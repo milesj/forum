@@ -1,0 +1,1854 @@
+# Translation of CakePHP Application
+# Copyright 2006-2009, Miles Johnson, Inc.
+# Generated from file: Revision: 7945 /app/webroot/test.php
+
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.4\n"
+"POT-Creation-Date: 2009-11-01 16:26-0800\n"
+"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
+"Last-Translator: Miles Johnson <contact@milesj.me>\n"
+"Language-Team: Miles Johnson <contact@milesj.me>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: /controllers/categories_controller.php:101
+msgid "A total of %d topic(s) have been permanently deleted"
+msgstr ""
+
+#: /controllers/categories_controller.php:105
+msgid "A total of %d topic(s) have been locked to the public"
+msgstr ""
+
+#: /controllers/categories_controller.php:109
+msgid "A total of %d topic(s) have been re-opened"
+msgstr ""
+
+#: /controllers/categories_controller.php:113
+msgid "A total of %d topic(s) have been moved to another forum category"
+msgstr ""
+
+#: /controllers/categories_controller.php:124
+#: /controllers/topics_controller.php:281
+#: /views/categories/moderate.ctp:9
+#: /views/categories/view.ctp:21;208
+#: /views/topics/moderate.ctp:9
+#: /views/topics/view.ctp:20;165
+msgid "Moderate"
+msgstr ""
+
+#: /controllers/categories_controller.php:160
+msgid "The order of the forums have been updated!"
+msgstr ""
+
+#: /controllers/categories_controller.php:163
+#: /views/categories/admin_index.ctp:2
+msgid "Manage Forums"
+msgstr ""
+
+#: /controllers/categories_controller.php:179
+#: /views/categories/admin_form_forum.ctp:6
+#: /views/categories/admin_index.ctp:7;115
+msgid "Add Forum"
+msgstr ""
+
+#: /controllers/categories_controller.php:206
+#: /views/categories/admin_form_forum.ctp:10
+msgid "Edit Forum"
+msgstr ""
+
+#: /controllers/categories_controller.php:228
+msgid "The forum %s has been deleted, and all its forum categories have been moved!"
+msgstr ""
+
+#: /controllers/categories_controller.php:232
+#: /views/categories/admin_delete_forum.ctp:2
+msgid "Delete Forum"
+msgstr ""
+
+#: /controllers/categories_controller.php:255
+#: /views/categories/admin_form_category.ctp:6
+msgid "Add Forum Category"
+msgstr ""
+
+#: /controllers/categories_controller.php:288
+#: /views/categories/admin_form_category.ctp:10
+msgid "Edit Forum Category"
+msgstr ""
+
+#: /controllers/categories_controller.php:313
+msgid "The forum category %s has been deleted, and all its sub-forums and topics have been moved!"
+msgstr ""
+
+#: /controllers/categories_controller.php:317
+#: /views/categories/admin_delete_category.ctp:2
+msgid "Delete Forum Category"
+msgstr ""
+
+#: /controllers/home_controller.php:34
+msgid "Index"
+msgstr ""
+
+#: /controllers/home_controller.php:62
+#: /views/layouts/default.ctp:32
+msgid "Help"
+msgstr ""
+
+#: /controllers/home_controller.php:71
+#: /views/layouts/default.ctp:31
+msgid "Rules"
+msgstr ""
+
+#: /controllers/home_controller.php:84
+msgid "Administration"
+msgstr ""
+
+#: /controllers/home_controller.php:111
+msgid "Settings have been updated!"
+msgstr ""
+
+#: /controllers/home_controller.php:117
+#: /views/layouts/admin.ctp:21
+msgid "Settings"
+msgstr ""
+
+#: /controllers/posts_controller.php:79
+#: /views/posts/add.ctp:10
+#: /views/topics/view.ctp:30;175;202
+msgid "Post Reply"
+msgstr ""
+
+#: /controllers/posts_controller.php:113
+#: /views/posts/edit.ctp:10
+msgid "Edit Post"
+msgstr ""
+
+#: /controllers/posts_controller.php:160
+msgid "You have succesfully reported this post! A moderator will review this post and take the necessary action."
+msgstr ""
+
+#: /controllers/posts_controller.php:165
+#: /views/posts/report.ctp:2
+#: /views/topics/view.ctp:114
+msgid "Report Post"
+msgstr ""
+
+#: /controllers/reports_controller.php:50
+#: /views/reports/admin_index.ctp:2
+msgid "Reported Items"
+msgstr ""
+
+#: /controllers/reports_controller.php:82
+msgid "A total of %d topics have been processed"
+msgstr ""
+
+#: /controllers/reports_controller.php:90
+#: /views/reports/admin_topics.ctp:2
+msgid "Reported Topics"
+msgstr ""
+
+#: /controllers/reports_controller.php:118
+msgid "A total of %d posts have been processed"
+msgstr ""
+
+#: /controllers/reports_controller.php:126
+#: /views/reports/admin_posts.ctp:2
+msgid "Reported Posts"
+msgstr ""
+
+#: /controllers/reports_controller.php:158
+msgid "A total of %d users have been processed"
+msgstr ""
+
+#: /controllers/reports_controller.php:166
+#: /views/reports/admin_users.ctp:2
+msgid "Reported Users"
+msgstr ""
+
+#: /controllers/search_controller.php:92
+#: /views/layouts/default.ctp:30
+#: /views/users/admin_index.ctp:14
+#: /views/users/listing.ctp:8
+msgid "Search"
+msgstr ""
+
+#: /controllers/staff_controller.php:53
+#: /views/staff/admin_form_access.ctp:6
+msgid "Add Access"
+msgstr ""
+
+#: /controllers/staff_controller.php:80
+#: /views/staff/admin_form_access.ctp:10
+msgid "Edit Access"
+msgstr ""
+
+#: /controllers/staff_controller.php:98
+msgid "The access levels for %s have been succesfully removed."
+msgstr ""
+
+#: /controllers/staff_controller.php:116
+#: /views/staff/admin_form_access_level.ctp:6
+#: /views/staff/admin_index.ctp:8;121
+msgid "Add Access Level"
+msgstr ""
+
+#: /controllers/staff_controller.php:142
+#: /views/staff/admin_form_access_level.ctp:10
+msgid "Edit Access Level"
+msgstr ""
+
+#: /controllers/staff_controller.php:163
+msgid "The level %s has been deleted, and all its users have been moved!"
+msgstr ""
+
+#: /controllers/staff_controller.php:167
+#: /views/staff/admin_delete_access_level.ctp:2
+msgid "Delete Access Level"
+msgstr ""
+
+#: /controllers/staff_controller.php:185
+#: /views/staff/admin_form_moderator.ctp:6
+#: /views/staff/admin_index.ctp:9;109;122
+msgid "Add Moderator"
+msgstr ""
+
+#: /controllers/staff_controller.php:212
+#: /views/staff/admin_form_moderator.ctp:10
+msgid "Edit Moderator"
+msgstr ""
+
+#: /controllers/staff_controller.php:230
+msgid "The moderator %s has been succesfully removed!"
+msgstr ""
+
+#: /controllers/topics_controller.php:60
+msgid "Post Poll"
+msgstr ""
+
+#: /controllers/topics_controller.php:64
+msgid "Post Topic"
+msgstr ""
+
+#: /controllers/topics_controller.php:129
+#: /views/topics/edit.ctp:10
+msgid "Edit Topic"
+msgstr ""
+
+#: /controllers/topics_controller.php:198
+msgid "You have succesfully reported this topic! A moderator will review this topic and take the necessary action."
+msgstr ""
+
+#: /controllers/topics_controller.php:203
+#: /views/topics/report.ctp:2
+#: /views/topics/view.ctp:110
+msgid "Report Topic"
+msgstr ""
+
+#: /controllers/topics_controller.php:270
+msgid "A total of %d post(s) have been permanently deleted"
+msgstr ""
+
+#: /controllers/users_controller.php:76
+msgid "Your profile information has been updated!"
+msgstr ""
+
+#: /controllers/users_controller.php:87
+#: /views/elements/navigation.ctp:9
+#: /views/users/edit.ctp:2
+msgid "Edit Profile"
+msgstr ""
+
+#: /controllers/users_controller.php:99
+msgid "Your new password and information has been sent to your email."
+msgstr ""
+
+#: /controllers/users_controller.php:104
+#: /views/elements/navigation.ctp:14
+#: /views/users/forgot.ctp:2
+msgid "Forgot Password"
+msgstr ""
+
+#: /controllers/users_controller.php:125
+#: /views/elements/login.ctp:8
+#: /views/elements/navigation.ctp:12
+#: /views/users/login.ctp:2;10
+msgid "Login"
+msgstr ""
+
+#: /controllers/users_controller.php:148
+#: /views/users/listing.ctp:2
+msgid "User List"
+msgstr ""
+
+#: /controllers/users_controller.php:166
+msgid "User Profile"
+msgstr ""
+
+#: /controllers/users_controller.php:191
+msgid "You have succesfully reported this user! A moderator will review this topic and take the necessary action."
+msgstr ""
+
+#: /controllers/users_controller.php:196
+#: /views/users/profile.ctp:5
+#: /views/users/report.ctp:2
+msgid "Report User"
+msgstr ""
+
+#: /controllers/users_controller.php:216
+msgid "You have successfully signed up, you may now login and begin posting."
+msgstr ""
+
+#: /controllers/users_controller.php:219
+msgid "Thank you for signing up on %s, your information is listed below"
+msgstr ""
+
+#: /controllers/users_controller.php:220
+#: /controllers/components/toolbar.php:163
+#: /views/elements/login.ctp:5
+#: /views/home/admin_index.ctp:72
+#: /views/users/admin_edit.ctp:5
+#: /views/users/admin_index.ctp:11;25
+#: /views/users/forgot.ctp:9
+#: /views/users/listing.ctp:18
+#: /views/users/login.ctp:7
+#: /views/users/signup.ctp:9
+msgid "Username"
+msgstr ""
+
+#: /controllers/users_controller.php:221
+#: /controllers/components/toolbar.php:164
+#: /views/elements/login.ctp:6
+#: /views/users/login.ctp:8
+#: /views/users/signup.ctp:11
+msgid "Password"
+msgstr ""
+
+#: /controllers/users_controller.php:222
+msgid "Enjoy!"
+msgstr ""
+
+#: /controllers/users_controller.php:226
+msgid "Sign Up Confirmation"
+msgstr ""
+
+#: /controllers/users_controller.php:234
+#: /views/elements/navigation.ctp:13
+#: /views/users/signup.ctp:2;14
+msgid "Sign Up"
+msgstr ""
+
+#: /controllers/users_controller.php:253
+#: /views/users/admin_index.ctp:2
+msgid "Manage Users"
+msgstr ""
+
+#: /controllers/users_controller.php:278
+#: /views/users/admin_edit.ctp:2
+msgid "Edit User"
+msgstr ""
+
+#: /controllers/users_controller.php:294
+msgid "The password for %s has been reset!"
+msgstr ""
+
+#: /controllers/users_controller.php:314
+msgid "The user %s and all of their associations have been deleted!"
+msgstr ""
+
+#: /controllers/users_controller.php:318
+#: /views/users/admin_delete.ctp:2
+msgid "Delete User"
+msgstr ""
+
+#: /controllers/components/toolbar.php:137
+#: /views/categories/admin_delete_forum.ctp:9
+#: /views/categories/admin_form_category.ctp:23
+#: /views/categories/admin_index.ctp:36
+#: /views/categories/view.ctp:43
+#: /views/categories/rss/feed.ctp:4
+#: /views/home/index.ctp:14
+#: /views/search/index.ctp:44
+msgid "Forum"
+msgstr ""
+
+#: /controllers/components/toolbar.php:156
+msgid "You have requested the login credentials for %s, your information is listed below"
+msgstr ""
+
+#: /controllers/components/toolbar.php:157
+msgid "Forgotten Password"
+msgstr ""
+
+#: /controllers/components/toolbar.php:159
+msgid "Your password has been reset for %s, your information is listed below"
+msgstr ""
+
+#: /controllers/components/toolbar.php:160
+#: /views/home/admin_index.ctp:92
+#: /views/users/admin_index.ctp:55
+msgid "Reset Password"
+msgstr ""
+
+#: /controllers/components/toolbar.php:165
+msgid "Please change your password once logging in."
+msgstr ""
+
+#: /views/categories/admin_delete_category.ctp:5
+msgid "Cannot process deletion, you must have atleast 1 active category."
+msgstr ""
+
+#: /views/categories/admin_delete_category.ctp:8
+msgid "Before you delete the category %s , please select which forum all topics should be moved to upon deletion. Additionally, any sub-forums will be moved to the main parent forum and any moderators will be deleted."
+msgstr ""
+
+#: /views/categories/admin_delete_category.ctp:11
+msgid "Move Topics To"
+msgstr ""
+
+#: /views/categories/admin_delete_category.ctp:12
+#: /views/categories/admin_delete_forum.ctp:10
+#: /views/categories/admin_index.ctp:22;67;92
+#: /views/home/admin_index.ctp:93
+#: /views/staff/admin_delete_access_level.ctp:8
+#: /views/staff/admin_index.ctp:36;66;101
+#: /views/topics/edit.ctp:39
+#: /views/topics/view.ctp:109;113
+#: /views/users/admin_index.ctp:56
+msgid "Delete"
+msgstr ""
+
+#: /views/categories/admin_delete_forum.ctp:6
+msgid "Before you delete the forum %s, please select which forum all child categories should be moved to upon deletion."
+msgstr ""
+
+#: /views/categories/admin_delete_forum.ctp:14
+msgid "You may not delete this forum, you must have at least one forum active."
+msgstr ""
+
+#: /views/categories/admin_form_category.ctp:5
+#: /views/categories/admin_form_forum.ctp:5
+#: /views/staff/admin_form_access.ctp:5
+#: /views/staff/admin_form_access_level.ctp:5
+#: /views/staff/admin_form_moderator.ctp:5
+msgid "Save"
+msgstr ""
+
+#: /views/categories/admin_form_category.ctp:9
+#: /views/categories/admin_form_forum.ctp:9
+#: /views/home/admin_settings.ctp:45
+#: /views/posts/edit.ctp:19
+#: /views/staff/admin_form_access.ctp:9
+#: /views/staff/admin_form_access_level.ctp:9
+#: /views/staff/admin_form_moderator.ctp:9
+#: /views/topics/edit.ctp:55
+#: /views/users/admin_edit.ctp:10
+msgid "Update"
+msgstr ""
+
+#: /views/categories/admin_form_category.ctp:13
+#: /views/categories/admin_form_forum.ctp:13
+msgid "None"
+msgstr ""
+
+#: /views/categories/admin_form_category.ctp:17
+msgid "When applying a read, post, reply or poll access, it states that all users with that access level and above will be able to commit the respective action. It does not mean only that type of access can view the forum category. However, the restricted access will limit only users with that access level to view the forum category."
+msgstr ""
+
+#: /views/categories/admin_form_category.ctp:21
+#: /views/categories/admin_form_forum.ctp:21
+#: /views/staff/admin_form_access_level.ctp:20
+#: /views/staff/admin_index.ctp:20
+#: /views/topics/add.ctp:12
+#: /views/topics/edit.ctp:13
+msgid "Title"
+msgstr ""
+
+#: /views/categories/admin_form_category.ctp:22
+msgid "Description"
+msgstr ""
+
+#: /views/categories/admin_form_category.ctp:25
+msgid "Parent Category"
+msgstr ""
+
+#: /views/categories/admin_form_category.ctp:27
+#: /views/categories/admin_form_forum.ctp:22
+#: /views/categories/admin_index.ctp:37
+#: /views/categories/moderate.ctp:25
+#: /views/topics/add.ctp:16
+#: /views/topics/edit.ctp:17
+#: /views/users/admin_edit.ctp:7
+msgid "Status"
+msgstr ""
+
+#: /views/categories/admin_form_category.ctp:28
+#: /views/categories/admin_form_forum.ctp:23
+msgid "Order No"
+msgstr ""
+
+#: /views/categories/admin_form_category.ctp:29
+#: /views/categories/admin_form_forum.ctp:24
+msgid "Restrict Access To"
+msgstr ""
+
+#: /views/categories/admin_form_category.ctp:30
+msgid "Read Access"
+msgstr ""
+
+#: /views/categories/admin_form_category.ctp:31
+msgid "Post Access"
+msgstr ""
+
+#: /views/categories/admin_form_category.ctp:32
+msgid "Reply Access"
+msgstr ""
+
+#: /views/categories/admin_form_category.ctp:33
+msgid "Poll Access"
+msgstr ""
+
+#: /views/categories/admin_form_category.ctp:34
+msgid "Increase Users Post/Topic Count"
+msgstr ""
+
+#: /views/categories/admin_form_category.ctp:35
+msgid "Auto-Lock Inactive Topics"
+msgstr ""
+
+#: /views/categories/admin_form_forum.ctp:17
+msgid "When applying a view access, it states that all users with that access level and above will be able to view the forum and all its child forum categories. However, the restricted access will limit only users with that access level to view the forum."
+msgstr ""
+
+#: /views/categories/admin_form_forum.ctp:25
+msgid "View Access"
+msgstr ""
+
+#: /views/categories/admin_index.ctp:8;102;116
+msgid "Add Category"
+msgstr ""
+
+#: /views/categories/admin_index.ctp:21;66;91
+#: /views/home/admin_index.ctp:91
+#: /views/staff/admin_index.ctp:35;65;100
+#: /views/topics/view.ctp:108;112
+#: /views/users/admin_index.ctp:54
+msgid "Edit"
+msgstr ""
+
+#: /views/categories/admin_index.ctp:38
+#: /views/categories/view.ctp:44
+#: /views/home/admin_index.ctp:75
+#: /views/home/index.ctp:15
+#: /views/reports/admin_index.ctp:6
+#: /views/reports/admin_posts.ctp:6
+#: /views/reports/admin_topics.ctp:6
+#: /views/reports/admin_users.ctp:6
+#: /views/users/admin_index.ctp:29
+#: /views/users/listing.ctp:21
+msgid "Topics"
+msgstr ""
+
+#: /views/categories/admin_index.ctp:39
+#: /views/categories/moderate.ctp:28
+#: /views/categories/view.ctp:45;96
+#: /views/home/admin_index.ctp:76
+#: /views/home/index.ctp:16
+#: /views/reports/admin_index.ctp:7
+#: /views/reports/admin_posts.ctp:7
+#: /views/reports/admin_topics.ctp:7
+#: /views/reports/admin_users.ctp:7
+#: /views/search/index.ctp:47
+#: /views/users/admin_index.ctp:30
+#: /views/users/listing.ctp:22
+#: /views/users/profile.ctp:66
+msgid "Posts"
+msgstr ""
+
+#: /views/categories/admin_index.ctp:40
+msgid "Read"
+msgstr ""
+
+#: /views/categories/admin_index.ctp:41
+#: /views/posts/add.ctp:19
+#: /views/posts/report.ctp:9
+#: /views/reports/admin_posts.ctp:18
+#: /views/topics/add.ctp:36
+#: /views/topics/moderate.ctp:25
+msgid "Post"
+msgstr ""
+
+#: /views/categories/admin_index.ctp:42
+msgid "Reply"
+msgstr ""
+
+#: /views/categories/admin_index.ctp:43
+msgid "Poll"
+msgstr ""
+
+#: /views/categories/admin_index.ctp:44
+#: /views/home/admin_index.ctp:77
+#: /views/staff/admin_index.ctp:22;54;88
+#: /views/users/admin_index.ctp:31
+msgid "Options"
+msgstr ""
+
+#: /views/categories/admin_index.ctp:102
+#: /views/home/index.ctp:65
+msgid "There are no categories within this forum."
+msgstr ""
+
+#: /views/categories/admin_index.ctp:112
+msgid "Update Order"
+msgstr ""
+
+#: /views/categories/moderate.ctp:14;100
+#: /views/layouts/admin.ctp:26
+msgid "Return to Forum"
+msgstr ""
+
+#: /views/categories/moderate.ctp:24
+#: /views/categories/view.ctp:93
+#: /views/reports/admin_topics.ctp:18
+#: /views/search/index.ctp:43
+#: /views/topics/rss/feed.ctp:4
+#: /views/users/profile.ctp:64;95
+msgid "Topic"
+msgstr ""
+
+#: /views/categories/moderate.ctp:26
+#: /views/categories/view.ctp:94
+#: /views/search/index.ctp:45
+#: /views/users/profile.ctp:96
+msgid "Author"
+msgstr ""
+
+#: /views/categories/moderate.ctp:27
+#: /views/categories/view.ctp:95
+#: /views/search/index.ctp:46
+#: /views/users/profile.ctp:65
+msgid "Created"
+msgstr ""
+
+#: /views/categories/moderate.ctp:29
+#: /views/categories/view.ctp:97
+#: /views/search/index.ctp:48
+#: /views/users/profile.ctp:67
+msgid "Views"
+msgstr ""
+
+#: /views/categories/moderate.ctp:30
+#: /views/categories/view.ctp:46;98
+#: /views/home/index.ctp:17
+#: /views/search/index.ctp:49
+msgid "Activity"
+msgstr ""
+
+#: /views/categories/moderate.ctp:50
+#: /views/categories/view.ctp:123;168
+#: /views/search/index.ctp:72
+msgid "Pages"
+msgstr ""
+
+#: /views/categories/moderate.ctp:64
+#: /views/categories/view.ctp:74;136;181
+#: /views/home/index.ctp:53
+#: /views/search/index.ctp:86
+msgid "by"
+msgstr ""
+
+#: /views/categories/moderate.ctp:67
+#: /views/categories/view.ctp:76;139;184
+#: /views/home/index.ctp:55
+#: /views/search/index.ctp:89
+msgid "No latest activity to display"
+msgstr ""
+
+#: /views/categories/moderate.ctp:77
+#: /views/categories/view.ctp:194
+msgid "There are no topics within this forum category."
+msgstr ""
+
+#: /views/categories/moderate.ctp:88
+msgid "Move Topic(s)"
+msgstr ""
+
+#: /views/categories/moderate.ctp:89
+msgid "Open Topic(s)"
+msgstr ""
+
+#: /views/categories/moderate.ctp:90
+#: /views/reports/admin_topics.ctp:52
+msgid "Close Topic(s)"
+msgstr ""
+
+#: /views/categories/moderate.ctp:91
+#: /views/reports/admin_topics.ctp:51
+msgid "Delete Topic(s)"
+msgstr ""
+
+#: /views/categories/moderate.ctp:93
+#: /views/reports/admin_posts.ctp:54
+#: /views/reports/admin_topics.ctp:55
+#: /views/reports/admin_users.ctp:55
+#: /views/topics/moderate.ctp:53
+msgid "Perform Action"
+msgstr ""
+
+#: /views/categories/moderate.ctp:95
+msgid "Move To"
+msgstr ""
+
+#: /views/categories/moderate.ctp:96
+#: /views/reports/admin_posts.ctp:56
+#: /views/reports/admin_topics.ctp:57
+#: /views/reports/admin_users.ctp:57
+#: /views/topics/moderate.ctp:54
+msgid "Process"
+msgstr ""
+
+#: /views/categories/view.ctp:25;212
+#: /views/topics/view.ctp:23;168
+msgid "Create Topic"
+msgstr ""
+
+#: /views/categories/view.ctp:28;215
+#: /views/topics/view.ctp:26;171
+msgid "Create Poll"
+msgstr ""
+
+#: /views/categories/view.ctp:31;218
+#: /views/helpers/cupcake.php:239
+#: /views/topics/view.ctp:32;177
+msgid "Closed"
+msgstr ""
+
+#: /views/categories/view.ctp:39;60
+#: /views/home/index.ctp:39
+msgid "Sub-Forums"
+msgstr ""
+
+#: /views/categories/view.ctp:106
+msgid "Important Topics"
+msgstr ""
+
+#: /views/categories/view.ctp:148
+msgid "Regular Topics"
+msgstr ""
+
+#: /views/categories/view.ctp:233
+#: /views/home/admin_index.ctp:7
+#: /views/topics/view.ctp:142
+#: /views/users/admin_edit.ctp:9
+#: /views/users/profile.ctp:16
+msgid "Total Topics"
+msgstr ""
+
+#: /views/categories/view.ctp:235
+msgid "Increases Post Count"
+msgstr ""
+
+#: /views/categories/view.ctp:237
+msgid "Can Read Topics"
+msgstr ""
+
+#: /views/categories/view.ctp:239
+msgid "Can Create Topics"
+msgstr ""
+
+#: /views/categories/view.ctp:243
+#: /views/home/admin_index.ctp:8
+#: /views/topics/view.ctp:143
+#: /views/users/admin_edit.ctp:8
+#: /views/users/profile.ctp:40
+msgid "Total Posts"
+msgstr ""
+
+#: /views/categories/view.ctp:245
+msgid "Auto-Lock Topics"
+msgstr ""
+
+#: /views/categories/view.ctp:247
+msgid "Can Reply"
+msgstr ""
+
+#: /views/categories/view.ctp:249
+msgid "Can Create Polls"
+msgstr ""
+
+#: /views/categories/view.ctp:254
+#: /views/staff/admin_index.ctp:81
+msgid "Moderators"
+msgstr ""
+
+#: /views/elements/copyright.ctp:3
+msgid "Powered by the %s v%s"
+msgstr ""
+
+#: /views/elements/copyright.ctp:4
+msgid "Created by %s"
+msgstr ""
+
+#: /views/elements/login.ctp:7
+#: /views/users/login.ctp:9
+msgid "Remember Me?"
+msgstr ""
+
+#: /views/elements/navigation.ctp:7
+msgid "View New Posts"
+msgstr ""
+
+#: /views/elements/navigation.ctp:8
+msgid "My Profile"
+msgstr ""
+
+#: /views/elements/navigation.ctp:10
+msgid "Logout"
+msgstr ""
+
+#: /views/elements/pagination.ctp:8
+msgid "Displaying %start%-%end% of %count%"
+msgstr ""
+
+#: /views/helpers/cupcake.php:237
+msgid "No"
+msgstr ""
+
+#: /views/helpers/cupcake.php:237
+msgid "Yes"
+msgstr ""
+
+#: /views/helpers/cupcake.php:239
+msgid "Open"
+msgstr ""
+
+#: /views/helpers/cupcake.php:241
+msgid "Visible"
+msgstr ""
+
+#: /views/helpers/cupcake.php:241
+msgid "Hidden"
+msgstr ""
+
+#: /views/helpers/cupcake.php:244
+msgid "Member"
+msgstr ""
+
+#: /views/helpers/cupcake.php:247
+msgid "Moderator"
+msgstr ""
+
+#: /views/helpers/cupcake.php:250
+msgid "Super Moderator"
+msgstr ""
+
+#: /views/helpers/cupcake.php:253
+msgid "Administrator"
+msgstr ""
+
+#: /views/helpers/cupcake.php:257
+msgid "Guest"
+msgstr ""
+
+#: /views/helpers/cupcake.php:260
+msgid "Active"
+msgstr ""
+
+#: /views/helpers/cupcake.php:260
+msgid "Banned"
+msgstr ""
+
+#: /views/helpers/cupcake.php:348
+#: /views/topics/add.ctp:19
+#: /views/topics/edit.ctp:20
+msgid "Sticky"
+msgstr ""
+
+#: /views/helpers/cupcake.php:349
+#: /views/topics/add.ctp:20
+#: /views/topics/edit.ctp:21
+msgid "Important"
+msgstr ""
+
+#: /views/helpers/cupcake.php:350
+#: /views/topics/add.ctp:21
+#: /views/topics/edit.ctp:22
+msgid "Announcement"
+msgstr ""
+
+#: /views/helpers/decoda.php:494
+#: /views/helpers/decoda.php:494
+msgid "mail"
+msgstr ""
+
+#: /views/helpers/decoda.php:702
+#: /views/helpers/decoda.php:702
+msgid "link"
+msgstr ""
+
+#: /views/home/admin_index.ctp:2
+msgid "Administration Panel"
+msgstr ""
+
+#: /views/home/admin_index.ctp:9
+msgid "Total Polls"
+msgstr ""
+
+#: /views/home/admin_index.ctp:10
+msgid "Total Users"
+msgstr ""
+
+#: /views/home/admin_index.ctp:11
+msgid "Total Reports"
+msgstr ""
+
+#: /views/home/admin_index.ctp:12
+msgid "Total Moderators"
+msgstr ""
+
+#: /views/home/admin_index.ctp:13
+#: /views/home/index.ctp:85
+msgid "Newest User"
+msgstr ""
+
+#: /views/home/admin_index.ctp:30
+msgid "Latest Reports"
+msgstr ""
+
+#: /views/home/admin_index.ctp:34
+#: /views/reports/admin_index.ctp:17
+#: /views/topics/add.ctp:22
+#: /views/topics/edit.ctp:23
+msgid "Type"
+msgstr ""
+
+#: /views/home/admin_index.ctp:35
+#: /views/reports/admin_index.ctp:18
+msgid "Item"
+msgstr ""
+
+#: /views/home/admin_index.ctp:36
+#: /views/reports/admin_index.ctp:19
+#: /views/reports/admin_posts.ctp:19
+#: /views/reports/admin_topics.ctp:19
+#: /views/reports/admin_users.ctp:19
+msgid "Reported By"
+msgstr ""
+
+#: /views/home/admin_index.ctp:37
+#: /views/posts/report.ctp:10
+#: /views/reports/admin_index.ctp:20
+#: /views/reports/admin_posts.ctp:20
+#: /views/reports/admin_topics.ctp:20
+#: /views/reports/admin_users.ctp:20
+#: /views/topics/report.ctp:9
+#: /views/users/report.ctp:9
+msgid "Comment"
+msgstr ""
+
+#: /views/home/admin_index.ctp:38
+#: /views/reports/admin_index.ctp:21
+#: /views/reports/admin_posts.ctp:21
+#: /views/reports/admin_topics.ctp:21
+#: /views/reports/admin_users.ctp:21
+msgid "Reported On"
+msgstr ""
+
+#: /views/home/admin_index.ctp:68
+msgid "Latest Signed Up Users"
+msgstr ""
+
+#: /views/home/admin_index.ctp:73
+#: /views/users/admin_edit.ctp:6
+#: /views/users/admin_index.ctp:26
+#: /views/users/edit.ctp:7
+#: /views/users/forgot.ctp:10
+#: /views/users/signup.ctp:10
+msgid "Email"
+msgstr ""
+
+#: /views/home/admin_index.ctp:74
+#: /views/posts/add.ctp:36
+#: /views/topics/view.ctp:141
+#: /views/users/admin_index.ctp:27
+#: /views/users/listing.ctp:19
+#: /views/users/profile.ctp:14
+msgid "Joined"
+msgstr ""
+
+#: /views/home/admin_index.ctp:92
+#: /views/users/admin_index.ctp:55
+msgid "Are you sure you want to reset?"
+msgstr ""
+
+#: /views/home/admin_settings.ctp:2
+msgid "Forum Settings"
+msgstr ""
+
+#: /views/home/admin_settings.ctp:8
+msgid "Site Name"
+msgstr ""
+
+#: /views/home/admin_settings.ctp:9
+msgid "Site Email"
+msgstr ""
+
+#: /views/home/admin_settings.ctp:10
+msgid "Site Website"
+msgstr ""
+
+#: /views/home/admin_settings.ctp:11
+#: /views/users/signup.ctp:13
+msgid "Security Question"
+msgstr ""
+
+#: /views/home/admin_settings.ctp:12
+msgid "Security Answer"
+msgstr ""
+
+#: /views/home/admin_settings.ctp:14
+msgid "Topic Settings"
+msgstr ""
+
+#: /views/home/admin_settings.ctp:17;18
+msgid "Topics Per Page"
+msgstr ""
+
+#: /views/home/admin_settings.ctp:19
+msgid "Topic Flood Interval"
+msgstr ""
+
+#: /views/home/admin_settings.ctp:19;27
+msgid "Seconds"
+msgstr ""
+
+#: /views/home/admin_settings.ctp:20
+msgid "Paging Till Truncation"
+msgstr ""
+
+#: /views/home/admin_settings.ctp:20
+msgid "Paging under a topic title"
+msgstr ""
+
+#: /views/home/admin_settings.ctp:22
+msgid "Post Settings"
+msgstr ""
+
+#: /views/home/admin_settings.ctp:25
+msgid "Posts Per Page"
+msgstr ""
+
+#: /views/home/admin_settings.ctp:26
+msgid "Posts Per Hour"
+msgstr ""
+
+#: /views/home/admin_settings.ctp:27
+msgid "Post Flood Interval"
+msgstr ""
+
+#: /views/home/admin_settings.ctp:28
+msgid "Posts Till Hot Topic"
+msgstr ""
+
+#: /views/home/admin_settings.ctp:30
+msgid "Misc Settings"
+msgstr ""
+
+#: /views/home/admin_settings.ctp:33
+msgid "Days"
+msgstr ""
+
+#: /views/home/admin_settings.ctp:33
+msgid "Inactive Days Till Topic Auto-Lock"
+msgstr ""
+
+#: /views/home/admin_settings.ctp:34
+msgid "Whos Online Interval"
+msgstr ""
+
+#: /views/home/admin_settings.ctp:34
+msgid "Past Minutes"
+msgstr ""
+
+#: /views/home/admin_settings.ctp:35
+msgid "Enable Quick Reply"
+msgstr ""
+
+#: /views/home/admin_settings.ctp:36
+msgid "Enable Gravatar"
+msgstr ""
+
+#: /views/home/admin_settings.ctp:37
+msgid "Censored Words"
+msgstr ""
+
+#: /views/home/admin_settings.ctp:37
+msgid "Separate with commas"
+msgstr ""
+
+#: /views/home/help.ctp:2
+msgid "Help Desk"
+msgstr ""
+
+#: /views/home/help.ctp:4
+msgid "Why do I need to sign up?"
+msgstr ""
+
+#: /views/home/help.ctp:5
+msgid "You may read all public forums as a guest, but to be able to post or reply to a topic, you must have a user account."
+msgstr ""
+
+#: /views/home/help.ctp:7
+msgid "Why can't I post a topic, poll or reply?"
+msgstr ""
+
+#: /views/home/help.ctp:8
+msgid "To begin you must have a user account and must be logged in. If you have done this, the topic might be locked or you do not have the proper acces to post in that topic or forum."
+msgstr ""
+
+#: /views/home/help.ctp:10
+msgid "Why can't I login?"
+msgstr ""
+
+#: /views/home/help.ctp:11
+msgid "The server might be having technicaly difficulties so your request could not be processed. It may also be that your account has been deleted or banned."
+msgstr ""
+
+#: /views/home/help.ctp:13
+msgid "Oh no, I forgot my password!"
+msgstr ""
+
+#: /views/home/help.ctp:14
+msgid "If you have forgotten your password, you can reset it using the %s form."
+msgstr ""
+
+#: /views/home/help.ctp:16
+msgid "What does reporting do?"
+msgstr ""
+
+#: /views/home/help.ctp:17
+msgid "If you find a piece of content that you find inappropriate or offensive, you can report the content for a moderator to delete or fix."
+msgstr ""
+
+#: /views/home/help.ctp:19
+msgid "What are moderators, super moderators and administrators?"
+msgstr ""
+
+#: /views/home/help.ctp:20
+msgid "Those are users with higher access and privileges than a regular user. Moderators control and moderate specific forums, where as Super Moderators have full access to all forums. Administrators have full access to all forums as well as editing all the sites settings and configuration. Additionally, moderates have the power to edit and delete other users content."
+msgstr ""
+
+#: /views/home/help.ctp:22
+msgid "What does the power search do?"
+msgstr ""
+
+#: /views/home/help.ctp:23
+msgid "By default the search will only search for terms within the topic title. If you check the power search, it will search within the title and post."
+msgstr ""
+
+#: /views/home/help.ctp:25
+msgid "How do I edit my profile?"
+msgstr ""
+
+#: /views/home/help.ctp:26
+msgid "Once you have logged in, you can edit your profile by going to the %s link, located at the top right."
+msgstr ""
+
+#: /views/home/help.ctp:28
+msgid "How do I post a topic?"
+msgstr ""
+
+#: /views/home/help.ctp:29
+msgid "You would first navigate to the appropriate forum you want to post in. Once there, you would click the \"Create Topic\" link located at the top and bottom right of the page."
+msgstr ""
+
+#: /views/home/help.ctp:31
+msgid "How do I post a reply?"
+msgstr ""
+
+#: /views/home/help.ctp:32
+msgid "When you are reading a topic and are logged in, you would click the \"Post Reply\" link also located at the top and bottom right of the page."
+msgstr ""
+
+#: /views/home/help.ctp:34
+msgid "How do I create a poll?"
+msgstr ""
+
+#: /views/home/help.ctp:35
+msgid "You would create a poll the same way you would create a topic. First enter the correct forum, then hit the \"Create Poll\" link."
+msgstr ""
+
+#: /views/home/help.ctp:37
+msgid "How do I edit my topic, poll, post, etc?"
+msgstr ""
+
+#: /views/home/help.ctp:38
+msgid "When you are reading a topic, at the top right of each post you will see a few text links. Hit the \"Edit\" link to edit your respective content. If you are editing the first post of a topic, it will additionally edit the topic or poll as well. You may only edit your own posts or topics unless you have moderating capabilities."
+msgstr ""
+
+#: /views/home/help.ctp:40
+msgid "How do I report a topic, post or user?"
+msgstr ""
+
+#: /views/home/help.ctp:41
+msgid "At the top right of each post you would click the \"Report <content>\" link. From there you should add a comment on why you are reporting this content."
+msgstr ""
+
+#: /views/home/help.ctp:43
+msgid "How do I get higher access and permissions?"
+msgstr ""
+
+#: /views/home/help.ctp:44
+msgid "It is up to the administrator to give you higher access. All you can do is be a superb member on the forum and hope they promote you."
+msgstr ""
+
+#: /views/home/help.ctp:46
+msgid "I have more questions that aren't shown here!"
+msgstr ""
+
+#: /views/home/help.ctp:47
+msgid "If you have additional questions and need further help, please contact us at %s."
+msgstr ""
+
+#: /views/home/index.ctp:81
+msgid "Statistics"
+msgstr ""
+
+#: /views/home/index.ctp:81
+msgid "%d topics, %d posts, and %d users"
+msgstr ""
+
+#: /views/home/index.ctp:96
+msgid "Whos Online"
+msgstr ""
+
+#: /views/home/rules.ctp:2
+msgid "Rules and Regulations"
+msgstr ""
+
+#: /views/home/rules.ctp:4
+msgid "No Offensive Material"
+msgstr ""
+
+#: /views/home/rules.ctp:5
+msgid "No posting any harmful, threatening, abusive, harassing, defamatory, vulgar, obscene, hateful, or racially, ethnically or otherwise objectionable content. This means no porn, gore, offensive, violent or disturbing images, websites and or other adult content. This will result in an immediate ban from the community."
+msgstr ""
+
+#: /views/home/rules.ctp:7
+msgid "No Prejudice or Discrimation"
+msgstr ""
+
+#: /views/home/rules.ctp:8
+msgid "There is to be absolutely no discriminating or hatred against somebody else due to race, religion, gender, cultural background or sexual preference. This will result in an immediate ban from the community."
+msgstr ""
+
+#: /views/home/rules.ctp:10
+msgid "No Flaming"
+msgstr ""
+
+#: /views/home/rules.ctp:11
+msgid "There is to be no offensive language, personal attacks, harassment or flaming to another member of the forum. For each infraction you will be warned, and if the problem persists you will be banned."
+msgstr ""
+
+#: /views/home/rules.ctp:13
+msgid "No Spamming"
+msgstr ""
+
+#: /views/home/rules.ctp:14
+msgid "No spamming or flooding forums or threads by posting frequent and / or annoying messages in the forums which serve no purpose."
+msgstr ""
+
+#: /views/home/rules.ctp:16
+msgid "No Short Length Posts"
+msgstr ""
+
+#: /views/home/rules.ctp:17
+msgid "A response with only a few words is considered spam. If you post a reply that contains less than 5-10 words, it is considered spam. If you do not have anything worth while to add to the conversation, then do not reply at all. Please refer to the No Spamming rule above."
+msgstr ""
+
+#: /views/home/rules.ctp:19
+msgid "No Virus, Trojans or Warez"
+msgstr ""
+
+#: /views/home/rules.ctp:20
+msgid "Posting links to and / or information about cheats, hacks, virus, trojans, warez and otherwise illegal content is prohibited. If this happens you will be banned immediately."
+msgstr ""
+
+#: /views/home/rules.ctp:22
+msgid "No Threadomancy"
+msgstr ""
+
+#: /views/home/rules.ctp:23
+msgid "Posting in a thread that hasn't had any new replies in roughly 3-4 weeks or more (up to mod discretion; possible exceptions apply)."
+msgstr ""
+
+#: /views/home/rules.ctp:25
+msgid "No Trolling"
+msgstr ""
+
+#: /views/home/rules.ctp:26
+msgid "No trolling these forums are allowed. Do not intentionally post controversial or contrary messages to invoke other members of the community. This will result in an immediate ban."
+msgstr ""
+
+#: /views/home/rules.ctp:28
+msgid "No Advertising"
+msgstr ""
+
+#: /views/home/rules.ctp:29
+msgid "Posting links to other community sites that are not on our affiliates list or posting links to advertise your site or community is prohibited. You may place a link within your signature, but you may not advertise with a topic. This will result in a warning or a ban."
+msgstr ""
+
+#: /views/home/rules.ctp:31
+msgid "No Double Posting"
+msgstr ""
+
+#: /views/home/rules.ctp:32
+msgid "Do not double post, if you need to double post please edit your previous post instead. Posting consecutively is not permitted."
+msgstr ""
+
+#: /views/home/rules.ctp:34
+msgid "No Duplicate Topics"
+msgstr ""
+
+#: /views/home/rules.ctp:35
+msgid "Do not create a new topic with the same content to an existing topic. Duplicated topics will be locked, and removed. Browse through the forum, or do a search and see if a topic already exist."
+msgstr ""
+
+#: /views/home/rules.ctp:37
+msgid "No Abusing Topics"
+msgstr ""
+
+#: /views/home/rules.ctp:38
+msgid "Do not post topics that have no real reason for being created. Also do not spam topics/polls."
+msgstr ""
+
+#: /views/home/rss/feed.ctp:4
+#: /views/users/profile.ctp:60
+msgid "Latest Topics"
+msgstr ""
+
+#: /views/home/rss/feed.ctp:6
+msgid "The latest 10 topics out of all forums"
+msgstr ""
+
+#: /views/layouts/admin.ctp:6;17
+msgid "Cupcake Forum Administration"
+msgstr ""
+
+#: /views/layouts/admin.ctp:20
+#: /views/layouts/default.ctp:29
+msgid "Home"
+msgstr ""
+
+#: /views/layouts/admin.ctp:22
+msgid "Forums"
+msgstr ""
+
+#: /views/layouts/admin.ctp:23
+#: /views/staff/admin_index.ctp:47
+msgid "Staff"
+msgstr ""
+
+#: /views/layouts/admin.ctp:24
+msgid "Reported"
+msgstr ""
+
+#: /views/layouts/admin.ctp:25
+#: /views/layouts/default.ctp:33
+#: /views/reports/admin_index.ctp:8
+#: /views/reports/admin_posts.ctp:8
+#: /views/reports/admin_topics.ctp:8
+#: /views/reports/admin_users.ctp:8
+msgid "Users"
+msgstr ""
+
+#: /views/layouts/default.ctp:15
+msgid "RSS Feed - Latest Topics"
+msgstr ""
+
+#: /views/layouts/default.ctp:17
+msgid "RSS Feed - Content Review"
+msgstr ""
+
+#: /views/layouts/default.ctp:35
+msgid "Admin"
+msgstr ""
+
+#: /views/posts/add.ctp:13
+#: /views/posts/edit.ctp:13
+#: /views/topics/add.ctp:30
+#: /views/topics/edit.ctp:49
+msgid "Content"
+msgstr ""
+
+#: /views/posts/add.ctp:16
+#: /views/posts/edit.ctp:16
+#: /views/topics/add.ctp:33
+#: /views/topics/edit.ctp:52
+msgid "Allowed Tags"
+msgstr ""
+
+#: /views/posts/add.ctp:24
+msgid "Topic Review - Last 10 Replies"
+msgstr ""
+
+#: /views/posts/report.ctp:4
+msgid "Are you sure you want to report the post (below) in the topic %s? If so, please add a comment as to why you are reporting it, 255 max characters."
+msgstr ""
+
+#: /views/posts/report.ctp:11
+#: /views/topics/report.ctp:10
+#: /views/users/report.ctp:10
+msgid "Report"
+msgstr ""
+
+#: /views/reports/admin_index.ctp:5
+#: /views/reports/admin_posts.ctp:5
+#: /views/reports/admin_topics.ctp:5
+#: /views/reports/admin_users.ctp:5
+msgid "View Reported"
+msgstr ""
+
+#: /views/reports/admin_index.ctp:49
+msgid "There are no reported items to display."
+msgstr ""
+
+#: /views/reports/admin_posts.ctp:31
+msgid "View Topic"
+msgstr ""
+
+#: /views/reports/admin_posts.ctp:41
+msgid "There are no reported posts."
+msgstr ""
+
+#: /views/reports/admin_posts.ctp:51
+#: /views/topics/moderate.ctp:53
+msgid "Delete Post(s)"
+msgstr ""
+
+#: /views/reports/admin_posts.ctp:52
+#: /views/reports/admin_topics.ctp:53
+#: /views/reports/admin_users.ctp:53
+msgid "Remove Report Only"
+msgstr ""
+
+#: /views/reports/admin_topics.ctp:41
+msgid "There are no reported topics."
+msgstr ""
+
+#: /views/reports/admin_users.ctp:18
+#: /views/staff/admin_index.ctp:51;85
+#: /views/topics/moderate.ctp:24
+msgid "User"
+msgstr ""
+
+#: /views/reports/admin_users.ctp:41
+msgid "There are no reported users."
+msgstr ""
+
+#: /views/reports/admin_users.ctp:51
+msgid "Ban User(s)"
+msgstr ""
+
+#: /views/reports/admin_users.ctp:52
+msgid "Delete User(s)"
+msgstr ""
+
+#: /views/search/index.ctp:4
+msgid "Last post time"
+msgstr ""
+
+#: /views/search/index.ctp:5
+msgid "Topic created time"
+msgstr ""
+
+#: /views/search/index.ctp:6
+msgid "Total posts"
+msgstr ""
+
+#: /views/search/index.ctp:7
+msgid "Total views"
+msgstr ""
+
+#: /views/search/index.ctp:16
+msgid "Keywords"
+msgstr ""
+
+#: /views/search/index.ctp:20
+msgid "Power Search?"
+msgstr ""
+
+#: /views/search/index.ctp:22
+msgid "Within Forum Category"
+msgstr ""
+
+#: /views/search/index.ctp:25
+msgid "Order By"
+msgstr ""
+
+#: /views/search/index.ctp:28
+msgid "By User (Username)"
+msgstr ""
+
+#: /views/search/index.ctp:33
+msgid "Search Topics"
+msgstr ""
+
+#: /views/search/index.ctp:54
+msgid "No results were found, please refine your search criteria."
+msgstr ""
+
+#: /views/staff/admin_delete_access_level.ctp:4
+msgid "Before you delete the level %s , please select which level a user should receive, if they have the level that will be deleted."
+msgstr ""
+
+#: /views/staff/admin_delete_access_level.ctp:7
+msgid "Move Users To"
+msgstr ""
+
+#: /views/staff/admin_form_access.ctp:15
+#: /views/staff/admin_form_moderator.ctp:15
+msgid "To find the users ID, you can search for them on the %s."
+msgstr ""
+
+#: /views/staff/admin_form_access.ctp:15
+#: /views/staff/admin_form_moderator.ctp:15
+msgid "Users listing"
+msgstr ""
+
+#: /views/staff/admin_form_access.ctp:19
+#: /views/staff/admin_form_moderator.ctp:19
+msgid "User ID"
+msgstr ""
+
+#: /views/staff/admin_form_access.ctp:20
+#: /views/staff/admin_form_access_level.ctp:21
+#: /views/staff/admin_index.ctp:52
+msgid "Access Level"
+msgstr ""
+
+#: /views/staff/admin_form_access_level.ctp:16
+msgid "You are unable to edit core levels, they are restricted."
+msgstr ""
+
+#: /views/staff/admin_form_access_level.ctp:22
+msgid "Is Super Moderator?"
+msgstr ""
+
+#: /views/staff/admin_form_access_level.ctp:23
+msgid "Is Administrator?"
+msgstr ""
+
+#: /views/staff/admin_form_moderator.ctp:20
+#: /views/topics/add.ctp:13
+#: /views/topics/edit.ctp:16
+msgid "Forum Category"
+msgstr ""
+
+#: /views/staff/admin_index.ctp:2
+msgid "Staff &amp; Moderators"
+msgstr ""
+
+#: /views/staff/admin_index.ctp:7;120
+msgid "Add Staff"
+msgstr ""
+
+#: /views/staff/admin_index.ctp:16
+msgid "Levels"
+msgstr ""
+
+#: /views/staff/admin_index.ctp:21
+msgid "Level"
+msgstr ""
+
+#: /views/staff/admin_index.ctp:33
+msgid "Restricted"
+msgstr ""
+
+#: /views/staff/admin_index.ctp:53;87
+msgid "Achieved On"
+msgstr ""
+
+#: /views/staff/admin_index.ctp:66;101
+#: /views/topics/view.ctp:109;113
+msgid "Are you sure you want to delete?"
+msgstr ""
+
+#: /views/staff/admin_index.ctp:86
+#: /views/users/profile.ctp:42
+msgid "Moderates"
+msgstr ""
+
+#: /views/staff/admin_index.ctp:109
+msgid "There are no assigned moderators."
+msgstr ""
+
+#: /views/topics/add.ctp:13
+#: /views/topics/edit.ctp:16
+msgid "Select a Forum"
+msgstr ""
+
+#: /views/topics/add.ctp:18
+#: /views/topics/edit.ctp:19
+msgid "Normal"
+msgstr ""
+
+#: /views/topics/add.ctp:26;26
+#: /views/topics/edit.ctp:31
+msgid "Poll Options"
+msgstr ""
+
+#: /views/topics/add.ctp:26
+msgid "One option per line. Max 10 options"
+msgstr ""
+
+#: /views/topics/add.ctp:27
+#: /views/topics/edit.ctp:45
+msgid "Expiration Date"
+msgstr ""
+
+#: /views/topics/add.ctp:27
+#: /views/topics/edit.ctp:45
+msgid "How many days till expiration? Leave blank to last forever."
+msgstr ""
+
+#: /views/topics/moderate.ctp:14;58
+msgid "Return to Topic"
+msgstr ""
+
+#: /views/topics/moderate.ctp:26
+msgid "Date"
+msgstr ""
+
+#: /views/topics/report.ctp:4
+msgid "Are you sure you want to report the topic %s ? If so, please add a comment as to why you are reporting it, 255 max characters."
+msgstr ""
+
+#: /views/topics/view.ctp:62
+msgid "Voting on this poll has been closed"
+msgstr ""
+
+#: /views/topics/view.ctp:64
+msgid "Vote"
+msgstr ""
+
+#: /views/topics/view.ctp:67
+msgid "Please login to vote!"
+msgstr ""
+
+#: /views/topics/view.ctp:83
+msgid "Your Vote"
+msgstr ""
+
+#: /views/topics/view.ctp:119
+msgid "Quote"
+msgstr ""
+
+#: /views/topics/view.ctp:185
+msgid "Quick Reply"
+msgstr ""
+
+#: /views/topics/view.ctp:191
+msgid "Message"
+msgstr ""
+
+#: /views/topics/view.ctp:193
+msgid "Advanced Reply"
+msgstr ""
+
+#: /views/topics/view.ctp:194
+msgid "BBCode Enabled"
+msgstr ""
+
+#: /views/users/admin_delete.ctp:4
+msgid "Are you sure you want to delete the user %s ? Once deleted, all the users topics, posts, moderator positions, access levels and any other associations will permanently be deleted from the system."
+msgstr ""
+
+#: /views/users/admin_delete.ctp:8
+msgid "Yes, Delete"
+msgstr ""
+
+#: /views/users/admin_index.ctp:10
+msgid "Search Users"
+msgstr ""
+
+#: /views/users/admin_index.ctp:12
+msgid "ID"
+msgstr ""
+
+#: /views/users/admin_index.ctp:28
+#: /views/users/listing.ctp:20
+msgid "Last Active"
+msgstr ""
+
+#: /views/users/admin_index.ctp:48
+#: /views/users/listing.ctp:36
+#: /views/users/profile.ctp:37
+msgid "Never"
+msgstr ""
+
+#: /views/users/admin_index.ctp:64
+msgid "There are no users signed up on this forum"
+msgstr ""
+
+#: /views/users/edit.ctp:8
+msgid "Language"
+msgstr ""
+
+#: /views/users/edit.ctp:9
+msgid "Signature"
+msgstr ""
+
+#: /views/users/edit.ctp:10
+msgid "Update Account"
+msgstr ""
+
+#: /views/users/edit.ctp:13
+msgid "Old Password"
+msgstr ""
+
+#: /views/users/edit.ctp:14
+msgid "New Password"
+msgstr ""
+
+#: /views/users/edit.ctp:15
+#: /views/users/signup.ctp:12
+msgid "Confirm Password"
+msgstr ""
+
+#: /views/users/edit.ctp:16
+msgid "Update Password"
+msgstr ""
+
+#: /views/users/forgot.ctp:4
+msgid "Please enter either your username or email to retrieve your information. Once you retrieved, you should receive an email with your login credentials."
+msgstr ""
+
+#: /views/users/forgot.ctp:11
+msgid "Retrieve"
+msgstr ""
+
+#: /views/users/listing.ctp:7
+msgid "Search Users (Username)"
+msgstr ""
+
+#: /views/users/listing.ctp:47
+msgid "There are no users signed up on this forum."
+msgstr ""
+
+#: /views/users/profile.ctp:18
+msgid "Roles"
+msgstr ""
+
+#: /views/users/profile.ctp:27;51
+msgid "N/A"
+msgstr ""
+
+#: /views/users/profile.ctp:32
+msgid "Last Login"
+msgstr ""
+
+#: /views/users/profile.ctp:68
+msgid "Last Activity"
+msgstr ""
+
+#: /views/users/profile.ctp:91
+msgid "Latest Posts"
+msgstr ""
+
+#: /views/users/profile.ctp:97
+msgid "Posted On"
+msgstr ""
+
+#: /views/users/profile.ctp:117
+msgid "Not Found"
+msgstr ""
+
+#: /views/users/profile.ctp:118
+msgid "The user you are looking for does not exist."
+msgstr ""
+
+#: /views/users/report.ctp:4
+msgid "Are you sure you want to report the user %s ? If so, please add a comment as to why you are reporting this user, and please be descriptive. Are they spamming, trolling, flaming, etc. 255 max characters."
+msgstr ""
+
+#: /views/users/signup.ctp:4
+msgid "Registration is free. All fields are required."
+msgstr ""
+
+#: /webroot/test.php:99
+msgid "Debug setting does not allow access to this url."
+msgstr ""
+
+#: /models/forum.php:50
+#: /models/forum_category.php:82
+#: /models/setting.php:54,64,74,84,94,104,114,124,134,144
+msgid "Please supply a number"
+msgstr ""
+
+#: /models/forum.php:54
+#: /models/forum_category.php:86
+#: /models/setting.php:36,46,58,68,78,88,98,108,118,128,138,148
+msgid "This setting is required"
+msgstr ""
+
+#: /models/topic.php:79
+msgid "You must supply a minimum of 2 options and a max of 10"
+msgstr ""
+
+#: /models/topic.php:83
+msgid "Please supply some answer options for your poll"
+msgstr ""
+
+#: /models/setting.php:32
+msgid "Please supply a valid email address"
+msgstr ""
+
+#: /models/setting.php:42
+msgid "Please supply a valid URL"
+msgstr ""
+
+#: /models/user.php:52
+msgid "That username has already been taken"
+msgstr ""
+
+#: /models/user.php:57
+msgid "Please enter a username"
+msgstr ""
+
+#: /models/user.php:62,83
+msgid "Please enter a password"
+msgstr ""
+
+#: /models/user.php:66
+msgid "The old password did not match"
+msgstr ""
+
+#: /models/user.php:71
+msgid "The passwords did not match"
+msgstr ""
+
+#: /models/user.php:75
+msgid "Your password may only be alphanumeric"
+msgstr ""
+
+#: /models/user.php:79
+msgid "Your password must be 6-20 characters in length"
+msgstr ""
+
+#: /models/user.php:89
+msgid "That email has already been taken"
+msgstr ""
+
+#: /models/user.php:94
+msgid "Your email is invalid"
+msgstr ""
+
+#: /models/user.php:98
+msgid "Your email is required"
+msgstr ""
+
+#: /views/users/edit.ctp:9
+msgid "Timezone"
+msgstr ""
