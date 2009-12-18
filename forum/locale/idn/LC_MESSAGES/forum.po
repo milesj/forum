@@ -1,0 +1,1851 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Cupcake Forum Plugin\n"
+"POT-Creation-Date: 2009-11-01 16:26-0800\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Rachman Chavik <rchavik@gmail.com>\n"
+"Language-Team: Rachman Chavik <rchavik@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Indonesian\n"
+"X-Poedit-Country: INDONESIA\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: /controllers/categories_controller.php:101
+msgid "A total of %d topic(s) have been permanently deleted"
+msgstr "Total %d topik telah dihapus secara permanen."
+
+#: /controllers/categories_controller.php:105
+msgid "A total of %d topic(s) have been locked to the public"
+msgstr "Total %d topik telah dikunci dari publik"
+
+#: /controllers/categories_controller.php:109
+msgid "A total of %d topic(s) have been re-opened"
+msgstr "Total %d topik telah dibuka ulang"
+
+#: /controllers/categories_controller.php:113
+msgid "A total of %d topic(s) have been moved to another forum category"
+msgstr "Total %d topik dipindah ke kategori forum lainnya"
+
+#: /controllers/categories_controller.php:124
+#: /controllers/topics_controller.php:281
+#: /views/categories/moderate.ctp:9
+#: /views/categories/view.ctp:21;208
+#: /views/topics/moderate.ctp:9
+#: /views/topics/view.ctp:20;165
+msgid "Moderate"
+msgstr "Moderate"
+
+#: /controllers/categories_controller.php:160
+msgid "The order of the forums have been updated!"
+msgstr "Urutan dari forum telah diupdate!"
+
+#: /controllers/categories_controller.php:163
+#: /views/categories/admin_index.ctp:2
+msgid "Manage Forums"
+msgstr "Pengaturan Forum"
+
+#: /controllers/categories_controller.php:179
+#: /views/categories/admin_form_forum.ctp:6
+#: /views/categories/admin_index.ctp:7;115
+msgid "Add Forum"
+msgstr "Tambah Forum"
+
+#: /controllers/categories_controller.php:206
+#: /views/categories/admin_form_forum.ctp:10
+msgid "Edit Forum"
+msgstr "Edit Forum"
+
+#: /controllers/categories_controller.php:228
+msgid "The forum %s has been deleted, and all its forum categories have been moved!"
+msgstr "Form %s telah dihapus, dan semua kategorinya telah dipindah!"
+
+#: /controllers/categories_controller.php:232
+#: /views/categories/admin_delete_forum.ctp:2
+msgid "Delete Forum"
+msgstr "Hapus Forum"
+
+#: /controllers/categories_controller.php:255
+#: /views/categories/admin_form_category.ctp:6
+msgid "Add Forum Category"
+msgstr "Tambah Kategori Forum"
+
+#: /controllers/categories_controller.php:288
+#: /views/categories/admin_form_category.ctp:10
+msgid "Edit Forum Category"
+msgstr "Edit Kategori Forum"
+
+#: /controllers/categories_controller.php:313
+msgid "The forum category %s has been deleted, and all its sub-forums and topics have been moved!"
+msgstr "Kategori Forum %s telah dihapus, dan semua sub-forum dan topik telah dipindah!"
+
+#: /controllers/categories_controller.php:317
+#: /views/categories/admin_delete_category.ctp:2
+msgid "Delete Forum Category"
+msgstr "Hapus Kategori Forum"
+
+#: /controllers/home_controller.php:34
+msgid "Index"
+msgstr "Index"
+
+#: /controllers/home_controller.php:62
+#: /views/layouts/default.ctp:32
+msgid "Help"
+msgstr "Bantuan"
+
+#: /controllers/home_controller.php:71
+#: /views/layouts/default.ctp:31
+msgid "Rules"
+msgstr "Aturan"
+
+#: /controllers/home_controller.php:84
+msgid "Administration"
+msgstr "Administrasi"
+
+#: /controllers/home_controller.php:111
+msgid "Settings have been updated!"
+msgstr "Settings telah diupdate!"
+
+#: /controllers/home_controller.php:117
+#: /views/layouts/admin.ctp:21
+msgid "Settings"
+msgstr "Settings"
+
+#: /controllers/posts_controller.php:79
+#: /views/posts/add.ctp:10
+#: /views/topics/view.ctp:30;175;202
+msgid "Post Reply"
+msgstr "Kirim jawaban"
+
+#: /controllers/posts_controller.php:113
+#: /views/posts/edit.ctp:10
+msgid "Edit Post"
+msgstr "Edit Posting"
+
+#: /controllers/posts_controller.php:160
+msgid "You have succesfully reported this post! A moderator will review this post and take the necessary action."
+msgstr "Anda telah melaporkan post ini! Moderator akan memeriksa post ini dan mengambil tindakan yang diperlukan."
+
+#: /controllers/posts_controller.php:165
+#: /views/posts/report.ctp:2
+#: /views/topics/view.ctp:114
+msgid "Report Post"
+msgstr "Laporkan Posting"
+
+#: /controllers/reports_controller.php:50
+#: /views/reports/admin_index.ctp:2
+msgid "Reported Items"
+msgstr "Item yang dilaporkan"
+
+#: /controllers/reports_controller.php:82
+msgid "A total of %d topics have been processed"
+msgstr "Total %d topik telah diproses"
+
+#: /controllers/reports_controller.php:90
+#: /views/reports/admin_topics.ctp:2
+msgid "Reported Topics"
+msgstr "Topik yang dilaporkan"
+
+#: /controllers/reports_controller.php:118
+msgid "A total of %d posts have been processed"
+msgstr "Total %d telah diproses"
+
+#: /controllers/reports_controller.php:126
+#: /views/reports/admin_posts.ctp:2
+msgid "Reported Posts"
+msgstr "Posting yang dilaporkan"
+
+#: /controllers/reports_controller.php:158
+msgid "A total of %d users have been processed"
+msgstr "Total %d pengguna telah diproses"
+
+#: /controllers/reports_controller.php:166
+#: /views/reports/admin_users.ctp:2
+msgid "Reported Users"
+msgstr "Pengguna yang dilaporkan"
+
+#: /controllers/search_controller.php:92
+#: /views/layouts/default.ctp:30
+#: /views/users/admin_index.ctp:14
+#: /views/users/listing.ctp:8
+msgid "Search"
+msgstr "Pencarian"
+
+#: /controllers/staff_controller.php:53
+#: /views/staff/admin_form_access.ctp:6
+msgid "Add Access"
+msgstr "Tambah Akses"
+
+#: /controllers/staff_controller.php:80
+#: /views/staff/admin_form_access.ctp:10
+msgid "Edit Access"
+msgstr "Edit Akses"
+
+#: /controllers/staff_controller.php:98
+msgid "The access levels for %s have been succesfully removed."
+msgstr "Level akses untuk %s telah dihapus"
+
+#: /controllers/staff_controller.php:116
+#: /views/staff/admin_form_access_level.ctp:6
+#: /views/staff/admin_index.ctp:8;121
+msgid "Add Access Level"
+msgstr "Tambah Level Akses"
+
+#: /controllers/staff_controller.php:142
+#: /views/staff/admin_form_access_level.ctp:10
+msgid "Edit Access Level"
+msgstr "Edit Level Akses"
+
+#: /controllers/staff_controller.php:163
+msgid "The level %s has been deleted, and all its users have been moved!"
+msgstr "Level %s telah dihapus, dan semua penggunanya telah dipindah!"
+
+#: /controllers/staff_controller.php:167
+#: /views/staff/admin_delete_access_level.ctp:2
+msgid "Delete Access Level"
+msgstr "Hapus Level Akses"
+
+#: /controllers/staff_controller.php:185
+#: /views/staff/admin_form_moderator.ctp:6
+#: /views/staff/admin_index.ctp:9;109;122
+msgid "Add Moderator"
+msgstr "Tambah Moderator"
+
+#: /controllers/staff_controller.php:212
+#: /views/staff/admin_form_moderator.ctp:10
+msgid "Edit Moderator"
+msgstr "Edit Moderator"
+
+#: /controllers/staff_controller.php:230
+msgid "The moderator %s has been succesfully removed!"
+msgstr "Moderator %s telah dihapus!"
+
+#: /controllers/topics_controller.php:60
+msgid "Post Poll"
+msgstr "Pasang Angket"
+
+#: /controllers/topics_controller.php:64
+msgid "Post Topic"
+msgstr "Pasang Topik"
+
+#: /controllers/topics_controller.php:129
+#: /views/topics/edit.ctp:10
+msgid "Edit Topic"
+msgstr "Edit Topik"
+
+#: /controllers/topics_controller.php:198
+msgid "You have succesfully reported this topic! A moderator will review this topic and take the necessary action."
+msgstr "Anda telah berhasil melaporkan topik ini! Moderator and memeriksa topik ini dan mengambil tindakan yang diperlukan."
+
+#: /controllers/topics_controller.php:203
+#: /views/topics/report.ctp:2
+#: /views/topics/view.ctp:110
+msgid "Report Topic"
+msgstr "Laporkan Topik"
+
+#: /controllers/topics_controller.php:270
+msgid "A total of %d post(s) have been permanently deleted"
+msgstr "Total %d posting telah dihapus"
+
+#: /controllers/users_controller.php:76
+msgid "Your profile information has been updated!"
+msgstr "Informasi profil Anda telah diupdate!"
+
+#: /controllers/users_controller.php:87
+#: /views/elements/navigation.ctp:9
+#: /views/users/edit.ctp:2
+msgid "Edit Profile"
+msgstr "Edit Profil"
+
+#: /controllers/users_controller.php:99
+msgid "Your new password and information has been sent to your email."
+msgstr "Password baru Anda dan informasi telah dikirimkan ke email Anda."
+
+#: /controllers/users_controller.php:104
+#: /views/elements/navigation.ctp:14
+#: /views/users/forgot.ctp:2
+msgid "Forgot Password"
+msgstr "Lupa Password"
+
+#: /controllers/users_controller.php:125
+#: /views/elements/login.ctp:8
+#: /views/elements/navigation.ctp:12
+#: /views/users/login.ctp:2;10
+msgid "Login"
+msgstr "Login"
+
+#: /controllers/users_controller.php:148
+#: /views/users/listing.ctp:2
+msgid "User List"
+msgstr "Daftar pengguna"
+
+#: /controllers/users_controller.php:166
+msgid "User Profile"
+msgstr "Profil Pengguna"
+
+#: /controllers/users_controller.php:191
+msgid "You have succesfully reported this user! A moderator will review this topic and take the necessary action."
+msgstr "Anda telah berhasil melaporkan pengguna ini! Moderator akan memeriksa topik ini dan mengambil tindakan yang diperlukan."
+
+#: /controllers/users_controller.php:196
+#: /views/users/profile.ctp:5
+#: /views/users/report.ctp:2
+msgid "Report User"
+msgstr "Laporkan Pengguna"
+
+#: /controllers/users_controller.php:216
+msgid "You have successfully signed up, you may now login and begin posting."
+msgstr "Anda telah berhasil mendaftar, silahkan login dan mulai posting."
+
+#: /controllers/users_controller.php:219
+msgid "Thank you for signing up on %s, your information is listed below"
+msgstr "Terima kasih telah mendaftar di %s, informasi Anda tercantum di bawah ini"
+
+#: /controllers/users_controller.php:220
+#: /controllers/components/toolbar.php:163
+#: /views/elements/login.ctp:5
+#: /views/home/admin_index.ctp:72
+#: /views/users/admin_edit.ctp:5
+#: /views/users/admin_index.ctp:11;25
+#: /views/users/forgot.ctp:9
+#: /views/users/listing.ctp:18
+#: /views/users/login.ctp:7
+#: /views/users/signup.ctp:9
+msgid "Username"
+msgstr "Username"
+
+#: /controllers/users_controller.php:221
+#: /controllers/components/toolbar.php:164
+#: /views/elements/login.ctp:6
+#: /views/users/login.ctp:8
+#: /views/users/signup.ctp:11
+msgid "Password"
+msgstr "Password"
+
+#: /controllers/users_controller.php:222
+msgid "Enjoy!"
+msgstr "Enjoy!"
+
+#: /controllers/users_controller.php:226
+msgid "Sign Up Confirmation"
+msgstr "Konfirmasi Sign Up"
+
+#: /controllers/users_controller.php:234
+#: /views/elements/navigation.ctp:13
+#: /views/users/signup.ctp:2;14
+msgid "Sign Up"
+msgstr "Daftar"
+
+#: /controllers/users_controller.php:253
+#: /views/users/admin_index.ctp:2
+msgid "Manage Users"
+msgstr "Pengaturan Pengguna"
+
+#: /controllers/users_controller.php:278
+#: /views/users/admin_edit.ctp:2
+msgid "Edit User"
+msgstr "Edit Pengguna"
+
+#: /controllers/users_controller.php:294
+msgid "The password for %s has been reset!"
+msgstr "Password untuk %s telah direset!"
+
+#: /controllers/users_controller.php:314
+msgid "The user %s and all of their associations have been deleted!"
+msgstr "Pengguna %s dan semua assosiasinya telah dihapus!"
+
+#: /controllers/users_controller.php:318
+#: /views/users/admin_delete.ctp:2
+msgid "Delete User"
+msgstr "Hapus Pengguna"
+
+#: /controllers/components/toolbar.php:137
+#: /views/categories/admin_delete_forum.ctp:9
+#: /views/categories/admin_form_category.ctp:23
+#: /views/categories/admin_index.ctp:36
+#: /views/categories/view.ctp:43
+#: /views/categories/rss/feed.ctp:4
+#: /views/home/index.ctp:14
+#: /views/search/index.ctp:44
+msgid "Forum"
+msgstr "Forum"
+
+#: /controllers/components/toolbar.php:156
+msgid "You have requested the login credentials for %s, your information is listed below"
+msgstr "Anda telah meminta login kredensial untuk %s, informasi Anda tercantum di bawah ini"
+
+#: /controllers/components/toolbar.php:157
+msgid "Forgotten Password"
+msgstr "Lupa Password"
+
+#: /controllers/components/toolbar.php:159
+msgid "Your password has been reset for %s, your information is listed below"
+msgstr "Password untuk %s telah direset, informasi Anda tercantum di bawah ini"
+
+#: /controllers/components/toolbar.php:160
+#: /views/home/admin_index.ctp:92
+#: /views/users/admin_index.ctp:55
+msgid "Reset Password"
+msgstr "Reset Password"
+
+#: /controllers/components/toolbar.php:165
+msgid "Please change your password once logging in."
+msgstr "Harap ganti password anda saat login nanti."
+
+#: /views/categories/admin_delete_category.ctp:5
+msgid "Cannot process deletion, you must have atleast 1 active category."
+msgstr "Tidak dapat menghapus, setidaknya 1 kategori harus aktif."
+
+#: /views/categories/admin_delete_category.ctp:8
+msgid "Before you delete the category %s , please select which forum all topics should be moved to upon deletion. Additionally, any sub-forums will be moved to the main parent forum and any moderators will be deleted."
+msgstr "Sebelum menghapus kategory %s, pilih forum tujuan dimana semua topik akan dipindah.  Selain itu, setiap sub-forum akan dipindahkan ke forum induk utama dan setiap moderator akan dihapus."
+
+#: /views/categories/admin_delete_category.ctp:11
+msgid "Move Topics To"
+msgstr "Pindahkan Topik Ke"
+
+#: /views/categories/admin_delete_category.ctp:12
+#: /views/categories/admin_delete_forum.ctp:10
+#: /views/categories/admin_index.ctp:22;67;92
+#: /views/home/admin_index.ctp:93
+#: /views/staff/admin_delete_access_level.ctp:8
+#: /views/staff/admin_index.ctp:36;66;101
+#: /views/topics/edit.ctp:39
+#: /views/topics/view.ctp:109;113
+#: /views/users/admin_index.ctp:56
+msgid "Delete"
+msgstr "Hapus"
+
+#: /views/categories/admin_delete_forum.ctp:6
+msgid "Before you delete the forum %s, please select which forum all child categories should be moved to upon deletion."
+msgstr "Sebelum menghapus forum %s, pilih forum tujuan dimana semua kategori akan dipindah."
+
+#: /views/categories/admin_delete_forum.ctp:14
+msgid "You may not delete this forum, you must have at least one forum active."
+msgstr "Anda tidak dapat menghapus forum ini, setidaknya 1 forum harus aktif."
+
+#: /views/categories/admin_form_category.ctp:5
+#: /views/categories/admin_form_forum.ctp:5
+#: /views/staff/admin_form_access.ctp:5
+#: /views/staff/admin_form_access_level.ctp:5
+#: /views/staff/admin_form_moderator.ctp:5
+msgid "Save"
+msgstr "Simpan"
+
+#: /views/categories/admin_form_category.ctp:9
+#: /views/categories/admin_form_forum.ctp:9
+#: /views/home/admin_settings.ctp:45
+#: /views/posts/edit.ctp:19
+#: /views/staff/admin_form_access.ctp:9
+#: /views/staff/admin_form_access_level.ctp:9
+#: /views/staff/admin_form_moderator.ctp:9
+#: /views/topics/edit.ctp:55
+#: /views/users/admin_edit.ctp:10
+msgid "Update"
+msgstr "Update"
+
+#: /views/categories/admin_form_category.ctp:13
+#: /views/categories/admin_form_forum.ctp:13
+msgid "None"
+msgstr "None"
+
+#: /views/categories/admin_form_category.ctp:17
+msgid "When applying a read, post, reply or poll access, it states that all users with that access level and above will be able to commit the respective action. It does not mean only that type of access can view the forum category. However, the restricted access will limit only users with that access level to view the forum category."
+msgstr "Ketika menerapkan suatu membaca, mengirim, reply atau akses jajak pendapat, hal itu menyatakan bahwa semua pengguna dengan tingkat akses dan di atas akan dapat melakukan tindakan masing-masing. Ini tidak berarti hanya jenis akses tersebut saja yang dapat melihat kategori forum. Namun, akses terbatas hanya akan membatasi pengguna dengan tingkat akses untuk melihat forum kategori."
+
+#: /views/categories/admin_form_category.ctp:21
+#: /views/categories/admin_form_forum.ctp:21
+#: /views/staff/admin_form_access_level.ctp:20
+#: /views/staff/admin_index.ctp:20
+#: /views/topics/add.ctp:12
+#: /views/topics/edit.ctp:13
+msgid "Title"
+msgstr "Judul"
+
+#: /views/categories/admin_form_category.ctp:22
+msgid "Description"
+msgstr "Deskripsi"
+
+#: /views/categories/admin_form_category.ctp:25
+msgid "Parent Category"
+msgstr "Kategori Induk"
+
+#: /views/categories/admin_form_category.ctp:27
+#: /views/categories/admin_form_forum.ctp:22
+#: /views/categories/admin_index.ctp:37
+#: /views/categories/moderate.ctp:25
+#: /views/topics/add.ctp:16
+#: /views/topics/edit.ctp:17
+#: /views/users/admin_edit.ctp:7
+msgid "Status"
+msgstr "Status"
+
+#: /views/categories/admin_form_category.ctp:28
+#: /views/categories/admin_form_forum.ctp:23
+msgid "Order No"
+msgstr "Order No"
+
+#: /views/categories/admin_form_category.ctp:29
+#: /views/categories/admin_form_forum.ctp:24
+msgid "Restrict Access To"
+msgstr "Membatasi Akses Untuk"
+
+#: /views/categories/admin_form_category.ctp:30
+msgid "Read Access"
+msgstr "Akses Baca"
+
+#: /views/categories/admin_form_category.ctp:31
+msgid "Post Access"
+msgstr "Akses Post"
+
+#: /views/categories/admin_form_category.ctp:32
+msgid "Reply Access"
+msgstr "Akses Jawab"
+
+#: /views/categories/admin_form_category.ctp:33
+msgid "Poll Access"
+msgstr "Akses Poll"
+
+#: /views/categories/admin_form_category.ctp:34
+msgid "Increase Users Post/Topic Count"
+msgstr "Increase Users Post/Topic Count"
+
+#: /views/categories/admin_form_category.ctp:35
+msgid "Auto-Lock Inactive Topics"
+msgstr "Auto-Lock Topik Non-Aktif"
+
+#: /views/categories/admin_form_forum.ctp:17
+msgid "When applying a view access, it states that all users with that access level and above will be able to view the forum and all its child forum categories. However, the restricted access will limit only users with that access level to view the forum."
+msgstr "Ketika menerapkan akses Membaca, hal itu menyatakan bahwa semua pengguna dengan tingkat akses tersebut akan dapat melihat forum dan semua anak forum kategori. Namun, akses terbatas itu hanya akan membatasi pengguna dengan tingkat akses tersebut untuk melihat forum."
+
+#: /views/categories/admin_form_forum.ctp:25
+msgid "View Access"
+msgstr "Akses View"
+
+#: /views/categories/admin_index.ctp:8;102;116
+msgid "Add Category"
+msgstr "Tambah Kategori"
+
+#: /views/categories/admin_index.ctp:21;66;91
+#: /views/home/admin_index.ctp:91
+#: /views/staff/admin_index.ctp:35;65;100
+#: /views/topics/view.ctp:108;112
+#: /views/users/admin_index.ctp:54
+msgid "Edit"
+msgstr "Edit"
+
+#: /views/categories/admin_index.ctp:38
+#: /views/categories/view.ctp:44
+#: /views/home/admin_index.ctp:75
+#: /views/home/index.ctp:15
+#: /views/reports/admin_index.ctp:6
+#: /views/reports/admin_posts.ctp:6
+#: /views/reports/admin_topics.ctp:6
+#: /views/reports/admin_users.ctp:6
+#: /views/users/admin_index.ctp:29
+#: /views/users/listing.ctp:21
+msgid "Topics"
+msgstr "Topik"
+
+#: /views/categories/admin_index.ctp:39
+#: /views/categories/moderate.ctp:28
+#: /views/categories/view.ctp:45;96
+#: /views/home/admin_index.ctp:76
+#: /views/home/index.ctp:16
+#: /views/reports/admin_index.ctp:7
+#: /views/reports/admin_posts.ctp:7
+#: /views/reports/admin_topics.ctp:7
+#: /views/reports/admin_users.ctp:7
+#: /views/search/index.ctp:47
+#: /views/users/admin_index.ctp:30
+#: /views/users/listing.ctp:22
+#: /views/users/profile.ctp:66
+msgid "Posts"
+msgstr "Posting"
+
+#: /views/categories/admin_index.ctp:40
+msgid "Read"
+msgstr "Baca"
+
+#: /views/categories/admin_index.ctp:41
+#: /views/posts/add.ctp:19
+#: /views/posts/report.ctp:9
+#: /views/reports/admin_posts.ctp:18
+#: /views/topics/add.ctp:36
+#: /views/topics/moderate.ctp:25
+msgid "Post"
+msgstr "Posting"
+
+#: /views/categories/admin_index.ctp:42
+msgid "Reply"
+msgstr "Jawab"
+
+#: /views/categories/admin_index.ctp:43
+msgid "Poll"
+msgstr "Angket"
+
+#: /views/categories/admin_index.ctp:44
+#: /views/home/admin_index.ctp:77
+#: /views/staff/admin_index.ctp:22;54;88
+#: /views/users/admin_index.ctp:31
+msgid "Options"
+msgstr "Opsi"
+
+#: /views/categories/admin_index.ctp:102
+#: /views/home/index.ctp:65
+msgid "There are no categories within this forum."
+msgstr "Tidak ada kategory dalam forum ini."
+
+#: /views/categories/admin_index.ctp:112
+msgid "Update Order"
+msgstr "Update Order"
+
+#: /views/categories/moderate.ctp:14;100
+#: /views/layouts/admin.ctp:26
+msgid "Return to Forum"
+msgstr "Kembali ke Forum"
+
+#: /views/categories/moderate.ctp:24
+#: /views/categories/view.ctp:93
+#: /views/reports/admin_topics.ctp:18
+#: /views/search/index.ctp:43
+#: /views/topics/rss/feed.ctp:4
+#: /views/users/profile.ctp:64;95
+msgid "Topic"
+msgstr "Topik"
+
+#: /views/categories/moderate.ctp:26
+#: /views/categories/view.ctp:94
+#: /views/search/index.ctp:45
+#: /views/users/profile.ctp:96
+msgid "Author"
+msgstr "Penulis"
+
+#: /views/categories/moderate.ctp:27
+#: /views/categories/view.ctp:95
+#: /views/search/index.ctp:46
+#: /views/users/profile.ctp:65
+msgid "Created"
+msgstr "Ditulis pada"
+
+#: /views/categories/moderate.ctp:29
+#: /views/categories/view.ctp:97
+#: /views/search/index.ctp:48
+#: /views/users/profile.ctp:67
+msgid "Views"
+msgstr "Dilihat"
+
+#: /views/categories/moderate.ctp:30
+#: /views/categories/view.ctp:46;98
+#: /views/home/index.ctp:17
+#: /views/search/index.ctp:49
+msgid "Activity"
+msgstr "Aktifitas"
+
+#: /views/categories/moderate.ctp:50
+#: /views/categories/view.ctp:123;168
+#: /views/search/index.ctp:72
+msgid "Pages"
+msgstr "Halaman"
+
+#: /views/categories/moderate.ctp:64
+#: /views/categories/view.ctp:74;136;181
+#: /views/home/index.ctp:53
+#: /views/search/index.ctp:86
+msgid "by"
+msgstr "oleh"
+
+#: /views/categories/moderate.ctp:67
+#: /views/categories/view.ctp:76;139;184
+#: /views/home/index.ctp:55
+#: /views/search/index.ctp:89
+msgid "No latest activity to display"
+msgstr "Tidak ada aktifitas baru untuk ditampilkan"
+
+#: /views/categories/moderate.ctp:77
+#: /views/categories/view.ctp:194
+msgid "There are no topics within this forum category."
+msgstr "Tidak ada topik di kategori forum ini."
+
+#: /views/categories/moderate.ctp:88
+msgid "Move Topic(s)"
+msgstr "Pindahkan topik"
+
+#: /views/categories/moderate.ctp:89
+msgid "Open Topic(s)"
+msgstr "Buka topik"
+
+#: /views/categories/moderate.ctp:90
+#: /views/reports/admin_topics.ctp:52
+msgid "Close Topic(s)"
+msgstr "Tutup topik"
+
+#: /views/categories/moderate.ctp:91
+#: /views/reports/admin_topics.ctp:51
+msgid "Delete Topic(s)"
+msgstr "Hapus topik"
+
+#: /views/categories/moderate.ctp:93
+#: /views/reports/admin_posts.ctp:54
+#: /views/reports/admin_topics.ctp:55
+#: /views/reports/admin_users.ctp:55
+#: /views/topics/moderate.ctp:53
+msgid "Perform Action"
+msgstr "Lakukan Aksi"
+
+#: /views/categories/moderate.ctp:95
+msgid "Move To"
+msgstr "Pindahkan Ke"
+
+#: /views/categories/moderate.ctp:96
+#: /views/reports/admin_posts.ctp:56
+#: /views/reports/admin_topics.ctp:57
+#: /views/reports/admin_users.ctp:57
+#: /views/topics/moderate.ctp:54
+msgid "Process"
+msgstr "Proses"
+
+#: /views/categories/view.ctp:25;212
+#: /views/topics/view.ctp:23;168
+msgid "Create Topic"
+msgstr "Buat topik"
+
+#: /views/categories/view.ctp:28;215
+#: /views/topics/view.ctp:26;171
+msgid "Create Poll"
+msgstr "Buat Polling"
+
+#: /views/categories/view.ctp:31;218
+#: /views/helpers/cupcake.php:239
+#: /views/topics/view.ctp:32;177
+msgid "Closed"
+msgstr "Ditutup"
+
+#: /views/categories/view.ctp:39;60
+#: /views/home/index.ctp:39
+msgid "Sub-Forums"
+msgstr "Sub-Forums"
+
+#: /views/categories/view.ctp:106
+msgid "Important Topics"
+msgstr "Topik Penting"
+
+#: /views/categories/view.ctp:148
+msgid "Regular Topics"
+msgstr "Topik Umum"
+
+#: /views/categories/view.ctp:233
+#: /views/home/admin_index.ctp:7
+#: /views/topics/view.ctp:142
+#: /views/users/admin_edit.ctp:9
+#: /views/users/profile.ctp:16
+msgid "Total Topics"
+msgstr "Total Topik"
+
+#: /views/categories/view.ctp:235
+msgid "Increases Post Count"
+msgstr "Meningkatkan Post Count"
+
+#: /views/categories/view.ctp:237
+msgid "Can Read Topics"
+msgstr "Dapat Membaca Topik"
+
+#: /views/categories/view.ctp:239
+msgid "Can Create Topics"
+msgstr "Dapat Membuat Topik"
+
+#: /views/categories/view.ctp:243
+#: /views/home/admin_index.ctp:8
+#: /views/topics/view.ctp:143
+#: /views/users/admin_edit.ctp:8
+#: /views/users/profile.ctp:40
+msgid "Total Posts"
+msgstr "Total Posting"
+
+#: /views/categories/view.ctp:245
+msgid "Auto-Lock Topics"
+msgstr "Auto-Lock Topik"
+
+#: /views/categories/view.ctp:247
+msgid "Can Reply"
+msgstr "Dapat Menjawab"
+
+#: /views/categories/view.ctp:249
+msgid "Can Create Polls"
+msgstr "Dapat Membuat Angket"
+
+#: /views/categories/view.ctp:254
+#: /views/staff/admin_index.ctp:81
+msgid "Moderators"
+msgstr "Moderator"
+
+#: /views/elements/copyright.ctp:3
+msgid "Powered by the %s v%s"
+msgstr "Powered by the %s v%s"
+
+#: /views/elements/copyright.ctp:4
+msgid "Created by %s"
+msgstr "Dibuat oleh %s"
+
+#: /views/elements/login.ctp:7
+#: /views/users/login.ctp:9
+msgid "Remember Me?"
+msgstr "Ingat Saya?"
+
+#: /views/elements/navigation.ctp:7
+msgid "View New Posts"
+msgstr "Lihat Posting Terbaru"
+
+#: /views/elements/navigation.ctp:8
+msgid "My Profile"
+msgstr "Profil"
+
+#: /views/elements/navigation.ctp:10
+msgid "Logout"
+msgstr "Logout"
+
+#: /views/elements/pagination.ctp:8
+msgid "Displaying %start%-%end% of %count%"
+msgstr "Menampilkan %start%-%end% dari %count%"
+
+#: /views/helpers/cupcake.php:237
+msgid "No"
+msgstr "Tidak"
+
+#: /views/helpers/cupcake.php:237
+msgid "Yes"
+msgstr "Ya"
+
+#: /views/helpers/cupcake.php:239
+msgid "Open"
+msgstr "Terbuka"
+
+#: /views/helpers/cupcake.php:241
+msgid "Visible"
+msgstr "Terlihat"
+
+#: /views/helpers/cupcake.php:241
+msgid "Hidden"
+msgstr "Tersembunyi"
+
+#: /views/helpers/cupcake.php:244
+msgid "Member"
+msgstr "Anggota"
+
+#: /views/helpers/cupcake.php:247
+msgid "Moderator"
+msgstr "Moderator"
+
+#: /views/helpers/cupcake.php:250
+msgid "Super Moderator"
+msgstr "Super Moderator"
+
+#: /views/helpers/cupcake.php:253
+msgid "Administrator"
+msgstr "Administrator"
+
+#: /views/helpers/cupcake.php:257
+msgid "Guest"
+msgstr "Guest"
+
+#: /views/helpers/cupcake.php:260
+msgid "Active"
+msgstr "Aktif"
+
+#: /views/helpers/cupcake.php:260
+msgid "Banned"
+msgstr "Banned"
+
+#: /views/helpers/cupcake.php:348
+#: /views/topics/add.ctp:19
+#: /views/topics/edit.ctp:20
+msgid "Sticky"
+msgstr "Sticky"
+
+#: /views/helpers/cupcake.php:349
+#: /views/topics/add.ctp:20
+#: /views/topics/edit.ctp:21
+msgid "Important"
+msgstr "Penting"
+
+#: /views/helpers/cupcake.php:350
+#: /views/topics/add.ctp:21
+#: /views/topics/edit.ctp:22
+msgid "Announcement"
+msgstr "Pengumuman"
+
+#: /views/helpers/decoda.php:494
+msgid "mail"
+msgstr "mail"
+
+#: /views/helpers/decoda.php:702
+msgid "link"
+msgstr "link"
+
+#: /views/home/admin_index.ctp:2
+msgid "Administration Panel"
+msgstr "Panel Administrasi"
+
+#: /views/home/admin_index.ctp:9
+msgid "Total Polls"
+msgstr "Total Angket"
+
+#: /views/home/admin_index.ctp:10
+msgid "Total Users"
+msgstr "Total Pengguna"
+
+#: /views/home/admin_index.ctp:11
+msgid "Total Reports"
+msgstr "Total Laporan"
+
+#: /views/home/admin_index.ctp:12
+msgid "Total Moderators"
+msgstr "Total Moderator"
+
+#: /views/home/admin_index.ctp:13
+#: /views/home/index.ctp:85
+msgid "Newest User"
+msgstr "Pengguna Terbaru"
+
+#: /views/home/admin_index.ctp:30
+msgid "Latest Reports"
+msgstr "Laporan Terakhir"
+
+#: /views/home/admin_index.ctp:34
+#: /views/reports/admin_index.ctp:17
+#: /views/topics/add.ctp:22
+#: /views/topics/edit.ctp:23
+msgid "Type"
+msgstr "Tipe"
+
+#: /views/home/admin_index.ctp:35
+#: /views/reports/admin_index.ctp:18
+msgid "Item"
+msgstr "Item"
+
+#: /views/home/admin_index.ctp:36
+#: /views/reports/admin_index.ctp:19
+#: /views/reports/admin_posts.ctp:19
+#: /views/reports/admin_topics.ctp:19
+#: /views/reports/admin_users.ctp:19
+msgid "Reported By"
+msgstr "Dilaporkan Oleh"
+
+#: /views/home/admin_index.ctp:37
+#: /views/posts/report.ctp:10
+#: /views/reports/admin_index.ctp:20
+#: /views/reports/admin_posts.ctp:20
+#: /views/reports/admin_topics.ctp:20
+#: /views/reports/admin_users.ctp:20
+#: /views/topics/report.ctp:9
+#: /views/users/report.ctp:9
+msgid "Comment"
+msgstr "Komentar"
+
+#: /views/home/admin_index.ctp:38
+#: /views/reports/admin_index.ctp:21
+#: /views/reports/admin_posts.ctp:21
+#: /views/reports/admin_topics.ctp:21
+#: /views/reports/admin_users.ctp:21
+msgid "Reported On"
+msgstr "Dilaporkan Pada"
+
+#: /views/home/admin_index.ctp:68
+msgid "Latest Signed Up Users"
+msgstr "Pengguna Terbaru"
+
+#: /views/home/admin_index.ctp:73
+#: /views/users/admin_edit.ctp:6
+#: /views/users/admin_index.ctp:26
+#: /views/users/edit.ctp:7
+#: /views/users/forgot.ctp:10
+#: /views/users/signup.ctp:10
+msgid "Email"
+msgstr "Email"
+
+#: /views/home/admin_index.ctp:74
+#: /views/posts/add.ctp:36
+#: /views/topics/view.ctp:141
+#: /views/users/admin_index.ctp:27
+#: /views/users/listing.ctp:19
+#: /views/users/profile.ctp:14
+msgid "Joined"
+msgstr "Bergabung"
+
+#: /views/home/admin_index.ctp:92
+#: /views/users/admin_index.ctp:55
+msgid "Are you sure you want to reset?"
+msgstr "Anda yakin untuk mereset?"
+
+#: /views/home/admin_settings.ctp:2
+msgid "Forum Settings"
+msgstr "Setting Forum"
+
+#: /views/home/admin_settings.ctp:8
+msgid "Site Name"
+msgstr "Nama Situs"
+
+#: /views/home/admin_settings.ctp:9
+msgid "Site Email"
+msgstr "Email Situs"
+
+#: /views/home/admin_settings.ctp:10
+msgid "Site Website"
+msgstr "Website Situs"
+
+#: /views/home/admin_settings.ctp:11
+#: /views/users/signup.ctp:13
+msgid "Security Question"
+msgstr "Pertanyaan Keamanan"
+
+#: /views/home/admin_settings.ctp:12
+msgid "Security Answer"
+msgstr "Jawaban Keamanan"
+
+#: /views/home/admin_settings.ctp:14
+msgid "Topic Settings"
+msgstr "Setting Topik"
+
+#: /views/home/admin_settings.ctp:17;18
+msgid "Topics Per Page"
+msgstr "Topik per Halaman"
+
+#: /views/home/admin_settings.ctp:19
+msgid "Topic Flood Interval"
+msgstr "Interval Topik Flood"
+
+#: /views/home/admin_settings.ctp:19;27
+msgid "Seconds"
+msgstr "Detik"
+
+#: /views/home/admin_settings.ctp:20
+msgid "Paging Till Truncation"
+msgstr ""
+
+#: /views/home/admin_settings.ctp:20
+msgid "Paging under a topic title"
+msgstr ""
+
+#: /views/home/admin_settings.ctp:22
+msgid "Post Settings"
+msgstr "Setting Post"
+
+#: /views/home/admin_settings.ctp:25
+msgid "Posts Per Page"
+msgstr "Post Per Halaman"
+
+#: /views/home/admin_settings.ctp:26
+msgid "Posts Per Hour"
+msgstr "Post Per Jam"
+
+#: /views/home/admin_settings.ctp:27
+msgid "Post Flood Interval"
+msgstr ""
+
+#: /views/home/admin_settings.ctp:28
+msgid "Posts Till Hot Topic"
+msgstr ""
+
+#: /views/home/admin_settings.ctp:30
+msgid "Misc Settings"
+msgstr "Setting Lainnya"
+
+#: /views/home/admin_settings.ctp:33
+msgid "Days"
+msgstr "Hari"
+
+#: /views/home/admin_settings.ctp:33
+msgid "Inactive Days Till Topic Auto-Lock"
+msgstr "Jumlah hari non-aktif sampai topik di Auto-Lock"
+
+#: /views/home/admin_settings.ctp:34
+msgid "Whos Online Interval"
+msgstr "Interval Whos Online"
+
+#: /views/home/admin_settings.ctp:34
+msgid "Past Minutes"
+msgstr ""
+
+#: /views/home/admin_settings.ctp:35
+msgid "Enable Quick Reply"
+msgstr "Aktifkan Quick Reply"
+
+#: /views/home/admin_settings.ctp:36
+msgid "Enable Gravatar"
+msgstr "Aktifkan Gravatar"
+
+#: /views/home/admin_settings.ctp:37
+msgid "Censored Words"
+msgstr "Kata kata disensor"
+
+#: /views/home/admin_settings.ctp:37
+msgid "Separate with commas"
+msgstr "Pisahkan dengan koma"
+
+#: /views/home/help.ctp:2
+msgid "Help Desk"
+msgstr "Meja Bantuan"
+
+#: /views/home/help.ctp:4
+msgid "Why do I need to sign up?"
+msgstr "Mengapa saya harus mendaftar?"
+
+#: /views/home/help.ctp:5
+msgid "You may read all public forums as a guest, but to be able to post or reply to a topic, you must have a user account."
+msgstr "Anda dapat membaca semua forum publik sebagai tamu, tapi untuk posting atau membalas topik, Anda harus memiliki account pengguna."
+
+#: /views/home/help.ctp:7
+msgid "Why can't I post a topic, poll or reply?"
+msgstr "Mengapa saya tidak dapat mengirim topik, angket atau menjawab?"
+
+#: /views/home/help.ctp:8
+msgid "To begin you must have a user account and must be logged in. If you have done this, the topic might be locked or you do not have the proper acces to post in that topic or forum."
+msgstr "Untuk memulai Anda harus memiliki account pengguna dan harus login. Jika Anda telah melakukan ini, topik tersebut mungkin dikunci atau Anda tidak memiliki acces yang tepat untuk posting di topik atau forum."
+
+#: /views/home/help.ctp:10
+msgid "Why can't I login?"
+msgstr "Mengapa saya tidak bisa login?"
+
+#: /views/home/help.ctp:11
+msgid "The server might be having technicaly difficulties so your request could not be processed. It may also be that your account has been deleted or banned."
+msgstr "Server mungkin akan mengalami kesulitan technicaly sehingga permintaan Anda tidak dapat diproses. Mungkin juga account Anda telah dihapus atau di-ban."
+
+#: /views/home/help.ctp:13
+msgid "Oh no, I forgot my password!"
+msgstr "Oh no, saya lupa password saya!"
+
+#: /views/home/help.ctp:14
+msgid "If you have forgotten your password, you can reset it using the %s form."
+msgstr "Jika Anda lupa password, Anda dapat reset password dengan menggunakan form %s."
+
+#: /views/home/help.ctp:16
+msgid "What does reporting do?"
+msgstr "Apakah Laporan itu?"
+
+#: /views/home/help.ctp:17
+msgid "If you find a piece of content that you find inappropriate or offensive, you can report the content for a moderator to delete or fix."
+msgstr "Jika Anda menemukan konten yang tidak pantas atau menyinggung, Anda dapat melaporkan konten ke moderator untuk menghapus atau memperbaiki."
+
+#: /views/home/help.ctp:19
+msgid "What are moderators, super moderators and administrators?"
+msgstr "Apakah yang moderator, super moderator dan administrator?"
+
+#: /views/home/help.ctp:20
+msgid "Those are users with higher access and privileges than a regular user. Moderators control and moderate specific forums, where as Super Moderators have full access to all forums. Administrators have full access to all forums as well as editing all the sites settings and configuration. Additionally, moderates have the power to edit and delete other users content."
+msgstr "Mereka adalah pengguna dengan akses dan hak-hak yang lebih tinggi daripada pengguna biasa. Moderator mengatur forum tertentu, di mana sebagai Super Moderator memiliki akses penuh ke semua forum. Administrator memiliki akses penuh ke semua forum dan juga mengedit semua pengaturan dan konfigurasi situs. Selain itu, moderator memiliki kekuatan untuk mengedit dan menghapus konten pengguna lain."
+
+#: /views/home/help.ctp:22
+msgid "What does the power search do?"
+msgstr "Apakah Power Seach itu?"
+
+#: /views/home/help.ctp:23
+msgid "By default the search will only search for terms within the topic title. If you check the power search, it will search within the title and post."
+msgstr "Secara default pencarian hanya akan mencari istilah dalam judul topik. Jika Anda menggunakan Power Search, maka akan mencari di dalam judul dan post."
+
+#: /views/home/help.ctp:25
+msgid "How do I edit my profile?"
+msgstr "Bagaimanakah cara meng-edit Profil saya?"
+
+#: /views/home/help.ctp:26
+msgid "Once you have logged in, you can edit your profile by going to the %s link, located at the top right."
+msgstr "Setelah Anda login, Anda dapat mengedit profil Anda dengan pergi ke link %s, yang terletak di bagian kanan atas."
+
+#: /views/home/help.ctp:28
+msgid "How do I post a topic?"
+msgstr "Bagaimana cara mengirim topik?"
+
+#: /views/home/help.ctp:29
+msgid "You would first navigate to the appropriate forum you want to post in. Once there, you would click the \"Create Topic\" link located at the top and bottom right of the page."
+msgstr "Anda akan pertama-tama navigasikan ke forum yang tepat Anda ingin memposting masuk. Setelah itu, klik \"Buat topik\" link yang terletak di bagian atas dan bawah kanan atas halaman."
+
+#: /views/home/help.ctp:31
+msgid "How do I post a reply?"
+msgstr "Bagaimana cara mengirim balasan?"
+
+#: /views/home/help.ctp:32
+msgid "When you are reading a topic and are logged in, you would click the \"Post Reply\" link also located at the top and bottom right of the page."
+msgstr "Saat Anda membaca topik dan login, klik link \"Post Jawaban\" yang terletak di bagian atas dan bawah kanan atas halaman."
+
+#: /views/home/help.ctp:34
+msgid "How do I create a poll?"
+msgstr "Bagaimana saya membuat Angket/Polling?"
+
+#: /views/home/help.ctp:35
+msgid "You would create a poll the same way you would create a topic. First enter the correct forum, then hit the \"Create Poll\" link."
+msgstr "Anda akan membuat polling dengan cara yang sama Anda akan menciptakan sebuah topik. Pertama-tama masukkan forum yang benar, lalu klik link \"Buat Poll\"."
+
+#: /views/home/help.ctp:37
+msgid "How do I edit my topic, poll, post, etc?"
+msgstr "Bagaimana cara mengedit topik, angket, posting, dll?"
+
+#: /views/home/help.ctp:38
+msgid "When you are reading a topic, at the top right of each post you will see a few text links. Hit the \"Edit\" link to edit your respective content. If you are editing the first post of a topic, it will additionally edit the topic or poll as well. You may only edit your own posts or topics unless you have moderating capabilities."
+msgstr "Saat Anda membaca suatu topik, di bagian kanan atas dari setiap posting Anda akan melihat beberapa link teks. Klik link Edit untuk mengedit isi masing-masing topik. Jika Anda mengedit posting pertama suatu topik, akan ditambah mengedit topik atau jajak pendapat juga. Anda hanya dapat mengedit posting atau topik Anda sendiri kecuali jika Anda memiliki kemampuan moderator."
+
+#: /views/home/help.ctp:40
+msgid "How do I report a topic, post or user?"
+msgstr "Bagaimana cara melaporkan suatu topik, posting atau pengguna?"
+
+#: /views/home/help.ctp:41
+msgid "At the top right of each post you would click the \"Report <content>\" link. From there you should add a comment on why you are reporting this content."
+msgstr "Di bagian kanan atas dari setiap posting Anda akan klik link \"Laporkan <content>\". Dari sana Anda harus menambahkan komentar pada mengapa Anda melaporkan konten ini."
+
+#: /views/home/help.ctp:43
+msgid "How do I get higher access and permissions?"
+msgstr "Bagaimana cara mendapatkan akses yang lebih tinggi?"
+
+#: /views/home/help.ctp:44
+msgid "It is up to the administrator to give you higher access. All you can do is be a superb member on the forum and hope they promote you."
+msgstr "Ini adalah hak Administrator untuk memberikan akses yang lebih tinggi. Jadilah anggota teladan pada forum ini dan berharap mereka mempromosikan Anda."
+
+#: /views/home/help.ctp:46
+msgid "I have more questions that aren't shown here!"
+msgstr "Saya memiliki lebih banyak pertanyaan yang tidak ditampilkan di sini!"
+
+#: /views/home/help.ctp:47
+msgid "If you have additional questions and need further help, please contact us at %s."
+msgstr "Jika Anda memiliki pertanyaan tambahan dan membutuhkan bantuan lebih lanjut, silahkan hubungi kami di %s."
+
+#: /views/home/index.ctp:81
+msgid "Statistics"
+msgstr "Statistik"
+
+#: /views/home/index.ctp:81
+msgid "%d topics, %d posts, and %d users"
+msgstr "%d topik,%d posting, dan %d pengguna"
+
+#: /views/home/index.ctp:96
+msgid "Whos Online"
+msgstr "Siapa Online"
+
+#: /views/home/rules.ctp:2
+msgid "Rules and Regulations"
+msgstr "Aturan"
+
+#: /views/home/rules.ctp:4
+msgid "No Offensive Material"
+msgstr "Posting yang tidak sopan, menghina"
+
+#: /views/home/rules.ctp:5
+msgid "No posting any harmful, threatening, abusive, harassing, defamatory, vulgar, obscene, hateful, or racially, ethnically or otherwise objectionable content. This means no porn, gore, offensive, violent or disturbing images, websites and or other adult content. This will result in an immediate ban from the community."
+msgstr "Tidak ada posting yang membahayakan, mengancam, kasar, melecehkan, memfitnah, vulgar, cabul, penuh kebencian, atau ras, etnis atau konten yang dilarang. Ini berarti bahwa gambar porno, darah, penyerangan, kekerasan atau gambar yang mengganggu, situs web dan atau konten dewasa lainnya dilarang. Jika anda posting gambar seperti ini akan mengakibatkan ban langsung dari komunitas."
+
+#: /views/home/rules.ctp:7
+msgid "No Prejudice or Discrimation"
+msgstr "Tidak ada Prasangka atau Diskriminasi"
+
+#: /views/home/rules.ctp:8
+msgid "There is to be absolutely no discriminating or hatred against somebody else due to race, religion, gender, cultural background or sexual preference. This will result in an immediate ban from the community."
+msgstr "Tidak boleh sama sekali  mendiskriminasikan atau kebencian terhadap orang lain karena ras, agama, jenis kelamin, latar belakang budaya atau preferensi seksual. Ini akan mengakibatkan pemblokiran dari komunitas."
+
+#: /views/home/rules.ctp:10
+msgid "No Flaming"
+msgstr "Tidak Ada Flaming"
+
+#: /views/home/rules.ctp:11
+msgid "There is to be no offensive language, personal attacks, harassment or flaming to another member of the forum. For each infraction you will be warned, and if the problem persists you will be banned."
+msgstr "Tidak boleh ada bahasa yang kasar, serangan pribadi, pelecehan atau berapi-api anggota lain forum. Untuk setiap pelanggaran Anda akan diperingatkan, dan jika masalah terus berlanjut Anda akan diblokir."
+
+#: /views/home/rules.ctp:13
+msgid "No Spamming"
+msgstr "Tidak Boleh Mengirimkan Spam"
+
+#: /views/home/rules.ctp:14
+msgid "No spamming or flooding forums or threads by posting frequent and / or annoying messages in the forums which serve no purpose."
+msgstr "Tidak ada spam atau banjir forum atau thread dengan mengirimkan posting dengan sering dan/atau mengganggu dalam forum yang tidak ada gunanya."
+
+#: /views/home/rules.ctp:16
+msgid "No Short Length Posts"
+msgstr "Tidak dibolehkan posting pendek."
+
+#: /views/home/rules.ctp:17
+msgid "A response with only a few words is considered spam. If you post a reply that contains less than 5-10 words, it is considered spam. If you do not have anything worth while to add to the conversation, then do not reply at all. Please refer to the No Spamming rule above."
+msgstr "Tanggapan hanya dengan beberapa kata yang dianggap spam. Jika Anda mengirim pesan yang berisi kurang dari 5-10 kata, itu dianggap spam. Jika Anda tidak memiliki sesuatu yang layak untuk ditambahkan ke percakapan, maka tidak perlu menjawab sama sekali. Silakan merujuk ke No Spamming aturan di atas."
+
+#: /views/home/rules.ctp:19
+msgid "No Virus, Trojans or Warez"
+msgstr "Tidak boleh mengirimkan Virus, Trojans atau Warez"
+
+#: /views/home/rules.ctp:20
+msgid "Posting links to and / or information about cheats, hacks, virus, trojans, warez and otherwise illegal content is prohibited. If this happens you will be banned immediately."
+msgstr ""
+
+#: /views/home/rules.ctp:22
+msgid "No Threadomancy"
+msgstr ""
+
+#: /views/home/rules.ctp:23
+msgid "Posting in a thread that hasn't had any new replies in roughly 3-4 weeks or more (up to mod discretion; possible exceptions apply)."
+msgstr ""
+
+#: /views/home/rules.ctp:25
+msgid "No Trolling"
+msgstr ""
+
+#: /views/home/rules.ctp:26
+msgid "No trolling these forums are allowed. Do not intentionally post controversial or contrary messages to invoke other members of the community. This will result in an immediate ban."
+msgstr ""
+
+#: /views/home/rules.ctp:28
+msgid "No Advertising"
+msgstr ""
+
+#: /views/home/rules.ctp:29
+msgid "Posting links to other community sites that are not on our affiliates list or posting links to advertise your site or community is prohibited. You may place a link within your signature, but you may not advertise with a topic. This will result in a warning or a ban."
+msgstr ""
+
+#: /views/home/rules.ctp:31
+msgid "No Double Posting"
+msgstr ""
+
+#: /views/home/rules.ctp:32
+msgid "Do not double post, if you need to double post please edit your previous post instead. Posting consecutively is not permitted."
+msgstr ""
+
+#: /views/home/rules.ctp:34
+msgid "No Duplicate Topics"
+msgstr ""
+
+#: /views/home/rules.ctp:35
+msgid "Do not create a new topic with the same content to an existing topic. Duplicated topics will be locked, and removed. Browse through the forum, or do a search and see if a topic already exist."
+msgstr ""
+
+#: /views/home/rules.ctp:37
+msgid "No Abusing Topics"
+msgstr ""
+
+#: /views/home/rules.ctp:38
+msgid "Do not post topics that have no real reason for being created. Also do not spam topics/polls."
+msgstr ""
+
+#: /views/home/rss/feed.ctp:4
+#: /views/users/profile.ctp:60
+msgid "Latest Topics"
+msgstr "Topik Terbaru"
+
+#: /views/home/rss/feed.ctp:6
+msgid "The latest 10 topics out of all forums"
+msgstr "10 Topik terbaru dari semua forum"
+
+#: /views/layouts/admin.ctp:6;17
+msgid "Cupcake Forum Administration"
+msgstr "Administrasi Forum Cupcake"
+
+#: /views/layouts/admin.ctp:20
+#: /views/layouts/default.ctp:29
+msgid "Home"
+msgstr "Home"
+
+#: /views/layouts/admin.ctp:22
+msgid "Forums"
+msgstr "Forum"
+
+#: /views/layouts/admin.ctp:23
+#: /views/staff/admin_index.ctp:47
+msgid "Staff"
+msgstr "Staff"
+
+#: /views/layouts/admin.ctp:24
+msgid "Reported"
+msgstr "Dilaporkan"
+
+#: /views/layouts/admin.ctp:25
+#: /views/layouts/default.ctp:33
+#: /views/reports/admin_index.ctp:8
+#: /views/reports/admin_posts.ctp:8
+#: /views/reports/admin_topics.ctp:8
+#: /views/reports/admin_users.ctp:8
+msgid "Users"
+msgstr "Pengguna"
+
+#: /views/layouts/default.ctp:15
+msgid "RSS Feed - Latest Topics"
+msgstr "RSS Feed - Topik Terbaru"
+
+#: /views/layouts/default.ctp:17
+msgid "RSS Feed - Content Review"
+msgstr "RSS Feed - Content Review"
+
+#: /views/layouts/default.ctp:35
+msgid "Admin"
+msgstr "Admin"
+
+#: /views/posts/add.ctp:13
+#: /views/posts/edit.ctp:13
+#: /views/topics/add.ctp:30
+#: /views/topics/edit.ctp:49
+msgid "Content"
+msgstr "Konten"
+
+#: /views/posts/add.ctp:16
+#: /views/posts/edit.ctp:16
+#: /views/topics/add.ctp:33
+#: /views/topics/edit.ctp:52
+msgid "Allowed Tags"
+msgstr "Tag yang dibolehkan"
+
+#: /views/posts/add.ctp:24
+msgid "Topic Review - Last 10 Replies"
+msgstr "Review Topik - 10 Jawaban Terbaru"
+
+#: /views/posts/report.ctp:4
+msgid "Are you sure you want to report the post (below) in the topic %s? If so, please add a comment as to why you are reporting it, 255 max characters."
+msgstr "Apakah Anda yakin ingin melaporkan posting (di bawah) dalam topik %s? Jika demikian, silakan tambahkan komentar mengapa Anda laporkan itu, 255 maks karakter."
+
+#: /views/posts/report.ctp:11
+#: /views/topics/report.ctp:10
+#: /views/users/report.ctp:10
+msgid "Report"
+msgstr "Laporkan"
+
+#: /views/reports/admin_index.ctp:5
+#: /views/reports/admin_posts.ctp:5
+#: /views/reports/admin_topics.ctp:5
+#: /views/reports/admin_users.ctp:5
+msgid "View Reported"
+msgstr "Lihat yang dilaporkan"
+
+#: /views/reports/admin_index.ctp:49
+msgid "There are no reported items to display."
+msgstr "Tidak ada item yang dilaporkan."
+
+#: /views/reports/admin_posts.ctp:31
+msgid "View Topic"
+msgstr "Lihat Topik"
+
+#: /views/reports/admin_posts.ctp:41
+msgid "There are no reported posts."
+msgstr "Tidak ada posting yang dilaporkan."
+
+#: /views/reports/admin_posts.ctp:51
+#: /views/topics/moderate.ctp:53
+msgid "Delete Post(s)"
+msgstr "Hapus Posting."
+
+#: /views/reports/admin_posts.ctp:52
+#: /views/reports/admin_topics.ctp:53
+#: /views/reports/admin_users.ctp:53
+msgid "Remove Report Only"
+msgstr "Hapus laporan saja."
+
+#: /views/reports/admin_topics.ctp:41
+msgid "There are no reported topics."
+msgstr "Tidak ada topik yang dilaporkan."
+
+#: /views/reports/admin_users.ctp:18
+#: /views/staff/admin_index.ctp:51;85
+#: /views/topics/moderate.ctp:24
+msgid "User"
+msgstr "Pengguna"
+
+#: /views/reports/admin_users.ctp:41
+msgid "There are no reported users."
+msgstr "Tidak ada pengguna yang dilaporkan."
+
+#: /views/reports/admin_users.ctp:51
+msgid "Ban User(s)"
+msgstr "Ban Pengguna"
+
+#: /views/reports/admin_users.ctp:52
+msgid "Delete User(s)"
+msgstr "Hapus Pengguna"
+
+#: /views/search/index.ctp:4
+msgid "Last post time"
+msgstr "Waktu posting terakhir"
+
+#: /views/search/index.ctp:5
+msgid "Topic created time"
+msgstr "Waktu pembuatan topik"
+
+#: /views/search/index.ctp:6
+msgid "Total posts"
+msgstr "Total posting"
+
+#: /views/search/index.ctp:7
+msgid "Total views"
+msgstr "Total dilihat"
+
+#: /views/search/index.ctp:16
+msgid "Keywords"
+msgstr "Keyword"
+
+#: /views/search/index.ctp:20
+msgid "Power Search?"
+msgstr "Power Search?"
+
+#: /views/search/index.ctp:22
+msgid "Within Forum Category"
+msgstr "Dalam Kategory Forum"
+
+#: /views/search/index.ctp:25
+msgid "Order By"
+msgstr "Urutkan dengan"
+
+#: /views/search/index.ctp:28
+msgid "By User (Username)"
+msgstr "Dengan Pengguna (Username)"
+
+#: /views/search/index.ctp:33
+msgid "Search Topics"
+msgstr "Pencarian Topik"
+
+#: /views/search/index.ctp:54
+msgid "No results were found, please refine your search criteria."
+msgstr "Pencarian tidak mengembalikan hasil, harap perbaiki kriteria pencarian Anda."
+
+#: /views/staff/admin_delete_access_level.ctp:4
+msgid "Before you delete the level %s , please select which level a user should receive, if they have the level that will be deleted."
+msgstr "Sebelum Anda menghapus level %s, silakan pilih yang tingkat pengguna harus menerima, jika mereka memiliki level yang akan dihapus."
+
+#: /views/staff/admin_delete_access_level.ctp:7
+msgid "Move Users To"
+msgstr "Pindahkan Pengguna Ke"
+
+#: /views/staff/admin_form_access.ctp:15
+#: /views/staff/admin_form_moderator.ctp:15
+msgid "To find the users ID, you can search for them on the %s."
+msgstr "Untuk menemukan ID pengguna, Anda dapat mencari mereka di %s."
+
+#: /views/staff/admin_form_access.ctp:15
+#: /views/staff/admin_form_moderator.ctp:15
+msgid "Users listing"
+msgstr "Listing Pengguna"
+
+#: /views/staff/admin_form_access.ctp:19
+#: /views/staff/admin_form_moderator.ctp:19
+msgid "User ID"
+msgstr "ID Pengguna"
+
+#: /views/staff/admin_form_access.ctp:20
+#: /views/staff/admin_form_access_level.ctp:21
+#: /views/staff/admin_index.ctp:52
+msgid "Access Level"
+msgstr "Level Akses"
+
+#: /views/staff/admin_form_access_level.ctp:16
+msgid "You are unable to edit core levels, they are restricted."
+msgstr "Anda tidak dapat mengedit level inti karena dibatasi."
+
+#: /views/staff/admin_form_access_level.ctp:22
+msgid "Is Super Moderator?"
+msgstr "Super Moderator?"
+
+#: /views/staff/admin_form_access_level.ctp:23
+msgid "Is Administrator?"
+msgstr "Administrator?"
+
+#: /views/staff/admin_form_moderator.ctp:20
+#: /views/topics/add.ctp:13
+#: /views/topics/edit.ctp:16
+msgid "Forum Category"
+msgstr "Forum Kategori"
+
+#: /views/staff/admin_index.ctp:2
+msgid "Staff &amp; Moderators"
+msgstr "Staff &amp; Moderator"
+
+#: /views/staff/admin_index.ctp:7;120
+msgid "Add Staff"
+msgstr "Tambah Staff"
+
+#: /views/staff/admin_index.ctp:16
+msgid "Levels"
+msgstr "Level"
+
+#: /views/staff/admin_index.ctp:21
+msgid "Level"
+msgstr "Level"
+
+#: /views/staff/admin_index.ctp:33
+msgid "Restricted"
+msgstr "Dibatasi"
+
+#: /views/staff/admin_index.ctp:53;87
+msgid "Achieved On"
+msgstr "Dicapai Pada"
+
+#: /views/staff/admin_index.ctp:66;101
+#: /views/topics/view.ctp:109;113
+msgid "Are you sure you want to delete?"
+msgstr "Apakah yakin untuk menghapus?"
+
+#: /views/staff/admin_index.ctp:86
+#: /views/users/profile.ctp:42
+msgid "Moderates"
+msgstr "Memoderasi"
+
+#: /views/staff/admin_index.ctp:109
+msgid "There are no assigned moderators."
+msgstr "Tidak ada moderator yang ditugaskan."
+
+#: /views/topics/add.ctp:13
+#: /views/topics/edit.ctp:16
+msgid "Select a Forum"
+msgstr "Pilih Forum"
+
+#: /views/topics/add.ctp:18
+#: /views/topics/edit.ctp:19
+msgid "Normal"
+msgstr "Normal"
+
+#: /views/topics/add.ctp:26;26
+#: /views/topics/edit.ctp:31
+msgid "Poll Options"
+msgstr "Opsi Angket"
+
+#: /views/topics/add.ctp:26
+msgid "One option per line. Max 10 options"
+msgstr "Satu pilihan per baris. Maks 10 Pilihan"
+
+#: /views/topics/add.ctp:27
+#: /views/topics/edit.ctp:45
+msgid "Expiration Date"
+msgstr "Tanggal kadaluarsa"
+
+#: /views/topics/add.ctp:27
+#: /views/topics/edit.ctp:45
+msgid "How many days till expiration? Leave blank to last forever."
+msgstr "Jumlah hari sampai kadaluarsa? Kosongkan untuk selamanya."
+
+#: /views/topics/moderate.ctp:14;58
+msgid "Return to Topic"
+msgstr "Kembali ke Topik"
+
+#: /views/topics/moderate.ctp:26
+msgid "Date"
+msgstr "Tanggal"
+
+#: /views/topics/report.ctp:4
+msgid "Are you sure you want to report the topic %s ? If so, please add a comment as to why you are reporting it, 255 max characters."
+msgstr "Apakah Anda yakin ingin melaporkan topik %s? Jika demikian, silakan tambahkan komentar mengapa Anda laporkan itu, 255 maks karakter."
+
+#: /views/topics/view.ctp:62
+msgid "Voting on this poll has been closed"
+msgstr "Pemilihan suara pada angket ini telah ditutup"
+
+#: /views/topics/view.ctp:64
+msgid "Vote"
+msgstr "Pilih"
+
+#: /views/topics/view.ctp:67
+msgid "Please login to vote!"
+msgstr "Harap login untuk memilih!"
+
+#: /views/topics/view.ctp:83
+msgid "Your Vote"
+msgstr "Pilihan Anda"
+
+#: /views/topics/view.ctp:119
+msgid "Quote"
+msgstr "Quote"
+
+#: /views/topics/view.ctp:185
+msgid "Quick Reply"
+msgstr "Quick Reply"
+
+#: /views/topics/view.ctp:191
+msgid "Message"
+msgstr "Pesan"
+
+#: /views/topics/view.ctp:193
+msgid "Advanced Reply"
+msgstr "Advanced Reply"
+
+#: /views/topics/view.ctp:194
+msgid "BBCode Enabled"
+msgstr "BBCode diaktifkan"
+
+#: /views/users/admin_delete.ctp:4
+msgid "Are you sure you want to delete the user %s ? Once deleted, all the users topics, posts, moderator positions, access levels and any other associations will permanently be deleted from the system."
+msgstr "Apakah Anda yakin ingin menghapus user% s? Setelah dihapus, semua topik pengguna, posting, posisi moderator, tingkat akses dan asosiasi lainnya akan secara permanen akan dihapus dari sistem."
+
+#: /views/users/admin_delete.ctp:8
+msgid "Yes, Delete"
+msgstr "Ya, Hapus"
+
+#: /views/users/admin_index.ctp:10
+msgid "Search Users"
+msgstr "Pencarian Pengguna"
+
+#: /views/users/admin_index.ctp:12
+msgid "ID"
+msgstr "ID"
+
+#: /views/users/admin_index.ctp:28
+#: /views/users/listing.ctp:20
+msgid "Last Active"
+msgstr "Terakhir Aktif"
+
+#: /views/users/admin_index.ctp:48
+#: /views/users/listing.ctp:36
+#: /views/users/profile.ctp:37
+msgid "Never"
+msgstr "Belum Pernah"
+
+#: /views/users/admin_index.ctp:64
+msgid "There are no users signed up on this forum"
+msgstr "Belum ada pengguna terdaftar di forum ini"
+
+#: /views/users/edit.ctp:8
+msgid "Language"
+msgstr "Bahasa"
+
+#: /views/users/edit.ctp:9
+msgid "Signature"
+msgstr "Signature"
+
+#: /views/users/edit.ctp:10
+msgid "Update Account"
+msgstr "Update Account"
+
+#: /views/users/edit.ctp:13
+msgid "Old Password"
+msgstr "Password Lama"
+
+#: /views/users/edit.ctp:14
+msgid "New Password"
+msgstr "Password Baru"
+
+#: /views/users/edit.ctp:15
+#: /views/users/signup.ctp:12
+msgid "Confirm Password"
+msgstr "Konfirmasi Password"
+
+#: /views/users/edit.ctp:16
+msgid "Update Password"
+msgstr "Update Password"
+
+#: /views/users/forgot.ctp:4
+msgid "Please enter either your username or email to retrieve your information. Once you retrieved, you should receive an email with your login credentials."
+msgstr "Silakan masukkan nama pengguna atau email untuk mengambil informasi Anda. Anda akan menerima email dengan detail kredensial anda."
+
+#: /views/users/forgot.ctp:11
+msgid "Retrieve"
+msgstr "Ambil"
+
+#: /views/users/listing.ctp:7
+msgid "Search Users (Username)"
+msgstr "Cari Pengguna (Username)"
+
+#: /views/users/listing.ctp:47
+msgid "There are no users signed up on this forum."
+msgstr "Tidak ada pengguna terdaftar dalam forum ini."
+
+#: /views/users/profile.ctp:18
+msgid "Roles"
+msgstr "Peranan"
+
+#: /views/users/profile.ctp:27;51
+msgid "N/A"
+msgstr "N/A"
+
+#: /views/users/profile.ctp:32
+msgid "Last Login"
+msgstr "Login terakhir"
+
+#: /views/users/profile.ctp:68
+msgid "Last Activity"
+msgstr "Aktifitas Terakhir"
+
+#: /views/users/profile.ctp:91
+msgid "Latest Posts"
+msgstr "Posting Terakhir"
+
+#: /views/users/profile.ctp:97
+msgid "Posted On"
+msgstr "Diposting pada"
+
+#: /views/users/profile.ctp:117
+msgid "Not Found"
+msgstr "Tidak Ditemukan"
+
+#: /views/users/profile.ctp:118
+msgid "The user you are looking for does not exist."
+msgstr "Pengguna tersebut tidak ditemukan."
+
+#: /views/users/report.ctp:4
+msgid "Are you sure you want to report the user %s ? If so, please add a comment as to why you are reporting this user, and please be descriptive. Are they spamming, trolling, flaming, etc. 255 max characters."
+msgstr "Apakah Anda yakin ingin melaporkan pengguna %s? Jika demikian, silakan tambahkan komentar mengapa Anda melaporkan pengguna ini, dan harap deskriptif. Apakah mereka spamming, trolling, flaming, dll maks 255 karakter."
+
+#: /views/users/signup.ctp:4
+msgid "Registration is free. All fields are required."
+msgstr "Pendaftaran gratis. Semua kolom wajib diisi."
+
+#: /webroot/test.php:99
+msgid "Debug setting does not allow access to this url."
+msgstr "Pengaturan debug tidak mengijinkan akses ke url ini."
+
+#: /models/forum.php:50
+#: /models/forum_category.php:82
+#: /models/setting.php:54,64,74,84,94,104,114,124,134,144
+msgid "Please supply a number"
+msgstr "Harap menyertakan angka"
+
+#: /models/forum.php:54
+#: /models/forum_category.php:86
+#: /models/setting.php:36,46,58,68,78,88,98,108,118,128,138,148
+msgid "This setting is required"
+msgstr "Setting ini diperlukan"
+
+#: /models/topic.php:79
+msgid "You must supply a minimum of 2 options and a max of 10"
+msgstr "Anda harus menyediakan minimal 2 pilihan dan maksimum 10"
+
+#: /models/topic.php:83
+msgid "Please supply some answer options for your poll"
+msgstr "Harap menyertakan beberapa pilihan jawaban untuk polling"
+
+#: /models/setting.php:32
+msgid "Please supply a valid email address"
+msgstr "Harap berikan alamat email yang benar"
+
+#: /models/setting.php:42
+msgid "Please supply a valid URL"
+msgstr "Harap menyertakan URL yang benar"
+
+#: /models/user.php:52
+msgid "That username has already been taken"
+msgstr "Username tersebut sudah dipakai"
+
+#: /models/user.php:57
+msgid "Please enter a username"
+msgstr "Silakan masukkan username"
+
+#: /models/user.php:62,83
+msgid "Please enter a password"
+msgstr "Silakan masukkan password"
+
+#: /models/user.php:66
+msgid "The old password did not match"
+msgstr "Password lama tidak sama"
+
+#: /models/user.php:71
+msgid "The passwords did not match"
+msgstr "Password tidak sama"
+
+#: /models/user.php:75
+msgid "Your password may only be alphanumeric"
+msgstr "Password hanya dalam bentuk alphanumeric"
+
+#: /models/user.php:79
+msgid "Your password must be 6-20 characters in length"
+msgstr "Password Anda harus 6-20 karakter"
+
+#: /models/user.php:89
+msgid "That email has already been taken"
+msgstr "Email itu telah dipakai"
+
+#: /models/user.php:94
+msgid "Your email is invalid"
+msgstr "Email Anda tidak benar"
+
+#: /models/user.php:98
+msgid "Your email is required"
+msgstr "Email diperlukan"
+
+#: /views/users/edit.ctp:9
+msgid "Timezone"
+msgstr "Zona waktu"
+
