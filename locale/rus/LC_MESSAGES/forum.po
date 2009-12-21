@@ -1,0 +1,1847 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Cupcake Forum Plugin\n"
+"POT-Creation-Date: 2009-11-01 16:26-0800\n"
+"PO-Revision-Date: \n"
+"Last-Translator: kondrat <alexey.kondratyev@gmail.com>\n"
+"Language-Team: Miles Johnson <contact@milesj.me>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Russian\n"
+"X-Poedit-Country: RUSSIAN FEDERATION\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: /controllers/categories_controller.php:101
+msgid "A total of %d topic(s) have been permanently deleted"
+msgstr "%d тем было удалено"
+
+#: /controllers/categories_controller.php:105
+msgid "A total of %d topic(s) have been locked to the public"
+msgstr "%d тем(а) было скрыто от публичного просмотра"
+
+#: /controllers/categories_controller.php:109
+msgid "A total of %d topic(s) have been re-opened"
+msgstr "%d тем(а) было восстановлено"
+
+#: /controllers/categories_controller.php:113
+msgid "A total of %d topic(s) have been moved to another forum category"
+msgstr "%d тем(а) было перемещено в другую категорию"
+
+#: /controllers/categories_controller.php:124
+#: /controllers/topics_controller.php:281
+#: /views/categories/moderate.ctp:9
+#: /views/categories/view.ctp:21;208
+#: /views/topics/moderate.ctp:9
+#: /views/topics/view.ctp:20;165
+msgid "Moderate"
+msgstr "Модерировать"
+
+#: /controllers/categories_controller.php:160
+msgid "The order of the forums have been updated!"
+msgstr "Порядок расположения форумов был изменен"
+
+#: /controllers/categories_controller.php:163
+#: /views/categories/admin_index.ctp:2
+msgid "Manage Forums"
+msgstr "Управление форумами"
+
+#: /controllers/categories_controller.php:179
+#: /views/categories/admin_form_forum.ctp:6
+#: /views/categories/admin_index.ctp:7;115
+msgid "Add Forum"
+msgstr "Добавить форум"
+
+#: /controllers/categories_controller.php:206
+#: /views/categories/admin_form_forum.ctp:10
+msgid "Edit Forum"
+msgstr "Редактировать форум"
+
+#: /controllers/categories_controller.php:228
+msgid "The forum %s has been deleted, and all its forum categories have been moved!"
+msgstr "Форум %s и все категории были удалены"
+
+#: /controllers/categories_controller.php:232
+#: /views/categories/admin_delete_forum.ctp:2
+msgid "Delete Forum"
+msgstr "Удалить форум"
+
+#: /controllers/categories_controller.php:255
+#: /views/categories/admin_form_category.ctp:6
+msgid "Add Forum Category"
+msgstr "Добавить категорию форума"
+
+#: /controllers/categories_controller.php:288
+#: /views/categories/admin_form_category.ctp:10
+msgid "Edit Forum Category"
+msgstr "Редактировать категорию форума"
+
+#: /controllers/categories_controller.php:313
+msgid "The forum category %s has been deleted, and all its sub-forums and topics have been moved!"
+msgstr "Категория форума %s была удалена и все под-форумы  и темы были перемещены"
+
+#: /controllers/categories_controller.php:317
+#: /views/categories/admin_delete_category.ctp:2
+msgid "Delete Forum Category"
+msgstr "Удалить категорию форума"
+
+#: /controllers/home_controller.php:34
+msgid "Index"
+msgstr "Индех"
+
+#: /controllers/home_controller.php:62
+#: /views/layouts/default.ctp:32
+msgid "Help"
+msgstr "Помощь"
+
+#: /controllers/home_controller.php:71
+#: /views/layouts/default.ctp:31
+msgid "Rules"
+msgstr "Правила"
+
+#: /controllers/home_controller.php:84
+msgid "Administration"
+msgstr "Администрирование"
+
+#: /controllers/home_controller.php:111
+msgid "Settings have been updated!"
+msgstr "Настройки сохранены"
+
+#: /controllers/home_controller.php:117
+#: /views/layouts/admin.ctp:21
+msgid "Settings"
+msgstr "Настройки"
+
+#: /controllers/posts_controller.php:79
+#: /views/posts/add.ctp:10
+#: /views/topics/view.ctp:30;175;202
+msgid "Post Reply"
+msgstr "Ответить"
+
+#: /controllers/posts_controller.php:113
+#: /views/posts/edit.ctp:10
+msgid "Edit Post"
+msgstr "Редактировать сообщение"
+
+#: /controllers/posts_controller.php:160
+msgid "You have succesfully reported this post! A moderator will review this post and take the necessary action."
+msgstr "Ваше сообщение добавлено. Сообщение будет опубликовано после просмотра модератором"
+
+#: /controllers/posts_controller.php:165
+#: /views/posts/report.ctp:2
+#: /views/topics/view.ctp:114
+msgid "Report Post"
+msgstr "Пожаловаться на сообщение"
+
+#: /controllers/reports_controller.php:50
+#: /views/reports/admin_index.ctp:2
+msgid "Reported Items"
+msgstr "Темы с жалобами"
+
+#: /controllers/reports_controller.php:82
+msgid "A total of %d topics have been processed"
+msgstr " %d тем было обработано"
+
+#: /controllers/reports_controller.php:90
+#: /views/reports/admin_topics.ctp:2
+msgid "Reported Topics"
+msgstr "Темы с жалобами"
+
+#: /controllers/reports_controller.php:118
+msgid "A total of %d posts have been processed"
+msgstr "%d ответов было обработано"
+
+#: /controllers/reports_controller.php:126
+#: /views/reports/admin_posts.ctp:2
+msgid "Reported Posts"
+msgstr "Ответы с жалобами"
+
+#: /controllers/reports_controller.php:158
+msgid "A total of %d users have been processed"
+msgstr "%d пользователей было обработано"
+
+#: /controllers/reports_controller.php:166
+#: /views/reports/admin_users.ctp:2
+msgid "Reported Users"
+msgstr "Пользователи на которых пожаловались"
+
+#: /controllers/search_controller.php:92
+#: /views/layouts/default.ctp:30
+#: /views/users/admin_index.ctp:14
+#: /views/users/listing.ctp:8
+msgid "Search"
+msgstr "Поиск"
+
+#: /controllers/staff_controller.php:53
+#: /views/staff/admin_form_access.ctp:6
+msgid "Add Access"
+msgstr "Добавить доступ"
+
+#: /controllers/staff_controller.php:80
+#: /views/staff/admin_form_access.ctp:10
+msgid "Edit Access"
+msgstr "Редактировать доступ"
+
+#: /controllers/staff_controller.php:98
+msgid "The access levels for %s have been succesfully removed."
+msgstr "Уровень доступа для %s был успешно удален."
+
+#: /controllers/staff_controller.php:116
+#: /views/staff/admin_form_access_level.ctp:6
+#: /views/staff/admin_index.ctp:8;121
+msgid "Add Access Level"
+msgstr "Добавить уровень доступа"
+
+#: /controllers/staff_controller.php:142
+#: /views/staff/admin_form_access_level.ctp:10
+msgid "Edit Access Level"
+msgstr "Редактировать уровень доступа"
+
+#: /controllers/staff_controller.php:163
+msgid "The level %s has been deleted, and all its users have been moved!"
+msgstr "Уровень %s был удален и все пользователи былм перемещены"
+
+#: /controllers/staff_controller.php:167
+#: /views/staff/admin_delete_access_level.ctp:2
+msgid "Delete Access Level"
+msgstr "Удалить уровень доступа"
+
+#: /controllers/staff_controller.php:185
+#: /views/staff/admin_form_moderator.ctp:6
+#: /views/staff/admin_index.ctp:9;109;122
+msgid "Add Moderator"
+msgstr "Добавить модератора"
+
+#: /controllers/staff_controller.php:212
+#: /views/staff/admin_form_moderator.ctp:10
+msgid "Edit Moderator"
+msgstr "Редактировать модератора"
+
+#: /controllers/staff_controller.php:230
+msgid "The moderator %s has been succesfully removed!"
+msgstr "Модератор %s был успешно удален"
+
+#: /controllers/topics_controller.php:60
+msgid "Post Poll"
+msgstr "Добавить опрос"
+
+#: /controllers/topics_controller.php:64
+msgid "Post Topic"
+msgstr "Добавить тему"
+
+#: /controllers/topics_controller.php:129
+#: /views/topics/edit.ctp:10
+msgid "Edit Topic"
+msgstr "Редактировать тему"
+
+#: /controllers/topics_controller.php:198
+msgid "You have succesfully reported this topic! A moderator will review this topic and take the necessary action."
+msgstr "Вы успешно сообщили о недопустимой теме. Модератор проверит сообщение и выполнит необходимые действия."
+
+#: /controllers/topics_controller.php:203
+#: /views/topics/report.ctp:2
+#: /views/topics/view.ctp:110
+msgid "Report Topic"
+msgstr "Пожаловаться на эту тему"
+
+#: /controllers/topics_controller.php:270
+msgid "A total of %d post(s) have been permanently deleted"
+msgstr "%d Ответ(ов) был навсегда удален"
+
+#: /controllers/users_controller.php:76
+msgid "Your profile information has been updated!"
+msgstr "Ваш профиль отредактирован"
+
+#: /controllers/users_controller.php:87
+#: /views/elements/navigation.ctp:9
+#: /views/users/edit.ctp:2
+msgid "Edit Profile"
+msgstr "Редактировать профиль"
+
+#: /controllers/users_controller.php:99
+msgid "Your new password and information has been sent to your email."
+msgstr "Ваш новый пароль и дополнительная информация выснаны на Ваш email."
+
+#: /controllers/users_controller.php:104
+#: /views/elements/navigation.ctp:14
+#: /views/users/forgot.ctp:2
+msgid "Forgot Password"
+msgstr "Забытый пароль"
+
+#: /controllers/users_controller.php:125
+#: /views/elements/login.ctp:8
+#: /views/elements/navigation.ctp:12
+#: /views/users/login.ctp:2;10
+msgid "Login"
+msgstr "Логин"
+
+#: /controllers/users_controller.php:148
+#: /views/users/listing.ctp:2
+msgid "User List"
+msgstr "Список пользователей"
+
+#: /controllers/users_controller.php:166
+msgid "User Profile"
+msgstr "Профиль пользователя"
+
+#: /controllers/users_controller.php:191
+msgid "You have succesfully reported this user! A moderator will review this topic and take the necessary action."
+msgstr "Вы пожаловались на этого пользователя. Модератор примет меры после проверки."
+
+#: /controllers/users_controller.php:196
+#: /views/users/profile.ctp:5
+#: /views/users/report.ctp:2
+msgid "Report User"
+msgstr "Пожаловаться на пользователя"
+
+#: /controllers/users_controller.php:216
+msgid "You have successfully signed up, you may now login and begin posting."
+msgstr "Вы успешно зарегистрировались. Теперь вы можете войти и начать работу"
+
+#: /controllers/users_controller.php:219
+msgid "Thank you for signing up on %s, your information is listed below"
+msgstr "Спасибо за регистрацию на %s. Ваши данные внизу."
+
+#: /controllers/users_controller.php:220
+#: /controllers/components/toolbar.php:163
+#: /views/elements/login.ctp:5
+#: /views/home/admin_index.ctp:72
+#: /views/users/admin_edit.ctp:5
+#: /views/users/admin_index.ctp:11;25
+#: /views/users/forgot.ctp:9
+#: /views/users/listing.ctp:18
+#: /views/users/login.ctp:7
+#: /views/users/signup.ctp:9
+msgid "Username"
+msgstr "Логин"
+
+#: /controllers/users_controller.php:221
+#: /controllers/components/toolbar.php:164
+#: /views/elements/login.ctp:6
+#: /views/users/login.ctp:8
+#: /views/users/signup.ctp:11
+msgid "Password"
+msgstr "Пароль"
+
+#: /controllers/users_controller.php:222
+msgid "Enjoy!"
+msgstr "Наслаждайтесь!"
+
+#: /controllers/users_controller.php:226
+msgid "Sign Up Confirmation"
+msgstr "Подтверждение регистрации"
+
+#: /controllers/users_controller.php:234
+#: /views/elements/navigation.ctp:13
+#: /views/users/signup.ctp:2;14
+msgid "Sign Up"
+msgstr "Регистрация"
+
+#: /controllers/users_controller.php:253
+#: /views/users/admin_index.ctp:2
+msgid "Manage Users"
+msgstr "Управление пользователями"
+
+#: /controllers/users_controller.php:278
+#: /views/users/admin_edit.ctp:2
+msgid "Edit User"
+msgstr "Редактировать пользователя"
+
+#: /controllers/users_controller.php:294
+msgid "The password for %s has been reset!"
+msgstr "Пароль пользователя %s был изменен"
+
+#: /controllers/users_controller.php:314
+msgid "The user %s and all of their associations have been deleted!"
+msgstr "Пользователь %s и вся связанная с ним информация удалена."
+
+#: /controllers/users_controller.php:318
+#: /views/users/admin_delete.ctp:2
+msgid "Delete User"
+msgstr "Удалить пользователя"
+
+#: /controllers/components/toolbar.php:137
+#: /views/categories/admin_delete_forum.ctp:9
+#: /views/categories/admin_form_category.ctp:23
+#: /views/categories/admin_index.ctp:36
+#: /views/categories/view.ctp:43
+#: /views/categories/rss/feed.ctp:4
+#: /views/home/index.ctp:14
+#: /views/search/index.ctp:44
+msgid "Forum"
+msgstr "Форум"
+
+#: /controllers/components/toolbar.php:156
+msgid "You have requested the login credentials for %s, your information is listed below"
+msgstr "Вы запросили данные логина для %s. Информация находится внизу"
+
+#: /controllers/components/toolbar.php:157
+msgid "Forgotten Password"
+msgstr "Забытый пароль"
+
+#: /controllers/components/toolbar.php:159
+msgid "Your password has been reset for %s, your information is listed below"
+msgstr "Пароль для %s был изменен. Информация находится внизу"
+
+#: /controllers/components/toolbar.php:160
+#: /views/home/admin_index.ctp:92
+#: /views/users/admin_index.ctp:55
+msgid "Reset Password"
+msgstr "Новый пароль"
+
+#: /controllers/components/toolbar.php:165
+msgid "Please change your password once logging in."
+msgstr "Пожалуйста, измените пароль после входа."
+
+#: /views/categories/admin_delete_category.ctp:5
+msgid "Cannot process deletion, you must have atleast 1 active category."
+msgstr "Невозможно удалить, у Вас должна быть по крайней 1 активная категория"
+
+#: /views/categories/admin_delete_category.ctp:8
+msgid "Before you delete the category %s , please select which forum all topics should be moved to upon deletion. Additionally, any sub-forums will be moved to the main parent forum and any moderators will be deleted."
+msgstr "Перед удалением категории %s выберите форум, куда будут перемещены все темы после удаления. Дополнительно будут перемещены все суб форумы и все модераторы будут удалены"
+
+#: /views/categories/admin_delete_category.ctp:11
+msgid "Move Topics To"
+msgstr "Переместить тему в"
+
+#: /views/categories/admin_delete_category.ctp:12
+#: /views/categories/admin_delete_forum.ctp:10
+#: /views/categories/admin_index.ctp:22;67;92
+#: /views/home/admin_index.ctp:93
+#: /views/staff/admin_delete_access_level.ctp:8
+#: /views/staff/admin_index.ctp:36;66;101
+#: /views/topics/edit.ctp:39
+#: /views/topics/view.ctp:109;113
+#: /views/users/admin_index.ctp:56
+msgid "Delete"
+msgstr "Удалить"
+
+#: /views/categories/admin_delete_forum.ctp:6
+msgid "Before you delete the forum %s, please select which forum all child categories should be moved to upon deletion."
+msgstr "Перед удалением форума %s выберите в какой форум будут перемещены все дочерние категории"
+
+#: /views/categories/admin_delete_forum.ctp:14
+msgid "You may not delete this forum, you must have at least one forum active."
+msgstr "Вы не можите удалить этот форум. У Вас должен остаться как минимум один астивный форум."
+
+#: /views/categories/admin_form_category.ctp:5
+#: /views/categories/admin_form_forum.ctp:5
+#: /views/staff/admin_form_access.ctp:5
+#: /views/staff/admin_form_access_level.ctp:5
+#: /views/staff/admin_form_moderator.ctp:5
+msgid "Save"
+msgstr "Сохранить"
+
+#: /views/categories/admin_form_category.ctp:9
+#: /views/categories/admin_form_forum.ctp:9
+#: /views/home/admin_settings.ctp:45
+#: /views/posts/edit.ctp:19
+#: /views/staff/admin_form_access.ctp:9
+#: /views/staff/admin_form_access_level.ctp:9
+#: /views/staff/admin_form_moderator.ctp:9
+#: /views/topics/edit.ctp:55
+#: /views/users/admin_edit.ctp:10
+msgid "Update"
+msgstr "Редактировать"
+
+#: /views/categories/admin_form_category.ctp:13
+#: /views/categories/admin_form_forum.ctp:13
+msgid "None"
+msgstr "Ничего"
+
+#: /views/categories/admin_form_category.ctp:17
+msgid "When applying a read, post, reply or poll access, it states that all users with that access level and above will be able to commit the respective action. It does not mean only that type of access can view the forum category. However, the restricted access will limit only users with that access level to view the forum category."
+msgstr "При установке доступа на просмотр, добавление ответов или доступа к опросам все пользователи с данным уровнем доступа и выше смогут совершать разрешенные действия на  данном форуме. Однако, ограниченный доступ лимитирует только избранных пользователей с данным уровнем доступа для просмотра форума"
+
+#: /views/categories/admin_form_category.ctp:21
+#: /views/categories/admin_form_forum.ctp:21
+#: /views/staff/admin_form_access_level.ctp:20
+#: /views/staff/admin_index.ctp:20
+#: /views/topics/add.ctp:12
+#: /views/topics/edit.ctp:13
+msgid "Title"
+msgstr "Заголовок"
+
+#: /views/categories/admin_form_category.ctp:22
+msgid "Description"
+msgstr "Описание"
+
+#: /views/categories/admin_form_category.ctp:25
+msgid "Parent Category"
+msgstr "Родительская категория"
+
+#: /views/categories/admin_form_category.ctp:27
+#: /views/categories/admin_form_forum.ctp:22
+#: /views/categories/admin_index.ctp:37
+#: /views/categories/moderate.ctp:25
+#: /views/topics/add.ctp:16
+#: /views/topics/edit.ctp:17
+#: /views/users/admin_edit.ctp:7
+msgid "Status"
+msgstr "Статус"
+
+#: /views/categories/admin_form_category.ctp:28
+#: /views/categories/admin_form_forum.ctp:23
+msgid "Order No"
+msgstr "Номер заказа"
+
+#: /views/categories/admin_form_category.ctp:29
+#: /views/categories/admin_form_forum.ctp:24
+msgid "Restrict Access To"
+msgstr "Ограничить доступ к"
+
+#: /views/categories/admin_form_category.ctp:30
+msgid "Read Access"
+msgstr "Доступ на чтение"
+
+#: /views/categories/admin_form_category.ctp:31
+msgid "Post Access"
+msgstr "Доступ на создание сообщений"
+
+#: /views/categories/admin_form_category.ctp:32
+msgid "Reply Access"
+msgstr "Доступ на создание ответов на сообщения"
+
+#: /views/categories/admin_form_category.ctp:33
+msgid "Poll Access"
+msgstr "Доступ к опросам"
+
+#: /views/categories/admin_form_category.ctp:34
+msgid "Increase Users Post/Topic Count"
+msgstr "Увеличение количества пользовательских сообщений,тем."
+
+#: /views/categories/admin_form_category.ctp:35
+msgid "Auto-Lock Inactive Topics"
+msgstr "Авто блокировка неактивных тем"
+
+#: /views/categories/admin_form_forum.ctp:17
+msgid "When applying a view access, it states that all users with that access level and above will be able to view the forum and all its child forum categories. However, the restricted access will limit only users with that access level to view the forum."
+msgstr "При установке доступа на просмотр все пользователи с данным уровнем доступа и выше смогут просматривать данный форум и его дочерние категории. Однако, ограниченный доступ лимитирует только избранных пользователей с данным уровнем доступа для просмотра форума"
+
+#: /views/categories/admin_form_forum.ctp:25
+msgid "View Access"
+msgstr "Доступ на просмотр"
+
+#: /views/categories/admin_index.ctp:8;102;116
+msgid "Add Category"
+msgstr "Добавить Категорию"
+
+#: /views/categories/admin_index.ctp:21;66;91
+#: /views/home/admin_index.ctp:91
+#: /views/staff/admin_index.ctp:35;65;100
+#: /views/topics/view.ctp:108;112
+#: /views/users/admin_index.ctp:54
+msgid "Edit"
+msgstr "Редактировать"
+
+#: /views/categories/admin_index.ctp:38
+#: /views/categories/view.ctp:44
+#: /views/home/admin_index.ctp:75
+#: /views/home/index.ctp:15
+#: /views/reports/admin_index.ctp:6
+#: /views/reports/admin_posts.ctp:6
+#: /views/reports/admin_topics.ctp:6
+#: /views/reports/admin_users.ctp:6
+#: /views/users/admin_index.ctp:29
+#: /views/users/listing.ctp:21
+msgid "Topics"
+msgstr "Темы"
+
+#: /views/categories/admin_index.ctp:39
+#: /views/categories/moderate.ctp:28
+#: /views/categories/view.ctp:45;96
+#: /views/home/admin_index.ctp:76
+#: /views/home/index.ctp:16
+#: /views/reports/admin_index.ctp:7
+#: /views/reports/admin_posts.ctp:7
+#: /views/reports/admin_topics.ctp:7
+#: /views/reports/admin_users.ctp:7
+#: /views/search/index.ctp:47
+#: /views/users/admin_index.ctp:30
+#: /views/users/listing.ctp:22
+#: /views/users/profile.ctp:66
+msgid "Posts"
+msgstr "Сообщения"
+
+#: /views/categories/admin_index.ctp:40
+msgid "Read"
+msgstr "Читать"
+
+#: /views/categories/admin_index.ctp:41
+#: /views/posts/add.ctp:19
+#: /views/posts/report.ctp:9
+#: /views/reports/admin_posts.ctp:18
+#: /views/topics/add.ctp:36
+#: /views/topics/moderate.ctp:25
+msgid "Post"
+msgstr "Сообщение"
+
+#: /views/categories/admin_index.ctp:42
+msgid "Reply"
+msgstr "Ответить"
+
+#: /views/categories/admin_index.ctp:43
+msgid "Poll"
+msgstr "Опрос"
+
+#: /views/categories/admin_index.ctp:44
+#: /views/home/admin_index.ctp:77
+#: /views/staff/admin_index.ctp:22;54;88
+#: /views/users/admin_index.ctp:31
+msgid "Options"
+msgstr "Опции"
+
+#: /views/categories/admin_index.ctp:102
+#: /views/home/index.ctp:65
+msgid "There are no categories within this forum."
+msgstr "Этот форум не содержит категорий"
+
+#: /views/categories/admin_index.ctp:112
+msgid "Update Order"
+msgstr "Порядок редактирования"
+
+#: /views/categories/moderate.ctp:14;100
+#: /views/layouts/admin.ctp:26
+msgid "Return to Forum"
+msgstr "Вернуться на форум"
+
+#: /views/categories/moderate.ctp:24
+#: /views/categories/view.ctp:93
+#: /views/reports/admin_topics.ctp:18
+#: /views/search/index.ctp:43
+#: /views/topics/rss/feed.ctp:4
+#: /views/users/profile.ctp:64;95
+msgid "Topic"
+msgstr "Тема"
+
+#: /views/categories/moderate.ctp:26
+#: /views/categories/view.ctp:94
+#: /views/search/index.ctp:45
+#: /views/users/profile.ctp:96
+msgid "Author"
+msgstr "Автор"
+
+#: /views/categories/moderate.ctp:27
+#: /views/categories/view.ctp:95
+#: /views/search/index.ctp:46
+#: /views/users/profile.ctp:65
+msgid "Created"
+msgstr "Создан"
+
+#: /views/categories/moderate.ctp:29
+#: /views/categories/view.ctp:97
+#: /views/search/index.ctp:48
+#: /views/users/profile.ctp:67
+msgid "Views"
+msgstr "Просмотры"
+
+#: /views/categories/moderate.ctp:30
+#: /views/categories/view.ctp:46;98
+#: /views/home/index.ctp:17
+#: /views/search/index.ctp:49
+msgid "Activity"
+msgstr "Активность"
+
+#: /views/categories/moderate.ctp:50
+#: /views/categories/view.ctp:123;168
+#: /views/search/index.ctp:72
+msgid "Pages"
+msgstr "Страницы"
+
+#: /views/categories/moderate.ctp:64
+#: /views/categories/view.ctp:74;136;181
+#: /views/home/index.ctp:53
+#: /views/search/index.ctp:86
+msgid "by"
+msgstr "к"
+
+#: /views/categories/moderate.ctp:67
+#: /views/categories/view.ctp:76;139;184
+#: /views/home/index.ctp:55
+#: /views/search/index.ctp:89
+msgid "No latest activity to display"
+msgstr "Нет последних действий для отображения"
+
+#: /views/categories/moderate.ctp:77
+#: /views/categories/view.ctp:194
+msgid "There are no topics within this forum category."
+msgstr "Категория этого форума не содержит тем."
+
+#: /views/categories/moderate.ctp:88
+msgid "Move Topic(s)"
+msgstr "Переместить тему(ы)"
+
+#: /views/categories/moderate.ctp:89
+msgid "Open Topic(s)"
+msgstr "Открыть тему(ы)"
+
+#: /views/categories/moderate.ctp:90
+#: /views/reports/admin_topics.ctp:52
+msgid "Close Topic(s)"
+msgstr "Закрыть тему(ы)"
+
+#: /views/categories/moderate.ctp:91
+#: /views/reports/admin_topics.ctp:51
+msgid "Delete Topic(s)"
+msgstr "Удалить тему(ы)"
+
+#: /views/categories/moderate.ctp:93
+#: /views/reports/admin_posts.ctp:54
+#: /views/reports/admin_topics.ctp:55
+#: /views/reports/admin_users.ctp:55
+#: /views/topics/moderate.ctp:53
+msgid "Perform Action"
+msgstr "Выполнить Действие"
+
+#: /views/categories/moderate.ctp:95
+msgid "Move To"
+msgstr "Переместить в"
+
+#: /views/categories/moderate.ctp:96
+#: /views/reports/admin_posts.ctp:56
+#: /views/reports/admin_topics.ctp:57
+#: /views/reports/admin_users.ctp:57
+#: /views/topics/moderate.ctp:54
+msgid "Process"
+msgstr "Процесс"
+
+#: /views/categories/view.ctp:25;212
+#: /views/topics/view.ctp:23;168
+msgid "Create Topic"
+msgstr "Создать Тему"
+
+#: /views/categories/view.ctp:28;215
+#: /views/topics/view.ctp:26;171
+msgid "Create Poll"
+msgstr "Создать Опрос"
+
+#: /views/categories/view.ctp:31;218
+#: /views/helpers/cupcake.php:239
+#: /views/topics/view.ctp:32;177
+msgid "Closed"
+msgstr "Зактата"
+
+#: /views/categories/view.ctp:39;60
+#: /views/home/index.ctp:39
+msgid "Sub-Forums"
+msgstr "Под-Форумы"
+
+#: /views/categories/view.ctp:106
+msgid "Important Topics"
+msgstr "Важные Темы"
+
+#: /views/categories/view.ctp:148
+msgid "Regular Topics"
+msgstr "Текущие Темы"
+
+#: /views/categories/view.ctp:233
+#: /views/home/admin_index.ctp:7
+#: /views/topics/view.ctp:142
+#: /views/users/admin_edit.ctp:9
+#: /views/users/profile.ctp:16
+msgid "Total Topics"
+msgstr "Все Темы"
+
+#: /views/categories/view.ctp:235
+msgid "Increases Post Count"
+msgstr "Увеличение количества сообщений"
+
+#: /views/categories/view.ctp:237
+msgid "Can Read Topics"
+msgstr "Вы можете читать темы"
+
+#: /views/categories/view.ctp:239
+msgid "Can Create Topics"
+msgstr "Вы можете создавать темы"
+
+#: /views/categories/view.ctp:243
+#: /views/home/admin_index.ctp:8
+#: /views/topics/view.ctp:143
+#: /views/users/admin_edit.ctp:8
+#: /views/users/profile.ctp:40
+msgid "Total Posts"
+msgstr "Всего сообщений"
+
+#: /views/categories/view.ctp:245
+msgid "Auto-Lock Topics"
+msgstr "Автоматически блокировать темы."
+
+#: /views/categories/view.ctp:247
+msgid "Can Reply"
+msgstr "Можите Ответить"
+
+#: /views/categories/view.ctp:249
+msgid "Can Create Polls"
+msgstr "Можите Содать Опрос"
+
+#: /views/categories/view.ctp:254
+#: /views/staff/admin_index.ctp:81
+msgid "Moderators"
+msgstr "Модераторы"
+
+#: /views/elements/copyright.ctp:3
+msgid "Powered by the %s v%s"
+msgstr "Управляется %s v%s"
+
+#: /views/elements/copyright.ctp:4
+msgid "Created by %s"
+msgstr "Создано %s"
+
+#: /views/elements/login.ctp:7
+#: /views/users/login.ctp:9
+msgid "Remember Me?"
+msgstr "Запомнить меня?"
+
+#: /views/elements/navigation.ctp:7
+msgid "View New Posts"
+msgstr "Просмотр Новых Сообщений"
+
+#: /views/elements/navigation.ctp:8
+msgid "My Profile"
+msgstr "Мой профиль"
+
+#: /views/elements/navigation.ctp:10
+msgid "Logout"
+msgstr "Выход"
+
+#: /views/elements/pagination.ctp:8
+msgid "Displaying %start%-%end% of %count%"
+msgstr "Показывается %start%-%end% из %count%"
+
+#: /views/helpers/cupcake.php:237
+msgid "No"
+msgstr "Нет"
+
+#: /views/helpers/cupcake.php:237
+msgid "Yes"
+msgstr "Да"
+
+#: /views/helpers/cupcake.php:239
+msgid "Open"
+msgstr "Открыты"
+
+#: /views/helpers/cupcake.php:241
+msgid "Visible"
+msgstr "Видимы"
+
+#: /views/helpers/cupcake.php:241
+msgid "Hidden"
+msgstr "Скрыты"
+
+#: /views/helpers/cupcake.php:244
+msgid "Member"
+msgstr "Участник"
+
+#: /views/helpers/cupcake.php:247
+msgid "Moderator"
+msgstr "Модератор"
+
+#: /views/helpers/cupcake.php:250
+msgid "Super Moderator"
+msgstr "Супер модератор"
+
+#: /views/helpers/cupcake.php:253
+msgid "Administrator"
+msgstr "Администратор"
+
+#: /views/helpers/cupcake.php:257
+msgid "Guest"
+msgstr "Гость"
+
+#: /views/helpers/cupcake.php:260
+msgid "Active"
+msgstr "Активны"
+
+#: /views/helpers/cupcake.php:260
+msgid "Banned"
+msgstr "Забанены"
+
+#: /views/helpers/cupcake.php:348
+#: /views/topics/add.ctp:19
+#: /views/topics/edit.ctp:20
+msgid "Sticky"
+msgstr "трудный"
+
+#: /views/helpers/cupcake.php:349
+#: /views/topics/add.ctp:20
+#: /views/topics/edit.ctp:21
+msgid "Important"
+msgstr "Важно"
+
+#: /views/helpers/cupcake.php:350
+#: /views/topics/add.ctp:21
+#: /views/topics/edit.ctp:22
+msgid "Announcement"
+msgstr "Объявление"
+
+#: /views/helpers/decoda.php:494
+msgid "mail"
+msgstr "почта"
+
+#: /views/helpers/decoda.php:702
+msgid "link"
+msgstr "ссылка"
+
+#: /views/home/admin_index.ctp:2
+msgid "Administration Panel"
+msgstr "Панель управления"
+
+#: /views/home/admin_index.ctp:9
+msgid "Total Polls"
+msgstr "Всего Опросов"
+
+#: /views/home/admin_index.ctp:10
+msgid "Total Users"
+msgstr "Всего Пользователей"
+
+#: /views/home/admin_index.ctp:11
+msgid "Total Reports"
+msgstr "Всего Жалоб"
+
+#: /views/home/admin_index.ctp:12
+msgid "Total Moderators"
+msgstr "Всего Модераторов"
+
+#: /views/home/admin_index.ctp:13
+#: /views/home/index.ctp:85
+msgid "Newest User"
+msgstr "Новый пользователь"
+
+#: /views/home/admin_index.ctp:30
+msgid "Latest Reports"
+msgstr "Последние Жалобы"
+
+#: /views/home/admin_index.ctp:34
+#: /views/reports/admin_index.ctp:17
+#: /views/topics/add.ctp:22
+#: /views/topics/edit.ctp:23
+msgid "Type"
+msgstr "Тип"
+
+#: /views/home/admin_index.ctp:35
+#: /views/reports/admin_index.ctp:18
+msgid "Item"
+msgstr "Тема"
+
+#: /views/home/admin_index.ctp:36
+#: /views/reports/admin_index.ctp:19
+#: /views/reports/admin_posts.ctp:19
+#: /views/reports/admin_topics.ctp:19
+#: /views/reports/admin_users.ctp:19
+msgid "Reported By"
+msgstr "Жалоба написана"
+
+#: /views/home/admin_index.ctp:37
+#: /views/posts/report.ctp:10
+#: /views/reports/admin_index.ctp:20
+#: /views/reports/admin_posts.ctp:20
+#: /views/reports/admin_topics.ctp:20
+#: /views/reports/admin_users.ctp:20
+#: /views/topics/report.ctp:9
+#: /views/users/report.ctp:9
+msgid "Comment"
+msgstr "Комментарий"
+
+#: /views/home/admin_index.ctp:38
+#: /views/reports/admin_index.ctp:21
+#: /views/reports/admin_posts.ctp:21
+#: /views/reports/admin_topics.ctp:21
+#: /views/reports/admin_users.ctp:21
+msgid "Reported On"
+msgstr "Жалоба создана"
+
+#: /views/home/admin_index.ctp:68
+msgid "Latest Signed Up Users"
+msgstr "Последние зарегистрированные пользователи"
+
+#: /views/home/admin_index.ctp:73
+#: /views/users/admin_edit.ctp:6
+#: /views/users/admin_index.ctp:26
+#: /views/users/edit.ctp:7
+#: /views/users/forgot.ctp:10
+#: /views/users/signup.ctp:10
+msgid "Email"
+msgstr "Email"
+
+#: /views/home/admin_index.ctp:74
+#: /views/posts/add.ctp:36
+#: /views/topics/view.ctp:141
+#: /views/users/admin_index.ctp:27
+#: /views/users/listing.ctp:19
+#: /views/users/profile.ctp:14
+msgid "Joined"
+msgstr "Присоединился"
+
+#: /views/home/admin_index.ctp:92
+#: /views/users/admin_index.ctp:55
+msgid "Are you sure you want to reset?"
+msgstr "Подтверждаете переустановку?"
+
+#: /views/home/admin_settings.ctp:2
+msgid "Forum Settings"
+msgstr "Насторйки форума"
+
+#: /views/home/admin_settings.ctp:8
+msgid "Site Name"
+msgstr "Название сайта"
+
+#: /views/home/admin_settings.ctp:9
+msgid "Site Email"
+msgstr "Email сайта"
+
+#: /views/home/admin_settings.ctp:10
+msgid "Site Website"
+msgstr "Сайт"
+
+#: /views/home/admin_settings.ctp:11
+#: /views/users/signup.ctp:13
+msgid "Security Question"
+msgstr "Сектетный вопрос"
+
+#: /views/home/admin_settings.ctp:12
+msgid "Security Answer"
+msgstr "Секретный ответ"
+
+#: /views/home/admin_settings.ctp:14
+msgid "Topic Settings"
+msgstr "Настройки Темы"
+
+#: /views/home/admin_settings.ctp:17;18
+msgid "Topics Per Page"
+msgstr "Тем на странице"
+
+#: /views/home/admin_settings.ctp:19
+msgid "Topic Flood Interval"
+msgstr "Анти флуд интервал"
+
+#: /views/home/admin_settings.ctp:19;27
+msgid "Seconds"
+msgstr "Секунды"
+
+#: /views/home/admin_settings.ctp:20
+msgid "Paging Till Truncation"
+msgstr "Разбение на страницы под последним сообщением"
+
+#: /views/home/admin_settings.ctp:20
+msgid "Paging under a topic title"
+msgstr "Разбение на страницы под названием темы"
+
+#: /views/home/admin_settings.ctp:22
+msgid "Post Settings"
+msgstr "Настройки Сообщений"
+
+#: /views/home/admin_settings.ctp:25
+msgid "Posts Per Page"
+msgstr "Сообщений на странице"
+
+#: /views/home/admin_settings.ctp:26
+msgid "Posts Per Hour"
+msgstr "Сообщений в час"
+
+#: /views/home/admin_settings.ctp:27
+msgid "Post Flood Interval"
+msgstr "\"Анти флуд\" интервал сообщений"
+
+#: /views/home/admin_settings.ctp:28
+msgid "Posts Till Hot Topic"
+msgstr "Старые сообщения "
+
+#: /views/home/admin_settings.ctp:30
+msgid "Misc Settings"
+msgstr "Дополнительные установки"
+
+#: /views/home/admin_settings.ctp:33
+msgid "Days"
+msgstr "Дни"
+
+#: /views/home/admin_settings.ctp:33
+msgid "Inactive Days Till Topic Auto-Lock"
+msgstr "Кол-во дней без активности до самоблокировки темы"
+
+#: /views/home/admin_settings.ctp:34
+msgid "Whos Online Interval"
+msgstr "Интервал \"кто на сайте\""
+
+#: /views/home/admin_settings.ctp:34
+msgid "Past Minutes"
+msgstr "Последние минуты"
+
+#: /views/home/admin_settings.ctp:35
+msgid "Enable Quick Reply"
+msgstr "Включить быстрый ответ"
+
+#: /views/home/admin_settings.ctp:36
+msgid "Enable Gravatar"
+msgstr "Включить Gravatar"
+
+#: /views/home/admin_settings.ctp:37
+msgid "Censored Words"
+msgstr "Цензурированные слова"
+
+#: /views/home/admin_settings.ctp:37
+msgid "Separate with commas"
+msgstr "Разделить запятыми"
+
+#: /views/home/help.ctp:2
+msgid "Help Desk"
+msgstr "Справочная информация"
+
+#: /views/home/help.ctp:4
+msgid "Why do I need to sign up?"
+msgstr "Зачем я должен регистрироваться?"
+
+#: /views/home/help.ctp:5
+msgid "You may read all public forums as a guest, but to be able to post or reply to a topic, you must have a user account."
+msgstr "Вы можете читать все публичные форумы как гость, но для создания сообщений и ответов Вы должны быть зарегистрированы"
+
+#: /views/home/help.ctp:7
+msgid "Why can't I post a topic, poll or reply?"
+msgstr "Почему я не могу создать тему, опрос или ответ?"
+
+#: /views/home/help.ctp:8
+msgid "To begin you must have a user account and must be logged in. If you have done this, the topic might be locked or you do not have the proper acces to post in that topic or forum."
+msgstr "Для начала работы у Вы должны быть зарегистрированны. Если  Вы находитесь в системе, вероятно, тема закрыта или у Вас нет достаточных прав доступа для записи в этой теме или форуме."
+
+#: /views/home/help.ctp:10
+msgid "Why can't I login?"
+msgstr "Почему я не могу войти?"
+
+#: /views/home/help.ctp:11
+msgid "The server might be having technicaly difficulties so your request could not be processed. It may also be that your account has been deleted or banned."
+msgstr "Ваш запрос не божет быть обработан из-за возможных проблем с сервером. Так же существует вероятность, что Ваша учетная запись удалена или заблокирована"
+
+#: /views/home/help.ctp:13
+msgid "Oh no, I forgot my password!"
+msgstr "Я забыл свой пароль!"
+
+#: /views/home/help.ctp:14
+msgid "If you have forgotten your password, you can reset it using the %s form."
+msgstr "Если Вы забыли пароль, Вы можете переустановить его используя %s форму."
+
+#: /views/home/help.ctp:16
+msgid "What does reporting do?"
+msgstr "Для чего существует система жалоб?"
+
+#: /views/home/help.ctp:17
+msgid "If you find a piece of content that you find inappropriate or offensive, you can report the content for a moderator to delete or fix."
+msgstr "Если вы обнаружили непремлимое или оскарбительное содержание, которое небходимо исправить или удалить, Вы можете сообщить об этом модератору"
+
+#: /views/home/help.ctp:19
+msgid "What are moderators, super moderators and administrators?"
+msgstr "Кто такие модераторы, супер модераторы, администраторы?"
+
+#: /views/home/help.ctp:20
+msgid "Those are users with higher access and privileges than a regular user. Moderators control and moderate specific forums, where as Super Moderators have full access to all forums. Administrators have full access to all forums as well as editing all the sites settings and configuration. Additionally, moderates have the power to edit and delete other users content."
+msgstr "Типы пользователей с более высоким уровнем доступа, чем обычные пользователи. Модераторы управляют и модерируют конкретные форумы, в то время, как супер модераторы имеют полный доступ ко всему форуму. Администраторы кроме управления содержимым форума могут менять настройки конфигурации."
+
+#: /views/home/help.ctp:22
+msgid "What does the power search do?"
+msgstr "Для чего существует система расширенного поиска?"
+
+#: /views/home/help.ctp:23
+msgid "By default the search will only search for terms within the topic title. If you check the power search, it will search within the title and post."
+msgstr "По умолчанию поиск осуществляется только по названию тем. Если Вы выберете расширенный поиск, поиск будет работать также по сообщениям"
+
+#: /views/home/help.ctp:25
+msgid "How do I edit my profile?"
+msgstr "Как я могу отредактировать мой профиль?"
+
+#: /views/home/help.ctp:26
+msgid "Once you have logged in, you can edit your profile by going to the %s link, located at the top right."
+msgstr "После входа в систему Вы сможете редактировать свой профиль перейдя по ссылке %s , расположенной справа вверху"
+
+#: /views/home/help.ctp:28
+msgid "How do I post a topic?"
+msgstr "Как я могу создать тему?"
+
+#: /views/home/help.ctp:29
+msgid "You would first navigate to the appropriate forum you want to post in. Once there, you would click the \"Create Topic\" link located at the top and bottom right of the page."
+msgstr "Вначале выберите форум, в котором Вы хотите создавать сообщения. После этого перейдите по ссылке \"Создать тему\" , расположенной сверху и снизу справа."
+
+#: /views/home/help.ctp:31
+msgid "How do I post a reply?"
+msgstr "Как я могу ответить на сообщение?"
+
+#: /views/home/help.ctp:32
+msgid "When you are reading a topic and are logged in, you would click the \"Post Reply\" link also located at the top and bottom right of the page."
+msgstr "Если Вы зарегистрированны, Вы можете ответить на сообщение, кликнув на ссылку \"Ответить\", расположенную сверху и снизу на странице"
+
+#: /views/home/help.ctp:34
+msgid "How do I create a poll?"
+msgstr "Как я могу создать опрос?"
+
+#: /views/home/help.ctp:35
+msgid "You would create a poll the same way you would create a topic. First enter the correct forum, then hit the \"Create Poll\" link."
+msgstr "Вы можете создать опрос так же как новую тему. Зайдите в необходимый форум, затем кликните ссылку \"Создать опрос\"."
+
+#: /views/home/help.ctp:37
+msgid "How do I edit my topic, poll, post, etc?"
+msgstr "Как я могу отредактироваь мою тему, опрос, сообщение и т.д?"
+
+#: /views/home/help.ctp:38
+msgid "When you are reading a topic, at the top right of each post you will see a few text links. Hit the \"Edit\" link to edit your respective content. If you are editing the first post of a topic, it will additionally edit the topic or poll as well. You may only edit your own posts or topics unless you have moderating capabilities."
+msgstr "Справа вверху от каждого сообщения расположено несколько текстовых ссылок. Кликните \"Редактировать\" для редактирования соответствующего содержания. Если Вы редактируете первое сообщение, Вы также можете отредактировать тему или опрос. Вы можете редактировать только сообщения, созданные вами (если у Вас нет прав модератора)."
+
+#: /views/home/help.ctp:40
+msgid "How do I report a topic, post or user?"
+msgstr "Как я могу пожаловаться на тему, сообщение или пользователя?"
+
+#: /views/home/help.ctp:41
+msgid "At the top right of each post you would click the \"Report <content>\" link. From there you should add a comment on why you are reporting this content."
+msgstr "Справа вверху каждого сообщения Вы можете кликнить \"Пожаловаться <content>\" . Вы должны промомментировать жалобу."
+
+#: /views/home/help.ctp:43
+msgid "How do I get higher access and permissions?"
+msgstr "Как я могу получить более высокий уровень доступа?"
+
+#: /views/home/help.ctp:44
+msgid "It is up to the administrator to give you higher access. All you can do is be a superb member on the forum and hope they promote you."
+msgstr "Решение о предоставлении Вам более высокого уровня доступа зависит от администратоов. Вы можете стать супер пользователем форума и , недеемся, Вы будете продвинуты. "
+
+#: /views/home/help.ctp:46
+msgid "I have more questions that aren't shown here!"
+msgstr "У меня есть вопросы, ответы на которые я не нашел!"
+
+#: /views/home/help.ctp:47
+msgid "If you have additional questions and need further help, please contact us at %s."
+msgstr "Если у Вас есть дополнительные вопросы, пожалйста пишите нам на %s."
+
+#: /views/home/index.ctp:81
+msgid "Statistics"
+msgstr "Статистика"
+
+#: /views/home/index.ctp:81
+msgid "%d topics, %d posts, and %d users"
+msgstr "%d тем, %d сообщений и %d пользователей"
+
+#: /views/home/index.ctp:96
+msgid "Whos Online"
+msgstr "Сейчас на форуме"
+
+#: /views/home/rules.ctp:2
+msgid "Rules and Regulations"
+msgstr "Правила"
+
+#: /views/home/rules.ctp:4
+msgid "No Offensive Material"
+msgstr "Не допускаются оскарбления"
+
+#: /views/home/rules.ctp:5
+msgid "No posting any harmful, threatening, abusive, harassing, defamatory, vulgar, obscene, hateful, or racially, ethnically or otherwise objectionable content. This means no porn, gore, offensive, violent or disturbing images, websites and or other adult content. This will result in an immediate ban from the community."
+msgstr "Запрещено размещение контента с угрозами, оскорблениями, клеветой, вульгарным и непристойным содержанием, призывами к рассовой ненависти и т.д. Так же запрещены картинки и ссылки на сайты, содержащие пронографию, сцены насилия, оскарбления, содержимое для взрослых. Нарушение этого правила повлечет за собой немедленное удаление."
+
+#: /views/home/rules.ctp:7
+msgid "No Prejudice or Discrimation"
+msgstr "Не допускается дискриминация"
+
+#: /views/home/rules.ctp:8
+msgid "There is to be absolutely no discriminating or hatred against somebody else due to race, religion, gender, cultural background or sexual preference. This will result in an immediate ban from the community."
+msgstr "Категорически запрещается дискриминация по рассовому, религиозному, половому, культурному  признаку, а так же по признаку сексуальной ориентации. Будет применен перманентный бан. "
+
+#: /views/home/rules.ctp:10
+msgid "No Flaming"
+msgstr "Запрещен флейм"
+
+#: /views/home/rules.ctp:11
+msgid "There is to be no offensive language, personal attacks, harassment or flaming to another member of the forum. For each infraction you will be warned, and if the problem persists you will be banned."
+msgstr "Запрещается оскорбительный язык, личные нападки, дискримиеация других учасников форума. За нарушение Вы получите предупреждение и, в случае не устранения, будете забанены."
+
+#: /views/home/rules.ctp:13
+msgid "No Spamming"
+msgstr "Не допускается спам"
+
+#: /views/home/rules.ctp:14
+msgid "No spamming or flooding forums or threads by posting frequent and / or annoying messages in the forums which serve no purpose."
+msgstr "Запрещен спам и флуд, а так же цепочки с бесцельными часто повторяющимися или раздражающими сообщениями."
+
+#: /views/home/rules.ctp:16
+msgid "No Short Length Posts"
+msgstr "Не допустимы короткие сообщения"
+
+#: /views/home/rules.ctp:17
+msgid "A response with only a few words is considered spam. If you post a reply that contains less than 5-10 words, it is considered spam. If you do not have anything worth while to add to the conversation, then do not reply at all. Please refer to the No Spamming rule above."
+msgstr "Ответ в несколько слов расценивется как спам. Если Ваш ответ содержит менее 5-10 слов, он расценивается как спам. Если у Вас нет сообщения для добавленя по теме, лучше просто не отвечать. Пожалйста, ознакомьтесь с нашей Анти Спам политикой."
+
+#: /views/home/rules.ctp:19
+msgid "No Virus, Trojans or Warez"
+msgstr "Не допускаются вирусы, трояны или варезы."
+
+#: /views/home/rules.ctp:20
+msgid "Posting links to and / or information about cheats, hacks, virus, trojans, warez and otherwise illegal content is prohibited. If this happens you will be banned immediately."
+msgstr "Размещение ссылок с информацией о/cодержащей мошейничестве, вирусах, троянах, варезах запрещено. Если это произойдет, Вы будете немедленно забанены."
+
+#: /views/home/rules.ctp:22
+msgid "No Threadomancy"
+msgstr "Запрещен \"подброс тем\" бессодержательными сообщениями"
+
+#: /views/home/rules.ctp:23
+msgid "Posting in a thread that hasn't had any new replies in roughly 3-4 weeks or more (up to mod discretion; possible exceptions apply)."
+msgstr "Размещение сообщений в старых темах,в  которых не было ни одного сообдения 3-4 недели или больше. (Зависит от решения модератора, возможны исключения)"
+
+#: /views/home/rules.ctp:25
+msgid "No Trolling"
+msgstr "Не допускается троллинг"
+
+#: /views/home/rules.ctp:26
+msgid "No trolling these forums are allowed. Do not intentionally post controversial or contrary messages to invoke other members of the community. This will result in an immediate ban."
+msgstr "Троллинг запрещен. Не размещайте под разными никами спорные или противоречивые сообщения для вовлечения в дискуссию других учасников форума. Это повлечет за собой моментальный бан."
+
+#: /views/home/rules.ctp:28
+msgid "No Advertising"
+msgstr "Запрещена реклама"
+
+#: /views/home/rules.ctp:29
+msgid "Posting links to other community sites that are not on our affiliates list or posting links to advertise your site or community is prohibited. You may place a link within your signature, but you may not advertise with a topic. This will result in a warning or a ban."
+msgstr "Размещение ссылок на другие сайты, кроме сайтов из нашего списка, а также ссылок рекламного характера не допускается. Вы можете добавить ссылку в Вашу подпись, но не в сообщение. Вы можете получить предупреждение или бан."
+
+#: /views/home/rules.ctp:31
+msgid "No Double Posting"
+msgstr "Запрещено дублирование тем"
+
+#: /views/home/rules.ctp:32
+msgid "Do not double post, if you need to double post please edit your previous post instead. Posting consecutively is not permitted."
+msgstr "Не дублируйте сообщения. Вместо этого Вы можете отредактировать предыдущее сообщение."
+
+#: /views/home/rules.ctp:34
+msgid "No Duplicate Topics"
+msgstr "Запрещено дублирование тем"
+
+#: /views/home/rules.ctp:35
+msgid "Do not create a new topic with the same content to an existing topic. Duplicated topics will be locked, and removed. Browse through the forum, or do a search and see if a topic already exist."
+msgstr "Не создавайте новые темы с содержимым, подобным существующим. Дублирущие темы будут заблокированны и удалены. Воспользуйтеь поиском, чтобы проверить наличие подобной темы."
+
+#: /views/home/rules.ctp:37
+msgid "No Abusing Topics"
+msgstr "Запрещены оскорбительные темы"
+
+#: /views/home/rules.ctp:38
+msgid "Do not post topics that have no real reason for being created. Also do not spam topics/polls."
+msgstr "Не создавайте тем без каких либо реальных причин. Так же не допускаются темы/опрсы с целью спама."
+
+#: /views/home/rss/feed.ctp:4
+#: /views/users/profile.ctp:60
+msgid "Latest Topics"
+msgstr "Последние темы"
+
+#: /views/home/rss/feed.ctp:6
+msgid "The latest 10 topics out of all forums"
+msgstr "Последние 10 тем всех форумов"
+
+#: /views/layouts/admin.ctp:6;17
+msgid "Cupcake Forum Administration"
+msgstr "Управление форумом Cupcake"
+
+#: /views/layouts/admin.ctp:20
+#: /views/layouts/default.ctp:29
+msgid "Home"
+msgstr "Домой"
+
+#: /views/layouts/admin.ctp:22
+msgid "Forums"
+msgstr "Форумы"
+
+#: /views/layouts/admin.ctp:23
+#: /views/staff/admin_index.ctp:47
+msgid "Staff"
+msgstr "Персонал"
+
+#: /views/layouts/admin.ctp:24
+msgid "Reported"
+msgstr "Жалобы"
+
+#: /views/layouts/admin.ctp:25
+#: /views/layouts/default.ctp:33
+#: /views/reports/admin_index.ctp:8
+#: /views/reports/admin_posts.ctp:8
+#: /views/reports/admin_topics.ctp:8
+#: /views/reports/admin_users.ctp:8
+msgid "Users"
+msgstr "Пользователи"
+
+#: /views/layouts/default.ctp:15
+msgid "RSS Feed - Latest Topics"
+msgstr "RSS Feed - Посление темы"
+
+#: /views/layouts/default.ctp:17
+msgid "RSS Feed - Content Review"
+msgstr "RSS Feed - Обзор содержания"
+
+#: /views/layouts/default.ctp:35
+msgid "Admin"
+msgstr "Администратор"
+
+#: /views/posts/add.ctp:13
+#: /views/posts/edit.ctp:13
+#: /views/topics/add.ctp:30
+#: /views/topics/edit.ctp:49
+msgid "Content"
+msgstr "Содержание"
+
+#: /views/posts/add.ctp:16
+#: /views/posts/edit.ctp:16
+#: /views/topics/add.ctp:33
+#: /views/topics/edit.ctp:52
+msgid "Allowed Tags"
+msgstr "Допустимые теги"
+
+#: /views/posts/add.ctp:24
+msgid "Topic Review - Last 10 Replies"
+msgstr "Обзор тем - 10 последних сообщений"
+
+#: /views/posts/report.ctp:4
+msgid "Are you sure you want to report the post (below) in the topic %s? If so, please add a comment as to why you are reporting it, 255 max characters."
+msgstr "Вы уверены что хотите пожаловаться на сообщение (внизу) а теме %s? Если да, пожалуйста, напишите коментарий. Максимум 255 знаков."
+
+#: /views/posts/report.ctp:11
+#: /views/topics/report.ctp:10
+#: /views/users/report.ctp:10
+msgid "Report"
+msgstr "Жалоба"
+
+#: /views/reports/admin_index.ctp:5
+#: /views/reports/admin_posts.ctp:5
+#: /views/reports/admin_topics.ctp:5
+#: /views/reports/admin_users.ctp:5
+msgid "View Reported"
+msgstr "Посмотреть жалобы"
+
+#: /views/reports/admin_index.ctp:49
+msgid "There are no reported items to display."
+msgstr "В настоящий момент жалоб нет."
+
+#: /views/reports/admin_posts.ctp:31
+msgid "View Topic"
+msgstr "Посмотреть тему"
+
+#: /views/reports/admin_posts.ctp:41
+msgid "There are no reported posts."
+msgstr "Нет сообщений с жалобами"
+
+#: /views/reports/admin_posts.ctp:51
+#: /views/topics/moderate.ctp:53
+msgid "Delete Post(s)"
+msgstr "Удалить сообщение(я)"
+
+#: /views/reports/admin_posts.ctp:52
+#: /views/reports/admin_topics.ctp:53
+#: /views/reports/admin_users.ctp:53
+msgid "Remove Report Only"
+msgstr "Удалить только жалобы"
+
+#: /views/reports/admin_topics.ctp:41
+msgid "There are no reported topics."
+msgstr "Нет тем с жалобами"
+
+#: /views/reports/admin_users.ctp:18
+#: /views/staff/admin_index.ctp:51;85
+#: /views/topics/moderate.ctp:24
+msgid "User"
+msgstr "Пользователь"
+
+#: /views/reports/admin_users.ctp:41
+msgid "There are no reported users."
+msgstr "Нет пользователей, на которых пожаловались"
+
+#: /views/reports/admin_users.ctp:51
+msgid "Ban User(s)"
+msgstr "Забаненный пользователь(и)"
+
+#: /views/reports/admin_users.ctp:52
+msgid "Delete User(s)"
+msgstr "Удаленный пользователь(и)"
+
+#: /views/search/index.ctp:4
+msgid "Last post time"
+msgstr "Время последнего сообщения"
+
+#: /views/search/index.ctp:5
+msgid "Topic created time"
+msgstr "Время создания темы"
+
+#: /views/search/index.ctp:6
+msgid "Total posts"
+msgstr "Всего сообщений"
+
+#: /views/search/index.ctp:7
+msgid "Total views"
+msgstr "Всего просмотров"
+
+#: /views/search/index.ctp:16
+msgid "Keywords"
+msgstr "Ключевые слова"
+
+#: /views/search/index.ctp:20
+msgid "Power Search?"
+msgstr "Расширенный поиск?"
+
+#: /views/search/index.ctp:22
+msgid "Within Forum Category"
+msgstr "Внутри категории форума"
+
+#: /views/search/index.ctp:25
+msgid "Order By"
+msgstr "Сортировать по"
+
+#: /views/search/index.ctp:28
+msgid "By User (Username)"
+msgstr "По имени пользователя"
+
+#: /views/search/index.ctp:33
+msgid "Search Topics"
+msgstr "Поиск тем"
+
+#: /views/search/index.ctp:54
+msgid "No results were found, please refine your search criteria."
+msgstr "Ничего не найдено, пожалуйста, уточните критерии поиска."
+
+#: /views/staff/admin_delete_access_level.ctp:4
+msgid "Before you delete the level %s , please select which level a user should receive, if they have the level that will be deleted."
+msgstr "Перед удалением уровня доступа %s выберите уровнь, на который должны быть перемещены пользователи с этого уровня."
+
+#: /views/staff/admin_delete_access_level.ctp:7
+msgid "Move Users To"
+msgstr "Переместить пользователя"
+
+#: /views/staff/admin_form_access.ctp:15
+#: /views/staff/admin_form_moderator.ctp:15
+msgid "To find the users ID, you can search for them on the %s."
+msgstr "Чтобы найти ID пользователя Вы можете искать по %s ."
+
+#: /views/staff/admin_form_access.ctp:15
+#: /views/staff/admin_form_moderator.ctp:15
+msgid "Users listing"
+msgstr "Список пользователей"
+
+#: /views/staff/admin_form_access.ctp:19
+#: /views/staff/admin_form_moderator.ctp:19
+msgid "User ID"
+msgstr "ID пользователя"
+
+#: /views/staff/admin_form_access.ctp:20
+#: /views/staff/admin_form_access_level.ctp:21
+#: /views/staff/admin_index.ctp:52
+msgid "Access Level"
+msgstr "Уровень доступа"
+
+#: /views/staff/admin_form_access_level.ctp:16
+msgid "You are unable to edit core levels, they are restricted."
+msgstr "Вы не можете редактировать уровни доступа \"по-умолчанию\". "
+
+#: /views/staff/admin_form_access_level.ctp:22
+msgid "Is Super Moderator?"
+msgstr "Супер модератор?"
+
+#: /views/staff/admin_form_access_level.ctp:23
+msgid "Is Administrator?"
+msgstr "Администратор?"
+
+#: /views/staff/admin_form_moderator.ctp:20
+#: /views/topics/add.ctp:13
+#: /views/topics/edit.ctp:16
+msgid "Forum Category"
+msgstr "Категория форума"
+
+#: /views/staff/admin_index.ctp:2
+msgid "Staff &amp; Moderators"
+msgstr "Персонал &amp; Модераторы"
+
+#: /views/staff/admin_index.ctp:7;120
+msgid "Add Staff"
+msgstr "Добавить персонал"
+
+#: /views/staff/admin_index.ctp:16
+msgid "Levels"
+msgstr "Уровни"
+
+#: /views/staff/admin_index.ctp:21
+msgid "Level"
+msgstr "Уровень"
+
+#: /views/staff/admin_index.ctp:33
+msgid "Restricted"
+msgstr "Ограничены"
+
+#: /views/staff/admin_index.ctp:53;87
+msgid "Achieved On"
+msgstr "Достигнуто"
+
+#: /views/staff/admin_index.ctp:66;101
+#: /views/topics/view.ctp:109;113
+msgid "Are you sure you want to delete?"
+msgstr "Вы подтверждаете удаление?"
+
+#: /views/staff/admin_index.ctp:86
+#: /views/users/profile.ctp:42
+msgid "Moderates"
+msgstr "Модераторы"
+
+#: /views/staff/admin_index.ctp:109
+msgid "There are no assigned moderators."
+msgstr "Нет назначенных модераторов"
+
+#: /views/topics/add.ctp:13
+#: /views/topics/edit.ctp:16
+msgid "Select a Forum"
+msgstr "Выберите форум"
+
+#: /views/topics/add.ctp:18
+#: /views/topics/edit.ctp:19
+msgid "Normal"
+msgstr "Нормальный"
+
+#: /views/topics/add.ctp:26;26
+#: /views/topics/edit.ctp:31
+msgid "Poll Options"
+msgstr "Опции опроса"
+
+#: /views/topics/add.ctp:26
+msgid "One option per line. Max 10 options"
+msgstr "Одна опция на строку. Максимально 10 опций"
+
+#: /views/topics/add.ctp:27
+#: /views/topics/edit.ctp:45
+msgid "Expiration Date"
+msgstr "Дата окончания"
+
+#: /views/topics/add.ctp:27
+#: /views/topics/edit.ctp:45
+msgid "How many days till expiration? Leave blank to last forever."
+msgstr "Сколько дней до окончания. Оставьте пустым для постоянного опроса."
+
+#: /views/topics/moderate.ctp:14;58
+msgid "Return to Topic"
+msgstr "Вернуться к теме"
+
+#: /views/topics/moderate.ctp:26
+msgid "Date"
+msgstr "Дата"
+
+#: /views/topics/report.ctp:4
+msgid "Are you sure you want to report the topic %s ? If so, please add a comment as to why you are reporting it, 255 max characters."
+msgstr "Вы уверены, что хотите пожаловаться на тему %s ?  Если да, пожалуйста, напишите коментарий. Максимум 255 знаков."
+
+#: /views/topics/view.ctp:62
+msgid "Voting on this poll has been closed"
+msgstr "Голосование закрыто"
+
+#: /views/topics/view.ctp:64
+msgid "Vote"
+msgstr "Голосовать"
+
+#: /views/topics/view.ctp:67
+msgid "Please login to vote!"
+msgstr "Пожалуйста, войдите, чтобы проголосовать"
+
+#: /views/topics/view.ctp:83
+msgid "Your Vote"
+msgstr "Ваш Голос"
+
+#: /views/topics/view.ctp:119
+msgid "Quote"
+msgstr "Квота"
+
+#: /views/topics/view.ctp:185
+msgid "Quick Reply"
+msgstr "Быстрый ответ"
+
+#: /views/topics/view.ctp:191
+msgid "Message"
+msgstr "Сообщение"
+
+#: /views/topics/view.ctp:193
+msgid "Advanced Reply"
+msgstr "Развернутый ответ"
+
+#: /views/topics/view.ctp:194
+msgid "BBCode Enabled"
+msgstr "BBCode Включен"
+
+#: /views/users/admin_delete.ctp:4
+msgid "Are you sure you want to delete the user %s ? Once deleted, all the users topics, posts, moderator positions, access levels and any other associations will permanently be deleted from the system."
+msgstr "Вы подтверждаете удаление пользователя %s ? После удаления все темы, сообщения, прова модератора, уровни доступа и другие атрибуты данного пользователя будут навсегда удалены из системы."
+
+#: /views/users/admin_delete.ctp:8
+msgid "Yes, Delete"
+msgstr "Да, удалить"
+
+#: /views/users/admin_index.ctp:10
+msgid "Search Users"
+msgstr "Найти пользователя"
+
+#: /views/users/admin_index.ctp:12
+msgid "ID"
+msgstr "ID"
+
+#: /views/users/admin_index.ctp:28
+#: /views/users/listing.ctp:20
+msgid "Last Active"
+msgstr "Последнее посещение"
+
+#: /views/users/admin_index.ctp:48
+#: /views/users/listing.ctp:36
+#: /views/users/profile.ctp:37
+msgid "Never"
+msgstr "Никогда"
+
+#: /views/users/admin_index.ctp:64
+msgid "There are no users signed up on this forum"
+msgstr "На этом форуме нет зарегистрированных пользователей"
+
+#: /views/users/edit.ctp:8
+msgid "Language"
+msgstr "Язык"
+
+#: /views/users/edit.ctp:9
+msgid "Signature"
+msgstr "Подпись"
+
+#: /views/users/edit.ctp:10
+msgid "Update Account"
+msgstr "Редактировать Профиль"
+
+#: /views/users/edit.ctp:13
+msgid "Old Password"
+msgstr "Старый пароль"
+
+#: /views/users/edit.ctp:14
+msgid "New Password"
+msgstr "Новый пароль"
+
+#: /views/users/edit.ctp:15
+#: /views/users/signup.ctp:12
+msgid "Confirm Password"
+msgstr "Подтвердить пароль"
+
+#: /views/users/edit.ctp:16
+msgid "Update Password"
+msgstr "Редактировать пароль"
+
+#: /views/users/forgot.ctp:4
+msgid "Please enter either your username or email to retrieve your information. Once you retrieved, you should receive an email with your login credentials."
+msgstr "Для получения информации введите логин или email. Информация с данными Вашей учетной записи будет выслана на Ваш email."
+
+#: /views/users/forgot.ctp:11
+msgid "Retrieve"
+msgstr "Получить"
+
+#: /views/users/listing.ctp:7
+msgid "Search Users (Username)"
+msgstr "Поиск пользователей (по имени)"
+
+#: /views/users/listing.ctp:47
+msgid "There are no users signed up on this forum."
+msgstr "На этом форуме нет зарегистрированных пользователей"
+
+#: /views/users/profile.ctp:18
+msgid "Roles"
+msgstr "Роли"
+
+#: /views/users/profile.ctp:27;51
+msgid "N/A"
+msgstr "N/A"
+
+#: /views/users/profile.ctp:32
+msgid "Last Login"
+msgstr "Был на форуме"
+
+#: /views/users/profile.ctp:68
+msgid "Last Activity"
+msgstr "Последние действия"
+
+#: /views/users/profile.ctp:91
+msgid "Latest Posts"
+msgstr "Последние сообщения"
+
+#: /views/users/profile.ctp:97
+msgid "Posted On"
+msgstr "Размещен"
+
+#: /views/users/profile.ctp:117
+msgid "Not Found"
+msgstr "Не найдено"
+
+#: /views/users/profile.ctp:118
+msgid "The user you are looking for does not exist."
+msgstr "Пользователь не существует"
+
+#: /views/users/report.ctp:4
+msgid "Are you sure you want to report the user %s ? If so, please add a comment as to why you are reporting this user, and please be descriptive. Are they spamming, trolling, flaming, etc. 255 max characters."
+msgstr "Вы уверенны, что хотите пожаловаться на пользователя %s ? Если да, прокоментируйте причину этого. Например: спам, троллинг, флэйминг и т.д. Максимально 255 символов. "
+
+#: /views/users/signup.ctp:4
+msgid "Registration is free. All fields are required."
+msgstr "Регистрация бесплатна. Необходимо заполнить все поля"
+
+#: /webroot/test.php:99
+msgid "Debug setting does not allow access to this url."
+msgstr "Настройки дебага ограничивают доступ к данному url."
+
+#: /models/forum.php:50
+#: /models/forum_category.php:82
+#: /models/setting.php:54,64,74,84,94,104,114,124,134,144
+msgid "Please supply a number"
+msgstr "Пожалуйста, введите число"
+
+#: /models/forum.php:54
+#: /models/forum_category.php:86
+#: /models/setting.php:36,46,58,68,78,88,98,108,118,128,138,148
+msgid "This setting is required"
+msgstr "Эти настройки необходимы"
+
+#: /models/topic.php:79
+msgid "You must supply a minimum of 2 options and a max of 10"
+msgstr "Вы должны выбрать от 2 до 10 опций."
+
+#: /models/topic.php:83
+msgid "Please supply some answer options for your poll"
+msgstr "Пожалуйста, создайте опции ответов для опроса."
+
+#: /models/setting.php:32
+msgid "Please supply a valid email address"
+msgstr "Пожалуйста, введите действительный email адрес"
+
+#: /models/setting.php:42
+msgid "Please supply a valid URL"
+msgstr "Пожалуйста, введите действительный url"
+
+#: /models/user.php:52
+msgid "That username has already been taken"
+msgstr "К сожалению, этот логин занят"
+
+#: /models/user.php:57
+msgid "Please enter a username"
+msgstr "Пожалйста, введите логин."
+
+#: /models/user.php:62,83
+msgid "Please enter a password"
+msgstr "Пожалуйста, введите пароль"
+
+#: /models/user.php:66
+msgid "The old password did not match"
+msgstr "Старые пароли не совпадают"
+
+#: /models/user.php:71
+msgid "The passwords did not match"
+msgstr "Пароли не совпадают"
+
+#: /models/user.php:75
+msgid "Your password may only be alphanumeric"
+msgstr "Допускаются только буквы и цифры"
+
+#: /models/user.php:79
+msgid "Your password must be 6-20 characters in length"
+msgstr "Длина пароля должна быть от 6 до 12 символов"
+
+#: /models/user.php:89
+msgid "That email has already been taken"
+msgstr "Данный email уже используется"
+
+#: /models/user.php:94
+msgid "Your email is invalid"
+msgstr "Введенный адрес email неверен."
+
+#: /models/user.php:98
+msgid "Your email is required"
+msgstr "Требуестся Ваш email"
+

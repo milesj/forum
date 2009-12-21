@@ -1,0 +1,69 @@
+Forum (Cupcake) - CakePHP Plugin
+******************************
+
+Requirements
+============
+
+	* CakePHP 1.2
+	* PHP 5.2.x
+	* Being Fantastic
+
+Installation
+============
+
+	Documentation:
+		* http://www.milesj.me/resources/script/forum-plugin
+
+	Quick Installation:
+		* Clone the repo into a folder called "forum" within your CakePHP's plugins directory.
+		* Add the route to connect the forum plugin to its base URL:
+			Router::connect('/forum', array('plugin' => 'forum', 'controller' => 'home', 'action' => 'index'));
+		* Run the schema SQL to generate your database tables.
+
+Translating
+============
+
+	If you would like to translate the forum into a new language, or fix a previous language.
+	Simply fork the repo and follow the instructions below, you will need to download PoEdit: http://www.poedit.net/
+
+	Once you have done that, just follow these steps.
+
+	1 - Open the program and go to File > New catalog from POT file
+	2 - Fill in the settings box with the following information
+
+		Project: Cupcake Forum Plugin
+		Team: Miles Johnson
+		Team Email: contact@milesj.me
+		Language: <Pick the language>
+		Country: <Pick the country>
+		Charset: UTF-8
+		Source code: UTF-8
+		Plural: <Leave blank>
+
+	3 - Hit ok
+	4 - Save the file as forum.po and place it anywhere
+	5 - Once saved, the program should populate with the text on the left
+	6 - Translate the sentences on the left by typing in the translation box in the bottom
+	7 - When you come across text with the %s and %d symbols, that means those symbols will be replaced with dynamic data
+
+		Example:
+		%d = Integer/Number
+		%s = Text/String
+
+		"The forum %s has been deleted, and all its forum categories have been moved!"
+		"The forum General Discussion has been deleted, and all its forum categories have been moved!"
+
+		So those ARE REQUIRED to work correctly, just place those symbols where they would be within the translated string.
+		You may find some others like %count% and %total%; leave those as they are as well.
+
+	8 - When you are done, simply save the file
+	9 - You should now have 2 files, a .po and a .mo
+	10 - Open up the .po with Notepad and you should see the following
+
+		#: /controllers/categories_controller.php:101
+		msgid "A total of %d topic(s) have been permanently deleted"
+		msgstr "<YOUR TRANSLATED VERSION HERE>"
+
+	11 - Create a folder for your language within the locale folder, based on the 3 character locale: http://www.loc.gov/standards/iso639-2/php/code_list.php
+	12 - Within the language folder, create the LC_MESSAGES folder and place the .po file within.
+	13 - Commit and push! Once done, I will review and merge with your changes.

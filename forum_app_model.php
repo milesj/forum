@@ -19,6 +19,13 @@ App::import(array(
 class ForumAppModel extends AppModel {
 
 	/**
+	 * Table Prefix
+	 * @access public
+	 * @var string
+	 */
+	public $tablePrefix = 'forum_';
+
+	/**
 	 * Cache queries
 	 * @access public
 	 * @var boolean

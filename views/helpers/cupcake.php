@@ -108,8 +108,9 @@ class CupcakeHelper extends AppHelper {
 				'deu' => 'German',
 				'fre' => 'French',
 				'spa' => 'Spanish',
-				'dut' => 'Dutch',
-				'rus' => 'Russian'
+				//'dut' => 'Dutch',
+				'rus' => 'Russian',
+				'ind' => 'Indonesian'
 			);
 		}
 
