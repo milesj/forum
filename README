@@ -1,24 +1,21 @@
 Forum (Cupcake) - CakePHP Plugin
-******************************
+********************************
 
 Requirements
 ============
 
 	* CakePHP 1.2
 	* PHP 5.2.x
-	* Being Fantastic
+
+Documentation
+=============
+
+	* http://www.milesj.me/resources/script/forum-plugin
 
 Installation
 ============
 
-	Documentation:
-		* http://www.milesj.me/resources/script/forum-plugin
-
-	Quick Installation:
-		* Clone the repo into a folder called "forum" within your CakePHP's plugins directory.
-		* Add the route to connect the forum plugin to its base URL:
-			Router::connect('/forum', array('plugin' => 'forum', 'controller' => 'home', 'action' => 'index'));
-		* Run the schema SQL to generate your database tables.
+	* Clone the repo into a folder called "forum" within your CakePHP's plugins directory.
 
 Translating
 ============
