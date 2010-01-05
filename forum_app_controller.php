@@ -132,12 +132,17 @@ class ForumAppController extends AppController {
 		parent::beforeFilter();
 		
 		$this->_initForum();
+		$Config = ForumConfig::getInstance();
 
 		// Load l10n/i18n support
-		if ($locale = $this->Auth->user('locale')) {
-			Configure::write('Config.language', $locale);
-			setlocale(LC_ALL, $locale .'UTF8', $locale .'UTF-8', $locale, 'eng.UTF8', 'eng.UTF-8', 'eng', 'en_US');
+		if ($this->Auth->user('locale')) {
+			$locale = $this->Auth->user('locale');
+		} else {
+			$locale = (isset($Config->settings['default_locale']) ? $Config->settings['default_locale'] : 'eng');
 		}
+
+		Configure::write('Config.language', $locale);
+		setlocale(LC_ALL, $locale .'UTF8', $locale .'UTF-8', $locale, 'eng.UTF8', 'eng.UTF-8', 'eng', 'en_US');
 		
 		// Auth settings
 		$referer = $this->referer();
@@ -161,8 +166,6 @@ class ForumAppController extends AppController {
 		$this->Cookie->key = 'cupcake';
 		
 		// Apply censored words
-		$Config = ForumConfig::getInstance();
-		
 		if (!empty($Config->settings['censored_words'])) {
 			$censored = explode(',', str_replace(', ', ',', $Config->settings['censored_words']));
 			$this->helpers['Forum.Decoda'] = array('censored' => $censored);

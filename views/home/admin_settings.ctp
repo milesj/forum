@@ -30,6 +30,7 @@ echo $form->input('posts_till_hot_topic', array('style' => 'width: 50px', 'label
 <p><strong><?php __d('forum', 'Misc Settings'); ?></strong></p>
 
 <?php // Misc
+echo $form->input('default_locale', array('options' => $cupcake->getLocales(), 'label' => __d('forum', 'Language', true)));
 echo $form->input('days_till_autolock', array('style' => 'width: 50px', 'after' => ' ('. __d('forum', 'Days', true) .')', 'label' => __d('forum', 'Inactive Days Till Topic Auto-Lock', true)));
 echo $form->input('whos_online_interval', array('style' => 'width: 50px', 'label' => __d('forum', 'Whos Online Interval', true), 'after' => ' ('. __d('forum', 'Past Minutes', true) .')'));
 echo $form->input('enable_quick_reply', array('options' => $cupcake->options(), 'label' => __d('forum', 'Enable Quick Reply', true)));
