@@ -27,6 +27,54 @@ Contributors
 	* Alexey Kondratyev - Russian
 	* Walter Mairena - Spanish
 
+Features
+========
+
+	Forums
+    * Forum wrappers and forum categories
+    * First tier sub-forums
+    * Activity and latest post tracking
+    * Auto-Lock old topics
+    * Enable/Disable post count increments
+    * Individual settings for reading, posting, replying, etc
+    * Access/Private specific forums
+    * Create topics or polls
+    * Reply to topics, or quote previous posts
+
+	Moderation
+    * Moderators, Super Moderators and Admin levels
+    * Restrict moderators to specific forums
+    * Inline moderation and management
+    * Mass processing (Move, Delete, Close, etc)
+    * Ability to edit and manage users content
+
+	Administration
+    * Full admin panel using CakePHP admin routes
+    * Requires the administration access level
+    * Can add, edit, order, delete forums and categories
+    * Manage all reported content
+    * Promote, demote, create access levels, staff and moderators
+    * Edit forum settings through the panel
+    * Manage all aspects and content
+
+	Security
+    * Utilizes CakePHPs Auth and Security Components
+    * Advanced flood protection (Posts and Topics)
+    * Hourly post limitations
+    * Registration security wall
+    * Form protection against bots and hackers
+
+	Miscellaneous
+    * BBCode support using the Decoda Helper
+    * Uses the GeSHi class for code syntax highlighting
+    * Utilizes remember me features
+    * Mark topics as read (Session)
+    * Log created topics and posts (Session)
+    * Access level verification
+    * Report system for topics, posts and users
+    * Search through topics (Title and Post)
+    * RSS feeds for each forum
+
 Translating
 ============
 
