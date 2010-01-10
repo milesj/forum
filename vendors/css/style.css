@@ -274,6 +274,12 @@ td.empty {
 	
 	.decoda_quoteBody { padding: 5px; }
 
+#textarea {
+	float: left;
+	width: 70%; }
+
+	#textarea textarea { width: 75%; }
+
 /*------------------------------------------------------
 	Classes
 ------------------------------------------------------*/

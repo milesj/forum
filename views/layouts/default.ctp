@@ -9,6 +9,7 @@
 
 <?php // Scripts
 echo $html->css('/forum/css/style.css');
+echo $javascript->link('/forum/js/jquery-1.3.2.min.js');
 echo $javascript->link('/forum/js/script.js');
 
 if ($this->params['controller'] == 'home') {

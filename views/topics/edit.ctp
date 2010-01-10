@@ -46,7 +46,17 @@ if (!empty($topic['Poll']['id'])) { ?>
 } ?>
 
 <?php echo $form->input('FirstPost.id', array('type' => 'hidden')); ?>
-<?php echo $form->input('FirstPost.content', array('type' => 'textarea', 'rows' => 15, 'label' => __d('forum', 'Content', true))); ?>
+
+<div class="input textarea">
+	<?php echo $form->label('content', __d('forum', 'Content', true)); ?>
+
+	<div id="textarea">
+		<?php echo $form->input('FirstPost.content', array('type' => 'textarea', 'rows' => 15, 'label' => false, 'div' => false)); ?>
+	</div>
+
+	<span class="clear"><!-- --></span>
+	<?php echo $this->element('markitup', array('textarea' => 'FirstPostContent')); ?>
+</div>
 
 <div class="input ac">
 	<strong><?php __d('forum', 'Allowed Tags'); ?>:</strong> [b], [u], [i], [img], [url], [email], [code], [align], [list], [li], [color], [size], [quote]

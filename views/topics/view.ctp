@@ -195,7 +195,8 @@ if ($cupcake->settings['enable_quick_reply'] == 1) { ?>
         </td>
         <td>
 			<?php echo $form->input('content', array('type' => 'textarea', 'rows' => 5, 'style' => 'width: 99%', 'div' => false, 'error' => false, 'label' => false)); ?>
-       	</td>
+			<?php echo $this->element('markitup', array('textarea' => 'PostContent')); ?>
+		</td>
   	</tr>
     <tr class="altRow">
     	<td colspan="2" class="ac">

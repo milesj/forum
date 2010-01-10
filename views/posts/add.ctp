@@ -10,7 +10,17 @@ $html->addCrumb($topic['Topic']['title'], array('controller' => 'topics', 'actio
 <h2><?php __d('forum', 'Post Reply'); ?></h2>
 
 <?php echo $form->create('Post', array('url' => array('controller' => 'posts', 'action' => 'add', $id, $quote_id))); ?>
-<?php echo $form->input('content', array('type' => 'textarea', 'rows' => 15, 'label' => __d('forum', 'Content', true))); ?>
+
+<div class="input textarea">
+	<?php echo $form->label('content', __d('forum', 'Content', true)); ?>
+
+	<div id="textarea">
+		<?php echo $form->input('content', array('type' => 'textarea', 'rows' => 15, 'label' => false, 'div' => false)); ?>
+	</div>
+
+	<span class="clear"><!-- --></span>
+	<?php echo $this->element('markitup', array('textarea' => 'PostContent')); ?>
+</div>
 
 <div class="input ac">
 	<strong><?php __d('forum', 'Allowed Tags'); ?>:</strong> [b], [u], [i], [img], [url], [email], [code], [align], [list], [li], [color], [size], [quote]

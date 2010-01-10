@@ -27,7 +27,16 @@ $html->addCrumb($category['ForumCategory']['title'], array('controller' => 'cate
 	echo $form->input('expires', array('label' => __d('forum', 'Expiration Date', true), 'after' => ' '. __d('forum', 'How many days till expiration? Leave blank to last forever.', true), 'style' => 'width: 50px'));
 } ?>
 
-<?php echo $form->input('content', array('type' => 'textarea', 'rows' => 15, 'label' => __d('forum', 'Content', true))); ?>
+<div class="input textarea">
+	<?php echo $form->label('content', __d('forum', 'Content', true)); ?>
+	
+	<div id="textarea">
+		<?php echo $form->input('content', array('type' => 'textarea', 'rows' => 15, 'label' => false, 'div' => false)); ?>
+	</div>
+
+	<span class="clear"><!-- --></span>
+	<?php echo $this->element('markitup', array('textarea' => 'TopicContent')); ?>
+</div>
 
 <div class="input ac">
 	<strong><?php __d('forum', 'Allowed Tags'); ?>:</strong> [b], [u], [i], [img], [url], [email], [code], [align], [list], [li], [color], [size], [quote]
