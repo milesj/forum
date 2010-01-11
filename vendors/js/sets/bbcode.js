@@ -21,7 +21,7 @@ mySettings = {
 		{name:'Link', key:'L', openWith:'[url=[![Url]!]]', closeWith:'[/url]', placeHolder:'Your text to link here...'},
 		{name:'Email', key:'E', openWith:'[email=[![Email]!]]', closeWith:'[/email]', placeHolder:'Email address here...'},
 		{separator:'---------------' },
-		{name:'Colors', key:'C', openWith:'[color=[![Color]!]]', closeWith:'[/color]', dropMenu: [
+		{name:'Colors', openWith:'[color=[![Color]!]]', closeWith:'[/color]', dropMenu: [
 			{name:'Yellow', openWith:'[color=yellow]', closeWith:'[/color]', className:"col1-1" },
 			{name:'Orange', openWith:'[color=orange]', closeWith:'[/color]', className:"col1-2" },
 			{name:'Red', openWith:'[color=red]', closeWith:'[/color]', className:"col1-3" },
@@ -32,12 +32,12 @@ mySettings = {
 			{name:'Gray', openWith:'[color=gray]', closeWith:'[/color]', className:"col3-2" },
 			{name:'Black', openWith:'[color=black]', closeWith:'[/color]', className:"col3-3" }
 		]},
-		{name:'Size', key:'S', openWith:'[size=[![Text size]!]]', closeWith:'[/size]', dropMenu :[
+		{name:'Size', openWith:'[size=[![Text size]!]]', closeWith:'[/size]', dropMenu :[
 			{name:'Big', openWith:'[size=29]', closeWith:'[/size]' },
 			{name:'Normal', openWith:'[size=20]', closeWith:'[/size]' },
 			{name:'Small', openWith:'[size=10]', closeWith:'[/size]' }
 		]},
-		{name:'Alignments', key:'A', openWith:'[align=[![Direction]!]]', closeWith:'[/align]', dropMenu:[
+		{name:'Alignments', openWith:'[align=[![Direction]!]]', closeWith:'[/align]', dropMenu:[
 			{name:'Left', className:'left', openWith:'[align=left]', closeWith:'[/align]' },
 			{name:'Center', className:'center', openWith:'[align=center]', closeWith:'[/align]' },
 			{name:'Right', className:'right', openWith:'[align=right]', closeWith:'[/align]' }
