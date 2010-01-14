@@ -1,19 +1,18 @@
 <?php
 /** 
- * poll_option.php
+ * Cupcake - PollOption Model
  *
  * @author 		Miles Johnson - www.milesj.me
  * @copyright	Copyright 2006-2009, Miles Johnson, Inc.
  * @license 	http://www.opensource.org/licenses/mit-license.php - Licensed under The MIT License
- * @package		Cupcake - PollOption Model
  * @link		www.milesj.me/resources/script/forum-plugin
- * @link		www.milesj.me/forum
  */
  
 class PollOption extends ForumAppModel {
 
 	/**
-	 * Belongs to
+	 * Belongs to.
+	 *
 	 * @access public
 	 * @var array
 	 */
@@ -24,7 +23,8 @@ class PollOption extends ForumAppModel {
 	);
 	
 	/**
-	 * Add a vote for a poll
+	 * Add a vote for a poll.
+	 *
 	 * @access public
 	 * @param int $id
 	 * @return boolean

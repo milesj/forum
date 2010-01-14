@@ -1,26 +1,26 @@
 <?php
 /** 
- * access.php
+ * Cupcake - Access Model
  *
  * @author 		Miles Johnson - www.milesj.me
  * @copyright	Copyright 2006-2009, Miles Johnson, Inc.
  * @license 	http://www.opensource.org/licenses/mit-license.php - Licensed under The MIT License
- * @package		Cupcake - Access Model
  * @link		www.milesj.me/resources/script/forum-plugin
- * @link		www.milesj.me/forum
  */
  
 class Access extends ForumAppModel {
 
 	/**
-	 * DB Table
+	 * DB Table.
+	 *
 	 * @access public
 	 * @var string
 	 */
 	public $useTable = 'access';
 
 	/**
-	 * Belongs to
+	 * Belongs to.
+	 *
 	 * @access public
 	 * @var array 
 	 */
@@ -34,7 +34,8 @@ class Access extends ForumAppModel {
 	);
 	
 	/**
-	 * Validation
+	 * Validation.
+	 *
 	 * @access public
 	 * @var array
 	 */
@@ -44,7 +45,8 @@ class Access extends ForumAppModel {
 	);
 	
 	/**
-	 * Get a list of all staff and their levels
+	 * Get a list of all staff and their levels.
+	 *
 	 * @access public
 	 * @return array
 	 */
@@ -56,7 +58,8 @@ class Access extends ForumAppModel {
 	}
 	
 	/**
-	 * Get all my access
+	 * Get all my access.
+	 *
 	 * @access public
 	 * @param int $user_id
 	 * @return array
@@ -78,7 +81,8 @@ class Access extends ForumAppModel {
 	}
 	
 	/**
-	 * Check to see if the user has the admin role
+	 * Check to see if the user has the admin role.
+	 *
 	 * @access public
 	 * @param int $user_id
 	 * @return int
@@ -94,7 +98,8 @@ class Access extends ForumAppModel {
 	}
 	
 	/**
-	 * Check to see if the user has the super moderator role
+	 * Check to see if the user has the super moderator role.
+	 *
 	 * @access public
 	 * @param int $user_id
 	 * @return int
@@ -110,7 +115,8 @@ class Access extends ForumAppModel {
 	}
 	
 	/**
-	 * Move all users to a new level
+	 * Move all users to a new level.
+	 * 
 	 * @access public
 	 * @param int $start_id
 	 * @param int $moved_id

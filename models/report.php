@@ -1,26 +1,26 @@
 <?php
 /** 
- * report.php
+ * Cupcake - Report Model
  *
  * @author 		Miles Johnson - www.milesj.me
  * @copyright	Copyright 2006-2009, Miles Johnson, Inc.
  * @license 	http://www.opensource.org/licenses/mit-license.php - Licensed under The MIT License
- * @package		Cupcake - Report Model
  * @link		www.milesj.me/resources/script/forum-plugin
- * @link		www.milesj.me/forum 
  */
  
 class Report extends ForumAppModel {
 
 	/**
-	 * DB Table
+	 * DB Table.
+	 *
 	 * @access public
 	 * @var string
 	 */
 	public $useTable = 'reported';
 	
 	/**
-	 * Belongs to
+	 * Belongs to.
+	 *
 	 * @access public
 	 * @var array
 	 */
@@ -47,7 +47,8 @@ class Report extends ForumAppModel {
 	);
 	
 	/**
-	 * Validation
+	 * Validation.
+	 *
 	 * @access public
 	 * @var array
 	 */
@@ -56,7 +57,8 @@ class Report extends ForumAppModel {
 	);
 	
 	/**
-	 * Get the latest reports
+	 * Get the latest reports.
+	 * 
 	 * @access public
 	 * @param $limit
 	 * @return array

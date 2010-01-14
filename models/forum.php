@@ -1,19 +1,18 @@
 <?php
 /** 
- * forum.php
+ * Cupcake - Forum Model
  *
  * @author 		Miles Johnson - www.milesj.me
  * @copyright	Copyright 2006-2009, Miles Johnson, Inc.
  * @license 	http://www.opensource.org/licenses/mit-license.php - Licensed under The MIT License
- * @package		Cupcake - Forum Model
  * @link		www.milesj.me/resources/script/forum-plugin
- * @link		www.milesj.me/forum
  */
  
 class Forum extends ForumAppModel {
 
 	/**
-	 * Belongs to
+	 * Belongs to.
+	 *
 	 * @access public
 	 * @var array
 	 */
@@ -24,7 +23,8 @@ class Forum extends ForumAppModel {
 	);
 
 	/**
-	 * Has many
+	 * Has many.
+	 *
 	 * @access public
 	 * @var array 
 	 */
@@ -38,7 +38,8 @@ class Forum extends ForumAppModel {
 	); 
 	
 	/**
-	 * Validate
+	 * Validate.
+	 *
 	 * @access public
 	 * @var array
 	 */
@@ -57,7 +58,8 @@ class Forum extends ForumAppModel {
 	);
 	
 	/**
-	 * Get the list of forums for the board index
+	 * Get the list of forums for the board index.
+	 *
 	 * @access public
 	 * @param int $access
 	 * @return array
@@ -77,7 +79,8 @@ class Forum extends ForumAppModel {
 	}
 	
 	/**
-	 * Get the list of forums for the board index
+	 * Get the list of forums for the board index.
+	 *
 	 * @access public
 	 * @param int $access
 	 * @param array $accessLevels
@@ -113,7 +116,8 @@ class Forum extends ForumAppModel {
 	}
 	
 	/**
-	 * Get a list of forums
+	 * Get a list of forums.
+	 * 
 	 * @access public
 	 * @param int $exclude
 	 * @return array

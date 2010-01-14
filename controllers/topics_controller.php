@@ -1,33 +1,26 @@
 <?php
 /** 
- * topics_controller.php
+ * Cupcake - Topics Controller
  *
  * @author 		Miles Johnson - www.milesj.me
  * @copyright	Copyright 2006-2009, Miles Johnson, Inc.
  * @license 	http://www.opensource.org/licenses/mit-license.php - Licensed under The MIT License
- * @package		Cupcake - Topics Controller
  * @link		www.milesj.me/resources/script/forum-plugin
- * @link		www.milesj.me/forum  
  */
  
 class TopicsController extends ForumAppController {
 
 	/**
-	 * Controller Name
-	 * @access public
-	 * @var string
-	 */
-	public $name = 'Topics';
-
-	/**
-	 * Models
+	 * Models.
+	 *
 	 * @access public
 	 * @var array
 	 */
 	public $uses = array('Forum.Topic');  
 	
 	/**
-	 * Pagination   
+	 * Pagination.
+	 *
 	 * @access public   
 	 * @var array    
 	 */ 
@@ -39,7 +32,8 @@ class TopicsController extends ForumAppController {
 	);
 	
 	/**
-	 * Redirect
+	 * Redirect.
+	 *
 	 * @access public
 	 */
 	public function index() {
@@ -47,7 +41,8 @@ class TopicsController extends ForumAppController {
 	}
 	
 	/**
-	 * Post a new topic or poll
+	 * Post a new topic or poll.
+	 *
 	 * @access public
 	 * @param int $category_id
 	 * @param string $type
@@ -100,7 +95,8 @@ class TopicsController extends ForumAppController {
 	}
 	
 	/**
-	 * Edit a topic
+	 * Edit a topic.
+	 *
 	 * @access public
 	 * @param int $id
 	 */
@@ -133,7 +129,8 @@ class TopicsController extends ForumAppController {
 	}
 	
 	/**
-	 * RSS Feed
+	 * RSS Feed.
+	 *
 	 * @access public
 	 * @param int $id
 	 */
@@ -156,7 +153,8 @@ class TopicsController extends ForumAppController {
 	}
 	
 	/**
-	 * Delete a topic
+	 * Delete a topic.
+	 *
 	 * @access public
 	 * @param int $id
 	 */
@@ -175,7 +173,8 @@ class TopicsController extends ForumAppController {
 	}
 	
 	/**
-	 * Report a topic
+	 * Report a topic.
+	 *
 	 * @access public
 	 * @param int $id
 	 */
@@ -206,7 +205,8 @@ class TopicsController extends ForumAppController {
 	}
 
 	/**
-	 * Read a topic
+	 * Read a topic.
+	 *
 	 * @access public
 	 * @param int $id
 	 */
@@ -242,7 +242,8 @@ class TopicsController extends ForumAppController {
 	}
 	
 	/**
-	 * Moderate a topic
+	 * Moderate a topic.
+	 *
 	 * @access public
 	 * @param int $id
 	 */
@@ -285,7 +286,8 @@ class TopicsController extends ForumAppController {
 	}
 	
 	/**
-	 * Before filter
+	 * Before filter.
+	 * 
 	 * @access public
 	 * @return void
 	 */

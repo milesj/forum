@@ -1,19 +1,18 @@
 <?php
 /** 
- * forum_category.php
+ * Cupcake - ForumCategory Model
  *
  * @author 		Miles Johnson - www.milesj.me
  * @copyright	Copyright 2006-2009, Miles Johnson, Inc.
  * @license 	http://www.opensource.org/licenses/mit-license.php - Licensed under The MIT License
- * @package		Cupcake - ForumCategory Model
  * @link		www.milesj.me/resources/script/forum-plugin
- * @link		www.milesj.me/forum 
  */
  
 class ForumCategory extends ForumAppModel {
 
 	/**
-	 * Belongs to
+	 * Belongs to.
+	 *
 	 * @access public
 	 * @var array
 	 */
@@ -44,7 +43,8 @@ class ForumCategory extends ForumAppModel {
 	);
 
 	/**
-	 * Has many
+	 * Has many.
+	 *
 	 * @access public
 	 * @var array
 	 */
@@ -68,7 +68,8 @@ class ForumCategory extends ForumAppModel {
 	);
 	
 	/**
-	 * Validate
+	 * Validate.
+	 *
 	 * @access public
 	 * @var array
 	 */
@@ -89,7 +90,8 @@ class ForumCategory extends ForumAppModel {
 	);
 	
 	/**
-	 * Get all basic info for a category
+	 * Get all basic info for a category.
+	 *
 	 * @access public
 	 * @param int $id
 	 * @param int $access
@@ -103,7 +105,8 @@ class ForumCategory extends ForumAppModel {
 	}
 	
 	/**
-	 * Get all required info for viewing a category
+	 * Get all required info for viewing a category.
+	 *
 	 * @access public
 	 * @param int $id
 	 * @param int $access
@@ -131,7 +134,8 @@ class ForumCategory extends ForumAppModel {
 	}
 	
 	/**
-	 * Get the hierarchy
+	 * Get the hierarchy.
+	 *
 	 * @access public
 	 * @param int $access
 	 * @param array $accessLevels
@@ -201,7 +205,8 @@ class ForumCategory extends ForumAppModel {
 	}
 	
 	/**
-	 * Get a list of parents
+	 * Get a list of parents.
+	 *
 	 * @access public
 	 * @param int $exclude
 	 * @return array
@@ -219,7 +224,8 @@ class ForumCategory extends ForumAppModel {
 	}
 	
 	/**
-	 * Increase the post count
+	 * Increase the post count.
+	 *
 	 * @access public
 	 * @param int $id
 	 * @return boolean
@@ -229,7 +235,8 @@ class ForumCategory extends ForumAppModel {
 	}
 	
 	/**
-	 * Move all categories to a new forum
+	 * Move all categories to a new forum.
+	 *
 	 * @access public
 	 * @param int $start_id
 	 * @param int $moved_id
@@ -246,7 +253,8 @@ class ForumCategory extends ForumAppModel {
 	}
 	
 	/**
-	 * Update the order of the forums
+	 * Update the order of the forums.
+	 * 
 	 * @access public
 	 * @param array $data
 	 * @return boolean

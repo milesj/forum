@@ -1,19 +1,18 @@
 <?php
 /** 
- * poll_vote.php
+ * Cupcake - PollVote Model
  *
  * @author 		Miles Johnson - www.milesj.me
  * @copyright	Copyright 2006-2009, Miles Johnson, Inc.
  * @license 	http://www.opensource.org/licenses/mit-license.php - Licensed under The MIT License
- * @package		Cupcake - PollVote Model
  * @link		www.milesj.me/resources/script/forum-plugin
- * @link		www.milesj.me/forum
  */
  
 class PollVote extends ForumAppModel {
 
 	/**
-	 * Belongs to
+	 * Belongs to.
+	 *
 	 * @access public
 	 * @var array
 	 */
@@ -30,7 +29,8 @@ class PollVote extends ForumAppModel {
 	);
 	
 	/**
-	 * Add a voter for a poll
+	 * Add a voter for a poll.
+	 *
 	 * @access public
 	 * @param int $poll_id
 	 * @param int $option_id
@@ -49,7 +49,8 @@ class PollVote extends ForumAppModel {
 	}
 	
 	/**
-	 * Check to see if a person voted
+	 * Check to see if a person voted.
+	 * 
 	 * @access public
 	 * @param int $user_id
 	 * @param int $poll_id

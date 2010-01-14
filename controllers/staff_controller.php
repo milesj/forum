@@ -1,33 +1,26 @@
 <?php
 /** 
- * staff_controller.php
+ * Cupcake - Staff Controller
  *
  * @author 		Miles Johnson - www.milesj.me
  * @copyright	Copyright 2006-2009, Miles Johnson, Inc.
  * @license 	http://www.opensource.org/licenses/mit-license.php - Licensed under The MIT License
- * @package		Cupcake - Staff Controller
  * @link		www.milesj.me/resources/script/forum-plugin
- * @link		www.milesj.me/forum
  */
  
 class StaffController extends ForumAppController {
 
 	/**
-	 * Controller Name
-	 * @access public
-	 * @var string
-	 */
-	public $name = 'Staff';
-	
-	/**
-	 * Models
+	 * Models.
+	 *
 	 * @access public
 	 * @var array
 	 */
 	public $uses = array('Forum.Access', 'Forum.Moderator');
 	
 	/**
-	 * List all staff
+	 * List all staff.
+	 *
 	 * @access private
 	 * @category Admin
 	 */
@@ -39,7 +32,8 @@ class StaffController extends ForumAppController {
 	}
 	
 	/**
-	 * Add an access / staff
+	 * Add an access / staff.
+	 *
 	 * @access private
 	 * @category Admin
 	 */
@@ -57,7 +51,8 @@ class StaffController extends ForumAppController {
 	}
 	
 	/**
-	 * Edit an access / staff
+	 * Edit an access / staff.
+	 *
 	 * @access private
 	 * @category Admin
 	 * @param int $id
@@ -84,7 +79,8 @@ class StaffController extends ForumAppController {
 	}
 	
 	/**
-	 * Delete an access / staff
+	 * Delete an access / staff.
+	 *
 	 * @access private
 	 * @category Admin
 	 * @param int $id
@@ -102,7 +98,8 @@ class StaffController extends ForumAppController {
 	}
 	
 	/**
-	 * Add an access level
+	 * Add an access level.
+	 *
 	 * @access private
 	 * @category Admin
 	 */
@@ -119,7 +116,8 @@ class StaffController extends ForumAppController {
 	}
 	
 	/**
-	 * Edit an access level
+	 * Edit an access level.
+	 *
 	 * @access private
 	 * @category Admin
 	 * @param $id
@@ -146,7 +144,8 @@ class StaffController extends ForumAppController {
 	}
 	
 	/**
-	 * Delete an access level
+	 * Delete an access level.
+	 *
 	 * @access private
 	 * @category Admin
 	 * @param $id
@@ -171,7 +170,8 @@ class StaffController extends ForumAppController {
 	}
 	
 	/**
-	 * Adds a moderator
+	 * Adds a moderator.
+	 *
 	 * @access private
 	 * @category Admin
 	 */
@@ -189,7 +189,8 @@ class StaffController extends ForumAppController {
 	}
 	
 	/**
-	 * Edit a moderator
+	 * Edit a moderator.
+	 *
 	 * @access private
 	 * @category Admin
 	 * @param $id
@@ -216,7 +217,8 @@ class StaffController extends ForumAppController {
 	}
 	
 	/**
-	 * Delete a moderator
+	 * Delete a moderator.
+	 *
 	 * @access private
 	 * @category Admin
 	 * @param $id
@@ -234,7 +236,8 @@ class StaffController extends ForumAppController {
 	}
 	
 	/**
-	 * Before filter
+	 * Before filter.
+	 * 
 	 * @access public
 	 * @return void
 	 */

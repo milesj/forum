@@ -1,33 +1,26 @@
 <?php
 /** 
- * reports_controller.php
+ * Cupcake - Reports Controller
  *
  * @author 		Miles Johnson - www.milesj.me
  * @copyright	Copyright 2006-2009, Miles Johnson, Inc.
  * @license 	http://www.opensource.org/licenses/mit-license.php - Licensed under The MIT License
- * @package		Cupcake - Reports Controller
  * @link		www.milesj.me/resources/script/forum-plugin
- * @link		www.milesj.me/forum 
  */
  
 class ReportsController extends ForumAppController {
 
 	/**
-	 * Controller Name
-	 * @access public  
-	 * @var string
-	 */
-	public $name = 'Reports';
-
-	/**
-	 * Models
+	 * Models.
+	 *
 	 * @access public  
 	 * @var array
 	 */
 	public $uses = array('Forum.Report');  
 	
 	/**
-	 * Pagination 
+	 * Pagination.
+	 *
 	 * @access public     
 	 * @var array      
 	 */ 
@@ -40,7 +33,8 @@ class ReportsController extends ForumAppController {
 	);
 	
 	/**
-	 * List of all reports
+	 * List of all reports.
+	 *
 	 * @access public
 	 * @category Admin
 	 */
@@ -52,7 +46,8 @@ class ReportsController extends ForumAppController {
 	}
 	
 	/**
-	 * Reported topics
+	 * Reported topics.
+	 *
 	 * @access public
 	 * @category Admin
 	 */
@@ -92,7 +87,8 @@ class ReportsController extends ForumAppController {
 	}
 	
 	/**
-	 * Reported posts
+	 * Reported posts.
+	 *
 	 * @access public
 	 * @category Admin
 	 */
@@ -128,7 +124,8 @@ class ReportsController extends ForumAppController {
 	}
 	
 	/**
-	 * Reported users
+	 * Reported users.
+	 *
 	 * @access public
 	 * @category Admin
 	 */
@@ -168,7 +165,8 @@ class ReportsController extends ForumAppController {
 	}
 	
 	/**
-	 * Before filter
+	 * Before filter.
+	 * 
 	 * @access public
 	 * @return void
 	 */

@@ -1,33 +1,26 @@
 <?php
 /** 
- * posts_controller.php
+ * Cupcake - Posts Controller
  *
  * @author 		Miles Johnson - www.milesj.me
  * @copyright	Copyright 2006-2009, Miles Johnson, Inc.
  * @license 	http://www.opensource.org/licenses/mit-license.php - Licensed under The MIT License
- * @package		Cupcake - Posts Controller
  * @link		www.milesj.me/resources/script/forum-plugin
- * @link		www.milesj.me/forum 
  */
  
 class PostsController extends ForumAppController {
 
 	/**
-	 * Controller Name
-	 * @access public
-	 * @var string
-	 */
-	public $name = 'Posts';
-
-	/**
-	 * Models
+	 * Models.
+	 *
 	 * @access public
 	 * @var array
 	 */
 	public $uses = array('Forum.Post'); 
 	
 	/**
-	 * Redirect
+	 * Redirect.
+	 *
 	 * @access public  
 	 */ 
 	public function index() {
@@ -35,7 +28,8 @@ class PostsController extends ForumAppController {
 	}
 	
 	/**
-	 * Add post / reply to topic
+	 * Add post / reply to topic.
+	 *
 	 * @access public
 	 * @param int $topic_id
 	 * @param int $quote_id
@@ -84,7 +78,8 @@ class PostsController extends ForumAppController {
 	}
 	
 	/**
-	 * Edit a post
+	 * Edit a post.
+	 *
 	 * @access public
 	 * @param int $id
 	 */
@@ -116,7 +111,8 @@ class PostsController extends ForumAppController {
 	}
 	
 	/**
-	 * Delete a post
+	 * Delete a post.
+	 *
 	 * @access public
 	 * @param int $id
 	 */
@@ -137,7 +133,8 @@ class PostsController extends ForumAppController {
 	}
 	
 	/**
-	 * Report a post
+	 * Report a post.
+	 *
 	 * @access public
 	 * @param int $id
 	 */
@@ -168,7 +165,8 @@ class PostsController extends ForumAppController {
 	}
 	
 	/**
-	 * Before filter
+	 * Before filter.
+	 * 
 	 * @access public
 	 * @return void
 	 */

@@ -2,7 +2,7 @@
 -- Table structure for table `access`
 --
 
-CREATE TABLE IF NOT EXISTS `access` (
+CREATE TABLE IF NOT EXISTS `{:prefix}access` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT,
 	`access_level_id` INT(11) NOT NULL,
 	`user_id` INT(11) NOT NULL,
@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS `access` (
 -- Table structure for table `access_levels`
 --
 
-CREATE TABLE IF NOT EXISTS `access_levels` (
+CREATE TABLE IF NOT EXISTS `{:prefix}access_levels` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT,
 	`title` VARCHAR(30) NOT NULL,
 	`level` INT(11) NOT NULL,
@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `access_levels` (
 -- Dumping data for table `access_levels`
 --
 
-INSERT INTO `access_levels` (`id`, `title`, `level`, `is_admin`, `is_super`) VALUES
+INSERT INTO `{:prefix}access_levels` (`id`, `title`, `level`, `is_admin`, `is_super`) VALUES
 	(1, 'Member', 1, 0, 0),
 	(2, 'Moderator', 4, 0, 0),
 	(3, 'Super Moderator', 7, 0, 1),
@@ -43,7 +43,7 @@ INSERT INTO `access_levels` (`id`, `title`, `level`, `is_admin`, `is_super`) VAL
 -- Table structure for table `forums`
 --
 
-CREATE TABLE IF NOT EXISTS `forums` (
+CREATE TABLE IF NOT EXISTS `{:prefix}forums` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT,
 	`access_level_id` SMALLINT(6) NOT NULL DEFAULT '0',
 	`title` VARCHAR(50) NOT NULL,
@@ -58,7 +58,7 @@ CREATE TABLE IF NOT EXISTS `forums` (
 -- Dumping data for table `forums`
 --
 
-INSERT INTO `forums` (`id`, `access_level_id`, `title`, `status`, `orderNo`, `accessView`) VALUES
+INSERT INTO `{:prefix}forums` (`id`, `access_level_id`, `title`, `status`, `orderNo`, `accessView`) VALUES
 	(1, 0, 'Cupcake Forums', 0, 1, 0);
 
 -- --------------------------------------------------------
@@ -67,7 +67,7 @@ INSERT INTO `forums` (`id`, `access_level_id`, `title`, `status`, `orderNo`, `ac
 -- Table structure for table `forum_categories`
 --
 
-CREATE TABLE IF NOT EXISTS `forum_categories` (
+CREATE TABLE IF NOT EXISTS `{:prefix}forum_categories` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT,
 	`forum_id` INT(11) NOT NULL,
 	`parent_id` INT(11) NOT NULL DEFAULT '0',
@@ -102,7 +102,7 @@ CREATE TABLE IF NOT EXISTS `forum_categories` (
 -- Dumping data for table `forum_categories`
 --
 
-INSERT INTO `forum_categories` (`id`, `forum_id`, `parent_id`, `access_level_id`, `title`, `description`, `status`, `orderNo`, `topic_count`, `post_count`, `accessRead`, `accessPost`, `accessReply`, `accessPoll`, `settingPostCount`, `settingAutoLock`, `lastTopic_id`, `lastPost_id`, `lastUser_id`, `created`, `modified`) VALUES
+INSERT INTO `{:prefix}forum_categories` (`id`, `forum_id`, `parent_id`, `access_level_id`, `title`, `description`, `status`, `orderNo`, `topic_count`, `post_count`, `accessRead`, `accessPost`, `accessReply`, `accessPoll`, `settingPostCount`, `settingAutoLock`, `lastTopic_id`, `lastPost_id`, `lastUser_id`, `created`, `modified`) VALUES
 (1, 1, 0, 0, 'General Discussion', 'This is a forum category, which is a child of the forum. You can add, edit or delete these categories by visiting the administration panel, but first you would need to give a user admin rights.', 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, NOW(), NOW());
 
 -- --------------------------------------------------------
@@ -111,7 +111,7 @@ INSERT INTO `forum_categories` (`id`, `forum_id`, `parent_id`, `access_level_id`
 -- Table structure for table `moderators`
 --
 
-CREATE TABLE IF NOT EXISTS `moderators` (
+CREATE TABLE IF NOT EXISTS `{:prefix}moderators` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT,
 	`forum_category_id` INT(11) NOT NULL,
 	`user_id` INT(11) NOT NULL,
@@ -127,7 +127,7 @@ CREATE TABLE IF NOT EXISTS `moderators` (
 -- Table structure for table `polls`
 --
 
-CREATE TABLE IF NOT EXISTS `polls` (
+CREATE TABLE IF NOT EXISTS `{:prefix}polls` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT,
 	`topic_id` INT(11) NOT NULL,
 	`created` DATETIME DEFAULT NULL,
@@ -143,7 +143,7 @@ CREATE TABLE IF NOT EXISTS `polls` (
 -- Table structure for table `poll_options`
 --
 
-CREATE TABLE IF NOT EXISTS `poll_options` (
+CREATE TABLE IF NOT EXISTS `{:prefix}poll_options` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT,
 	`poll_id` INT(11) NOT NULL,
 	`option` VARCHAR(100) NOT NULL,
@@ -158,7 +158,7 @@ CREATE TABLE IF NOT EXISTS `poll_options` (
 -- Table structure for table `poll_votes`
 --
 
-CREATE TABLE IF NOT EXISTS `poll_votes` (
+CREATE TABLE IF NOT EXISTS `{:prefix}poll_votes` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT,
 	`poll_id` INT(11) NOT NULL,
 	`poll_option_id` INT(11) NOT NULL,
@@ -175,7 +175,7 @@ CREATE TABLE IF NOT EXISTS `poll_votes` (
 -- Table structure for table `posts`
 --
 
-CREATE TABLE IF NOT EXISTS `posts` (
+CREATE TABLE IF NOT EXISTS `{:prefix}posts` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT,
 	`topic_id` INT(11) NOT NULL,
 	`user_id` INT(11) NOT NULL,
@@ -194,7 +194,7 @@ CREATE TABLE IF NOT EXISTS `posts` (
 -- Table structure for table `reported`
 --
 
-CREATE TABLE IF NOT EXISTS `reported` (
+CREATE TABLE IF NOT EXISTS `{:prefix}reported` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT,
 	`item_id` INT(11) NOT NULL,
 	`itemType` VARCHAR(15) NOT NULL,
@@ -212,7 +212,7 @@ CREATE TABLE IF NOT EXISTS `reported` (
 -- Table structure for table `topics`
 --
 
-CREATE TABLE IF NOT EXISTS `topics` (
+CREATE TABLE IF NOT EXISTS `{:prefix}topics` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT,
 	`forum_category_id` INT(11) NOT NULL,
 	`user_id` INT(11) NOT NULL,

@@ -1,19 +1,18 @@
 <?php
 /** 
- * user.php
+ * Cupcake - User Model
  *
  * @author 		Miles Johnson - www.milesj.me
  * @copyright	Copyright 2006-2009, Miles Johnson, Inc.
  * @license 	http://www.opensource.org/licenses/mit-license.php - Licensed under The MIT License
- * @package		Cupcake - User Model
  * @link		www.milesj.me/resources/script/forum-plugin
- * @link		www.milesj.me/forum
  */
  
 class User extends ForumAppModel {
 
 	/**
-	 * Has many
+	 * Has many.
+	 *
 	 * @access public
 	 * @var array
 	 */
@@ -41,7 +40,8 @@ class User extends ForumAppModel {
 	);
 	
 	/**
-	 * Validation
+	 * Validation.
+	 *
 	 * @access public
 	 * @var array
 	 */ 
@@ -101,7 +101,8 @@ class User extends ForumAppModel {
 	);
 	
 	/**
-	 * Retrieve and reset information for a forgotten password
+	 * Retrieve and reset information for a forgotten password.
+	 *
 	 * @access public
 	 * @param array $data
 	 * @return array
@@ -125,7 +126,8 @@ class User extends ForumAppModel {
 	}
 	
 	/**
-	 * Generates a string of random characters
+	 * Generates a string of random characters.
+	 *
 	 * @access public
 	 * @param int $length
 	 * @return string
@@ -145,7 +147,8 @@ class User extends ForumAppModel {
 	}
 	
 	/**
-	 * Get a users profile: info, access levels, moderations
+	 * Get a users profile: info, access levels, moderations.
+	 *
 	 * @access public
 	 * @param int $id
 	 * @return array
@@ -161,7 +164,8 @@ class User extends ForumAppModel {
 	}
 	
 	/**
-	 * Get the latest users signed up
+	 * Get the latest users signed up.
+	 *
 	 * @access public
 	 * @param $limit
 	 * @return array
@@ -174,7 +178,8 @@ class User extends ForumAppModel {
 	}
 
 	/**
-	 * Get the newest signup
+	 * Get the newest signup.
+	 *
 	 * @access public
 	 * @return array
 	 */
@@ -187,7 +192,8 @@ class User extends ForumAppModel {
 	}
 	
 	/**
-	 * Increase the post count
+	 * Increase the post count.
+	 *
 	 * @access public
 	 * @param int $id
 	 * @return boolean
@@ -197,7 +203,8 @@ class User extends ForumAppModel {
 	}
 	
 	/**
-	 * Increase the topic count
+	 * Increase the topic count.
+	 *
 	 * @access public
 	 * @param int $id
 	 * @return boolean
@@ -207,7 +214,8 @@ class User extends ForumAppModel {
 	}
 	
 	/**
-	 * Checks to see if the old password matches their input
+	 * Checks to see if the old password matches their input.
+	 *
 	 * @access public
 	 * @param array $data
 	 * @return boolean
@@ -227,7 +235,8 @@ class User extends ForumAppModel {
 	}	
 	
 	/**
-	 * Login the user and update records
+	 * Login the user and update records.
+	 *
 	 * @access public
 	 * @param array $user
 	 * @return boolean
@@ -247,7 +256,8 @@ class User extends ForumAppModel {
 	}
 	
 	/**
-	 * Change the users password
+	 * Change the users password.
+	 *
 	 * @access public
 	 * @param int $id
 	 * @param string $password
@@ -259,7 +269,8 @@ class User extends ForumAppModel {
 	}
 	
 	/**
-	 * Get whos online within the past x minutes
+	 * Get whos online within the past x minutes.
+	 *
 	 * @access public
 	 * @param int $minutes
 	 * @return array
@@ -275,7 +286,8 @@ class User extends ForumAppModel {
 	}
 	
 	/**
-	 * Extra validation checking
+	 * Extra validation checking.
+	 * 
 	 * @access public
 	 * @return boolean
 	 */

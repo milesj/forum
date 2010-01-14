@@ -1,33 +1,34 @@
 <?php
 /** 
- * core.php
+ * Cupcake - Core Configuration
  *
  * @author 		Miles Johnson - www.milesj.me
  * @copyright	Copyright 2006-2009, Miles Johnson, Inc.
  * @license 	http://www.opensource.org/licenses/mit-license.php - Licensed under The MIT License
- * @package		Cupcake - Core Configuration
  * @link		www.milesj.me/resources/script/forum-plugin
- * @link		www.milesj.me/forum  
  */
  
 class ForumConfig {
 
 	/**
-	 * Current version: www.milesj.me/files/logs/forum-plugin
+	 * Current version: www.milesj.me/resources/logs/forum-plugin
+	 *
 	 * @access public
 	 * @var string
 	 */
 	public $version = '1.6';
 
 	/**
-	 * Settings
+	 * Settings.
+	 *
 	 * @access public
 	 * @var array
 	 */
 	public $settings = array();
 
 	/**
-	 * Singleton Instance
+	 * Singleton Instance.
+	 *
 	 * @access private
 	 * @var array
 	 * @static
@@ -35,7 +36,8 @@ class ForumConfig {
 	private static $__instance;
 	
 	/**
-	 * Load the settings from the ini file
+	 * Load the settings from the ini file.
+	 *
 	 * @access private
 	 * @return void
 	 */
@@ -58,7 +60,8 @@ class ForumConfig {
 	}
 
 	/**
-	 * Grab the current object instance
+	 * Grab the current object instance.
+	 * 
 	 * @access public
 	 * @return object
 	 * @static

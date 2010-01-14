@@ -1,26 +1,26 @@
 <?php
 /** 
- * setting.php
+ * Cupcake - Setting Model
  *
  * @author 		Miles Johnson - www.milesj.me
  * @copyright	Copyright 2006-2009, Miles Johnson, Inc.
  * @license 	http://www.opensource.org/licenses/mit-license.php - Licensed under The MIT License
- * @package		Cupcake - Setting Model
  * @link		www.milesj.me/resources/script/forum-plugin
- * @link		www.milesj.me/forum
  */
  
 class Setting extends ForumAppModel {
 
 	/**
-	 * No table
+	 * No table.
+	 *
 	 * @access public
 	 * @var boolean
 	 */
 	public $useTable = false;
 	
 	/**
-	 * Validate
+	 * Validate.
+	 *
 	 * @access public
 	 * @var array
 	 */
@@ -152,7 +152,8 @@ class Setting extends ForumAppModel {
 	);
 	
 	/**
-	 * Save the data to the ini file
+	 * Save the data to the ini file.
+	 * 
 	 * @access public
 	 * @param array $data
 	 * @return boolean

@@ -1,19 +1,18 @@
 <?php
 /** 
- * poll.php
+ * Cupcake - Poll Model
  *
  * @author 		Miles Johnson - www.milesj.me
  * @copyright	Copyright 2006-2009, Miles Johnson, Inc.
  * @license 	http://www.opensource.org/licenses/mit-license.php - Licensed under The MIT License
- * @package		Cupcake - Poll Model
  * @link		www.milesj.me/resources/script/forum-plugin
- * @link		www.milesj.me/forum
  */
  
 class Poll extends ForumAppModel {
 
 	/**
-	 * Belongs to
+	 * Belongs to.
+	 *
 	 * @access public
 	 * @var array
 	 */
@@ -24,7 +23,8 @@ class Poll extends ForumAppModel {
 	);
 
 	/**
-	 * Has many
+	 * Has many.
+	 *
 	 * @access public
 	 * @var array
 	 */
@@ -43,7 +43,8 @@ class Poll extends ForumAppModel {
 	);
 	
 	/**
-	 * Add a poll attached to a topic
+	 * Add a poll attached to a topic.
+	 *
 	 * @access public
 	 * @param int $topic_id
 	 * @param array $data
@@ -78,7 +79,8 @@ class Poll extends ForumAppModel {
 	}
 	
 	/**
-	 * Process the totals and percentages
+	 * Process the totals and percentages.
+	 *
 	 * @access public
 	 * @param array $poll
 	 * @param int $user_id
@@ -108,7 +110,8 @@ class Poll extends ForumAppModel {
 	}
 	
 	/**
-	 * Vote in a poll
+	 * Vote in a poll.
+	 * 
 	 * @access public
 	 * @param int $poll_id
 	 * @param int $option_id

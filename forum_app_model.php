@@ -1,13 +1,11 @@
 <?php
 /** 
- * forum_app_model.php
+ * Cupcake - Forum Plugin AppModel
  *
  * @author 		Miles Johnson - www.milesj.me
  * @copyright	Copyright 2006-2009, Miles Johnson, Inc.
  * @license 	http://www.opensource.org/licenses/mit-license.php - Licensed under The MIT License
- * @package		Cupcake - Forum Plugin AppModel
  * @link		www.milesj.me/resources/script/forum-plugin
- * @link		www.milesj.me/forum
  */
 
 App::import(array(
@@ -19,21 +17,32 @@ App::import(array(
 class ForumAppModel extends AppModel {
 
 	/**
-	 * Cache queries
+	 * Table prefix.
+	 *
+	 * @access public
+	 * @var string
+	 */
+	public $tablePrefix = '{:prefix}';
+
+	/**
+	 * Cache queries.
+	 *
 	 * @access public
 	 * @var boolean
 	 */
 	public $cacheQueries = true;
 
 	/**
-	 * Behaviors
+	 * Behaviors.
+	 *
 	 * @access public
 	 * @var array
 	 */
 	public $actsAs = array('Containable');
 
 	/**
-	 * Grab a row and defined fields/containables
+	 * Grab a row and defined fields/containables.
+	 *
 	 * @access public
 	 * @param int $id
 	 * @param array $fields
@@ -57,7 +66,8 @@ class ForumAppModel extends AppModel {
 	}
 
 	/**
-	 * Adds locale functions to errors
+	 * Adds locale functions to errors.
+	 *
 	 * @param string $field
 	 * @param mixed $value
 	 * @return string
@@ -67,7 +77,8 @@ class ForumAppModel extends AppModel {
 	}
 	
 	/**
-	 * Validates two inputs against each other
+	 * Validates two inputs against each other.
+	 *
 	 * @access public
 	 * @param array $data
 	 * @param string $confirmField
@@ -82,7 +93,8 @@ class ForumAppModel extends AppModel {
 	}
 
 	/**
-	 * Update a row with certain fields
+	 * Update a row with certain fields.
+	 * 
 	 * @access public
 	 * @param int $id
 	 * @param array $data

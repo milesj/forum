@@ -1,40 +1,34 @@
 <?php
 /** 
- * users_controller.php
+ * Cupcake - Users Controller
  *
  * @author 		Miles Johnson - www.milesj.me
  * @copyright	Copyright 2006-2009, Miles Johnson, Inc.
  * @license 	http://www.opensource.org/licenses/mit-license.php - Licensed under The MIT License
- * @package		Cupcake - Users Controller
  * @link		www.milesj.me/resources/script/forum-plugin
- * @link		www.milesj.me/forum 
  */
  
 class UsersController extends ForumAppController {
 
 	/**
-	 * Controller Name
-	 * @access public
-	 * @var string
-	 */
-	public $name = 'Users';
-
-	/**
-	 * Models
+	 * Models.
+	 *
 	 * @access public
 	 * @var array
 	 */
 	public $uses = array('Forum.User');  
 
 	/**
-	 * Components
+	 * Components.
+	 *
 	 * @access public
 	 * @var array
 	 */
 	public $components = array('Email');   
 	
 	/**
-	 * Pagination   
+	 * Pagination.
+	 *
 	 * @access public   
 	 * @var array      
 	 */ 
@@ -47,7 +41,8 @@ class UsersController extends ForumAppController {
 	);
 	
 	/**
-	 * Redirect 
+	 * Redirect.
+	 *
 	 * @access public 
 	 */
 	public function index() {
@@ -55,7 +50,8 @@ class UsersController extends ForumAppController {
 	}
 	
 	/**
-	 * Edit a users profile
+	 * Edit a users profile.
+	 *
 	 * @access public
 	 */
 	public function edit() {
@@ -93,7 +89,8 @@ class UsersController extends ForumAppController {
 	}
 	
 	/**
-	 * Forgot credentials
+	 * Forgot credentials.
+	 *
 	 * @access public
 	 */
 	public function forgot() {
@@ -110,7 +107,8 @@ class UsersController extends ForumAppController {
 	}
 	
 	/**
-	 * Login
+	 * Login.
+	 *
 	 * @access public
 	 */
 	public function login() {
@@ -131,7 +129,8 @@ class UsersController extends ForumAppController {
 	}
 	
 	/**
-	 * Logout
+	 * Logout.
+	 *
 	 * @access public
 	 */
 	public function logout() {
@@ -140,7 +139,8 @@ class UsersController extends ForumAppController {
 	}
 	
 	/**
-	 * List of all users
+	 * List of all users.
+	 *
 	 * @access public
 	 */
 	public function listing() {
@@ -155,7 +155,8 @@ class UsersController extends ForumAppController {
 	}
 	
 	/**
-	 * User profile
+	 * User profile.
+	 *
 	 * @access public
 	 * @param int $id
 	 */
@@ -173,7 +174,8 @@ class UsersController extends ForumAppController {
 	}
 	
 	/**
-	 * Report a user
+	 * Report a user.
+	 *
 	 * @access public
 	 * @param int $id
 	 */
@@ -204,7 +206,8 @@ class UsersController extends ForumAppController {
 	}
 	
 	/**
-	 * Signup
+	 * Signup.
+	 *
 	 * @access public
 	 */
 	public function signup() {
@@ -241,6 +244,7 @@ class UsersController extends ForumAppController {
 	
 	/**
 	 * Admin index!
+	 *
 	 * @access public
 	 * @category Admin
 	 */
@@ -260,7 +264,8 @@ class UsersController extends ForumAppController {
 	}
 	
 	/**
-	 * Edit a user
+	 * Edit a user.
+	 *
 	 * @access public
 	 * @category Admin
 	 * @param int $id
@@ -285,7 +290,8 @@ class UsersController extends ForumAppController {
 	}
 	
 	/**
-	 * Reset users password
+	 * Reset users password.
+	 *
 	 * @access public
 	 * @category Admin
 	 * @param int $id
@@ -303,7 +309,8 @@ class UsersController extends ForumAppController {
 	}
 	
 	/**
-	 * Delets a user and all its content
+	 * Delets a user and all its content.
+	 *
 	 * @access public
 	 * @category Admin
 	 * @param int $id
@@ -326,7 +333,8 @@ class UsersController extends ForumAppController {
 	}
 	
 	/**
-	 * Before filter
+	 * Before filter.
+	 * 
 	 * @access public
 	 * @return void
 	 */

@@ -1,19 +1,18 @@
 <?php
 /** 
- * moderator.php
+ * Cupcake - Moderator Model
  *
  * @author 		Miles Johnson - www.milesj.me
  * @copyright	Copyright 2006-2009, Miles Johnson, Inc.
  * @license 	http://www.opensource.org/licenses/mit-license.php - Licensed under The MIT License
- * @package		Cupcake - Moderator Model
  * @link		www.milesj.me/resources/script/forum-plugin
- * @link		www.milesj.me/forum
  */
  
 class Moderator extends ForumAppModel {
 
 	/**
-	 * Belongs to
+	 * Belongs to.
+	 *
 	 * @access public
 	 * @var array 
 	 */
@@ -28,7 +27,8 @@ class Moderator extends ForumAppModel {
 	);
 	
 	/**
-	 * Validation
+	 * Validation.
+	 *
 	 * @access public
 	 * @var array
 	 */
@@ -38,7 +38,8 @@ class Moderator extends ForumAppModel {
 	);
 	
 	/**
-	 * Return a list of all moderators and their forums
+	 * Return a list of all moderators and their forums.
+	 *
 	 * @access public
 	 * @return array
 	 */
@@ -50,7 +51,8 @@ class Moderator extends ForumAppModel {
 	}
 	
 	/**
-	 * Get all forums you moderate
+	 * Get all forums you moderate.
+	 * 
 	 * @access public
 	 * @param int $user_id
 	 * @return array

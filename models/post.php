@@ -1,19 +1,18 @@
 <?php
 /** 
- * post.php
+ * Cupcake - Post Model
  *
  * @author 		Miles Johnson - www.milesj.me
  * @copyright	Copyright 2006-2009, Miles Johnson, Inc.
  * @license 	http://www.opensource.org/licenses/mit-license.php - Licensed under The MIT License
- * @package		Cupcake - Post Model
  * @link		www.milesj.me/resources/script/forum-plugin
- * @link		www.milesj.me/forum  
  */
  
 class Post extends ForumAppModel {
 
 	/**
-	 * Belongs to
+	 * Belongs to.
+	 *
 	 * @access public
 	 * @var array
 	 */
@@ -28,7 +27,8 @@ class Post extends ForumAppModel {
 	);
 	
 	/**
-	 * Validation
+	 * Validation.
+	 *
 	 * @access public
 	 * @var array
 	 */
@@ -37,7 +37,8 @@ class Post extends ForumAppModel {
 	);
 	
 	/**
-	 * Validate and add a post
+	 * Validate and add a post.
+	 *
 	 * @access public
 	 * @param array $data
 	 * @param array $settings
@@ -115,7 +116,8 @@ class Post extends ForumAppModel {
 	}
 	
 	/**
-	 * Save the first post with a topic
+	 * Save the first post with a topic.
+	 *
 	 * @access public
 	 * @param int $topic_id
 	 * @param array $data
@@ -137,7 +139,8 @@ class Post extends ForumAppModel {
 	}
 	
 	/**
-	 * Check the posting flood interval
+	 * Check the posting flood interval.
+	 *
 	 * @access public
 	 * @param array $posts
 	 * @return boolean
@@ -160,7 +163,8 @@ class Post extends ForumAppModel {
 	}
 	
 	/**
-	 * Check the hourly posting
+	 * Check the hourly posting.
+	 *
 	 * @access public
 	 * @param array $posts
 	 * @param int $max
@@ -186,7 +190,8 @@ class Post extends ForumAppModel {
 	}
 
 	/**
-	 * Delete a post and process any required logic
+	 * Delete a post and process any required logic.
+	 *
 	 * @param int $id
 	 * @param array $post
 	 * @return boolean
@@ -209,7 +214,8 @@ class Post extends ForumAppModel {
 	}
 	
 	/**
-	 * Get the latest posts by a user
+	 * Get the latest posts by a user.
+	 *
 	 * @access public
 	 * @param int $user_id
 	 * @param int $limit
@@ -230,7 +236,8 @@ class Post extends ForumAppModel {
 	}
 	
 	/**
-	 * Get all info for editing a post
+	 * Get all info for editing a post.
+	 *
 	 * @access public
 	 * @param int $id
 	 * @return array
@@ -251,7 +258,8 @@ class Post extends ForumAppModel {
 	}
 	
 	/**
-	 * Get a post for quoting
+	 * Get a post for quoting.
+	 *
 	 * @access public
 	 * @param int $id
 	 * @return array
@@ -265,7 +273,8 @@ class Post extends ForumAppModel {
 	}
 	
 	/**
-	 * Get the latest posts in a topic
+	 * Get the latest posts in a topic.
+	 * 
 	 * @access public
 	 * @param int $topic_id
 	 * @param int $imit

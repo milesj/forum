@@ -2,7 +2,7 @@
 -- Table structure for table `users`
 --
 
-ALTER TABLE `users` 
+ALTER TABLE `{:prefix}users`
   	ADD `status` SMALLINT(6) NOT NULL DEFAULT '0',
 	ADD `signature` VARCHAR(255) NOT NULL,
 	ADD `locale` VARCHAR(3) NOT NULL DEFAULT 'eng',

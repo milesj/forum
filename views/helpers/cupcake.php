@@ -1,13 +1,11 @@
 <?php
 /** 
- * cupcake.php
+ * Cupcake - Cupcake Helper
  *
  * @author 		Miles Johnson - www.milesj.me
  * @copyright	Copyright 2006-2009, Miles Johnson, Inc.
  * @license 	http://www.opensource.org/licenses/mit-license.php - Licensed under The MIT License
- * @package		Cupcake - Cupcake Helper
  * @link		www.milesj.me/resources/script/forum-plugin
- * @link		www.milesj.me/forum
  */
 
 App::import('Core', 'HttpSocket');
@@ -15,21 +13,24 @@ App::import('Core', 'HttpSocket');
 class CupcakeHelper extends AppHelper {
 
 	/**
-	 * Helpers
+	 * Helpers.
+	 *
 	 * @access public
 	 * @var array
 	 */
 	public $helpers = array('Html', 'Session');
 
 	/**
-	 * Array of current gravatars to try and limit HTTP requests
+	 * Array of current gravatars to try and limit HTTP requests.
+	 *
 	 * @access private
 	 * @var array
 	 */
 	private $__gravatars = array();
 	
 	/**
-	 * Load forum settings
+	 * Load forum settings.
+	 *
 	 * @access public
 	 * @return void
 	 */
@@ -42,7 +43,8 @@ class CupcakeHelper extends AppHelper {
 	}
 
 	/**
-	 * Determine the forum icon state
+	 * Determine the forum icon state.
+	 *
 	 * @access public
 	 * @param array $category
 	 * @return string
@@ -66,7 +68,8 @@ class CupcakeHelper extends AppHelper {
 	}
 	
 	/**
-	 * Gets the highest access level
+	 * Gets the highest access level.
+	 *
 	 * @access public
 	 * @return int
 	 */
@@ -87,6 +90,7 @@ class CupcakeHelper extends AppHelper {
 
 	/**
 	 * Get an array of the supported locales.
+	 *
 	 * @access public
 	 * @return array
 	 */
@@ -119,7 +123,8 @@ class CupcakeHelper extends AppHelper {
 	}
 
 	/**
-	 * List of timezones
+	 * List of timezones.
+	 *
 	 * @access public
 	 * @return array
 	 */
@@ -158,7 +163,8 @@ class CupcakeHelper extends AppHelper {
 	}
 	
 	/**
-	 * Get topics made in the past hour
+	 * Get topics made in the past hour.
+	 *
 	 * @access public
 	 * @return int
 	 */
@@ -179,7 +185,8 @@ class CupcakeHelper extends AppHelper {
 	}
 	
 	/**
-	 * Get posts made in the past hour
+	 * Get posts made in the past hour.
+	 *
 	 * @access public
 	 * @return int
 	 */
@@ -200,7 +207,8 @@ class CupcakeHelper extends AppHelper {
 	}
 
 	/**
-	 * Generates a gravatar image
+	 * Generates a gravatar image.
+	 *
 	 * @param string $email
 	 * @param int $size
 	 * @param string $rating
@@ -243,7 +251,8 @@ class CupcakeHelper extends AppHelper {
 	}
 	
 	/**
-	 * Checks to see if the user has mod status
+	 * Checks to see if the user has mod status.
+	 *
 	 * @access public
 	 * @param string $level
 	 * @param int $forum_id
@@ -268,7 +277,8 @@ class CupcakeHelper extends AppHelper {
 	}
 	
 	/**
-	 * Prebuilt option lists for form selects
+	 * Prebuilt option lists for form selects.
+	 *
 	 * @access public
 	 * @param int $type
 	 * @param string $value
@@ -311,7 +321,9 @@ class CupcakeHelper extends AppHelper {
 	}
 
 	/**
-	 * Get the users timezone
+	 * Get the users timezone.
+	 *
+	 * @access public
 	 * @return string
 	 */
 	public function timezone() {
@@ -321,7 +333,8 @@ class CupcakeHelper extends AppHelper {
 	}
 
 	/**
-	 * Determine the topic icon state
+	 * Determine the topic icon state.
+	 *
 	 * @access public
 	 * @param array $topic
 	 * @return string
@@ -366,7 +379,8 @@ class CupcakeHelper extends AppHelper {
 	}
 		
 	/**
-	 * Get the amount of pages for a topic
+	 * Get the amount of pages for a topic.
+	 *
 	 * @access public
 	 * @param array $topic
 	 * @return array
@@ -390,7 +404,8 @@ class CupcakeHelper extends AppHelper {
 	}
 	
 	/**
-	 * Get the type of topic
+	 * Get the type of topic.
+	 *
 	 * @access public
 	 * @param int $type
 	 * @return string
@@ -407,7 +422,8 @@ class CupcakeHelper extends AppHelper {
 	}
 	
 	/**
-	 * Checks to see if a user is logged in
+	 * Checks to see if a user is logged in.
+	 * 
 	 * @access public
 	 * @param string $key
 	 * @return boolean|string

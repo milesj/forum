@@ -1,26 +1,26 @@
 <?php
 /** 
- * toolbar.php
+ * Cupcake - Toolbar Component
  *
  * @author 		Miles Johnson - www.milesj.me
  * @copyright	Copyright 2006-2009, Miles Johnson, Inc.
  * @license 	http://www.opensource.org/licenses/mit-license.php - Licensed under The MIT License
- * @package		Cupcake - Toolbar Component
  * @link		www.milesj.me/resources/script/forum-plugin
- * @link		www.milesj.me/forum
  */
  
 class ToolbarComponent extends Object {
 
 	/**
-	 * Components
+	 * Components.
+	 *
 	 * @access public
 	 * @var array
 	 */
 	public $components = array('Session'); 
 	
 	/**
-	 * Initialize
+	 * Initialize.
+	 *
 	 * @access public
 	 * @param obj $Controller
 	 * @param array $settings 
@@ -32,7 +32,8 @@ class ToolbarComponent extends Object {
 	}
 	
 	/**
-	 * Calculates the page to redirect to
+	 * Calculates the page to redirect to.
+	 *
 	 * @access public
 	 * @param int $topic_id
 	 * @param int $post_id
@@ -87,7 +88,8 @@ class ToolbarComponent extends Object {
 	}
 	
 	/**
-	 * Gets the highest access level
+	 * Gets the highest access level.
+	 *
 	 * @access public
 	 * @return int
 	 */
@@ -107,7 +109,8 @@ class ToolbarComponent extends Object {
 	}
 	
 	/**
-	 * Simply marks a topic as read
+	 * Simply marks a topic as read.
+	 *
 	 * @access public
 	 * @param int $topic_id
 	 * @return void
@@ -127,7 +130,8 @@ class ToolbarComponent extends Object {
 	}
 	
 	/**
-	 * Builds the page title
+	 * Builds the page title.
+	 *
 	 * @access public
 	 * @param array $args
 	 * @return string
@@ -140,7 +144,8 @@ class ToolbarComponent extends Object {
 	}
 	
 	/**
-	 * Method for reseting a password
+	 * Method for reseting a password.
+	 *
 	 * @access public
 	 * @param array $user
 	 * @param boolean $reset
@@ -171,7 +176,8 @@ class ToolbarComponent extends Object {
 	}
 	
 	/**
-	 * Updates the session topics array
+	 * Updates the session topics array.
+	 *
 	 * @access public
 	 * @param int $topic_id
 	 * @return void
@@ -191,7 +197,8 @@ class ToolbarComponent extends Object {
 	}
 	
 	/**
-	 * Updates the session posts array
+	 * Updates the session posts array.
+	 *
 	 * @access public
 	 * @param int $post_id
 	 * @return void
@@ -211,7 +218,8 @@ class ToolbarComponent extends Object {
 	}
 	
 	/**
-	 * Do we have access to commit this action
+	 * Do we have access to commit this action.
+	 *
 	 * @access public
 	 * @param array $validators
 	 * @return boolean
@@ -260,7 +268,8 @@ class ToolbarComponent extends Object {
 	}
 	
 	/**
-	 * Double check access levels in session and db and permit
+	 * Double check access levels in session and db and permit.
+	 * 
 	 * @access public
 	 * @return boolean
 	 */

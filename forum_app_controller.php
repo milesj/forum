@@ -1,13 +1,11 @@
 <?php
 /** 
- * forum_app_controller.php
+ * Cupcake - Forum Plugin AppController
  *
  * @author 		Miles Johnson - www.milesj.me
  * @copyright	Copyright 2006-2009, Miles Johnson, Inc.
  * @license 	http://www.opensource.org/licenses/mit-license.php - Licensed under The MIT License
- * @package		Cupcake - Forum Plugin AppController
  * @link		www.milesj.me/resources/script/forum-plugin
- * @link		www.milesj.me/forum  
  */
   
 App::import(array(
@@ -19,21 +17,24 @@ App::import(array(
 class ForumAppController extends AppController {
 
 	/**
-	 * Components
+	 * Components.
+	 *
 	 * @access public
 	 * @var array
 	 */
 	public $components = array('RequestHandler', 'Security', 'Cookie', 'Auth', 'Forum.Toolbar', 'Forum.AutoLogin');
 	
 	/**
-	 * Helpers
+	 * Helpers.
+	 *
 	 * @access public
 	 * @var array
 	 */
 	public $helpers = array('Html', 'Session', 'Form', 'Time', 'Text', 'Javascript', 'Forum.Cupcake', 'Forum.Decoda' => array());
 	
 	/**
-	 * Custom method to setup your settings, only edit this
+	 * Custom method to setup your settings, only edit this.
+	 *
 	 * @access protected
 	 * @return void
 	 */
@@ -42,7 +43,8 @@ class ForumAppController extends AppController {
 	}
 	
 	/**
-	 * Initialize the session and all data
+	 * Initialize the session and all data.
+	 *
 	 * @access protected
 	 * @return void
 	 */
@@ -91,7 +93,8 @@ class ForumAppController extends AppController {
 	}
 	
 	/**
-	 * Run auto login logic
+	 * Run auto login logic.
+	 *
 	 * @access protected
 	 * @param array $user - The logged in User
 	 * @return void
@@ -105,7 +108,8 @@ class ForumAppController extends AppController {
 	}
 
 	/**
-	 * Refreshes the Auth to get new data
+	 * Refreshes the Auth to get new data.
+	 *
 	 * @access public
 	 * @param string $field
 	 * @param string $value
@@ -124,7 +128,8 @@ class ForumAppController extends AppController {
 	}
 	
 	/**
-	 * Before filter
+	 * Before filter.
+	 * 
 	 * @access public
 	 * @return void
 	 */

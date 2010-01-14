@@ -1,19 +1,18 @@
 <?php
 /** 
- * topic.php
+ * Cupcake - Topic Model
  *
  * @author 		Miles Johnson - www.milesj.me
  * @copyright	Copyright 2006-2009, Miles Johnson, Inc.
  * @license 	http://www.opensource.org/licenses/mit-license.php - Licensed under The MIT License
- * @package		Cupcake - Topic Model
  * @link		www.milesj.me/resources/script/forum-plugin
- * @link		www.milesj.me/forum
  */
  
 class Topic extends ForumAppModel {
 
 	/**
-	 * Belongs to
+	 * Belongs to.
+	 *
 	 * @access public
 	 * @var array
 	 */
@@ -40,7 +39,8 @@ class Topic extends ForumAppModel {
 	);
 	
 	/**
-	 * Has one
+	 * Has one.
+	 *
 	 * @access public
 	 * @var array
 	 */
@@ -52,7 +52,8 @@ class Topic extends ForumAppModel {
 	);
 	
 	/**
-	 * Has many
+	 * Has many.
+	 *
 	 * @access public
 	 * @var array
 	 */
@@ -66,7 +67,8 @@ class Topic extends ForumAppModel {
 	);
 	
 	/**
-	 * Validation
+	 * Validation.
+	 *
 	 * @access public
 	 * @var array
 	 */
@@ -87,7 +89,8 @@ class Topic extends ForumAppModel {
 	);
 	
 	/**
-	 * Validate and add a topic
+	 * Validate and add a topic.
+	 *
 	 * @access public
 	 * @param array $data
 	 * @param array $settings
@@ -160,7 +163,8 @@ class Topic extends ForumAppModel {
 	}
 	
 	/**
-	 * Check the posting flood interval
+	 * Check the posting flood interval.
+	 *
 	 * @access public
 	 * @param array $topics
 	 * @param int $interval
@@ -184,7 +188,8 @@ class Topic extends ForumAppModel {
 	}
 	
 	/**
-	 * Check the hourly posting
+	 * Check the hourly posting.
+	 *
 	 * @access public
 	 * @param array $topics
 	 * @param int $max
@@ -210,7 +215,8 @@ class Topic extends ForumAppModel {
 	}
 	
 	/**
-	 * Check to make sure the poll is valid
+	 * Check to make sure the poll is valid.
+	 *
 	 * @access public
 	 * @param array $data
 	 * @return boolean
@@ -233,7 +239,9 @@ class Topic extends ForumAppModel {
 	}
 
 	/**
-	 * Delete a topic and process any required logic
+	 * Delete a topic and process any required logic.
+	 *
+	 * @access public
 	 * @param int $id
 	 * @return boolean
 	 */
@@ -242,7 +250,8 @@ class Topic extends ForumAppModel {
 	}
 	
 	/**
-	 * Robust method for saving all topic data
+	 * Robust method for saving all topic data.
+	 *
 	 * @access public
 	 * @param int $id
 	 * @param array $topic
@@ -284,7 +293,8 @@ class Topic extends ForumAppModel {
 	}
 	
 	/**
-	 * Increase the view count
+	 * Increase the view count.
+	 *
 	 * @access public
 	 * @param int $id
 	 * @return boolean
@@ -294,7 +304,8 @@ class Topic extends ForumAppModel {
 	}
 	
 	/**
-	 * Get the latest topics
+	 * Get the latest topics.
+	 *
 	 * @access public
 	 * @param int $limit
 	 * @return array
@@ -308,7 +319,8 @@ class Topic extends ForumAppModel {
 	}
 	
 	/**
-	 * Get the latest topics by a user
+	 * Get the latest topics by a user.
+	 *
 	 * @access public
 	 * @param int $user_id
 	 * @param int $limit
@@ -324,7 +336,8 @@ class Topic extends ForumAppModel {
 	}
 	
 	/**
-	 * Get all high level topics within a forum category
+	 * Get all high level topics within a forum category.
+	 *
 	 * @access public
 	 * @param int $category_id
 	 * @return array
@@ -346,7 +359,8 @@ class Topic extends ForumAppModel {
 	}
 	
 	/**
-	 * Get all info for editing a topic
+	 * Get all info for editing a topic.
+	 *
 	 * @access public
 	 * @param int $id
 	 * @return array
@@ -375,7 +389,8 @@ class Topic extends ForumAppModel {
 	}
 	
 	/**
-	 * Get all info for replying to a topic
+	 * Get all info for replying to a topic.
+	 *
 	 * @access public
 	 * @param int $id
 	 * @return array
@@ -394,7 +409,8 @@ class Topic extends ForumAppModel {
 	}
 	
 	/**
-	 * Get all info for reading a topic
+	 * Get all info for reading a topic.
+	 *
 	 * @access public
 	 * @param int $id
 	 * @param int $user_id
@@ -421,7 +437,8 @@ class Topic extends ForumAppModel {
 	}
 	
 	/**
-	 * Move all topics to a new forum
+	 * Move all topics to a new forum.
+	 *
 	 * @access public
 	 * @param int $start_id
 	 * @param int $moved_id
@@ -435,7 +452,8 @@ class Topic extends ForumAppModel {
 	}
 	
 	/**
-	 * Finds difference in days between dates
+	 * Finds difference in days between dates.
+	 *
 	 * @access public
 	 * @param int $start
 	 * @param int $finish
@@ -452,7 +470,8 @@ class Topic extends ForumAppModel {
 	}
 	
 	/**
-	 * After find
+	 * After find.
+	 * 
 	 * @access public
 	 * @param array $results
 	 * @param boolean $primary

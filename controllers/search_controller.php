@@ -1,33 +1,26 @@
 <?php
 /** 
- * search_controller.php
+ * Cupcake - Search Controller
  *
  * @author 		Miles Johnson - www.milesj.me
  * @copyright	Copyright 2006-2009, Miles Johnson, Inc.
  * @license 	http://www.opensource.org/licenses/mit-license.php - Licensed under The MIT License
- * @package		Cupcake - Search Controller
  * @link		www.milesj.me/resources/script/forum-plugin
- * @link		www.milesj.me/forum
  */
  
 class SearchController extends ForumAppController {
 
 	/**
-	 * Controller Name
-	 * @access public
-	 * @var string
-	 */
-	public $name = 'Search';
-
-	/**
-	 * Models
+	 * Models.
+	 *
 	 * @access public
 	 * @var array
 	 */
 	public $uses = array('Forum.Topic');
 	
 	/**
-	 * Pagination 
+	 * Pagination.
+	 *
 	 * @access public
 	 * @var array 
 	 */
@@ -39,7 +32,8 @@ class SearchController extends ForumAppController {
 	); 
 	
 	/**
-	 * Search the topics
+	 * Search the topics.
+	 *
 	 * @access public
 	 * @param string $type
 	 */
@@ -96,7 +90,8 @@ class SearchController extends ForumAppController {
 	}
 	
 	/**
-	 * Proxy action to build named parameters
+	 * Proxy action to build named parameters.
+	 *
 	 * @access public
 	 */
 	public function proxy() {
@@ -112,7 +107,8 @@ class SearchController extends ForumAppController {
 	}
 	
 	/**
-	 * Before filter
+	 * Before filter.
+	 * 
 	 * @access public
 	 * @return void
 	 */

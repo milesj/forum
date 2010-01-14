@@ -2,7 +2,7 @@
 -- Table structure for table `users`
 --
 
-CREATE TABLE IF NOT EXISTS `users` (
+CREATE TABLE IF NOT EXISTS `{:prefix}users` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT,
 	`username` VARCHAR(30) NOT NULL,
 	`password` VARCHAR(50) NOT NULL,

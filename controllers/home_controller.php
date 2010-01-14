@@ -1,33 +1,26 @@
 <?php
 /** 
- * home_controller.php
+ * Cupcake - Home Controller
  *
  * @author 		Miles Johnson - www.milesj.me
  * @copyright	Copyright 2006-2009, Miles Johnson, Inc.
  * @license 	http://www.opensource.org/licenses/mit-license.php - Licensed under The MIT License
- * @package		Cupcake - Home Controller
  * @link		www.milesj.me/resources/script/forum-plugin
- * @link		www.milesj.me/forum 
  */
  
 class HomeController extends ForumAppController {
 
 	/**
-	 * Controller Name
-	 * @access public  
-	 * @var string
-	 */
-	public $name = 'Home';
-
-	/**
-	 * Models
+	 * Models.
+	 *
 	 * @access public  
 	 * @var array
 	 */
 	public $uses = array('Forum.Topic'); 
 
 	/**
-	 * Forum index  
+	 * Forum index.
+	 *
 	 * @access public   
 	 */
 	public function index() {
@@ -42,7 +35,8 @@ class HomeController extends ForumAppController {
 	}
 	
 	/**
-	 * RSS Feed
+	 * RSS Feed.
+	 *
 	 * @access public
 	 */
 	public function feed() {
@@ -55,7 +49,8 @@ class HomeController extends ForumAppController {
 	}
 	
 	/**
-	 * Help / FAQ
+	 * Help / FAQ.
+	 *
 	 * @access public
 	 */
 	public function help() {
@@ -64,7 +59,8 @@ class HomeController extends ForumAppController {
 	}
 	
 	/**
-	 * Rules
+	 * Rules.
+	 *
 	 * @access public
 	 */
 	public function rules() {
@@ -73,7 +69,8 @@ class HomeController extends ForumAppController {
 	}
 	
 	/**
-	 * Administration home, list statistics
+	 * Administration home, list statistics.
+	 *
 	 * @access public
 	 * @category Admin
 	 */
@@ -95,7 +92,8 @@ class HomeController extends ForumAppController {
 	}
 	
 	/**
-	 * Edit the settings
+	 * Edit the settings.
+	 *
 	 * @access public
 	 * @category Admin
 	 */
@@ -119,7 +117,8 @@ class HomeController extends ForumAppController {
 	}
 	
 	/**
-	 * Before filter
+	 * Before filter.
+	 * 
 	 * @access public
 	 * @return void
 	 */

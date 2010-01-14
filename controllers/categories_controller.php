@@ -1,33 +1,26 @@
 <?php
 /** 
- * categories_controller.php
+ * Cupcake - Categories Controller
  *
  * @author 		Miles Johnson - www.milesj.me
  * @copyright	Copyright 2006-2009, Miles Johnson, Inc.
  * @license 	http://www.opensource.org/licenses/mit-license.php - Licensed under The MIT License
- * @package		Cupcake - Categories Controller
  * @link		www.milesj.me/resources/script/forum-plugin
- * @link		www.milesj.me/forum
  */
  
 class CategoriesController extends ForumAppController {
 
 	/**
-	 * Controller Name
-	 * @access public
-	 * @var string
-	 */
-	public $name = 'Categories'; 
-
-	/**
-	 * Models
+	 * Models.
+	 *
 	 * @access public
 	 * @var array
 	 */
 	public $uses = array('Forum.ForumCategory');  
 	
 	/**
-	 * Pagination 
+	 * Pagination.
+	 *
 	 * @access public
 	 * @var array 
 	 */
@@ -40,7 +33,8 @@ class CategoriesController extends ForumAppController {
 	);
 	
 	/**
-	 * Redirect
+	 * Redirect.
+	 *
 	 * @access public
 	 */
 	public function index() {
@@ -48,7 +42,8 @@ class CategoriesController extends ForumAppController {
 	}
 
 	/**
-	 * Read a category
+	 * Read a category.
+	 *
 	 * @access public
 	 * @param int $id
 	 */
@@ -72,7 +67,8 @@ class CategoriesController extends ForumAppController {
 	}
 
 	/**
-	 * Moderate a category
+	 * Moderate a category.
+	 *
 	 * @access public
 	 * @param int $id
 	 */
@@ -128,7 +124,8 @@ class CategoriesController extends ForumAppController {
 	}
 	
 	/**
-	 * RSS Feed
+	 * RSS Feed.
+	 *
 	 * @access public
 	 * @param int $id
 	 */
@@ -151,6 +148,7 @@ class CategoriesController extends ForumAppController {
 	
 	/**
 	 * Admin index!
+	 *
 	 * @access public
 	 * @category Admin
 	 */
@@ -165,7 +163,8 @@ class CategoriesController extends ForumAppController {
 	}
 	
 	/**
-	 * Add a top level forum
+	 * Add a top level forum.
+	 *
 	 * @access public
 	 * @category Admin
 	 */
@@ -183,7 +182,8 @@ class CategoriesController extends ForumAppController {
 	}
 	
 	/**
-	 * Edit top level forum
+	 * Edit top level forum.
+	 *
 	 * @access public
 	 * @category Admin
 	 * @param int $id
@@ -211,7 +211,8 @@ class CategoriesController extends ForumAppController {
 	}
 	
 	/**
-	 * Delete a forum
+	 * Delete a forum.
+	 *
 	 * @access public
 	 * @category Admin
 	 * @param int $id
@@ -237,7 +238,8 @@ class CategoriesController extends ForumAppController {
 	}
 	
 	/**
-	 * Add a forum category
+	 * Add a forum category.
+	 *
 	 * @access public
 	 * @category Admin
 	 */
@@ -261,7 +263,8 @@ class CategoriesController extends ForumAppController {
 	}
 	
 	/**
-	 * Edit a forum category
+	 * Edit a forum category.
+	 *
 	 * @access public
 	 * @category Admin
 	 * @param int $id
@@ -295,7 +298,8 @@ class CategoriesController extends ForumAppController {
 	}
 	
 	/**
-	 * Delete a category
+	 * Delete a category.
+	 *
 	 * @access public
 	 * @category Admin
 	 * @param int $id
@@ -321,7 +325,8 @@ class CategoriesController extends ForumAppController {
 	}
 	
 	/**
-	 * Before filter
+	 * Before filter.
+	 * 
 	 * @access public
 	 * @return void
 	 */

@@ -1,19 +1,18 @@
 <?php
 /** 
- * access_level.php
+ * Cupcake - AccessLevel Model
  *
  * @author 		Miles Johnson - www.milesj.me
  * @copyright	Copyright 2006-2009, Miles Johnson, Inc.
  * @license 	http://www.opensource.org/licenses/mit-license.php - Licensed under The MIT License
- * @package		Cupcake - AccessLevel Model
  * @link		www.milesj.me/resources/script/forum-plugin
- * @link		www.milesj.me/forum 
  */
  
 class AccessLevel extends ForumAppModel {
 	
 	/**
-	 * Validation
+	 * Validation.
+	 *
 	 * @access public
 	 * @var array
 	 */
@@ -23,7 +22,8 @@ class AccessLevel extends ForumAppModel {
 	);
 
 	/**
-	 * Get a list of levels
+	 * Get a list of levels.
+	 *
 	 * @access public
 	 * @param int $exclude
 	 * @return array
@@ -41,7 +41,8 @@ class AccessLevel extends ForumAppModel {
 	}
 
 	/**
-	 * Get a list of levels
+	 * Get a list of levels.
+	 * 
 	 * @access public
 	 * @return array
 	 */
