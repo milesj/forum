@@ -11,6 +11,14 @@
 class User extends ForumAppModel {
 
 	/**
+	 * Table prefix.
+	 *
+	 * @access public
+	 * @var string
+	 */
+	public $tablePrefix = '{:prefix}';
+
+	/**
 	 * Has many.
 	 *
 	 * @access public
