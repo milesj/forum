@@ -10,6 +10,7 @@
 
 App::import('Core', 'File');
 App::import('Model', 'ConnectionManager', false);
+include_once CONFIGS . 'database.php';
 
 class InstallController extends ForumAppController {
 
@@ -22,23 +23,97 @@ class InstallController extends ForumAppController {
 	public $uses = array();
 
 	/**
-	 * Primary installation and checking action.
+	 * Select which database to create the tables in.
 	 *
 	 * @access public
 	 * @return void
 	 */
 	public function index() {
-		if (!$this->Session->check('Forum.Install')) {
-			$this->Session->write('Forum.Install', array('step' => 1));
+		if (!$this->Session->check('Install')) {
+			$this->Session->write('Install', array());
 		}
 
-		$step = $this->Session->read('Forum.Install.step');
-		$db =& ConnectionManager::getDataSource('milesj');
-
-		// Step 1: Database Configuration
-		if ($step == 1) {
-			$this->pageTitle = 'Step 1: Database Configuration';
+		// Get database configs
+		$dbConfig = new DATABASE_CONFIG();
+		$databases = array();
+		foreach ($dbConfig as $db => $params) {
+			$databases[$db] = $db;
 		}
+
+		// Set default prefix
+		$this->data['prefix'] = 'forum_';
+
+		$this->pageTitle = 'Step 1: Database Configuration';
+		$this->set('databases', $databases);
+	}
+
+	/**
+	 * Check to see if the database tables are taken, and that you can connect to the database.
+	 *
+	 * @access public
+	 * @return void
+	 */
+	public function check_database() {
+		if (isset($this->data['database'])) {
+			$this->Session->write('Install.database', $this->data['database']);
+		} else {
+			$this->redirect(array('action' => 'index'));
+		}
+
+		$this->Session->write('Install.prefix', $this->data['prefix']);
+
+		// Check database
+		$db = ConnectionManager::getDataSource($this->data['database']);
+
+		if ($db->isConnected()) {
+			$tables = $this->__checkTables($db, $this->data['prefix']);
+			$takenTables = array();
+			$prefixTables = array();
+
+			if (!empty($tables)) {
+				foreach ($tables as $table => $value) {
+					$prefixTables[] = $this->data['prefix'] . $table;
+
+					if ($value == 1) {
+						$takenTables[] = $table;
+					}
+				}
+			}
+			
+			$this->set('isConnected', true);
+			$this->set('tables', $prefixTables);
+			$this->set('taken', $takenTables);
+		} else {
+			$this->set('isConnected', false);
+		}
+
+		$this->pageTitle = 'Step 2: Database Table Check';
+	}
+
+	/**
+	 * Update the site settings.
+	 *
+	 * @access public
+	 * @return void
+	 */
+	public function edit_settings() {
+		if (isset($this->data['user_table'])) {
+			$this->Session->write('Install.user_table', 'yes');
+		}
+
+		$this->pageTitle = 'Step 3: Edit Settings';
+	}
+
+	public function create_tables() {
+		if (!empty($this->data)) {
+			foreach ($this->data as $field => $value) {
+				if ($field != '_Token') {
+					$this->Session->write('Install.'. $field, $value);
+				}
+			}
+		}
+
+		debug($this->Session->read('Install'));
 	}
 
 	/**
@@ -50,18 +125,8 @@ class InstallController extends ForumAppController {
 	 * @return array
 	 */
 	private function __checkTables($db, $prefix = '') {
-		$result = $db->fetchAll('SHOW TABLES');
+		$existent = $db->listSources();
 		$tables = array_flip(array('access', 'access_levels', 'forums', 'forum_categories', 'moderators', 'polls', 'poll_options', 'poll_votes', 'posts', 'reported', 'topics', 'users'));
-		$existent = array();
-
-		if (!empty($result)) {
-			foreach ($result as $dbTables) {
-				foreach ($dbTables as $tableList) {
-					$table = array_values($tableList);
-					$existent[] = $table[0];
-				}
-			}
-		}
 
 		foreach ($tables as $table => $value) {
 			$tables[$table] = (in_array($prefix . $table, $existent) ? true : false);
@@ -126,6 +191,18 @@ class InstallController extends ForumAppController {
 	 */
 	public function beforeFilter() {
 		parent::beforeFilter();
+
+		if ($this->action != 'index') {
+			if (!$this->Session->check('Install')) {
+				$this->redirect(array('action' => 'index'));
+			}
+		}
+
+		if ($this->Session->check('Install.database')) {
+			$this->DB =& ConnectionManager::getDataSource($this->Session->read('Install.database'));
+		}
+
+		debug($this->Session->read('Install'));
 
 		// Set the installation layout
 		$this->layout = 'install';

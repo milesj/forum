@@ -297,4 +297,23 @@ td.empty {
 .clear {
 	clear: both;
 	display: block; }
-	
+
+.errorBox {
+	padding: 10px;
+	margin-bottom: 10px;
+	background: #f4f4f4;
+	border: 1px solid red;
+	-moz-border-radius: .3em;
+	clear: both; }
+
+	.errorBox b { color: red; }
+
+.successBox {
+	padding: 10px;
+	margin-bottom: 10px;
+	background: #f4f4f4;
+	border: 1px solid green;
+	-moz-border-radius: .3em;
+	clear: both; }
+
+	.successBox b { color: green; }
