@@ -17,7 +17,7 @@ echo $scripts_for_layout; ?>
 <body>
 <div id="wrapper">
 	<div id="header">
-    	<h1><?php echo $html->link($cupcake->settings['site_name'], $cupcake->settings['site_main_url']); ?> Installation</h1>
+    	<h1><?php echo $cupcake->settings['site_name']; ?> Installation</h1>
     </div>
 
     <div id="content">
