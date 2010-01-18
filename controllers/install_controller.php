@@ -73,11 +73,7 @@ class InstallController extends ForumAppController {
 
 			if (!empty($tables)) {
 				foreach ($tables as $table => $value) {
-					if ($table == 'users') {
-						$prefixTables[] = (($this->data['user_table'] == 1) ? $table : $this->data['prefix'] . $table);
-					} else {
-						$prefixTables[] = $this->data['prefix'] . $table;
-					}
+					$prefixTables[] = $this->__prefix($table);
 
 					if ($value == 1) {
 						$takenTables[] = $table;
@@ -102,12 +98,8 @@ class InstallController extends ForumAppController {
 	 * @return void
 	 */
 	public function create_tables() {
-		if (!empty($this->data)) {
-			foreach ($this->data as $field => $value) {
-				if ($field != '_Token') {
-					$this->Session->write('Install.'. $field, $value);
-				}
-			}
+		if (!$this->Session->check('Install.database')) {
+			$this->redirect(array('action' => 'index'));
 		}
 
 		// Prepare SQL
@@ -173,7 +165,6 @@ class InstallController extends ForumAppController {
 		$this->__rewriteModel($userPrefix, 'UserModel');
 
 		// Save the settings
-		$this->Session->write('Install.date', date('Y-m-d H:i:s'));
 		$this->__saveInstall();
 		$this->__saveRouting();
 
@@ -210,6 +201,23 @@ class InstallController extends ForumAppController {
 	 */
 	private function __getTables() {
 		return array('access', 'access_levels', 'forums', 'forum_categories', 'moderators', 'polls', 'poll_options', 'poll_votes', 'posts', 'reported', 'topics', 'users');
+	}
+
+	/**
+	 * Prefix the appropriate table.
+	 *
+	 * @access private
+	 * @param string $table
+	 * @return string
+	 */
+	private function __prefix($table) {
+		if ($table == 'users') {
+			$table = (($this->Session->read('Install.user_table') == 1) ? $table : $this->Session->read('Install.prefix') . $table);
+		} else {
+			$table = $this->Session->read('Install.prefix') . $table;
+		}
+
+		return $table;
 	}
 
 	/**
@@ -271,13 +279,7 @@ class InstallController extends ForumAppController {
 		$tables = $this->__getTables();
 
 		foreach ($tables as $table) {
-			if ($table == 'users') {
-				$table = (($this->Session->read('Install.user_table') == 1) ? $table : $this->Session->read('Install.prefix') . $table);
-			} else {
-				$table = $this->Session->read('Install.prefix') . $table;
-			}
-
-			$this->DB->execute('DROP TABLE `'. $table .'`;');
+			$this->DB->execute('DROP TABLE `'. $this->__prefix($table) .'`;');
 		}
 	}
 
@@ -289,6 +291,7 @@ class InstallController extends ForumAppController {
 	 */
 	private function __saveInstall() {
 		$install = $this->Session->read('Install');
+		$install['date'] = date('Y-m-d H:i:s');
 		$settings = array();
 
 		foreach ($install as $field => $value) {
@@ -298,8 +301,8 @@ class InstallController extends ForumAppController {
 			$settings[] = $field .' = '. $value;
 		}
 
-		$path = APP .'plugins'. DS .'forum'. DS .'config'. DS .'install.ini';
-		$handle = fopen($path, "w");
+		$path = dirname(__DIR__) . DS .'config'. DS .'install.ini';
+		$handle = fopen($path, 'w');
 		fwrite($handle, implode("\n", $settings));
 		fclose($handle);
 		chmod($path, 0777);
@@ -314,7 +317,7 @@ class InstallController extends ForumAppController {
 	 * @return void
 	 */
 	private function __saveRouting() {
-		$path = CONFIGS . 'routes.php';
+		$path = CONFIGS .'routes.php';
 
 		$contents = file_get_contents($path);
 		$contents = str_replace('?>', '', $contents);
