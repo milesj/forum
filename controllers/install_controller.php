@@ -142,6 +142,7 @@ class InstallController extends ForumAppController {
 
 		// Check
 		if ($executed != $total) {
+			$this->__rollback();
 			$this->Session->delete('Install');
 		} else {
 			$this->Session->write('Install.finished', true);
@@ -261,6 +262,26 @@ class InstallController extends ForumAppController {
 	}
 
 	/**
+	 * Rollback the installation and delete the created tables.
+	 *
+	 * @access private
+	 * @return void
+	 */
+	private function __rollback() {
+		$tables = $this->__getTables();
+
+		foreach ($tables as $table) {
+			if ($table == 'users') {
+				$table = (($this->Session->read('Install.user_table') == 1) ? $table : $this->Session->read('Install.prefix') . $table);
+			} else {
+				$table = $this->Session->read('Install.prefix') . $table;
+			}
+
+			$this->DB->execute('DROP TABLE `'. $table .'`;');
+		}
+	}
+
+	/**
 	 * Save the installation settings.
 	 *
 	 * @access private
@@ -282,6 +303,8 @@ class InstallController extends ForumAppController {
 		fwrite($handle, implode("\n", $settings));
 		fclose($handle);
 		chmod($path, 0777);
+
+		$this->Session->delete('Install');
 	}
 
 	/**
@@ -296,7 +319,7 @@ class InstallController extends ForumAppController {
 		$contents = file_get_contents($path);
 		$contents = str_replace('?>', '', $contents);
 		$contents .= "\n\nRouter::parseExtensions('rss');";
-		$contents .= "\n\nRouter::connect('/forum', array('plugin' => 'forum', 'controller' => 'home', 'action' => 'index'));";
+		$contents .= "\nRouter::connect('/forum', array('plugin' => 'forum', 'controller' => 'home', 'action' => 'index'));";
 
 		$this->File = new File($path, true, 0777);
 		$this->File->open('w', true);

@@ -1,4 +1,4 @@
-Forum (Cupcake) v1.6 - CakePHP Plugin
+Forum (Cupcake) v1.7 - CakePHP Plugin
 *************************************
 
 Requirements
@@ -16,6 +16,7 @@ Installation
 ============
 
 	* Clone the repo into a folder called "forum" within your CakePHP's plugins directory.
+	* Hit the installer script at: www.yourdomain.com/forum/install/
 
 Contributors
 ============
