@@ -301,19 +301,17 @@ td.empty {
 .errorBox {
 	padding: 10px;
 	margin-bottom: 10px;
-	background: #f4f4f4;
-	border: 1px solid red;
+	background-color: #fab4b4;
+	color: #802f2f;
+	border: 1px solid #c91818;
 	-moz-border-radius: .3em;
 	clear: both; }
-
-	.errorBox b { color: red; }
 
 .successBox {
 	padding: 10px;
 	margin-bottom: 10px;
-	background: #f4f4f4;
-	border: 1px solid green;
+	background-color: #ddf7a9;
+	color: #3f8515;
+	border: 1px solid #88b035;
 	-moz-border-radius: .3em;
 	clear: both; }
-
-	.successBox b { color: green; }

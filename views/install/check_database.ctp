@@ -17,8 +17,8 @@ if ($isConnected) { ?>
 		<?php echo $form->create(null, array('action' => 'create_tables')); ?>
 
 		<div class="submit">
-			<?php echo $form->button('Go Back', array('onclick' => 'window.history.go(-1);'));
-			echo $form->submit('Create Tables', array('div' => false)); ?>
+			<?php echo $form->button('Go Back', array('onclick' => 'window.history.go(-1);')); ?> 
+			<?php echo $form->submit('Create Tables', array('div' => false)); ?>
 		</div>
 
 		<?php echo $form->end();

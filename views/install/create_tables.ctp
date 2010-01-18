@@ -9,8 +9,8 @@
 	echo $form->create(null, array('action' => 'finished')); ?>
 
 	<div class="submit">
-		<?php echo $form->button('Go Back', array('onclick' => 'window.history.go(-1);'));
-		echo $form->submit('Finish Installation', array('div' => false)); ?>
+		<?php echo $form->button('Go Back', array('onclick' => 'window.history.go(-1);')); ?>
+		<?php echo $form->submit('Finish Installation', array('div' => false)); ?>
 	</div>
 
 <?php echo $form->end();

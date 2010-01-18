@@ -5,7 +5,7 @@
 
 <p>If you experience any problems, please check the database manually and check the $tablePrefix property within the AppModel and UserModel classes.</p>
 
-<p>Lastly, you must enable the admin and routes (the script will attempt to but do not rely on it).</p>
+<p>Lastly, you must enable the admin and routes (the script will attempt to, but do not rely on it).</p>
 
 <pre class="php decoda_code">
 // core.php
@@ -19,5 +19,5 @@ Router::connect('/forum', array('plugin' => 'forum', 'controller' => 'home', 'ac
 <br /><br />
 
 <div class="submit">
-	<?php echo $form->button('Go To The Forum', array('onclick' => "goTo('". Router::url(array('controller' => 'home', 'action' => 'index', 'plugin' => 'forum')) ."');")); ?>
+	<?php echo $form->button('Visit Forum', array('onclick' => "goTo('". Router::url(array('controller' => 'home', 'action' => 'index', 'plugin' => 'forum')) ."');")); ?>
 </div>
