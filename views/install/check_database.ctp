@@ -14,16 +14,11 @@ if ($isConnected) { ?>
 			<b>Success!</b> There are no table conflicts when using the prefix: <?php echo $this->data['prefix']; ?>.
 		</div>
 
-		<br />
-		<p>Do you have an already existent user table? Check the following field to <b>not</b> prefix the user table.</p>
-
-		<?php // Form
-		echo $form->create(null, array('action' => 'edit_settings'));
-		echo $form->input('user_table', array('type' => 'checkbox', 'label' => 'User Table Exists', 'after' => ' Yes')); ?>
+		<?php echo $form->create(null, array('action' => 'create_tables')); ?>
 
 		<div class="submit">
 			<?php echo $form->button('Go Back', array('onclick' => 'window.history.go(-1);'));
-			echo $form->submit('Edit Settings', array('div' => false)); ?>
+			echo $form->submit('Create Tables', array('div' => false)); ?>
 		</div>
 
 		<?php echo $form->end();

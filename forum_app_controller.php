@@ -13,7 +13,7 @@ App::import(array(
 	'name' => 'Forum.ForumConfig', 
 	'file' => 'config'. DS .'core.php'
 ));
- 
+
 class ForumAppController extends AppController {
 
 	/**
@@ -31,11 +31,11 @@ class ForumAppController extends AppController {
 	 * @var array
 	 */
 	public $helpers = array('Html', 'Session', 'Form', 'Time', 'Text', 'Javascript', 'Forum.Cupcake', 'Forum.Decoda' => array());
-	
+
 	/**
 	 * Custom method to setup your settings, only edit this.
 	 *
-	 * @access protected
+	 * @access public
 	 * @return void
 	 */
 	public function _initForum() {
@@ -45,7 +45,7 @@ class ForumAppController extends AppController {
 	/**
 	 * Initialize the session and all data.
 	 *
-	 * @access protected
+	 * @access public
 	 * @return void
 	 */
 	public function _initSession() {
@@ -95,13 +95,13 @@ class ForumAppController extends AppController {
 	/**
 	 * Run auto login logic.
 	 *
-	 * @access protected
+	 * @access public
 	 * @param array $user - The logged in User
 	 * @return void
 	 */
 	public function _autoLogin($user) {
 		$this->Session->delete('Forum');
-		ClassRegistry::init('User')->login($user);
+		ClassRegistry::init('Forum.User')->login($user);
 		
 		$this->_initForum();
 		$this->_initSession();

@@ -16,7 +16,7 @@ class ForumConfig {
 	 * @access public
 	 * @var string
 	 */
-	public $version = '1.6.2';
+	public $version = '1.7';
 
 	/**
 	 * Settings.
@@ -72,6 +72,24 @@ class ForumConfig {
 		}
 		
 		return self::$__instance;
+	}
+
+	/**
+	 * Check to see if the installation file exists.
+	 *
+	 * @access public
+	 * @return boolean
+	 * @static
+	 */
+	public static function isInstalled() {
+		$path = dirname(__FILE__) . DS .'install.ini';
+
+		if (file_exists(dirname(__FILE__) . DS .'install.ini')) {
+			$contents = parse_ini_file($path);
+			return ($contents['finished'] == 1);
+		} else {
+			return false;
+		}
 	}
 
 }

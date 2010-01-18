@@ -1,6 +1,4 @@
---
--- Table structure for table `users`
---
+/* Table structure for table `users` */
 
 CREATE TABLE IF NOT EXISTS `{:prefix}users` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -19,4 +17,4 @@ CREATE TABLE IF NOT EXISTS `{:prefix}users` (
 	`modified` DATETIME DEFAULT NULL,
 	PRIMARY KEY (`id`),
 	UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Users' AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Users' AUTO_INCREMENT=1;

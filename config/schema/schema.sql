@@ -1,6 +1,4 @@
---
--- Table structure for table `access`
---
+/* Table structure for table `access` */
 
 CREATE TABLE IF NOT EXISTS `{:prefix}access` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -12,11 +10,7 @@ CREATE TABLE IF NOT EXISTS `{:prefix}access` (
 	KEY `user_id` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Users with certain access' AUTO_INCREMENT=1;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `access_levels`
---
+/* Table structure for table `access_levels` */
 
 CREATE TABLE IF NOT EXISTS `{:prefix}access_levels` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -27,21 +21,13 @@ CREATE TABLE IF NOT EXISTS `{:prefix}access_levels` (
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Access levels for users' AUTO_INCREMENT=1;
 
---
--- Dumping data for table `access_levels`
---
-
 INSERT INTO `{:prefix}access_levels` (`id`, `title`, `level`, `is_admin`, `is_super`) VALUES
 	(1, 'Member', 1, 0, 0),
 	(2, 'Moderator', 4, 0, 0),
 	(3, 'Super Moderator', 7, 0, 1),
 	(4, 'Administrator', 10, 1, 1);
 
--- --------------------------------------------------------
-
---
--- Table structure for table `forums`
---
+/* Table structure for table `forums` */
 
 CREATE TABLE IF NOT EXISTS `{:prefix}forums` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -54,18 +40,10 @@ CREATE TABLE IF NOT EXISTS `{:prefix}forums` (
 	KEY `access_level_id` (`access_level_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Containing forums' AUTO_INCREMENT=1;
 
---
--- Dumping data for table `forums`
---
-
 INSERT INTO `{:prefix}forums` (`id`, `access_level_id`, `title`, `status`, `orderNo`, `accessView`) VALUES
 	(1, 0, 'Cupcake Forums', 0, 1, 0);
 
--- --------------------------------------------------------
-
---
--- Table structure for table `forum_categories`
---
+/* Table structure for table `forum_categories` */
 
 CREATE TABLE IF NOT EXISTS `{:prefix}forum_categories` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -98,18 +76,10 @@ CREATE TABLE IF NOT EXISTS `{:prefix}forum_categories` (
 	KEY `access_level_id` (`access_level_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Forum categories to post topics to' AUTO_INCREMENT=1;
 
---
--- Dumping data for table `forum_categories`
---
-
 INSERT INTO `{:prefix}forum_categories` (`id`, `forum_id`, `parent_id`, `access_level_id`, `title`, `description`, `status`, `orderNo`, `topic_count`, `post_count`, `accessRead`, `accessPost`, `accessReply`, `accessPoll`, `settingPostCount`, `settingAutoLock`, `lastTopic_id`, `lastPost_id`, `lastUser_id`, `created`, `modified`) VALUES
-(1, 1, 0, 0, 'General Discussion', 'This is a forum category, which is a child of the forum. You can add, edit or delete these categories by visiting the administration panel, but first you would need to give a user admin rights.', 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, NOW(), NOW());
+	(1, 1, 0, 0, 'General Discussion', 'This is a forum category, which is a child of the forum. You can add, edit or delete these categories by visiting the administration panel, but first you would need to give a user admin rights.', 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, NOW(), NOW());
 
--- --------------------------------------------------------
-
---
--- Table structure for table `moderators`
---
+/* Table structure for table `moderators` */
 
 CREATE TABLE IF NOT EXISTS `{:prefix}moderators` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -119,13 +89,9 @@ CREATE TABLE IF NOT EXISTS `{:prefix}moderators` (
 	PRIMARY KEY (`id`),
 	KEY `user_id` (`user_id`),
 	KEY `forum_category_id` (`forum_category_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Moderators to forums' AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Moderators to forums' AUTO_INCREMENT=1;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `polls`
---
+/* Table structure for table `polls` */
 
 CREATE TABLE IF NOT EXISTS `{:prefix}polls` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -135,13 +101,9 @@ CREATE TABLE IF NOT EXISTS `{:prefix}polls` (
 	`expires` DATETIME DEFAULT NULL,
 	PRIMARY KEY (`id`),
 	KEY `topic_id` (`topic_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Polls attached to topics' AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Polls attached to topics' AUTO_INCREMENT=1;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `poll_options`
---
+/* Table structure for table `poll_options` */
 
 CREATE TABLE IF NOT EXISTS `{:prefix}poll_options` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -150,13 +112,9 @@ CREATE TABLE IF NOT EXISTS `{:prefix}poll_options` (
 	`vote_count` INT(11) NOT NULL DEFAULT '0',
 	PRIMARY KEY (`id`),
 	KEY `poll_id` (`poll_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Options/Questions for a poll' AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Options/Questions for a poll' AUTO_INCREMENT=1;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `poll_votes`
---
+/* Table structure for table `poll_votes` */
 
 CREATE TABLE IF NOT EXISTS `{:prefix}poll_votes` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -167,13 +125,9 @@ CREATE TABLE IF NOT EXISTS `{:prefix}poll_votes` (
 	KEY `poll_id` (`poll_id`),
 	KEY `poll_option_id` (`poll_option_id`),
 	KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Votes for polls' AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Votes for polls' AUTO_INCREMENT=1;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `posts`
---
+/* Table structure for table `posts` */
 
 CREATE TABLE IF NOT EXISTS `{:prefix}posts` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -186,13 +140,9 @@ CREATE TABLE IF NOT EXISTS `{:prefix}posts` (
 	PRIMARY KEY (`id`),
 	KEY `topic_id` (`topic_id`),
 	KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Posts to topics' AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Posts to topics' AUTO_INCREMENT=1;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `reported`
---
+/* Table structure for table `reported` */
 
 CREATE TABLE IF NOT EXISTS `{:prefix}reported` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -204,13 +154,9 @@ CREATE TABLE IF NOT EXISTS `{:prefix}reported` (
 	PRIMARY KEY (`id`),
 	KEY `item_id` (`item_id`),
 	KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Reported topics, posts, users, etc' AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Reported topics, posts, users, etc' AUTO_INCREMENT=1;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `topics`
---
+/* Table structure for table `topics` */
 
 CREATE TABLE IF NOT EXISTS `{:prefix}topics` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -232,4 +178,4 @@ CREATE TABLE IF NOT EXISTS `{:prefix}topics` (
 	KEY `lastPost_id` (`lastPost_id`),
 	KEY `lastUser_id` (`lastUser_id`),
 	KEY `forum_category_id` (`forum_category_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Discussion topics' AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Discussion topics' AUTO_INCREMENT=1;
