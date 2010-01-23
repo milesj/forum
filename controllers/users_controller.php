@@ -69,7 +69,7 @@ class UsersController extends ForumAppController {
 				}
 
 				$this->User->id = $user_id;
-				if ($this->User->save($this->data, false, array('email', 'password', 'signature', 'locale', 'timezone'))) {
+				if ($this->User->save($this->data, false, array('email', 'password', $this->User->columnMap['signature'], $this->User->columnMap['locale'], $this->User->columnMap['timezone']))) {
 					$this->Session->setFlash(__d('forum', 'Your profile information has been updated!', true));
 
 					foreach ($this->data['User'] as $field => $value) {
@@ -278,7 +278,7 @@ class UsersController extends ForumAppController {
 		if (!empty($this->data)) {
 			$this->User->id = $id;
 			
-			if ($this->User->save($this->data, true, array('username', 'email', 'totalPosts', 'totalTopics'))) {
+			if ($this->User->save($this->data, true, array('username', 'email', $this->User->columnMap['totalPosts'], $this->User->columnMap['totalTopics']))) {
 				$this->redirect(array('controller' => 'users', 'action' => 'index', 'admin' => true));
 			}
 		} else {

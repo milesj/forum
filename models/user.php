@@ -11,12 +11,38 @@
 class User extends ForumAppModel {
 
 	/**
+	 * Constants specific to changing the status of a user.
+	 *
+	 * @access public
+	 * @var string
+	 */
+	const STATUS_BANNED = 1;
+	const STATUS_ACTIVE = 0;
+
+	/**
 	 * Table prefix.
 	 *
 	 * @access public
 	 * @var string
 	 */
 	public $tablePrefix = '{:prefix}';
+
+	/**
+	 * A column map allowing you to define the name of certain user columns.
+	 *
+	 * @access public
+	 * @var array
+	 */
+	public $columnMap = array(
+		'status'		=> 'status',
+		'signature'		=> 'signature',
+		'locale'		=> 'locale', // Must allow 3 characters: eng
+		'timezone'		=> 'timezone', // Must allow 5 digits: -10.5
+		'totalPosts'	=> 'totalPosts',
+		'totalTopics'	=> 'totalTopics',
+		'currentLogin'	=> 'currentLogin',
+		'lastLogin'		=> 'lastLogin'
+	);
 
 	/**
 	 * Has many.
@@ -207,7 +233,7 @@ class User extends ForumAppModel {
 	 * @return boolean
 	 */
 	public function increasePosts($id) {
-		return $this->query("UPDATE `". $this->tablePrefix ."users` AS `User` SET `User`.`totalPosts` = `User`.`totalPosts` + 1 WHERE `User`.`id` = $id");
+		return $this->query("UPDATE `". $this->tablePrefix ."users` AS `User` SET `User`.`". $this->columnMap['totalPosts'] ."` = `User`.`". $this->columnMap['totalPosts'] ."` + 1 WHERE `User`.`id` = $id");
 	}
 	
 	/**
@@ -218,7 +244,7 @@ class User extends ForumAppModel {
 	 * @return boolean
 	 */
 	public function increaseTopics($id) {
-		return $this->query("UPDATE `". $this->tablePrefix ."users` AS `User` SET `User`.`totalTopics` = `User`.`totalTopics` + 1 WHERE `User`.`id` = $id");
+		return $this->query("UPDATE `". $this->tablePrefix ."users` AS `User` SET `User`.`". $this->columnMap['totalTopics'] ."` = `User`.`". $this->columnMap['totalTopics'] ."` + 1 WHERE `User`.`id` = $id");
 	}
 	
 	/**
@@ -251,11 +277,10 @@ class User extends ForumAppModel {
 	 */
 	public function login($user) {
 		if (!empty($user)) {
-			$data = array(
-				'currentLogin' => date('Y-m-d H:i:s'),
-				'lastLogin' => $user['User']['currentLogin']
-			);
-			
+			$data = array();
+			$data[$this->columnMap['currentLogin']] = date('Y-m-d H:i:s');
+			$data[$this->columnMap['lastLogin']] = $user['User']['currentLogin'];
+
 			$this->id = $user['User']['id'];
 			return $this->save($data, false, array_keys($data));
 		}
@@ -287,7 +312,7 @@ class User extends ForumAppModel {
 		$past = date('Y-m-d H:i:s', strtotime('-'. $minutes .' minutes'));
 		
 		return $this->find('all', array(
-			'conditions' => array('User.currentLogin >' => $past),
+			'conditions' => array('User.'. $this->columnMap['currentLogin'] .' >' => $past),
 			'fields' => array('User.id', 'User.username'),
 			'contain' => false
 		));
@@ -300,7 +325,7 @@ class User extends ForumAppModel {
 	 * @return boolean
 	 */
 	public function beforeValidate() {
-		$action = (isset($this->action)) ? $this->action : null;
+		$action = (isset($this->action) ? $this->action : null);
 		
 		if ($action == 'login') {
 			unset($this->validate['username']['isUnique']);

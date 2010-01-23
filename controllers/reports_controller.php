@@ -144,7 +144,7 @@ class ReportsController extends ForumAppController {
 						break;
 						case 'ban':
 							$this->User->id = $item_id;
-							$this->User->saveField('status', 1);
+							$this->User->saveField('status', User::STATUS_BANNED);
 						break;
 					}
 					
