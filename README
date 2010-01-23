@@ -1,5 +1,5 @@
-Forum (Cupcake) v1.7 - CakePHP Plugin
-*************************************
+Forum (Cupcake) v1.7.4 - CakePHP Plugin
+***************************************
 
 Requirements
 ============
@@ -27,6 +27,7 @@ Contributors
 	* Rachman Chavik - Indonesian
 	* Alexey Kondratyev - Russian
 	* Walter Mairena - Spanish
+	* Mariano Iglesias - Sluggable Behavior
 
 Features
 ========

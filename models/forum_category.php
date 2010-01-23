@@ -11,6 +11,14 @@
 class ForumCategory extends ForumAppModel {
 
 	/**
+	 * Behaviors
+	 *
+	 * @access public
+	 * @var array
+	 */
+	public $actsAs = array('Forum.Sluggable');
+
+	/**
 	 * Belongs to.
 	 *
 	 * @access public
