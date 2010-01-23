@@ -7,7 +7,9 @@ $orderBy = array(
 	'Topic.view_count' => __d('forum', 'Total views', true)
 ); ?>
 
-<h2>Search</h2>
+<div class="forumHeader">
+	<h2>Search</h2>
+</div>
 
 <?php echo $form->create('Topic', array('url' => array('controller' => 'search', 'action' => 'proxy'))); ?>
 <div id="search">

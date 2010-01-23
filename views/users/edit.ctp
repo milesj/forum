@@ -1,18 +1,20 @@
 
-<h2><?php __d('forum', 'Edit Profile'); ?></h2>
+<div class="forumHeader">
+	<h2><?php __d('forum', 'Edit Profile'); ?></h2>
+</div>
 
 <?php $session->flash(); ?>
 
 <?php echo $form->create('User', array('url' => array('controller' => 'users', 'action' => 'edit'))); ?>
 <?php echo $form->input('email', array('label' => __d('forum', 'Email', true))); ?>
-<?php echo $form->input('locale', array('options' => $cupcake->getLocales(), 'label' => __d('forum', 'Language', true))); ?>
-<?php echo $form->input('timezone', array('options' => $cupcake->getTimezones(), 'label' => __d('forum', 'Timezone', true))); ?>
+<?php echo $form->input($cupcake->columnMap['locale'], array('options' => $cupcake->getLocales(), 'label' => __d('forum', 'Language', true))); ?>
+<?php echo $form->input($cupcake->columnMap['timezone'], array('options' => $cupcake->getTimezones(), 'label' => __d('forum', 'Timezone', true))); ?>
 
 <div class="input textarea">
-	<?php echo $form->label('signature', __d('forum', 'Signature', true)); ?>
+	<?php echo $form->label($cupcake->columnMap['signature'], __d('forum', 'Signature', true)); ?>
 
 	<div id="textarea">
-		<?php echo $form->input('signature', array('type' => 'textarea', 'rows' => 5, 'label' => false, 'div' => false)); ?>
+		<?php echo $form->input($cupcake->columnMap['signature'], array('type' => 'textarea', 'rows' => 5, 'label' => false, 'div' => false)); ?>
 	</div>
 
 	<span class="clear"><!-- --></span>

@@ -12,7 +12,9 @@ if ($method == 'add') {
 
 array_unshift($levels, '-- '. __d('forum', 'None', true) .' --'); ?>
 
-<h2><?php echo $title; ?></h2>
+<div class="forumHeader">
+	<h2><?php echo $title; ?></h2>
+</div>
 
 <p><?php __d('forum', 'When applying a view access, it states that all users with that access level and above will be able to view the forum and all its child forum categories. However, the restricted access will limit only users with that access level to view the forum.'); ?></p>
 

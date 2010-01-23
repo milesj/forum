@@ -1,5 +1,7 @@
 
-<h2><?php __d('forum', 'Forum Settings'); ?></h2>
+<div class="forumHeader">
+	<h2><?php __d('forum', 'Forum Settings'); ?></h2>
+</div>
 
 <?php $session->flash(); ?>
 

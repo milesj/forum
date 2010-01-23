@@ -10,7 +10,9 @@ if ($method == 'add') {
 	$title = __d('forum', 'Edit Access Level', true);
 } ?>
 
-<h2><?php echo $title; ?></h2>
+<div class="forumHeader">
+	<h2><?php echo $title; ?></h2>
+</div>
 
 <?php if ($method == 'edit' && $id <= 4) { ?>
 <p><?php __d('forum', 'You are unable to edit core levels, they are restricted.'); ?></p>

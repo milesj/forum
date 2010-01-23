@@ -1,5 +1,7 @@
 
-<h2>Step 3: Create Tables</h2>
+<div class="forumHeader">
+	<h2>Step 3: Create Tables</h2>
+</div>
 
 <p>Your tables are now being created in the database: <b><?php echo $database; ?></b></p>
 

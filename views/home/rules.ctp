@@ -1,6 +1,8 @@
 
-<h2><?php __d('forum', 'Rules and Regulations'); ?></h2>
-                
+<div class="forumHeader">
+	<h2><?php __d('forum', 'Rules and Regulations'); ?></h2>
+</div>
+
 <p><strong><?php __d('forum', 'No Offensive Material'); ?></strong><br />
 <?php __d('forum', 'No posting any harmful, threatening, abusive, harassing, defamatory, vulgar, obscene, hateful, or racially, ethnically or otherwise objectionable content. This means no porn, gore, offensive, violent or disturbing images, websites and or other adult content. This will result in an immediate ban from the community.'); ?></p>
 

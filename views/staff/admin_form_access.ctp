@@ -10,7 +10,9 @@ if ($method == 'add') {
 	$title = __d('forum', 'Edit Access', true);
 } ?>
 
-<h2><?php echo $title; ?></h2>
+<div class="forumHeader">
+	<h2><?php echo $title; ?></h2>
+</div>
 
 <p><?php printf(__d('forum', 'To find the users ID, you can search for them on the %s.', true), $html->link(__d('forum', 'Users listing', true), array('controller' => 'users', 'action' => 'index', 'admin' => true))); ?></p>
 

@@ -1,5 +1,7 @@
 
-<h2>Step 1: Database Configuration</h2>
+<div class="forumHeader">
+	<h2>Step 1: Database Configuration</h2>
+</div>
 
 <p>Select the database you want to use, and the prefix to append to your table names.</p>
 

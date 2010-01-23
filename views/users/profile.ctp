@@ -2,11 +2,13 @@
 <?php // User exists
 if (!empty($user)) { ?>
 
-<button type="button" onclick="goTo('<?php echo $html->url(array('action' => 'report', $user['User']['id'])); ?>');" class="fr button"><?php __d('forum', 'Report User'); ?></button>
-<h2><?php echo $user['User']['username']; ?></h2>
+<div class="forumHeader">
+	<button type="button" onclick="goTo('<?php echo $html->url(array('action' => 'report', $user['User']['id'])); ?>');" class="fr button"><?php __d('forum', 'Report User'); ?></button>
+	<h2><?php echo $user['User']['username']; ?></h2>
+</div>
 
-<?php if (!empty($user['User']['signature'])) { ?>
-<p><?php $decoda->parse($user['User']['signature'], false, array('b', 'i', 'u', 'img', 'url', 'align', 'color', 'size', 'code')); ?></p>
+<?php if (!empty($user['User'][$cupcake->columnMap['signature']])) { ?>
+<p><?php $decoda->parse($user['User'][$cupcake->columnMap['signature']], false, array('b', 'i', 'u', 'img', 'url', 'align', 'color', 'size', 'code')); ?></p>
 <?php } ?>
 
 <table cellpadding="5" cellspacing="0" id="userInfo">
@@ -14,7 +16,7 @@ if (!empty($user)) { ?>
 	<td><strong><?php __d('forum', 'Joined'); ?>:</strong></td>
     <td><?php echo $time->nice($user['User']['created'], $cupcake->timezone()); ?></td>
 	<td><strong><?php __d('forum', 'Total Topics'); ?>:</strong></td>
-    <td><?php echo number_format($user['User']['totalTopics']); ?></td>
+    <td><?php echo number_format($user['User'][$cupcake->columnMap['totalTopics']]); ?></td>
     <td><strong><?php __d('forum', 'Roles'); ?>:</strong></td>
     <td>
     	<?php if (!empty($user['Access'])) { 
@@ -31,14 +33,14 @@ if (!empty($user)) { ?>
 <tr>
     <td><strong><?php __d('forum', 'Last Login'); ?>:</strong></td>
     <td>
-		<?php if (!empty($user['User']['lastLogin'])) {
-			echo $time->relativeTime($user['User']['lastLogin'], array('userOffset' => $cupcake->timezone()));
+		<?php if (!empty($user['User'][$cupcake->columnMap['lastLogin']])) {
+			echo $time->relativeTime($user['User'][$cupcake->columnMap['lastLogin']], array('userOffset' => $cupcake->timezone()));
 		} else {
 			echo '<em>'. __d('forum', 'Never', true) .'</em>';
 		} ?>
     </td>
     <td><strong><?php __d('forum', 'Total Posts'); ?>:</strong></td>
-    <td><?php echo number_format($user['User']['totalPosts']); ?></td>
+    <td><?php echo number_format($user['User'][$cupcake->columnMap['totalPosts']]); ?></td>
     <td><strong><?php __d('forum', 'Moderates'); ?>:</strong></td>
     <td>
     	<?php if (!empty($user['Moderator'])) { 

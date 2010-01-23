@@ -1,5 +1,7 @@
 
-<h2>Step 4: Finished</h2>
+<div class="forumHeader">
+	<h2>Step 4: Finished</h2>
+</div>
 
 <p>You have succesfully installed the forum plugin and created the required tables!</p>
 

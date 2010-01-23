@@ -1,5 +1,7 @@
 
-<h2>Step 2: Database Table Check</h2>
+<div class="forumHeader">
+	<h2>Step 2: Database Table Check</h2>
+</div>
 
 <?php // Database connected
 if ($isConnected) { ?>

@@ -1,5 +1,7 @@
 
-<h2><?php __d('forum', 'Manage Users'); ?></h2>
+<div class="forumHeader">
+	<h2><?php __d('forum', 'Manage Users'); ?></h2>
+</div>
 
 <?php $session->flash(); ?>
 
@@ -25,9 +27,9 @@
         <th><?php echo $paginator->sort(__d('forum', 'Username', true), 'User.username'); ?></th>
         <th><?php echo $paginator->sort(__d('forum', 'Email', true), 'User.email'); ?></th>
         <th><?php echo $paginator->sort(__d('forum', 'Joined', true), 'User.created'); ?></th>
-        <th><?php echo $paginator->sort(__d('forum', 'Last Active', true), 'User.lastLogin'); ?></th>
-        <th><?php echo $paginator->sort(__d('forum', 'Topics', true), 'User.totalTopics'); ?></th>
-        <th><?php echo $paginator->sort(__d('forum', 'Posts', true), 'User.totalPosts'); ?></th>
+        <th><?php echo $paginator->sort(__d('forum', 'Last Active', true), 'User.'. $cupcake->columnMap['lastLogin']); ?></th>
+        <th><?php echo $paginator->sort(__d('forum', 'Topics', true), 'User.'. $cupcake->columnMap['totalTopics']); ?></th>
+        <th><?php echo $paginator->sort(__d('forum', 'Posts', true), 'User.'. $cupcake->columnMap['totalPosts']); ?></th>
         <th><?php __d('forum', 'Options'); ?></th>
     </tr>
     
@@ -43,7 +45,7 @@
         <td class="ac"><?php echo $time->nice($user['User']['created'], $cupcake->timezone()); ?></td>
         <td class="ac">
             <?php if (!empty($user['User']['lastLogin'])) {
-                echo $time->relativeTime($user['User']['lastLogin'], array('userOffset' => $cupcake->timezone()));
+                echo $time->relativeTime($user['User'][$cupcake->columnMap['lastLogin']], array('userOffset' => $cupcake->timezone()));
             } else {
                 echo '<em>'. __d('forum', 'Never', true) .'</em>';
             } ?>

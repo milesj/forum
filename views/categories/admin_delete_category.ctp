@@ -1,5 +1,7 @@
 
-<h2><?php __d('forum', 'Delete Forum Category'); ?></h2>
+<div class="forumHeader">
+	<h2><?php __d('forum', 'Delete Forum Category'); ?></h2>
+</div>
 
 <?php if (empty($categories)) { ?>
 <p><?php __d('forum', 'Cannot process deletion, you must have atleast 1 active category.'); ?></p>

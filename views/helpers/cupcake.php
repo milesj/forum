@@ -40,6 +40,7 @@ class CupcakeHelper extends AppHelper {
 		$Config = ForumConfig::getInstance();
 		$this->version = $Config->version;
 		$this->settings = $Config->settings;
+		$this->columnMap = $Config->columnMap;
 	}
 
 	/**
@@ -327,8 +328,8 @@ class CupcakeHelper extends AppHelper {
 	 * @return string
 	 */
 	public function timezone() {
-		if ($this->Session->check('Auth.User.timezone')) {
-			return $this->Session->read('Auth.User.timezone');
+		if ($this->Session->check('Auth.User.'. $cupcake->columnMap['timezone'])) {
+			return $this->Session->read('Auth.User.'. $cupcake->columnMap['timezone']);
 		}
 	}
 

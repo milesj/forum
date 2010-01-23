@@ -7,7 +7,9 @@ if (!empty($post['Topic']['ForumCategory']['Parent']['id'])) {
 $html->addCrumb($post['Topic']['ForumCategory']['title'], array('controller' => 'categories', 'action' => 'view', $post['Topic']['ForumCategory']['id']));
 $html->addCrumb($post['Topic']['title'], array('controller' => 'topics', 'action' => 'view', $post['Topic']['id'])); ?>
 
-<h2><?php __d('forum', 'Edit Post'); ?></h2>
+<div class="forumHeader">
+	<h2><?php __d('forum', 'Edit Post'); ?></h2>
+</div>
 
 <?php echo $form->create('Post'); ?>
 

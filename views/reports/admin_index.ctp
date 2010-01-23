@@ -1,5 +1,7 @@
 
-<h2><?php __d('forum', 'Reported Items'); ?></h2>
+<div class="forumHeader">
+	<h2><?php __d('forum', 'Reported Items'); ?></h2>
+</div>
 
 <div class="forumOptions">
 	<span><?php __d('forum', 'View Reported'); ?>:</span>

@@ -6,7 +6,9 @@ if (!empty($category['Parent']['id'])) {
 }
 $html->addCrumb($category['ForumCategory']['title'], array('controller' => 'categories', 'action' => 'view', $category['ForumCategory']['id'])); ?>
 
-<h2><?php __d('forum', 'Moderate'); ?>: <?php echo $category['ForumCategory']['title']; ?></h2>
+<div class="forumHeader">
+	<h2><?php __d('forum', 'Moderate'); ?>: <?php echo $category['ForumCategory']['title']; ?></h2>
+</div>
 
 <?php $session->flash(); ?>
 

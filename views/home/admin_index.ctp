@@ -1,5 +1,7 @@
 
-<h2><?php __d('forum', 'Administration Panel'); ?></h2>
+<div class="forumHeader">
+	<h2><?php __d('forum', 'Administration Panel'); ?></h2>
+</div>
 
 <div class="forumWrap">
     <table class="table" cellspacing="0">

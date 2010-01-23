@@ -29,6 +29,7 @@ class ToolbarComponent extends Object {
 	public function initialize(&$Controller, $settings = array()) {
 		$this->Controller = $Controller;
 		$this->settings = ForumConfig::getInstance()->settings;
+		$this->columnMap = ForumConfig::getInstance()->columnMap;
 	}
 
 	/**
@@ -55,7 +56,7 @@ class ToolbarComponent extends Object {
 
 			// Save last visit time
 			if (!$this->Session->check('Forum.lastVisit')) {
-				$lastVisit = ($user_id) ? $this->Controller->Auth->user('lastLogin') : date('Y-m-d H:i:s');
+				$lastVisit = ($user_id) ? $this->Controller->Auth->user($this->columnMap['lastLogin']) : date('Y-m-d H:i:s');
 				$this->Session->write('Forum.lastVisit', $lastVisit);
 			}
 

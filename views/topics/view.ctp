@@ -6,13 +6,15 @@ if (!empty($topic['ForumCategory']['Parent']['id'])) {
 }
 $html->addCrumb($topic['ForumCategory']['title'], array('controller' => 'categories', 'action' => 'view', $topic['ForumCategory']['id'])); ?>
 
-<?php if (!$cupcake->user()) { ?>
-<div class="fr">
-	<?php echo $this->element('login'); ?>
-</div>
-<?php } ?>
+<div class="forumHeader">
+	<?php if (!$cupcake->user()) { ?>
+	<div class="fr">
+		<?php echo $this->element('login'); ?>
+	</div>
+	<?php } ?>
 
-<h2><?php echo $topic['Topic']['title']; ?></h2>
+	<h2><?php echo $topic['Topic']['title']; ?></h2>
+</div>
 
 <?php if ($cupcake->user()) { ?>
 <div class="forumOptions">

@@ -6,7 +6,9 @@ if (!empty($category['Parent']['id'])) {
 }
 $html->addCrumb($category['ForumCategory']['title'], array('controller' => 'categories', 'action' => 'view', $category['ForumCategory']['id'])); ?>
 
-<h2><?php echo $pageTitle; ?></h2>
+<div class="forumHeader">
+	<h2><?php echo $pageTitle; ?></h2>
+</div>
 
 <?php echo $form->create('Topic', array('url' => array('controller' => 'topics', 'action' => 'add', $id, $type))); ?>
 <?php echo $form->input('title', array('label' => __d('forum', 'Title', true))); ?>

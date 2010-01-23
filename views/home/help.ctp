@@ -1,5 +1,7 @@
 
-<h2><?php __d('forum', 'Help Desk'); ?></h2>
+<div class="forumHeader">
+	<h2><?php __d('forum', 'Help Desk'); ?></h2>
+</div>
 
 <p><strong><?php __d('forum', 'Why do I need to sign up?'); ?></strong><br />
 <?php __d('forum', 'You may read all public forums as a guest, but to be able to post or reply to a topic, you must have a user account.'); ?></p>

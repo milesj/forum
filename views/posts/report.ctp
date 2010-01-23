@@ -1,5 +1,7 @@
 
-<h2><?php __d('forum', 'Report Post'); ?></h2>
+<div class="forumHeader">
+	<h2><?php __d('forum', 'Report Post'); ?></h2>
+</div>
 
 <p><?php printf(__d('forum', 'Are you sure you want to report the post (below) in the topic %s? If so, please add a comment as to why you are reporting it, 255 max characters.', true), $html->link($post['Topic']['title'], array('controller' => 'topics', 'action' => 'view', $post['Topic']['id']))); ?></p>
 

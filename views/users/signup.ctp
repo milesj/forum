@@ -1,5 +1,7 @@
 
-<h2><?php __d('forum', 'Sign Up'); ?></h2>
+<div class="forumHeader">
+	<h2><?php __d('forum', 'Sign Up'); ?></h2>
+</div>
 
 <p><?php __d('forum', 'Registration is free. All fields are required.'); ?></p>
 

@@ -16,7 +16,7 @@ class ForumConfig {
 	 * @access public
 	 * @var string
 	 */
-	public $version = '1.7.2';
+	public $version = '1.7.3';
 
 	/**
 	 * Settings.
@@ -25,6 +25,14 @@ class ForumConfig {
 	 * @var array
 	 */
 	public $settings = array();
+
+	/**
+	 * Taken from: User::$columnMap
+	 *
+	 * @access public
+	 * @var array
+	 */
+	public $columnMap = array();
 
 	/**
 	 * Singleton Instance.
@@ -57,6 +65,8 @@ class ForumConfig {
 				$this->settings['supported_locales'] = 'eng=English';
 			}
 		}
+
+		$this->columnMap = ClassRegistry::init('Forum.User')->columnMap;
 	}
 
 	/**
