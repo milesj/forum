@@ -33,66 +33,6 @@ class ForumAppController extends AppController {
 	public $helpers = array('Html', 'Session', 'Form', 'Time', 'Text', 'Javascript', 'Forum.Cupcake', 'Forum.Decoda' => array());
 
 	/**
-	 * Custom method to setup your settings, only edit this.
-	 *
-	 * @access public
-	 * @return void
-	 */
-	public function _initForum() {
-		Security::setHash('md5');
-	}
-	
-	/**
-	 * Initialize the session and all data.
-	 *
-	 * @access public
-	 * @return void
-	 */
-	public function _initSession() {
-		if (!$this->Session->check('Forum.isBrowsing')) {
-			$user_id = $this->Auth->user('id');
-			
-			// How much access we have?
-			if (!$this->Session->check('Forum.access')) {
-				$access = array('Guest' => 0);
-				
-				if ($user_id) {
-					$access['Member'] = 1;
-					$access = array_merge($access, ClassRegistry::init('Forum.Access')->getMyAccess($user_id));
-				}
-				
-				$this->Session->write('Forum.access', $access);
-			}
-			
-			// Save last visit time
-			if (!$this->Session->check('Forum.lastVisit')) {
-				$lastVisit = ($user_id) ? $this->Auth->user('lastLogin') : date('Y-m-d H:i:s');
-				$this->Session->write('Forum.lastVisit', $lastVisit);
-			}
-			
-			// Moderator?
-			if (!$this->Session->check('Forum.moderates')) {
-				$moderates = ($user_id) ? ClassRegistry::init('Forum.Moderator')->getModerations($user_id) : array();
-				$this->Session->write('Forum.moderates', $moderates);
-			}
-			
-			// Are we a super mod?
-			if (!$this->Session->check('Forum.isSuperMod')) {
-				$status = ($user_id) ? ClassRegistry::init('Forum.Access')->isSuper($user_id) : 0;
-				$this->Session->write('Forum.isSuperMod', $status);
-			}
-			
-			// Are we an administrator?
-			if (!$this->Session->check('Forum.isAdmin')) {
-				$status = ($user_id) ? ClassRegistry::init('Forum.Access')->isAdmin($user_id) : 0;
-				$this->Session->write('Forum.isAdmin', $status);
-			}
-			
-			$this->Session->write('Forum.isBrowsing', true);
-		}
-	}
-	
-	/**
 	 * Run auto login logic.
 	 *
 	 * @access public
@@ -100,11 +40,10 @@ class ForumAppController extends AppController {
 	 * @return void
 	 */
 	public function _autoLogin($user) {
-		$this->Session->delete('Forum');
 		ClassRegistry::init('Forum.User')->login($user);
-		
-		$this->_initForum();
-		$this->_initSession();
+
+		$this->Session->delete('Forum');
+		$this->Toolbar->initForum();
 	}
 
 	/**
@@ -136,7 +75,7 @@ class ForumAppController extends AppController {
 	public function beforeFilter() {
 		parent::beforeFilter();
 		
-		$this->_initForum();
+		Security::setHash('md5');
 		$Config = ForumConfig::getInstance();
 
 		// Load l10n/i18n support
@@ -168,7 +107,7 @@ class ForumAppController extends AppController {
 			'logoutAction' => 'logout'
 		);
 
-		$this->Cookie->key = 'cupcake';
+		$this->Cookie->key = Configure::read('Security.salt');
 		
 		// Apply censored words
 		if (!empty($Config->settings['censored_words'])) {
@@ -177,7 +116,7 @@ class ForumAppController extends AppController {
 		}
 		
 		// Initialize
-		$this->_initSession();
+		$this->Toolbar->initForum();
 	}
 
 }

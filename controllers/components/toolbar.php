@@ -16,7 +16,7 @@ class ToolbarComponent extends Object {
 	 * @access public
 	 * @var array
 	 */
-	public $components = array('Session'); 
+	public $components = array('Session');
 	
 	/**
 	 * Initialize.
@@ -29,6 +29,56 @@ class ToolbarComponent extends Object {
 	public function initialize(&$Controller, $settings = array()) {
 		$this->Controller = $Controller;
 		$this->settings = ForumConfig::getInstance()->settings;
+	}
+
+	/**
+	 * Initialize the session and all data.
+	 *
+	 * @access public
+	 * @return void
+	 */
+	public function initForum() {
+		if (!$this->Session->check('Forum.isBrowsing')) {
+			$user_id = $this->Controller->Auth->user('id');
+
+			// How much access we have?
+			if (!$this->Session->check('Forum.access')) {
+				$access = array('Guest' => 0);
+
+				if ($user_id) {
+					$access['Member'] = 1;
+					$access = array_merge($access, ClassRegistry::init('Forum.Access')->getMyAccess($user_id));
+				}
+
+				$this->Session->write('Forum.access', $access);
+			}
+
+			// Save last visit time
+			if (!$this->Session->check('Forum.lastVisit')) {
+				$lastVisit = ($user_id) ? $this->Controller->Auth->user('lastLogin') : date('Y-m-d H:i:s');
+				$this->Session->write('Forum.lastVisit', $lastVisit);
+			}
+
+			// Moderator?
+			if (!$this->Session->check('Forum.moderates')) {
+				$moderates = ($user_id) ? ClassRegistry::init('Forum.Moderator')->getModerations($user_id) : array();
+				$this->Session->write('Forum.moderates', $moderates);
+			}
+
+			// Are we a super mod?
+			if (!$this->Session->check('Forum.isSuperMod')) {
+				$status = ($user_id) ? ClassRegistry::init('Forum.Access')->isSuper($user_id) : 0;
+				$this->Session->write('Forum.isSuperMod', $status);
+			}
+
+			// Are we an administrator?
+			if (!$this->Session->check('Forum.isAdmin')) {
+				$status = ($user_id) ? ClassRegistry::init('Forum.Access')->isAdmin($user_id) : 0;
+				$this->Session->write('Forum.isAdmin', $status);
+			}
+
+			$this->Session->write('Forum.isBrowsing', true);
+		}
 	}
 	
 	/**
