@@ -328,8 +328,8 @@ class CupcakeHelper extends AppHelper {
 	 * @return string
 	 */
 	public function timezone() {
-		if ($this->Session->check('Auth.User.'. $cupcake->columnMap['timezone'])) {
-			return $this->Session->read('Auth.User.'. $cupcake->columnMap['timezone']);
+		if ($this->Session->check('Auth.User.'. $this->columnMap['timezone'])) {
+			return $this->Session->read('Auth.User.'. $this->columnMap['timezone']);
 		}
 	}
 
