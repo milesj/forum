@@ -1,11 +1,11 @@
 
 <?php // Crumbs
 $html->addCrumb($post['Topic']['ForumCategory']['Forum']['title'], array('controller' => 'home', 'action' => 'index'));
-if (!empty($post['Topic']['ForumCategory']['Parent']['id'])) {
-	$html->addCrumb($post['Topic']['ForumCategory']['Parent']['title'], array('controller' => 'categories', 'action' => 'view', $post['Topic']['ForumCategory']['Parent']['id']));
+if (!empty($post['Topic']['ForumCategory']['Parent']['slug'])) {
+	$html->addCrumb($post['Topic']['ForumCategory']['Parent']['title'], array('controller' => 'categories', 'action' => 'view', $post['Topic']['ForumCategory']['Parent']['slug']));
 }
-$html->addCrumb($post['Topic']['ForumCategory']['title'], array('controller' => 'categories', 'action' => 'view', $post['Topic']['ForumCategory']['id']));
-$html->addCrumb($post['Topic']['title'], array('controller' => 'topics', 'action' => 'view', $post['Topic']['id'])); ?>
+$html->addCrumb($post['Topic']['ForumCategory']['title'], array('controller' => 'categories', 'action' => 'view', $post['Topic']['ForumCategory']['slug']));
+$html->addCrumb($post['Topic']['title'], array('controller' => 'topics', 'action' => 'view', $post['Topic']['slug'])); ?>
 
 <div class="forumHeader">
 	<h2><?php __d('forum', 'Edit Post'); ?></h2>

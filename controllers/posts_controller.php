@@ -117,7 +117,7 @@ class PostsController extends ForumAppController {
 	 * @param int $id
 	 */
 	public function delete($id) {
-		$post = $this->Post->get($id, array('id', 'user_id', 'topic_id'), array('Topic.forum_category_id'));
+		$post = $this->Post->get($id, array('id', 'user_id', 'topic_id'), array('Topic.forum_category_id', 'Topic.slug'));
 		$user_id = $this->Auth->user('id');
 		
 		// Access
@@ -129,7 +129,7 @@ class PostsController extends ForumAppController {
 		
 		// Delete All
 		$this->Post->destroy($id, $post);
-		$this->redirect(array('controller' => 'topics', 'action' => 'view', $post['Post']['topic_id']));
+		$this->redirect(array('controller' => 'topics', 'action' => 'view', $post['Topic']['slug']));
 	}
 	
 	/**
@@ -141,7 +141,7 @@ class PostsController extends ForumAppController {
 	public function report($id) {
 		$this->loadModel('Forum.Report');
 		
-		$post = $this->Post->get($id, array('content'), array('Topic.id', 'Topic.title'));
+		$post = $this->Post->get($id, array('content'), array('Topic.id', 'Topic.title', 'Topic.slug'));
 		$user_id = $this->Auth->user('id');
 		
 		// Access

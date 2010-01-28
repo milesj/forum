@@ -22,7 +22,7 @@ class ForumAppModel extends AppModel {
 	 * @access public
 	 * @var string
 	 */
-	public $tablePrefix = '{:prefix}';
+	public $tablePrefix = 'forum_';
 
 	/**
 	 * Cache queries.
@@ -50,6 +50,14 @@ class ForumAppModel extends AppModel {
 	 * @return array
 	 */
 	public function get($id, $fields = array(), $contain = false) {
+		if (is_array($id)) {
+			$column = $id[0];
+			$value = $id[1];
+		} else {
+			$column = 'id';
+			$value = $id;
+		}
+
 		if (empty($fields)) {
 			$fields = $this->alias .'.*';
 		} else {
@@ -59,7 +67,7 @@ class ForumAppModel extends AppModel {
 		}
 		
 		return $this->find('first', array(
-			'conditions' => array($this->alias .'.id' => $id),
+			'conditions' => array($this->alias .'.'. $column => $value),
 			'fields' => $fields,
 			'contain' => $contain
 		));

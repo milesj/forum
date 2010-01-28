@@ -1,10 +1,10 @@
 
 <?php // Crumbs
 $html->addCrumb($topic['ForumCategory']['Forum']['title'], array('controller' => 'home', 'action' => 'index'));
-if (!empty($topic['ForumCategory']['Parent']['id'])) {
-	$html->addCrumb($topic['ForumCategory']['Parent']['title'], array('controller' => 'categories', 'action' => 'view', $topic['ForumCategory']['Parent']['id']));
+if (!empty($topic['ForumCategory']['Parent']['slug'])) {
+	$html->addCrumb($topic['ForumCategory']['Parent']['title'], array('controller' => 'categories', 'action' => 'view', $topic['ForumCategory']['Parent']['slug']));
 }
-$html->addCrumb($topic['ForumCategory']['title'], array('controller' => 'categories', 'action' => 'view', $topic['ForumCategory']['id'])); ?>
+$html->addCrumb($topic['ForumCategory']['title'], array('controller' => 'categories', 'action' => 'view', $topic['ForumCategory']['slug'])); ?>
 
 <div class="forumHeader">
 	<h2><?php __d('forum', 'Moderate'); ?>: <?php echo $topic['Topic']['title']; ?></h2>
@@ -13,10 +13,10 @@ $html->addCrumb($topic['ForumCategory']['title'], array('controller' => 'categor
 <?php $session->flash(); ?>
 
 <div class="forumOptions">
-	<?php echo $html->link(__d('forum', 'Return to Topic', true), array('controller' => 'topics', 'action' => 'view', $topic['Topic']['id'])); ?>
+	<?php echo $html->link(__d('forum', 'Return to Topic', true), array('controller' => 'topics', 'action' => 'view', $topic['Topic']['slug'])); ?>
 </div>
 
-<?php echo $form->create('Post', array('url' => array('controller' => 'topics', 'action' => 'moderate', $topic['Topic']['id']))); ?>
+<?php echo $form->create('Post', array('url' => array('controller' => 'topics', 'action' => 'moderate', $topic['Topic']['slug']))); ?>
 <div id="postWrap">
 	<?php echo $this->element('pagination'); ?>
     
@@ -57,5 +57,5 @@ $html->addCrumb($topic['ForumCategory']['title'], array('controller' => 'categor
 <?php echo $form->end(); ?>
 
 <div class="forumOptions">
-	<?php echo $html->link(__d('forum', 'Return to Topic', true), array('controller' => 'topics', 'action' => 'view', $topic['Topic']['id'])); ?>
+	<?php echo $html->link(__d('forum', 'Return to Topic', true), array('controller' => 'topics', 'action' => 'view', $topic['Topic']['slug'])); ?>
 </div>

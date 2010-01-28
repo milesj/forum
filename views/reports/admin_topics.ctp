@@ -30,7 +30,7 @@
         
     <tr<?php if ($counter % 2) echo ' class="altRow"'; ?>>
     	<td class="ac"><input type="checkbox" name="data[Report][items][]" value="<?php echo $report['Report']['id']; ?>:<?php echo $report['Topic']['id']; ?>" /></td>
-        <td><?php echo $html->link($report['Topic']['title'], array('controller' => 'topics', 'action' => 'view', $report['Topic']['id'], 'admin' => false)); ?></td>
+        <td><?php echo $html->link($report['Topic']['title'], array('controller' => 'topics', 'action' => 'view', $report['Topic']['slug'], 'admin' => false)); ?></td>
         <td><?php echo $html->link($report['Reporter']['username'], array('controller' => 'users', 'action' => 'edit', $report['Reporter']['id'], 'admin' => true)); ?></td>
         <td><?php echo $report['Report']['comment']; ?></td>
         <td><?php echo $time->nice($report['Report']['created'], $cupcake->timezone()); ?></td>

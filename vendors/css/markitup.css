@@ -42,7 +42,7 @@
 	width:22px; height:5px;
 	margin-left:auto;
 	margin-right:auto;
-	background-image:url(/forum/img/markitup/handle.png);
+	background-image:url(../img/markitup/handle.png);
 	cursor:n-resize;
 }
 /***************************************************************************************/
@@ -56,7 +56,7 @@
 	display:block;
 }
 .markItUpHeader ul .markItUpDropMenu {
-	background:transparent url(/forum/img/markitup/menu.png) no-repeat 115% 50%;
+	background:transparent url(../img/markitup/menu.png) no-repeat 115% 50%;
 	margin-right:5px;
 }
 .markItUpHeader ul .markItUpDropMenu li {
@@ -75,7 +75,7 @@
 	border-bottom:1px solid #CBCD7C;
 }
 .markItUpHeader ul ul .markItUpDropMenu {
-	background:#FFF url(/forum/img/markitup/submenu.png) no-repeat 100% 50%;
+	background:#FFF url(../img/markitup/submenu.png) no-repeat 100% 50%;
 }
 .markItUpHeader ul .markItUpSeparator {
 	margin:0 10px;

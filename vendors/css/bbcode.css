@@ -3,13 +3,13 @@
 // By Jay Salvat - http://markitup.jaysalvat.com/
 // ------------------------------------------------------------------*/
 
-.bbcode .markItUpButton1 a { background-image: url("/forum/img/markitup/bold.png"); }
-.bbcode .markItUpButton2 a { background-image: url("/forum/img/markitup/italic.png"); }
-.bbcode .markItUpButton3 a { background-image: url("/forum/img/markitup/underline.png"); }
-.bbcode .markItUpButton4 a { background-image: url("/forum/img/markitup/picture.png"); }
-.bbcode .markItUpButton5 a { background-image: url("/forum/img/markitup/link.png"); }
-.bbcode .markItUpButton6 a { background-image: url("/forum/img/markitup/email.png"); }
-.bbcode .markItUpButton7 a { background-image: url("/forum/img/markitup/colors.png"); }
+.bbcode .markItUpButton1 a { background-image: url("../img/markitup/bold.png"); }
+.bbcode .markItUpButton2 a { background-image: url("../img/markitup/italic.png"); }
+.bbcode .markItUpButton3 a { background-image: url("../img/markitup/underline.png"); }
+.bbcode .markItUpButton4 a { background-image: url("../img/markitup/picture.png"); }
+.bbcode .markItUpButton5 a { background-image: url("../img/markitup/link.png"); }
+.bbcode .markItUpButton6 a { background-image: url("../img/markitup/email.png"); }
+.bbcode .markItUpButton7 a { background-image: url("../img/markitup/colors.png"); }
 
 	.bbcode .markItUpButton7 ul {
 		width:81px;
@@ -34,17 +34,17 @@
 	.bbcode .markItUpButton7 .col3-2 a { background:gray; }
 	.bbcode .markItUpButton7 .col3-3 a { background:black; }
 
-.bbcode .markItUpButton8 a { background-image: url("/forum/img/markitup/fonts.png"); }
-.bbcode .markItUpButton9 a { background-image: url("/forum/img/markitup/text_align_left.png"); }
+.bbcode .markItUpButton8 a { background-image: url("../img/markitup/fonts.png"); }
+.bbcode .markItUpButton9 a { background-image: url("../img/markitup/text_align_left.png"); }
 
-	.bbcode .markItUpButton9 .left a { background-image: url("/forum/img/markitup/text_align_left.png"); }
-	.bbcode .markItUpButton9 .center a { background-image: url("/forum/img/markitup/text_align_center.png"); }
-	.bbcode .markItUpButton9 .right a { background-image: url("/forum/img/markitup/text_align_center.png"); }
-	.bbcode .markItUpButton9 .justify a { background-image: url("/forum/img/markitup/text_align_justify.png"); }
+	.bbcode .markItUpButton9 .left a { background-image: url("../img/markitup/text_align_left.png"); }
+	.bbcode .markItUpButton9 .center a { background-image: url("../img/markitup/text_align_center.png"); }
+	.bbcode .markItUpButton9 .right a { background-image: url("../img/markitup/text_align_center.png"); }
+	.bbcode .markItUpButton9 .justify a { background-image: url("../img/markitup/text_align_justify.png"); }
 
-.bbcode .markItUpButton10 a { background-image: url("/forum/img/markitup/list-bullet.png"); }
-.bbcode .markItUpButton11 a { background-image: url("/forum/img/markitup/list-item.png"); }
-.bbcode .markItUpButton12 a { background-image: url("/forum/img/markitup/quotes.png"); }
-.bbcode .markItUpButton13 a { background-image: url("/forum/img/markitup/code.png"); }
-.bbcode .clean a { background-image:url(/forum/img/markitup/clean.png); }
-.bbcode .preview a { background-image:url(/forum/img/markitup/preview.png); }
+.bbcode .markItUpButton10 a { background-image: url("../img/markitup/list-bullet.png"); }
+.bbcode .markItUpButton11 a { background-image: url("../img/markitup/list-item.png"); }
+.bbcode .markItUpButton12 a { background-image: url("../img/markitup/quotes.png"); }
+.bbcode .markItUpButton13 a { background-image: url("../img/markitup/code.png"); }
+.bbcode .clean a { background-image:url(../img/markitup/clean.png); }
+.bbcode .preview a { background-image:url(../img/markitup/preview.png); }

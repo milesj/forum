@@ -75,7 +75,7 @@ if (!empty($topics)) { ?>
         $lastTime = (isset($topic['LastPost']['created'])) ? $topic['LastPost']['created'] : $topic['Topic']['modified']; ?>
         
     <tr<?php if ($counter % 2) echo ' class="altRow"'; ?>>
-        <td><?php echo $html->link($topic['Topic']['title'], array('controller' => 'topics', 'action' => 'view', $topic['Topic']['id'])); ?></td>
+        <td><?php echo $html->link($topic['Topic']['title'], array('controller' => 'topics', 'action' => 'view', $topic['Topic']['slug'])); ?></td>
         <td class="ac"><?php echo $time->niceShort($topic['Topic']['created'], $cupcake->timezone()); ?></td>
         <td class="ac"><?php echo number_format($topic['Topic']['post_count']); ?></td>
         <td class="ac"><?php echo number_format($topic['Topic']['view_count']); ?></td>
@@ -101,7 +101,7 @@ if (!empty($posts)) { ?>
     
     <?php foreach($posts as $post) { ?>
     <tr class="altRow">
-        <td><strong><?php echo $html->link($post['Topic']['title'], array('controller' => 'topics', 'action' => 'view', $post['Topic']['id'])); ?></strong></td>
+        <td><strong><?php echo $html->link($post['Topic']['title'], array('controller' => 'topics', 'action' => 'view', $post['Topic']['slug'])); ?></strong></td>
         <td><?php echo $html->link($post['Topic']['User']['username'], array('controller' => 'users', 'action' => 'profile', $post['Topic']['User']['id'])); ?></td>
         <td class="ar"><?php echo $time->relativeTime($post['Post']['created'], array('userOffset' => $cupcake->timezone())); ?></td>
     </tr>

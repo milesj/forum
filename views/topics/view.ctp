@@ -1,10 +1,10 @@
 
 <?php // Crumbs
 $html->addCrumb($topic['ForumCategory']['Forum']['title'], array('controller' => 'home', 'action' => 'index'));
-if (!empty($topic['ForumCategory']['Parent']['id'])) {
-	$html->addCrumb($topic['ForumCategory']['Parent']['title'], array('controller' => 'categories', 'action' => 'view', $topic['ForumCategory']['Parent']['id']));
+if (!empty($topic['ForumCategory']['Parent']['slug'])) {
+	$html->addCrumb($topic['ForumCategory']['Parent']['title'], array('controller' => 'categories', 'action' => 'view', $topic['ForumCategory']['Parent']['slug']));
 }
-$html->addCrumb($topic['ForumCategory']['title'], array('controller' => 'categories', 'action' => 'view', $topic['ForumCategory']['id'])); ?>
+$html->addCrumb($topic['ForumCategory']['title'], array('controller' => 'categories', 'action' => 'view', $topic['ForumCategory']['slug'])); ?>
 
 <div class="forumHeader">
 	<?php if (!$cupcake->user()) { ?>
@@ -40,7 +40,7 @@ $html->addCrumb($topic['ForumCategory']['title'], array('controller' => 'categor
 <?php // Topic Poll
 if (!empty($topic['Poll']['id'])) { ?>
 <div id="pollWrap">
-	<?php echo $form->create('Poll', array('url' => array('controller' => 'topics', 'action' => 'view', $topic['Topic']['id']))); ?>
+	<?php echo $form->create('Poll', array('url' => array('controller' => 'topics', 'action' => 'view', $topic['Topic']['slug']))); ?>
   	<table cellspacing="0" class="table">
     <tr>
     	<th colspan="3"><?php echo $topic['Topic']['title']; ?></th>

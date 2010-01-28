@@ -1,10 +1,10 @@
 
 <?php // Crumbs
 $html->addCrumb($category['Forum']['title'], array('controller' => 'home', 'action' => 'index'));
-if (!empty($category['Parent']['id'])) {
-	$html->addCrumb($category['Parent']['title'], array('controller' => 'categories', 'action' => 'view', $category['Parent']['id']));
+if (!empty($category['Parent']['slug'])) {
+	$html->addCrumb($category['Parent']['title'], array('controller' => 'categories', 'action' => 'view', $category['Parent']['slug']));
 }
-$html->addCrumb($category['ForumCategory']['title'], array('controller' => 'categories', 'action' => 'view', $category['ForumCategory']['id'])); ?>
+$html->addCrumb($category['ForumCategory']['title'], array('controller' => 'categories', 'action' => 'view', $category['ForumCategory']['slug'])); ?>
 
 <div class="forumHeader">
 	<?php if (!$cupcake->user()) { ?>
@@ -20,7 +20,7 @@ $html->addCrumb($category['ForumCategory']['title'], array('controller' => 'cate
 <?php if ($cupcake->user()) { ?>
 <div class="forumOptions">
 	<?php if ($cupcake->hasAccess('mod', $category['ForumCategory']['id'])) {
-		echo $html->link(__d('forum', 'Moderate', true), array('controller' => 'categories', 'action' => 'moderate', $category['ForumCategory']['id']));
+		echo $html->link(__d('forum', 'Moderate', true), array('controller' => 'categories', 'action' => 'moderate', $category['ForumCategory']['slug']));
 	} ?>
 	<?php if ($category['ForumCategory']['status'] == 0) {
 		if ($cupcake->hasAccess($category['ForumCategory']['accessPost'])) {
@@ -54,7 +54,7 @@ if (!empty($category['SubForum'])) { ?>
     <tr id="category_<?php echo $subCat['id']; ?>"<?php if ($counter % 2) echo ' class="altRow"'; ?>>
         <td class="ac" style="width: 35px"><?php echo $cupcake->forumIcon($subCat); ?></td>
         <td>
-            <strong><?php echo $html->link($subCat['title'], array('controller' => 'categories', 'action' => 'view', $subCat['id'])); ?></strong><br />
+            <strong><?php echo $html->link($subCat['title'], array('controller' => 'categories', 'action' => 'view', $subCat['slug'])); ?></strong><br />
             <?php echo $subCat['description']; ?>
             
             <?php if (!empty($subForums)) { ?>
@@ -70,8 +70,8 @@ if (!empty($category['SubForum'])) { ?>
             if (!empty($subCat['LastTopic'])) {
                 $lastTime = (!empty($subCat['LastPost']['created'])) ? $subCat['LastPost']['created'] : $subCat['LastTopic']['created']; ?>
                 
-                <?php echo $html->link($subCat['LastTopic']['title'], array('controller' => 'topics', 'action' => 'view', $subCat['lastTopic_id'])); ?>
-                <?php echo $html->image('/forum/img/goto.png', array('alt' => '', 'url' => array('controller' => 'topics', 'action' => 'view', $subCat['lastTopic_id'], 'page' => $subCat['LastTopic']['page_count'], '#' => 'post_'. $subCat['lastPost_id']))); ?><br />
+                <?php echo $html->link($subCat['LastTopic']['title'], array('controller' => 'topics', 'action' => 'view', $subCat['slug'])); ?>
+                <?php echo $html->image('/forum/img/goto.png', array('alt' => '', 'url' => array('controller' => 'topics', 'action' => 'view', $subCat['slug'], 'page' => $subCat['LastTopic']['page_count'], '#' => 'post_'. $subCat['lastPost_id']))); ?><br />
                 
                 <em><?php echo $time->relativeTime($lastTime, array('userOffset' => $cupcake->timezone())); ?></em> <span class="gray"><?php __d('forum', 'by'); ?> <?php echo $html->link($subCat['LastUser']['username'], array('controller' => 'users', 'action' => 'profile', $subCat['lastUser_id'])); ?></span>
             <?php } else {
@@ -119,7 +119,7 @@ if (!empty($category['SubForum'])) { ?>
 			} ?>
             
         	<?php echo $cupcake->topicType($topic['Topic']['type']); ?> 
-        	<strong><?php echo $html->link($topic['Topic']['title'], array('controller' => 'topics', 'action' => 'view', $topic['Topic']['id'])); ?></strong>
+        	<strong><?php echo $html->link($topic['Topic']['title'], array('controller' => 'topics', 'action' => 'view', $topic['Topic']['slug'])); ?></strong>
             
             <?php if (count($pages) > 1) { ?>
             <br /><span class="gray"><?php __d('forum', 'Pages'); ?>: [ <?php echo implode(', ', $pages); ?> ]</span>
@@ -136,7 +136,7 @@ if (!empty($category['SubForum'])) { ?>
                 
                 <em><?php echo $time->relativeTime($lastTime, array('userOffset' => $cupcake->timezone())); ?></em><br />
                 <span class="gray"><?php __d('forum', 'by'); ?> <?php echo $html->link($topic['LastUser']['username'], array('controller' => 'users', 'action' => 'profile', $topic['Topic']['lastUser_id'])); ?></span>
-                <?php echo $html->image('/forum/img/goto.png', array('alt' => '', 'url' => array('controller' => 'topics', 'action' => 'view', $topic['Topic']['id'], 'page' => $topic['Topic']['page_count'], '#' => 'post_'. $topic['Topic']['lastPost_id']))); ?>
+                <?php echo $html->image('/forum/img/goto.png', array('alt' => '', 'url' => array('controller' => 'topics', 'action' => 'view', $topic['Topic']['slug'], 'page' => $topic['Topic']['page_count'], '#' => 'post_'. $topic['Topic']['lastPost_id']))); ?>
             <?php } else {
 				__d('forum', 'No latest activity to display');
             } ?>
@@ -164,7 +164,7 @@ if (!empty($category['SubForum'])) { ?>
 				echo $html->image('/forum/img/poll.png', array('alt' => 'Poll'));
 			} ?>
             
-        	<strong><?php echo $html->link($topic['Topic']['title'], array('controller' => 'topics', 'action' => 'view', $topic['Topic']['id'])); ?></strong>
+        	<strong><?php echo $html->link($topic['Topic']['title'], array('controller' => 'topics', 'action' => 'view', $topic['Topic']['slug'])); ?></strong>
             
             <?php if (count($pages) > 1) { ?>
             <br /><span class="gray"><?php __d('forum', 'Pages'); ?>: [ <?php echo implode(', ', $pages); ?> ]</span>
@@ -181,7 +181,7 @@ if (!empty($category['SubForum'])) { ?>
                 
                 <em><?php echo $time->relativeTime($lastTime, array('userOffset' => $cupcake->timezone())); ?></em><br />
                 <span class="gray"><?php __d('forum', 'by'); ?> <?php echo $html->link($topic['LastUser']['username'], array('controller' => 'users', 'action' => 'profile', $topic['Topic']['lastUser_id'])); ?></span>
-                <?php echo $html->image('/forum/img/goto.png', array('alt' => '', 'url' => array('controller' => 'topics', 'action' => 'view', $topic['Topic']['id'], 'page' => $topic['Topic']['page_count'], '#' => 'post_'. $topic['Topic']['lastPost_id']))); ?>
+                <?php echo $html->image('/forum/img/goto.png', array('alt' => '', 'url' => array('controller' => 'topics', 'action' => 'view', $topic['Topic']['slug'], 'page' => $topic['Topic']['page_count'], '#' => 'post_'. $topic['Topic']['lastPost_id']))); ?>
             <?php } else {
 				__d('forum', 'No latest activity to display');
 			} ?>

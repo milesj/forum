@@ -228,7 +228,7 @@ class Post extends ForumAppModel {
 			'limit' => $limit,
 			'contain' => array(
 				'Topic' => array(
-					'fields' => array('Topic.id', 'Topic.title', 'Topic.user_id'),
+					'fields' => array('Topic.id', 'Topic.title', 'Topic.slug', 'Topic.user_id'),
 					'User.id', 'User.username'
 				)
 			)
@@ -247,9 +247,9 @@ class Post extends ForumAppModel {
 			'conditions' => array('Post.id' => $id),
 			'contain' => array(
 				'Topic' => array(
-					'fields' => array('Topic.id', 'Topic.title'),
+					'fields' => array('Topic.id', 'Topic.title', 'Topic.slug'),
 					'ForumCategory' => array(
-						'fields' => array('ForumCategory.id', 'ForumCategory.title'),
+						'fields' => array('ForumCategory.id', 'ForumCategory.title', 'ForumCategory.slug'),
 						'Forum', 'Parent'
 					)
 				)

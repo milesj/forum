@@ -92,6 +92,13 @@ class ToolbarComponent extends Object {
 	 * @return mixed
 	 */
 	public function goToPage($topic_id = NULL, $post_id = NULL, $return = false) {
+		$topic = ClassRegistry::init('Forum.Topic')->find('first', array(
+			'conditions' => array('Topic.id' => $topic_id),
+			'fields' => array('Topic.slug')
+		));
+
+		$slug = (!empty($topic['Topic']['slug']) ? $topic['Topic']['slug'] : null);
+
 		// Certain page
 		if ($topic_id && $post_id) {
 			$posts = ClassRegistry::init('Forum.Post')->find('list', array(
@@ -109,18 +116,18 @@ class ToolbarComponent extends Object {
 			}
 			
 			if ($totalPages <= 1) {
-				$url = array('plugin' => 'forum', 'controller' => 'topics', 'action' => 'view', $topic_id, '#' => 'post_'. $post_id);
+				$url = array('plugin' => 'forum', 'controller' => 'topics', 'action' => 'view', $slug, '#' => 'post_'. $post_id);
 			} else {
 				$posts = array_values($posts);
 				$flips = array_flip($posts);
 				$position = $flips[$post_id] + 1;
 				$goTo = ceil($position / $perPage);
-				$url = array('plugin' => 'forum', 'controller' => 'topics', 'action' => 'view', $topic_id, 'page' => $goTo, '#' => 'post_'. $post_id);
+				$url = array('plugin' => 'forum', 'controller' => 'topics', 'action' => 'view', $slug, 'page' => $goTo, '#' => 'post_'. $post_id);
 			}
 			
 		// First post
 		} else if ($topic_id && !$post_id) {
-			$url = array('plugin' => 'forum', 'controller' => 'topics', 'action' => 'view', $topic_id);
+			$url = array('plugin' => 'forum', 'controller' => 'topics', 'action' => 'view', $slug);
 
 		// None
 		} else {

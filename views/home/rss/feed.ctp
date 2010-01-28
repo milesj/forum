@@ -10,7 +10,7 @@ $this->set('channel', array(
 // Loop rss
 if (!empty($items)) {
 	foreach ($items as $item) {
-		$link = array('plugin' => 'forum', 'controller' => 'topics', 'action' => 'view', $item['Topic']['id']);
+		$link = array('plugin' => 'forum', 'controller' => 'topics', 'action' => 'view', $item['Topic']['slug']);
 	
 		echo $rss->item(array(), array(
 			'title' => $item['Topic']['title'],

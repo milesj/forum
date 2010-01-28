@@ -45,10 +45,10 @@ class CategoriesController extends ForumAppController {
 	 * Read a category.
 	 *
 	 * @access public
-	 * @param int $id
+	 * @param string $slug
 	 */
-	public function view($id) {
-		$category = $this->ForumCategory->getCategoryForViewing($id, $this->Toolbar->getAccess(), $this->Session->read('Forum.access'));
+	public function view($slug) {
+		$category = $this->ForumCategory->getCategoryForViewing($slug, $this->Toolbar->getAccess(), $this->Session->read('Forum.access'));
 		
 		// Access
 		$this->Toolbar->verifyAccess(array(
@@ -58,22 +58,23 @@ class CategoriesController extends ForumAppController {
 		
 		// Paginate
 		$this->paginate['Topic']['limit'] = $this->Toolbar->settings['topics_per_page'];
-		$this->paginate['Topic']['conditions']['Topic.forum_category_id'] = $id;
+		$this->paginate['Topic']['conditions']['Topic.forum_category_id'] = $category['ForumCategory']['id'];
 		
 		$this->Toolbar->pageTitle($category['ForumCategory']['title']);
 		$this->set('category', $category);
 		$this->set('topics', $this->paginate('Topic'));
-		$this->set('stickies', $this->ForumCategory->Topic->getStickiesInForum($id));
+		$this->set('stickies', $this->ForumCategory->Topic->getStickiesInForum($category['ForumCategory']['id']));
+		$this->set('feedId', $slug);
 	}
 
 	/**
 	 * Moderate a category.
 	 *
 	 * @access public
-	 * @param int $id
+	 * @param string $slug
 	 */
-	public function moderate($id) {
-		$category = $this->ForumCategory->get($id, null, array('Parent', 'Forum.title'));
+	public function moderate($slug) {
+		$category = $this->ForumCategory->get(array('slug', $slug), null, array('Parent', 'Forum.title', 'Forum.slug'));
 		
 		// Access
 		$this->Toolbar->verifyAccess(array(
@@ -115,38 +116,35 @@ class CategoriesController extends ForumAppController {
 		
 		// Paginate
 		$this->paginate['Topic']['limit'] = $this->Toolbar->settings['topics_per_page'];
-		$this->paginate['Topic']['conditions'] = array('Topic.forum_category_id' => $id);
+		$this->paginate['Topic']['conditions'] = array('Topic.forum_category_id' => $category['ForumCategory']['id']);
 		
 		$this->Toolbar->pageTitle(__d('forum', 'Moderate', true), $category['ForumCategory']['title']);
 		$this->set('category', $category);
 		$this->set('topics', $this->paginate('Topic'));
 		$this->set('forums', $this->ForumCategory->getHierarchy($this->Toolbar->getAccess(), $this->Session->read('Forum.access'), 'read'));
+		$this->set('feedId', $slug);
 	}
 	
 	/**
 	 * RSS Feed.
 	 *
 	 * @access public
-	 * @param int $id
+	 * @param string $slug
 	 */
-	public function feed($id) {
+	public function feed($slug) {
 		if ($this->RequestHandler->isRss()) {
-			$category = $this->ForumCategory->get($id);
+			$category = $this->ForumCategory->get(array('slug', $slug));
 			$this->Toolbar->verifyAccess(array('exists' => $category));
 		
 			$this->paginate['Topic']['limit'] = $this->Toolbar->settings['topics_per_page'];
-			$this->paginate['Topic']['conditions'] = array('Topic.forum_category_id' => $id);
+			$this->paginate['Topic']['conditions'] = array('Topic.forum_category_id' => $category['ForumCategory']['id']);
 			$this->paginate['Topic']['contain'] = array('User.id', 'User.username', 'LastPost.created', 'FirstPost.content');
-
-			if (!empty($this->params['url'])) {
-				$this->paginate['Topic']['conditions'] = array_merge($this->paginate['Topic']['conditions'], $this->params['url']);
-			}
 
 			$this->set('items', $this->paginate('Topic'));
 			$this->set('category', $category);
 			$this->set('document', array('xmlns:dc' => 'http://purl.org/dc/elements/1.1/'));
 		} else {
-			$this->redirect('/forum/categories/feed/'. $id .'.rss');
+			$this->redirect('/forum/categories/feed/'. $slug .'.rss');
 		}
 	}
 	

@@ -68,13 +68,13 @@ if ($searching === true) { ?>
 			} ?>
             
         	<?php echo $cupcake->topicType($topic['Topic']['type']); ?> 
-        	<strong><?php echo $html->link($topic['Topic']['title'], array('controller' => 'topics', 'action' => 'view', $topic['Topic']['id'])); ?></strong>
+        	<strong><?php echo $html->link($topic['Topic']['title'], array('controller' => 'topics', 'action' => 'view', $topic['Topic']['slug'])); ?></strong>
             
             <?php if (count($pages) > 1) { ?>
             <br /><span class="gray"><?php __d('forum', 'Pages'); ?>: [ <?php echo implode(', ', $pages); ?> ]</span>
             <?php } ?>
         </td>
-        <td class="ac"><?php echo $html->link($topic['ForumCategory']['title'], array('controller' => 'categories', 'action' => 'view', $topic['Topic']['forum_category_id'])); ?></td>
+        <td class="ac"><?php echo $html->link($topic['ForumCategory']['title'], array('controller' => 'categories', 'action' => 'view', $topic['ForumCategory']['slug'])); ?></td>
         <td class="ac"><?php echo $html->link($topic['User']['username'], array('controller' => 'users', 'action' => 'profile', $topic['User']['id'])); ?></td>
         <td class="ac"><?php echo $time->niceShort($topic['Topic']['created'], $cupcake->timezone()); ?></td>
         <td class="ac"><?php echo number_format($topic['Topic']['post_count']); ?></td>
@@ -86,7 +86,7 @@ if ($searching === true) { ?>
                 
                 <em><?php echo $time->relativeTime($lastTime, array('userOffset' => $cupcake->timezone())); ?></em><br />
                 <span class="gray"><?php __d('forum', 'by'); ?> <?php echo $html->link($topic['LastUser']['username'], array('controller' => 'users', 'action' => 'profile', $topic['Topic']['lastUser_id'])); ?></span>
-                <?php echo $html->image('/forum/img/goto.png', array('alt' => '', 'url' => array('controller' => 'topics', 'action' => 'view', $topic['Topic']['id'], 'page' => $topic['Topic']['page_count'], '#' => 'post_'. $topic['Topic']['lastPost_id']))); ?>
+                <?php echo $html->image('/forum/img/goto.png', array('alt' => '', 'url' => array('controller' => 'topics', 'action' => 'view', $topic['Topic']['slug'], 'page' => $topic['Topic']['page_count'], '#' => 'post_'. $topic['Topic']['lastPost_id']))); ?>
             <?php } else {
 				__d('forum', 'No latest activity to display');
 			} ?>

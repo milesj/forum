@@ -17,6 +17,14 @@ App::import(array(
 class ForumAppController extends AppController {
 
 	/**
+	 * Remove parent models.
+	 *
+	 * @access public
+	 * @var array
+	 */
+	public $uses = array();
+
+	/**
 	 * Components.
 	 *
 	 * @access public
@@ -93,7 +101,7 @@ class ForumAppController extends AppController {
 		if (empty($referer) || $referer == '/forum/users/login' || $referer == '/admin/forum/users/login') {
 			$referer = array('plugin' => 'forum', 'controller' => 'home', 'action' => 'index');
 		}
-		
+
 		$this->Auth->loginAction = array('plugin' => 'forum', 'controller' => 'users', 'action' => 'login', 'admin' => false);
 		$this->Auth->loginRedirect = $referer;
 		$this->Auth->logoutRedirect = $referer;

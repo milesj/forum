@@ -2,7 +2,7 @@
 <?php // Channel
 $this->set('channel', array(
 	'title' 		=> $cupcake->settings['site_name'] .' - '. __d('forum', 'Topic', true) .': '. $topic['Topic']['title'],
-	'link' 			=> array('plugin' => 'forum', 'controller' => 'topics', 'action' => 'view', $topic['Topic']['id']),
+	'link' 			=> array('plugin' => 'forum', 'controller' => 'topics', 'action' => 'view', $topic['Topic']['slug']),
 	'description' 	=> $text->truncate($decoda->parse($topic['FirstPost']['content'], true)),
 	'language' 		=> 'en-us',
 ));
@@ -10,7 +10,7 @@ $this->set('channel', array(
 // Loop rss
 if (!empty($items)) {
 	foreach ($items as $item) {
-		$link = array('plugin' => 'forum', 'controller' => 'topics', 'action' => 'view', $topic['Topic']['id'], '#' => 'post_'. $item['Post']['id']);
+		$link = array('plugin' => 'forum', 'controller' => 'topics', 'action' => 'view', $topic['Topic']['slug'], '#' => 'post_'. $item['Post']['id']);
 	
 		echo $rss->item(array(), array(
 			'title' => 'Post #'. $item['Post']['id'] .' - '. $item['User']['username'],

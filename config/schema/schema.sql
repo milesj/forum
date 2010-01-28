@@ -41,8 +41,8 @@ CREATE TABLE IF NOT EXISTS `{:prefix}forums` (
 	KEY `access_level_id` (`access_level_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Containing forums' AUTO_INCREMENT=1;
 
-INSERT INTO `{:prefix}forums` (`id`, `access_level_id`, `title`, `status`, `orderNo`, `accessView`) VALUES
-	(1, 0, 'Cupcake Forums', 0, 1, 0);
+INSERT INTO `{:prefix}forums` (`id`, `access_level_id`, `title`, `slug`, `status`, `orderNo`, `accessView`) VALUES
+	(1, 0, 'Cupcake Forums', 'cupcake-forums', 0, 1, 0);
 
 /* Table structure for table `forum_categories` */
 
@@ -78,8 +78,8 @@ CREATE TABLE IF NOT EXISTS `{:prefix}forum_categories` (
 	KEY `access_level_id` (`access_level_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Forum categories to post topics to' AUTO_INCREMENT=1;
 
-INSERT INTO `{:prefix}forum_categories` (`id`, `forum_id`, `parent_id`, `access_level_id`, `title`, `description`, `status`, `orderNo`, `topic_count`, `post_count`, `accessRead`, `accessPost`, `accessReply`, `accessPoll`, `settingPostCount`, `settingAutoLock`, `lastTopic_id`, `lastPost_id`, `lastUser_id`, `created`, `modified`) VALUES
-	(1, 1, 0, 0, 'General Discussion', 'This is a forum category, which is a child of the forum. You can add, edit or delete these categories by visiting the administration panel, but first you would need to give a user admin rights.', 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, NOW(), NOW());
+INSERT INTO `{:prefix}forum_categories` (`id`, `forum_id`, `parent_id`, `access_level_id`, `title`, `slug`, `description`, `status`, `orderNo`, `topic_count`, `post_count`, `accessRead`, `accessPost`, `accessReply`, `accessPoll`, `settingPostCount`, `settingAutoLock`, `lastTopic_id`, `lastPost_id`, `lastUser_id`, `created`, `modified`) VALUES
+	(1, 1, 0, 0, 'General Discussion', 'general-discussion', 'This is a forum category, which is a child of the forum. You can add, edit or delete these categories by visiting the administration panel, but first you would need to give a user admin rights.', 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, NOW(), NOW());
 
 /* Table structure for table `moderators` */
 

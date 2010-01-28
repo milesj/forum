@@ -24,14 +24,14 @@ if (!empty($forums)) {
 			$subForums = array();
 			if (!empty($category['SubForum'])) {
 				foreach ($category['SubForum'] as $sub) {
-					$subForums[] = $html->link($sub['title'], array('controller' => 'categories', 'action' => 'view', $sub['id']));
+					$subForums[] = $html->link($sub['title'], array('controller' => 'categories', 'action' => 'view', $sub['slug']));
 				}
 			} ?>
     
     <tr id="category_<?php echo $category['id']; ?>"<?php if ($counter % 2) echo ' class="altRow"'; ?>>
         <td class="ac" style="width: 35px"><?php echo $cupcake->forumIcon($category); ?></td>
         <td>
-            <strong><?php echo $html->link($category['title'], array('controller' => 'categories', 'action' => 'view', $category['id'])); ?></strong><br />
+            <strong><?php echo $html->link($category['title'], array('controller' => 'categories', 'action' => 'view', $category['slug'])); ?></strong><br />
             <?php echo $category['description']; ?>
             
             <?php if (!empty($subForums)) { ?>
@@ -47,8 +47,8 @@ if (!empty($forums)) {
             if (!empty($category['LastTopic'])) {
                 $lastTime = (!empty($category['LastPost']['created'])) ? $category['LastPost']['created'] : $category['LastTopic']['created']; ?>
                 
-                <?php echo $html->link($category['LastTopic']['title'], array('controller' => 'topics', 'action' => 'view', $category['lastTopic_id'])); ?>
-                <?php echo $html->image('/forum/img/goto.png', array('alt' => '', 'url' => array('controller' => 'topics', 'action' => 'view', $category['lastTopic_id'], 'page' => $category['LastTopic']['page_count'], '#' => 'post_'. $category['lastPost_id']))); ?><br />
+                <?php echo $html->link($category['LastTopic']['title'], array('controller' => 'topics', 'action' => 'view', $category['LastTopic']['slug'])); ?>
+                <?php echo $html->image('/forum/img/goto.png', array('alt' => '', 'url' => array('controller' => 'topics', 'action' => 'view', $category['LastTopic']['slug'], 'page' => $category['LastTopic']['page_count'], '#' => 'post_'. $category['lastPost_id']))); ?><br />
                 
                 <em><?php echo $time->relativeTime($lastTime, array('userOffset' => $cupcake->timezone())); ?></em> <span class="gray"><?php __d('forum', 'by'); ?> <?php echo $html->link($category['LastUser']['username'], array('controller' => 'users', 'action' => 'profile', $category['lastUser_id'])); ?></span>
             <?php } else {

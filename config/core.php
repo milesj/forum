@@ -66,7 +66,9 @@ class ForumConfig {
 			}
 		}
 
-		$this->columnMap = ClassRegistry::init('Forum.User')->columnMap;
+		if (self::isInstalled()) {
+			$this->columnMap = ClassRegistry::init('Forum.User')->columnMap;
+		}
 	}
 
 	/**

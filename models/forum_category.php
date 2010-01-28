@@ -31,7 +31,7 @@ class ForumCategory extends ForumAppModel {
 		'Parent' => array(
 			'className'		=> 'Forum.ForumCategory',
 			'foreignKey'	=> 'parent_id',
-			'fields'		=> array('Parent.id', 'Parent.title', 'Parent.parent_id')
+			'fields'		=> array('Parent.id', 'Parent.title', 'Parent.slug', 'Parent.parent_id')
 		),
 		'LastTopic' => array(
 			'className' 	=> 'Forum.Topic',
@@ -65,7 +65,7 @@ class ForumCategory extends ForumAppModel {
 			'className' 	=> 'Forum.ForumCategory',
 			'foreignKey' 	=> 'parent_id',
 			'order' 		=> 'SubForum.orderNo ASC',
-			'fields' 		=> array('SubForum.id', 'SubForum.forum_id', 'SubForum.parent_id', 'SubForum.title', 'SubForum.description', 'SubForum.status', 'SubForum.topic_count', 'SubForum.post_count', 'SubForum.lastTopic_id', 'SubForum.lastPost_id', 'SubForum.lastUser_id'),
+			'fields' 		=> array('SubForum.id', 'SubForum.forum_id', 'SubForum.parent_id', 'SubForum.title', 'SubForum.slug', 'SubForum.description', 'SubForum.status', 'SubForum.topic_count', 'SubForum.post_count', 'SubForum.lastTopic_id', 'SubForum.lastPost_id', 'SubForum.lastUser_id'),
 			'dependent'		=> false
 		),
 		'Moderator' => array(
@@ -116,15 +116,15 @@ class ForumCategory extends ForumAppModel {
 	 * Get all required info for viewing a category.
 	 *
 	 * @access public
-	 * @param int $id
+	 * @param string $slug
 	 * @param int $access
 	 * @param array $accessLevels
 	 * @return array
 	 */
-	public function getCategoryForViewing($id, $access = 0, $accessLevels) {
+	public function getCategoryForViewing($slug, $access = 0, $accessLevels) {
 		return $this->find('first', array(
 			'conditions' => array(
-				'ForumCategory.id' => $id,
+				'ForumCategory.slug' => $slug,
 				'ForumCategory.access_level_id' => $accessLevels
 			),
 			'contain' => array(
@@ -134,7 +134,7 @@ class ForumCategory extends ForumAppModel {
 						'SubForum.accessRead <=' => $access,
 						'SubForum.access_level_id' => $accessLevels
 					),
-					'LastTopic.title', 'LastTopic.created', 'LastPost.created', 'LastUser.username'
+					'LastTopic.title', 'LastTopic.created', 'LastPost.created', 'LastUser.username', 'LastTopic.slug'
 				),
 				'Moderator' => array('User.id', 'User.username')
 			)
@@ -172,7 +172,7 @@ class ForumCategory extends ForumAppModel {
 		}
 
 		$categories = $this->find('all', array(
-			'fields' => array('ForumCategory.id', 'ForumCategory.title', 'ForumCategory.parent_id', 'ForumCategory.forum_id', 'ForumCategory.orderNo', 'ForumCategory.'. $accessField),
+			'fields' => array('ForumCategory.id', 'ForumCategory.title', 'ForumCategory.slug', 'ForumCategory.parent_id', 'ForumCategory.forum_id', 'ForumCategory.orderNo', 'ForumCategory.'. $accessField),
 			'conditions' => $conditions,
 			'order' => 'ForumCategory.orderNo ASC',
 			'contain' => array(

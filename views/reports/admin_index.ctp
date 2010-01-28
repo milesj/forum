@@ -32,7 +32,7 @@
         <td><?php echo $html->link(__d('forum', ucfirst($report['Report']['itemType']), true), array('action' => $report['Report']['itemType'] .'s')); ?></td>
     	<td>	
         	<?php if ($report['Report']['itemType'] == 'topic') {
-				echo $html->link($report['Topic']['title'], array('controller' => 'topics', 'action' => 'view', $report['Topic']['id'], 'admin' => false));
+				echo $html->link($report['Topic']['title'], array('controller' => 'topics', 'action' => 'view', $report['Topic']['slug'], 'admin' => false));
 			} else if ($report['Report']['itemType'] == 'user') {
 				echo $html->link($report['User']['username'], array('controller' => 'users', 'action' => 'edit', $report['User']['id'], 'admin' => true));
 			} else if ($report['Report']['itemType'] == 'post') {

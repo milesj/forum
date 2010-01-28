@@ -1,10 +1,10 @@
 
 <?php // Crumbs
 $html->addCrumb($category['Forum']['title'], array('controller' => 'home', 'action' => 'index'));
-if (!empty($category['Parent']['id'])) {
-	$html->addCrumb($category['Parent']['title'], array('controller' => 'categories', 'action' => 'view', $category['Parent']['id']));
+if (!empty($category['Parent']['slug'])) {
+	$html->addCrumb($category['Parent']['title'], array('controller' => 'categories', 'action' => 'view', $category['Parent']['slug']));
 }
-$html->addCrumb($category['ForumCategory']['title'], array('controller' => 'categories', 'action' => 'view', $category['ForumCategory']['id'])); ?>
+$html->addCrumb($category['ForumCategory']['title'], array('controller' => 'categories', 'action' => 'view', $category['ForumCategory']['slug'])); ?>
 
 <div class="forumHeader">
 	<h2><?php __d('forum', 'Moderate'); ?>: <?php echo $category['ForumCategory']['title']; ?></h2>
@@ -13,10 +13,10 @@ $html->addCrumb($category['ForumCategory']['title'], array('controller' => 'cate
 <?php $session->flash(); ?>
 
 <div class="forumOptions">
-	<?php echo $html->link(__d('forum', 'Return to Forum', true), array('controller' => 'categories', 'action' => 'view', $category['ForumCategory']['id'])); ?>
+	<?php echo $html->link(__d('forum', 'Return to Forum', true), array('controller' => 'categories', 'action' => 'view', $category['ForumCategory']['slug'])); ?>
 </div>
 
-<?php echo $form->create('Topic', array('url' => array('controller' => 'categories', 'action' => 'moderate', $category['ForumCategory']['id']))); ?>
+<?php echo $form->create('Topic', array('url' => array('controller' => 'categories', 'action' => 'moderate', $category['ForumCategory']['slug']))); ?>
 <div id="topicWrap">
 	<?php echo $this->element('pagination'); ?>
     
@@ -46,7 +46,7 @@ $html->addCrumb($category['ForumCategory']['title'], array('controller' => 'cate
 				echo $html->image('/forum/img/poll.png', array('alt' => 'Poll'));
 			} ?>
             
-        	<strong><?php echo $html->link($topic['Topic']['title'], array('controller' => 'topics', 'action' => 'view', $topic['Topic']['id'])); ?></strong>
+        	<strong><?php echo $html->link($topic['Topic']['title'], array('controller' => 'topics', 'action' => 'view', $topic['Topic']['slug'])); ?></strong>
             
             <?php if (count($pages) > 1) { ?>
             <br /><span class="gray"><?php __d('forum', 'Pages'); ?>: [ <?php echo implode(', ', $pages); ?> ]</span>
@@ -64,7 +64,7 @@ $html->addCrumb($category['ForumCategory']['title'], array('controller' => 'cate
                 
                 <em><?php echo $time->relativeTime($lastTime, array('userOffset' => $cupcake->timezone())); ?></em><br />
                 <span class="gray"><?php __d('forum', 'by'); ?> <?php echo $html->link($topic['LastUser']['username'], array('controller' => 'users', 'action' => 'profile', $topic['Topic']['lastUser_id'])); ?></span>
-                <?php echo $html->image('/forum/img/goto.png', array('alt' => '', 'url' => array('controller' => 'topics', 'action' => 'view', $topic['Topic']['id'], 'page' => $topic['Topic']['page_count'], '#' => 'post_'. $topic['Topic']['lastPost_id']))); ?>
+                <?php echo $html->image('/forum/img/goto.png', array('alt' => '', 'url' => array('controller' => 'topics', 'action' => 'view', $topic['Topic']['slug'], 'page' => $topic['Topic']['page_count'], '#' => 'post_'. $topic['Topic']['lastPost_id']))); ?>
             <?php } else {
 				__d('forum', 'No latest activity to display');
 			} ?>
@@ -99,5 +99,5 @@ $html->addCrumb($category['ForumCategory']['title'], array('controller' => 'cate
 <?php echo $form->end(); ?>
 
 <div class="forumOptions">
-	<?php echo $html->link(__d('forum', 'Return to Forum', true), array('controller' => 'categories', 'action' => 'view', $category['ForumCategory']['id'])); ?>
+	<?php echo $html->link(__d('forum', 'Return to Forum', true), array('controller' => 'categories', 'action' => 'view', $category['ForumCategory']['slug'])); ?>
 </div>

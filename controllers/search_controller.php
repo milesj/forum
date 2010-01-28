@@ -27,7 +27,7 @@ class SearchController extends ForumAppController {
 	public $paginate = array( 
 		'Topic' => array(
 			'order' => 'LastPost.created DESC',
-			'contain' => array('ForumCategory.title', 'User.id', 'User.username', 'LastPost.created', 'LastUser.username', 'Poll.id', 'FirstPost.content')
+			'contain' => array('ForumCategory.title', 'ForumCategory.slug', 'User.id', 'User.username', 'LastPost.created', 'LastUser.username', 'Poll.id', 'FirstPost.content')
 		)
 	); 
 	

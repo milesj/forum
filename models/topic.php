@@ -124,7 +124,7 @@ class Topic extends ForumAppModel {
 				
 				// Save Topic
 				$this->create();
-				$this->save($data, false, array('forum_category_id', 'user_id', 'title', 'status', 'type'));
+				$this->save($data, false, array('forum_category_id', 'user_id', 'title', 'slug', 'status', 'type'));
 				
 				$topic_id = $this->id;
 				$user_id = $data['Topic']['user_id'];
@@ -380,7 +380,7 @@ class Topic extends ForumAppModel {
 				'FirstPost.id', 'FirstPost.content', 
 				'Poll' => array('PollOption'),
 				'ForumCategory' => array(
-					'fields' => array('ForumCategory.id', 'ForumCategory.title'),
+					'fields' => array('ForumCategory.id', 'ForumCategory.title', 'ForumCategory.slug'),
 					'Forum', 'Parent'
 				)
 			),
@@ -405,11 +405,11 @@ class Topic extends ForumAppModel {
 	 */
 	public function getTopicForReply($id) {
 		return $this->find('first', array(
-			'fields' => array('Topic.id', 'Topic.title', 'Topic.status', 'Topic.forum_category_id'),
+			'fields' => array('Topic.id', 'Topic.title', 'Topic.slug', 'Topic.status', 'Topic.forum_category_id'),
 			'conditions' => array('Topic.id' => $id),
 			'contain' => array(
 				'ForumCategory' => array(
-					'fields' => array('ForumCategory.id', 'ForumCategory.title', 'ForumCategory.accessReply', 'ForumCategory.settingPostCount'),
+					'fields' => array('ForumCategory.id', 'ForumCategory.title', 'ForumCategory.slug', 'ForumCategory.accessReply', 'ForumCategory.settingPostCount'),
 					'Forum', 'Parent'
 				)
 			)
@@ -420,17 +420,17 @@ class Topic extends ForumAppModel {
 	 * Get all info for reading a topic.
 	 *
 	 * @access public
-	 * @param int $id
+	 * @param string $slug
 	 * @param int $user_id
 	 * @return array
 	 */
-	public function getTopicForViewing($id, $user_id) {
+	public function getTopicForViewing($slug, $user_id, $field = 'slug') {
 		$topic = $this->find('first', array(
-			'fields' => array('Topic.id', 'Topic.title', 'Topic.status', 'Topic.type', 'Topic.forum_category_id', 'Topic.firstPost_id'),
-			'conditions' => array('Topic.id' => $id),
+			'fields' => array('Topic.id', 'Topic.title', 'Topic.slug', 'Topic.status', 'Topic.type', 'Topic.forum_category_id', 'Topic.firstPost_id'),
+			'conditions' => array('Topic.'. $field => $slug),
 			'contain' => array(
 				'ForumCategory' => array(
-					'fields' => array('ForumCategory.id', 'ForumCategory.title', 'ForumCategory.accessPost', 'ForumCategory.accessPoll', 'ForumCategory.accessReply', 'ForumCategory.accessRead'),
+					'fields' => array('ForumCategory.id', 'ForumCategory.title', 'ForumCategory.slug', 'ForumCategory.accessPost', 'ForumCategory.accessPoll', 'ForumCategory.accessReply', 'ForumCategory.accessRead'),
 					'Forum', 'Parent'
 				), 
 				'Poll' => array('PollOption')

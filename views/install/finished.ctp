@@ -12,6 +12,7 @@
 <pre class="php decoda_code">
 // core.php
 Configure::write('Routing.admin', 'admin');
+Configure::write('Routing.prefixes', array('admin')); // 1.3
 
 // routes.php
 Router::parseExtensions('rss');

@@ -25,7 +25,7 @@ class User extends ForumAppModel {
 	 * @access public
 	 * @var string
 	 */
-	public $tablePrefix = '{:prefix}';
+	public $tablePrefix = 'forum_';
 
 	/**
 	 * A column map allowing you to define the name of certain user columns.

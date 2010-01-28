@@ -104,20 +104,20 @@ class Forum extends ForumAppModel {
 			),
 			'contain' => array(
 				'ForumCategory' => array(
-					'fields' => array('ForumCategory.id', 'ForumCategory.forum_id', 'ForumCategory.parent_id', 'ForumCategory.title', 'ForumCategory.description', 'ForumCategory.status', 'ForumCategory.topic_count', 'ForumCategory.post_count'),
+					'fields' => array('ForumCategory.id', 'ForumCategory.forum_id', 'ForumCategory.parent_id', 'ForumCategory.title', 'ForumCategory.slug', 'ForumCategory.description', 'ForumCategory.status', 'ForumCategory.topic_count', 'ForumCategory.post_count'),
 					'conditions' => array(
 						'ForumCategory.access_level_id' => $accessLevels,
 						'ForumCategory.accessRead <=' => $access,
 						'ForumCategory.parent_id' => 0
 					),
 					'SubForum' => array(
-						'fields' => array('SubForum.id', 'SubForum.title'), 
+						'fields' => array('SubForum.id', 'SubForum.title', 'SubForum.slug'),
 						'conditions' => array(
 							'SubForum.accessRead <=' => $access,
 							'SubForum.access_level_id' => $accessLevels
 						)
 					),
-					'LastTopic.title', 'LastTopic.created', 'LastTopic.post_count', 'LastPost.created', 'LastUser.username'
+					'LastTopic.title', 'LastTopic.slug', 'LastTopic.created', 'LastTopic.post_count', 'LastPost.created', 'LastUser.username'
 				)
 			)	
 		));

@@ -19,7 +19,7 @@ class Moderator extends ForumAppModel {
 	public $belongsTo = array(
 		'ForumCategory' => array(
 			'className' => 'Forum.ForumCategory',
-			'fields' => array('ForumCategory.id', 'ForumCategory.title')
+			'fields' => array('ForumCategory.id', 'ForumCategory.title', 'ForumCategory.slug')
 		), 
 		'User' => array(
 			'className' => 'Forum.User'

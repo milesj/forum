@@ -67,7 +67,7 @@ class Report extends ForumAppModel {
 		return $this->find('all', array(
 			'limit' => $limit,
 			'order' => 'Report.created ASC',
-			'contain' => array('Reporter', 'Topic.id', 'Topic.title', 'Post.id', 'Post.content', 'User.id', 'User.username')
+			'contain' => array('Reporter', 'Topic.id', 'Topic.title', 'Topic.slug', 'Post.id', 'Post.content', 'User.id', 'User.username')
 		));
 	}
 	
