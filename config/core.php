@@ -16,7 +16,7 @@ class ForumConfig {
 	 * @access public
 	 * @var string
 	 */
-	public $version = '1.7.4';
+	public $version = '1.7.5';
 
 	/**
 	 * Settings.

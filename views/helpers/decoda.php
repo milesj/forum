@@ -28,7 +28,7 @@ class DecodaHelper extends AppHelper {
 	 * @access public
 	 * @var array
 	 */
-	public $helpers = array('Html');
+	public $helpers = array('Html', 'Time', 'Cupcake');
 
 	/**
 	 * Should we parse codeblocks with geshi?
@@ -133,7 +133,7 @@ class DecodaHelper extends AppHelper {
 	 * Fix missing sub helpers if called with App::import().
 	 *
 	 * @access public
-	 * @uses HtmlHelper, GeSHi
+	 * @uses HtmlHelper, TimeHelper, GeSHi
 	 * @param array $settings
 	 * @return void
 	 */
@@ -151,6 +151,11 @@ class DecodaHelper extends AppHelper {
 		if (!isset($this->Html)) {
 			App::import('Helper', 'Html');
 			$this->Html = new HtmlHelper();
+		}
+
+		if (!isset($this->Time)) {
+			App::import('Helper', 'Time');
+			$this->Time = new TimeHelper();
 		}
 
 		if (!class_exists('GeSHi')) {
@@ -247,8 +252,7 @@ class DecodaHelper extends AppHelper {
 
 			// Build quotes and lists
 			if ($this->allowed('quote')) {
-				$string = preg_replace_callback('/\[quote(?:=\".*?\")?\s?(?:date=\".*?\")?\](.*?)\[\/quote\]/is', array($this, '__processQuotes'), $string);
-				//$string = $this->__processQuotes($string);
+				$string = preg_replace_callback('/\[quote(?:=\"(.*?)\")?(?:\sdate=\"(.*?)\")?\](.*?)\[\/quote\]/is', array($this, '__processQuotes'), $string);
 			}
 
 			if ($this->allowed('list')) {
@@ -682,13 +686,19 @@ class DecodaHelper extends AppHelper {
 	 * @return string
 	 */
 	private function __processQuotes($matches) {
-		$openQuote  = '<blockquote class="decoda_quote">';
-		$closeQuote = '</blockquote>';
-		$content = '<div class="decoda_quoteBody">%s</div>';
-		$author = '<div class="decoda_quoteAuthor">%sQuote by %s</div>';
-		$date = '<span class="decoda_quoteDate">%s</span>';
+		$quote = '<blockquote class="decoda_quote">';
 
-		debug($matches);
+		if (!empty($matches[2])) {
+			$date = sprintf('<span class="decoda_quoteDate">%s</span>', $this->Time->niceShort($matches[2], $this->Cupcake->timezone()));
+		} else {
+			$date = '';
+		}
+
+		$quote .= sprintf('<div class="decoda_quoteAuthor">%sQuote by %s</div>', $date, $matches[1]);
+		$quote .= sprintf('<div class="decoda_quoteBody">%s</div>', $matches[3]);
+		$quote .= '</blockquote>';
+
+		return $quote;
 
 		/*preg_match_all('/\[quote(?:=\".*?\")?\s?(?:date=\".*?\")?\]/i', $string, $matches);
 		$openTags = count($matches[0]);
@@ -701,13 +711,7 @@ class DecodaHelper extends AppHelper {
 			for ($i = 0; $i < $unclosed; $i++) {
 				$string .= '[/quote]';
 			}
-		}
-
-		$string = str_replace('[quote]', $openQuote, $string);
-		$string = str_replace('[/quote]', $closeQuote, $string);
-		$string = preg_replace('/\[quote(?:=\".*?\")?\s?(?:date=\".*?\")?\]/i', $authorQuote, $string);
-
-		return $string;*/
+		}*/
 	}
 
 	/**
