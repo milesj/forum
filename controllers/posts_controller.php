@@ -117,7 +117,7 @@ class PostsController extends ForumAppController {
 	 * @param int $id
 	 */
 	public function delete($id) {
-		$post = $this->Post->get($id, array('id', 'user_id'), array('Topic.forum_category_id'));
+		$post = $this->Post->get($id, array('id', 'user_id', 'topic_id'), array('Topic.forum_category_id'));
 		$user_id = $this->Auth->user('id');
 		
 		// Access

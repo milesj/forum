@@ -284,6 +284,7 @@ class Post extends ForumAppModel {
 		return $this->find('all', array(
 			'conditions' => array('Post.topic_id' => $topic_id),
 			'contain' => array('User.id', 'User.username', 'User.created'),
+			'order' => array('Post.created' => 'DESC'),
 			'limit' => $limit
 		));
 	}
