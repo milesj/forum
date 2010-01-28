@@ -137,7 +137,11 @@ class CategoriesController extends ForumAppController {
 			$this->paginate['Topic']['limit'] = $this->Toolbar->settings['topics_per_page'];
 			$this->paginate['Topic']['conditions'] = array('Topic.forum_category_id' => $id);
 			$this->paginate['Topic']['contain'] = array('User.id', 'User.username', 'LastPost.created', 'FirstPost.content');
-			
+
+			if (!empty($this->params['url'])) {
+				$this->paginate['Topic']['conditions'] = array_merge($this->paginate['Topic']['conditions'], $this->params['url']);
+			}
+
 			$this->set('items', $this->paginate('Topic'));
 			$this->set('category', $category);
 			$this->set('document', array('xmlns:dc' => 'http://purl.org/dc/elements/1.1/'));

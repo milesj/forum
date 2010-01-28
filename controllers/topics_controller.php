@@ -143,6 +143,10 @@ class TopicsController extends ForumAppController {
 			$this->paginate['Post']['conditions']['Post.topic_id'] = $id;
 			$this->paginate['Post']['contain'] = array('User');
 			$this->paginate['Post']['order'] = 'Post.created DESC';
+
+			if (!empty($this->params['url'])) {
+				$this->paginate['Post']['conditions'] = array_merge($this->paginate['Post']['conditions'], $this->params['url']);
+			}
 			
 			$this->set('items', $this->paginate('Post'));
 			$this->set('topic', $topic);

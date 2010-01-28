@@ -247,7 +247,8 @@ class DecodaHelper extends AppHelper {
 
 			// Build quotes and lists
 			if ($this->allowed('quote')) {
-				$string = $this->__processQuotes($string);
+				$string = preg_replace_callback('/\[quote(?:=\".*?\")?\s?(?:date=\".*?\")?\](.*?)\[\/quote\]/is', array($this, '__processQuotes'), $string);
+				//$string = $this->__processQuotes($string);
 			}
 
 			if ($this->allowed('list')) {
@@ -677,15 +678,19 @@ class DecodaHelper extends AppHelper {
 	 * Processes and replaces nested quote tags.
 	 *
 	 * @access private
-	 * @param string $string
+	 * @param array $matches
 	 * @return string
 	 */
-	private function __processQuotes($string) {
-		$openQuote  = '<blockquote class="decoda_quote"><div class="decoda_quoteBody">';
-		$authorQuote= '<blockquote class="decoda_quote"><div class="decoda_quoteAuthor">Quote by $1</div><div class="decoda_quoteBody">';
-		$closeQuote = '</div></blockquote>';
+	private function __processQuotes($matches) {
+		$openQuote  = '<blockquote class="decoda_quote">';
+		$closeQuote = '</blockquote>';
+		$content = '<div class="decoda_quoteBody">%s</div>';
+		$author = '<div class="decoda_quoteAuthor">%sQuote by %s</div>';
+		$date = '<span class="decoda_quoteDate">%s</span>';
 
-		preg_match_all('/\[quote(?:=\".*?\")?\]/i', $string, $matches);
+		debug($matches);
+
+		/*preg_match_all('/\[quote(?:=\".*?\")?\s?(?:date=\".*?\")?\]/i', $string, $matches);
 		$openTags = count($matches[0]);
 
 		preg_match_all('/\[\/quote\]/i', $string, $matches);
@@ -700,9 +705,9 @@ class DecodaHelper extends AppHelper {
 
 		$string = str_replace('[quote]', $openQuote, $string);
 		$string = str_replace('[/quote]', $closeQuote, $string);
-		$string = preg_replace('/\[quote=\"(.*?)\"\]/i', $authorQuote, $string);
+		$string = preg_replace('/\[quote(?:=\".*?\")?\s?(?:date=\".*?\")?\]/i', $authorQuote, $string);
 
-		return $string;
+		return $string;*/
 	}
 
 	/**

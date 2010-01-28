@@ -267,7 +267,7 @@ class Post extends ForumAppModel {
 	public function getQuote($id) {
 		return $this->find('first', array(
 			'conditions' => array('Post.id' => $id),
-			'fields' => array('Post.content'),
+			'fields' => array('Post.content', 'Post.created'),
 			'contain' => array('User.username')
 		));
 	}
