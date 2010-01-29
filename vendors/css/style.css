@@ -315,3 +315,6 @@ td.empty {
 	border: 1px solid #88b035;
 	-moz-border-radius: .3em;
 	clear: both; }
+
+#patchList { margin: 0 0 15px 50px; }
+#patchList li { padding: 2px 0; }

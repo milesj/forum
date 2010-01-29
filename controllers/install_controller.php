@@ -29,9 +29,7 @@ class InstallController extends ForumAppController {
 	 * @return void
 	 */
 	public function index() {
-		if (!$this->Session->check('Install')) {
-			$this->Session->write('Install', array());
-		}
+		$this->__checkInstallation();
 
 		// Get database configs
 		$dbConfig = new DATABASE_CONFIG();
@@ -54,6 +52,8 @@ class InstallController extends ForumAppController {
 	 * @return void
 	 */
 	public function check_database() {
+		$this->__checkInstallation();
+
 		if (isset($this->data['database'])) {
 			$this->Session->write('Install.database', $this->data['database']);
 		} else {
@@ -98,6 +98,8 @@ class InstallController extends ForumAppController {
 	 * @return void
 	 */
 	public function create_tables() {
+		$this->__checkInstallation();
+		
 		if (!$this->Session->check('Install.database')) {
 			$this->redirect(array('action' => 'index'));
 		}
@@ -153,6 +155,8 @@ class InstallController extends ForumAppController {
 	 * @return void
 	 */
 	public function finished() {
+		$this->__checkInstallation();
+		
 		if (!$this->Session->check('Install.finished')) {
 			$this->redirect(array('action' => 'index'));
 		}
@@ -170,6 +174,141 @@ class InstallController extends ForumAppController {
 
 		$this->pageTitle = 'Step 4: Finished';
 	}
+
+	/**
+	 * Patch your installation!
+	 *
+	 * @access public
+	 * @return void
+	 */
+	public function patch() {
+		if (!empty($this->data)) {
+			$data = $this->data;
+			$data['finished'] = true;
+			unset($data['_Token']);
+
+			$this->Session->write('Install', $data);
+			$this->set('patchMsg', 'Your plugin has successfully been patched!');
+
+			$prefix = $data['prefix'];
+			$userPrefix = (($data['user_table'] == 1) ? '' : $prefix);
+
+			$this->__rewriteModel($prefix, 'AppModel');
+			$this->__rewriteModel($userPrefix, 'UserModel');
+			$this->__saveInstall();
+		}
+
+		$installed = ForumConfig::isInstalled();
+
+		if (!$installed) {
+			$dbConfig = new DATABASE_CONFIG();
+			$databases = array();
+			foreach ($dbConfig as $db => $params) {
+				$databases[$db] = $db;
+			}
+
+			$this->data['prefix'] = 'forum_';
+			$this->set('databases', $databases);
+		}
+		
+		$this->pageTitle = 'Patch Installation';
+		$this->set('installed', $installed);
+	}
+
+	/**
+	 * Upgrade to version 1.8!
+	 *
+	 * @access public
+	 * @return void
+	 */
+	public function upgrade_1_8() {
+		if (!ForumConfig::isInstalled()) {
+			$this->redirect(array('action' => 'patch'));
+		}
+
+		$config = $this->__getInstallation();
+
+		// Process
+		if (!empty($this->data)) {
+			$this->DB = ConnectionManager::getDataSource($config['database']);
+
+			// Load 1.8 SQL and run
+			$schema = dirname(__DIR__) . DS .'config'. DS .'schema'. DS .'upgrades'. DS .'1.8.sql';
+			$contents = file_get_contents($schema);
+			$contents = String::insert($contents, array('prefix' => $config['prefix']), array('before' => '{:', 'after' => '}'));
+			$contents = preg_replace('!/\*[^*]*\*+([^/][^*]*\*+)*/!', '', $contents);
+
+			/*$sqls = explode(';', $contents);
+			foreach ($sqls as $sql) {
+				$this->DB->execute(trim($sql));
+			}
+			
+			// Apply slug to the tables
+			$Topic = ClassRegistry::init('Forum.Topic');
+			$Forum = ClassRegistry::init('Forum.Forum');
+			$ForumCategory = ClassRegistry::init('Forum.ForumCategory');
+			$slugSettings = array('label' => 'title', 'slug' => 'slug', 'separator' => '-', 'length' => 100, 'overwrite' => false);
+			
+			$topics = $Topic->find('all', array('contain' => false, 'callbacks' => false));
+			if (!empty($topics)) {
+				foreach ($topics as $topic) {
+					$Topic->id = $topic['Topic']['id'];
+					$Topic->save(array('slug' => $Topic->Behaviors->Sluggable->__slug($topic['Topic']['title'], $slugSettings)), false, array('slug'));
+				}
+			}
+
+			$forums = $Forum->find('all', array('contain' => false, 'callbacks' => false));
+			if (!empty($forums)) {
+				foreach ($forums as $forum) {
+					$Forum->id = $forum['Forum']['id'];
+					$Forum->save(array('slug' => $Forum->Behaviors->Sluggable->__slug($forum['Forum']['title'], $slugSettings)), false, array('slug'));
+				}
+			}
+
+			$forumsCats = $ForumCategory->find('all', array('contain' => false, 'callbacks' => false));
+			if (!empty($forumsCats)) {
+				foreach ($forumsCats as $forumCat) {
+					$ForumCategory->id = $forumCat['ForumCategory']['id'];
+					$ForumCategory->save(array('slug' => $ForumCategory->Behaviors->Sluggable->__slug($forumCat['ForumCategory']['title'], $slugSettings)), false, array('slug'));
+				}
+			}*/
+
+			$this->set('upgraded', true);
+		}
+
+		$this->pageTitle = 'Upgrade to 1.8';
+		$this->set('config', $config);
+	}
+	
+	/**
+	 * Check if the plugin was installed.
+	 * 
+	 * @access private
+	 * @return void
+	 */
+	private function __checkInstallation() {
+		// Check the installation status
+		if (ForumConfig::isInstalled()) {
+			$this->redirect(array('action' => 'index', 'controller' => 'home', 'plugin' => 'forum'));
+		}
+
+		// If progress hasn't begun, redirect
+		if ($this->action != 'index') {
+			if (!$this->Session->check('Install')) {
+				$this->redirect(array('action' => 'index'));
+			}
+		} else {
+			if (!$this->Session->check('Install')) {
+				$this->Session->write('Install', array());
+			}
+		}
+
+		// Auto load DB
+		if ($this->Session->check('Install.database')) {
+			$this->DB =& ConnectionManager::getDataSource($this->Session->read('Install.database'));
+		}
+	}
+
 	/**
 	 * Check to see if the database tables have already been taken.
 	 *
@@ -191,6 +330,22 @@ class InstallController extends ForumAppController {
 		}
 
 		return $tables;
+	}
+
+	/**
+	 * Load the installation settings.
+	 *
+	 * @access private
+	 * @return array
+	 */
+	private function __getInstallation() {
+		$path = dirname(dirname(__FILE__)) . DS .'config'. DS .'install.ini';
+
+		if (file_exists($path)) {
+			return parse_ini_file($path);
+		}
+
+		return null;
 	}
 
 	/**
@@ -338,23 +493,6 @@ class InstallController extends ForumAppController {
 	 */
 	public function beforeFilter() {
 		parent::beforeFilter();
-
-		// Check the installation status
-		if (ForumConfig::isInstalled()) {
-			$this->redirect(array('action' => 'index', 'controller' => 'home', 'plugin' => 'forum'));
-		}
-
-		// If progress hasn't begun, redirect
-		if ($this->action != 'index') {
-			if (!$this->Session->check('Install')) {
-				$this->redirect(array('action' => 'index'));
-			}
-		}
-
-		// Auto load DB
-		if ($this->Session->check('Install.database')) {
-			$this->DB =& ConnectionManager::getDataSource($this->Session->read('Install.database'));
-		}
 
 		// Set the installation layout
 		$this->layout = 'install';

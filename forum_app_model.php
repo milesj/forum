@@ -41,6 +41,14 @@ class ForumAppModel extends AppModel {
 	public $actsAs = array('Containable');
 
 	/**
+	 * No recursion.
+	 *
+	 * @access public
+	 * @var int
+	 */
+	public $recursive = -1;
+
+	/**
 	 * Grab a row and defined fields/containables.
 	 *
 	 * @access public
