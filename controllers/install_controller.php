@@ -12,6 +12,11 @@ App::import('Core', 'File');
 App::import('Model', 'ConnectionManager', false);
 include_once CONFIGS . 'database.php';
 
+// Installation Constants
+define('FORUM_PLUGIN', dirname(dirname(__FILE__)) . DS);
+define('FORUM_CONFIG', FORUM_PLUGIN .'config'. DS);
+define('FORUM_SCHEMA', FORUM_CONFIG .'schema'. DS);
+
 class InstallController extends ForumAppController {
 
 	/**
@@ -30,19 +35,10 @@ class InstallController extends ForumAppController {
 	 */
 	public function index() {
 		$this->__checkInstallation();
-
-		// Get database configs
-		$dbConfig = new DATABASE_CONFIG();
-		$databases = array();
-		foreach ($dbConfig as $db => $params) {
-			$databases[$db] = $db;
-		}
-
-		// Set default prefix
 		$this->data['prefix'] = 'forum_';
 
 		$this->pageTitle = 'Step 1: Database Configuration';
-		$this->set('databases', $databases);
+		$this->set('databases', $this->__getDatabases());
 	}
 
 	/**
@@ -54,6 +50,7 @@ class InstallController extends ForumAppController {
 	public function check_database() {
 		$this->__checkInstallation();
 
+		// Store values
 		if (isset($this->data['database'])) {
 			$this->Session->write('Install.database', $this->data['database']);
 		} else {
@@ -104,17 +101,14 @@ class InstallController extends ForumAppController {
 			$this->redirect(array('action' => 'index'));
 		}
 
-		// Prepare SQL
+		// Prepare SQL and gather statements
 		$this->__rewriteSql($this->Session->read('Install.prefix'));
-		$path = dirname(__DIR__) . DS .'config'. DS .'schema'. DS;
-
-		// Gather statements
-		$schema = explode(";", file_get_contents($path . 'prepared_schema.sql'));
+		$schema = explode(";", file_get_contents(FORUM_SCHEMA . 'prepared_schema.sql'));
 
 		if ($this->Session->read('Install.user_table') == 1) {
-			$userSchema = array(file_get_contents($path . 'prepared_users_alter.sql'));
+			$userSchema = array(file_get_contents(FORUM_SCHEMA . 'prepared_users_alter.sql'));
 		} else {
-			$userSchema = array(file_get_contents($path . 'prepared_users_create.sql'));
+			$userSchema = array(file_get_contents(FORUM_SCHEMA . 'prepared_users_create.sql'));
 		}
 
 		// Execute!
@@ -182,6 +176,7 @@ class InstallController extends ForumAppController {
 	 * @return void
 	 */
 	public function patch() {
+		// Process form
 		if (!empty($this->data)) {
 			$data = $this->data;
 			$data['finished'] = true;
@@ -201,14 +196,8 @@ class InstallController extends ForumAppController {
 		$installed = ForumConfig::isInstalled();
 
 		if (!$installed) {
-			$dbConfig = new DATABASE_CONFIG();
-			$databases = array();
-			foreach ($dbConfig as $db => $params) {
-				$databases[$db] = $db;
-			}
-
 			$this->data['prefix'] = 'forum_';
-			$this->set('databases', $databases);
+			$this->set('databases', $this->__getDatabases());
 		}
 		
 		$this->pageTitle = 'Patch Installation';
@@ -233,46 +222,16 @@ class InstallController extends ForumAppController {
 			$this->DB = ConnectionManager::getDataSource($config['database']);
 
 			// Load 1.8 SQL and run
-			$schema = dirname(__DIR__) . DS .'config'. DS .'schema'. DS .'upgrades'. DS .'1.8.sql';
+			$schema = FORUM_SCHEMA .'upgrades'. DS .'1.8.sql';
 			$contents = file_get_contents($schema);
 			$contents = String::insert($contents, array('prefix' => $config['prefix']), array('before' => '{:', 'after' => '}'));
 			$contents = preg_replace('!/\*[^*]*\*+([^/][^*]*\*+)*/!', '', $contents);
 
-			/*$sqls = explode(';', $contents);
+			$sqls = explode(';', $contents);
 			foreach ($sqls as $sql) {
 				$this->DB->execute(trim($sql));
 			}
 			
-			// Apply slug to the tables
-			$Topic = ClassRegistry::init('Forum.Topic');
-			$Forum = ClassRegistry::init('Forum.Forum');
-			$ForumCategory = ClassRegistry::init('Forum.ForumCategory');
-			$slugSettings = array('label' => 'title', 'slug' => 'slug', 'separator' => '-', 'length' => 100, 'overwrite' => false);
-			
-			$topics = $Topic->find('all', array('contain' => false, 'callbacks' => false));
-			if (!empty($topics)) {
-				foreach ($topics as $topic) {
-					$Topic->id = $topic['Topic']['id'];
-					$Topic->save(array('slug' => $Topic->Behaviors->Sluggable->__slug($topic['Topic']['title'], $slugSettings)), false, array('slug'));
-				}
-			}
-
-			$forums = $Forum->find('all', array('contain' => false, 'callbacks' => false));
-			if (!empty($forums)) {
-				foreach ($forums as $forum) {
-					$Forum->id = $forum['Forum']['id'];
-					$Forum->save(array('slug' => $Forum->Behaviors->Sluggable->__slug($forum['Forum']['title'], $slugSettings)), false, array('slug'));
-				}
-			}
-
-			$forumsCats = $ForumCategory->find('all', array('contain' => false, 'callbacks' => false));
-			if (!empty($forumsCats)) {
-				foreach ($forumsCats as $forumCat) {
-					$ForumCategory->id = $forumCat['ForumCategory']['id'];
-					$ForumCategory->save(array('slug' => $ForumCategory->Behaviors->Sluggable->__slug($forumCat['ForumCategory']['title'], $slugSettings)), false, array('slug'));
-				}
-			}*/
-
 			$this->set('upgraded', true);
 		}
 
@@ -333,13 +292,30 @@ class InstallController extends ForumAppController {
 	}
 
 	/**
+	 * Get a list of all databases, based on core/database.php.
+	 *
+	 * @access private
+	 * @return array
+	 */
+	private function __getDatabases() {
+		$dbConfig = new DATABASE_CONFIG();
+		$databases = array();
+
+		foreach ($dbConfig as $db => $params) {
+			$databases[$db] = $db;
+		}
+
+		return $databases;
+	}
+
+	/**
 	 * Load the installation settings.
 	 *
 	 * @access private
 	 * @return array
 	 */
 	private function __getInstallation() {
-		$path = dirname(dirname(__FILE__)) . DS .'config'. DS .'install.ini';
+		$path = FORUM_CONFIG .'install.ini';
 
 		if (file_exists($path)) {
 			return parse_ini_file($path);
@@ -366,10 +342,12 @@ class InstallController extends ForumAppController {
 	 * @return string
 	 */
 	private function __prefix($table) {
+		$prefix = $this->Session->read('Install.prefix');
+
 		if ($table == 'users') {
-			$table = (($this->Session->read('Install.user_table') == 1) ? $table : $this->Session->read('Install.prefix') . $table);
+			$table = (($this->Session->read('Install.user_table') == 1) ? $table : $prefix . $table);
 		} else {
-			$table = $this->Session->read('Install.prefix') . $table;
+			$table = $prefix . $table;
 		}
 
 		return $table;
@@ -385,8 +363,8 @@ class InstallController extends ForumAppController {
 	 */
 	private function __rewriteModel($prefix = '', $file = 'AppModel') {
 		switch ($file) {
-			case 'AppModel':	$path = dirname(__DIR__) . DS .'forum_app_model.php'; break;
-			case 'UserModel':	$path = dirname(__DIR__) . DS .'models'. DS .'user.php'; break;
+			case 'AppModel':	$path = FORUM_PLUGIN .'forum_app_model.php'; break;
+			case 'UserModel':	$path = FORUM_PLUGIN .'models'. DS .'user.php'; break;
 			default: return; break;
 		}
 
@@ -407,16 +385,15 @@ class InstallController extends ForumAppController {
 	 * @return void
 	 */
 	private function __rewriteSql($prefix = '') {
-		$path = dirname(__DIR__) . DS .'config'. DS .'schema'. DS;
 		$schemas = array('schema.sql', 'users_create.sql', 'users_alter.sql');
 
 		foreach ($schemas as $schema) {
-			if (file_exists($path . $schema)) {
-				$contents = file_get_contents($path . $schema);
+			if (file_exists(FORUM_SCHEMA . $schema)) {
+				$contents = file_get_contents(FORUM_SCHEMA . $schema);
 				$contents = String::insert($contents, array('prefix' => $prefix), array('before' => '{:', 'after' => '}'));
 				$contents = preg_replace('!/\*[^*]*\*+([^/][^*]*\*+)*/!', '', $contents);
 
-				$this->File = new File($path .'prepared_'. $schema, true, 0777);
+				$this->File = new File(FORUM_SCHEMA .'prepared_'. $schema, true, 0777);
 				$this->File->open('w', true);
 				$this->File->write($contents);
 				$this->File->close();
@@ -447,21 +424,24 @@ class InstallController extends ForumAppController {
 	private function __saveInstall() {
 		$install = $this->Session->read('Install');
 		$install['date'] = date('Y-m-d H:i:s');
-		$settings = array();
 
+		// Prepare settings for ini
+		$settings = array();
 		foreach ($install as $field => $value) {
-			if (!is_numeric($value)) {
-				$value = '"'. $value .'"';
-			}
+			$value = (!is_numeric($value) ? '"'. $value .'"' : $value);
 			$settings[] = $field .' = '. $value;
 		}
 
-		$path = dirname(__DIR__) . DS .'config'. DS .'install.ini';
-		$handle = fopen($path, 'w');
-		fwrite($handle, implode("\n", $settings));
-		fclose($handle);
-		chmod($path, 0777);
+		// Save the ini file
+		$path = FORUM_CONFIG .'install.ini';
+		$contents = implode("\n", $settings);
 
+		$this->File = new File($path, true, 0777);
+		$this->File->open('w', true);
+		$this->File->write($contents);
+		$this->File->close();
+
+		// Delete session
 		$this->Session->delete('Install');
 	}
 
