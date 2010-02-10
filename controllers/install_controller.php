@@ -28,64 +28,52 @@ class InstallController extends ForumAppController {
 	public $uses = array();
 
 	/**
-	 * Select which database to create the tables in.
+	 * Default page with directions.
 	 *
 	 * @access public
 	 * @return void
 	 */
 	public function index() {
-		$this->__checkInstallation();
-		$this->data['prefix'] = 'forum_';
-
-		$this->pageTitle = 'Step 1: Database Configuration';
-		$this->set('databases', $this->__getDatabases());
+		$this->Session->delete('Install');
+		
+		$this->pageTitle = 'Forum Installation';
 	}
 
 	/**
-	 * Check to see if the database tables are taken, and that you can connect to the database.
+	 * Select which database to create the tables in.
 	 *
 	 * @access public
 	 * @return void
 	 */
 	public function check_database() {
 		$this->__checkInstallation();
-
-		// Store values
-		if (isset($this->data['database'])) {
-			$this->Session->write('Install.database', $this->data['database']);
-		} else {
-			$this->redirect(array('action' => 'index'));
-		}
-
-		$this->Session->write('Install.prefix', $this->data['prefix']);
-		$this->Session->write('Install.user_table', $this->data['user_table']);
+		$processed = false;
 
 		// Check database
-		$this->DB = ConnectionManager::getDataSource($this->data['database']);
+		if ($this->RequestHandler->isPost()) {
+			$this->Session->write('Install.database', $this->data['database']);
+			$this->Session->write('Install.prefix', $this->data['prefix']);
 
-		if ($this->DB->isConnected()) {
-			$tables = $this->__checkTables($this->data['prefix'], $this->data['user_table']);
-			$takenTables = array();
-			$prefixTables = array();
+			$this->DB = ConnectionManager::getDataSource($this->data['database']);
+			
+			if ($this->DB->isConnected()) {
+				$tables = $this->__checkTables($this->data['prefix']);
+				$conflicts = array_keys(array_filter($tables));
 
-			if (!empty($tables)) {
-				foreach ($tables as $table => $value) {
-					$prefixTables[] = $this->__prefix($table);
-
-					if ($value == 1) {
-						$takenTables[] = $table;
-					}
-				}
+				$this->set('isConnected', true);
+				$this->set('conflicts', $conflicts);
+			} else {
+				$this->set('isConnected', false);
 			}
 			
-			$this->set('isConnected', true);
-			$this->set('tables', $prefixTables);
-			$this->set('taken', $takenTables);
+			$processed = true;
 		} else {
-			$this->set('isConnected', false);
+			$this->data['prefix'] = 'forum_';
 		}
-
-		$this->pageTitle = 'Step 2: Database Table Check';
+		
+		$this->pageTitle = 'Step 1: Database Configuration';
+		$this->set('databases', $this->__getDatabases());
+		$this->set('processed', $processed);
 	}
 
 	/**
@@ -101,45 +89,77 @@ class InstallController extends ForumAppController {
 			$this->redirect(array('action' => 'index'));
 		}
 
-		// Prepare SQL and gather statements
+		// Rewrite SQL
 		$this->__rewriteSql($this->Session->read('Install.prefix'));
-		$schema = explode(";", file_get_contents(FORUM_SCHEMA . 'prepared_schema.sql'));
-
-		if ($this->Session->read('Install.user_table') == 1) {
-			$userSchema = array(file_get_contents(FORUM_SCHEMA . 'prepared_users_alter.sql'));
-		} else {
-			$userSchema = array(file_get_contents(FORUM_SCHEMA . 'prepared_users_create.sql'));
-		}
 
 		// Execute!
-		$sqls = array_merge($schema, $userSchema);
-		$total = count($this->__getTables());
+		$tables = $this->__getTables($this->Session->read('Install.prefix'));
+		$total	= count($tables);
+		$schema = explode(";", file_get_contents(FORUM_SCHEMA .'schema.sql'));
+		$database = $this->Session->read('Install.database');
 		$executed = 0;
 
-		foreach ($sqls as $sql) {
-			$sql = trim($sql);
-			
-			if (!empty($sql) && $this->DB->execute($sql)) {
-				$command = trim(substr($sql, 0, 6));
-				
+		foreach ($schema as $sql) {
+			if ($this->DB->execute(trim($sql))) {
+				$command = substr(trim($sql), 0, 6);
+
 				if (($command == 'CREATE') || ($command == 'ALTER')) {
 					$executed++;
 				}
 			}
 		}
 
-		// Check
+		// Final check, rollback tables if failure
 		if ($executed != $total) {
 			$this->__rollback();
 			$this->Session->delete('Install');
 		} else {
-			$this->Session->write('Install.finished', true);
+			$this->Session->write('Install.created', true);
 		}
 
-		$this->pageTitle = 'Step 3: Create Tables';
-		$this->set('database', $this->Session->read('Install.database'));
+		$this->pageTitle = 'Step 2: Create Tables';
+		$this->set('database', $database);
 		$this->set('executed', $executed);
+		$this->set('tables', $tables);
 		$this->set('total', $total);
+	}
+
+	/**
+	 * Check the users table and what to do.
+	 *
+	 * @access public
+	 * @return void
+	 */
+	public function setup_users() {
+		$this->__checkInstallation();
+		$processed = false;
+		$executed = false;
+
+		if (!$this->Session->check('Install.created')) {
+			$this->redirect(array('action' => 'index'));
+		}
+
+		// Create tables
+		if ($this->RequestHandler->isPost()) {
+			$this->Session->write('Install.user_table', ($this->data['action'] == 'sqlAlter' ? 1 : 0));
+
+			$schema	= $this->data[$this->data['action']];
+			$processed = true;
+			
+			if ($this->DB->execute($schema)) {
+				$executed = true;
+			} else {
+				$this->__rollback('users');
+			}
+		} else {
+			$this->data['sqlCreate'] = trim(file_get_contents(FORUM_SCHEMA .'users_create.sql'));
+			$this->data['sqlAlter'] = trim(file_get_contents(FORUM_SCHEMA .'users_alter.sql'));
+		}
+
+		$this->pageTitle = 'Step 3: Setup Users Table';
+		$this->set('processed', $processed);
+		$this->set('executed', $executed);
+		$this->set('database', $this->Session->read('Install.database'));
 	}
 
 	/**
@@ -151,7 +171,7 @@ class InstallController extends ForumAppController {
 	public function finished() {
 		$this->__checkInstallation();
 		
-		if (!$this->Session->check('Install.finished')) {
+		if (!$this->Session->check('Install.created')) {
 			$this->redirect(array('action' => 'index'));
 		}
 
@@ -176,14 +196,13 @@ class InstallController extends ForumAppController {
 	 * @return void
 	 */
 	public function patch() {
-		// Process form
-		if (!empty($this->data)) {
+		if ($this->RequestHandler->isPost()) {
 			$data = $this->data;
 			$data['finished'] = true;
 			unset($data['_Token']);
 
 			$this->Session->write('Install', $data);
-			$this->set('patchMsg', 'Your plugin has successfully been patched!');
+			$this->Session->setFlash('Your plugin has successfully been patched!');
 
 			$prefix = $data['prefix'];
 			$userPrefix = (($data['user_table'] == 1) ? '' : $prefix);
@@ -252,7 +271,7 @@ class InstallController extends ForumAppController {
 		}
 
 		// If progress hasn't begun, redirect
-		if ($this->action != 'index') {
+		if ($this->action != 'check_database') {
 			if (!$this->Session->check('Install')) {
 				$this->redirect(array('action' => 'index'));
 			}
@@ -281,11 +300,7 @@ class InstallController extends ForumAppController {
 		$tables = array_flip($this->__getTables());
 
 		foreach ($tables as $table => $value) {
-			if ($userTable == 1 && $table == 'users') {
-				$tables['users'] = false;
-			} else {
-				$tables[$table] = (in_array($prefix . $table, $existent) ? true : false);
-			}
+			$tables[$table] = (in_array($prefix . $table, $existent) ? true : false);
 		}
 
 		return $tables;
@@ -328,10 +343,19 @@ class InstallController extends ForumAppController {
 	 * Get a list of tables.
 	 *
 	 * @access private
+	 * @param string $prefix
 	 * @return array
 	 */
-	private function __getTables() {
-		return array('access', 'access_levels', 'forums', 'forum_categories', 'moderators', 'polls', 'poll_options', 'poll_votes', 'posts', 'reported', 'topics', 'users');
+	private function __getTables($prefix = null) {
+		$tables = array('access', 'access_levels', 'forums', 'forum_categories', 'moderators', 'polls', 'poll_options', 'poll_votes', 'posts', 'reported', 'topics');
+
+		if ($prefix) {
+			foreach ($tables as &$table) {
+				$table = $prefix . $table;
+			}
+		}
+
+		return $tables;
 	}
 
 	/**
@@ -343,14 +367,14 @@ class InstallController extends ForumAppController {
 	 */
 	private function __prefix($table) {
 		$prefix = $this->Session->read('Install.prefix');
-
+		
 		if ($table == 'users') {
-			$table = (($this->Session->read('Install.user_table') == 1) ? $table : $prefix . $table);
-		} else {
-			$table = $prefix . $table;
+			if ($userTable = $this->Session->check('Install.user_table')) {
+				return ($userTable == 1) ? $table : $prefix . $table;
+			}
 		}
 
-		return $table;
+		return $prefix . $table;
 	}
 
 	/**
@@ -393,7 +417,7 @@ class InstallController extends ForumAppController {
 				$contents = String::insert($contents, array('prefix' => $prefix), array('before' => '{:', 'after' => '}'));
 				$contents = preg_replace('!/\*[^*]*\*+([^/][^*]*\*+)*/!', '', $contents);
 
-				$this->File = new File(FORUM_SCHEMA .'prepared_'. $schema, true, 0777);
+				$this->File = new File(FORUM_SCHEMA . $schema, true, 0777);
 				$this->File->open('w', true);
 				$this->File->write($contents);
 				$this->File->close();
@@ -405,12 +429,17 @@ class InstallController extends ForumAppController {
 	 * Rollback the installation and delete the created tables.
 	 *
 	 * @access private
+	 * @param string $table
 	 * @return void
 	 */
-	private function __rollback() {
-		$tables = $this->__getTables();
+	private function __rollback($table = null) {
+		if (!$table) {
+			$tables = $this->__getTables();
 
-		foreach ($tables as $table) {
+			foreach ($tables as $table) {
+				$this->DB->execute('DROP TABLE `'. $this->__prefix($table) .'`;');
+			}
+		} else {
 			$this->DB->execute('DROP TABLE `'. $this->__prefix($table) .'`;');
 		}
 	}
@@ -428,8 +457,7 @@ class InstallController extends ForumAppController {
 		// Prepare settings for ini
 		$settings = array();
 		foreach ($install as $field => $value) {
-			$value = (!is_numeric($value) ? '"'. $value .'"' : $value);
-			$settings[] = $field .' = '. $value;
+			$settings[] = $field .' = "'. $value .'"';
 		}
 
 		// Save the ini file

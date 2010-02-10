@@ -1,48 +1,43 @@
 
 <div class="forumHeader">
-	<h2>Step 2: Database Table Check</h2>
+	<h2>Step 1: Database Configuration</h2>
 </div>
 
-<?php // Database connected
-if ($isConnected) { ?>
+<?php // Form posted
+if ($processed) {
 
-	<p>Check to see if there are any conflicts between tables in your current database.</p>
-
-	<p>Tables to be created: <i><?php echo implode(', ', $tables); ?></i></p>
-
-	<?php // No conflicts!
-	if (empty($taken)) { ?>
-		<div class="successBox">
-			<b>Success!</b> There are no table conflicts when using the prefix: <?php echo $this->data['prefix']; ?>.
-		</div>
-
-		<?php echo $form->create(null, array('action' => 'create_tables')); ?>
-
-		<div class="submit">
-			<?php echo $form->button('Go Back', array('onclick' => 'window.history.go(-1);')); ?> 
-			<?php echo $form->submit('Create Tables', array('div' => false)); ?>
-		</div>
-
-		<?php echo $form->end();
-	} else { ?>
+	// Database connected
+	if ($isConnected) {
+		if (empty($conflicts)) { ?>
+			<div class="successBox">
+				<b>Success!</b> There are no table conflicts when using the prefix: <?php echo $this->data['prefix']; ?>
+			</div>
+		<?php } else { ?>
+			<div class="errorBox">
+				<b>Error:</b> The following tables are in conflict: <?php echo implode(', ', $conflicts); ?>
+			</div>
+		<?php }
 		
+	} else { ?>
 		<div class="errorBox">
-			<b>Error:</b> The following tables are in conflict: <?php echo implode(', ', $taken); ?>.
+			<b>Error:</b> There is no connection to the database you selected!
 		</div>
-
-		<div class="submit">
-			<?php echo $form->button('Go Back', array('onclick' => 'window.history.go(-1);')); ?>
-		</div>
-
 	<?php }
-} else { ?>
+} ?>
 
-	<div class="errorBox">
-		<b>Error:</b> There is no connection to the database you selected!
-	</div>
+<p>Select the database you want to use, and the prefix to append to your table names (recommended).</p>
 
-	<div class="submit">
-		<?php echo $form->button('Go Back', array('onclick' => 'window.history.go(-1);')); ?>
-	</div>
+<?php // Form
+echo $form->create(null, array('action' => 'check_database'));
+echo $form->input('database', array('options' => $databases));
+echo $form->input('prefix'); ?>
 
-<?php } ?>
+<div class="submit">
+	<?php echo $form->submit('Check Database', array('div' => false)); ?>
+
+	<?php if ($processed && empty($conflicts)) {
+		echo $form->button('Create Tables', array('onclick' => "goTo('". Router::url(array('action' => 'create_tables')) ."');"));
+	} ?>
+</div>
+
+<?php echo $form->end(); ?>

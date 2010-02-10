@@ -1,15 +1,28 @@
 
 <div class="forumHeader">
-	<h2>Step 1: Database Configuration</h2>
+	<h2>Install</h2>
 </div>
 
-<p>Select the database you want to use, and the prefix to append to your table names.</p>
+<p>If this is your first time installing the forum, or you want to install a fresh version with all new tables. Please continue onto the nex step.</p>
 
-<p>Furthermore, do you have an already existent user table? Check the following field to <b>not</b> prefix the user table.</p>
+<p><button type="button" class="button" onclick="goTo('<?php echo Router::url(array('action' => 'check_database')); ?>');">Begin Installation</button></p>
 
-<?php // Form
-echo $form->create(null, array('action' => 'check_database'));
-echo $form->input('database', array('options' => $databases));
-echo $form->input('prefix');
-echo $form->input('user_table', array('type' => 'checkbox', 'label' => 'Use Existent User Table', 'after' => ' Yes'));
-echo $form->end('Check Database'); ?>
+<br />
+<div class="forumHeader">
+	<h2>Patch</h2>
+</div>
+
+<p>If you already have the forum installed and are now upgrading to a newer version, you will need to patch your installation (if you haven't patched yet).</p>
+
+<p><button type="button" class="button" onclick="goTo('<?php echo Router::url(array('action' => 'patch')); ?>');">Apply Patch</button></p>
+
+<br />
+<div class="forumHeader">
+	<h2>Upgrade</h2>
+</div>
+
+<p>Certain versions require an upgrade script to upgrade the code correctly. Apply the following updates for the version you want (if you haven't already).</p>
+
+<ul class="decoda_list">
+	<li><?php echo $html->link('Upgrade to 1.8', array('action' => 'upgrade_1_8')); ?></li>
+</ul>

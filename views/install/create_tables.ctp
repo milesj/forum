@@ -1,25 +1,26 @@
 
 <div class="forumHeader">
-	<h2>Step 3: Create Tables</h2>
+	<h2>Step 2: Create Tables</h2>
 </div>
+
+<?php if ($executed == $total) { ?>
+<div class="successBox">
+	<b>Success!</b> Your tables created succesfully. Continue to setup the users table.
+</div>
+<?php } else { ?>
+<div class="errorBox">
+	<b>Error:</b> There was an error creating the database tables. Tables have been dropped.
+</div>
+<?php } ?>
 
 <p>Your tables are now being created in the database: <b><?php echo $database; ?></b></p>
 
-<p>Tables created (or altered): <b><?php echo $executed; ?></b> of <b><?php echo $total; ?></b></p>
+<p><b>Tables being created:</b> <?php echo implode(', ', $tables); ?></p>
 
-<?php if ($executed == $total) {
-	echo $form->create(null, array('action' => 'finished')); ?>
-
-	<div class="submit">
-		<?php echo $form->button('Go Back', array('onclick' => 'window.history.go(-1);')); ?>
-		<?php echo $form->submit('Finish Installation', array('div' => false)); ?>
-	</div>
-
-<?php echo $form->end();
-} else { ?>
-
-<div class="errorBox">
-	<b>Error:</b> There was an error creating the database tables. You will need to completely remove the tables manually before trying the installation process again.
+<div class="submit">
+	<?php if ($executed == $total) {
+		echo $form->button('Setup Users Table', array('onclick' => "goTo('". Router::url(array('action' => 'setup_users')) ."');"));
+	} else {
+		echo $form->button('Restart', array('onclick' => "goTo('". Router::url(array('action' => 'index')) ."');"));
+	} ?>
 </div>
-
-<?php } ?>

@@ -300,7 +300,7 @@ td.empty {
 
 .errorBox {
 	padding: 10px;
-	margin-bottom: 10px;
+	margin-bottom: 15px;
 	background-color: #fab4b4;
 	color: #802f2f;
 	border: 1px solid #c91818;
@@ -309,7 +309,7 @@ td.empty {
 
 .successBox {
 	padding: 10px;
-	margin-bottom: 10px;
+	margin-bottom: 15px;
 	background-color: #ddf7a9;
 	color: #3f8515;
 	border: 1px solid #88b035;

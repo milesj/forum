@@ -1,4 +1,4 @@
-/* Table structure for table `users` */
+
 
 ALTER TABLE `users`
   	ADD `status` SMALLINT(6) NOT NULL DEFAULT '0',
