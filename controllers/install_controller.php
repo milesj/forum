@@ -95,16 +95,20 @@ class InstallController extends ForumAppController {
 		// Execute!
 		$tables = $this->__getTables($this->Session->read('Install.prefix'));
 		$total	= count($tables);
-		$schema = explode(";", file_get_contents(FORUM_SCHEMA .'schema.sql'));
+		$schema = explode(";", file_get_contents(FORUM_SCHEMA .'parsed_schema.sql'));
 		$database = $this->Session->read('Install.database');
 		$executed = 0;
 
 		foreach ($schema as $sql) {
-			if ($this->DB->execute(trim($sql))) {
-				$command = substr(trim($sql), 0, 6);
+			$sql = trim($sql);
 
-				if (($command == 'CREATE') || ($command == 'ALTER')) {
-					$executed++;
+			if (!empty($sql)) {
+				if ($this->DB->execute($sql)) {
+					$command = trim(substr($sql, 0, 6));
+
+					if (($command == 'CREATE') || ($command == 'ALTER')) {
+						$executed++;
+					}
 				}
 			}
 		}
@@ -152,8 +156,8 @@ class InstallController extends ForumAppController {
 				$this->__rollback('users');
 			}
 		} else {
-			$this->data['sqlCreate'] = trim(file_get_contents(FORUM_SCHEMA .'users_create.sql'));
-			$this->data['sqlAlter'] = trim(file_get_contents(FORUM_SCHEMA .'users_alter.sql'));
+			$this->data['sqlCreate'] = trim(file_get_contents(FORUM_SCHEMA .'parsed_users_create.sql'));
+			$this->data['sqlAlter'] = trim(file_get_contents(FORUM_SCHEMA .'parsed_users_alter.sql'));
 		}
 
 		$this->pageTitle = 'Step 3: Setup Users Table';
@@ -190,6 +194,70 @@ class InstallController extends ForumAppController {
 	}
 
 	/**
+	 * Create an admin user.
+	 *
+	 * @access public
+	 * @return void
+	 */
+	public function create_admin() {
+		if (!ForumConfig::isInstalled()) {
+			$this->Session->delete('Install');
+			$this->redirect(array('action' => 'check_database'));
+		}
+
+		$this->loadModel('Forum.User');
+		$this->loadModel('Forum.Access');
+		
+		$total = $this->User->find('count');
+		$granted = false;
+
+		if ($this->RequestHandler->isPost()) {
+			$access = array('access_level_id' => 4);
+
+			// Create user
+			if ($total == 0) {
+				$this->User->create();
+				$this->User->set($this->data);
+				$this->User->action = 'signup';
+
+				if ($this->User->validates()) {
+					$this->data['User']['username'] = strip_tags($this->data['User']['username']);
+					$this->data['User']['password'] = $this->Auth->password($this->data['User']['newPassword']);
+
+					if ($this->User->save($this->data, false, array('username', 'email', 'password'))) {
+						$granted = true;
+						$access['user_id'] = $this->User->id;
+					}
+				}
+
+			// Based on ID
+			} else {
+				if (!empty($this->data['User']['user_id'])) {
+					$exists = $this->User->findById($this->data['User']['user_id']);
+
+					if (!empty($exists)) {
+						$granted = true;
+						$access['user_id'] = $this->data['User']['user_id'];
+					} else {
+						$this->User->invalidate('user_id', 'No user exists with that ID');
+					}
+				} else {
+					$this->User->invalidate('user_id', 'Please enter a user ID');
+				}
+			}
+
+			// Give access
+			if ($granted) {
+				$this->Access->save($access, false);
+			}
+		}
+
+		$this->pageTitle = 'Create Admin';
+		$this->set('total', $total);
+		$this->set('granted', $granted);
+	}
+
+	/**
 	 * Patch your installation!
 	 *
 	 * @access public
@@ -198,11 +266,11 @@ class InstallController extends ForumAppController {
 	public function patch() {
 		if ($this->RequestHandler->isPost()) {
 			$data = $this->data;
-			$data['finished'] = true;
+			$data['created'] = true;
 			unset($data['_Token']);
 
 			$this->Session->write('Install', $data);
-			$this->Session->setFlash('Your plugin has successfully been patched!');
+			$this->set('patchMsg', 'Your plugin has successfully been patched!');
 
 			$prefix = $data['prefix'];
 			$userPrefix = (($data['user_table'] == 1) ? '' : $prefix);
@@ -248,7 +316,11 @@ class InstallController extends ForumAppController {
 
 			$sqls = explode(';', $contents);
 			foreach ($sqls as $sql) {
-				$this->DB->execute(trim($sql));
+				$sql = trim($sql);
+
+				if (!empty($sql)) {
+					$this->DB->execute($sql);
+				}
 			}
 			
 			$this->set('upgraded', true);
@@ -417,7 +489,7 @@ class InstallController extends ForumAppController {
 				$contents = String::insert($contents, array('prefix' => $prefix), array('before' => '{:', 'after' => '}'));
 				$contents = preg_replace('!/\*[^*]*\*+([^/][^*]*\*+)*/!', '', $contents);
 
-				$this->File = new File(FORUM_SCHEMA . $schema, true, 0777);
+				$this->File = new File(FORUM_SCHEMA . 'parsed_'. $schema, true, 0777);
 				$this->File->open('w', true);
 				$this->File->write($contents);
 				$this->File->close();

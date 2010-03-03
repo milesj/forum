@@ -18,6 +18,15 @@
 
 <br />
 <div class="forumHeader">
+	<h2>Create Administrator</h2>
+</div>
+
+<p>If you need to create a user and grant admin access, or grant an existent user access, you can do so below.</p>
+
+<p><button type="button" class="button" onclick="goTo('<?php echo Router::url(array('action' => 'create_admin')); ?>');">Grant Access</button></p>
+
+<br />
+<div class="forumHeader">
 	<h2>Upgrade</h2>
 </div>
 

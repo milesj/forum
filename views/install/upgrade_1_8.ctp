@@ -5,7 +5,13 @@
 
 <?php if (isset($upgraded)) { ?>
 
-	<p>You are now upgraded to 1.8! Enjoy!</p>
+	<p>You are now upgraded to 1.8! However, you are not finished yet, time for the hard part.</p>
+
+	<p>Since we added a new slugged title feature, we must now go and process all the old rows and update them with their slugs.
+		To do this we must use the Cake console and run the the shell <b>slugify</b>.
+		Your shell command may look like the following (Make sure you are running the plugin shell!)</p>
+
+	<pre class="php decoda_code">cake -app /path/to/app slugify</pre>
 
 <?php } else { ?>
 
@@ -13,7 +19,6 @@
 
 	<ul class="decoda_list">
 		<li>Adding the new "slug" column to specific tables.</li>
-		<li>Update the slug column in all the topics and forums. (Can be a huge process if there are tons of rows)
 	</ul>
 
 	<br />

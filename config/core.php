@@ -16,7 +16,7 @@ class ForumConfig {
 	 * @access public
 	 * @var string
 	 */
-	public $version = '1.7.8';
+	public $version = '1.8';
 
 	/**
 	 * Settings.
@@ -97,8 +97,7 @@ class ForumConfig {
 		$path = dirname(__FILE__) . DS .'install.ini';
 
 		if (file_exists($path)) {
-			$contents = parse_ini_file($path);
-			return ($contents['finished'] == 1);
+			return parse_ini_file($path);
 		} else {
 			return false;
 		}
