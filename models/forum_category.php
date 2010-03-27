@@ -198,12 +198,12 @@ class ForumCategory extends ForumAppModel {
 			
 			if ($access >= $category['ForumCategory'][$accessField]) {
 				$hierarchy[$category['Forum']['title']][$category['ForumCategory']['id']] = $category['ForumCategory']['title'];
-			}
 			
-			if (!empty($category['SubForum'])) {
-				foreach ($category['SubForum'] as $child) {
-					if ($access >= $child[$accessField]) {
-						$hierarchy[$category['Forum']['title']][$child['id']] = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; '. $child['title'];
+				if (!empty($category['SubForum'])) {
+					foreach ($category['SubForum'] as $child) {
+						if ($access >= $child[$accessField]) {
+							$hierarchy[$category['Forum']['title']][$child['id']] = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; '. $child['title'];
+						}
 					}
 				}
 			}

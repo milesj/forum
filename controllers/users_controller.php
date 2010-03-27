@@ -219,8 +219,9 @@ class UsersController extends ForumAppController {
 			if ($this->User->validates()) {
 				$this->data['User']['username'] = strip_tags($this->data['User']['username']);
 				$this->data['User']['password'] = $this->Auth->password($this->data['User']['newPassword']);
-				
-				if ($this->User->save($this->data, false, array('username', 'email', 'password'))) {
+				$this->data['User'][$this->User->columnMap['locale']] = $this->Toolbar->settings['default_locale'];
+
+				if ($this->User->save($this->data, false, array('username', 'email', 'password', $this->User->columnMap['locale']))) {
 					$this->Session->setFlash(__d('forum', 'You have successfully signed up, you may now login and begin posting.', true));
 
 					// Send email

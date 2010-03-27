@@ -83,7 +83,6 @@ class ForumAppController extends AppController {
 	public function beforeFilter() {
 		parent::beforeFilter();
 		
-		Security::setHash('md5');
 		$Config = ForumConfig::getInstance();
 
 		// Load l10n/i18n support

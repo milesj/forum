@@ -133,7 +133,7 @@ class ToolbarComponent extends Object {
 		} else {
 			$url = $this->Controller->referer();
 		
-			if (empty($url)) {
+			if ((empty($url)) || (strpos($url, 'delete') !== false)) {
 				$url = array('plugin' => 'forum', 'controller' => 'home', 'action' => 'index');
 			}
 		}

@@ -118,7 +118,7 @@ class SluggableBehavior extends ModelBehavior
 
 				// Look for slugs that start with the same slug we've just generated
 
-				$conditions = array($Model->alias . '.' . $this->__settings[$Model->alias]['slug'] => 'LIKE ' . $slug . '%');
+				$conditions = array($Model->alias . '.' . $this->__settings[$Model->alias]['slug'] .' LIKE' => $slug . '%');
 
 				if (!empty($Model->id))
 				{
