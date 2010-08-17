@@ -51,6 +51,8 @@ class SearchController extends ForumAppController {
 			$this->data['Topic']['orderBy'] = 'LastPost.created';
 			$this->paginate['Topic']['conditions']['LastPost.created >='] = $this->Session->read('Forum.lastVisit');
 		}
+
+		$forums = $this->Topic->ForumCategory->getHierarchy($this->Toolbar->getAccess(), $this->Session->read('Forum.access'), 'read');
 		
 		// Search
 		if (!empty($this->data)) {
@@ -67,9 +69,14 @@ class SearchController extends ForumAppController {
 					);
 				}
 			}
-			
+
 			if (!empty($this->data['Topic']['category'])) {
 				$this->paginate['Topic']['conditions']['Topic.forum_category_id'] = $this->data['Topic']['category'];
+			} else {
+				$this->data['Topic']['category'] = array();
+				foreach ($forums as $forum_category_ids) {
+					$this->data['Topic']['category'] = array_merge($this->data['Topic']['category'], array_keys($forum_category_ids));
+				}
 			}
 			
 			if (!empty($this->data['Topic']['orderBy'])) {
@@ -86,7 +93,7 @@ class SearchController extends ForumAppController {
 		$this->Toolbar->pageTitle(__d('forum', 'Search', true));
 		$this->set('menuTab', 'search');
 		$this->set('searching', $searching);
-		$this->set('forums', $this->Topic->ForumCategory->getHierarchy($this->Toolbar->getAccess(), $this->Session->read('Forum.access'), 'read'));
+		$this->set('forums', $forums);
 	}
 	
 	/**
