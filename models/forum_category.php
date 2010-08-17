@@ -208,6 +208,10 @@ class ForumCategory extends ForumAppModel {
 				}
 			}
 		}
+
+		foreach ($hierarchy as $key => $value) {
+			if (empty($value)) unset($hierarchy[$key]);
+		}
 		
 		return $hierarchy;
 	}
