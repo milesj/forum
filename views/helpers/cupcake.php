@@ -394,7 +394,7 @@ class CupcakeHelper extends AppHelper {
 		
 		$topicPages = array();
 		for ($i = 1; $i <= $topic['page_count']; ++$i) {
-			$topicPages[] = $this->Html->link($i, array('controller' => 'topics', 'action' => 'view', $topic['id'], 'page' => $i));
+			$topicPages[] = $this->Html->link($i, array('controller' => 'topics', 'action' => 'view', $topic['slug'], 'page' => $i));
 		}
 		
 		if ($topic['page_count'] > $this->settings['topic_pages_till_truncate']) {
