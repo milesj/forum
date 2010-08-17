@@ -70,8 +70,8 @@ if (!empty($category['SubForum'])) { ?>
             if (!empty($subCat['LastTopic'])) {
                 $lastTime = (!empty($subCat['LastPost']['created'])) ? $subCat['LastPost']['created'] : $subCat['LastTopic']['created']; ?>
                 
-                <?php echo $html->link($subCat['LastTopic']['title'], array('controller' => 'topics', 'action' => 'view', $subCat['slug'])); ?>
-                <?php echo $html->image('/forum/img/goto.png', array('alt' => '', 'url' => array('controller' => 'topics', 'action' => 'view', $subCat['slug'], 'page' => $subCat['LastTopic']['page_count'], '#' => 'post_'. $subCat['lastPost_id']))); ?><br />
+                <?php echo $html->link($subCat['LastTopic']['title'], array('controller' => 'topics', 'action' => 'view', $subCat['LastTopic']['slug'])); ?>
+                <?php echo $html->image('/forum/img/goto.png', array('alt' => '', 'url' => array('controller' => 'topics', 'action' => 'view', $subCat['LastTopic']['slug'], 'page' => $subCat['LastTopic']['page_count'], '#' => 'post_'. $subCat['lastPost_id']))); ?><br />
                 
                 <em><?php echo $time->relativeTime($lastTime, array('userOffset' => $cupcake->timezone())); ?></em> <span class="gray"><?php __d('forum', 'by'); ?> <?php echo $html->link($subCat['LastUser']['username'], array('controller' => 'users', 'action' => 'profile', $subCat['lastUser_id'])); ?></span>
             <?php } else {
