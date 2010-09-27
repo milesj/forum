@@ -8,7 +8,6 @@ A fully robust and powerful CakePHP forum plugin.
 * PHP 5.2.x
 
 ## Documentation ##
-=============
 
 Thorough documentation can be found here: http://www.milesj.me/resources/script/forum-plugin
 
