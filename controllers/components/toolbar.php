@@ -1,11 +1,11 @@
 <?php
 /** 
- * Cupcake - Toolbar Component
+ * Forum - Toolbar Component
  *
- * @author 		Miles Johnson - www.milesj.me
- * @copyright	Copyright 2006-2009, Miles Johnson, Inc.
- * @license 	http://www.opensource.org/licenses/mit-license.php - Licensed under The MIT License
- * @link		www.milesj.me/resources/script/forum-plugin
+ * @author		Miles Johnson - http://milesj.me
+ * @copyright	Copyright 2006-2010, Miles Johnson, Inc.
+ * @license		http://opensource.org/licenses/mit-license.php - Licensed under The MIT License
+ * @link		http://milesj.me/resources/script/forum-plugin
  */
  
 class ToolbarComponent extends Object {
@@ -17,7 +17,7 @@ class ToolbarComponent extends Object {
 	 * @var array
 	 */
 	public $components = array('Session');
-	
+
 	/**
 	 * Initialize.
 	 *
@@ -46,7 +46,7 @@ class ToolbarComponent extends Object {
 			if (!$this->Session->check('Forum.access')) {
 				$access = array('Guest' => 0);
 
-				if ($user_id) {
+				if ($user_id && $this->Controller->Auth->user($this->columnMap['status']) != Configure::read('Forum.statusMap.banned')) {
 					$access['Member'] = 1;
 					$access = array_merge($access, ClassRegistry::init('Forum.Access')->getMyAccess($user_id));
 				}
@@ -68,13 +68,13 @@ class ToolbarComponent extends Object {
 
 			// Are we a super mod?
 			if (!$this->Session->check('Forum.isSuperMod')) {
-				$status = ($user_id) ? ClassRegistry::init('Forum.Access')->isSuper($user_id) : 0;
+				$status = ($user_id) ? ClassRegistry::init('Forum.Access')->isSuper($user_id) : false;
 				$this->Session->write('Forum.isSuperMod', $status);
 			}
 
 			// Are we an administrator?
 			if (!$this->Session->check('Forum.isAdmin')) {
-				$status = ($user_id) ? ClassRegistry::init('Forum.Access')->isAdmin($user_id) : 0;
+				$status = ($user_id) ? ClassRegistry::init('Forum.Access')->isAdmin($user_id) : false;
 				$this->Session->write('Forum.isAdmin', $status);
 			}
 
@@ -91,21 +91,13 @@ class ToolbarComponent extends Object {
 	 * @param boolean $return
 	 * @return mixed
 	 */
-	public function goToPage($topic_id = NULL, $post_id = NULL, $return = false) {
-		$topic = ClassRegistry::init('Forum.Topic')->find('first', array(
-			'conditions' => array('Topic.id' => $topic_id),
-			'fields' => array('Topic.slug')
-		));
-
-		$slug = (!empty($topic['Topic']['slug']) ? $topic['Topic']['slug'] : null);
+	public function goToPage($topic_id = null, $post_id = null, $return = false) {
+		$topic = ClassRegistry::init('Forum.Topic')->get($topic_id, array('Topic.slug'));
+		$slug = !empty($topic['Topic']['slug']) ? $topic['Topic']['slug'] : null;
 
 		// Certain page
 		if ($topic_id && $post_id) {
-			$posts = ClassRegistry::init('Forum.Post')->find('list', array(
-				'conditions' => array('Post.topic_id' => $topic_id),
-				'order' => array('Post.id' => 'ASC')
-			));
-			
+			$posts = ClassRegistry::init('Forum.Post')->getIdsForPaging($topic_id);
 			$totalPosts = count($posts);
 			$perPage = $this->settings['posts_per_page'];
 			
@@ -138,7 +130,7 @@ class ToolbarComponent extends Object {
 			}
 		}
 		
-		if ($return === true) {
+		if ($return) {
 			return $url;
 		} else {
 			$this->Controller->redirect($url);
@@ -180,6 +172,7 @@ class ToolbarComponent extends Object {
 			$readTopics[] = $topic_id;
 			$readTopics = array_unique($readTopics);
 			$this->Session->write('Forum.readTopics', $readTopics);
+			
 		} else {
 			$this->Session->write('Forum.readTopics', array($topic_id));
 		}
@@ -198,7 +191,7 @@ class ToolbarComponent extends Object {
 		$args = func_get_args();
 		array_unshift($args, __d('forum', 'Forum', true));
 		
-		$this->Controller->set('title_for_layout', implode(' &raquo; ', $args));
+		$this->Controller->set('title_for_layout', implode(Configure::read('Forum.settings.title_separator'), $args));
 	}
 	
 	/**
@@ -210,7 +203,7 @@ class ToolbarComponent extends Object {
 	 * @return void
 	 */
 	public function resetPassword($user, $reset = false) {
-		$User = ClassRegistry::init('User');
+		$User = ClassRegistry::init('Forum.User');
 		$password = $User->generate();
 		$User->resetPassword($user['User']['id'], $this->Controller->Auth->password($password));
 		
@@ -218,6 +211,7 @@ class ToolbarComponent extends Object {
 		if (!$reset) {
 			$message = sprintf(__d('forum', 'You have requested the login credentials for %s, your information is listed below', true), $this->settings['site_name']) .":\n\n";
 			$subject = __d('forum', 'Forgotten Password', true);
+			
 		} else {
 			$message = sprintf(__d('forum', 'Your password has been reset for %s, your information is listed below', true), $this->settings['site_name']) .":\n\n";
 			$subject = __d('forum', 'Reset Password', true);

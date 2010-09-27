@@ -289,4 +289,18 @@ class Post extends ForumAppModel {
 		));
 	}
 
+	/**
+	 * Get a list of IDs for determining paging.
+	 *
+	 * @access public
+	 * @param int $topic_id
+	 * @return array
+	 */
+	public function getIdsForPaging($topic_id) {
+		return $this->find('list', array(
+			'conditions' => array('Post.topic_id' => $topic_id),
+			'order' => array('Post.id' => 'ASC')
+		));
+	}
+
 }

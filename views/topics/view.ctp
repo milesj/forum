@@ -182,7 +182,7 @@ if (!empty($topic['Poll']['id'])) { ?>
 </div>
 
 <?php // Quick Reply
-if ($this->Forum->settings['enable_quick_reply'] == 1) { ?>
+if ($this->Forum->settings['enable_quick_reply'] == 1 && $this->Forum->hasAccess($topic['ForumCategory']['accessReply'])) { ?>
 <div id="quickReply">
 	<h3><?php __d('forum', 'Quick Reply'); ?></h3>
     
