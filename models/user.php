@@ -1,11 +1,11 @@
 <?php
 /** 
- * Cupcake - User Model
+ * Forum - User Model
  *
- * @author 		Miles Johnson - www.milesj.me
- * @copyright	Copyright 2006-2009, Miles Johnson, Inc.
- * @license 	http://www.opensource.org/licenses/mit-license.php - Licensed under The MIT License
- * @link		www.milesj.me/resources/script/forum-plugin
+ * @author		Miles Johnson - http://milesj.me
+ * @copyright	Copyright 2006-2010, Miles Johnson, Inc.
+ * @license		http://opensource.org/licenses/mit-license.php - Licensed under The MIT License
+ * @link		http://milesj.me/resources/script/forum-plugin
  */
  
 class User extends ForumAppModel {
@@ -325,7 +325,7 @@ class User extends ForumAppModel {
 	 * @return boolean
 	 */
 	public function beforeValidate() {
-		$action = (isset($this->action) ? $this->action : null);
+		$action = isset($this->action) ? $this->action : null;
 		
 		if ($action == 'login') {
 			unset($this->validate['username']['isUnique']);

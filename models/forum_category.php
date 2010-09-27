@@ -1,11 +1,11 @@
 <?php
 /** 
- * Cupcake - ForumCategory Model
+ * Forum - ForumCategory Model
  *
- * @author 		Miles Johnson - www.milesj.me
- * @copyright	Copyright 2006-2009, Miles Johnson, Inc.
- * @license 	http://www.opensource.org/licenses/mit-license.php - Licensed under The MIT License
- * @link		www.milesj.me/resources/script/forum-plugin
+ * @author		Miles Johnson - http://milesj.me
+ * @copyright	Copyright 2006-2010, Miles Johnson, Inc.
+ * @license		http://opensource.org/licenses/mit-license.php - Licensed under The MIT License
+ * @link		http://milesj.me/resources/script/forum-plugin
  */
  
 class ForumCategory extends ForumAppModel {
@@ -16,7 +16,11 @@ class ForumCategory extends ForumAppModel {
 	 * @access public
 	 * @var array
 	 */
-	public $actsAs = array('Forum.Sluggable');
+	public $actsAs = array(
+		'Utils.Sluggable' => array(
+			'separator' => '-'
+		)
+	);
 
 	/**
 	 * Belongs to.
@@ -167,6 +171,7 @@ class ForumCategory extends ForumAppModel {
 			'ForumCategory.access_level_id' => $accessLevels,
 			'ForumCategory.parent_id' => 0
 		);
+
 		if (is_numeric($exclude)) {
 			$conditions['ForumCategory.id !='] = $exclude;
 		}
@@ -210,7 +215,9 @@ class ForumCategory extends ForumAppModel {
 		}
 
 		foreach ($hierarchy as $key => $value) {
-			if (empty($value)) unset($hierarchy[$key]);
+			if (empty($value)) {
+				unset($hierarchy[$key]);
+			}
 		}
 		
 		return $hierarchy;

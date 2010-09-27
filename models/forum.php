@@ -1,11 +1,11 @@
 <?php
 /** 
- * Cupcake - Forum Model
+ * Forum - Forum Model
  *
- * @author 		Miles Johnson - www.milesj.me
- * @copyright	Copyright 2006-2009, Miles Johnson, Inc.
- * @license 	http://www.opensource.org/licenses/mit-license.php - Licensed under The MIT License
- * @link		www.milesj.me/resources/script/forum-plugin
+ * @author		Miles Johnson - http://milesj.me
+ * @copyright	Copyright 2006-2010, Miles Johnson, Inc.
+ * @license		http://opensource.org/licenses/mit-license.php - Licensed under The MIT License
+ * @link		http://milesj.me/resources/script/forum-plugin
  */
  
 class Forum extends ForumAppModel {
@@ -16,7 +16,11 @@ class Forum extends ForumAppModel {
 	 * @access public
 	 * @var array
 	 */
-	public $actsAs = array('Forum.Sluggable');
+	public $actsAs = array(
+		'Utils.Sluggable' => array(
+			'separator' => '-'
+		)
+	);
 
 	/**
 	 * Belongs to.
@@ -132,6 +136,7 @@ class Forum extends ForumAppModel {
 	 */
 	public function getList($exclude = null) {
 		$conditions = array();
+		
 		if (is_numeric($exclude)) {
 			$conditions['Forum.id !='] = $exclude;
 		}
