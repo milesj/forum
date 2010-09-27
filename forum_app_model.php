@@ -93,6 +93,20 @@ class ForumAppModel extends AppModel {
 	}
 
 	/**
+	 * Get a count of all rows.
+	 *
+	 * @access public
+	 * @return int
+	 */
+	public function getTotal() {
+		return $this->find('count', array(
+			'contain' => false,
+			'recursive' => false,
+			'cache' => array('global_total', '+24 hours')
+		));
+	}
+
+	/**
 	 * Adds locale functions to errors.
 	 *
 	 * @param string $field

@@ -27,9 +27,9 @@ class ForumController extends ForumAppController {
 		$this->Toolbar->pageTitle(__d('forum', 'Index', true));
 		$this->set('menuTab', 'home');
 		$this->set('forums', 		$this->Topic->ForumCategory->Forum->getIndex($this->Toolbar->getAccess(), $this->Session->read('Forum.access')));
-		$this->set('totalPosts', 	$this->Topic->Post->find('count', array('contain' => false)));
-		$this->set('totalTopics', 	$this->Topic->find('count', array('contain' => false)));
-		$this->set('totalUsers', 	$this->Topic->User->find('count', array('contain' => false)));
+		$this->set('totalPosts', 	$this->Topic->Post->getTotal());
+		$this->set('totalTopics', 	$this->Topic->getTotal());
+		$this->set('totalUsers', 	$this->Topic->User->getTotal());
 		$this->set('newestUser', 	$this->Topic->User->getNewestUser());
 		$this->set('whosOnline', 	$this->Topic->User->whosOnline($this->Toolbar->settings['whos_online_interval']));
 	}
@@ -80,12 +80,12 @@ class ForumController extends ForumAppController {
 		
 		$this->pageTitle = __d('forum', 'Administration', true);
 		$this->set('menuTab', 'home');
-		$this->set('totalPosts', 	$this->Topic->Post->find('count', array('contain' => false)));
-		$this->set('totalTopics', 	$this->Topic->find('count', array('contain' => false)));
-		$this->set('totalUsers', 	$this->Topic->User->find('count', array('contain' => false)));
-		$this->set('totalPolls', 	$this->Topic->Poll->find('count', array('contain' => false)));
-		$this->set('totalReports', 	$this->Report->find('count', array('contain' => false)));
-		$this->set('totalMods', 	$this->Moderator->find('count', array('contain' => false)));
+		$this->set('totalPosts', 	$this->Topic->Post->getTotal());
+		$this->set('totalTopics', 	$this->Topic->getTotal());
+		$this->set('totalUsers', 	$this->Topic->User->getTotal());
+		$this->set('totalPolls', 	$this->Topic->Poll->getTotal());
+		$this->set('totalReports', 	$this->Report->getTotal());
+		$this->set('totalMods', 	$this->Moderator->getTotal());
 		$this->set('newestUser', 	$this->Topic->User->getNewestUser());
 		$this->set('latestReports', $this->Report->getLatest());
 		$this->set('latestUsers', 	$this->Topic->User->getLatest());
