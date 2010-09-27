@@ -1,6 +1,6 @@
 <?php
 /** 
- * Cupcake - Cupcake Helper
+ * Forum Helper
  *
  * @author 		Miles Johnson - www.milesj.me
  * @copyright	Copyright 2006-2009, Miles Johnson, Inc.

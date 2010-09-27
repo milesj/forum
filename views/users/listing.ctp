@@ -17,11 +17,11 @@
     
     <table class="table" cellspacing="0">
     <tr>
-        <th><?php echo $paginator->sort(__d('forum', 'Username', true), 'User.username'); ?></th>
-        <th><?php echo $paginator->sort(__d('forum', 'Joined', true), 'User.created'); ?></th>
-        <th><?php echo $paginator->sort(__d('forum', 'Last Active', true), 'User.'. $this->Forum->columnMap['lastLogin']); ?></th>
-        <th><?php echo $paginator->sort(__d('forum', 'Topics', true), 'User.'. $this->Forum->columnMap['totalTopics']); ?></th>
-        <th><?php echo $paginator->sort(__d('forum', 'Posts', true), 'User.'. $this->Forum->columnMap['totalPosts']); ?></th>
+        <th><?php echo $this->Paginator->sort(__d('forum', 'Username', true), 'User.username'); ?></th>
+        <th><?php echo $this->Paginator->sort(__d('forum', 'Joined', true), 'User.created'); ?></th>
+        <th><?php echo $this->Paginator->sort(__d('forum', 'Last Active', true), 'User.'. $this->Forum->columnMap['lastLogin']); ?></th>
+        <th><?php echo $this->Paginator->sort(__d('forum', 'Topics', true), 'User.'. $this->Forum->columnMap['totalTopics']); ?></th>
+        <th><?php echo $this->Paginator->sort(__d('forum', 'Posts', true), 'User.'. $this->Forum->columnMap['totalPosts']); ?></th>
     </tr>
     
     <?php if (!empty($users)) {

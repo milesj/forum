@@ -42,13 +42,13 @@ if ($searching === true) { ?>
     
 	<table cellspacing="0" class="table">
     <tr>
-        <th colspan="2"><?php echo $paginator->sort(__d('forum', 'Topic', true), 'Topic.title'); ?></th>
-        <th><?php echo $paginator->sort(__d('forum', 'Forum', true), 'Topic.forum_category_id'); ?></th>
-        <th><?php echo $paginator->sort(__d('forum', 'Author', true), 'User.username'); ?></th>
-        <th><?php echo $paginator->sort(__d('forum', 'Created', true), 'Topic.created'); ?></th>
-        <th><?php echo $paginator->sort(__d('forum', 'Posts', true), 'Topic.post_count'); ?></th>
-        <th><?php echo $paginator->sort(__d('forum', 'Views', true), 'Topic.view_count'); ?></th>
-        <th><?php echo $paginator->sort(__d('forum', 'Activity', true), 'LastPost.created'); ?></th>
+        <th colspan="2"><?php echo $this->Paginator->sort(__d('forum', 'Topic', true), 'Topic.title'); ?></th>
+        <th><?php echo $this->Paginator->sort(__d('forum', 'Forum', true), 'Topic.forum_category_id'); ?></th>
+        <th><?php echo $this->Paginator->sort(__d('forum', 'Author', true), 'User.username'); ?></th>
+        <th><?php echo $this->Paginator->sort(__d('forum', 'Created', true), 'Topic.created'); ?></th>
+        <th><?php echo $this->Paginator->sort(__d('forum', 'Posts', true), 'Topic.post_count'); ?></th>
+        <th><?php echo $this->Paginator->sort(__d('forum', 'Views', true), 'Topic.view_count'); ?></th>
+        <th><?php echo $this->Paginator->sort(__d('forum', 'Activity', true), 'LastPost.created'); ?></th>
     </tr>
     
     <?php if (empty($topics)) { ?>

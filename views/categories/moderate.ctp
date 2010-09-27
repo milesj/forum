@@ -21,13 +21,13 @@ $this->Html->addCrumb($category['ForumCategory']['title'], array('controller' =>
 	<table cellspacing="0" class="table">
     <tr>
     	<th style="width: 25px" class="ac"><input type="checkbox" onclick="toggleCheckboxes(this, 'Topic', 'items');" /></th>
-        <th><?php echo $paginator->sort(__d('forum', 'Topic', true), 'Topic.title'); ?></th>
-        <th><?php echo $paginator->sort(__d('forum', 'Status', true), 'Topic.status'); ?></th>
-        <th><?php echo $paginator->sort(__d('forum', 'Author', true), 'User.username'); ?></th>
-        <th><?php echo $paginator->sort(__d('forum', 'Created', true), 'Topic.created'); ?></th>
-        <th><?php echo $paginator->sort(__d('forum', 'Posts', true), 'Topic.post_count'); ?></th>
-        <th><?php echo $paginator->sort(__d('forum', 'Views', true), 'Topic.view_count'); ?></th>
-        <th><?php echo $paginator->sort(__d('forum', 'Activity', true), 'LastPost.created'); ?></th>
+        <th><?php echo $this->Paginator->sort(__d('forum', 'Topic', true), 'Topic.title'); ?></th>
+        <th><?php echo $this->Paginator->sort(__d('forum', 'Status', true), 'Topic.status'); ?></th>
+        <th><?php echo $this->Paginator->sort(__d('forum', 'Author', true), 'User.username'); ?></th>
+        <th><?php echo $this->Paginator->sort(__d('forum', 'Created', true), 'Topic.created'); ?></th>
+        <th><?php echo $this->Paginator->sort(__d('forum', 'Posts', true), 'Topic.post_count'); ?></th>
+        <th><?php echo $this->Paginator->sort(__d('forum', 'Views', true), 'Topic.view_count'); ?></th>
+        <th><?php echo $this->Paginator->sort(__d('forum', 'Activity', true), 'LastPost.created'); ?></th>
     </tr>
     
     <?php // Topics

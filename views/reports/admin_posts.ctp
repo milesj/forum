@@ -18,9 +18,9 @@
     <tr>
     	<th style="width: 25px">&nbsp;</th>
         <th><?php __d('forum', 'Post'); ?></th>
-        <th><?php echo $paginator->sort(__d('forum', 'Reported By', true), 'Reporter.username'); ?></th>
+        <th><?php echo $this->Paginator->sort(__d('forum', 'Reported By', true), 'Reporter.username'); ?></th>
         <th><?php __d('forum', 'Comment'); ?></th>
-        <th><?php echo $paginator->sort(__d('forum', 'Reported On', true), 'Report.created'); ?></th>
+        <th><?php echo $this->Paginator->sort(__d('forum', 'Reported On', true), 'Report.created'); ?></th>
     </tr>
     
     <?php // List
