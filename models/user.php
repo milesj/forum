@@ -256,7 +256,7 @@ class User extends ForumAppModel {
 	 */
 	public function isPassword($data) {
 		$user = $this->find('first', array(
-			'conditions' => array('User.id' => $_SESSION['Auth']['User']['id']),
+			'conditions' => array('User.id' => $this->Session->read('Auth.User.id')),
 			'fields' => array('User.password'),
 			'contain' => false
 		));

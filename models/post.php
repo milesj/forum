@@ -50,7 +50,7 @@ class Post extends ForumAppModel {
 		
 		// Validate
 		if ($this->validates()) {
-			$isAdmin = ($_SESSION['Forum']['isAdmin'] > 0) ? true : false;
+			$isAdmin = ($this->Session->read('Forum.isAdmin') > 0);
 
 			if (($secondsLeft = $this->checkFlooding($posts, $settings['post_flood_interval'])) > 0 && !$isAdmin) {
 				$this->invalidate('content', 'You must wait '. $secondsLeft .' more second(s) till you can post a reply');

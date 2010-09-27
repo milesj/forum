@@ -115,7 +115,7 @@ class Topic extends ForumAppModel {
 		
 		// Validate
 		if ($this->validates()) {
-			$isAdmin = ($_SESSION['Forum']['isAdmin'] > 0) ? true : false;
+			$isAdmin = ($this->Session->read('Forum.isAdmin') > 0);
 
 			if (($secondsLeft = $this->checkFlooding($topics, $settings['topic_flood_interval'])) > 0 && !$isAdmin) {
 				$this->invalidate('title', 'You must wait '. $secondsLeft .' more second(s) till you can post a topic');

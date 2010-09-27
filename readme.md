@@ -9,7 +9,7 @@ A fully robust and powerful CakePHP forum plugin.
 
 ## Documentation ##
 
-Thorough documentation can be found here: http://www.milesj.me/resources/script/forum-plugin
+Thorough documentation can be found here: http://milesj.me/resources/script/forum-plugin
 
 ## Installation ##
 
@@ -24,7 +24,7 @@ Thorough documentation can be found here: http://www.milesj.me/resources/script/
 * Rachman Chavik - Indonesian
 * Alexey Kondratyev - Russian
 * Walter Mairena - Spanish
-* Mariano Iglesias - Sluggable Behavior
+* CakeDC - Utils Plugin (Sluggable Behavior)
 
 ## Features ##
 

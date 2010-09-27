@@ -8,6 +8,8 @@
  * @link		http://milesj.me/resources/script/forum-plugin
  */
 
+App::import('Core', 'CakeSession');
+
 class ForumAppModel extends AppModel {
 
 	/**
@@ -41,6 +43,21 @@ class ForumAppModel extends AppModel {
 	 * @var int
 	 */
 	public $recursive = -1;
+
+	/**
+	 * Allow the model to interact with the sesion.
+	 *
+	 * @access public
+	 * @param int $id
+	 * @param string $table
+	 * @param string $ds
+	 * @return void
+	 */
+	public function __construct($id = false, $table = null, $ds = null) {
+		parent::__construct($id, $table, $ds);
+
+		$this->Session = new CakeSession();
+	}
 
 	/**
 	 * Grab a row and defined fields/containables.
