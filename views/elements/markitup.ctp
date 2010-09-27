@@ -1,9 +1,9 @@
 
 <?php // Includes files and init!
-$javascript->link('/forum/js/jquery.markitup.pack.js', false);
-$javascript->link('/forum/js/sets/bbcode.js', false);
-$html->css('/forum/css/markitup.css', 'stylesheet', array('media' => 'screen'), false);
-$html->css('/forum/css/bbcode.css', 'stylesheet', array('media' => 'screen'), false); ?>
+$this->Html->script('/forum/js/jquery.markitup.pack.js', array('inline' => false));
+$this->Html->script('/forum/js/sets/bbcode.js', array('inline' => false));
+$this->Html->css('/forum/css/markitup.css', 'stylesheet', array('media' => 'screen', 'inline' => false));
+$this->Html->css('/forum/css/bbcode.css', 'stylesheet', array('media' => 'screen', 'inline' => false)); ?>
 
 <script type="text/javascript">
    $(function() {

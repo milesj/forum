@@ -10,7 +10,7 @@
 
 App::import('Core', 'HttpSocket');
  
-class CupcakeHelper extends AppHelper {
+class ForumHelper extends AppHelper {
 
 	/**
 	 * Helpers.

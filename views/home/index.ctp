@@ -1,6 +1,6 @@
 
 <?php // Crumbs
-$html->addCrumb($cupcake->settings['site_name'], array('controller' => 'home', 'action' => 'index')); ?>
+$this->Html->addCrumb($this->Forum->settings['site_name'], array('controller' => 'home', 'action' => 'index')); ?>
 
 <?php // Forums
 if (!empty($forums)) {
@@ -24,14 +24,14 @@ if (!empty($forums)) {
 			$subForums = array();
 			if (!empty($category['SubForum'])) {
 				foreach ($category['SubForum'] as $sub) {
-					$subForums[] = $html->link($sub['title'], array('controller' => 'categories', 'action' => 'view', $sub['slug']));
+					$subForums[] = $this->Html->link($sub['title'], array('controller' => 'categories', 'action' => 'view', $sub['slug']));
 				}
 			} ?>
     
     <tr id="category_<?php echo $category['id']; ?>"<?php if ($counter % 2) echo ' class="altRow"'; ?>>
-        <td class="ac" style="width: 35px"><?php echo $cupcake->forumIcon($category); ?></td>
+        <td class="ac" style="width: 35px"><?php echo $this->Forum->forumIcon($category); ?></td>
         <td>
-            <strong><?php echo $html->link($category['title'], array('controller' => 'categories', 'action' => 'view', $category['slug'])); ?></strong><br />
+            <strong><?php echo $this->Html->link($category['title'], array('controller' => 'categories', 'action' => 'view', $category['slug'])); ?></strong><br />
             <?php echo $category['description']; ?>
             
             <?php if (!empty($subForums)) { ?>
@@ -47,10 +47,10 @@ if (!empty($forums)) {
             if (!empty($category['LastTopic'])) {
                 $lastTime = (!empty($category['LastPost']['created'])) ? $category['LastPost']['created'] : $category['LastTopic']['created']; ?>
                 
-                <?php echo $html->link($category['LastTopic']['title'], array('controller' => 'topics', 'action' => 'view', $category['LastTopic']['slug'])); ?>
-                <?php echo $html->image('/forum/img/goto.png', array('alt' => '', 'url' => array('controller' => 'topics', 'action' => 'view', $category['LastTopic']['slug'], 'page' => $category['LastTopic']['page_count'], '#' => 'post_'. $category['lastPost_id']))); ?><br />
+                <?php echo $this->Html->link($category['LastTopic']['title'], array('controller' => 'topics', 'action' => 'view', $category['LastTopic']['slug'])); ?>
+                <?php echo $this->Html->image('/forum/img/goto.png', array('alt' => '', 'url' => array('controller' => 'topics', 'action' => 'view', $category['LastTopic']['slug'], 'page' => $category['LastTopic']['page_count'], '#' => 'post_'. $category['lastPost_id']))); ?><br />
                 
-                <em><?php echo $time->relativeTime($lastTime, array('userOffset' => $cupcake->timezone())); ?></em> <span class="gray"><?php __d('forum', 'by'); ?> <?php echo $html->link($category['LastUser']['username'], array('controller' => 'users', 'action' => 'profile', $category['lastUser_id'])); ?></span>
+                <em><?php echo $this->Time->relativeTime($lastTime, array('userOffset' => $this->Forum->timezone())); ?></em> <span class="gray"><?php __d('forum', 'by'); ?> <?php echo $this->Html->link($category['LastUser']['username'], array('controller' => 'users', 'action' => 'profile', $category['lastUser_id'])); ?></span>
             <?php } else {
 				__d('forum', 'No latest activity to display');
             } ?>
@@ -72,7 +72,7 @@ if (!empty($forums)) {
 <?php } } ?>
 
 <div id="forumStats">
-	<?php if (!$cupcake->user()) { ?>
+	<?php if (!$this->Forum->user()) { ?>
 	<div class="fr">
     	<?php echo $this->element('login'); ?>
     </div>
@@ -82,14 +82,14 @@ if (!empty($forums)) {
     
     <?php // Newest user
 	if (!empty($newestUser)) { ?>
-    <strong><?php __d('forum', 'Newest User'); ?></strong>: <?php echo $html->link($newestUser['User']['username'], array('controller' => 'users', 'action' => 'profile', $newestUser['User']['id'])); ?>
+    <strong><?php __d('forum', 'Newest User'); ?></strong>: <?php echo $this->Html->link($newestUser['User']['username'], array('controller' => 'users', 'action' => 'profile', $newestUser['User']['id'])); ?>
    	<?php } ?>
      
     <?php // Whos online
 	if (!empty($whosOnline)) {
 		$online = array();
 		foreach ($whosOnline as $user) {
-			$online[] = $html->link($user['User']['username'], array('controller' => 'users', 'action' => 'profile', $user['User']['id']));
+			$online[] = $this->Html->link($user['User']['username'], array('controller' => 'users', 'action' => 'profile', $user['User']['id']));
 		} ?>
         
     <div id="whosOnline">

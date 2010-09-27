@@ -198,7 +198,7 @@ class ToolbarComponent extends Object {
 		$args = func_get_args();
 		array_unshift($args, __d('forum', 'Forum', true));
 		
-		$this->Controller->pageTitle = implode(' &raquo; ', $args);
+		$this->Controller->set('title_for_layout', implode(' &raquo; ', $args));
 	}
 	
 	/**

@@ -42,7 +42,7 @@ public $columnMap = array(
 	<?php } ?>
 
 	<div class="submit">
-		<?php echo $form->button('Finish Installation', array('onclick' => "goTo('". Router::url(array('action' => 'finished')) ."');")); ?>
+		<?php echo $this->Form->button('Finish Installation', array('onclick' => "goTo('". Router::url(array('action' => 'finished')) ."');")); ?>
 	</div>
 
 <?php // Didn't execute
@@ -64,9 +64,9 @@ public $columnMap = array(
 	This applies to all columns in the alter schema, allowing you to fully integrate it into your existent table.</p>
 
 	<?php 
-	echo $form->create(null, array('action' => 'setup_users'));
-	echo $form->input('sqlCreate', array('type' => 'textarea', 'label' => 'Create Schema'));
-	echo $form->input('sqlAlter', array('type' => 'textarea', 'label' => 'Alter Schema'));
-	echo $form->input('action', array('type' => 'select', 'options' => array('sqlCreate' => 'Create The Table', 'sqlAlter' => 'Alter The Table')));
-	echo $form->end('Process User Table');
+	echo $this->Form->create(null, array('action' => 'setup_users'));
+	echo $this->Form->input('sqlCreate', array('type' => 'textarea', 'label' => 'Create Schema'));
+	echo $this->Form->input('sqlAlter', array('type' => 'textarea', 'label' => 'Alter Schema'));
+	echo $this->Form->input('action', array('type' => 'select', 'options' => array('sqlCreate' => 'Create The Table', 'sqlAlter' => 'Alter The Table')));
+	echo $this->Form->end('Process User Table');
 } ?>

@@ -1,5 +1,5 @@
 
 <div id="copyright">
-	<?php printf(__d('forum', 'Powered by the %s v%s', true), $html->link('Cupcake Forum Plugin', 'http://www.milesj.me/resources/script/forum-plugin'), $cupcake->version); ?><br />
-    <?php printf(__d('forum', 'Created by %s', true), $html->link('Miles Johnson', 'http://www.milesj.me')); ?>
+	<?php printf(__d('forum', 'Powered by the %s v%s', true), $this->Html->link('Forum Plugin', 'http://milesj.me/resources/script/forum-plugin'), $this->Forum->version); ?><br />
+    <?php printf(__d('forum', 'Created by %s', true), $this->Html->link('Miles Johnson', 'http://milesj.me')); ?>
 </div>

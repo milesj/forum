@@ -22,6 +22,6 @@ Router::connect('/forum', array('plugin' => 'forum', 'controller' => 'home', 'ac
 <br /><br />
 
 <div class="submit">
-	<?php echo $form->button('Visit Forum', array('onclick' => "goTo('". Router::url(array('controller' => 'home', 'action' => 'index', 'plugin' => 'forum')) ."');")); ?>
-	<?php echo $form->button('Create Admin', array('onclick' => "goTo('". Router::url(array('action' => 'create_admin')) ."');")); ?>
+	<?php echo $this->Form->button('Visit Forum', array('onclick' => "goTo('". Router::url(array('controller' => 'home', 'action' => 'index', 'plugin' => 'forum')) ."');")); ?>
+	<?php echo $this->Form->button('Create Admin', array('onclick' => "goTo('". Router::url(array('action' => 'create_admin')) ."');")); ?>
 </div>

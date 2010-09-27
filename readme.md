@@ -4,8 +4,8 @@ A fully robust and powerful CakePHP forum plugin.
 
 ## Requirements ##
 
-* CakePHP 1.2.x
-* PHP 5.2.x
+* CakePHP 1.3.x
+* PHP 5.2.x, 5.3.x
 
 ## Documentation ##
 

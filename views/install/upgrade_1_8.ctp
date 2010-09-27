@@ -25,7 +25,7 @@
 	<p><b>Note:</b> The database <i><?php echo $config['database']; ?></i> and prefix <i><?php echo $config['prefix']; ?></i> will be used for the table alterations.</p>
 
 	<?php // Form
-	echo $form->create(null, array('action' => 'upgrade_1_8'));
-	echo $form->end('Commence Upgrade'); ?>
+	echo $this->Form->create(null, array('action' => 'upgrade_1_8'));
+	echo $this->Form->end('Commence Upgrade'); ?>
 
 <?php } ?>
