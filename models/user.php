@@ -333,7 +333,7 @@ class User extends ForumAppModel {
 		} else if ($action == 'signup') {
 			$this->validate['security'] = array(
 				'equalTo' => array(
-					'rule' => array('equalTo', ForumConfig::getInstance()->settings['security_answer']),
+					'rule' => array('equalTo', Configure::read('Forum.settings.security_answer')),
 					'message' => 'Your security answer is incorrect, please try again!'
 				),
 				'notEmpty' => array(

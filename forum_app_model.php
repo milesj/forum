@@ -1,18 +1,12 @@
 <?php
 /** 
- * Cupcake - Forum Plugin AppModel
+ * Forum Plugin AppModel
  *
- * @author 		Miles Johnson - www.milesj.me
- * @copyright	Copyright 2006-2009, Miles Johnson, Inc.
- * @license 	http://www.opensource.org/licenses/mit-license.php - Licensed under The MIT License
- * @link		www.milesj.me/resources/script/forum-plugin
+ * @author		Miles Johnson - http://milesj.me
+ * @copyright	Copyright 2006-2010, Miles Johnson, Inc.
+ * @license		http://opensource.org/licenses/mit-license.php - Licensed under The MIT License
+ * @link		http://milesj.me/resources/script/forum-plugin
  */
-
-App::import(array(
-	'type' => 'File',
-	'name' => 'Forum.ForumConfig',
-	'file' => 'config'. DS .'core.php'
-));
 
 class ForumAppModel extends AppModel {
 
@@ -103,7 +97,7 @@ class ForumAppModel extends AppModel {
 	public function isMatch($data, $confirmField) {
 		$data = array_values($data);
 		$var1 = $data[0];
-		$var2 = (isset($this->data[$this->name][$confirmField])) ? $this->data[$this->name][$confirmField] : '';
+		$var2 = isset($this->data[$this->name][$confirmField]) ? $this->data[$this->name][$confirmField] : '';
 
 		return ($var1 === $var2);
 	}

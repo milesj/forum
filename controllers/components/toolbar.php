@@ -28,8 +28,8 @@ class ToolbarComponent extends Object {
 	 */  
 	public function initialize(&$Controller, $settings = array()) {
 		$this->Controller = $Controller;
-		$this->settings = ForumConfig::getInstance()->settings;
-		$this->columnMap = ForumConfig::getInstance()->columnMap;
+		$this->settings = Configure::read('Forum.settings');
+		$this->columnMap = Configure::read('Forum.userMap');
 	}
 
 	/**

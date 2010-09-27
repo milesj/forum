@@ -487,9 +487,8 @@ class Topic extends ForumAppModel {
 	 */
 	public function afterFind($results, $primary = NULL) {
 		if (!empty($results)) {
-			$Config = ForumConfig::getInstance();
-			$postsPerPage = $Config->settings['posts_per_page'];
-			$autoLock = $Config->settings['days_till_autolock'];
+			$postsPerPage = Configure::read('Forum.settings.posts_per_page');
+			$autoLock = Configure::read('Forum.settings.days_till_autolock');
 			
 			if ($primary === true) {	
 				foreach ($results as &$result) {

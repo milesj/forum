@@ -1,18 +1,14 @@
 <?php
 /** 
- * Cupcake - Forum Plugin AppController
+ * Forum Plugin AppController
  *
- * @author 		Miles Johnson - www.milesj.me
- * @copyright	Copyright 2006-2009, Miles Johnson, Inc.
- * @license 	http://www.opensource.org/licenses/mit-license.php - Licensed under The MIT License
- * @link		www.milesj.me/resources/script/forum-plugin
+ * @author		Miles Johnson - http://milesj.me
+ * @copyright	Copyright 2006-2010, Miles Johnson, Inc.
+ * @license		http://opensource.org/licenses/mit-license.php - Licensed under The MIT License
+ * @link		http://milesj.me/resources/script/forum-plugin
  */
   
-App::import(array(
-	'type' => 'File', 
-	'name' => 'Forum.ForumConfig', 
-	'file' => 'config'. DS .'core.php'
-));
+Configure::load('Forum.config');
 
 class ForumAppController extends AppController {
 
@@ -82,21 +78,18 @@ class ForumAppController extends AppController {
 	 */
 	public function beforeFilter() {
 		parent::beforeFilter();
+
+		// @todo - Load settings from the database
+		Configure::write('Forum.settings', array());
 		
-		$Config = ForumConfig::getInstance();
-
-		// Load l10n/i18n support
-		if ($this->Auth->user('locale')) {
-			$locale = $this->Auth->user('locale');
-		} else {
-			$locale = (isset($Config->settings['default_locale']) ? $Config->settings['default_locale'] : 'eng');
-		}
-
+		// Localization
+		$locale = $this->Auth->user('locale') ? $this->Auth->user('locale') : Configure::read('Forum.settings.default_locale');
 		Configure::write('Config.language', $locale);
 		setlocale(LC_ALL, $locale .'UTF8', $locale .'UTF-8', $locale, 'eng.UTF8', 'eng.UTF-8', 'eng', 'en_US');
 		
-		// Auth settings
+		// Authorization
 		$referer = $this->referer();
+		
 		if (empty($referer) || $referer == '/forum/users/login' || $referer == '/admin/forum/users/login') {
 			$referer = array('plugin' => 'forum', 'controller' => 'home', 'action' => 'index');
 		}
@@ -106,7 +99,7 @@ class ForumAppController extends AppController {
 		$this->Auth->logoutRedirect = $referer;
 		$this->Auth->autoRedirect = false;
 		
-		// AutoLogin settings
+		// AutoLogin
 		$this->AutoLogin->settings = array(
 			'plugin' => 'forum',
 			'controller' => 'users',
@@ -114,12 +107,9 @@ class ForumAppController extends AppController {
 			'logoutAction' => 'logout'
 		);
 
-		$this->Cookie->key = Configure::read('Security.salt');
-		
-		// Apply censored words
-		if (!empty($Config->settings['censored_words'])) {
-			$censored = explode(',', str_replace(', ', ',', $Config->settings['censored_words']));
-			$this->helpers['Forum.Decoda'] = array('censored' => $censored);
+		// Customize Helpers
+		if ($censored = Configure::read('Forum.settings.censored_words')) {
+			$this->helpers['Forum.Decoda'] = array('censored' => explode(',', str_replace(', ', ',', $censored)));
 		}
 		
 		// Initialize

@@ -104,8 +104,7 @@ class HomeController extends ForumAppController {
 		if (!empty($this->data)) {
 			$this->Setting->set($this->data);
 			
-			if ($this->Setting->validates()) {
-				$this->Setting->process($this->data);
+			if ($this->Setting->save($this->data, true)) {
 				$this->Session->setFlash(__d('forum', 'Settings have been updated!', true));
 			}
 		} else {

@@ -1,23 +1,15 @@
 <?php
 /** 
- * Cupcake - Setting Model
+ * Forum - Settings Model
  *
- * @author 		Miles Johnson - www.milesj.me
- * @copyright	Copyright 2006-2009, Miles Johnson, Inc.
- * @license 	http://www.opensource.org/licenses/mit-license.php - Licensed under The MIT License
- * @link		www.milesj.me/resources/script/forum-plugin
+ * @author		Miles Johnson - http://milesj.me
+ * @copyright	Copyright 2006-2010, Miles Johnson, Inc.
+ * @license		http://opensource.org/licenses/mit-license.php - Licensed under The MIT License
+ * @link		http://milesj.me/resources/script/forum-plugin
  */
  
 class Setting extends ForumAppModel {
 
-	/**
-	 * No table.
-	 *
-	 * @access public
-	 * @var boolean
-	 */
-	public $useTable = false;
-	
 	/**
 	 * Validate.
 	 *
@@ -150,31 +142,5 @@ class Setting extends ForumAppModel {
 		),
 		'supported_locales' => 'notEmpty',
 	);
-	
-	/**
-	 * Save the data to the ini file.
-	 * 
-	 * @access public
-	 * @param array $data
-	 * @return boolean
-	 */
-	public function process($data) {
-		$settings = array();
-		foreach ($data['Setting'] as $field => $value) {
-			$value = htmlentities(strip_tags(trim($value)), ENT_NOQUOTES, 'UTF-8');
-			if (!is_numeric($value)) {
-				$value = '"'. $value .'"';
-			}
-			$settings[] = $field .' = '. $value;
-		}
-		
-		$path = APP .'plugins'. DS .'forum'. DS .'config'. DS .'settings.ini';
-		$handle = fopen($path, "w");
-		fwrite($handle, implode("\n", $settings));
-		fclose($handle);
-		chmod($path, 0777);
-		
-		return true;
-	}
 	
 }

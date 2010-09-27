@@ -37,10 +37,8 @@ class ForumHelper extends AppHelper {
 	public function __construct() {
 		parent::__construct();
 		
-		$Config = ForumConfig::getInstance();
-		$this->version = $Config->version;
-		$this->settings = $Config->settings;
-		$this->columnMap = $Config->columnMap;
+		$this->version = Configure::read('Forum.version');
+		$this->settings = Configure::read('Forum.settings');
 	}
 
 	/**
@@ -328,8 +326,10 @@ class ForumHelper extends AppHelper {
 	 * @return string
 	 */
 	public function timezone() {
-		if ($this->Session->check('Auth.User.'. $this->columnMap['timezone'])) {
-			return $this->Session->read('Auth.User.'. $this->columnMap['timezone']);
+		if ($this->Session->check('Forum.Profile.timezone')) {
+			return $this->Session->read('Forum.Profile.timezone');
+		} else {
+			return $this->settings['default_timezone'];
 		}
 	}
 
