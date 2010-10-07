@@ -79,8 +79,8 @@ class ForumAppController extends AppController {
 	public function beforeFilter() {
 		parent::beforeFilter();
 
-		// @todo - Load settings from the database
-		Configure::write('Forum.settings', array());
+		// Settings
+		Configure::write('Forum.settings', ClassRegistry::init('Setting')->getSettings());
 		
 		// Localization
 		$locale = $this->Auth->user('locale') ? $this->Auth->user('locale') : Configure::read('Forum.settings.default_locale');
@@ -107,7 +107,7 @@ class ForumAppController extends AppController {
 			'logoutAction' => 'logout'
 		);
 
-		// Customize Helpers
+		// Helpers
 		if ($censored = Configure::read('Forum.settings.censored_words')) {
 			$this->helpers['Forum.Decoda'] = array('censored' => explode(',', str_replace(', ', ',', $censored)));
 		}

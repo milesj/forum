@@ -18,7 +18,7 @@ class ForumAppModel extends AppModel {
 	 * @access public
 	 * @var string
 	 */
-	public $tablePrefix = '{:prefix}';
+	public $tablePrefix = 'forum_';
 
 	/**
 	 * Cache queries.
@@ -57,6 +57,56 @@ class ForumAppModel extends AppModel {
 		parent::__construct($id, $table, $ds);
 
 		$this->Session = new CakeSession();
+
+		if (Cache::config('sql') === false) {
+			Cache::config('sql', array(
+				'engine' 	=> 'File',
+				'serialize' => true,
+				'prefix'	=> '',
+				'path' 		=> CACHE .'sql'. DS,
+				'duration'	=> '+1 day'
+			));
+		}
+	}
+
+	/**
+	 * Wrapper find() to cache sql queries.
+	 *
+	 * @access public
+	 * @param array $conditions
+	 * @param array $fields
+	 * @param string $order
+	 * @param string $recursive
+	 * @return array
+	 */
+	public function find($conditions = null, $fields = array(), $order = null, $recursive = null) {
+		if (!Configure::read('Cache.disable') && Configure::read('Cache.check') && !empty($fields['cache'])) {
+			if (is_array($fields['cache'])) {
+				$key = $fields['cache'][0];
+				$expires = $fields['cache'][1];
+			} else {
+				$key = $fields['cache'];
+				$expires = '+1 hour';
+			}
+
+			Cache::config('sql', array(
+				'prefix' 	=> strtolower($this->name) .'__',
+				'duration'	=> $expires
+			));
+
+			$results = Cache::read($key, 'sql');
+
+			if (!is_array($results)) {
+				$results = parent::find($conditions, $fields, $order, $recursive);
+				
+				Cache::write($key, $results, 'sql');
+			}
+
+			return $results;
+		}
+
+		// Not caching
+		return parent::find($conditions, $fields, $order, $recursive);
 	}
 
 	/**

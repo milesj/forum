@@ -142,5 +142,17 @@ class Setting extends ForumAppModel {
 		),
 		'supported_locales' => 'notEmpty',
 	);
+
+	/**
+	 * Return a list of all settings.
+	 *
+	 * @access public
+	 * @return array
+	 */
+	public function getSettings() {
+		return $this->find('list', array(
+			'fields' => array('Setting.key', 'Setting.value')
+		));
+	}
 	
 }
