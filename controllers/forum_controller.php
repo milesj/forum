@@ -16,7 +16,7 @@ class ForumController extends ForumAppController {
 	 * @access public  
 	 * @var array
 	 */
-	public $uses = array('Forum.Topic'); 
+	public $uses = array('Forum.Topic', 'Forum.Profile');
 
 	/**
 	 * Forum index.
@@ -30,8 +30,8 @@ class ForumController extends ForumAppController {
 		$this->set('totalPosts', 	$this->Topic->Post->getTotal());
 		$this->set('totalTopics', 	$this->Topic->getTotal());
 		$this->set('totalUsers', 	$this->Topic->User->getTotal());
-		$this->set('newestUser', 	$this->Topic->User->getNewestUser());
-		$this->set('whosOnline', 	$this->Topic->User->whosOnline($this->Toolbar->settings['whos_online_interval']));
+		$this->set('newestUser', 	$this->Profile->getNewestUser());
+		$this->set('whosOnline', 	$this->Profile->whosOnline($this->Toolbar->settings['whos_online_interval']));
 	}
 	
 	/**

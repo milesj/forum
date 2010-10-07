@@ -11,38 +11,12 @@
 class User extends ForumAppModel {
 
 	/**
-	 * Constants specific to changing the status of a user.
-	 *
-	 * @access public
-	 * @var string
-	 */
-	const STATUS_BANNED = 1;
-	const STATUS_ACTIVE = 0;
-
-	/**
 	 * Table prefix.
 	 *
 	 * @access public
 	 * @var string
 	 */
-	public $tablePrefix = '{:prefix}';
-
-	/**
-	 * A column map allowing you to define the name of certain user columns.
-	 *
-	 * @access public
-	 * @var array
-	 */
-	public $columnMap = array(
-		'status'		=> 'status',
-		'signature'		=> 'signature',
-		'locale'		=> 'locale', // Must allow 3 characters: eng
-		'timezone'		=> 'timezone', // Must allow 5 digits: -10.5
-		'totalPosts'	=> 'totalPosts',
-		'totalTopics'	=> 'totalTopics',
-		'currentLogin'	=> 'currentLogin',
-		'lastLogin'		=> 'lastLogin'
-	);
+	public $tablePrefix = '';
 
 	/**
 	 * Has many.
@@ -210,42 +184,6 @@ class User extends ForumAppModel {
 			'order' => 'User.created DESC'
 		));
 	}
-
-	/**
-	 * Get the newest signup.
-	 *
-	 * @access public
-	 * @return array
-	 */
-	public function getNewestUser() {
-		return $this->find('first', array(
-			'fields' => array('User.id', 'User.username'),
-			'order' => 'User.created DESC',
-			'limit' => 1
-		));
-	}
-	
-	/**
-	 * Increase the post count.
-	 *
-	 * @access public
-	 * @param int $id
-	 * @return boolean
-	 */
-	public function increasePosts($id) {
-		return $this->query("UPDATE `". $this->tablePrefix ."users` AS `User` SET `User`.`". $this->columnMap['totalPosts'] ."` = `User`.`". $this->columnMap['totalPosts'] ."` + 1 WHERE `User`.`id` = $id");
-	}
-	
-	/**
-	 * Increase the topic count.
-	 *
-	 * @access public
-	 * @param int $id
-	 * @return boolean
-	 */
-	public function increaseTopics($id) {
-		return $this->query("UPDATE `". $this->tablePrefix ."users` AS `User` SET `User`.`". $this->columnMap['totalTopics'] ."` = `User`.`". $this->columnMap['totalTopics'] ."` + 1 WHERE `User`.`id` = $id");
-	}
 	
 	/**
 	 * Checks to see if the old password matches their input.
@@ -266,26 +204,6 @@ class User extends ForumAppModel {
 		$var2 = $user['User']['password'];
 		
 		return ($var1 === $var2);
-	}	
-	
-	/**
-	 * Login the user and update records.
-	 *
-	 * @access public
-	 * @param array $user
-	 * @return boolean
-	 */
-	public function login($user) {
-		if (!empty($user)) {
-			$data = array();
-			$data[$this->columnMap['currentLogin']] = date('Y-m-d H:i:s');
-			$data[$this->columnMap['lastLogin']] = $user['User']['currentLogin'];
-
-			$this->id = $user['User']['id'];
-			return $this->save($data, false, array_keys($data));
-		}
-		
-		return true;
 	}
 	
 	/**
@@ -299,23 +217,6 @@ class User extends ForumAppModel {
 	public function resetPassword($id, $password) {
 		$this->id = $id;
 		return $this->saveField('password', $password);
-	}
-	
-	/**
-	 * Get whos online within the past x minutes.
-	 *
-	 * @access public
-	 * @param int $minutes
-	 * @return array
-	 */
-	public function whosOnline($minutes) {
-		$past = date('Y-m-d H:i:s', strtotime('-'. $minutes .' minutes'));
-		
-		return $this->find('all', array(
-			'conditions' => array('User.'. $this->columnMap['currentLogin'] .' >' => $past),
-			'fields' => array('User.id', 'User.username'),
-			'contain' => false
-		));
 	}
 	
 	/**
