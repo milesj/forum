@@ -5,6 +5,7 @@ CREATE TABLE IF NOT EXISTS `forum_access` (
 	`access_level_id` INT(11) NOT NULL,
 	`user_id` INT(11) NOT NULL,
 	`created` DATETIME DEFAULT NULL,
+	`modified` DATETIME DEFAULT NULL,
 	PRIMARY KEY (`id`),
 	KEY `access_level_id` (`access_level_id`),
 	KEY `user_id` (`user_id`)
@@ -16,12 +17,12 @@ CREATE TABLE IF NOT EXISTS `forum_access_levels` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT,
 	`title` VARCHAR(30) NOT NULL,
 	`level` INT(11) NOT NULL,
-	`is_admin` SMALLINT(6) NOT NULL DEFAULT '0',
-	`is_super` SMALLINT(6) NOT NULL DEFAULT '0',
+	`isAdmin` SMALLINT(6) NOT NULL DEFAULT '0',
+	`isSuper` SMALLINT(6) NOT NULL DEFAULT '0',
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Access levels for users' AUTO_INCREMENT=1;
 
-INSERT INTO `forum_access_levels` (`id`, `title`, `level`, `is_admin`, `is_super`) VALUES
+INSERT INTO `forum_access_levels` (`id`, `title`, `level`, `isAdmin`, `isSuper`) VALUES
 	(1, 'Member', 1, 0, 0),
 	(2, 'Moderator', 4, 0, 0),
 	(3, 'Super Moderator', 7, 0, 1),
@@ -31,7 +32,7 @@ INSERT INTO `forum_access_levels` (`id`, `title`, `level`, `is_admin`, `is_super
 
 CREATE TABLE IF NOT EXISTS `forum_forums` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT,
-	`access_level_id` SMALLINT(6) NOT NULL DEFAULT '0',
+	`access_level_id` SMALLINT(6) DEFAULT NULL,
 	`title` VARCHAR(50) NOT NULL,
 	`slug` VARCHAR(60) NOT NULL,
 	`status` SMALLINT(6) NOT NULL DEFAULT '0',
@@ -49,8 +50,8 @@ INSERT INTO `forum_forums` (`id`, `access_level_id`, `title`, `slug`, `status`, 
 CREATE TABLE IF NOT EXISTS `forum_forum_categories` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT,
 	`forum_id` INT(11) NOT NULL,
-	`parent_id` INT(11) NOT NULL DEFAULT '0',
-	`access_level_id` SMALLINT(6) NOT NULL DEFAULT '0',
+	`parent_id` INT(11) DEFAULT NULL,
+	`access_level_id` SMALLINT(6) DEFAULT NULL,
 	`title` VARCHAR(50) NOT NULL,
 	`slug` VARCHAR(60) NOT NULL,
 	`description` VARCHAR(255) NOT NULL,
@@ -64,9 +65,9 @@ CREATE TABLE IF NOT EXISTS `forum_forum_categories` (
 	`accessPoll` SMALLINT(6) NOT NULL DEFAULT '1',
 	`settingPostCount` SMALLINT(6) NOT NULL DEFAULT '1',
 	`settingAutoLock` SMALLINT(6) NOT NULL DEFAULT '1',
-	`lastTopic_id` INT(11) NOT NULL DEFAULT '0',
-	`lastPost_id` INT(11) NOT NULL DEFAULT '0',
-	`lastUser_id` INT(11) NOT NULL DEFAULT '0',
+	`lastTopic_id` INT(11) DEFAULT NULL,
+	`lastPost_id` INT(11) DEFAULT NULL,
+	`lastUser_id` INT(11) DEFAULT NULL,
 	`created` DATETIME DEFAULT NULL,
 	`modified` DATETIME DEFAULT NULL,
 	PRIMARY KEY (`id`),
@@ -149,7 +150,7 @@ CREATE TABLE IF NOT EXISTS `forum_posts` (
 CREATE TABLE IF NOT EXISTS `forum_reported` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT,
 	`item_id` INT(11) NOT NULL,
-	`itemType` VARCHAR(15) NOT NULL,
+	`itemType` SMALLINT(6) NOT NULL,
 	`user_id` INT(11) NOT NULL,
 	`comment` VARCHAR(255) NOT NULL,
 	`created` DATETIME DEFAULT NULL,
@@ -170,9 +171,9 @@ CREATE TABLE IF NOT EXISTS `forum_topics` (
 	`type` SMALLINT(6) NOT NULL DEFAULT '0',
 	`post_count` INT(11) NOT NULL DEFAULT '0',
 	`view_count` INT(11) NOT NULL DEFAULT '0',
-	`firstPost_id` INT(11) NOT NULL,
-	`lastPost_id` INT(11) NOT NULL,
-	`lastUser_id` INT(11) NOT NULL,
+	`firstPost_id` INT(11) DEFAULT NULL,
+	`lastPost_id` INT(11) DEFAULT NULL,
+	`lastUser_id` INT(11) DEFAULT NULL,
 	`created` DATETIME DEFAULT NULL,
 	`modified` DATETIME DEFAULT NULL,
 	PRIMARY KEY (`id`),
@@ -189,6 +190,7 @@ CREATE TABLE IF NOT EXISTS `forum_settings` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT,
 	`key` VARCHAR(50) NOT NULL,
 	`value` VARCHAR(100) NOT NULL,
+	`created` DATETIME DEFAULT NULL,
 	`modified` DATETIME DEFAULT NULL,
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Forum settings' AUTO_INCREMENT=1;
@@ -224,11 +226,12 @@ CREATE TABLE IF NOT EXISTS `forum_profiles` (
 	`signature` VARCHAR(255) NOT NULL,
 	`locale` VARCHAR(3) NOT NULL DEFAULT 'eng',
 	`timezone` VARCHAR(4) NOT NULL DEFAULT '-8',
-	`totalPosts` INT(10) NOT NULL,
-	`totalTopics` INT(10) NOT NULL,
+	`totalPosts` INT(10) NOT NULL DEFAULT '0',
+	`totalTopics` INT(10) NOT NULL DEFAULT '0',
 	`currentLogin` DATETIME DEFAULT NULL,
 	`lastLogin` DATETIME DEFAULT NULL,
 	`created` DATETIME DEFAULT NULL,
 	`modified` DATETIME DEFAULT NULL,
-	PRIMARY KEY (`id`)
+	PRIMARY KEY (`id`),
+	KEY `user_id` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='User profiles' AUTO_INCREMENT=1;

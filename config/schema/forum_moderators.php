@@ -8,7 +8,7 @@
  * @link		http://milesj.me/resources/script/forum-plugin
  */
 
-class ForumAccessSchema extends CakeSchema {
+class ForumModeratorsSchema extends CakeSchema {
 
 	/**
 	 * Schema name.
@@ -16,7 +16,7 @@ class ForumAccessSchema extends CakeSchema {
 	 * @access public
 	 * @var string
 	 */
-	public $name = 'ForumAccess';
+	public $name = 'ForumModerators';
 
 	/**
 	 * Table schema.
@@ -24,14 +24,14 @@ class ForumAccessSchema extends CakeSchema {
 	 * @access public
 	 * @var array
 	 */
-	public $forum_access = array(
+	public $forum_moderators = array(
 		'id' => array(
 			'type' => 'integer',
 			'length' => 10,
 			'null' => false,
 			'key' => 'primary'
 		),
-		'access_level_id' => array(
+		'forum_category_id' => array(
 			'type' => 'integer',
 			'length' => 10,
 			'null' => false
@@ -46,25 +46,20 @@ class ForumAccessSchema extends CakeSchema {
 			'null' => true,
 			'default' => null
 		),
-		'modified' => array(
-			'type' => 'datetime',
-			'null' => true,
-			'default' => null
-		),
 		'indexes' => array(
 			'PRIMARY' => array(
 				'column' => 'id',
 				'unique' => true
 			),
-			'user_id' => array(
-				'column' => 'user_id',
+			'forum_category_id' => array(
+				'column' => 'forum_category_id',
 				'unique' => false
 			),
-			'access_level_id' => array(
-				'column' => 'access_level_id',
+			'user_id' => array(
+				'column' => 'user_id',
 				'unique' => false
 			)
 		)
 	);
-	
+
 }

@@ -8,7 +8,7 @@
  * @link		http://milesj.me/resources/script/forum-plugin
  */
 
-class ForumAccessSchema extends CakeSchema {
+class ForumPostsSchema extends CakeSchema {
 
 	/**
 	 * Schema name.
@@ -16,7 +16,7 @@ class ForumAccessSchema extends CakeSchema {
 	 * @access public
 	 * @var string
 	 */
-	public $name = 'ForumAccess';
+	public $name = 'ForumPosts';
 
 	/**
 	 * Table schema.
@@ -24,14 +24,14 @@ class ForumAccessSchema extends CakeSchema {
 	 * @access public
 	 * @var array
 	 */
-	public $forum_access = array(
+	public $forum_posts = array(
 		'id' => array(
 			'type' => 'integer',
 			'length' => 10,
 			'null' => false,
 			'key' => 'primary'
 		),
-		'access_level_id' => array(
+		'topic_id' => array(
 			'type' => 'integer',
 			'length' => 10,
 			'null' => false
@@ -39,6 +39,15 @@ class ForumAccessSchema extends CakeSchema {
 		'user_id' => array(
 			'type' => 'integer',
 			'length' => 10,
+			'null' => false
+		),
+		'userIP' => array(
+			'type' => 'string',
+			'null' => false,
+			'length' => 100
+		),
+		'content' => array(
+			'type' => 'text',
 			'null' => false
 		),
 		'created' => array(
@@ -56,15 +65,15 @@ class ForumAccessSchema extends CakeSchema {
 				'column' => 'id',
 				'unique' => true
 			),
-			'user_id' => array(
-				'column' => 'user_id',
+			'topic_id' => array(
+				'column' => 'topic_id',
 				'unique' => false
 			),
-			'access_level_id' => array(
-				'column' => 'access_level_id',
+			'user_id' => array(
+				'column' => 'user_id',
 				'unique' => false
 			)
 		)
 	);
-	
+
 }

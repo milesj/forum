@@ -8,7 +8,7 @@
  * @link		http://milesj.me/resources/script/forum-plugin
  */
 
-class ForumAccessSchema extends CakeSchema {
+class ForumReportedSchema extends CakeSchema {
 
 	/**
 	 * Schema name.
@@ -16,7 +16,7 @@ class ForumAccessSchema extends CakeSchema {
 	 * @access public
 	 * @var string
 	 */
-	public $name = 'ForumAccess';
+	public $name = 'ForumReported';
 
 	/**
 	 * Table schema.
@@ -24,14 +24,14 @@ class ForumAccessSchema extends CakeSchema {
 	 * @access public
 	 * @var array
 	 */
-	public $forum_access = array(
+	public $forum_reported = array(
 		'id' => array(
 			'type' => 'integer',
 			'length' => 10,
 			'null' => false,
 			'key' => 'primary'
 		),
-		'access_level_id' => array(
+		'item_id' => array(
 			'type' => 'integer',
 			'length' => 10,
 			'null' => false
@@ -41,12 +41,17 @@ class ForumAccessSchema extends CakeSchema {
 			'length' => 10,
 			'null' => false
 		),
-		'created' => array(
-			'type' => 'datetime',
-			'null' => true,
-			'default' => null
+		'itemType' => array(
+			'type' => 'integer',
+			'length' => 5,
+			'null' => false
 		),
-		'modified' => array(
+		'comment' => array(
+			'type' => 'string',
+			'null' => false,
+			'length' => 255
+		),
+		'created' => array(
 			'type' => 'datetime',
 			'null' => true,
 			'default' => null
@@ -56,15 +61,15 @@ class ForumAccessSchema extends CakeSchema {
 				'column' => 'id',
 				'unique' => true
 			),
-			'user_id' => array(
-				'column' => 'user_id',
+			'item_id' => array(
+				'column' => 'item_id',
 				'unique' => false
 			),
-			'access_level_id' => array(
-				'column' => 'access_level_id',
+			'user_id' => array(
+				'column' => 'user_id',
 				'unique' => false
 			)
 		)
 	);
-	
+
 }

@@ -8,7 +8,7 @@
  * @link		http://milesj.me/resources/script/forum-plugin
  */
 
-class ForumAccessSchema extends CakeSchema {
+class ForumPollOptionsSchema extends CakeSchema {
 
 	/**
 	 * Schema name.
@@ -16,7 +16,7 @@ class ForumAccessSchema extends CakeSchema {
 	 * @access public
 	 * @var string
 	 */
-	public $name = 'ForumAccess';
+	public $name = 'ForumPollOptions';
 
 	/**
 	 * Table schema.
@@ -24,47 +24,39 @@ class ForumAccessSchema extends CakeSchema {
 	 * @access public
 	 * @var array
 	 */
-	public $forum_access = array(
+	public $forum_poll_options = array(
 		'id' => array(
 			'type' => 'integer',
 			'length' => 10,
 			'null' => false,
 			'key' => 'primary'
 		),
-		'access_level_id' => array(
+		'poll_id' => array(
 			'type' => 'integer',
 			'length' => 10,
 			'null' => false
 		),
-		'user_id' => array(
+		'vote_count' => array(
 			'type' => 'integer',
 			'length' => 10,
-			'null' => false
+			'null' => false,
+			'default' => 0
 		),
-		'created' => array(
-			'type' => 'datetime',
-			'null' => true,
-			'default' => null
-		),
-		'modified' => array(
-			'type' => 'datetime',
-			'null' => true,
-			'default' => null
+		'option' => array(
+			'type' => 'string',
+			'null' => false,
+			'length' => 100
 		),
 		'indexes' => array(
 			'PRIMARY' => array(
 				'column' => 'id',
 				'unique' => true
 			),
-			'user_id' => array(
-				'column' => 'user_id',
-				'unique' => false
-			),
-			'access_level_id' => array(
-				'column' => 'access_level_id',
+			'poll_id' => array(
+				'column' => 'poll_id',
 				'unique' => false
 			)
 		)
 	);
-	
+
 }

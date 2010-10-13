@@ -8,7 +8,7 @@
  * @link		http://milesj.me/resources/script/forum-plugin
  */
 
-class ForumAccessSchema extends CakeSchema {
+class ForumProfilesSchema extends CakeSchema {
 
 	/**
 	 * Schema name.
@@ -16,7 +16,7 @@ class ForumAccessSchema extends CakeSchema {
 	 * @access public
 	 * @var string
 	 */
-	public $name = 'ForumAccess';
+	public $name = 'ForumProfiles';
 
 	/**
 	 * Table schema.
@@ -24,22 +24,56 @@ class ForumAccessSchema extends CakeSchema {
 	 * @access public
 	 * @var array
 	 */
-	public $forum_access = array(
+	public $forum_profiles = array(
 		'id' => array(
 			'type' => 'integer',
 			'length' => 10,
 			'null' => false,
 			'key' => 'primary'
 		),
-		'access_level_id' => array(
-			'type' => 'integer',
-			'length' => 10,
-			'null' => false
-		),
 		'user_id' => array(
 			'type' => 'integer',
 			'length' => 10,
 			'null' => false
+		),
+		'signature' => array(
+			'type' => 'string',
+			'length' => 255,
+			'null' => false
+		),
+		'locale' => array(
+			'type' => 'string',
+			'length' => 3,
+			'null' => false,
+			'default' => 'eng'
+		),
+		'timezone' => array(
+			'type' => 'string',
+			'length' => 4,
+			'null' => false,
+			'default' => '-8'
+		),
+		'totalPosts' => array(
+			'type' => 'integer',
+			'length' => 10,
+			'null' => false,
+			'default' => 0
+		),
+		'totalTopics' => array(
+			'type' => 'integer',
+			'length' => 10,
+			'null' => false,
+			'default' => 0
+		),
+		'currentLogin' => array(
+			'type' => 'datetime',
+			'null' => true,
+			'default' => null
+		),
+		'lastLogin' => array(
+			'type' => 'datetime',
+			'null' => true,
+			'default' => null
 		),
 		'created' => array(
 			'type' => 'datetime',
@@ -59,12 +93,8 @@ class ForumAccessSchema extends CakeSchema {
 			'user_id' => array(
 				'column' => 'user_id',
 				'unique' => false
-			),
-			'access_level_id' => array(
-				'column' => 'access_level_id',
-				'unique' => false
 			)
 		)
 	);
-	
+
 }
