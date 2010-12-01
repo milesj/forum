@@ -10,5 +10,5 @@
 <?php echo $this->Form->input('email', array('label' => __d('forum', 'Email', true))); ?>
 <?php echo $this->Form->input('newPassword', array('type' => 'password', 'label' => __d('forum', 'Password', true))); ?>
 <?php echo $this->Form->input('confirmPassword', array('type' => 'password', 'label' => __d('forum', 'Confirm Password', true))); ?>
-<?php echo $this->Form->input('security', array('after' => ' '. $this->Forum->settings['security_question'], 'label' => __d('forum', 'Security Question', true), 'style' => 'width: 10%')); ?>
+<?php echo $this->Form->input('security', array('after' => ' '. $settings['security_question'], 'label' => __d('forum', 'Security Question', true), 'style' => 'width: 10%')); ?>
 <?php echo $this->Form->end(__d('forum', 'Sign Up', true)); ?>

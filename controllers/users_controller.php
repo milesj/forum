@@ -34,7 +34,7 @@ class UsersController extends ForumAppController {
 	 */ 
 	public $paginate = array(  
 		'User' => array(
-			'order' => 'User.username ASC',
+			'order' => array('User.username' => 'ASC'),
 			'limit' => 25,
 			'contain' => false
 		) 
@@ -192,7 +192,7 @@ class UsersController extends ForumAppController {
 		if (!empty($this->data)) {
 			$this->data['Report']['user_id'] = $user_id;
 			$this->data['Report']['item_id'] = $id;
-			$this->data['Report']['itemType'] = 'user';
+			$this->data['Report']['itemType'] = Report::USER;
 			
 			if ($this->Report->save($this->data, true, array('item_id', 'itemType', 'user_id', 'comment'))) {
 				$this->Session->setFlash(__d('forum', 'You have succesfully reported this user! A moderator will review this topic and take the necessary action.', true));
@@ -219,7 +219,7 @@ class UsersController extends ForumAppController {
 			if ($this->User->validates()) {
 				$this->data['User']['username'] = strip_tags($this->data['User']['username']);
 				$this->data['User']['password'] = $this->Auth->password($this->data['User']['newPassword']);
-				$this->data['User'][$this->User->columnMap['locale']] = $this->Toolbar->settings['default_locale'];
+				$this->data['User'][$this->User->columnMap['locale']] = Configure::read('Forum.settings.default_locale');
 
 				if ($this->User->save($this->data, false, array('username', 'email', 'password', $this->User->columnMap['locale']))) {
 					$this->Session->setFlash(__d('forum', 'You have successfully signed up, you may now login and begin posting.', true));
@@ -231,8 +231,8 @@ class UsersController extends ForumAppController {
 					$message .= __d('forum', 'Enjoy!', true);
 					
 					$this->Email->to = $this->data['User']['email'];
-					$this->Email->from = $this->Toolbar->settings['site_name'] .' <'. $this->Toolbar->settings['site_email'] .'>';
-					$this->Email->subject = $this->Toolbar->settings['site_name'] .' - '. __d('forum', 'Sign Up Confirmation', true);
+					$this->Email->from = Configure::read('Forum.settings.site_name') .' <'. Configure::read('Forum.settings.site_email') .'>';
+					$this->Email->subject = Configure::read('Forum.settings.site_name') .' - '. __d('forum', 'Sign Up Confirmation', true);
 					$this->Email->send($message);
 					
 					unset($this->data['User']);

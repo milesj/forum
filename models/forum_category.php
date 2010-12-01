@@ -68,7 +68,7 @@ class ForumCategory extends ForumAppModel {
 		'SubForum' => array(
 			'className' 	=> 'Forum.ForumCategory',
 			'foreignKey' 	=> 'parent_id',
-			'order' 		=> 'SubForum.orderNo ASC',
+			'order' 		=> array('SubForum.orderNo' => 'ASC'),
 			'fields' 		=> array('SubForum.id', 'SubForum.forum_id', 'SubForum.parent_id', 'SubForum.title', 'SubForum.slug', 'SubForum.description', 'SubForum.status', 'SubForum.topic_count', 'SubForum.post_count', 'SubForum.lastTopic_id', 'SubForum.lastPost_id', 'SubForum.lastUser_id'),
 			'dependent'		=> false
 		),
@@ -125,7 +125,7 @@ class ForumCategory extends ForumAppModel {
 	 * @param array $accessLevels
 	 * @return array
 	 */
-	public function getCategoryForViewing($slug, $access = 0, $accessLevels) {
+	public function getCategoryForViewing($slug, $access = 0, $accessLevels = array()) {
 		return $this->find('first', array(
 			'conditions' => array(
 				'ForumCategory.slug' => $slug,
@@ -155,7 +155,7 @@ class ForumCategory extends ForumAppModel {
 	 * @param int $exclude
 	 * @return array
 	 */
-	public function getHierarchy($access = 1, $accessLevels, $type = 'post', $exclude = null) {
+	public function getHierarchy($access = 1, $accessLevels = array(), $type = 'post', $exclude = null) {
 		$accessField = 'access'. ucfirst($type);
 		
 		$forums = $this->Forum->find('list', array(
@@ -164,7 +164,7 @@ class ForumCategory extends ForumAppModel {
 				'Forum.accessView <=' => $access,
 				'Forum.access_level_id' => $accessLevels
 			),
-			'order' => 'Forum.orderNo ASC'
+			'order' => array('Forum.orderNo' => 'ASC')
 		));
 		
 		$conditions = array(
@@ -179,7 +179,7 @@ class ForumCategory extends ForumAppModel {
 		$categories = $this->find('all', array(
 			'fields' => array('ForumCategory.id', 'ForumCategory.title', 'ForumCategory.slug', 'ForumCategory.parent_id', 'ForumCategory.forum_id', 'ForumCategory.orderNo', 'ForumCategory.'. $accessField),
 			'conditions' => $conditions,
-			'order' => 'ForumCategory.orderNo ASC',
+			'order' => array('ForumCategory.orderNo' => 'ASC'),
 			'contain' => array(
 				'Forum.title', 
 				'SubForum' => array(
@@ -232,13 +232,14 @@ class ForumCategory extends ForumAppModel {
 	 */
 	public function getParents($exclude = null) {
 		$conditions = array('ForumCategory.parent_id' => 0);
+
 		if (is_numeric($exclude)) {
 			$conditions['ForumCategory.id !='] = $exclude;
 		}
 		
 		return $this->find('list', array(
 			'conditions' => $conditions,
-			'order' => 'ForumCategory.orderNo ASC'
+			'order' => array('ForumCategory.orderNo' => 'ASC')
 		));
 	}
 	

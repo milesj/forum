@@ -57,7 +57,7 @@
         </td>
         <td><?php echo $this->Html->link($report['Reporter']['username'], array('controller' => 'users', 'action' => 'edit', $report['Reporter']['id'], 'admin' => true)); ?></td>
         <td><?php echo $report['Report']['comment']; ?></td>
-        <td><?php echo $this->Time->nice($report['Report']['created'], $this->Forum->timezone()); ?></td>
+        <td><?php echo $this->Time->nice($report['Report']['created'], $this->Common->timezone()); ?></td>
     </tr>
     
     <?php ++$counter; } ?>
@@ -86,7 +86,7 @@
     <tr<?php if ($counter % 2) echo ' class="altRow"'; ?>>
         <td><?php echo $this->Html->link($user['User']['username'], array('controller' => 'users', 'action' => 'edit', $user['User']['id'], 'admin' => true)); ?></td>
         <td><?php echo $user['User']['email']; ?></td>
-        <td class="ac"><?php echo $this->Time->nice($user['User']['created'], $this->Forum->timezone()); ?></td>
+        <td class="ac"><?php echo $this->Time->nice($user['User']['created'], $this->Common->timezone()); ?></td>
         <td class="ac"><?php echo number_format($user['User']['totalTopics']); ?></td>
         <td class="ac"><?php echo number_format($user['User']['totalPosts']); ?></td>
         <td class="ac gray">

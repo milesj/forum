@@ -7,7 +7,7 @@ if (!empty($category['Parent']['slug'])) {
 $this->Html->addCrumb($category['ForumCategory']['title'], array('controller' => 'categories', 'action' => 'view', $category['ForumCategory']['slug'])); ?>
 
 <div class="forumHeader">
-	<?php if (!$this->Forum->user()) { ?>
+	<?php if (!$this->Common->user()) { ?>
 	<div class="fr">
 		<?php echo $this->element('login'); ?>
 	</div>
@@ -17,16 +17,16 @@ $this->Html->addCrumb($category['ForumCategory']['title'], array('controller' =>
 	<p><?php echo $category['ForumCategory']['description']; ?></p>
 </div>
 
-<?php if ($this->Forum->user()) { ?>
+<?php if ($this->Common->user()) { ?>
 <div class="forumOptions">
-	<?php if ($this->Forum->hasAccess('mod', $category['ForumCategory']['id'])) {
+	<?php if ($this->Common->hasAccess('mod', $category['ForumCategory']['id'])) {
 		echo $this->Html->link(__d('forum', 'Moderate', true), array('controller' => 'categories', 'action' => 'moderate', $category['ForumCategory']['slug']));
 	} ?>
 	<?php if ($category['ForumCategory']['status'] == 0) {
-		if ($this->Forum->hasAccess($category['ForumCategory']['accessPost'])) {
+		if ($this->Common->hasAccess($category['ForumCategory']['accessPost'])) {
 			echo $this->Html->link(__d('forum', 'Create Topic', true), array('controller' => 'topics', 'action' => 'add', $category['ForumCategory']['id']));
 		} ?>
-		<?php if ($this->Forum->hasAccess($category['ForumCategory']['accessPoll'])) {
+		<?php if ($this->Common->hasAccess($category['ForumCategory']['accessPoll'])) {
 			echo $this->Html->link(__d('forum', 'Create Poll', true), array('controller' => 'topics', 'action' => 'add', $category['ForumCategory']['id'], 'poll'));
 		}
 	} else {
@@ -52,7 +52,7 @@ if (!empty($category['SubForum'])) { ?>
 	foreach ($category['SubForum'] as $subCat) { ?>
     
     <tr id="category_<?php echo $subCat['id']; ?>"<?php if ($counter % 2) echo ' class="altRow"'; ?>>
-        <td class="ac" style="width: 35px"><?php echo $this->Forum->forumIcon($subCat); ?></td>
+        <td class="ac" style="width: 35px"><?php echo $this->Common->forumIcon($subCat); ?></td>
         <td>
             <strong><?php echo $this->Html->link($subCat['title'], array('controller' => 'categories', 'action' => 'view', $subCat['slug'])); ?></strong><br />
             <?php echo $subCat['description']; ?>
@@ -73,7 +73,7 @@ if (!empty($category['SubForum'])) { ?>
                 <?php echo $this->Html->link($subCat['LastTopic']['title'], array('controller' => 'topics', 'action' => 'view', $subCat['LastTopic']['slug'])); ?>
                 <?php echo $this->Html->image('/forum/img/goto.png', array('alt' => '', 'url' => array('controller' => 'topics', 'action' => 'view', $subCat['LastTopic']['slug'], 'page' => $subCat['LastTopic']['page_count'], '#' => 'post_'. $subCat['lastPost_id']))); ?><br />
                 
-                <em><?php echo $this->Time->relativeTime($lastTime, array('userOffset' => $this->Forum->timezone())); ?></em> <span class="gray"><?php __d('forum', 'by'); ?> <?php echo $this->Html->link($subCat['LastUser']['username'], array('controller' => 'users', 'action' => 'profile', $subCat['lastUser_id'])); ?></span>
+                <em><?php echo $this->Time->relativeTime($lastTime, array('userOffset' => $this->Common->timezone())); ?></em> <span class="gray"><?php __d('forum', 'by'); ?> <?php echo $this->Html->link($subCat['LastUser']['username'], array('controller' => 'users', 'action' => 'profile', $subCat['lastUser_id'])); ?></span>
             <?php } else {
 				__d('forum', 'No latest activity to display');
 			} ?>
@@ -109,16 +109,16 @@ if (!empty($category['SubForum'])) { ?>
  	</tr>
     
 	<?php foreach ($stickies as $topic) {
-        $pages = $this->Forum->topicPages($topic['Topic']); ?>
+        $pages = $this->Common->topicPages($topic['Topic']); ?>
         
    	<tr<?php if ($counter % 2) echo ' class="altRow"'; ?>>
-    	<td class="ac" style="width: 35px"><?php echo $this->Forum->topicIcon($topic); ?></td>
+    	<td class="ac" style="width: 35px"><?php echo $this->Common->topicIcon($topic); ?></td>
         <td>
         	<?php if (!empty($topic['Poll']['id'])) { 
 				echo $this->Html->image('/forum/img/poll.png', array('alt' => 'Poll', 'class' => 'img'));
 			} ?>
             
-        	<?php echo $this->Forum->topicType($topic['Topic']['type']); ?> 
+        	<?php echo $this->Common->topicType($topic['Topic']['type']); ?> 
         	<strong><?php echo $this->Html->link($topic['Topic']['title'], array('controller' => 'topics', 'action' => 'view', $topic['Topic']['slug'])); ?></strong>
             
             <?php if (count($pages) > 1) { ?>
@@ -126,7 +126,7 @@ if (!empty($category['SubForum'])) { ?>
             <?php } ?>
         </td>
         <td class="ac"><?php echo $this->Html->link($topic['User']['username'], array('controller' => 'users', 'action' => 'profile', $topic['User']['id'])); ?></td>
-        <td class="ac"><?php echo $this->Time->niceShort($topic['Topic']['created'], $this->Forum->timezone()); ?></td>
+        <td class="ac"><?php echo $this->Time->niceShort($topic['Topic']['created'], $this->Common->timezone()); ?></td>
         <td class="ac"><?php echo number_format($topic['Topic']['post_count']); ?></td>
         <td class="ac"><?php echo number_format($topic['Topic']['view_count']); ?></td>
         <td>
@@ -134,7 +134,7 @@ if (!empty($category['SubForum'])) { ?>
             if (!empty($topic['LastPost'])) {
                 $lastTime = (!empty($topic['LastPost']['created'])) ? $topic['LastPost']['created'] : $topic['Topic']['modified']; ?>
                 
-                <em><?php echo $this->Time->relativeTime($lastTime, array('userOffset' => $this->Forum->timezone())); ?></em><br />
+                <em><?php echo $this->Time->relativeTime($lastTime, array('userOffset' => $this->Common->timezone())); ?></em><br />
                 <span class="gray"><?php __d('forum', 'by'); ?> <?php echo $this->Html->link($topic['LastUser']['username'], array('controller' => 'users', 'action' => 'profile', $topic['Topic']['lastUser_id'])); ?></span>
                 <?php echo $this->Html->image('/forum/img/goto.png', array('alt' => '', 'url' => array('controller' => 'topics', 'action' => 'view', $topic['Topic']['slug'], 'page' => $topic['Topic']['page_count'], '#' => 'post_'. $topic['Topic']['lastPost_id']))); ?>
             <?php } else {
@@ -155,10 +155,10 @@ if (!empty($category['SubForum'])) { ?>
     // Topics
 	if (!empty($topics)) {
 		foreach ($topics as $topic) {
-			$pages = $this->Forum->topicPages($topic['Topic']); ?>
+			$pages = $this->Common->topicPages($topic['Topic']); ?>
         
    	<tr<?php if ($counter % 2) echo ' class="altRow"'; ?>>
-    	<td class="ac" style="width: 35px"><?php echo $this->Forum->topicIcon($topic); ?></td>
+    	<td class="ac" style="width: 35px"><?php echo $this->Common->topicIcon($topic); ?></td>
         <td>
         	<?php if (!empty($topic['Poll']['id'])) { 
 				echo $this->Html->image('/forum/img/poll.png', array('alt' => 'Poll'));
@@ -171,7 +171,7 @@ if (!empty($category['SubForum'])) { ?>
             <?php } ?>
         </td>
         <td class="ac"><?php echo $this->Html->link($topic['User']['username'], array('controller' => 'users', 'action' => 'profile', $topic['User']['id'])); ?></td>
-        <td class="ac"><?php echo $this->Time->niceShort($topic['Topic']['created'], $this->Forum->timezone()); ?></td>
+        <td class="ac"><?php echo $this->Time->niceShort($topic['Topic']['created'], $this->Common->timezone()); ?></td>
         <td class="ac"><?php echo number_format($topic['Topic']['post_count']); ?></td>
         <td class="ac"><?php echo number_format($topic['Topic']['view_count']); ?></td>
         <td>
@@ -179,7 +179,7 @@ if (!empty($category['SubForum'])) { ?>
             if (!empty($topic['LastPost'])) {
                 $lastTime = (!empty($topic['LastPost']['created'])) ? $topic['LastPost']['created'] : $topic['Topic']['modified']; ?>
                 
-                <em><?php echo $this->Time->relativeTime($lastTime, array('userOffset' => $this->Forum->timezone())); ?></em><br />
+                <em><?php echo $this->Time->relativeTime($lastTime, array('userOffset' => $this->Common->timezone())); ?></em><br />
                 <span class="gray"><?php __d('forum', 'by'); ?> <?php echo $this->Html->link($topic['LastUser']['username'], array('controller' => 'users', 'action' => 'profile', $topic['Topic']['lastUser_id'])); ?></span>
                 <?php echo $this->Html->image('/forum/img/goto.png', array('alt' => '', 'url' => array('controller' => 'topics', 'action' => 'view', $topic['Topic']['slug'], 'page' => $topic['Topic']['page_count'], '#' => 'post_'. $topic['Topic']['lastPost_id']))); ?>
             <?php } else {
@@ -204,16 +204,16 @@ if (!empty($category['SubForum'])) { ?>
 </div>
 
 <div id="categoryStats">
-	<?php if ($this->Forum->user()) { ?>
+	<?php if ($this->Common->user()) { ?>
     <div class="forumOptions fr">
-		<?php if ($this->Forum->hasAccess('mod', $category['ForumCategory']['id'])) {
+		<?php if ($this->Common->hasAccess('mod', $category['ForumCategory']['id'])) {
             echo $this->Html->link(__d('forum', 'Moderate', true), array('controller' => 'categories', 'action' => 'moderate', $category['ForumCategory']['id']));
         } ?>
         <?php if ($category['ForumCategory']['status'] == 0) {
-            if ($this->Forum->hasAccess($category['ForumCategory']['accessPost'])) {
+            if ($this->Common->hasAccess($category['ForumCategory']['accessPost'])) {
                 echo $this->Html->link(__d('forum', 'Create Topic', true), array('controller' => 'topics', 'action' => 'add', $category['ForumCategory']['id']));
             } ?>
-            <?php if ($this->Forum->hasAccess($category['ForumCategory']['accessPoll'])) {
+            <?php if ($this->Common->hasAccess($category['ForumCategory']['accessPoll'])) {
                 echo $this->Html->link(__d('forum', 'Create Poll', true), array('controller' => 'topics', 'action' => 'add', $category['ForumCategory']['id'], 'poll'));
             }
         } else {
@@ -237,9 +237,9 @@ if (!empty($category['SubForum'])) { ?>
         <td class="ar"><?php __d('forum', 'Increases Post Count'); ?>: </td>
         <td><strong><?php echo ($category['ForumCategory']['settingPostCount']) ? 'Yes' : 'No'; ?></strong></td>
         <td class="ar"><?php __d('forum', 'Can Read Topics'); ?>: </td>
-        <td><strong><?php echo ($this->Forum->hasAccess($category['ForumCategory']['accessRead'])) ? 'Yes' : 'No'; ?></strong></td>
+        <td><strong><?php echo ($this->Common->hasAccess($category['ForumCategory']['accessRead'])) ? 'Yes' : 'No'; ?></strong></td>
         <td class="ar"><?php __d('forum', 'Can Create Topics'); ?>: </td>
-        <td><strong><?php echo ($this->Forum->hasAccess($category['ForumCategory']['accessPost'])) ? 'Yes' : 'No'; ?></strong></td>
+        <td><strong><?php echo ($this->Common->hasAccess($category['ForumCategory']['accessPost'])) ? 'Yes' : 'No'; ?></strong></td>
     </tr>
     <tr>
         <td class="ar"><?php __d('forum', 'Total Posts'); ?>: </td>
@@ -247,9 +247,9 @@ if (!empty($category['SubForum'])) { ?>
         <td class="ar"><?php __d('forum', 'Auto-Lock Topics'); ?>: </td>
         <td><strong><?php echo ($category['ForumCategory']['settingAutoLock']) ? 'Yes' : 'No'; ?></strong></td>
         <td class="ar"><?php __d('forum', 'Can Reply'); ?>: </td>
-        <td><strong><?php echo ($this->Forum->hasAccess($category['ForumCategory']['accessReply'])) ? 'Yes' : 'No'; ?></strong></td>
+        <td><strong><?php echo ($this->Common->hasAccess($category['ForumCategory']['accessReply'])) ? 'Yes' : 'No'; ?></strong></td>
         <td class="ar"><?php __d('forum', 'Can Create Polls'); ?>: </td>
-        <td><strong><?php echo ($this->Forum->hasAccess($category['ForumCategory']['accessPoll'])) ? 'Yes' : 'No'; ?></strong></td>
+        <td><strong><?php echo ($this->Common->hasAccess($category['ForumCategory']['accessPoll'])) ? 'Yes' : 'No'; ?></strong></td>
     </tr>
     <?php if (!empty($moderators)) { ?>
     <tr>

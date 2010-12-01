@@ -1,7 +1,7 @@
 
 <?php // Channel
 $this->set('channel', array(
-	'title' 		=> $this->Forum->settings['site_name'] .' - '. __d('forum', 'Latest Topics', true),
+	'title' 		=> $settings['site_name'] .' - '. __d('forum', 'Latest Topics', true),
 	'link' 			=> array('plugin' => 'forum', 'controller' => 'home', 'action' => 'index'),
 	'description' 	=> __d('forum', 'The latest 10 topics out of all forums', true),
 	'language' 		=> 'en-us',

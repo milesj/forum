@@ -7,7 +7,7 @@ if (!empty($topic['ForumCategory']['Parent']['slug'])) {
 $this->Html->addCrumb($topic['ForumCategory']['title'], array('controller' => 'categories', 'action' => 'view', $topic['ForumCategory']['slug'])); ?>
 
 <div class="forumHeader">
-	<?php if (!$this->Forum->user()) { ?>
+	<?php if (!$this->Common->user()) { ?>
 	<div class="fr">
 		<?php echo $this->element('login'); ?>
 	</div>
@@ -16,18 +16,18 @@ $this->Html->addCrumb($topic['ForumCategory']['title'], array('controller' => 'c
 	<h2><?php echo $topic['Topic']['title']; ?></h2>
 </div>
 
-<?php if ($this->Forum->user()) { ?>
+<?php if ($this->Common->user()) { ?>
 <div class="forumOptions">
-	<?php if ($this->Forum->hasAccess('mod', $topic['ForumCategory']['id'])) {
+	<?php if ($this->Common->hasAccess('mod', $topic['ForumCategory']['id'])) {
 		echo $this->Html->link(__d('forum', 'Moderate', true), array('controller' => 'topics', 'action' => 'moderate', $topic['Topic']['id']));
 	} ?>
-	<?php if ($this->Forum->hasAccess($topic['ForumCategory']['accessPost'])) {
+	<?php if ($this->Common->hasAccess($topic['ForumCategory']['accessPost'])) {
 		echo $this->Html->link(__d('forum', 'Create Topic', true), array('controller' => 'topics', 'action' => 'add', $topic['ForumCategory']['id']));
 	} ?>
-    <?php if ($this->Forum->hasAccess($topic['ForumCategory']['accessPoll'])) {
+    <?php if ($this->Common->hasAccess($topic['ForumCategory']['accessPoll'])) {
 		echo $this->Html->link(__d('forum', 'Create Poll', true), array('controller' => 'topics', 'action' => 'add', $topic['ForumCategory']['id'], 'poll'));
 	} ?>
-    <?php if ($this->Forum->hasAccess($topic['ForumCategory']['accessReply'])) {
+    <?php if ($this->Common->hasAccess($topic['ForumCategory']['accessReply'])) {
 		if ($topic['Topic']['status'] == 0) {
 			echo $this->Html->link(__d('forum', 'Post Reply', true), array('controller' => 'posts', 'action' => 'add', $topic['Topic']['id']));
 		} else {
@@ -59,7 +59,7 @@ if (!empty($topic['Poll']['id'])) { ?>
     
     <tr class="altRow2">
     	<td colspan="3" class="ac">
-			<?php if ($this->Forum->user()) {
+			<?php if ($this->Common->user()) {
 				if (!empty($topic['Poll']['expires']) && $topic['Poll']['expires'] <= date('Y-m-d H:i:s')) { 
 					__d('forum', 'Voting on this poll has been closed');
 				} else { 
@@ -100,12 +100,12 @@ if (!empty($topic['Poll']['id'])) { ?>
     
     <?php foreach ($posts as $post) { ?>
     <tr class="altRow" id="post_<?php echo $post['Post']['id']; ?>">
-		<td class="ar gray"><?php echo $this->Time->niceShort($post['Post']['created'], $this->Forum->timezone()); ?></td>
+		<td class="ar gray"><?php echo $this->Time->niceShort($post['Post']['created'], $this->Common->timezone()); ?></td>
         <td class="ar gray">
         	<?php // Commands
-			if ($this->Forum->user()) {
+			if ($this->Common->user()) {
 				$links = array();
-				if ($this->Forum->hasAccess('super', $topic['ForumCategory']['id']) || $this->Forum->user('id') == $post['Post']['user_id']) {
+				if ($this->Common->hasAccess('super', $topic['ForumCategory']['id']) || $this->Common->user('id') == $post['Post']['user_id']) {
 					if ($topic['Topic']['firstPost_id'] == $post['Post']['id']) {
 						$links[] = $this->Html->link(__d('forum', 'Edit', true), array('controller' => 'topics', 'action' => 'edit', $topic['Topic']['id']));
 						$links[] = $this->Html->link(__d('forum', 'Delete', true), array('controller' => 'topics', 'action' => 'delete', $topic['Topic']['id']), array('confirm' => __d('forum', 'Are you sure you want to delete?', true)));
@@ -117,7 +117,7 @@ if (!empty($topic['Poll']['id'])) { ?>
 					}
 				}
 				
-				if ($this->Forum->hasAccess($topic['ForumCategory']['accessReply'])) {
+				if ($this->Common->hasAccess($topic['ForumCategory']['accessReply'])) {
 					$links[] = $this->Html->link(__d('forum', 'Quote', true), array('controller' => 'posts', 'action' => 'add', $topic['Topic']['id'], $post['Post']['id']));
 				}
 				
@@ -135,12 +135,12 @@ if (!empty($topic['Poll']['id'])) { ?>
         	<?php } ?>
 
 			<?php // Gravatar
-			if ($this->Forum->settings['enable_gravatar'] == 1) {
-				if ($avatar = $this->Forum->gravatar($post['User']['email'])) { ?>
+			if ($settings['enable_gravatar'] == 1) {
+				if ($avatar = $this->Common->gravatar($post['User']['email'])) { ?>
 			<p><?php echo $avatar; ?></p>
 			<?php } } ?>
         	
-        	<strong><?php __d('forum', 'Joined'); ?>:</strong> <?php echo $this->Time->niceShort($post['User']['created'], $this->Forum->timezone()); ?><br />
+        	<strong><?php __d('forum', 'Joined'); ?>:</strong> <?php echo $this->Time->niceShort($post['User']['created'], $this->Common->timezone()); ?><br />
             <strong><?php __d('forum', 'Total Topics'); ?>:</strong> <?php echo number_format($post['User']['totalTopics']); ?><br />
             <strong><?php __d('forum', 'Total Posts'); ?>:</strong> <?php echo number_format($post['User']['totalPosts']); ?>
         </td>
@@ -161,18 +161,18 @@ if (!empty($topic['Poll']['id'])) { ?>
     <?php echo $this->element('pagination'); ?>
 </div>
 
-<?php if ($this->Forum->user()) { ?>
+<?php if ($this->Common->user()) { ?>
 <div class="forumOptions">
-	<?php if ($this->Forum->hasAccess('mod', $topic['ForumCategory']['id'])) {
+	<?php if ($this->Common->hasAccess('mod', $topic['ForumCategory']['id'])) {
 		echo $this->Html->link(__d('forum', 'Moderate', true), array('controller' => 'topics', 'action' => 'moderate', $topic['Topic']['id']));
 	} ?>
-	<?php if ($this->Forum->hasAccess($topic['ForumCategory']['accessPost'])) {
+	<?php if ($this->Common->hasAccess($topic['ForumCategory']['accessPost'])) {
 		echo $this->Html->link(__d('forum', 'Create Topic', true), array('controller' => 'topics', 'action' => 'add', $topic['ForumCategory']['id']));
 	} ?>
-    <?php if ($this->Forum->hasAccess($topic['ForumCategory']['accessPoll'])) {
+    <?php if ($this->Common->hasAccess($topic['ForumCategory']['accessPoll'])) {
 		echo $this->Html->link(__d('forum', 'Create Poll', true), array('controller' => 'topics', 'action' => 'add', $topic['ForumCategory']['id'], 'poll'));
 	} ?>
-    <?php if ($this->Forum->hasAccess($topic['ForumCategory']['accessReply'])) {
+    <?php if ($this->Common->hasAccess($topic['ForumCategory']['accessReply'])) {
 		if ($topic['Topic']['status'] == 0) {
 			echo $this->Html->link(__d('forum', 'Post Reply', true), array('controller' => 'posts', 'action' => 'add', $topic['Topic']['id']));
 		} else {
@@ -182,7 +182,7 @@ if (!empty($topic['Poll']['id'])) { ?>
 </div>
 
 <?php // Quick Reply
-if ($this->Forum->settings['enable_quick_reply'] == 1 && $this->Forum->hasAccess($topic['ForumCategory']['accessReply'])) { ?>
+if ($settings['enable_quick_reply'] == 1 && $this->Common->hasAccess($topic['ForumCategory']['accessReply'])) { ?>
 <div id="quickReply">
 	<h3><?php __d('forum', 'Quick Reply'); ?></h3>
     

@@ -105,7 +105,7 @@ class StaffController extends ForumAppController {
 	 */
 	public function admin_add_access_level() {
 		if (!empty($this->data)) {
-			if ($this->Access->AccessLevel->save($this->data, true, array('level', 'title', 'is_super', 'is_admin'))) {
+			if ($this->Access->AccessLevel->save($this->data, true, array('level', 'title', 'isSuper', 'isAdmin'))) {
 				$this->redirect(array('controller' => 'staff', 'action' => 'index', 'admin' => true));
 			}
 		}
@@ -130,7 +130,7 @@ class StaffController extends ForumAppController {
 		if (!empty($this->data)) {
 			$this->Access->AccessLevel->id = $id;
 			
-			if ($this->Access->AccessLevel->save($this->data, true, array('level', 'title', 'is_super', 'is_admin'))) {
+			if ($this->Access->AccessLevel->save($this->data, true, array('level', 'title', 'isSuper', 'isAdmin'))) {
 				$this->redirect(array('controller' => 'staff', 'action' => 'index', 'admin' => true));
 			}
 		} else {

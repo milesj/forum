@@ -25,9 +25,9 @@
         <th><?php echo $this->Paginator->sort(__d('forum', 'Username', true), 'User.username'); ?></th>
         <th><?php echo $this->Paginator->sort(__d('forum', 'Email', true), 'User.email'); ?></th>
         <th><?php echo $this->Paginator->sort(__d('forum', 'Joined', true), 'User.created'); ?></th>
-        <th><?php echo $this->Paginator->sort(__d('forum', 'Last Active', true), 'User.'. $this->Forum->columnMap['lastLogin']); ?></th>
-        <th><?php echo $this->Paginator->sort(__d('forum', 'Topics', true), 'User.'. $this->Forum->columnMap['totalTopics']); ?></th>
-        <th><?php echo $this->Paginator->sort(__d('forum', 'Posts', true), 'User.'. $this->Forum->columnMap['totalPosts']); ?></th>
+        <th><?php echo $this->Paginator->sort(__d('forum', 'Last Active', true), 'User.'. $this->Common->columnMap['lastLogin']); ?></th>
+        <th><?php echo $this->Paginator->sort(__d('forum', 'Topics', true), 'User.'. $this->Common->columnMap['totalTopics']); ?></th>
+        <th><?php echo $this->Paginator->sort(__d('forum', 'Posts', true), 'User.'. $this->Common->columnMap['totalPosts']); ?></th>
         <th><?php __d('forum', 'Options'); ?></th>
     </tr>
     
@@ -40,10 +40,10 @@
     	<td class="ac"><?php echo $user['User']['id']; ?></td>
         <td><?php echo $this->Html->link($user['User']['username'], array('action' => 'edit', $user['User']['id'], 'admin' => true)); ?></td>
         <td><?php echo $user['User']['email']; ?></td>
-        <td class="ac"><?php echo $this->Time->nice($user['User']['created'], $this->Forum->timezone()); ?></td>
+        <td class="ac"><?php echo $this->Time->nice($user['User']['created'], $this->Common->timezone()); ?></td>
         <td class="ac">
             <?php if (!empty($user['User']['lastLogin'])) {
-                echo $this->Time->relativeTime($user['User'][$this->Forum->columnMap['lastLogin']], array('userOffset' => $this->Forum->timezone()));
+                echo $this->Time->relativeTime($user['User'][$this->Common->columnMap['lastLogin']], array('userOffset' => $this->Common->timezone()));
             } else {
                 echo '<em>'. __d('forum', 'Never', true) .'</em>';
             } ?>

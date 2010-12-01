@@ -28,7 +28,7 @@ class DecodaHelper extends AppHelper {
 	 * @access public
 	 * @var array
 	 */
-	public $helpers = array('Html', 'Time', 'Cupcake');
+	public $helpers = array('Html', 'Time', 'Common');
 
 	/**
 	 * Should we parse codeblocks with geshi?
@@ -689,7 +689,7 @@ class DecodaHelper extends AppHelper {
 		$quote = '<blockquote class="decoda_quote">';
 
 		if (!empty($matches[2])) {
-			$date = sprintf('<span class="decoda_quoteDate">%s</span>', $this->Time->niceShort($matches[2], $this->Cupcake->timezone()));
+			$date = sprintf('<span class="decoda_quoteDate">%s</span>', $this->Time->niceShort($matches[2], $this->Common->timezone()));
 		} else {
 			$date = '';
 		}

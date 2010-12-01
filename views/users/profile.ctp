@@ -7,16 +7,16 @@ if (!empty($user)) { ?>
 	<h2><?php echo $user['User']['username']; ?></h2>
 </div>
 
-<?php if (!empty($user['User'][$this->Forum->columnMap['signature']])) { ?>
-<p><?php $this->Decoda->parse($user['User'][$this->Forum->columnMap['signature']], false, array('b', 'i', 'u', 'img', 'url', 'align', 'color', 'size', 'code')); ?></p>
+<?php if (!empty($user['User'][$this->Common->columnMap['signature']])) { ?>
+<p><?php $this->Decoda->parse($user['User'][$this->Common->columnMap['signature']], false, array('b', 'i', 'u', 'img', 'url', 'align', 'color', 'size', 'code')); ?></p>
 <?php } ?>
 
 <table cellpadding="5" cellspacing="0" id="userInfo">
 <tr>
 	<td><strong><?php __d('forum', 'Joined'); ?>:</strong></td>
-    <td><?php echo $this->Time->nice($user['User']['created'], $this->Forum->timezone()); ?></td>
+    <td><?php echo $this->Time->nice($user['User']['created'], $this->Common->timezone()); ?></td>
 	<td><strong><?php __d('forum', 'Total Topics'); ?>:</strong></td>
-    <td><?php echo number_format($user['User'][$this->Forum->columnMap['totalTopics']]); ?></td>
+    <td><?php echo number_format($user['User'][$this->Common->columnMap['totalTopics']]); ?></td>
     <td><strong><?php __d('forum', 'Roles'); ?>:</strong></td>
     <td>
     	<?php if (!empty($user['Access'])) { 
@@ -33,14 +33,14 @@ if (!empty($user)) { ?>
 <tr>
     <td><strong><?php __d('forum', 'Last Login'); ?>:</strong></td>
     <td>
-		<?php if (!empty($user['User'][$this->Forum->columnMap['lastLogin']])) {
-			echo $this->Time->relativeTime($user['User'][$this->Forum->columnMap['lastLogin']], array('userOffset' => $this->Forum->timezone()));
+		<?php if (!empty($user['User'][$this->Common->columnMap['lastLogin']])) {
+			echo $this->Time->relativeTime($user['User'][$this->Common->columnMap['lastLogin']], array('userOffset' => $this->Common->timezone()));
 		} else {
 			echo '<em>'. __d('forum', 'Never', true) .'</em>';
 		} ?>
     </td>
     <td><strong><?php __d('forum', 'Total Posts'); ?>:</strong></td>
-    <td><?php echo number_format($user['User'][$this->Forum->columnMap['totalPosts']]); ?></td>
+    <td><?php echo number_format($user['User'][$this->Common->columnMap['totalPosts']]); ?></td>
     <td><strong><?php __d('forum', 'Moderates'); ?>:</strong></td>
     <td>
     	<?php if (!empty($user['Moderator'])) { 
@@ -76,10 +76,10 @@ if (!empty($topics)) { ?>
         
     <tr<?php if ($counter % 2) echo ' class="altRow"'; ?>>
         <td><?php echo $this->Html->link($topic['Topic']['title'], array('controller' => 'topics', 'action' => 'view', $topic['Topic']['slug'])); ?></td>
-        <td class="ac"><?php echo $this->Time->niceShort($topic['Topic']['created'], $this->Forum->timezone()); ?></td>
+        <td class="ac"><?php echo $this->Time->niceShort($topic['Topic']['created'], $this->Common->timezone()); ?></td>
         <td class="ac"><?php echo number_format($topic['Topic']['post_count']); ?></td>
         <td class="ac"><?php echo number_format($topic['Topic']['view_count']); ?></td>
-        <td><?php echo $this->Time->relativeTime($lastTime, array('userOffset' => $this->Forum->timezone())); ?></td>
+        <td><?php echo $this->Time->relativeTime($lastTime, array('userOffset' => $this->Common->timezone())); ?></td>
     </tr>
     <?php ++$counter; } ?>
     
@@ -103,7 +103,7 @@ if (!empty($posts)) { ?>
     <tr class="altRow">
         <td><strong><?php echo $this->Html->link($post['Topic']['title'], array('controller' => 'topics', 'action' => 'view', $post['Topic']['slug'])); ?></strong></td>
         <td><?php echo $this->Html->link($post['Topic']['User']['username'], array('controller' => 'users', 'action' => 'profile', $post['Topic']['User']['id'])); ?></td>
-        <td class="ar"><?php echo $this->Time->relativeTime($post['Post']['created'], array('userOffset' => $this->Forum->timezone())); ?></td>
+        <td class="ar"><?php echo $this->Time->relativeTime($post['Post']['created'], array('userOffset' => $this->Common->timezone())); ?></td>
     </tr>
     <tr>
         <td colspan="3"><?php echo $this->Decoda->parse($post['Post']['content']); ?></td>

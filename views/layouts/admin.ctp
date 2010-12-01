@@ -14,7 +14,7 @@
 <body>
 <div id="wrapper">  
 	<div id="header">
-    	<h1><?php echo $this->Html->link(__d('forum', 'Cupcake Forum Administration', true), $this->Forum->settings['site_main_url']); ?></h1>
+    	<h1><?php echo $this->Html->link(__d('forum', 'Cupcake Forum Administration', true), $settings['site_main_url']); ?></h1>
         
         <ul id="menu">
         	<li<?php if ($menuTab == 'home') echo ' class="active"'; ?>><?php echo $this->Html->link(__d('forum', 'Home', true), array('controller' => 'home', 'action' => 'index', 'admin' => true)); ?></li>

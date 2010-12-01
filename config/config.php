@@ -19,6 +19,7 @@ $config['Forum']['version'] = '2.0';
  */
 $config['Forum']['userMap'] = array(
 	'username'	=> 'username',
+	'password'	=> 'password',
 	'email'		=> 'email',
 	'status'	=> 'status'
 );
@@ -31,4 +32,14 @@ $config['Forum']['statusMap'] = array(
 	'pending'	=> 0,
 	'active'	=> 1,
 	'banned'	=> 2
+);
+
+/**
+ * A map of external user management URLs.
+ */
+$config['Forum']['routes'] = array(
+	'login' => array('plugin' => false, 'admin' => false, 'controller' => 'users', 'action' => 'login'),
+	'logout' => array('plugin' => false, 'admin' => false, 'controller' => 'users', 'action' => 'logout'),
+	'signup' => array('plugin' => false, 'admin' => false, 'controller' => 'users', 'action' => 'signup'),
+	'forgotPass' => array('plugin' => false, 'admin' => false, 'controller' => 'users', 'action' => 'forgot_password')
 );

@@ -26,8 +26,8 @@ class CategoriesController extends ForumAppController {
 	 */
 	public $paginate = array(  
 		'Topic' => array(
-			'order' => 'LastPost.created DESC',
-			'conditions' => array('Topic.type' => 0),
+			'order' => array('LastPost.created' => 'DESC'),
+			'conditions' => array('Topic.type' => Topic::NORMAL),
 			'contain' => array('User.id', 'User.username', 'LastPost.created', 'LastUser.username', 'Poll.id')
 		)
 	);
@@ -57,7 +57,7 @@ class CategoriesController extends ForumAppController {
 		));
 		
 		// Paginate
-		$this->paginate['Topic']['limit'] = $this->Toolbar->settings['topics_per_page'];
+		$this->paginate['Topic']['limit'] = Configure::read('Forum.settings.topics_per_page');
 		$this->paginate['Topic']['conditions']['Topic.forum_category_id'] = $category['ForumCategory']['id'];
 		
 		$this->Toolbar->pageTitle($category['ForumCategory']['title']);
@@ -98,11 +98,11 @@ class CategoriesController extends ForumAppController {
 							$this->Session->setFlash(sprintf(__d('forum', 'A total of %d topic(s) have been permanently deleted', true), count($items)));
 	
 						} else if ($action == 'close') {
-							$this->ForumCategory->Topic->saveField('status', 1);
+							$this->ForumCategory->Topic->saveField('status', Topic::STATUS_CLOSED);
 							$this->Session->setFlash(sprintf(__d('forum', 'A total of %d topic(s) have been locked to the public', true), count($items)));
 							
 						} else if ($action == 'open') {
-							$this->ForumCategory->Topic->saveField('status', 0);
+							$this->ForumCategory->Topic->saveField('status', Topic::STATUS_OPEN);
 							$this->Session->setFlash(sprintf(__d('forum', 'A total of %d topic(s) have been re-opened', true), count($items)));
 							
 						} else if ($action == 'move') {
@@ -115,7 +115,7 @@ class CategoriesController extends ForumAppController {
 		}
 		
 		// Paginate
-		$this->paginate['Topic']['limit'] = $this->Toolbar->settings['topics_per_page'];
+		$this->paginate['Topic']['limit'] = Configure::read('Forum.settings.topics_per_page');
 		$this->paginate['Topic']['conditions'] = array('Topic.forum_category_id' => $category['ForumCategory']['id']);
 		
 		$this->Toolbar->pageTitle(__d('forum', 'Moderate', true), $category['ForumCategory']['title']);
@@ -136,7 +136,7 @@ class CategoriesController extends ForumAppController {
 			$category = $this->ForumCategory->get(array('slug', $slug));
 			$this->Toolbar->verifyAccess(array('exists' => $category));
 		
-			$this->paginate['Topic']['limit'] = $this->Toolbar->settings['topics_per_page'];
+			$this->paginate['Topic']['limit'] = Configure::read('Forum.settings.topics_per_page');
 			$this->paginate['Topic']['conditions'] = array('Topic.forum_category_id' => $category['ForumCategory']['id']);
 			$this->paginate['Topic']['contain'] = array('User.id', 'User.username', 'LastPost.created', 'FirstPost.content');
 

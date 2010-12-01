@@ -44,7 +44,7 @@ class Forum extends ForumAppModel {
 		'ForumCategory' => array(
 			'className' 	=> 'Forum.ForumCategory',
 			'conditions' 	=> array('ForumCategory.parent_id' => 0),
-			'order'			=> 'ForumCategory.orderNo ASC',
+			'order'			=> array('ForumCategory.orderNo' => 'ASC'),
 			'dependent'		=> false
 		)
 	); 
@@ -78,7 +78,7 @@ class Forum extends ForumAppModel {
 	 */
 	public function getAdminIndex($access = 0) {
 		return $this->find('all', array(
-			'order' => 'Forum.orderNo ASC',
+			'order' => array('Forum.orderNo' => 'ASC'),
 			'contain' => array(
 				'ForumCategory' => array(
 					'conditions' => array('ForumCategory.parent_id' => 0),
@@ -100,9 +100,9 @@ class Forum extends ForumAppModel {
 	 */
 	public function getIndex($access = 0, $accessLevels = array()) {
 		return $this->find('all', array(
-			'order' => 'Forum.orderNo ASC',
+			'order' => array('Forum.orderNo' => 'ASC'),
 			'conditions' => array(
-				'Forum.status' => 0,
+				'Forum.status' => self::STATUS_OPEN,
 				'Forum.accessView <=' => $access,
 				'Forum.access_level_id' => $accessLevels
 			),
@@ -143,7 +143,7 @@ class Forum extends ForumAppModel {
 		
 		return $this->find('list', array(
 			'conditions' => $conditions,
-			'order' => 'Forum.orderNo ASC'
+			'order' => array('Forum.orderNo' => 'ASC')
 		));
 	}
 

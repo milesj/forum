@@ -26,7 +26,7 @@ class ReportsController extends ForumAppController {
 	 */ 
 	public $paginate = array(  
 		'Report' => array(
-			'order' => 'Report.created ASC',
+			'order' => array('Report.created' => 'ASC'),
 			'limit' => 25,
 			'contain' => false
 		) 
@@ -66,7 +66,7 @@ class ReportsController extends ForumAppController {
 						break;
 						case 'close':
 							$this->Topic->id = $item_id;
-							$this->Topic->saveField('status', 1);
+							$this->Topic->saveField('status', Topic::STATUS_CLOSED);
 						break;
 					}
 					
@@ -144,7 +144,7 @@ class ReportsController extends ForumAppController {
 						break;
 						case 'ban':
 							$this->User->id = $item_id;
-							$this->User->saveField('status', User::STATUS_BANNED);
+							$this->User->saveField('status', Configure::read('Forum.statusMap.banned'));
 						break;
 					}
 					

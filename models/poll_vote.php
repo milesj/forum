@@ -45,6 +45,7 @@ class PollVote extends ForumAppModel {
 		);
 		
 		$this->create();
+		
 		return $this->save($data, false, array_keys($data));
 	}
 	

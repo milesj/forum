@@ -1,4 +1,4 @@
-# Forum v1.8.1 #
+# Forum v2.0 (DEVELOPMENT) #
 
 A fully robust and powerful CakePHP forum plugin.
 

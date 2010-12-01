@@ -13,6 +13,18 @@ App::import('Core', 'CakeSession');
 class ForumAppModel extends AppModel {
 
 	/**
+	 * Togglable constants.
+	 */
+	const BOOL_YES = 1;
+	const BOOL_NO = 0;
+
+	/**
+	 * Status constants.
+	 */
+	const STATUS_OPEN = 1;
+	const STATUS_CLOSED = 0;
+
+	/**
 	 * Table prefix.
 	 *
 	 * @access public

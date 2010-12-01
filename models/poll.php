@@ -33,7 +33,7 @@ class Poll extends ForumAppModel {
 			'className'	=> 'Forum.PollOption',
 			'exclusive' => true,
 			'dependent' => true,
-			'order' 	=> 'PollOption.id ASC',
+			'order' 	=> array('PollOption.id' => 'ASC'),
 		),
 		'PollVote' => array(
 			'className' => 'Forum.PollVote',
@@ -53,7 +53,7 @@ class Poll extends ForumAppModel {
 	public function addPoll($topic_id, $data) {
 		$poll = array(
 			'topic_id' => $topic_id,
-			'expires' => (!empty($data['expires'])) ? date('Y-m-d H:i:s', strtotime('+'. $data['expires'] .' days')) : NULL
+			'expires' => !empty($data['expires']) ? date('Y-m-d H:i:s', strtotime('+'. $data['expires'] .' days')) : NULL
 		);
 		
 		if ($this->save($poll, false, array('topic_id', 'expires'))) {
@@ -67,6 +67,7 @@ class Poll extends ForumAppModel {
 			foreach ($options as $id => $opt) {
 				if (!empty($opt)) {
 					$results['option'] = htmlentities($opt, ENT_NOQUOTES, 'UTF-8');
+					
 					$this->PollOption->create();
 					$this->PollOption->save($results, false, array_keys($results));
 				}

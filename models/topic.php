@@ -11,6 +11,14 @@
 class Topic extends ForumAppModel {
 
 	/**
+	 * Type constants.
+	 */
+	const NORMAL = 0;
+	const STICKY = 1;
+	const IMPORTANT = 2;
+	const ANNOUNCEMENT = 3;
+
+	/**
 	 * Behaviors
 	 *
 	 * @access public
@@ -74,7 +82,7 @@ class Topic extends ForumAppModel {
 			'className'	=> 'Forum.Post',
 			'exclusive' => true,
 			'dependent' => true,
-			'order' 	=> 'Post.created DESC',
+			'order' 	=> array('Post.created' => 'DESC'),
 		)
 	);
 	
@@ -105,23 +113,23 @@ class Topic extends ForumAppModel {
 	 *
 	 * @access public
 	 * @param array $data
-	 * @param array $settings
-	 * @param array $topics
 	 * @param boolean $poll
 	 * @return boolean|int
 	 */
-	public function addTopic($data, $settings, $topics, $poll = false) {
+	public function addTopic($data, $poll = false) {
 		$this->set($data);
 		
 		// Validate
 		if ($this->validates()) {
+			$settings = Configure::read('Forum.settings');
 			$isAdmin = ($this->Session->read('Forum.isAdmin') > 0);
+			$topics = $this->Session->read('Forum.topics');
 
 			if (($secondsLeft = $this->checkFlooding($topics, $settings['topic_flood_interval'])) > 0 && !$isAdmin) {
-				$this->invalidate('title', 'You must wait '. $secondsLeft .' more second(s) till you can post a topic');
+				return $this->invalidate('title', 'You must wait '. $secondsLeft .' more second(s) till you can post a topic');
 				
 			} else if ($this->checkHourly($topics, $settings['topics_per_hour']) && !$isAdmin) {
-				$this->invalidate('title', 'You are only allowed to post '. $settings['topics_per_hour'] .' topic(s) per hour');
+				return $this->invalidate('title', 'You are only allowed to post '. $settings['topics_per_hour'] .' topic(s) per hour');
 				
 			} else {
 				$data['Topic']['title'] = strip_tags($data['Topic']['title']);
@@ -212,6 +220,7 @@ class Topic extends ForumAppModel {
 			
 		if (!empty($topics)) {
 			$count = 0;
+			
 			foreach ($topics as $id => $time) {
 				if ($time >= $pastHour) {
 					++$count;
@@ -238,6 +247,7 @@ class Topic extends ForumAppModel {
 		$options = explode("\n", $data[0]);
 		
 		$clean = array();
+
 		if (!empty($options)) {
 			foreach ($options as $o) {
 				if ($o != '') {
@@ -245,6 +255,7 @@ class Topic extends ForumAppModel {
 				}
 			}
 		}
+
 		$total = count($clean);
 		
 		return ($total >= 2 && $total <= 10) ? true : false;
@@ -281,7 +292,8 @@ class Topic extends ForumAppModel {
 					$this->Post->save($data, false, array('content'));
 					
 				} else if ($model == 'Poll') {
-					$data['expires'] = (!empty($data['expires'])) ? date('Y-m-d H:i:s', strtotime('+'. $data['expires'] .' days')) : NULL;
+					$data['expires'] = !empty($data['expires']) ? date('Y-m-d H:i:s', strtotime('+'. $data['expires'] .' days')) : NULL;
+					
 					$this->Poll->id = $data['id'];
 					$this->Poll->save($data, false, array('expires'));
 					
@@ -324,7 +336,7 @@ class Topic extends ForumAppModel {
 	 */
 	public function getLatest($limit = 10) {
 		return $this->find('all', array(
-			'order' => 'Topic.created DESC',
+			'order' => array('Topic.created' => 'DESC'),
 			'limit' => $limit,
 			'contain' => array('User', 'LastPost.created', 'FirstPost.content')
 		));
@@ -341,7 +353,7 @@ class Topic extends ForumAppModel {
 	public function getLatestByUser($user_id, $limit = 10) {
 		return $this->find('all', array(
 			'conditions' => array('Topic.user_id' => $user_id),
-			'order' => 'Topic.created DESC',
+			'order' => array('Topic.created' => 'DESC'),
 			'limit' => $limit,
 			'contain' => array('LastPost.created')
 		));
@@ -356,13 +368,13 @@ class Topic extends ForumAppModel {
 	 */
 	public function getStickiesInForum($category_id) {
 		return $this->find('all', array(
-			'order' => 'Topic.type DESC',
+			'order' => array('Topic.type' => 'DESC'),
 			'conditions' => array(
 				'OR' => array(
-					array('Topic.type' => 3),
+					array('Topic.type' => self::ANNOUNCEMENT),
 					array(
 						'Topic.forum_category_id' => $category_id,
-						'Topic.type' => array(1, 2)
+						'Topic.type' => array(self::STICKY, self::IMPORTANT)
 					)
 				)
 			),

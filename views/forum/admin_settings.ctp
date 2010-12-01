@@ -30,11 +30,11 @@ echo $this->Form->input('posts_till_hot_topic', array('style' => 'width: 50px', 
 <p><strong><?php __d('forum', 'Misc Settings'); ?></strong></p>
 
 <?php // Misc
-echo $this->Form->input('default_locale', array('options' => $this->Forum->getLocales(), 'label' => __d('forum', 'Language', true)));
+echo $this->Form->input('default_locale', array('options' => $this->Common->getLocales(), 'label' => __d('forum', 'Language', true)));
 echo $this->Form->input('days_till_autolock', array('style' => 'width: 50px', 'after' => ' ('. __d('forum', 'Days', true) .')', 'label' => __d('forum', 'Inactive Days Till Topic Auto-Lock', true)));
 echo $this->Form->input('whos_online_interval', array('style' => 'width: 50px', 'label' => __d('forum', 'Whos Online Interval', true), 'after' => ' ('. __d('forum', 'Past Minutes', true) .')'));
-echo $this->Form->input('enable_quick_reply', array('options' => $this->Forum->options(), 'label' => __d('forum', 'Enable Quick Reply', true)));
-echo $this->Form->input('enable_gravatar', array('options' => $this->Forum->options(), 'label' => __d('forum', 'Enable Gravatar', true)));
+echo $this->Form->input('enable_quick_reply', array('options' => $this->Common->options(), 'label' => __d('forum', 'Enable Quick Reply', true)));
+echo $this->Form->input('enable_gravatar', array('options' => $this->Common->options(), 'label' => __d('forum', 'Enable Gravatar', true)));
 echo $this->Form->input('censored_words', array('type' => 'textarea', 'label' => __d('forum', 'Censored Words', true), 'after' => ' ('. __d('forum', 'Separate with commas', true) .')')); ?>
 
 <?php echo $this->Form->end(__d('forum', 'Update', true)); ?>

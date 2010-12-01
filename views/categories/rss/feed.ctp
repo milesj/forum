@@ -1,7 +1,7 @@
 
 <?php // Channel
 $this->set('channel', array(
-	'title' 		=> $this->Forum->settings['site_name'] .' - '. __d('forum', 'Forum', true) .': '. $category['ForumCategory']['title'],
+	'title' 		=> $settings['site_name'] .' - '. __d('forum', 'Forum', true) .': '. $category['ForumCategory']['title'],
 	'link' 			=> array('plugin' => 'forum', 'controller' => 'categories', 'action' => 'view', $category['ForumCategory']['slug']),
 	'description' 	=> $category['ForumCategory']['description'],
 	'language' 		=> 'en-us',

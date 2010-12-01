@@ -26,10 +26,8 @@ class ToolbarComponent extends Object {
 	 * @param array $settings 
 	 * @return void
 	 */  
-	public function initialize(&$Controller, $settings = array()) {
+	public function initialize($Controller, $settings = array()) {
 		$this->Controller = $Controller;
-		$this->settings = Configure::read('Forum.settings');
-		$this->columnMap = Configure::read('Forum.userMap');
 	}
 
 	/**
@@ -41,12 +39,15 @@ class ToolbarComponent extends Object {
 	public function initForum() {
 		if (!$this->Session->check('Forum.isBrowsing')) {
 			$user_id = $this->Controller->Auth->user('id');
+			$profile = ClassRegistry::init('Forum.Profile')->getUserProfile($user_id);
+
+			$this->Session->write('Forum.profile', $profile);
 
 			// How much access we have?
 			if (!$this->Session->check('Forum.access')) {
 				$access = array('Guest' => 0);
 
-				if ($user_id && $this->Controller->Auth->user($this->columnMap['status']) != Configure::read('Forum.statusMap.banned')) {
+				if ($user_id && $this->Controller->Auth->user(Configure::read('Forum.userMap.status')) != Configure::read('Forum.statusMap.banned')) {
 					$access['Member'] = 1;
 					$access = array_merge($access, ClassRegistry::init('Forum.Access')->getMyAccess($user_id));
 				}
@@ -56,7 +57,7 @@ class ToolbarComponent extends Object {
 
 			// Save last visit time
 			if (!$this->Session->check('Forum.lastVisit')) {
-				$lastVisit = ($user_id) ? $this->Controller->Auth->user($this->columnMap['lastLogin']) : date('Y-m-d H:i:s');
+				$lastVisit = ($user_id) ? $profile['lastLogin'] : date('Y-m-d H:i:s');
 				$this->Session->write('Forum.lastVisit', $lastVisit);
 			}
 
@@ -99,7 +100,7 @@ class ToolbarComponent extends Object {
 		if ($topic_id && $post_id) {
 			$posts = ClassRegistry::init('Forum.Post')->getIdsForPaging($topic_id);
 			$totalPosts = count($posts);
-			$perPage = $this->settings['posts_per_page'];
+			$perPage = Configure::read('Forum.settings.posts_per_page');
 			
 			if ($totalPosts > $perPage) {
 				$totalPages = ceil($totalPosts / $perPage);
@@ -126,7 +127,7 @@ class ToolbarComponent extends Object {
 			$url = $this->Controller->referer();
 		
 			if ((empty($url)) || (strpos($url, 'delete') !== false)) {
-				$url = array('plugin' => 'forum', 'controller' => 'home', 'action' => 'index');
+				$url = array('plugin' => 'forum', 'controller' => 'forum', 'action' => 'index');
 			}
 		}
 		
@@ -195,39 +196,6 @@ class ToolbarComponent extends Object {
 	}
 	
 	/**
-	 * Method for reseting a password.
-	 *
-	 * @access public
-	 * @param array $user
-	 * @param boolean $reset
-	 * @return void
-	 */
-	public function resetPassword($user, $reset = false) {
-		$User = ClassRegistry::init('Forum.User');
-		$password = $User->generate();
-		$User->resetPassword($user['User']['id'], $this->Controller->Auth->password($password));
-		
-		// Send email
-		if (!$reset) {
-			$message = sprintf(__d('forum', 'You have requested the login credentials for %s, your information is listed below', true), $this->settings['site_name']) .":\n\n";
-			$subject = __d('forum', 'Forgotten Password', true);
-			
-		} else {
-			$message = sprintf(__d('forum', 'Your password has been reset for %s, your information is listed below', true), $this->settings['site_name']) .":\n\n";
-			$subject = __d('forum', 'Reset Password', true);
-		}
-		
-		$message .= __d('forum', 'Username', true) .": ". $user['User']['username'] ."\n";
-		$message .= __d('forum', 'Password', true) .": ". $password ."\n\n";
-		$message .= __d('forum', 'Please change your password once logging in.', true);
-		
-		$this->Controller->Email->to = $user['User']['username'] .' <'. $user['User']['email'] .'>';
-		$this->Controller->Email->from = $this->settings['site_name'] .' <'. $this->settings['site_email'] .'>';
-		$this->Controller->Email->subject = $this->settings['site_name'] .' - '. $subject;
-		$this->Controller->Email->send($message);
-	}
-	
-	/**
 	 * Updates the session topics array.
 	 *
 	 * @access public
@@ -278,6 +246,10 @@ class ToolbarComponent extends Object {
 	 */
 	public function verifyAccess($validators = array()) {
 		$user_id = $this->Controller->Auth->user('id');
+
+		if (!$user_id) {
+			return false;
+		}
 		
 		// Does the data exist?
 		if (isset($validators['exists'])) {

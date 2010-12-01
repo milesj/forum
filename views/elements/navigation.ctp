@@ -3,18 +3,23 @@
     <span class="fr">
         <?php // User links
         $links = array();
-        if ($this->Forum->user()) {
+
+        if ($this->Common->user()) {
             $links[] = $this->Html->link(__d('forum', 'View New Posts', true), array('controller' => 'search', 'action' => 'index', 'new_posts', 'admin' => false));
-            $links[] = $this->Html->link(__d('forum', 'My Profile', true), array('controller' => 'users', 'action' => 'profile', $this->Forum->user('id'), 'admin' => false));
+            $links[] = $this->Html->link(__d('forum', 'My Profile', true), array('controller' => 'users', 'action' => 'profile', $this->Common->user('id'), 'admin' => false));
             $links[] = $this->Html->link(__d('forum', 'Edit Profile', true), array('controller' => 'users', 'action' => 'edit', 'admin' => false));
-            $links[] = $this->Html->link(__d('forum', 'Logout', true), array('controller' => 'users', 'action' => 'logout', 'admin' => false));
-        } else {
-            $links[] = $this->Html->link(__d('forum', 'Login', true), array('controller' => 'users', 'action' => 'login'));
-            $links[] = $this->Html->link(__d('forum', 'Sign Up', true), array('controller' => 'users', 'action' => 'signup'));
-            $links[] = $this->Html->link(__d('forum', 'Forgot Password', true), array('controller' => 'users', 'action' => 'forgot'));
+            $links[] = $this->Html->link(__d('forum', 'Logout', true), $plugin['routes']['logout']);
+
+		} else {
+            $links[] = $this->Html->link(__d('forum', 'Login', true), $plugin['routes']['login']);
+            $links[] = $this->Html->link(__d('forum', 'Sign Up', true), $plugin['routes']['signup']);
+
+			if (!empty($plugin['routes']['forgotPass'])) {
+				$links[] = $this->Html->link(__d('forum', 'Forgot Password', true), $plugin['routes']['forgotPass']);
+			}
         }
         
-        $links[] = $this->Time->nice(time(), $this->Forum->timezone());
+        $links[] = $this->Time->nice(time(), $this->Common->timezone());
         echo implode(' - ', $links); ?>
     </span>
     

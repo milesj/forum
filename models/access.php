@@ -53,7 +53,7 @@ class Access extends ForumAppModel {
 	public function getList() {
 		return $this->find('all', array(
 			'contain' => array('User', 'AccessLevel'),
-			'order' => 'Access.access_level_id ASC'
+			'order' => array('Access.access_level_id' => 'ASC')
 		));
 	}
 	
@@ -71,6 +71,7 @@ class Access extends ForumAppModel {
 		));
 		
 		$clean = array();
+		
 		if (!empty($levels)) {
 			foreach ($levels as $level) {
 				$clean[$level['AccessLevel']['title']] = $level['AccessLevel']['level'];
@@ -91,9 +92,9 @@ class Access extends ForumAppModel {
 		return $this->find('count', array(
 			'conditions' => array(
 				'Access.user_id' => $user_id,
-				'AccessLevel.is_admin' => 1
+				'AccessLevel.isAdmin' => self::BOOL_YES
 			),
-			'contain' => array('AccessLevel.is_admin')
+			'contain' => array('AccessLevel.isAdmin')
 		));	
 	}
 	
@@ -108,9 +109,9 @@ class Access extends ForumAppModel {
 		return $this->find('count', array(
 			'conditions' => array(
 				'Access.user_id' => $user_id,
-				'AccessLevel.is_super' => 1
+				'AccessLevel.isSuper' => self::BOOL_YES
 			),
-			'contain' => array('AccessLevel.is_super')
+			'contain' => array('AccessLevel.isSuper')
 		));	
 	}
 	

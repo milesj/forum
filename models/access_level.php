@@ -9,6 +9,15 @@
  */
  
 class AccessLevel extends ForumAppModel {
+
+	/**
+	 * Constants for DB IDs.
+	 */
+	const GUEST = 0;
+	const MEMBER = 1;
+	const MOD = 2;
+	const SUPER = 3;
+	const ADMIN = 4;
 	
 	/**
 	 * Validation.
@@ -29,7 +38,7 @@ class AccessLevel extends ForumAppModel {
 	 * @return array
 	 */
 	public function getHigherLevels($exclude = null) {
-		$conditions = array('AccessLevel.level >' => 1);
+		$conditions = array('AccessLevel.level >' => self::MEMBER);
 		
 		if (is_numeric($exclude)) {
 			$conditions['AccessLevel.id !='] = $exclude;
@@ -49,7 +58,7 @@ class AccessLevel extends ForumAppModel {
 	 */
 	public function getList() {
 		return $this->find('all', array(
-			'order' => 'AccessLevel.level ASC'
+			'order' => array('AccessLevel.level' => 'ASC')
 		));
 	}
 	

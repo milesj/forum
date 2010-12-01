@@ -27,7 +27,7 @@ if (!empty($forums)) {
         echo $this->Form->input('Forum.'. $forum['Forum']['id'] .'.id', array('value' => $forum['Forum']['id'], 'type' => 'hidden')); ?>
         
 		<?php echo $forum['Forum']['title']; ?> 
-        <span class="gray">(<?php echo $this->Forum->options(3, $forum['Forum']['status']); ?>)</span>
+        <span class="gray">(<?php echo $this->Common->options(3, $forum['Forum']['status']); ?>)</span>
     </h3>
      
     <table cellspacing="0" class="table">
@@ -55,13 +55,13 @@ if (!empty($forums)) {
 			echo $this->Form->input('ForumCategory.'. $category['id'] .'.id', array('value' => $category['id'], 'type' => 'hidden')); ?>
         </td>
         <td colspan="2"><strong><?php echo $this->Html->link($category['title'], array('action' => 'edit_category', $category['id'])); ?></strong></td>
-        <td class="ac"><?php echo $this->Forum->options(2, $category['status']); ?></td>
+        <td class="ac"><?php echo $this->Common->options(2, $category['status']); ?></td>
         <td class="ac"><?php echo number_format($category['topic_count']); ?></td>
         <td class="ac"><?php echo number_format($category['post_count']); ?></td>
-        <td class="ac"><?php echo $this->Forum->options(4, $category['accessRead'], true); ?></td>
-        <td class="ac"><?php echo $this->Forum->options(4, $category['accessPost']); ?></td>
-        <td class="ac"><?php echo $this->Forum->options(4, $category['accessReply']); ?></td>
-        <td class="ac"><?php echo $this->Forum->options(4, $category['accessPoll']); ?></td>
+        <td class="ac"><?php echo $this->Common->options(4, $category['accessRead'], true); ?></td>
+        <td class="ac"><?php echo $this->Common->options(4, $category['accessPost']); ?></td>
+        <td class="ac"><?php echo $this->Common->options(4, $category['accessReply']); ?></td>
+        <td class="ac"><?php echo $this->Common->options(4, $category['accessPoll']); ?></td>
         <td class="ac gray">
         	<?php echo $this->Html->link(__d('forum', 'Edit', true), array('action' => 'edit_category', $category['id'])); ?> -
         	<?php echo $this->Html->link(__d('forum', 'Delete', true), array('action' => 'delete_category', $category['id'])); ?>
@@ -80,13 +80,13 @@ if (!empty($forums)) {
 			echo $this->Form->input('ForumCategory.'. $child['id'] .'.id', array('value' => $child['id'], 'type' => 'hidden')); ?>
         </td>
         <td><strong><?php echo $this->Html->link($child['title'], array('action' => 'edit_category', $child['id'])); ?></strong></td>
-        <td class="ac"><?php echo $this->Forum->options(2, $child['status']); ?></td>
+        <td class="ac"><?php echo $this->Common->options(2, $child['status']); ?></td>
         <td class="ac"><?php echo number_format($child['topic_count']); ?></td>
         <td class="ac"><?php echo number_format($child['post_count']); ?></td>
-        <td class="ac"><?php echo $this->Forum->options(4, $child['accessRead'], true); ?></td>
-        <td class="ac"><?php echo $this->Forum->options(4, $child['accessPost']); ?></td>
-        <td class="ac"><?php echo $this->Forum->options(4, $child['accessReply']); ?></td>
-        <td class="ac"><?php echo $this->Forum->options(4, $child['accessPoll']); ?></td>
+        <td class="ac"><?php echo $this->Common->options(4, $child['accessRead'], true); ?></td>
+        <td class="ac"><?php echo $this->Common->options(4, $child['accessPost']); ?></td>
+        <td class="ac"><?php echo $this->Common->options(4, $child['accessReply']); ?></td>
+        <td class="ac"><?php echo $this->Common->options(4, $child['accessPoll']); ?></td>
         <td class="ac gray">
         	<?php echo $this->Html->link(__d('forum', 'Edit', true), array('action' => 'edit_category', $child['id'])); ?> -
         	<?php echo $this->Html->link(__d('forum', 'Delete', true), array('action' => 'delete_category', $child['id'])); ?>

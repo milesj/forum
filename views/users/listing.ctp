@@ -19,9 +19,9 @@
     <tr>
         <th><?php echo $this->Paginator->sort(__d('forum', 'Username', true), 'User.username'); ?></th>
         <th><?php echo $this->Paginator->sort(__d('forum', 'Joined', true), 'User.created'); ?></th>
-        <th><?php echo $this->Paginator->sort(__d('forum', 'Last Active', true), 'User.'. $this->Forum->columnMap['lastLogin']); ?></th>
-        <th><?php echo $this->Paginator->sort(__d('forum', 'Topics', true), 'User.'. $this->Forum->columnMap['totalTopics']); ?></th>
-        <th><?php echo $this->Paginator->sort(__d('forum', 'Posts', true), 'User.'. $this->Forum->columnMap['totalPosts']); ?></th>
+        <th><?php echo $this->Paginator->sort(__d('forum', 'Last Active', true), 'User.'. $this->Common->columnMap['lastLogin']); ?></th>
+        <th><?php echo $this->Paginator->sort(__d('forum', 'Topics', true), 'User.'. $this->Common->columnMap['totalTopics']); ?></th>
+        <th><?php echo $this->Paginator->sort(__d('forum', 'Posts', true), 'User.'. $this->Common->columnMap['totalPosts']); ?></th>
     </tr>
     
     <?php if (!empty($users)) {
@@ -30,16 +30,16 @@
         
     <tr<?php if ($counter % 2) echo ' class="altRow"'; ?>>
         <td><?php echo $this->Html->link($user['User']['username'], array('action' => 'profile', $user['User']['id'])); ?></td>
-        <td class="ac"><?php echo $this->Time->nice($user['User']['created'], $this->Forum->timezone()); ?></td>
+        <td class="ac"><?php echo $this->Time->nice($user['User']['created'], $this->Common->timezone()); ?></td>
         <td class="ac">
-            <?php if (!empty($user['User'][$this->Forum->columnMap['lastLogin']])) {
-                echo $this->Time->relativeTime($user['User'][$this->Forum->columnMap['lastLogin']], array('userOffset' => $this->Forum->timezone()));
+            <?php if (!empty($user['User'][$this->Common->columnMap['lastLogin']])) {
+                echo $this->Time->relativeTime($user['User'][$this->Common->columnMap['lastLogin']], array('userOffset' => $this->Common->timezone()));
             } else {
                 echo '<em>'. __d('forum', 'Never', true) .'</em>';
             } ?>
         </td>
-        <td class="ac"><?php echo number_format($user['User'][$this->Forum->columnMap['totalTopics']]); ?></td>
-        <td class="ac"><?php echo number_format($user['User'][$this->Forum->columnMap['totalPosts']]); ?></td>
+        <td class="ac"><?php echo number_format($user['User'][$this->Common->columnMap['totalTopics']]); ?></td>
+        <td class="ac"><?php echo number_format($user['User'][$this->Common->columnMap['totalPosts']]); ?></td>
     </tr>
     	<?php ++$counter; 
 		}

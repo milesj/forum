@@ -33,7 +33,7 @@
         <td><?php echo $report['Post']['content']; ?> (<?php echo $this->Html->link(__d('forum', 'View Topic', true), array('controller' => 'topics', 'action' => 'view', $report['Post']['topic_id'], 'admin' => false)); ?>)</td>
         <td><?php echo $this->Html->link($report['Reporter']['username'], array('controller' => 'users', 'action' => 'edit', $report['Reporter']['id'], 'admin' => true)); ?></td>
         <td><?php echo $report['Report']['comment']; ?></td>
-        <td><?php echo $this->Time->nice($report['Report']['created'], $this->Forum->timezone()); ?></td>
+        <td><?php echo $this->Time->nice($report['Report']['created'], $this->Common->timezone()); ?></td>
     </tr>
     	<?php ++$counter; 
 		}

@@ -11,6 +11,13 @@
 class Report extends ForumAppModel {
 
 	/**
+	 * Report types.
+	 */
+	const TOPIC = 1;
+	const POST = 2;
+	const USER = 3;
+
+	/**
 	 * DB Table.
 	 *
 	 * @access public
@@ -32,17 +39,17 @@ class Report extends ForumAppModel {
 		'Topic' => array(
 			'className' 	=> 'Forum.Topic',
 			'foreignKey' 	=> 'item_id',
-			'conditions' 	=> array('Report.itemType' => 'topic')
+			'conditions' 	=> array('Report.itemType' => self::TOPIC)
 		),
 		'Post' => array(
 			'className' 	=> 'Forum.Post',
 			'foreignKey' 	=> 'item_id',
-			'conditions' 	=> array('Report.itemType' => 'post')
+			'conditions' 	=> array('Report.itemType' => self::POST)
 		),
 		'User' => array(
 			'className' 	=> 'Forum.User',
 			'foreignKey' 	=> 'item_id',
-			'conditions' 	=> array('Report.itemType' => 'user')
+			'conditions' 	=> array('Report.itemType' => self::USER)
 		)
 	);
 	
@@ -66,7 +73,7 @@ class Report extends ForumAppModel {
 	public function getLatest($limit = 10) {
 		return $this->find('all', array(
 			'limit' => $limit,
-			'order' => 'Report.created ASC',
+			'order' => array('Report.created' => 'ASC'),
 			'contain' => array('Reporter', 'Topic.id', 'Topic.title', 'Topic.slug', 'Post.id', 'Post.content', 'User.id', 'User.username')
 		));
 	}

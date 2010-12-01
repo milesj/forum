@@ -16,7 +16,11 @@ class Profile extends ForumAppModel {
 	 * @access public
 	 * @var array
 	 */
-	public $belongsTo = array('User');
+	public $belongsTo = array(
+		'User' => array(
+			'className' => 'Forum.User'
+		)
+	);
 
 	/**
 	 * Get the newest signup.
@@ -30,6 +34,33 @@ class Profile extends ForumAppModel {
 			'contain' => array('User'),
 			'limit' => 1
 		));
+	}
+
+	/**
+	 * Grab the users profile. If it doesn't exist, create it!
+	 *
+	 * @access public
+	 * @param int $user_id
+	 * @return array
+	 */
+	public function getUserProfile($user_id) {
+		$profile = $this->find('first', array(
+			'conditions' => array('Profile.user_id' => $user_id)
+		));
+
+		// Update login and return
+		if (!empty($profile)) {
+			$this->login($profile['Profile']['id'], $profile['Profile']['currentLogin']);
+
+			return $profile['Profile'];
+
+		// Create new record
+		} else {
+			$this->create();
+			$this->save(array('user_id' => $user_id), false);
+
+			return $this->getUserProfile($user_id);
+		}
 	}
 
 	/**
@@ -58,20 +89,17 @@ class Profile extends ForumAppModel {
 	 * Login the user and update records.
 	 *
 	 * @access public
-	 * @param array $user
+	 * @param int $id
+	 * @param string $login
 	 * @return boolean
 	 */
-	public function login($user) {
-		if (!empty($user)) {
-			$this->id = $user['User']['id'];
+	public function login($id, $login) {
+		$this->id = $id;
 
-			return $this->save(array(
-				'currentLogin' => date('Y-m-d H:i:s'),
-				'lastLogin' => $user['User']['currentLogin']
-			), false);
-		}
-
-		return true;
+		return $this->save(array(
+			'currentLogin' => date('Y-m-d H:i:s'),
+			'lastLogin' => $login
+		), false);
 	}
 
 	/**
@@ -81,7 +109,11 @@ class Profile extends ForumAppModel {
 	 * @param int $minutes
 	 * @return array
 	 */
-	public function whosOnline($minutes) {
+	public function whosOnline($minutes = null) {
+		if (!$minutes) {
+			$minutes = Configure::read('Forum.settings.whos_online_interval');
+		}
+		
 		return $this->find('all', array(
 			'conditions' => array('Profile.currentLogin >' => date('Y-m-d H:i:s', strtotime('-'. $minutes .' minutes'))),
 			'contain' => array('User')

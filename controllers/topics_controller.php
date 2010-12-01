@@ -26,7 +26,7 @@ class TopicsController extends ForumAppController {
 	 */ 
 	public $paginate = array( 
 		'Post' => array(
-			'order' => 'Post.created ASC',
+			'order' => array('Post.created' => 'ASC'),
 			'contain' => array('User' => array('Access' => array('AccessLevel')))
 		) 
 	);
@@ -73,7 +73,7 @@ class TopicsController extends ForumAppController {
 			$this->data['Topic']['user_id'] = $user_id;
 			$this->data['Topic']['userIP'] = $this->RequestHandler->getClientIp();
 
-			if ($topic_id = $this->Topic->addTopic($this->data, $this->Toolbar->settings, $this->Session->read('Forum.topics'), $isPoll)) {
+			if ($topic_id = $this->Topic->addTopic($this->data, $isPoll)) {
 				if ($category['ForumCategory']['settingPostCount'] == 1) {
 					$this->Topic->User->increasePosts($user_id);
 					$this->Topic->User->increaseTopics($user_id);
@@ -140,10 +140,10 @@ class TopicsController extends ForumAppController {
 			$topic = $this->Topic->get($id, null, array('FirstPost.content'));
 			$this->Toolbar->verifyAccess(array('exists' => $topic));
 		
-			$this->paginate['Post']['limit'] = $this->Toolbar->settings['posts_per_page'];
+			$this->paginate['Post']['limit'] = Configure::read('Forum.settings.posts_per_page');
 			$this->paginate['Post']['conditions']['Post.topic_id'] = $id;
 			$this->paginate['Post']['contain'] = array('User');
-			$this->paginate['Post']['order'] = 'Post.created DESC';
+			$this->paginate['Post']['order'] = array('Post.created' => 'DESC');
 
 			$this->set('items', $this->paginate('Post'));
 			$this->set('topic', $topic);
@@ -192,7 +192,7 @@ class TopicsController extends ForumAppController {
 		if (!empty($this->data)) {
 			$this->data['Report']['user_id'] = $user_id;
 			$this->data['Report']['item_id'] = $id;
-			$this->data['Report']['itemType'] = 'topic';
+			$this->data['Report']['itemType'] = Report::TOPIC;
 			
 			if ($this->Report->save($this->data, true, array('item_id', 'itemType', 'user_id', 'comment'))) {
 				$this->Session->setFlash(__d('forum', 'You have succesfully reported this topic! A moderator will review this topic and take the necessary action.', true));
@@ -227,7 +227,7 @@ class TopicsController extends ForumAppController {
 		$this->Topic->increaseViews($topic['Topic']['id']);
 		
 		// Paginate
-		$this->paginate['Post']['limit'] = $this->Toolbar->settings['posts_per_page'];
+		$this->paginate['Post']['limit'] = Configure::read('Forum.settings.posts_per_page');
 		$this->paginate['Post']['conditions']['Post.topic_id'] = $topic['Topic']['id'];
 		
 		// Poll Voting
@@ -277,7 +277,7 @@ class TopicsController extends ForumAppController {
 		}
 		
 		// Paginate
-		$this->paginate['Post']['limit'] = $this->Toolbar->settings['posts_per_page'];
+		$this->paginate['Post']['limit'] = Configure::read('Forum.settings.posts_per_page');
 		$this->paginate['Post']['conditions']['Post.topic_id'] = $id;
 		
 		$this->Toolbar->pageTitle(__d('forum', 'Moderate', true), $topic['Topic']['title']);

@@ -26,7 +26,7 @@ class SearchController extends ForumAppController {
 	 */
 	public $paginate = array( 
 		'Topic' => array(
-			'order' => 'LastPost.created DESC',
+			'order' => array('LastPost.created' => 'DESC'),
 			'contain' => array('ForumCategory.title', 'ForumCategory.slug', 'User.id', 'User.username', 'LastPost.created', 'LastUser.username', 'Poll.id', 'FirstPost.content')
 		)
 	); 
@@ -57,7 +57,7 @@ class SearchController extends ForumAppController {
 		// Search
 		if (!empty($this->data)) {
 			$searching = true;
-			$this->paginate['Topic']['limit'] = $this->Toolbar->settings['topics_per_page'];
+			$this->paginate['Topic']['limit'] = Configure::read('Forum.settings.topics_per_page');
 			
 			if (!empty($this->data['Topic']['keywords'])) {
 				if ($this->data['Topic']['power'] == 0) {
@@ -80,7 +80,7 @@ class SearchController extends ForumAppController {
 			}
 			
 			if (!empty($this->data['Topic']['orderBy'])) {
-				$this->paginate['Topic']['order'] = $this->data['Topic']['orderBy'] .' DESC';
+				$this->paginate['Topic']['order'] = array($this->data['Topic']['orderBy'] => 'DESC');
 			}
 			
 			if (!empty($this->data['Topic']['byUser'])) {

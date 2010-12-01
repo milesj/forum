@@ -51,7 +51,7 @@ class PostsController extends ForumAppController {
 			$this->data['Post']['user_id'] = $user_id;
 			$this->data['Post']['userIP'] = $this->RequestHandler->getClientIp();
 
-			if ($post_id = $this->Post->addPost($this->data, $this->Toolbar->settings, $this->Session->read('Forum.posts'))) {
+			if ($post_id = $this->Post->addPost($this->data)) {
 				if ($topic['ForumCategory']['settingPostCount'] == 1) {
 					$this->Post->User->increasePosts($user_id);
 				}
@@ -151,7 +151,7 @@ class PostsController extends ForumAppController {
 		if (!empty($this->data)) {
 			$this->data['Report']['user_id'] = $user_id;
 			$this->data['Report']['item_id'] = $id;
-			$this->data['Report']['itemType'] = 'post';
+			$this->data['Report']['itemType'] = Report::POST;
 			
 			if ($this->Report->save($this->data, true, array('item_id', 'itemType', 'user_id', 'comment'))) {
 				$this->Session->setFlash(__d('forum', 'You have succesfully reported this post! A moderator will review this post and take the necessary action.', true));

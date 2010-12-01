@@ -14,9 +14,9 @@ $this->Html->addCrumb($topic['Topic']['title'], array('controller' => 'topics', 
 <?php echo $this->Form->create('Topic', array('url' => '/forum/topics/edit/'. $id)); ?>
 <?php echo $this->Form->input('title', array('label' => __d('forum', 'Title', true))); ?>
 
-<?php if ($this->Forum->hasAccess('super', $topic['ForumCategory']['id'])) {
+<?php if ($this->Common->hasAccess('super', $topic['ForumCategory']['id'])) {
 	echo $this->Form->input('forum_category_id', array('label' => __d('forum', 'Forum Category', true), 'options' => $forums, 'escape' => false, 'empty' => '-- '. __d('forum', 'Select a Forum', true) .' --'));
-	echo $this->Form->input('status', array('label' => __d('forum', 'Status', true), 'options' => $this->Forum->options(2)));
+	echo $this->Form->input('status', array('label' => __d('forum', 'Status', true), 'options' => $this->Common->options(2)));
 	echo $this->Form->input('type', array('options' => array(
 		0 => __d('forum', 'Normal', true),
 		1 => __d('forum', 'Sticky', true),

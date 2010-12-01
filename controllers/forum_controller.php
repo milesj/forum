@@ -31,7 +31,7 @@ class ForumController extends ForumAppController {
 		$this->set('totalTopics', 	$this->Topic->getTotal());
 		$this->set('totalUsers', 	$this->Topic->User->getTotal());
 		$this->set('newestUser', 	$this->Profile->getNewestUser());
-		$this->set('whosOnline', 	$this->Profile->whosOnline($this->Toolbar->settings['whos_online_interval']));
+		$this->set('whosOnline', 	$this->Profile->whosOnline());
 	}
 	
 	/**
@@ -108,7 +108,7 @@ class ForumController extends ForumAppController {
 				$this->Session->setFlash(__d('forum', 'Settings have been updated!', true));
 			}
 		} else {
-			$this->data['Setting'] = $this->Toolbar->settings;
+			$this->data['Setting'] = Configure::read('Forum.settings');
 		}
 		
 		$this->pageTitle = __d('forum', 'Settings', true);

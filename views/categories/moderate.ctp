@@ -34,12 +34,12 @@ $this->Html->addCrumb($category['ForumCategory']['title'], array('controller' =>
 	if (!empty($topics)) {
 		$counter = 0;
 		foreach ($topics as $topic) {
-			$pages = $this->Forum->topicPages($topic['Topic']); ?>
+			$pages = $this->Common->topicPages($topic['Topic']); ?>
         
    	<tr<?php if ($counter % 2) echo ' class="altRow"'; ?>>
     	<td class="ac"><input type="checkbox" name="data[Topic][items][]" value="<?php echo $topic['Topic']['id']; ?>" /></td>
         <td>
-        	<?php echo $this->Forum->topicType($topic['Topic']['status']); ?>
+        	<?php echo $this->Common->topicType($topic['Topic']['status']); ?>
 			<?php if (!empty($topic['Poll']['id'])) { 
 				echo $this->Html->image('/forum/img/poll.png', array('alt' => 'Poll'));
 			} ?>
@@ -50,9 +50,9 @@ $this->Html->addCrumb($category['ForumCategory']['title'], array('controller' =>
             <br /><span class="gray"><?php __d('forum', 'Pages'); ?>: [ <?php echo implode(', ', $pages); ?> ]</span>
             <?php } ?>
         </td>
-        <td class="ac"><?php echo $this->Forum->options(2, $topic['Topic']['status']); ?></td>
+        <td class="ac"><?php echo $this->Common->options(2, $topic['Topic']['status']); ?></td>
         <td class="ac"><?php echo $this->Html->link($topic['User']['username'], array('controller' => 'users', 'action' => 'profile', $topic['User']['id'])); ?></td>
-        <td class="ac"><?php echo $this->Time->niceShort($topic['Topic']['created'], $this->Forum->timezone()); ?></td>
+        <td class="ac"><?php echo $this->Time->niceShort($topic['Topic']['created'], $this->Common->timezone()); ?></td>
         <td class="ac"><?php echo number_format($topic['Topic']['post_count']); ?></td>
         <td class="ac"><?php echo number_format($topic['Topic']['view_count']); ?></td>
         <td>
@@ -60,7 +60,7 @@ $this->Html->addCrumb($category['ForumCategory']['title'], array('controller' =>
             if (!empty($topic['LastPost'])) {
                 $lastTime = (!empty($topic['LastPost']['created'])) ? $topic['LastPost']['created'] : $topic['Topic']['modified']; ?>
                 
-                <em><?php echo $this->Time->relativeTime($lastTime, array('userOffset' => $this->Forum->timezone())); ?></em><br />
+                <em><?php echo $this->Time->relativeTime($lastTime, array('userOffset' => $this->Common->timezone())); ?></em><br />
                 <span class="gray"><?php __d('forum', 'by'); ?> <?php echo $this->Html->link($topic['LastUser']['username'], array('controller' => 'users', 'action' => 'profile', $topic['Topic']['lastUser_id'])); ?></span>
                 <?php echo $this->Html->image('/forum/img/goto.png', array('alt' => '', 'url' => array('controller' => 'topics', 'action' => 'view', $topic['Topic']['slug'], 'page' => $topic['Topic']['page_count'], '#' => 'post_'. $topic['Topic']['lastPost_id']))); ?>
             <?php } else {

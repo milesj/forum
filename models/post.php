@@ -41,25 +41,26 @@ class Post extends ForumAppModel {
 	 *
 	 * @access public
 	 * @param array $data
-	 * @param array $settings
-	 * @param array $posts
 	 * @return boolean|int
 	 */
-	public function addPost($data, $settings, $posts) {
+	public function addPost($data) {
 		$this->set($data);
 		
 		// Validate
 		if ($this->validates()) {
+			$settings = Configure::read('Forum.settings');
 			$isAdmin = ($this->Session->read('Forum.isAdmin') > 0);
+			$posts = $this->Session->read('Forum.posts');
 
 			if (($secondsLeft = $this->checkFlooding($posts, $settings['post_flood_interval'])) > 0 && !$isAdmin) {
-				$this->invalidate('content', 'You must wait '. $secondsLeft .' more second(s) till you can post a reply');
+				return $this->invalidate('content', 'You must wait '. $secondsLeft .' more second(s) till you can post a reply');
 				
 			} else if ($this->checkHourly($posts, $settings['posts_per_hour']) && !$isAdmin) {
-				$this->invalidate('content', 'You are only allowed to post '. $settings['topics_per_hour'] .' time(s) per hour');
+				return $this->invalidate('content', 'You are only allowed to post '. $settings['topics_per_hour'] .' time(s) per hour');
 				
 			} else {
 				$data['Post']['content'] = strip_tags($data['Post']['content']);
+				$data['Post']['contentHtml'] = $data['Post']['content']; // DECODA HERE
 				
 				// Save Topic
 				$this->create();
@@ -128,11 +129,13 @@ class Post extends ForumAppModel {
 			'topic_id' => $topic_id,
 			'user_id' => $data['user_id'],
 			'userIP' => $data['userIP'],
-			'content' => strip_tags($data['content'])
+			'content' => strip_tags($data['content']),
+			'contentHtml' => strip_tags($data['content']) // DECODA HERE
 		);
 		
 		$this->create();
 		$this->save($post, false, array_keys($post));
+		
 		$this->Topic->ForumCategory->increasePosts($data['forum_category_id']);
 		
 		return $this->id;
@@ -224,7 +227,7 @@ class Post extends ForumAppModel {
 	public function getLatestByUser($user_id, $limit = 5) {
 		return $this->find('all', array(
 			'conditions' => array('Post.user_id' => $user_id),
-			'order' => 'Post.created DESC',
+			'order' => array('Post.created' => 'DESC'),
 			'limit' => $limit,
 			'contain' => array(
 				'Topic' => array(

@@ -34,7 +34,7 @@ class ForumAppController extends AppController {
 	 * @access public
 	 * @var array
 	 */
-	public $helpers = array('Html', 'Session', 'Form', 'Time', 'Text', 'Forum.Forum', 'Forum.Decoda' => array());
+	public $helpers = array('Html', 'Session', 'Form', 'Time', 'Text', 'Forum.Common', 'Forum.Decoda' => array());
 
 	/**
 	 * Run auto login logic.
@@ -80,7 +80,7 @@ class ForumAppController extends AppController {
 		parent::beforeFilter();
 
 		// Settings
-		Configure::write('Forum.settings', ClassRegistry::init('Setting')->getSettings());
+		Configure::write('Forum.settings', ClassRegistry::init('Forum.Setting')->getSettings());
 		
 		// Localization
 		$locale = $this->Auth->user('locale') ? $this->Auth->user('locale') : Configure::read('Forum.settings.default_locale');
@@ -89,22 +89,23 @@ class ForumAppController extends AppController {
 		
 		// Authorization
 		$referer = $this->referer();
-		
+		$routes = Configure::read('Forum.routes');
+
 		if (empty($referer) || $referer == '/forum/users/login' || $referer == '/admin/forum/users/login') {
-			$referer = array('plugin' => 'forum', 'controller' => 'home', 'action' => 'index');
+			$referer = array('plugin' => 'forum', 'controller' => 'forum', 'action' => 'index');
 		}
 
-		$this->Auth->loginAction = array('plugin' => 'forum', 'controller' => 'users', 'action' => 'login', 'admin' => false);
+		$this->Auth->loginAction = Configure::read('Forum.routes.login');
 		$this->Auth->loginRedirect = $referer;
 		$this->Auth->logoutRedirect = $referer;
 		$this->Auth->autoRedirect = false;
 		
 		// AutoLogin
 		$this->AutoLogin->settings = array(
-			'plugin' => 'forum',
-			'controller' => 'users',
-			'loginAction' => 'login',
-			'logoutAction' => 'logout'
+			'plugin' => $routes['login']['plugin'],
+			'controller' => $routes['login']['controller'],
+			'loginAction' => $routes['login']['action'],
+			'logoutAction' => $routes['logout']['action']
 		);
 
 		// Helpers
@@ -114,6 +115,17 @@ class ForumAppController extends AppController {
 		
 		// Initialize
 		$this->Toolbar->initForum();
+	}
+
+	/**
+	 * Before render.
+	 *
+	 * @access public
+	 * @return void
+	 */
+	public function beforeRender() {
+		$this->set('plugin', Configure::read('Forum'));
+		$this->set('settings', Configure::read('Forum.settings'));
 	}
 
 }

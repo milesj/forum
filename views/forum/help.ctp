@@ -46,4 +46,4 @@
 <?php __d('forum', 'It is up to the administrator to give you higher access. All you can do is be a superb member on the forum and hope they promote you.'); ?></p>
 
 <p><strong><?php __d('forum', 'I have more questions that aren\'t shown here!'); ?></strong><br />
-<?php printf(__d('forum', 'If you have additional questions and need further help, please contact us at %s.', true), $this->Forum->settings['site_email']); ?></p>
+<?php printf(__d('forum', 'If you have additional questions and need further help, please contact us at %s.', true), $settings['site_email']); ?></p>

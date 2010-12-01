@@ -21,8 +21,8 @@ array_unshift($levels, '-- '. __d('forum', 'None', true) .' --'); ?>
 <?php 
 echo $this->Form->create('Forum', array('url' => array('controller' => 'categories', 'action' => $action, 'admin' => true)));
 echo $this->Form->input('title', array('label' => __d('forum', 'Title', true)));
-echo $this->Form->input('status', array('options' => $this->Forum->options(3), 'label' => __d('forum', 'Status', true)));
+echo $this->Form->input('status', array('options' => $this->Common->options(3), 'label' => __d('forum', 'Status', true)));
 echo $this->Form->input('orderNo', array('style' => 'width: 50px', 'label' => __d('forum', 'Order No', true)));
 echo $this->Form->input('access_level_id', array('options' => $levels, 'label' => __d('forum', 'Restrict Access To', true)));
-echo $this->Form->input('accessView', array('options' => $this->Forum->options(4, null, true), 'label' => __d('forum', 'View Access', true)));
+echo $this->Form->input('accessView', array('options' => $this->Common->options(4, null, true), 'label' => __d('forum', 'View Access', true)));
 echo $this->Form->end($button); ?>

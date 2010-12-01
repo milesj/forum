@@ -3,7 +3,7 @@
 <head>
 <?php echo $this->Html->charset(); ?>
 <title>
-	<?php echo $this->Forum->settings['site_name']; ?> Installation -
+	<?php echo $settings['site_name']; ?> Installation -
 	<?php echo $title_for_layout; ?>
 </title>
 
@@ -17,7 +17,7 @@ echo $scripts_for_layout; ?>
 <body>
 <div id="wrapper">
 	<div id="header">
-    	<h1><?php echo $this->Forum->settings['site_name']; ?> Installation</h1>
+    	<h1><?php echo $settings['site_name']; ?> Installation</h1>
     </div>
 
     <div id="content">

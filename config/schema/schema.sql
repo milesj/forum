@@ -17,8 +17,8 @@ CREATE TABLE IF NOT EXISTS `forum_access_levels` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT,
 	`title` VARCHAR(30) NOT NULL,
 	`level` INT(11) NOT NULL,
-	`isAdmin` SMALLINT(6) NOT NULL DEFAULT '0',
-	`isSuper` SMALLINT(6) NOT NULL DEFAULT '0',
+	`isAdmin` TINYINT NOT NULL DEFAULT '0',
+	`isSuper` TINYINT NOT NULL DEFAULT '0',
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Access levels for users' AUTO_INCREMENT=1;
 
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `forum_forums` (
 	`access_level_id` SMALLINT(6) DEFAULT NULL,
 	`title` VARCHAR(50) NOT NULL,
 	`slug` VARCHAR(60) NOT NULL,
-	`status` SMALLINT(6) NOT NULL DEFAULT '0',
+	`status` SMALLINT(6) NOT NULL DEFAULT '1',
 	`orderNo` SMALLINT(6) NOT NULL DEFAULT '0',
 	`accessView` SMALLINT(6) NOT NULL DEFAULT '0',
 	PRIMARY KEY (`id`),
@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS `forum_forums` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Containing forums' AUTO_INCREMENT=1;
 
 INSERT INTO `forum_forums` (`id`, `access_level_id`, `title`, `slug`, `status`, `orderNo`, `accessView`) VALUES
-	(1, 0, 'Cupcake Forums', 'cupcake-forums', 0, 1, 0);
+	(1, 0, 'Cupcake Forums', 'cupcake-forums', 1, 1, 0);
 
 /* Table structure for table `forum_categories` */
 
@@ -51,11 +51,11 @@ CREATE TABLE IF NOT EXISTS `forum_forum_categories` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT,
 	`forum_id` INT(11) NOT NULL,
 	`parent_id` INT(11) DEFAULT NULL,
-	`access_level_id` SMALLINT(6) DEFAULT NULL,
-	`title` VARCHAR(50) NOT NULL,
-	`slug` VARCHAR(60) NOT NULL,
+	`access_level_id` INT(11) DEFAULT NULL,
+	`title` VARCHAR(100) NOT NULL,
+	`slug` VARCHAR(115) NOT NULL,
 	`description` VARCHAR(255) NOT NULL,
-	`status` SMALLINT(6) NOT NULL DEFAULT '0',
+	`status` SMALLINT(6) NOT NULL DEFAULT '1',
 	`orderNo` SMALLINT(6) NOT NULL DEFAULT '0',
 	`topic_count` INT(11) NOT NULL DEFAULT '0',
 	`post_count` INT(11) NOT NULL DEFAULT '0',
@@ -80,7 +80,7 @@ CREATE TABLE IF NOT EXISTS `forum_forum_categories` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Forum categories to post topics to' AUTO_INCREMENT=1;
 
 INSERT INTO `forum_forum_categories` (`id`, `forum_id`, `parent_id`, `access_level_id`, `title`, `slug`, `description`, `status`, `orderNo`, `topic_count`, `post_count`, `accessRead`, `accessPost`, `accessReply`, `accessPoll`, `settingPostCount`, `settingAutoLock`, `lastTopic_id`, `lastPost_id`, `lastUser_id`, `created`, `modified`) VALUES
-	(1, 1, 0, 0, 'General Discussion', 'general-discussion', 'This is a forum category, which is a child of the forum. You can add, edit or delete these categories by visiting the administration panel, but first you would need to give a user admin rights.', 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, NOW(), NOW());
+	(1, 1, 0, 0, 'General Discussion', 'general-discussion', 'This is a forum category, which is a child of the forum. You can add, edit or delete these categories by visiting the administration panel, but first you would need to give a user admin rights.', 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, NOW(), NOW());
 
 /* Table structure for table `moderators` */
 
@@ -138,6 +138,7 @@ CREATE TABLE IF NOT EXISTS `forum_posts` (
 	`user_id` INT(11) NOT NULL,
 	`userIP` VARCHAR(100) NOT NULL,
 	`content` text NOT NULL,
+	`contentHtml` text NOT NULL,
 	`created` DATETIME DEFAULT NULL,
 	`modified` DATETIME DEFAULT NULL,
 	PRIMARY KEY (`id`),

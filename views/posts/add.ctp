@@ -40,12 +40,12 @@ if (!empty($review)) { ?>
         
         <?php foreach ($review as $post) { ?>
         <tr class="altRow" id="post_<?php echo $post['Post']['id']; ?>">
-            <td colspan="2" class="ar"><?php echo $this->Time->niceShort($post['Post']['created'], $this->Forum->timezone()); ?></td>
+            <td colspan="2" class="ar"><?php echo $this->Time->niceShort($post['Post']['created'], $this->Common->timezone()); ?></td>
         </tr>
         <tr>
             <td valign="top" style="width: 25%">
                 <h4><?php echo $this->Html->link($post['User']['username'], array('controller' => 'users', 'action' => 'profile', $post['User']['id'])); ?></h4>
-                <strong><?php __d('forum', 'Joined'); ?>:</strong> <?php echo $this->Time->niceShort($post['User']['created'], $this->Forum->timezone()); ?>
+                <strong><?php __d('forum', 'Joined'); ?>:</strong> <?php echo $this->Time->niceShort($post['User']['created'], $this->Common->timezone()); ?>
             </td>
             <td valign="top"><?php $this->Decoda->parse($post['Post']['content']); ?></td>
         </tr>
