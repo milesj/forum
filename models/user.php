@@ -166,7 +166,7 @@ class User extends ForumAppModel {
 			'conditions' => array('User.id' => $id),	
 			'contain' => array(
 				'Access' => array('AccessLevel'),
-				'Moderator' => array('ForumCategory')
+				'Moderator' => array('Forum')
 			)
 		));
 	}

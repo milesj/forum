@@ -37,8 +37,8 @@ class Topic extends ForumAppModel {
 	 * @var array
 	 */
 	public $belongsTo = array(
-		'ForumCategory' => array(
-			'className' 	=> 'Forum.ForumCategory',
+		'Forum' => array(
+			'className' 	=> 'Forum.Forum',
 			'counterCache' 	=> true
 		),
 		'User' => array(
@@ -94,7 +94,7 @@ class Topic extends ForumAppModel {
 	 */
 	public $validate = array(
 		'title' => 'notEmpty',
-		'forum_category_id' => 'notEmpty',
+		'forum_id' => 'notEmpty',
 		'options' => array(
 			'checkOptions' => array(
 				'rule' => array('checkOptions'),
@@ -136,7 +136,7 @@ class Topic extends ForumAppModel {
 				
 				// Save Topic
 				$this->create();
-				$this->save($data, false, array('forum_category_id', 'user_id', 'title', 'slug', 'status', 'type'));
+				$this->save($data, false, array('forum_id', 'user_id', 'title', 'slug', 'status', 'type'));
 				
 				$topic_id = $this->id;
 				$user_id = $data['Topic']['user_id'];
@@ -149,21 +149,21 @@ class Topic extends ForumAppModel {
 					'lastUser_id' => $user_id,
 				));
 				
-				$this->ForumCategory->update($data['Topic']['forum_category_id'], array(
+				$this->Forum->update($data['Topic']['forum_id'], array(
 					'lastTopic_id' => $topic_id,
 					'lastPost_id' => $post_id,
 					'lastUser_id' => $user_id,
 				));
 				
 				// Update parent forum as well
-				$forum = $this->ForumCategory->find('first', array(
-					'conditions' => array('ForumCategory.id' => $data['Topic']['forum_category_id']),
-					'fields' => array('ForumCategory.id', 'ForumCategory.parent_id'),
+				$forum = $this->Forum->find('first', array(
+					'conditions' => array('Forum.id' => $data['Topic']['forum_id']),
+					'fields' => array('Forum.id', 'Forum.forum_id'),
 					'contain' => false
 				));
 				
-				if ($forum['ForumCategory']['parent_id'] != 0) {
-					$this->ForumCategory->update($forum['ForumCategory']['parent_id'], array(
+				if ($forum['Forum']['forum_id'] != 0) {
+					$this->Forum->update($forum['Forum']['forum_id'], array(
 						'lastTopic_id' => $topic_id,
 						'lastPost_id' => $post_id,
 						'lastUser_id' => $user_id,
@@ -360,20 +360,20 @@ class Topic extends ForumAppModel {
 	}
 	
 	/**
-	 * Get all high level topics within a forum category.
+	 * Get all high level topics within a forum.
 	 *
 	 * @access public
-	 * @param int $category_id
+	 * @param int $forum_id
 	 * @return array
 	 */
-	public function getStickiesInForum($category_id) {
+	public function getStickiesInForum($forum_id) {
 		return $this->find('all', array(
 			'order' => array('Topic.type' => 'DESC'),
 			'conditions' => array(
 				'OR' => array(
 					array('Topic.type' => self::ANNOUNCEMENT),
 					array(
-						'Topic.forum_category_id' => $category_id,
+						'Topic.forum_id' => $forum_id,
 						'Topic.type' => array(self::STICKY, self::IMPORTANT)
 					)
 				)
@@ -395,9 +395,9 @@ class Topic extends ForumAppModel {
 			'contain' => array(
 				'FirstPost.id', 'FirstPost.content', 
 				'Poll' => array('PollOption'),
-				'ForumCategory' => array(
-					'fields' => array('ForumCategory.id', 'ForumCategory.title', 'ForumCategory.slug'),
-					'Forum', 'Parent'
+				'Forum' => array(
+					'fields' => array('Forum.id', 'Forum.title', 'Forum.slug'),
+					'Parent'
 				)
 			),
 			'callbacks' => 'before'
@@ -421,12 +421,12 @@ class Topic extends ForumAppModel {
 	 */
 	public function getTopicForReply($id) {
 		return $this->find('first', array(
-			'fields' => array('Topic.id', 'Topic.title', 'Topic.slug', 'Topic.status', 'Topic.forum_category_id'),
+			'fields' => array('Topic.id', 'Topic.title', 'Topic.slug', 'Topic.status', 'Topic.forum_id'),
 			'conditions' => array('Topic.id' => $id),
 			'contain' => array(
-				'ForumCategory' => array(
-					'fields' => array('ForumCategory.id', 'ForumCategory.title', 'ForumCategory.slug', 'ForumCategory.accessReply', 'ForumCategory.settingPostCount'),
-					'Forum', 'Parent'
+				'Forum' => array(
+					'fields' => array('Forum.id', 'Forum.title', 'Forum.slug', 'Forum.accessReply', 'Forum.settingPostCount'),
+					'Parent'
 				)
 			)
 		));
@@ -442,12 +442,12 @@ class Topic extends ForumAppModel {
 	 */
 	public function getTopicForViewing($slug, $user_id, $field = 'slug') {
 		$topic = $this->find('first', array(
-			'fields' => array('Topic.id', 'Topic.title', 'Topic.slug', 'Topic.status', 'Topic.type', 'Topic.forum_category_id', 'Topic.firstPost_id'),
+			'fields' => array('Topic.id', 'Topic.title', 'Topic.slug', 'Topic.status', 'Topic.type', 'Topic.forum_id', 'Topic.firstPost_id'),
 			'conditions' => array('Topic.'. $field => $slug),
 			'contain' => array(
-				'ForumCategory' => array(
-					'fields' => array('ForumCategory.id', 'ForumCategory.title', 'ForumCategory.slug', 'ForumCategory.accessPost', 'ForumCategory.accessPoll', 'ForumCategory.accessReply', 'ForumCategory.accessRead'),
-					'Forum', 'Parent'
+				'Forum' => array(
+					'fields' => array('Forum.id', 'Forum.title', 'Forum.slug', 'Forum.accessPost', 'Forum.accessPoll', 'Forum.accessReply', 'Forum.accessRead'),
+					'Parent'
 				), 
 				'Poll' => array('PollOption')
 			)
@@ -470,8 +470,8 @@ class Topic extends ForumAppModel {
 	 */
 	public function moveAll($start_id, $moved_id) {
 		return $this->updateAll(
-			array('Topic.forum_category_id' => $moved_id),
-			array('Topic.forum_category_id' => $start_id)
+			array('Topic.forum_id' => $moved_id),
+			array('Topic.forum_id' => $start_id)
 		);
 	}
 	
@@ -518,13 +518,13 @@ class Topic extends ForumAppModel {
 						}
 						
 						// Automatically lock threads
-						if (!empty($result['Topic']['forum_category_id'])) {
-							$forum = ClassRegistry::init('Forum.ForumCategory')->find('first', array(
-								'fields' => array('ForumCategory.settingAutoLock'),
-								'conditions' => array('ForumCategory.id' => $result['Topic']['forum_category_id']),
+						if (!empty($result['Topic']['forum_id'])) {
+							$forum = ClassRegistry::init('Forum.Forum')->find('first', array(
+								'fields' => array('Forum.settingAutoLock'),
+								'conditions' => array('Forum.id' => $result['Topic']['forum_id']),
 								'contain' => false
 							));
-							$lock = ($forum['ForumCategory']['settingAutoLock'] == 1) ? 'yes' : 'no';
+							$lock = ($forum['Forum']['settingAutoLock'] == 1) ? 'yes' : 'no';
 						} else {
 							$lock = 'yes';
 						}

@@ -26,7 +26,7 @@ class ForumController extends ForumAppController {
 	public function index() {
 		$this->Toolbar->pageTitle(__d('forum', 'Index', true));
 		$this->set('menuTab', 'home');
-		$this->set('forums', 		$this->Topic->ForumCategory->Forum->getIndex($this->Toolbar->getAccess(), $this->Session->read('Forum.access')));
+		$this->set('forums', 		$this->Topic->Forum->getIndex($this->Toolbar->getAccess(), $this->Session->read('Forum.access')));
 		$this->set('totalPosts', 	$this->Topic->Post->getTotal());
 		$this->set('totalTopics', 	$this->Topic->getTotal());
 		$this->set('totalUsers', 	$this->Topic->User->getTotal());

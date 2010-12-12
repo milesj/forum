@@ -32,25 +32,7 @@ INSERT INTO `forum_access_levels` (`id`, `title`, `level`, `isAdmin`, `isSuper`)
 
 CREATE TABLE IF NOT EXISTS `forum_forums` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT,
-	`access_level_id` SMALLINT(6) DEFAULT NULL,
-	`title` VARCHAR(50) NOT NULL,
-	`slug` VARCHAR(60) NOT NULL,
-	`status` SMALLINT(6) NOT NULL DEFAULT '1',
-	`orderNo` SMALLINT(6) NOT NULL DEFAULT '0',
-	`accessView` SMALLINT(6) NOT NULL DEFAULT '0',
-	PRIMARY KEY (`id`),
-	KEY `access_level_id` (`access_level_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Containing forums' AUTO_INCREMENT=1;
-
-INSERT INTO `forum_forums` (`id`, `access_level_id`, `title`, `slug`, `status`, `orderNo`, `accessView`) VALUES
-	(1, 0, 'Cupcake Forums', 'cupcake-forums', 1, 1, 0);
-
-/* Table structure for table `forum_categories` */
-
-CREATE TABLE IF NOT EXISTS `forum_forum_categories` (
-	`id` INT(11) NOT NULL AUTO_INCREMENT,
 	`forum_id` INT(11) NOT NULL,
-	`parent_id` INT(11) DEFAULT NULL,
 	`access_level_id` INT(11) DEFAULT NULL,
 	`title` VARCHAR(100) NOT NULL,
 	`slug` VARCHAR(115) NOT NULL,
@@ -61,8 +43,8 @@ CREATE TABLE IF NOT EXISTS `forum_forum_categories` (
 	`post_count` INT(11) NOT NULL DEFAULT '0',
 	`accessRead` SMALLINT(6) NOT NULL DEFAULT '0',
 	`accessPost` SMALLINT(6) NOT NULL DEFAULT '1',
-	`accessReply` SMALLINT(6) NOT NULL DEFAULT '1',
 	`accessPoll` SMALLINT(6) NOT NULL DEFAULT '1',
+	`accessReply` SMALLINT(6) NOT NULL DEFAULT '1',
 	`settingPostCount` SMALLINT(6) NOT NULL DEFAULT '1',
 	`settingAutoLock` SMALLINT(6) NOT NULL DEFAULT '1',
 	`lastTopic_id` INT(11) DEFAULT NULL,
@@ -75,23 +57,23 @@ CREATE TABLE IF NOT EXISTS `forum_forum_categories` (
 	KEY `lastPost_id` (`lastPost_id`),
 	KEY `lastUser_id` (`lastUser_id`),
 	KEY `forum_id` (`forum_id`),
-	KEY `parent_id` (`parent_id`),
 	KEY `access_level_id` (`access_level_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Forum categories to post topics to' AUTO_INCREMENT=1;
 
-INSERT INTO `forum_forum_categories` (`id`, `forum_id`, `parent_id`, `access_level_id`, `title`, `slug`, `description`, `status`, `orderNo`, `topic_count`, `post_count`, `accessRead`, `accessPost`, `accessReply`, `accessPoll`, `settingPostCount`, `settingAutoLock`, `lastTopic_id`, `lastPost_id`, `lastUser_id`, `created`, `modified`) VALUES
-	(1, 1, 0, 0, 'General Discussion', 'general-discussion', 'This is a forum category, which is a child of the forum. You can add, edit or delete these categories by visiting the administration panel, but first you would need to give a user admin rights.', 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, NOW(), NOW());
+INSERT INTO `forum_forums` (`id`, `forum_id`, `access_level_id`, `title`, `slug`, `description`, `status`, `orderNo`, `topic_count`, `post_count`, `accessRead`, `accessPost`, `accessReply`, `accessPoll`, `settingPostCount`, `settingAutoLock`, `lastTopic_id`, `lastPost_id`, `lastUser_id`, `created`, `modified`) VALUES
+	(1, 0, 0, 'Cupcake Forums', 'cupcake-forums', 'This is a primary forum and it contains child forums. Primary forums (no parents) can not be posted in.', 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, NOW(), NOW()),
+	(2, 1, 0, 'General Discussion', 'general-discussion', 'This is a child forum. You can add, edit or delete these forums by visiting the administration panel, but first you would need to give a user admin rights.', 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, NOW(), NOW());
 
 /* Table structure for table `moderators` */
 
 CREATE TABLE IF NOT EXISTS `forum_moderators` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT,
-	`forum_category_id` INT(11) NOT NULL,
+	`forum_id` INT(11) NOT NULL,
 	`user_id` INT(11) NOT NULL,
 	`created` DATETIME DEFAULT NULL,
 	PRIMARY KEY (`id`),
 	KEY `user_id` (`user_id`),
-	KEY `forum_category_id` (`forum_category_id`)
+	KEY `forum_id` (`forum_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Moderators to forums' AUTO_INCREMENT=1;
 
 /* Table structure for table `polls` */
@@ -164,7 +146,7 @@ CREATE TABLE IF NOT EXISTS `forum_reported` (
 
 CREATE TABLE IF NOT EXISTS `forum_topics` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT,
-	`forum_category_id` INT(11) NOT NULL,
+	`forum_id` INT(11) NOT NULL,
 	`user_id` INT(11) NOT NULL,
 	`title` VARCHAR(100) NOT NULL,
 	`slug` VARCHAR(110) NOT NULL,
@@ -182,7 +164,7 @@ CREATE TABLE IF NOT EXISTS `forum_topics` (
 	KEY `firstPost_id` (`firstPost_id`),
 	KEY `lastPost_id` (`lastPost_id`),
 	KEY `lastUser_id` (`lastUser_id`),
-	KEY `forum_category_id` (`forum_category_id`)
+	KEY `forum_id` (`forum_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Discussion topics' AUTO_INCREMENT=1;
 
 /* Table structure for table `topics` */

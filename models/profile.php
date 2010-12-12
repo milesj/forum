@@ -56,10 +56,10 @@ class Profile extends ForumAppModel {
 
 		// Create new record
 		} else {
-			$this->create();
-			$this->save(array('user_id' => $user_id), false);
+			//$this->create();
+			//$this->save(array('user_id' => $user_id), false);
 
-			return $this->getUserProfile($user_id);
+			//return $this->getUserProfile($user_id);
 		}
 	}
 

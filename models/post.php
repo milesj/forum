@@ -78,22 +78,22 @@ class Post extends ForumAppModel {
 				
 				$topic = $this->Topic->find('first', array(
 					'conditions' => array('Topic.id' => $topic_id),
-					'fields' => array('Topic.forum_category_id'),
+					'fields' => array('Topic.forum_id'),
 					'contain' => array(
-						'ForumCategory' => array(
-							'fields' => array('ForumCategory.id', 'ForumCategory.parent_id'),
+						'Forum' => array(
+							'fields' => array('Forum.id', 'Forum.forum_id'),
 							'Parent'
 						)
 					)
 				));
 				
-				// Get total posts for forum category
+				// Get total posts for forum
 				$totalPosts = $this->find('count', array(
-					'conditions' => array('Topic.forum_category_id' => $topic['Topic']['forum_category_id']),
-					'contain' => array('Topic.forum_category_id')
+					'conditions' => array('Topic.forum_id' => $topic['Topic']['forum_id']),
+					'contain' => array('Topic.forum_id')
 				));
 				
-				$this->Topic->ForumCategory->update($topic['Topic']['forum_category_id'], array(
+				$this->Topic->Forum->update($topic['Topic']['forum_id'], array(
 					'lastTopic_id' => $topic_id,
 					'lastPost_id' => $post_id,
 					'lastUser_id' => $user_id,
@@ -101,8 +101,8 @@ class Post extends ForumAppModel {
 				));
 				
 				// Update parent forum as well
-				if (isset($topic['ForumCategory']['Parent']['id']) && $topic['ForumCategory']['parent_id'] != 0) {
-					$this->Topic->ForumCategory->update($topic['ForumCategory']['Parent']['id'], array(
+				if (isset($topic['Forum']['Parent']['id']) && $topic['Forum']['forum_id'] != 0) {
+					$this->Topic->Forum->update($topic['Forum']['Parent']['id'], array(
 						'lastTopic_id' => $topic_id,
 						'lastPost_id' => $post_id,
 						'lastUser_id' => $user_id,
@@ -136,7 +136,7 @@ class Post extends ForumAppModel {
 		$this->create();
 		$this->save($post, false, array_keys($post));
 		
-		$this->Topic->ForumCategory->increasePosts($data['forum_category_id']);
+		$this->Topic->Forum->increasePosts($data['forum_id']);
 		
 		return $this->id;
 	}
@@ -201,16 +201,16 @@ class Post extends ForumAppModel {
 	 */
 	public function destroy($id, $post = array()) {
 		if (empty($post)) {
-			$post = $this->get($id, array('id'), array('Topic.id', 'Topic.forum_category_id'));
+			$post = $this->get($id, array('id'), array('Topic.id', 'Topic.forum_id'));
 		}
 		
 		if (!empty($post)) {
 			$totalPosts = $this->find('count', array(
-				'conditions' => array('Topic.forum_category_id' => $post['Topic']['forum_category_id']),
-				'contain' => array('Topic.forum_category_id')
+				'conditions' => array('Topic.forum_id' => $post['Topic']['forum_id']),
+				'contain' => array('Topic.forum_id')
 			));
 
-			$this->Topic->ForumCategory->update($post['Topic']['forum_category_id'], array('post_count' => $totalPosts));
+			$this->Topic->Forum->update($post['Topic']['forum_id'], array('post_count' => $totalPosts));
 		}
 
 		return $this->delete($id, true);
@@ -251,9 +251,9 @@ class Post extends ForumAppModel {
 			'contain' => array(
 				'Topic' => array(
 					'fields' => array('Topic.id', 'Topic.title', 'Topic.slug'),
-					'ForumCategory' => array(
-						'fields' => array('ForumCategory.id', 'ForumCategory.title', 'ForumCategory.slug'),
-						'Forum', 'Parent'
+					'Forum' => array(
+						'fields' => array('Forum.id', 'Forum.title', 'Forum.slug'),
+						'Parent'
 					)
 				)
 			)

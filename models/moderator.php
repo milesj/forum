@@ -17,9 +17,9 @@ class Moderator extends ForumAppModel {
 	 * @var array 
 	 */
 	public $belongsTo = array(
-		'ForumCategory' => array(
-			'className' => 'Forum.ForumCategory',
-			'fields' => array('ForumCategory.id', 'ForumCategory.title', 'ForumCategory.slug')
+		'Forum' => array(
+			'className' => 'Forum.Forum',
+			'fields' => array('Forum.id', 'Forum.title', 'Forum.slug')
 		), 
 		'User' => array(
 			'className' => 'Forum.User'
@@ -34,7 +34,7 @@ class Moderator extends ForumAppModel {
 	 */
 	public $validate = array(
 		'user_id' => 'notEmpty',
-		'forum_category_id' => 'notEmpty'
+		'forum_id' => 'notEmpty'
 	);
 	
 	/**
@@ -45,8 +45,8 @@ class Moderator extends ForumAppModel {
 	 */
 	public function getList() {
 		return $this->find('all', array(
-			'contain' => array('ForumCategory', 'User'),
-			'order' => array('Moderator.forum_category_id' => 'ASC')
+			'contain' => array('Forum', 'User'),
+			'order' => array('Moderator.forum_id' => 'ASC')
 		));
 	}
 	
@@ -60,7 +60,7 @@ class Moderator extends ForumAppModel {
 	public function getModerations($user_id) {
 		return $this->find('list', array(
 			'conditions' => array('Moderator.user_id' => $user_id),
-			'fields' => array('Moderator.forum_category_id')
+			'fields' => array('Moderator.forum_id')
 		));
 	}
 
