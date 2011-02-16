@@ -5,12 +5,12 @@
 
 <div class="forumOptions">
 	<span><?php __d('forum', 'View Reported'); ?>:</span>
-	<?php echo $html->link(__d('forum', 'Topics', true), array('controller' => 'reports', 'action' => 'topics')); ?>
-    <?php echo $html->link(__d('forum', 'Posts', true), array('controller' => 'reports', 'action' => 'posts')); ?>
-    <?php echo $html->link(__d('forum', 'Users', true), array('controller' => 'reports', 'action' => 'users')); ?>
+	<?php echo $this->Html->link(__d('forum', 'Topics', true), array('controller' => 'reports', 'action' => 'topics')); ?>
+    <?php echo $this->Html->link(__d('forum', 'Posts', true), array('controller' => 'reports', 'action' => 'posts')); ?>
+    <?php echo $this->Html->link(__d('forum', 'Users', true), array('controller' => 'reports', 'action' => 'users')); ?>
 </div>
 
-<?php echo $form->create('Report', array('url' => array('controller' => 'reports', 'action' => 'users', 'admin' => true))); ?>
+<?php echo $this->Form->create('Report', array('url' => array('controller' => 'reports', 'action' => 'users', 'admin' => true))); ?>
 <div class="forumWrap">
     <?php echo $this->element('pagination'); ?>
     
@@ -30,10 +30,10 @@
         
     <tr<?php if ($counter % 2) echo ' class="altRow"'; ?>>
     	<td class="ac"><input type="checkbox" name="data[Report][items][]" value="<?php echo $report['Report']['id']; ?>:<?php echo $report['User']['id']; ?>" /></td>
-        <td><?php echo $html->link($report['User']['username'], array('controller' => 'users', 'action' => 'edit', $report['User']['id'], 'admin' => true)); ?></td>
-        <td><?php echo $html->link($report['Reporter']['username'], array('controller' => 'users', 'action' => 'edit', $report['Reporter']['id'], 'admin' => true)); ?></td>
+        <td><?php echo $this->Html->link($report['User']['username'], array('controller' => 'users', 'action' => 'edit', $report['User']['id'], 'admin' => true)); ?></td>
+        <td><?php echo $this->Html->link($report['Reporter']['username'], array('controller' => 'users', 'action' => 'edit', $report['Reporter']['id'], 'admin' => true)); ?></td>
         <td><?php echo $report['Report']['comment']; ?></td>
-        <td><?php echo $time->nice($report['Report']['created'], $cupcake->timezone()); ?></td>
+        <td><?php echo $this->Time->nice($report['Report']['created'], $this->Cupcake->timezone()); ?></td>
     </tr>
     	<?php ++$counter; 
 		}
@@ -49,12 +49,12 @@
 	<?php echo $this->element('pagination'); ?>
 </div>	
 
-<?php echo $form->input('action', array('options' => array(
+<?php echo $this->Form->input('action', array('options' => array(
 	'ban' => __d('forum', 'Ban User(s)', true),
 	'delete' => __d('forum', 'Delete User(s)', true),
 	'remove' => __d('forum', 'Remove Report Only', true)),
 	'div' => false,
 	'label' => __d('forum', 'Perform Action', true) .': '
 )); ?>
-<?php echo $form->submit(__d('forum', 'Process', true), array('div' => false)); ?>
-<?php echo $form->end(); ?>
+<?php echo $this->Form->submit(__d('forum', 'Process', true), array('div' => false)); ?>
+<?php echo $this->Form->end(); ?>

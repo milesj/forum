@@ -28,10 +28,10 @@
 	</ol>
 
 	<?php // Form
-	echo $form->create(null, array('action' => 'patch'));
-	echo $form->input('database', array('options' => $databases));
-	echo $form->input('prefix', array('label' => 'Table Prefix'));
-	echo $form->input('user_table', array('type' => 'checkbox', 'label' => 'Using Existent User Table', 'after' => ' Yes'));
-	echo $form->end('Apply Patch'); ?>
+	echo $this->Form->create(null, array('action' => 'patch'));
+	echo $this->Form->input('database', array('options' => $databases));
+	echo $this->Form->input('prefix', array('label' => 'Table Prefix'));
+	echo $this->Form->input('user_table', array('type' => 'checkbox', 'label' => 'Using Existent User Table', 'after' => ' Yes'));
+	echo $this->Form->end('Apply Patch'); ?>
 
 <?php } ?>

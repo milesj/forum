@@ -30,7 +30,7 @@ class ForumAppController extends AppController {
 	 * @access public
 	 * @var array
 	 */
-	public $components = array('RequestHandler', 'Security', 'Cookie', 'Auth', 'Forum.Toolbar', 'Forum.AutoLogin');
+	public $components = array('RequestHandler', 'Session', 'Security', 'Cookie', 'Auth', 'Forum.Toolbar', 'Forum.AutoLogin');
 	
 	/**
 	 * Helpers.
@@ -38,7 +38,7 @@ class ForumAppController extends AppController {
 	 * @access public
 	 * @var array
 	 */
-	public $helpers = array('Html', 'Session', 'Form', 'Time', 'Text', 'Javascript', 'Forum.Cupcake', 'Forum.Decoda' => array());
+	public $helpers = array('Html', 'Session', 'Form', 'Time', 'Text', 'Forum.Cupcake', 'Forum.Decoda' => array());
 
 	/**
 	 * Run auto login logic.
@@ -124,6 +124,15 @@ class ForumAppController extends AppController {
 		
 		// Initialize
 		$this->Toolbar->initForum();
+	}
+
+	/**
+	 * Check page title and set for 1.3.
+	 */
+	public function beforeRender() {
+		if (isset($this->pageTitle) && !empty($this->pageTitle)) {
+			$this->set('title_for_layout', $this->pageTitle);
+		}
 	}
 
 }

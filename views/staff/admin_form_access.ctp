@@ -14,10 +14,10 @@ if ($method == 'add') {
 	<h2><?php echo $title; ?></h2>
 </div>
 
-<p><?php printf(__d('forum', 'To find the users ID, you can search for them on the %s.', true), $html->link(__d('forum', 'Users listing', true), array('controller' => 'users', 'action' => 'index', 'admin' => true))); ?></p>
+<p><?php printf(__d('forum', 'To find the users ID, you can search for them on the %s.', true), $this->Html->link(__d('forum', 'Users listing', true), array('controller' => 'users', 'action' => 'index', 'admin' => true))); ?></p>
 
 <?php 
-echo $form->create('Access', array('url' => array('controller' => 'staff', 'action' => $action, 'admin' => true)));
-echo $form->input('user_id', array('style' => 'width: 50px', 'label' => __d('forum', 'User ID', true)));
-echo $form->input('access_level_id', array('options' => $levels, 'label' => __d('forum', 'Access Level', true), 'empty' => false));
-echo $form->end($button); ?>
+echo $this->Form->create('Access', array('url' => array('controller' => 'staff', 'action' => $action, 'admin' => true)));
+echo $this->Form->input('user_id', array('style' => 'width: 50px', 'label' => __d('forum', 'User ID', true)));
+echo $this->Form->input('access_level_id', array('options' => $levels, 'label' => __d('forum', 'Access Level', true), 'empty' => false));
+echo $this->Form->end($button); ?>

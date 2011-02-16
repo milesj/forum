@@ -22,7 +22,7 @@
     	<td class="ac"><?php echo number_format($totalUsers); ?></td>
     	<td class="ac"><?php echo number_format($totalReports); ?></td>
     	<td class="ac"><?php echo number_format($totalMods); ?></td>
-    	<td class="ac"><?php echo $html->link($newestUser['User']['username'], array('controller' => 'users', 'action' => 'edit', $newestUser['User']['id'], 'admin' => true)); ?></td>
+    	<td class="ac"><?php echo $this->Html->link($newestUser['User']['username'], array('controller' => 'users', 'action' => 'edit', $newestUser['User']['id'], 'admin' => true)); ?></td>
     </tr>
     </table>
 </div>	
@@ -45,19 +45,19 @@
 	foreach ($latestReports as $report) { ?>
         
     <tr<?php if ($counter % 2) echo ' class="altRow"'; ?>>
-        <td><?php echo $html->link(__d('forum', ucfirst($report['Report']['itemType']), true), array('controller' => 'reports', 'action' => $report['Report']['itemType'] .'s')); ?></td>
+        <td><?php echo $this->Html->link(__d('forum', ucfirst($report['Report']['itemType']), true), array('controller' => 'reports', 'action' => $report['Report']['itemType'] .'s')); ?></td>
     	<td>	
         	<?php if ($report['Report']['itemType'] == 'topic') {
-				echo $html->link($report['Topic']['title'], array('controller' => 'topics', 'action' => 'view', $report['Topic']['id'], 'admin' => false));
+				echo $this->Html->link($report['Topic']['title'], array('controller' => 'topics', 'action' => 'view', $report['Topic']['id'], 'admin' => false));
 			} else if ($report['Report']['itemType'] == 'user') {
-				echo $html->link($report['User']['username'], array('controller' => 'users', 'action' => 'edit', $report['User']['id'], 'admin' => true));
+				echo $this->Html->link($report['User']['username'], array('controller' => 'users', 'action' => 'edit', $report['User']['id'], 'admin' => true));
 			} else if ($report['Report']['itemType'] == 'post') {
 				echo $report['Post']['content'];
 			} ?>
         </td>
-        <td><?php echo $html->link($report['Reporter']['username'], array('controller' => 'users', 'action' => 'edit', $report['Reporter']['id'], 'admin' => true)); ?></td>
+        <td><?php echo $this->Html->link($report['Reporter']['username'], array('controller' => 'users', 'action' => 'edit', $report['Reporter']['id'], 'admin' => true)); ?></td>
         <td><?php echo $report['Report']['comment']; ?></td>
-        <td><?php echo $time->nice($report['Report']['created'], $cupcake->timezone()); ?></td>
+        <td><?php echo $this->Time->nice($report['Report']['created'], $this->Cupcake->timezone()); ?></td>
     </tr>
     
     <?php ++$counter; } ?>
@@ -84,15 +84,15 @@
 	foreach ($latestUsers as $user) { ?>
         
     <tr<?php if ($counter % 2) echo ' class="altRow"'; ?>>
-        <td><?php echo $html->link($user['User']['username'], array('controller' => 'users', 'action' => 'edit', $user['User']['id'], 'admin' => true)); ?></td>
+        <td><?php echo $this->Html->link($user['User']['username'], array('controller' => 'users', 'action' => 'edit', $user['User']['id'], 'admin' => true)); ?></td>
         <td><?php echo $user['User']['email']; ?></td>
-        <td class="ac"><?php echo $time->nice($user['User']['created'], $cupcake->timezone()); ?></td>
+        <td class="ac"><?php echo $this->Time->nice($user['User']['created'], $this->Cupcake->timezone()); ?></td>
         <td class="ac"><?php echo number_format($user['User']['totalTopics']); ?></td>
         <td class="ac"><?php echo number_format($user['User']['totalPosts']); ?></td>
         <td class="ac gray">
-        	<?php echo $html->link(__d('forum', 'Edit', true), array('controller' => 'users', 'action' => 'edit', $user['User']['id'], 'admin' => true)); ?> -
-        	<?php echo $html->link(__d('forum', 'Reset Password', true), array('controller' => 'users', 'action' => 'reset', $user['User']['id'], 'admin' => true), array('confirm' => __d('forum', 'Are you sure you want to reset?', true))); ?> -
-        	<?php echo $html->link(__d('forum', 'Delete', true), array('controller' => 'users', 'action' => 'delete', $user['User']['id'], 'admin' => true)); ?>
+        	<?php echo $this->Html->link(__d('forum', 'Edit', true), array('controller' => 'users', 'action' => 'edit', $user['User']['id'], 'admin' => true)); ?> -
+        	<?php echo $this->Html->link(__d('forum', 'Reset Password', true), array('controller' => 'users', 'action' => 'reset', $user['User']['id'], 'admin' => true), array('confirm' => __d('forum', 'Are you sure you want to reset?', true))); ?> -
+        	<?php echo $this->Html->link(__d('forum', 'Delete', true), array('controller' => 'users', 'action' => 'delete', $user['User']['id'], 'admin' => true)); ?>
         </td>
     </tr>
     

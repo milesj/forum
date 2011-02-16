@@ -7,9 +7,9 @@
 
 <p><?php printf(__d('forum', 'Before you delete the forum %s, please select which forum all child categories should be moved to upon deletion.', true), '<strong>'. $forum['Forum']['title'] .'</strong>'); ?></p>
 
-<?php echo $form->create('Forum', array('url' => array('controller' => 'categories', 'action' => 'delete_forum', $id, 'admin' => true)));
-echo $form->input('forum_id', array('option' => $forums, 'label' => __d('forum', 'Forum', true)));
-echo $form->end(__d('forum', 'Delete', true)); ?>
+<?php echo $this->Form->create('Forum', array('url' => array('controller' => 'categories', 'action' => 'delete_forum', $id, 'admin' => true)));
+echo $this->Form->input('forum_id', array('option' => $forums, 'label' => __d('forum', 'Forum', true)));
+echo $this->Form->end(__d('forum', 'Delete', true)); ?>
 
 <?php } else { ?>
 

@@ -3,16 +3,16 @@
 	<h2><?php __d('forum', 'Staff &amp; Moderators'); ?></h2>
 </div>
 
-<?php $session->flash(); ?>
+<?php echo $this->Session->flash(); ?>
 
 <div class="forumOptions">
-	<?php echo $html->link(__d('forum', 'Add Staff', true), array('action' => 'add_access')); ?>
-	<?php echo $html->link(__d('forum', 'Add Access Level', true), array('action' => 'add_access_level')); ?>
-    <?php echo $html->link(__d('forum', 'Add Moderator', true), array('action' => 'add_moderator')); ?>
+	<?php echo $this->Html->link(__d('forum', 'Add Staff', true), array('action' => 'add_access')); ?>
+	<?php echo $this->Html->link(__d('forum', 'Add Access Level', true), array('action' => 'add_access_level')); ?>
+    <?php echo $this->Html->link(__d('forum', 'Add Moderator', true), array('action' => 'add_moderator')); ?>
 </div>
 
 <?php // Form
-echo $form->create('Access', array('url' => array('controller' => 'staff', 'action' => 'index', 'admin' => true))); ?>
+echo $this->Form->create('Access', array('url' => array('controller' => 'staff', 'action' => 'index', 'admin' => true))); ?>
 
 <div class="forumWrap">
 	<h3><?php __d('forum', 'Levels'); ?></h3>
@@ -34,8 +34,8 @@ echo $form->create('Access', array('url' => array('controller' => 'staff', 'acti
         	<?php if ($level['AccessLevel']['id'] <= 4) { ?>
         		<em><?php __d('forum', 'Restricted'); ?></em>
         	<?php } else { ?>
-        	<?php echo $html->link(__d('forum', 'Edit', true), array('action' => 'edit_access_level', $level['AccessLevel']['id'])); ?> -
-        	<?php echo $html->link(__d('forum', 'Delete', true), array('action' => 'delete_access_level', $level['AccessLevel']['id']));
+        	<?php echo $this->Html->link(__d('forum', 'Edit', true), array('action' => 'edit_access_level', $level['AccessLevel']['id'])); ?> -
+        	<?php echo $this->Html->link(__d('forum', 'Delete', true), array('action' => 'delete_access_level', $level['AccessLevel']['id']));
 			} ?>
         </td>
     </tr>
@@ -60,12 +60,12 @@ echo $form->create('Access', array('url' => array('controller' => 'staff', 'acti
 	foreach ($staff as $user) { ?>
     
     <tr id="staff_<?php echo $user['Access']['id']; ?>">
-        <td><strong><?php echo $html->link($user['User']['username'], array('controller' => 'users', 'action' => 'edit', $user['User']['id'], 'admin' => true)); ?></strong></td>
+        <td><strong><?php echo $this->Html->link($user['User']['username'], array('controller' => 'users', 'action' => 'edit', $user['User']['id'], 'admin' => true)); ?></strong></td>
         <td class="ac"><?php echo $user['AccessLevel']['title']; ?></td>
-        <td class="ac"><?php echo $time->nice($user['Access']['created'], $cupcake->timezone()); ?></td>
+        <td class="ac"><?php echo $this->Time->nice($user['Access']['created'], $this->Cupcake->timezone()); ?></td>
         <td class="ac gray">
-        	<?php echo $html->link(__d('forum', 'Edit', true), array('action' => 'edit_access', $user['Access']['id'])); ?> -
-        	<?php echo $html->link(__d('forum', 'Delete', true), array('action' => 'delete_access', $user['Access']['id']), array('confirm' => __d('forum', 'Are you sure you want to delete?', true))); ?>
+        	<?php echo $this->Html->link(__d('forum', 'Edit', true), array('action' => 'edit_access', $user['Access']['id'])); ?> -
+        	<?php echo $this->Html->link(__d('forum', 'Delete', true), array('action' => 'delete_access', $user['Access']['id']), array('confirm' => __d('forum', 'Are you sure you want to delete?', true))); ?>
         </td>
     </tr>
     
@@ -74,10 +74,10 @@ echo $form->create('Access', array('url' => array('controller' => 'staff', 'acti
     </table>
 </div>
 
-<?php echo $form->end(); ?>
+<?php echo $this->Form->end(); ?>
 
 <?php // Form
-echo $form->create('Moderator', array('url' => array('controller' => 'staff', 'action' => 'index', 'admin' => true))); ?>
+echo $this->Form->create('Moderator', array('url' => array('controller' => 'staff', 'action' => 'index', 'admin' => true))); ?>
 
 <div class="forumWrap">
 	<h3><?php __d('forum', 'Moderators'); ?></h3>
@@ -95,12 +95,12 @@ echo $form->create('Moderator', array('url' => array('controller' => 'staff', 'a
 		foreach ($mods as $user) { ?>
     
     <tr id="mod_<?php echo $user['Moderator']['id']; ?>">
-        <td><strong><?php echo $html->link($user['User']['username'], array('controller' => 'users', 'action' => 'edit', $user['Moderator']['id'], 'admin' => true)); ?></strong></td>
-        <td class="ac"><?php echo $html->link($user['ForumCategory']['title'], array('controller' => 'categories', 'action' => 'edit_category', $user['ForumCategory']['id'], 'admin' => true)); ?></td>
-        <td class="ac"><?php echo $time->nice($user['Moderator']['created'], $cupcake->timezone()); ?></td>
+        <td><strong><?php echo $this->Html->link($user['User']['username'], array('controller' => 'users', 'action' => 'edit', $user['Moderator']['id'], 'admin' => true)); ?></strong></td>
+        <td class="ac"><?php echo $this->Html->link($user['ForumCategory']['title'], array('controller' => 'categories', 'action' => 'edit_category', $user['ForumCategory']['id'], 'admin' => true)); ?></td>
+        <td class="ac"><?php echo $this->Time->nice($user['Moderator']['created'], $this->Cupcake->timezone()); ?></td>
         <td class="ac gray">
-        	<?php echo $html->link(__d('forum', 'Edit', true), array('action' => 'edit_moderator', $user['Moderator']['id'])); ?> -
-        	<?php echo $html->link(__d('forum', 'Delete', true), array('action' => 'delete_moderator', $user['Moderator']['id']), array('confirm' => __d('forum', 'Are you sure you want to delete?', true))); ?>
+        	<?php echo $this->Html->link(__d('forum', 'Edit', true), array('action' => 'edit_moderator', $user['Moderator']['id'])); ?> -
+        	<?php echo $this->Html->link(__d('forum', 'Delete', true), array('action' => 'delete_moderator', $user['Moderator']['id']), array('confirm' => __d('forum', 'Are you sure you want to delete?', true))); ?>
         </td>
     </tr>
     
@@ -108,7 +108,7 @@ echo $form->create('Moderator', array('url' => array('controller' => 'staff', 'a
     } else { ?>
     
     <tr>
-    	<td colspan="4" class="empty"><?php __d('forum', 'There are no assigned moderators.'); ?> <?php echo $html->link(__d('forum', 'Add Moderator', true), array('action' => 'add_moderator')); ?>.</td>
+    	<td colspan="4" class="empty"><?php __d('forum', 'There are no assigned moderators.'); ?> <?php echo $this->Html->link(__d('forum', 'Add Moderator', true), array('action' => 'add_moderator')); ?>.</td>
     </tr>
     
     <?php } ?>
@@ -116,11 +116,11 @@ echo $form->create('Moderator', array('url' => array('controller' => 'staff', 'a
     </table>
 </div>
 
-<?php echo $form->end(); ?>
+<?php echo $this->Form->end(); ?>
 
 <div class="forumOptions">
-	<?php echo $html->link(__d('forum', 'Add Staff', true), array('action' => 'add_access')); ?>
-	<?php echo $html->link(__d('forum', 'Add Access Level', true), array('action' => 'add_access_level')); ?>
-    <?php echo $html->link(__d('forum', 'Add Moderator', true), array('action' => 'add_moderator')); ?>
+	<?php echo $this->Html->link(__d('forum', 'Add Staff', true), array('action' => 'add_access')); ?>
+	<?php echo $this->Html->link(__d('forum', 'Add Access Level', true), array('action' => 'add_access_level')); ?>
+    <?php echo $this->Html->link(__d('forum', 'Add Moderator', true), array('action' => 'add_moderator')); ?>
 </div>
 

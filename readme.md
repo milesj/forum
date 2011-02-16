@@ -1,15 +1,15 @@
-# Forum v1.8.1 #
+# Forum v1.9 #
 
 A fully robust and powerful CakePHP forum plugin.
 
 ## Requirements ##
 
-* CakePHP 1.2.x
+* CakePHP 1.3.x
 * PHP 5.2.x
 
 ## Documentation ##
 
-Thorough documentation can be found here: http://www.milesj.me/resources/script/forum-plugin
+Thorough documentation can be found here: http://milesj.me/resources/script/forum-plugin
 
 ## Installation ##
 

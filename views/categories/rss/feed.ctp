@@ -1,7 +1,7 @@
 
 <?php // Channel
 $this->set('channel', array(
-	'title' 		=> $cupcake->settings['site_name'] .' - '. __d('forum', 'Forum', true) .': '. $category['ForumCategory']['title'],
+	'title' 		=> $this->Cupcake->settings['site_name'] .' - '. __d('forum', 'Forum', true) .': '. $category['ForumCategory']['title'],
 	'link' 			=> array('plugin' => 'forum', 'controller' => 'categories', 'action' => 'view', $category['ForumCategory']['slug']),
 	'description' 	=> $category['ForumCategory']['description'],
 	'language' 		=> 'en-us',
@@ -16,7 +16,7 @@ if (!empty($items)) {
 			'title' => $item['Topic']['title'],
 			'link' => $link,
 			'guid' => array('url' => $link, 'isPermaLink' => 'true'),
-			'description' => $decoda->parse($item['FirstPost']['content'], true),
+			'description' => $this->Decoda->parse($item['FirstPost']['content'], true),
 			'dc:creator' => $item['User']['username'],
 			'pubDate' => $item['Topic']['created']
 		));

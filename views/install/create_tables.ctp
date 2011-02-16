@@ -19,8 +19,8 @@
 
 <div class="submit">
 	<?php if ($executed == $total) {
-		echo $form->button('Setup Users Table', array('onclick' => "goTo('". Router::url(array('action' => 'setup_users')) ."');"));
+		echo $this->Form->button('Setup Users Table', array('onclick' => "goTo('". Router::url(array('action' => 'setup_users')) ."');"));
 	} else {
-		echo $form->button('Restart', array('onclick' => "goTo('". Router::url(array('action' => 'index')) ."');"));
+		echo $this->Form->button('Restart', array('onclick' => "goTo('". Router::url(array('action' => 'index')) ."');"));
 	} ?>
 </div>

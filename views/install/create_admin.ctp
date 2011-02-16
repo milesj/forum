@@ -14,7 +14,7 @@ The form below quickly allows you to add an administrator into the system instea
 
 <?php if ($granted) { ?>
 <div class="submit">
-	<?php echo $form->button('Visit Forum', array('onclick' => "goTo('". Router::url(array('controller' => 'home', 'action' => 'index', 'plugin' => 'forum')) ."');")); ?>
+	<?php echo $this->Form->button('Visit Forum', array('onclick' => "goTo('". Router::url(array('controller' => 'home', 'action' => 'index', 'plugin' => 'forum')) ."');")); ?>
 </div>
 
 <?php } else {
@@ -22,19 +22,19 @@ The form below quickly allows you to add an administrator into the system instea
 		<p>Please enter the user ID of the user you want to give administrator access.</p>
 
 		<?php // Form
-		echo $form->create('User', array('url' => array('controller' => 'install', 'action' => 'create_admin')));
-		echo $form->input('user_id', array('label' => 'User ID'));
-		echo $form->end('Grant Access');
+		echo $this->Form->create('User', array('url' => array('controller' => 'install', 'action' => 'create_admin')));
+		echo $this->Form->input('user_id', array('label' => 'User ID'));
+		echo $this->Form->end('Grant Access');
 		
 	} else { ?>
 		<p>Since there are no users yet in the system, we must create a new user.</p>
 
 		<?php // Form
-		echo $form->create('User', array('url' => array('controller' => 'install', 'action' => 'create_admin')));
-		echo $form->input('username', array('label' => __d('forum', 'Username', true)));
-		echo $form->input('email', array('label' => __d('forum', 'Email', true)));
-		echo $form->input('newPassword', array('type' => 'password', 'label' => __d('forum', 'Password', true)));
-		echo $form->input('confirmPassword', array('type' => 'password', 'label' => __d('forum', 'Confirm Password', true)));
-		echo $form->end('Create User');
+		echo $this->Form->create('User', array('url' => array('controller' => 'install', 'action' => 'create_admin')));
+		echo $this->Form->input('username', array('label' => __d('forum', 'Username', true)));
+		echo $this->Form->input('email', array('label' => __d('forum', 'Email', true)));
+		echo $this->Form->input('newPassword', array('type' => 'password', 'label' => __d('forum', 'Password', true)));
+		echo $this->Form->input('confirmPassword', array('type' => 'password', 'label' => __d('forum', 'Confirm Password', true)));
+		echo $this->Form->end('Create User');
 	}
 } ?>

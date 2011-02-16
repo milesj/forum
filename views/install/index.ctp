@@ -33,5 +33,5 @@
 <p>Certain versions require an upgrade script to upgrade the code correctly. Apply the following updates for the version you want (if you haven't already).</p>
 
 <ul class="decoda_list">
-	<li><?php echo $html->link('Upgrade to 1.8', array('action' => 'upgrade_1_8')); ?></li>
+	<li><?php echo $this->Html->link('Upgrade to 1.8', array('action' => 'upgrade_1_8')); ?></li>
 </ul>

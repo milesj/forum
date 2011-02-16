@@ -3,20 +3,20 @@
 if (!empty($user)) { ?>
 
 <div class="forumHeader">
-	<button type="button" onclick="goTo('<?php echo $html->url(array('action' => 'report', $user['User']['id'])); ?>');" class="fr button"><?php __d('forum', 'Report User'); ?></button>
+	<button type="button" onclick="goTo('<?php echo $this->Html->url(array('action' => 'report', $user['User']['id'])); ?>');" class="fr button"><?php __d('forum', 'Report User'); ?></button>
 	<h2><?php echo $user['User']['username']; ?></h2>
 </div>
 
-<?php if (!empty($user['User'][$cupcake->columnMap['signature']])) { ?>
-<p><?php $decoda->parse($user['User'][$cupcake->columnMap['signature']], false, array('b', 'i', 'u', 'img', 'url', 'align', 'color', 'size', 'code')); ?></p>
+<?php if (!empty($user['User'][$this->Cupcake->columnMap['signature']])) { ?>
+<p><?php $this->Decoda->parse($user['User'][$this->Cupcake->columnMap['signature']], false, array('b', 'i', 'u', 'img', 'url', 'align', 'color', 'size', 'code')); ?></p>
 <?php } ?>
 
 <table cellpadding="5" cellspacing="0" id="userInfo">
 <tr>
 	<td><strong><?php __d('forum', 'Joined'); ?>:</strong></td>
-    <td><?php echo $time->nice($user['User']['created'], $cupcake->timezone()); ?></td>
+    <td><?php echo $this->Time->nice($user['User']['created'], $this->Cupcake->timezone()); ?></td>
 	<td><strong><?php __d('forum', 'Total Topics'); ?>:</strong></td>
-    <td><?php echo number_format($user['User'][$cupcake->columnMap['totalTopics']]); ?></td>
+    <td><?php echo number_format($user['User'][$this->Cupcake->columnMap['totalTopics']]); ?></td>
     <td><strong><?php __d('forum', 'Roles'); ?>:</strong></td>
     <td>
     	<?php if (!empty($user['Access'])) { 
@@ -33,20 +33,20 @@ if (!empty($user)) { ?>
 <tr>
     <td><strong><?php __d('forum', 'Last Login'); ?>:</strong></td>
     <td>
-		<?php if (!empty($user['User'][$cupcake->columnMap['lastLogin']])) {
-			echo $time->relativeTime($user['User'][$cupcake->columnMap['lastLogin']], array('userOffset' => $cupcake->timezone()));
+		<?php if (!empty($user['User'][$this->Cupcake->columnMap['lastLogin']])) {
+			echo $this->Time->relativeTime($user['User'][$this->Cupcake->columnMap['lastLogin']], array('userOffset' => $this->Cupcake->timezone()));
 		} else {
 			echo '<em>'. __d('forum', 'Never', true) .'</em>';
 		} ?>
     </td>
     <td><strong><?php __d('forum', 'Total Posts'); ?>:</strong></td>
-    <td><?php echo number_format($user['User'][$cupcake->columnMap['totalPosts']]); ?></td>
+    <td><?php echo number_format($user['User'][$this->Cupcake->columnMap['totalPosts']]); ?></td>
     <td><strong><?php __d('forum', 'Moderates'); ?>:</strong></td>
     <td>
     	<?php if (!empty($user['Moderator'])) { 
 			$mods = array();
 			foreach ($user['Moderator'] as $mod) {
-				$mods[] = $html->link($mod['ForumCategory']['title'], array('controller' => 'category', 'action' => 'view', $mod['ForumCategory']['id']));
+				$mods[] = $this->Html->link($mod['ForumCategory']['title'], array('controller' => 'category', 'action' => 'view', $mod['ForumCategory']['id']));
 			}
 			echo implode(', ', $mods);
 		} else {
@@ -75,11 +75,11 @@ if (!empty($topics)) { ?>
         $lastTime = (isset($topic['LastPost']['created'])) ? $topic['LastPost']['created'] : $topic['Topic']['modified']; ?>
         
     <tr<?php if ($counter % 2) echo ' class="altRow"'; ?>>
-        <td><?php echo $html->link($topic['Topic']['title'], array('controller' => 'topics', 'action' => 'view', $topic['Topic']['slug'])); ?></td>
-        <td class="ac"><?php echo $time->niceShort($topic['Topic']['created'], $cupcake->timezone()); ?></td>
+        <td><?php echo $this->Html->link($topic['Topic']['title'], array('controller' => 'topics', 'action' => 'view', $topic['Topic']['slug'])); ?></td>
+        <td class="ac"><?php echo $this->Time->niceShort($topic['Topic']['created'], $this->Cupcake->timezone()); ?></td>
         <td class="ac"><?php echo number_format($topic['Topic']['post_count']); ?></td>
         <td class="ac"><?php echo number_format($topic['Topic']['view_count']); ?></td>
-        <td><?php echo $time->relativeTime($lastTime, array('userOffset' => $cupcake->timezone())); ?></td>
+        <td><?php echo $this->Time->relativeTime($lastTime, array('userOffset' => $this->Cupcake->timezone())); ?></td>
     </tr>
     <?php ++$counter; } ?>
     
@@ -101,12 +101,12 @@ if (!empty($posts)) { ?>
     
     <?php foreach($posts as $post) { ?>
     <tr class="altRow">
-        <td><strong><?php echo $html->link($post['Topic']['title'], array('controller' => 'topics', 'action' => 'view', $post['Topic']['slug'])); ?></strong></td>
-        <td><?php echo $html->link($post['Topic']['User']['username'], array('controller' => 'users', 'action' => 'profile', $post['Topic']['User']['id'])); ?></td>
-        <td class="ar"><?php echo $time->relativeTime($post['Post']['created'], array('userOffset' => $cupcake->timezone())); ?></td>
+        <td><strong><?php echo $this->Html->link($post['Topic']['title'], array('controller' => 'topics', 'action' => 'view', $post['Topic']['slug'])); ?></strong></td>
+        <td><?php echo $this->Html->link($post['Topic']['User']['username'], array('controller' => 'users', 'action' => 'profile', $post['Topic']['User']['id'])); ?></td>
+        <td class="ar"><?php echo $this->Time->relativeTime($post['Post']['created'], array('userOffset' => $this->Cupcake->timezone())); ?></td>
     </tr>
     <tr>
-        <td colspan="3"><?php echo $decoda->parse($post['Post']['content']); ?></td>
+        <td colspan="3"><?php echo $this->Decoda->parse($post['Post']['content']); ?></td>
     </tr>
     <?php } ?>
     

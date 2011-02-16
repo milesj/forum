@@ -13,7 +13,7 @@
 <?php __d('forum', 'The server might be having technicaly difficulties so your request could not be processed. It may also be that your account has been deleted or banned.'); ?></p>
 
 <p><strong><?php __d('forum', 'Oh no, I forgot my password!'); ?></strong><br />
-<?php printf(__d('forum', 'If you have forgotten your password, you can reset it using the %s form.', true), $html->link('forgotten password', array('controller' => 'users', 'action' => 'forgot'))); ?></p>
+<?php printf(__d('forum', 'If you have forgotten your password, you can reset it using the %s form.', true), $this->Html->link('forgotten password', array('controller' => 'users', 'action' => 'forgot'))); ?></p>
 
 <p><strong><?php __d('forum', 'What does reporting do?'); ?></strong><br />
 <?php __d('forum', 'If you find a piece of content that you find inappropriate or offensive, you can report the content for a moderator to delete or fix.'); ?></p>
@@ -25,7 +25,7 @@
 <?php __d('forum', 'By default the search will only search for terms within the topic title. If you check the power search, it will search within the title and post.'); ?></p>
 
 <p><strong><?php __d('forum', 'How do I edit my profile?'); ?></strong><br />
-<?php printf(__d('forum', 'Once you have logged in, you can edit your profile by going to the %s link, located at the top right.', true), $html->link('edit profile', array('controller' => 'users', 'action' => 'edit'))); ?></p>
+<?php printf(__d('forum', 'Once you have logged in, you can edit your profile by going to the %s link, located at the top right.', true), $this->Html->link('edit profile', array('controller' => 'users', 'action' => 'edit'))); ?></p>
 
 <p><strong><?php __d('forum', 'How do I post a topic?'); ?></strong><br />
 <?php __d('forum', 'You would first navigate to the appropriate forum you want to post in. Once there, you would click the "Create Topic" link located at the top and bottom right of the page.'); ?></p>
@@ -46,4 +46,4 @@
 <?php __d('forum', 'It is up to the administrator to give you higher access. All you can do is be a superb member on the forum and hope they promote you.'); ?></p>
 
 <p><strong><?php __d('forum', 'I have more questions that aren\'t shown here!'); ?></strong><br />
-<?php printf(__d('forum', 'If you have additional questions and need further help, please contact us at %s.', true), $cupcake->settings['site_email']); ?></p>
+<?php printf(__d('forum', 'If you have additional questions and need further help, please contact us at %s.', true), $this->Cupcake->settings['site_email']); ?></p>

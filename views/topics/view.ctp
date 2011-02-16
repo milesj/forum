@@ -1,13 +1,13 @@
 
 <?php // Crumbs
-$html->addCrumb($topic['ForumCategory']['Forum']['title'], array('controller' => 'home', 'action' => 'index'));
+$this->Html->addCrumb($topic['ForumCategory']['Forum']['title'], array('controller' => 'home', 'action' => 'index'));
 if (!empty($topic['ForumCategory']['Parent']['slug'])) {
-	$html->addCrumb($topic['ForumCategory']['Parent']['title'], array('controller' => 'categories', 'action' => 'view', $topic['ForumCategory']['Parent']['slug']));
+	$this->Html->addCrumb($topic['ForumCategory']['Parent']['title'], array('controller' => 'categories', 'action' => 'view', $topic['ForumCategory']['Parent']['slug']));
 }
-$html->addCrumb($topic['ForumCategory']['title'], array('controller' => 'categories', 'action' => 'view', $topic['ForumCategory']['slug'])); ?>
+$this->Html->addCrumb($topic['ForumCategory']['title'], array('controller' => 'categories', 'action' => 'view', $topic['ForumCategory']['slug'])); ?>
 
 <div class="forumHeader">
-	<?php if (!$cupcake->user()) { ?>
+	<?php if (!$this->Cupcake->user()) { ?>
 	<div class="fr">
 		<?php echo $this->element('login'); ?>
 	</div>
@@ -16,20 +16,20 @@ $html->addCrumb($topic['ForumCategory']['title'], array('controller' => 'categor
 	<h2><?php echo $topic['Topic']['title']; ?></h2>
 </div>
 
-<?php if ($cupcake->user()) { ?>
+<?php if ($this->Cupcake->user()) { ?>
 <div class="forumOptions">
-	<?php if ($cupcake->hasAccess('mod', $topic['ForumCategory']['id'])) {
-		echo $html->link(__d('forum', 'Moderate', true), array('controller' => 'topics', 'action' => 'moderate', $topic['Topic']['id']));
+	<?php if ($this->Cupcake->hasAccess('mod', $topic['ForumCategory']['id'])) {
+		echo $this->Html->link(__d('forum', 'Moderate', true), array('controller' => 'topics', 'action' => 'moderate', $topic['Topic']['id']));
 	} ?>
-	<?php if ($cupcake->hasAccess($topic['ForumCategory']['accessPost'])) {
-		echo $html->link(__d('forum', 'Create Topic', true), array('controller' => 'topics', 'action' => 'add', $topic['ForumCategory']['id']));
+	<?php if ($this->Cupcake->hasAccess($topic['ForumCategory']['accessPost'])) {
+		echo $this->Html->link(__d('forum', 'Create Topic', true), array('controller' => 'topics', 'action' => 'add', $topic['ForumCategory']['id']));
 	} ?>
-    <?php if ($cupcake->hasAccess($topic['ForumCategory']['accessPoll'])) {
-		echo $html->link(__d('forum', 'Create Poll', true), array('controller' => 'topics', 'action' => 'add', $topic['ForumCategory']['id'], 'poll'));
+    <?php if ($this->Cupcake->hasAccess($topic['ForumCategory']['accessPoll'])) {
+		echo $this->Html->link(__d('forum', 'Create Poll', true), array('controller' => 'topics', 'action' => 'add', $topic['ForumCategory']['id'], 'poll'));
 	} ?>
-    <?php if ($cupcake->hasAccess($topic['ForumCategory']['accessReply'])) {
+    <?php if ($this->Cupcake->hasAccess($topic['ForumCategory']['accessReply'])) {
 		if ($topic['Topic']['status'] == 0) {
-			echo $html->link(__d('forum', 'Post Reply', true), array('controller' => 'posts', 'action' => 'add', $topic['Topic']['id']));
+			echo $this->Html->link(__d('forum', 'Post Reply', true), array('controller' => 'posts', 'action' => 'add', $topic['Topic']['id']));
 		} else {
 			echo '<span>'. __d('forum', 'Closed', true) .'</span>';
 		}	
@@ -40,7 +40,7 @@ $html->addCrumb($topic['ForumCategory']['title'], array('controller' => 'categor
 <?php // Topic Poll
 if (!empty($topic['Poll']['id'])) { ?>
 <div id="pollWrap">
-	<?php echo $form->create('Poll', array('url' => array('controller' => 'topics', 'action' => 'view', $topic['Topic']['slug']))); ?>
+	<?php echo $this->Form->create('Poll', array('url' => array('controller' => 'topics', 'action' => 'view', $topic['Topic']['slug']))); ?>
   	<table cellspacing="0" class="table">
     <tr>
     	<th colspan="3"><?php echo $topic['Topic']['title']; ?></th>
@@ -59,11 +59,11 @@ if (!empty($topic['Poll']['id'])) { ?>
     
     <tr class="altRow2">
     	<td colspan="3" class="ac">
-			<?php if ($cupcake->user()) {
+			<?php if ($this->Cupcake->user()) {
 				if (!empty($topic['Poll']['expires']) && $topic['Poll']['expires'] <= date('Y-m-d H:i:s')) { 
 					__d('forum', 'Voting on this poll has been closed');
 				} else { 
-					echo $form->submit(__d('forum', 'Vote', true), array('div' => false));
+					echo $this->Form->submit(__d('forum', 'Vote', true), array('div' => false));
 				}
 			} else {
 				__d('forum', 'Please login to vote!');
@@ -89,7 +89,7 @@ if (!empty($topic['Poll']['id'])) { ?>
     	<?php ++$counter; } 
 	} ?>
     </table>
-    <?php echo $form->end(); ?>
+    <?php echo $this->Form->end(); ?>
 </div>
 <?php } ?>
 
@@ -100,25 +100,25 @@ if (!empty($topic['Poll']['id'])) { ?>
     
     <?php foreach ($posts as $post) { ?>
     <tr class="altRow" id="post_<?php echo $post['Post']['id']; ?>">
-		<td class="ar gray"><?php echo $time->niceShort($post['Post']['created'], $cupcake->timezone()); ?></td>
+		<td class="ar gray"><?php echo $this->Time->niceShort($post['Post']['created'], $this->Cupcake->timezone()); ?></td>
         <td class="ar gray">
         	<?php // Commands
-			if ($cupcake->user()) {
+			if ($this->Cupcake->user()) {
 				$links = array();
-				if ($cupcake->hasAccess('super', $topic['ForumCategory']['id']) || $cupcake->user('id') == $post['Post']['user_id']) {
+				if ($this->Cupcake->hasAccess('super', $topic['ForumCategory']['id']) || $this->Cupcake->user('id') == $post['Post']['user_id']) {
 					if ($topic['Topic']['firstPost_id'] == $post['Post']['id']) {
-						$links[] = $html->link(__d('forum', 'Edit', true), array('controller' => 'topics', 'action' => 'edit', $topic['Topic']['id']));
-						$links[] = $html->link(__d('forum', 'Delete', true), array('controller' => 'topics', 'action' => 'delete', $topic['Topic']['id']), array('confirm' => __d('forum', 'Are you sure you want to delete?', true)));
-						$links[] = $html->link(__d('forum', 'Report Topic', true), array('controller' => 'topics', 'action' => 'report', $topic['Topic']['id']));
+						$links[] = $this->Html->link(__d('forum', 'Edit', true), array('controller' => 'topics', 'action' => 'edit', $topic['Topic']['id']));
+						$links[] = $this->Html->link(__d('forum', 'Delete', true), array('controller' => 'topics', 'action' => 'delete', $topic['Topic']['id']), array('confirm' => __d('forum', 'Are you sure you want to delete?', true)));
+						$links[] = $this->Html->link(__d('forum', 'Report Topic', true), array('controller' => 'topics', 'action' => 'report', $topic['Topic']['id']));
 					} else {
-						$links[] = $html->link(__d('forum', 'Edit', true), array('controller' => 'posts', 'action' => 'edit', $post['Post']['id']));
-						$links[] = $html->link(__d('forum', 'Delete', true), array('controller' => 'posts', 'action' => 'delete', $post['Post']['id']), array('confirm' => __d('forum', 'Are you sure you want to delete?', true)));
-						$links[] = $html->link(__d('forum', 'Report Post', true), array('controller' => 'posts', 'action' => 'report', $post['Post']['id']));
+						$links[] = $this->Html->link(__d('forum', 'Edit', true), array('controller' => 'posts', 'action' => 'edit', $post['Post']['id']));
+						$links[] = $this->Html->link(__d('forum', 'Delete', true), array('controller' => 'posts', 'action' => 'delete', $post['Post']['id']), array('confirm' => __d('forum', 'Are you sure you want to delete?', true)));
+						$links[] = $this->Html->link(__d('forum', 'Report Post', true), array('controller' => 'posts', 'action' => 'report', $post['Post']['id']));
 					}
 				}
 				
-				if ($cupcake->hasAccess($topic['ForumCategory']['accessReply'])) {
-					$links[] = $html->link(__d('forum', 'Quote', true), array('controller' => 'posts', 'action' => 'add', $topic['Topic']['id'], $post['Post']['id']));
+				if ($this->Cupcake->hasAccess($topic['ForumCategory']['accessReply'])) {
+					$links[] = $this->Html->link(__d('forum', 'Quote', true), array('controller' => 'posts', 'action' => 'add', $topic['Topic']['id'], $post['Post']['id']));
 				}
 				
 				if (!empty($links)) {
@@ -129,27 +129,27 @@ if (!empty($topic['Poll']['id'])) { ?>
     </tr>
     <tr>
     	<td valign="top" style="width: 25%">
-        	<h4><?php echo $html->link($post['User']['username'], array('controller' => 'users', 'action' => 'profile', $post['User']['id'])); ?></h4>
+        	<h4><?php echo $this->Html->link($post['User']['username'], array('controller' => 'users', 'action' => 'profile', $post['User']['id'])); ?></h4>
         	<?php if (!empty($post['User']['Access'][0]['AccessLevel']['title'])) { ?>
         	<p><strong><?php echo $post['User']['Access'][0]['AccessLevel']['title']; ?></strong></p>
         	<?php } ?>
 
 			<?php // Gravatar
-			if ($cupcake->settings['enable_gravatar'] == 1) {
-				if ($avatar = $cupcake->gravatar($post['User']['email'])) { ?>
+			if ($this->Cupcake->settings['enable_gravatar'] == 1) {
+				if ($avatar = $this->Cupcake->gravatar($post['User']['email'])) { ?>
 			<p><?php echo $avatar; ?></p>
 			<?php } } ?>
         	
-        	<strong><?php __d('forum', 'Joined'); ?>:</strong> <?php echo $time->niceShort($post['User']['created'], $cupcake->timezone()); ?><br />
+        	<strong><?php __d('forum', 'Joined'); ?>:</strong> <?php echo $this->Time->niceShort($post['User']['created'], $this->Cupcake->timezone()); ?><br />
             <strong><?php __d('forum', 'Total Topics'); ?>:</strong> <?php echo number_format($post['User']['totalTopics']); ?><br />
             <strong><?php __d('forum', 'Total Posts'); ?>:</strong> <?php echo number_format($post['User']['totalPosts']); ?>
         </td>
         <td valign="top">
-			<?php $decoda->parse($post['Post']['content']); ?>
+			<?php $this->Decoda->parse($post['Post']['content']); ?>
             
             <?php if (!empty($post['User']['signature'])) { ?>
             <div class="signature">
-            	<?php $decoda->parse($post['User']['signature'], false, array('b', 'i', 'u', 'img', 'url', 'align', 'color', 'size', 'code')); ?>
+            	<?php $this->Decoda->parse($post['User']['signature'], false, array('b', 'i', 'u', 'img', 'url', 'align', 'color', 'size', 'code')); ?>
             </div>
             <?php } ?>
        	</td>
@@ -161,20 +161,20 @@ if (!empty($topic['Poll']['id'])) { ?>
     <?php echo $this->element('pagination'); ?>
 </div>
 
-<?php if ($cupcake->user()) { ?>
+<?php if ($this->Cupcake->user()) { ?>
 <div class="forumOptions">
-	<?php if ($cupcake->hasAccess('mod', $topic['ForumCategory']['id'])) {
-		echo $html->link(__d('forum', 'Moderate', true), array('controller' => 'topics', 'action' => 'moderate', $topic['Topic']['id']));
+	<?php if ($this->Cupcake->hasAccess('mod', $topic['ForumCategory']['id'])) {
+		echo $this->Html->link(__d('forum', 'Moderate', true), array('controller' => 'topics', 'action' => 'moderate', $topic['Topic']['id']));
 	} ?>
-	<?php if ($cupcake->hasAccess($topic['ForumCategory']['accessPost'])) {
-		echo $html->link(__d('forum', 'Create Topic', true), array('controller' => 'topics', 'action' => 'add', $topic['ForumCategory']['id']));
+	<?php if ($this->Cupcake->hasAccess($topic['ForumCategory']['accessPost'])) {
+		echo $this->Html->link(__d('forum', 'Create Topic', true), array('controller' => 'topics', 'action' => 'add', $topic['ForumCategory']['id']));
 	} ?>
-    <?php if ($cupcake->hasAccess($topic['ForumCategory']['accessPoll'])) {
-		echo $html->link(__d('forum', 'Create Poll', true), array('controller' => 'topics', 'action' => 'add', $topic['ForumCategory']['id'], 'poll'));
+    <?php if ($this->Cupcake->hasAccess($topic['ForumCategory']['accessPoll'])) {
+		echo $this->Html->link(__d('forum', 'Create Poll', true), array('controller' => 'topics', 'action' => 'add', $topic['ForumCategory']['id'], 'poll'));
 	} ?>
-    <?php if ($cupcake->hasAccess($topic['ForumCategory']['accessReply'])) {
+    <?php if ($this->Cupcake->hasAccess($topic['ForumCategory']['accessReply'])) {
 		if ($topic['Topic']['status'] == 0) {
-			echo $html->link(__d('forum', 'Post Reply', true), array('controller' => 'posts', 'action' => 'add', $topic['Topic']['id']));
+			echo $this->Html->link(__d('forum', 'Post Reply', true), array('controller' => 'posts', 'action' => 'add', $topic['Topic']['id']));
 		} else {
 			echo '<span>'. __d('forum', 'Closed', true) .'</span>';
 		}
@@ -182,30 +182,30 @@ if (!empty($topic['Poll']['id'])) { ?>
 </div>
 
 <?php // Quick Reply
-if ($cupcake->settings['enable_quick_reply'] == 1) { ?>
+if ($this->Cupcake->settings['enable_quick_reply'] == 1) { ?>
 <div id="quickReply">
 	<h3><?php __d('forum', 'Quick Reply'); ?></h3>
     
-    <?php echo $form->create('Post', array('url' => array('controller' => 'posts', 'action' => 'add', $topic['Topic']['id']))); ?>
+    <?php echo $this->Form->create('Post', array('url' => array('controller' => 'posts', 'action' => 'add', $topic['Topic']['id']))); ?>
     <table cellspacing="0" class="table">
     <tr>
     	<td style="width: 25%">
-        	<strong><?php echo $form->label('content', __d('forum', 'Message', true) .':'); ?></strong><br /><br />
+        	<strong><?php echo $this->Form->label('content', __d('forum', 'Message', true) .':'); ?></strong><br /><br />
             
-            <?php echo $html->link(__d('forum', 'Advanced Reply', true), array('controller' => 'posts', 'action' => 'add', $topic['Topic']['id'])); ?><br />
+            <?php echo $this->Html->link(__d('forum', 'Advanced Reply', true), array('controller' => 'posts', 'action' => 'add', $topic['Topic']['id'])); ?><br />
             <?php __d('forum', 'BBCode Enabled'); ?>
         </td>
         <td>
-			<?php echo $form->input('content', array('type' => 'textarea', 'rows' => 5, 'style' => 'width: 99%', 'div' => false, 'error' => false, 'label' => false)); ?>
+			<?php echo $this->Form->input('content', array('type' => 'textarea', 'rows' => 5, 'style' => 'width: 99%', 'div' => false, 'error' => false, 'label' => false)); ?>
 			<?php echo $this->element('markitup', array('textarea' => 'PostContent')); ?>
 		</td>
   	</tr>
     <tr class="altRow">
     	<td colspan="2" class="ac">
-        	<?php echo $form->submit(__d('forum', 'Post Reply', true)); ?>
+        	<?php echo $this->Form->submit(__d('forum', 'Post Reply', true)); ?>
         </td>
    	</tr> 
     </table>
-    <?php echo $form->end(); ?>
+    <?php echo $this->Form->end(); ?>
 </div>
 <?php } } ?>
