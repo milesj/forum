@@ -36,7 +36,7 @@ echo $this->Form->input('prefix'); ?>
 	<?php echo $this->Form->submit('Check Database', array('div' => false)); ?>
 
 	<?php if ($processed && empty($conflicts)) {
-		echo $this->Form->button('Create Tables', array('onclick' => "goTo('". Router::url(array('action' => 'create_tables')) ."');"));
+		echo $this->Form->button('Create Tables', array('onclick' => "goTo('". Router::url(array('action' => 'create_tables')) ."');", 'type' => 'button', 'class' => 'button'));
 	} ?>
 </div>
 

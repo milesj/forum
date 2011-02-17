@@ -14,7 +14,7 @@ The form below quickly allows you to add an administrator into the system instea
 
 <?php if ($granted) { ?>
 <div class="submit">
-	<?php echo $this->Form->button('Visit Forum', array('onclick' => "goTo('". Router::url(array('controller' => 'home', 'action' => 'index', 'plugin' => 'forum')) ."');")); ?>
+	<?php echo $this->Form->button('Visit Forum', array('onclick' => "goTo('". Router::url(array('controller' => 'home', 'action' => 'index', 'plugin' => 'forum')) ."');", 'type' => 'button', 'class' => 'button')); ?>
 </div>
 
 <?php } else {

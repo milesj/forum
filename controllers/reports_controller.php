@@ -16,7 +16,15 @@ class ReportsController extends ForumAppController {
 	 * @access public  
 	 * @var array
 	 */
-	public $uses = array('Forum.Report');  
+	public $uses = array('Forum.Report');
+
+	/**
+	 * Components.
+	 *
+	 * @access public
+	 * @var array
+	 */
+	public $components = array('Auth', 'Forum.AutoLogin');
 	
 	/**
 	 * Pagination.

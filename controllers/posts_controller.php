@@ -16,7 +16,15 @@ class PostsController extends ForumAppController {
 	 * @access public
 	 * @var array
 	 */
-	public $uses = array('Forum.Post'); 
+	public $uses = array('Forum.Post');
+
+	/**
+	 * Components.
+	 *
+	 * @access public
+	 * @var array
+	 */
+	public $components = array('Auth', 'Forum.AutoLogin');
 	
 	/**
 	 * Redirect.

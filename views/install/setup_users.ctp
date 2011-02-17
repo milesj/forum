@@ -42,7 +42,7 @@ public $columnMap = array(
 	<?php } ?>
 
 	<div class="submit">
-		<?php echo $this->Form->button('Finish Installation', array('onclick' => "goTo('". Router::url(array('action' => 'finished')) ."');")); ?>
+		<?php echo $this->Form->button('Finish Installation', array('onclick' => "goTo('". Router::url(array('action' => 'finished')) ."');", 'type' => 'button', 'class' => 'button')); ?>
 	</div>
 
 <?php // Didn't execute

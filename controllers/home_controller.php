@@ -16,7 +16,15 @@ class HomeController extends ForumAppController {
 	 * @access public  
 	 * @var array
 	 */
-	public $uses = array('Forum.Topic'); 
+	public $uses = array('Forum.Topic');
+
+	/**
+	 * Components.
+	 *
+	 * @access public
+	 * @var array
+	 */
+	public $components = array('Auth', 'Forum.AutoLogin');
 
 	/**
 	 * Forum index.

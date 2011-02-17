@@ -25,6 +25,7 @@
 
 <p><button type="button" class="button" onclick="goTo('<?php echo Router::url(array('action' => 'create_admin')); ?>');">Grant Access</button></p>
 
+<?php /*
 <br />
 <div class="forumHeader">
 	<h2>Upgrade</h2>
@@ -34,4 +35,4 @@
 
 <ul class="decoda_list">
 	<li><?php echo $this->Html->link('Upgrade to 1.8', array('action' => 'upgrade_1_8')); ?></li>
-</ul>
+</ul>*/ ?>

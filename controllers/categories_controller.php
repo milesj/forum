@@ -16,7 +16,15 @@ class CategoriesController extends ForumAppController {
 	 * @access public
 	 * @var array
 	 */
-	public $uses = array('Forum.ForumCategory');  
+	public $uses = array('Forum.ForumCategory');
+
+	/**
+	 * Components.
+	 *
+	 * @access public
+	 * @var array
+	 */
+	public $components = array('Auth', 'Forum.AutoLogin');
 	
 	/**
 	 * Pagination.

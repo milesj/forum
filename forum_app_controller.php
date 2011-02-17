@@ -30,7 +30,7 @@ class ForumAppController extends AppController {
 	 * @access public
 	 * @var array
 	 */
-	public $components = array('RequestHandler', 'Session', 'Security', 'Cookie', 'Auth', 'Forum.Toolbar', 'Forum.AutoLogin');
+	public $components = array('RequestHandler', 'Session', 'Security', 'Cookie', 'Forum.Toolbar');
 	
 	/**
 	 * Helpers.
@@ -86,7 +86,7 @@ class ForumAppController extends AppController {
 		$Config = ForumConfig::getInstance();
 
 		// Load l10n/i18n support
-		if ($this->Auth->user('locale')) {
+		if (isset($this->Auth) && $this->Auth->user('locale')) {
 			$locale = $this->Auth->user('locale');
 		} else {
 			$locale = (isset($Config->settings['default_locale']) ? $Config->settings['default_locale'] : 'eng');
@@ -101,18 +101,21 @@ class ForumAppController extends AppController {
 			$referer = array('plugin' => 'forum', 'controller' => 'home', 'action' => 'index');
 		}
 
-		$this->Auth->loginAction = array('plugin' => 'forum', 'controller' => 'users', 'action' => 'login', 'admin' => false);
-		$this->Auth->loginRedirect = $referer;
-		$this->Auth->logoutRedirect = $referer;
-		$this->Auth->autoRedirect = false;
-		
-		// AutoLogin settings
-		$this->AutoLogin->settings = array(
-			'plugin' => 'forum',
-			'controller' => 'users',
-			'loginAction' => 'login',
-			'logoutAction' => 'logout'
-		);
+		if (isset($this->Auth)) {
+			$this->Auth->loginAction = array('plugin' => 'forum', 'controller' => 'users', 'action' => 'login', 'admin' => false);
+			$this->Auth->loginRedirect = $referer;
+			$this->Auth->logoutRedirect = $referer;
+			$this->Auth->autoRedirect = false;
+			$this->Auth->userModel = 'Forum.User';
+
+			// AutoLogin settings
+			$this->AutoLogin->settings = array(
+				'plugin' => 'forum',
+				'controller' => 'users',
+				'loginAction' => 'login',
+				'logoutAction' => 'logout'
+			);
+		}
 
 		$this->Cookie->key = Configure::read('Security.salt');
 		

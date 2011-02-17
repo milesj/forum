@@ -222,7 +222,7 @@ class InstallController extends ForumAppController {
 
 				if ($this->User->validates()) {
 					$this->data['User']['username'] = strip_tags($this->data['User']['username']);
-					$this->data['User']['password'] = $this->Auth->password($this->data['User']['newPassword']);
+					$this->data['User']['password'] = Security::hash($this->data['User']['newPassword'], null, true);
 
 					if ($this->User->save($this->data, false, array('username', 'email', 'password'))) {
 						$granted = true;
@@ -291,45 +291,6 @@ class InstallController extends ForumAppController {
 		$this->set('installed', $installed);
 	}
 
-	/**
-	 * Upgrade to version 1.8!
-	 *
-	 * @access public
-	 * @return void
-	 */
-	public function upgrade_1_8() {
-		if (!ForumConfig::isInstalled()) {
-			$this->redirect(array('action' => 'patch'));
-		}
-
-		$config = $this->__getInstallation();
-
-		// Process
-		if (!empty($this->data)) {
-			$this->DB = ConnectionManager::getDataSource($config['database']);
-
-			// Load 1.8 SQL and run
-			$schema = FORUM_SCHEMA .'upgrades'. DS .'1.8.sql';
-			$contents = file_get_contents($schema);
-			$contents = String::insert($contents, array('prefix' => $config['prefix']), array('before' => '{:', 'after' => '}'));
-			$contents = preg_replace('!/\*[^*]*\*+([^/][^*]*\*+)*/!', '', $contents);
-
-			$sqls = explode(';', $contents);
-			foreach ($sqls as $sql) {
-				$sql = trim($sql);
-
-				if (!empty($sql)) {
-					$this->DB->execute($sql);
-				}
-			}
-			
-			$this->set('upgraded', true);
-		}
-
-		$this->pageTitle = 'Upgrade to 1.8';
-		$this->set('config', $config);
-	}
-	
 	/**
 	 * Check if the plugin was installed.
 	 * 
@@ -578,7 +539,6 @@ class InstallController extends ForumAppController {
 		$this->layout = 'install';
 
 		// The usual
-		$this->Auth->allow('*');
 		$this->set('menuTab', '');
 	}
 

@@ -210,7 +210,7 @@ class ToolbarComponent extends Object {
 	 * @return void
 	 */
 	public function resetPassword($user, $reset = false) {
-		$User = ClassRegistry::init('User');
+		$User = ClassRegistry::init('Forum.User');
 		$password = $User->generate();
 		$User->resetPassword($user['User']['id'], $this->Controller->Auth->password($password));
 		

@@ -17,6 +17,14 @@ class SearchController extends ForumAppController {
 	 * @var array
 	 */
 	public $uses = array('Forum.Topic');
+
+	/**
+	 * Components.
+	 *
+	 * @access public
+	 * @var array
+	 */
+	public $components = array('Auth', 'Forum.AutoLogin');
 	
 	/**
 	 * Pagination.

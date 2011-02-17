@@ -17,6 +17,14 @@ class StaffController extends ForumAppController {
 	 * @var array
 	 */
 	public $uses = array('Forum.Access', 'Forum.Moderator');
+
+	/**
+	 * Components.
+	 *
+	 * @access public
+	 * @var array
+	 */
+	public $components = array('Auth', 'Forum.AutoLogin');
 	
 	/**
 	 * List all staff.
