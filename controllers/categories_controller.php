@@ -102,7 +102,7 @@ class CategoriesController extends ForumAppController {
 						$this->ForumCategory->Topic->id = $topic_id;
 						
 						if ($action == 'delete') {
-							$this->ForumCategory->Topic->destroy($post_id);
+							$this->ForumCategory->Topic->destroy($topic_id);
 							$this->Session->setFlash(sprintf(__d('forum', 'A total of %d topic(s) have been permanently deleted', true), count($items)));
 	
 						} else if ($action == 'close') {

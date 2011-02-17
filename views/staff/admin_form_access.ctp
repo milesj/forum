@@ -18,6 +18,6 @@ if ($method == 'add') {
 
 <?php 
 echo $this->Form->create('Access', array('url' => array('controller' => 'staff', 'action' => $action, 'admin' => true)));
-echo $this->Form->input('user_id', array('style' => 'width: 50px', 'label' => __d('forum', 'User ID', true)));
+echo $this->Form->input('user_id', array('style' => 'width: 50px', 'label' => __d('forum', 'User ID', true), 'type' => 'text'));
 echo $this->Form->input('access_level_id', array('options' => $levels, 'label' => __d('forum', 'Access Level', true), 'empty' => false));
 echo $this->Form->end($button); ?>
