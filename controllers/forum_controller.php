@@ -19,14 +19,12 @@ class ForumController extends ForumAppController {
 	public $uses = array('Forum.Topic', 'Forum.Profile');
 
 	/**
-	 * Forum index.
-	 *
-	 * @access public   
+	 * Forum index.  
 	 */
 	public function index() {
 		$this->Toolbar->pageTitle(__d('forum', 'Index', true));
 		$this->set('menuTab', 'home');
-		$this->set('forums', 		$this->Topic->Forum->getIndex($this->Toolbar->getAccess(), $this->Session->read('Forum.access')));
+		$this->set('forums', 		$this->Topic->Forum->getIndex($this->Toolbar->getAccess()));
 		$this->set('totalPosts', 	$this->Topic->Post->getTotal());
 		$this->set('totalTopics', 	$this->Topic->getTotal());
 		$this->set('totalUsers', 	$this->Topic->User->getTotal());
@@ -36,8 +34,6 @@ class ForumController extends ForumAppController {
 	
 	/**
 	 * RSS Feed.
-	 *
-	 * @access public
 	 */
 	public function feed() {
 		if ($this->RequestHandler->isRss()) {
@@ -50,8 +46,6 @@ class ForumController extends ForumAppController {
 	
 	/**
 	 * Help / FAQ.
-	 *
-	 * @access public
 	 */
 	public function help() {
 		$this->Toolbar->pageTitle(__d('forum', 'Help', true));
@@ -60,8 +54,6 @@ class ForumController extends ForumAppController {
 	
 	/**
 	 * Rules.
-	 *
-	 * @access public
 	 */
 	public function rules() {
 		$this->Toolbar->pageTitle(__d('forum', 'Rules', true));
@@ -70,15 +62,12 @@ class ForumController extends ForumAppController {
 	
 	/**
 	 * Administration home, list statistics.
-	 *
-	 * @access public
-	 * @category Admin
 	 */
 	public function admin_index() {
 		$this->loadModel('Forum.Report');
 		$this->loadModel('Forum.Moderator');
 		
-		$this->pageTitle = __d('forum', 'Administration', true);
+		$this->Toolbar->pageTitle(__d('forum', 'Administration', true));
 		$this->set('menuTab', 'home');
 		$this->set('totalPosts', 	$this->Topic->Post->getTotal());
 		$this->set('totalTopics', 	$this->Topic->getTotal());
@@ -93,9 +82,6 @@ class ForumController extends ForumAppController {
 	
 	/**
 	 * Edit the settings.
-	 *
-	 * @access public
-	 * @category Admin
 	 */
 	public function admin_settings() {
 		$this->loadModel('Forum.Setting');
@@ -108,18 +94,15 @@ class ForumController extends ForumAppController {
 				$this->Session->setFlash(__d('forum', 'Settings have been updated!', true));
 			}
 		} else {
-			$this->data['Setting'] = Configure::read('Forum.settings');
+			$this->data['Setting'] = $this->settings;
 		}
 		
-		$this->pageTitle = __d('forum', 'Settings', true);
+		$this->Toolbar->pageTitle(__d('forum', 'Settings', true));
 		$this->set('menuTab', 'settings');
 	}
 	
 	/**
 	 * Before filter.
-	 * 
-	 * @access public
-	 * @return void
 	 */
 	public function beforeFilter() {
 		parent::beforeFilter();

@@ -156,6 +156,8 @@ class ToolbarComponent extends Object {
 			}
 		}
 		
+		return 10;
+		
 		return $level;
 	}
 	

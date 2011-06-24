@@ -16,7 +16,7 @@ class CategoriesController extends ForumAppController {
 	 * @access public
 	 * @var array
 	 */
-	public $uses = array('Forum.ForumCategory');  
+	public $uses = array('Forum.Forum');  
 	
 	/**
 	 * Pagination.
@@ -27,15 +27,12 @@ class CategoriesController extends ForumAppController {
 	public $paginate = array(  
 		'Topic' => array(
 			'order' => array('LastPost.created' => 'DESC'),
-			'conditions' => array('Topic.type' => Topic::NORMAL),
 			'contain' => array('User.id', 'User.username', 'LastPost.created', 'LastUser.username', 'Poll.id')
 		)
 	);
 	
 	/**
 	 * Redirect.
-	 *
-	 * @access public
 	 */
 	public function index() {
 		$this->Toolbar->goToPage(); 
@@ -44,104 +41,101 @@ class CategoriesController extends ForumAppController {
 	/**
 	 * Read a category.
 	 *
-	 * @access public
 	 * @param string $slug
 	 */
 	public function view($slug) {
-		$category = $this->ForumCategory->getCategoryForViewing($slug, $this->Toolbar->getAccess(), $this->Session->read('Forum.access'));
+		$forum = $this->Forum->get($slug, $this->Toolbar->getAccess());
 		
-		// Access
 		$this->Toolbar->verifyAccess(array(
-			'exists' => $category, 
-			'permission' => $category['ForumCategory']['accessRead']
+			'exists' => $forum, 
+			'permission' => $forum['Forum']['accessRead']
 		));
 		
-		// Paginate
-		$this->paginate['Topic']['limit'] = Configure::read('Forum.settings.topics_per_page');
-		$this->paginate['Topic']['conditions']['Topic.forum_category_id'] = $category['ForumCategory']['id'];
+		$this->paginate['Topic']['limit'] = $this->settings['topics_per_page'];
+		$this->paginate['Topic']['conditions'] = array(
+			'Topic.forum_id' => $forum['Forum']['id'],
+			'Topic.type' => Topic::NORMAL
+		);
 		
-		$this->Toolbar->pageTitle($category['ForumCategory']['title']);
-		$this->set('category', $category);
+		$this->Toolbar->pageTitle($forum['Forum']['title']);
+		$this->set('forum', $forum);
 		$this->set('topics', $this->paginate('Topic'));
-		$this->set('stickies', $this->ForumCategory->Topic->getStickiesInForum($category['ForumCategory']['id']));
+		$this->set('stickies', $this->Forum->Topic->getStickiesInForum($forum['Forum']['id']));
 		$this->set('feedId', $slug);
 	}
 
 	/**
 	 * Moderate a category.
 	 *
-	 * @access public
 	 * @param string $slug
 	 */
 	public function moderate($slug) {
-		$category = $this->ForumCategory->get(array('slug', $slug), null, array('Parent', 'Forum.title', 'Forum.slug'));
+		$forum = $this->Forum->get($slug, $this->Toolbar->getAccess());
 		
-		// Access
 		$this->Toolbar->verifyAccess(array(
-			'exists' => $category, 
-			'permission' => $category['ForumCategory']['accessRead'],
-			'moderate' => $category['ForumCategory']['id']
+			'exists' => $forum, 
+			'permission' => $forum['Forum']['accessRead'],
+			'moderate' => $forum['Forum']['id']
 		));
 		
-		// Processing
-		if ($this->RequestHandler->isPost()) {
-			if (!empty($this->data['Topic']['items'])) {
-				$items = $this->data['Topic']['items'];
-				$action = $this->data['Topic']['action'];
-				
-				foreach ($items as $topic_id) {
-					if (is_numeric($topic_id)) {
-						$this->ForumCategory->Topic->id = $topic_id;
-						
-						if ($action == 'delete') {
-							$this->ForumCategory->Topic->destroy($post_id);
-							$this->Session->setFlash(sprintf(__d('forum', 'A total of %d topic(s) have been permanently deleted', true), count($items)));
-	
-						} else if ($action == 'close') {
-							$this->ForumCategory->Topic->saveField('status', Topic::STATUS_CLOSED);
-							$this->Session->setFlash(sprintf(__d('forum', 'A total of %d topic(s) have been locked to the public', true), count($items)));
-							
-						} else if ($action == 'open') {
-							$this->ForumCategory->Topic->saveField('status', Topic::STATUS_OPEN);
-							$this->Session->setFlash(sprintf(__d('forum', 'A total of %d topic(s) have been re-opened', true), count($items)));
-							
-						} else if ($action == 'move') {
-							$this->ForumCategory->Topic->saveField('forum_category_id', $this->data['Topic']['move_id']);
-							$this->Session->setFlash(sprintf(__d('forum', 'A total of %d topic(s) have been moved to another forum category', true), count($items)));
-						}
+		if (!empty($this->data['Topic']['items'])) {
+			$items = $this->data['Topic']['items'];
+			$action = $this->data['Topic']['action'];
+
+			foreach ($items as $topic_id) {
+				if (is_numeric($topic_id)) {
+					$this->Forum->Topic->id = $topic_id;
+
+					if ($action == 'delete') {
+						$this->Forum->Topic->destroy($post_id);
+						$this->Session->setFlash(sprintf(__d('forum', 'A total of %d topic(s) have been permanently deleted', true), count($items)));
+
+					} else if ($action == 'close') {
+						$this->Forum->Topic->saveField('status', Topic::STATUS_CLOSED);
+						$this->Session->setFlash(sprintf(__d('forum', 'A total of %d topic(s) have been locked to the public', true), count($items)));
+
+					} else if ($action == 'open') {
+						$this->Forum->Topic->saveField('status', Topic::STATUS_OPEN);
+						$this->Session->setFlash(sprintf(__d('forum', 'A total of %d topic(s) have been re-opened', true), count($items)));
+
+					} else if ($action == 'move') {
+						$this->Forum->Topic->saveField('forum_category_id', $this->data['Topic']['move_id']);
+						$this->Session->setFlash(sprintf(__d('forum', 'A total of %d topic(s) have been moved to another forum category', true), count($items)));
 					}
 				}
 			}
 		}
 		
-		// Paginate
-		$this->paginate['Topic']['limit'] = Configure::read('Forum.settings.topics_per_page');
-		$this->paginate['Topic']['conditions'] = array('Topic.forum_category_id' => $category['ForumCategory']['id']);
+		$this->paginate['Topic']['limit'] = $this->settings['topics_per_page'];
+		$this->paginate['Topic']['conditions'] = array(
+			'Topic.forum_id' => $forum['Forum']['id'],
+			'Topic.type' => Topic::NORMAL
+		);
 		
-		$this->Toolbar->pageTitle(__d('forum', 'Moderate', true), $category['ForumCategory']['title']);
-		$this->set('category', $category);
+		$this->Toolbar->pageTitle(__d('forum', 'Moderate', true), $forum['Forum']['title']);
+		$this->set('forum', $forum);
 		$this->set('topics', $this->paginate('Topic'));
-		$this->set('forums', $this->ForumCategory->getHierarchy($this->Toolbar->getAccess(), $this->Session->read('Forum.access'), 'read'));
+		$this->set('forums', $this->Forum->getHierarchy($this->Toolbar->getAccess(), 'read'));
 		$this->set('feedId', $slug);
 	}
 	
 	/**
 	 * RSS Feed.
 	 *
-	 * @access public
 	 * @param string $slug
 	 */
 	public function feed($slug) {
 		if ($this->RequestHandler->isRss()) {
-			$category = $this->ForumCategory->get(array('slug', $slug));
-			$this->Toolbar->verifyAccess(array('exists' => $category));
+			$forum = $this->Forum->get($slug);
+			
+			$this->Toolbar->verifyAccess(array('exists' => $forum));
 		
-			$this->paginate['Topic']['limit'] = Configure::read('Forum.settings.topics_per_page');
-			$this->paginate['Topic']['conditions'] = array('Topic.forum_category_id' => $category['ForumCategory']['id']);
+			$this->paginate['Topic']['limit'] = $this->settings['topics_per_page'];
+			$this->paginate['Topic']['conditions'] = array('Topic.forum_id' => $forum['Forum']['id']);
 			$this->paginate['Topic']['contain'] = array('User.id', 'User.username', 'LastPost.created', 'FirstPost.content');
 
-			$this->set('items', $this->paginate('Topic'));
-			$this->set('category', $category);
+			$this->set('topics', $this->paginate('Topic'));
+			$this->set('forum', $forum);
 			$this->set('document', array('xmlns:dc' => 'http://purl.org/dc/elements/1.1/'));
 		} else {
 			$this->redirect('/forum/categories/feed/'. $slug .'.rss');
@@ -149,197 +143,110 @@ class CategoriesController extends ForumAppController {
 	}
 	
 	/**
-	 * Admin index!
-	 *
-	 * @access public
-	 * @category Admin
+	 * Admin index.
 	 */
 	public function admin_index() {
 		if (!empty($this->data)) {
-			$this->ForumCategory->updateOrder($this->data);
+			$this->Forum->updateOrder($this->data);
 			$this->Session->setFlash(__d('forum', 'The order of the forums have been updated!', true));
 		}
 		
-		$this->pageTitle = __d('forum', 'Manage Forums', true);
-		$this->set('forums', $this->ForumCategory->Forum->getAdminIndex());
+		$this->Toolbar->pageTitle(__d('forum', 'Manage Forums', true));
+		$this->set('forums', $this->Forum->getAdminIndex());
 	}
 	
 	/**
-	 * Add a top level forum.
-	 *
-	 * @access public
-	 * @category Admin
+	 * Add a forum.
 	 */
-	public function admin_add_forum() {
+	public function admin_add() {
 		if (!empty($this->data)) {
-			if ($this->ForumCategory->Forum->save($this->data, true, array('title', 'status', 'orderNo', 'accessView', 'access_level_id'))) {
+			if (empty($this->data['Forum']['forum_id'])) {
+				$this->data['Forum']['forum_id'] = 0;
+			}
+			
+			if ($this->Forum->save($this->data, true)) {
 				$this->redirect(array('controller' => 'categories', 'action' => 'index', 'admin' => true));
 			}
 		}
-		
-		$this->pageTitle = __d('forum', 'Add Forum', true);
+
+		$this->Toolbar->pageTitle(__d('forum', 'Add Forum', true));
 		$this->set('method', 'add');
-		$this->set('levels', $this->ForumCategory->AccessLevel->getHigherLevels());
-		$this->render('admin_form_forum');
+		$this->set('levels', $this->Forum->AccessLevel->getHigherLevels());
+		$this->set('forums', $this->Forum->getList());
+		$this->render('admin_form');
 	}
 	
 	/**
-	 * Edit top level forum.
-	 *
-	 * @access public
-	 * @category Admin
+	 * Edit a forum.
+	 * 
 	 * @param int $id
 	 */
-	public function admin_edit_forum($id) {
-		$forum = $this->ForumCategory->Forum->get($id);
+	public function admin_edit($id) {
+		$forum = $this->Forum->getById($id);
+		
 		$this->Toolbar->verifyAccess(array('exists' => $forum));
 		
-		// Form Processing
 		if (!empty($this->data)) {
-			$this->ForumCategory->Forum->id = $id;
+			$this->Forum->id = $id;
 			
-			if ($this->ForumCategory->Forum->save($this->data, true, array('title', 'status', 'orderNo', 'accessView', 'access_level_id'))) {
+			if (empty($this->data['Forum']['forum_id'])) {
+				$this->data['Forum']['forum_id'] = 0;
+			} else if ($this->data['Forum']['forum_id'] == $id) {
+				$this->data['Forum']['forum_id'] = $forum['Forum']['forum_id'];
+			}
+			
+			if ($this->Forum->save($this->data, true)) {
 				$this->redirect(array('controller' => 'categories', 'action' => 'index', 'admin' => true));
 			}
 		} else {
 			$this->data = $forum;
 		}
 		
-		$this->pageTitle = __d('forum', 'Edit Forum', true);
-		$this->set('id', $id);
+		$this->Toolbar->pageTitle(__d('forum', 'Edit Forum', true), $forum['Forum']['title']);
 		$this->set('method', 'edit');
-		$this->set('levels', $this->ForumCategory->AccessLevel->getHigherLevels());
-		$this->render('admin_form_forum');
+		$this->set('levels', $this->Forum->AccessLevel->getHigherLevels());
+		$this->set('forums', $this->Forum->getList());
+		$this->render('admin_form');
 	}
 	
 	/**
 	 * Delete a forum.
 	 *
-	 * @access public
-	 * @category Admin
 	 * @param int $id
 	 */
-	public function admin_delete_forum($id) {
-		$forum = $this->ForumCategory->Forum->get($id, array('id', 'title'));
+	public function admin_delete($id) {
+		$forum = $this->Forum->getById($id);
+		
 		$this->Toolbar->verifyAccess(array('exists' => $forum));
 		
-		// Form Processing
-		if (!empty($this->data['Forum']['forum_id'])) {
-			$this->ForumCategory->moveAll($forum['Forum']['id'], $this->data['Forum']['forum_id']);
-			$this->ForumCategory->Forum->delete($forum['Forum']['id'], true);
+		if (!empty($this->data)) {
+			$this->Forum->Topic->moveAll($id, $this->data['Forum']['move_topics']);
+			$this->Forum->moveAll($id, $this->data['Forum']['move_forums']);
+			$this->Forum->delete($id, true);
 
-			$this->Session->setFlash(sprintf(__d('forum', 'The forum %s has been deleted, and all its forum categories have been moved!', true), '<strong>'. $forum['Forum']['title'] .'</strong>'));
+			$this->Session->setFlash(sprintf(__d('forum', 'The forum category %s has been deleted, and all its sub-forums and topics have been moved!', true), '<strong>'. $forum['Forum']['title'] .'</strong>'));
 			$this->redirect(array('controller' => 'categories', 'action' => 'index', 'admin' => true));
 		}
 		
-		$this->pageTitle = __d('forum', 'Delete Forum', true);
-		$this->set('id', $id);
+		$this->Toolbar->pageTitle(__d('forum', 'Delete Forum', true), $forum['Forum']['title']);
 		$this->set('forum', $forum);
-		$this->set('levels', $this->ForumCategory->AccessLevel->getHigherLevels());
-		$this->set('forums', $this->ForumCategory->Forum->getList($forum['Forum']['id']));
+		$this->set('levels', $this->Forum->AccessLevel->getHigherLevels());
+		$this->set('topicForums', $this->Forum->getList(true, $id));
+		$this->set('subForums', $this->Forum->getList(false, $id));
 	}
-	
-	/**
-	 * Add a forum category.
-	 *
-	 * @access public
-	 * @category Admin
-	 */
-	public function admin_add_category() {
-		if (!empty($this->data)) {
-			if (empty($this->data['ForumCategory']['parent_id'])) {
-				$this->data['ForumCategory']['parent_id'] = 0;
-			}
-			
-			if ($this->ForumCategory->save($this->data, true, array('title', 'description', 'forum_id', 'parent_id', 'status', 'orderNo', 'accessRead', 'accessPost', 'accessReply', 'accessPoll', 'settingPostCount', 'settingAutoLock', 'access_level_id'))) {
-				$this->redirect(array('controller' => 'categories', 'action' => 'index', 'admin' => true));
-			}
-		}
-		
-		$this->pageTitle = __d('forum', 'Add Forum Category', true);
-		$this->set('levels', $this->ForumCategory->AccessLevel->getHigherLevels());
-		$this->set('forums', $this->ForumCategory->Forum->getList());
-		$this->set('categories', $this->ForumCategory->getParents());
-		$this->set('method', 'add');
-		$this->render('admin_form_category');
-	}
-	
-	/**
-	 * Edit a forum category.
-	 *
-	 * @access public
-	 * @category Admin
-	 * @param int $id
-	 */
-	public function admin_edit_category($id) {
-		$category = $this->ForumCategory->get($id);
-		$this->Toolbar->verifyAccess(array('exists' => $category));
-		
-		// Form Processing
-		if (!empty($this->data)) {
-			$this->ForumCategory->id = $id;
-			
-			if (empty($this->data['ForumCategory']['parent_id'])) {
-				$this->data['ForumCategory']['parent_id'] = 0;
-			}
-			
-			if ($this->ForumCategory->save($this->data, true, array('title', 'description', 'forum_id', 'parent_id', 'status', 'orderNo', 'accessRead', 'accessPost', 'accessReply', 'accessPoll', 'settingPostCount', 'settingAutoLock', 'access_level_id'))) {
-				$this->redirect(array('controller' => 'categories', 'action' => 'index', 'admin' => true));
-			}
-		} else {
-			$this->data = $category;
-		}
-		
-		$this->pageTitle = __d('forum', 'Edit Forum Category', true);
-		$this->set('id', $id);
-		$this->set('levels', $this->ForumCategory->AccessLevel->getHigherLevels());
-		$this->set('forums', $this->ForumCategory->Forum->getList());
-		$this->set('categories', $this->ForumCategory->getParents($id));
-		$this->set('method', 'edit');
-		$this->render('admin_form_category');
-	}
-	
-	/**
-	 * Delete a category.
-	 *
-	 * @access public
-	 * @category Admin
-	 * @param int $id
-	 */
-	public function admin_delete_category($id) {
-		$category = $this->ForumCategory->get($id);
-		$this->Toolbar->verifyAccess(array('exists' => $category));
-		
-		// Form Processing
-		if (!empty($this->data['ForumCategory']['category_id'])) {
-			$this->ForumCategory->Topic->moveAll($category['ForumCategory']['id'], $this->data['ForumCategory']['category_id']);
-			$this->ForumCategory->moveAll($category['ForumCategory']['id'], 0, true);
-			$this->ForumCategory->delete($category['ForumCategory']['id'], true);
-			
-			$this->Session->setFlash(sprintf(__d('forum', 'The forum category %s has been deleted, and all its sub-forums and topics have been moved!', true), '<strong>'. $category['ForumCategory']['title'] .'</strong>'));
-			$this->redirect(array('controller' => 'categories', 'action' => 'index', 'admin' => true));
-		}
-		
-		$this->pageTitle = __d('forum', 'Delete Forum Category', true);
-		$this->set('id', $id);
-		$this->set('category', $category);
-		$this->set('categories', $this->ForumCategory->getHierarchy(0, $this->Session->read('Forum.access'), 'read', $id));
-	}
-	
+
 	/**
 	 * Before filter.
-	 * 
-	 * @access public
-	 * @return void
 	 */
 	public function beforeFilter() {
 		parent::beforeFilter();
 		
-		$this->Auth->allow('index', 'view', 'feed');
+		//$this->Auth->allow('index', 'view', 'feed');
+		$this->Auth->allow('*');
 		$this->Security->disabledFields = array('items');
 		
 		if (isset($this->params['admin'])) {
-			$this->Toolbar->verifyAdmin();
+			//$this->Toolbar->verifyAdmin();
 			$this->layout = 'admin';
 			$this->set('menuTab', 'forums');
 		} else {

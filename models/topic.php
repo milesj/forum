@@ -461,21 +461,6 @@ class Topic extends ForumAppModel {
 	}
 	
 	/**
-	 * Move all topics to a new forum.
-	 *
-	 * @access public
-	 * @param int $start_id
-	 * @param int $moved_id
-	 * @return boolean
-	 */
-	public function moveAll($start_id, $moved_id) {
-		return $this->updateAll(
-			array('Topic.forum_id' => $moved_id),
-			array('Topic.forum_id' => $start_id)
-		);
-	}
-	
-	/**
 	 * Finds difference in days between dates.
 	 *
 	 * @access public
@@ -554,6 +539,50 @@ class Topic extends ForumAppModel {
 		}
 		
 		return $results;
+	}
+	
+	/**
+	 * NEW
+	 */
+	
+	/**
+	 * Get all info for reading a topic.
+	 *
+	 * @access public
+	 * @param string $slug
+	 * @param int $user_id
+	 * @return array
+	 */
+	public function get($slug, $user_id, $field = 'slug') {
+		$topic = $this->find('first', array(
+			'fields' => array('Topic.id', 'Topic.title', 'Topic.slug', 'Topic.status', 'Topic.type', 'Topic.forum_id', 'Topic.firstPost_id'),
+			'conditions' => array('Topic.slug' => $slug),
+			'contain' => array(
+				'Forum' => array('Parent'), 
+				'Poll' => array('PollOption')
+			)
+		));
+		
+		/*if (!empty($topic['Poll']['id'])) {
+			$topic['Poll'] = $this->Poll->process($topic['Poll'], $user_id);
+		}*/
+		
+		return $topic;
+	}
+	
+	/**
+	 * Move all topics to a new forum.
+	 *
+	 * @access public
+	 * @param int $start_id
+	 * @param int $moved_id
+	 * @return boolean
+	 */
+	public function moveAll($start_id, $moved_id) {
+		return $this->updateAll(
+			array('Topic.forum_id' => $moved_id),
+			array('Topic.forum_id' => $start_id)
+		);
 	}
 	
 }

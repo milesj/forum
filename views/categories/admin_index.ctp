@@ -4,12 +4,11 @@
 </div>
 
 <div class="forumOptions">
-	<?php echo $this->Html->link(__d('forum', 'Add Forum', true), array('action' => 'add_forum')); ?>
-    <?php echo $this->Html->link(__d('forum', 'Add Category', true), array('action' => 'add_category')); ?>
+	<?php echo $this->Html->link(__d('forum', 'Add Forum', true), array('action' => 'add')); ?>
 </div>
 
 <?php // Form
-echo $this->Form->create('ForumCategory', array('url' => array('controller' => 'categories', 'action' => 'index', 'admin' => true)));
+echo $this->Form->create('Forum', array('url' => $this->here));
 
 // Forums
 if (!empty($forums)) {
@@ -18,8 +17,8 @@ if (!empty($forums)) {
 <div class="forumWrap" id="forum_<?php echo $forum['Forum']['id']; ?>">
 	<h3>
     	<span class="fr">
-			<?php echo $this->Html->link(__d('forum', 'Edit', true), array('action' => 'edit_forum', $forum['Forum']['id'])); ?> -
-            <?php echo $this->Html->link(__d('forum', 'Delete', true), array('action' => 'delete_forum', $forum['Forum']['id'])); ?>
+			<?php echo $this->Html->link(__d('forum', 'Edit', true), array('action' => 'edit', $forum['Forum']['id'])); ?> -
+            <?php echo $this->Html->link(__d('forum', 'Delete', true), array('action' => 'delete', $forum['Forum']['id'])); ?>
         </span>
         
 		<?php // Order
@@ -45,62 +44,26 @@ if (!empty($forums)) {
     </tr>
     
     <?php // Categories
-	if (!empty($forum['ForumCategory'])) {
-		foreach ($forum['ForumCategory'] as $category) { ?>
-    
-    <tr id="category_<?php echo $category['id']; ?>">
-    	<td>
-			<?php // Order
-			echo $this->Form->input('ForumCategory.'. $category['id'] .'.orderNo', array('value' => $category['orderNo'], 'div' => false, 'label' => false, 'style' => 'width: 30px'));
-			echo $this->Form->input('ForumCategory.'. $category['id'] .'.id', array('value' => $category['id'], 'type' => 'hidden')); ?>
-        </td>
-        <td colspan="2"><strong><?php echo $this->Html->link($category['title'], array('action' => 'edit_category', $category['id'])); ?></strong></td>
-        <td class="ac"><?php echo $this->Common->options(2, $category['status']); ?></td>
-        <td class="ac"><?php echo number_format($category['topic_count']); ?></td>
-        <td class="ac"><?php echo number_format($category['post_count']); ?></td>
-        <td class="ac"><?php echo $this->Common->options(4, $category['accessRead'], true); ?></td>
-        <td class="ac"><?php echo $this->Common->options(4, $category['accessPost']); ?></td>
-        <td class="ac"><?php echo $this->Common->options(4, $category['accessReply']); ?></td>
-        <td class="ac"><?php echo $this->Common->options(4, $category['accessPoll']); ?></td>
-        <td class="ac gray">
-        	<?php echo $this->Html->link(__d('forum', 'Edit', true), array('action' => 'edit_category', $category['id'])); ?> -
-        	<?php echo $this->Html->link(__d('forum', 'Delete', true), array('action' => 'delete_category', $category['id'])); ?>
-        </td>
-    </tr>
+	if (!empty($forum['SubForum'])) {
+		foreach ($forum['SubForum'] as $subForum) {
+			echo $this->element('admin/forum_row', array(
+				'forum' => $subForum
+			));
 
-		<?php // Sub forums
-		if (!empty($category['SubForum'])) {
-			foreach ($category['SubForum'] as $child) { ?>
-            
- 	<tr id="category_<?php echo $child['id']; ?>" class="altRow">
-    	<td>&nbsp;</td>
-    	<td style="width: 35px">
-			<?php // Order
-			echo $this->Form->input('ForumCategory.'. $child['id'] .'.orderNo', array('value' => $child['orderNo'], 'div' => false, 'label' => false, 'style' => 'width: 30px'));
-			echo $this->Form->input('ForumCategory.'. $child['id'] .'.id', array('value' => $child['id'], 'type' => 'hidden')); ?>
-        </td>
-        <td><strong><?php echo $this->Html->link($child['title'], array('action' => 'edit_category', $child['id'])); ?></strong></td>
-        <td class="ac"><?php echo $this->Common->options(2, $child['status']); ?></td>
-        <td class="ac"><?php echo number_format($child['topic_count']); ?></td>
-        <td class="ac"><?php echo number_format($child['post_count']); ?></td>
-        <td class="ac"><?php echo $this->Common->options(4, $child['accessRead'], true); ?></td>
-        <td class="ac"><?php echo $this->Common->options(4, $child['accessPost']); ?></td>
-        <td class="ac"><?php echo $this->Common->options(4, $child['accessReply']); ?></td>
-        <td class="ac"><?php echo $this->Common->options(4, $child['accessPoll']); ?></td>
-        <td class="ac gray">
-        	<?php echo $this->Html->link(__d('forum', 'Edit', true), array('action' => 'edit_category', $child['id'])); ?> -
-        	<?php echo $this->Html->link(__d('forum', 'Delete', true), array('action' => 'delete_category', $child['id'])); ?>
-        </td>
-    </tr>
-    
-    	<?php }
-		}
+			if (!empty($subForum['Children'])) {
+				foreach ($subForum['Children'] as $child) {
+					echo $this->element('admin/forum_row', array(
+						'forum' => $child,
+						'child' => true
+					));
+				}
+			}
 		} 
     } else { ?>
     
-    <tr>
-    	<td colspan="11" class="empty"><?php __d('forum', 'There are no categories within this forum.'); ?> <?php echo $this->Html->link(__d('forum', 'Add Category', true), array('action' => 'add_category')); ?>.</td>
-   	</tr>
+		<tr>
+			<td colspan="11" class="empty"><?php __d('forum', 'There are no categories within this forum.'); ?> <?php echo $this->Html->link(__d('forum', 'Add Category', true), array('action' => 'add_category')); ?>.</td>
+		</tr>
     
     <?php } ?>
     
@@ -112,7 +75,6 @@ if (!empty($forums)) {
 echo $this->Form->end(__d('forum', 'Update Order', true)); ?>
 
 <div class="forumOptions">
-	<?php echo $this->Html->link(__d('forum', 'Add Forum', true), array('action' => 'add_forum')); ?>
-    <?php echo $this->Html->link(__d('forum', 'Add Category', true), array('action' => 'add_category')); ?>
+	<?php echo $this->Html->link(__d('forum', 'Add Forum', true), array('action' => 'add')); ?>
 </div>
 

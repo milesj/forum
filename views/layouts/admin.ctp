@@ -31,6 +31,8 @@
     
     <div id="content">
     	<?php echo $this->element('navigation'); ?>
+		
+		<?php echo $this->Session->flash(); ?>
         
 		<?php echo $content_for_layout; ?>
  	</div>

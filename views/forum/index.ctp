@@ -3,8 +3,6 @@
 $this->Html->addCrumb($settings['site_name'], array('controller' => 'home', 'action' => 'index')); ?>
 
 <?php // Forums
-debug($forums);
-
 if (!empty($forums)) {
 	foreach ($forums as $forum) { ?>
 
@@ -22,55 +20,25 @@ if (!empty($forums)) {
     </thead>
 	<tbody>
 
-		<?php // Categories
-		if (!empty($forum['SubForum'])) {
-			$counter = 0;
-			foreach ($forum['SubForum'] as $category) {
-				$subForums = array();
-				if (!empty($category['SubForum'])) {
-					foreach ($category['SubForum'] as $sub) {
-						$subForums[] = $this->Html->link($sub['title'], array('controller' => 'categories', 'action' => 'view', $sub['slug']));
-					}
-				} ?>
-    
-		<tr id="category_<?php echo $category['id']; ?>"<?php if ($counter % 2) echo ' class="altRow"'; ?>>
-			<td class="ac" style="width: 35px"><?php echo $this->Common->forumIcon($category); ?></td>
-			<td>
-				<strong><?php echo $this->Html->link($category['title'], array('controller' => 'categories', 'action' => 'view', $category['slug'])); ?></strong><br />
-				<?php echo $category['description']; ?>
+	<?php // Categories
+	if (!empty($forum['Children'])) {
+		$counter = 0;
 
-				<?php if (!empty($subForums)) { ?>
-				<div class="subForums">
-					<span class="gray"><?php __d('forum', 'Sub-Forums'); ?>:</span> <?php echo implode(', ', $subForums); ?>
-				</div>
-				<?php } ?>
-			</td>
-			<td class="ac"><?php echo number_format($category['topic_count']); ?></td>
-			<td class="ac"><?php echo number_format($category['post_count']); ?></td>
-			<td>
-				<?php // Last activity
-				if (!empty($category['LastTopic'])) {
-					$lastTime = (!empty($category['LastPost']['created'])) ? $category['LastPost']['created'] : $category['LastTopic']['created']; ?>
+		foreach ($forum['Children'] as $child) {
+			echo $this->element('tiles/forum_row', array(
+				'forum' => $child,
+				'counter' => $counter
+			));
 
-					<?php echo $this->Html->link($category['LastTopic']['title'], array('controller' => 'topics', 'action' => 'view', $category['LastTopic']['slug'])); ?>
-					<?php echo $this->Html->image('/forum/img/goto.png', array('alt' => '', 'url' => array('controller' => 'topics', 'action' => 'view', $category['LastTopic']['slug'], 'page' => $category['LastTopic']['page_count'], '#' => 'post_'. $category['lastPost_id']))); ?><br />
-
-					<em><?php echo $this->Time->relativeTime($lastTime, array('userOffset' => $this->Common->timezone())); ?></em> <span class="gray"><?php __d('forum', 'by'); ?> <?php echo $this->Html->link($category['LastUser']['username'], array('controller' => 'users', 'action' => 'profile', $category['lastUser_id'])); ?></span>
-				<?php } else {
-					__d('forum', 'No latest activity to display');
-				} ?>
-			</td>
-		</tr>
-
-			<?php ++$counter;
-			}
-		} else { ?>
+			++$counter;
+		}
+	} else { ?>
     
 		<tr>
 			<td colspan="5" class="empty"><?php __d('forum', 'There are no categories within this forum.'); ?></td>
 		</tr>
     
-		<?php } ?>
+	<?php } ?>
 
 	</tbody>
     </table>
@@ -94,6 +62,7 @@ if (!empty($forums)) {
     <?php // Whos online
 	if (!empty($whosOnline)) {
 		$online = array();
+		
 		foreach ($whosOnline as $user) {
 			$online[] = $this->Html->link($user['User']['username'], array('controller' => 'users', 'action' => 'profile', $user['User']['id']));
 		} ?>

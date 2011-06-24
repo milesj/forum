@@ -42,19 +42,19 @@ class CommonHelper extends AppHelper {
 	 * Determine the forum icon state.
 	 *
 	 * @access public
-	 * @param array $category
+	 * @param array $forum
 	 * @return string
 	 */
-	public function forumIcon($category) { 
+	public function forumIcon($forum) { 
 		$icon = 'open';
 		
-		if (isset($category['LastPost']['created'])) {
-			$lastPost = $category['LastPost']['created'];
-		} else if (isset($category['LastTopic']['created'])) {
-			$lastPost = $category['LastTopic']['created'];
+		if (isset($forum['LastPost']['created'])) {
+			$lastPost = $forum['LastPost']['created'];
+		} else if (isset($forum['LastTopic']['created'])) {
+			$lastPost = $forum['LastTopic']['created'];
 		}
 		
-		if ($category['status'] == 1) {
+		if ($forum['status'] == 0) {
 			$icon = 'closed';
 		} else if (isset($lastPost) && $lastPost > $this->Session->read('Forum.lastVisit')) {
 			$icon = 'new';
@@ -285,9 +285,9 @@ class CommonHelper extends AppHelper {
 		if ($type == 1) {
 			$options = array(0 => __d('forum', 'No', true), 1 => __d('forum', 'Yes', true));
 		} else if ($type == 2) {
-			$options = array(0 => __d('forum', 'Open', true), 1 => __d('forum', 'Closed', true));
+			$options = array(0 => __d('forum', 'Closed', true), 1 => __d('forum', 'Open', true));
 		} else if ($type == 3) {
-			$options = array(0 => __d('forum', 'Visible', true), 1 => __d('forum', 'Hidden', true));
+			$options = array(0 => __d('forum', 'Hidden', true), 1 => __d('forum', 'Visible', true));
 		} else if ($type == 4) {
 			$options = array(
 				1 => '1 ('. __d('forum', 'Member', true) .')',

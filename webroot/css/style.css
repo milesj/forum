@@ -183,6 +183,8 @@ h4 { font-size: 24px; }
 	overflow: hidden;
 	border-top: 1px dashed #ccc; }
 
+.moderateOptions select { margin-right: 10px; }
+
 /*------------------------------------------------------
 	Tables
 ------------------------------------------------------*/

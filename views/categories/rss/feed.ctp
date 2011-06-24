@@ -1,24 +1,24 @@
 
 <?php // Channel
 $this->set('channel', array(
-	'title' 		=> $settings['site_name'] .' - '. __d('forum', 'Forum', true) .': '. $category['ForumCategory']['title'],
-	'link' 			=> array('plugin' => 'forum', 'controller' => 'categories', 'action' => 'view', $category['ForumCategory']['slug']),
-	'description' 	=> $category['ForumCategory']['description'],
-	'language' 		=> 'en-us',
+	'title' => $settings['site_name'] .' - '. __d('forum', 'Forum', true) .': '. $forum['Forum']['title'],
+	'link' => array('plugin' => 'forum', 'controller' => 'categories', 'action' => 'view', $forum['Forum']['slug']),
+	'description' => $forum['Forum']['description'],
+	'language' => 'en-us',
 ));
 			
 // Loop rss
-if (!empty($items)) {
-	foreach ($items as $item) {
-		$link = array('plugin' => 'forum', 'controller' => 'topics', 'action' => 'view', $item['Topic']['slug']);
+if (!empty($topics)) {
+	foreach ($topics as $topic) {
+		$link = array('plugin' => 'forum', 'controller' => 'topics', 'action' => 'view', $topic['Topic']['slug']);
 	
 		echo $rss->item(array(), array(
-			'title' => $item['Topic']['title'],
+			'title' => $topic['Topic']['title'],
 			'link' => $link,
 			'guid' => array('url' => $link, 'isPermaLink' => 'true'),
-			'description' => $this->Decoda->parse($item['FirstPost']['content'], true),
-			'dc:creator' => $item['User']['username'],
-			'pubDate' => $item['Topic']['created']
+			'description' => $this->Decoda->parse($topic['FirstPost']['content'], true),
+			'dc:creator' => $topic['User']['username'],
+			'pubDate' => $topic['Topic']['created']
 		));
 	}
 }

@@ -164,7 +164,7 @@ class ForumAppModel extends AppModel {
 		return $this->find('count', array(
 			'contain' => false,
 			'recursive' => false,
-			'cache' => array('global_total', '+24 hours')
+			'cache' => array(__FUNCTION__, '+24 hours')
 		));
 	}
 
@@ -205,6 +205,7 @@ class ForumAppModel extends AppModel {
 	 */
 	public function update($id, $data) {
 		$this->id = $id;
+		
 		return $this->save($data, false, array_keys($data));
 	}
 	

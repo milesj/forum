@@ -33,8 +33,6 @@ class TopicsController extends ForumAppController {
 	
 	/**
 	 * Redirect.
-	 *
-	 * @access public
 	 */
 	public function index() {
 		$this->Toolbar->goToPage();
@@ -214,21 +212,18 @@ class TopicsController extends ForumAppController {
 	 */
 	public function view($slug) {
 		$user_id = $this->Auth->user('id');
-		$topic = $this->Topic->getTopicForViewing($slug, $user_id);
-		
-		// Access
+		$topic = $this->Topic->get($slug, $user_id);
+
 		$this->Toolbar->verifyAccess(array(
 			'exists' => $topic, 
-			'permission' => $topic['ForumCategory']['accessRead']
+			'permission' => $topic['Forum']['accessRead']
 		));
 		
-		// Update
 		$this->Toolbar->markAsRead($topic['Topic']['id']);
 		$this->Topic->increaseViews($topic['Topic']['id']);
 		
-		// Paginate
-		$this->paginate['Post']['limit'] = Configure::read('Forum.settings.posts_per_page');
-		$this->paginate['Post']['conditions']['Post.topic_id'] = $topic['Topic']['id'];
+		$this->paginate['Post']['limit'] = $this->settings['posts_per_page'];
+		$this->paginate['Post']['conditions'] = array('Post.topic_id' => $topic['Topic']['id']);
 		
 		// Poll Voting
 		if (!empty($this->data['Poll']['option'])) {
@@ -236,7 +231,7 @@ class TopicsController extends ForumAppController {
 			$this->redirect(array('plugin' => 'forum', 'controller' => 'topics', 'action' => 'view', $slug));
 		}
 		
-		$this->Toolbar->pageTitle($topic['ForumCategory']['title'], $topic['Topic']['title']);
+		$this->Toolbar->pageTitle($topic['Forum']['title'], $topic['Topic']['title']);
 		$this->set('topic', $topic);
 		$this->set('posts', $this->paginate('Post'));
 		$this->set('feedId', $topic['Topic']['id']);

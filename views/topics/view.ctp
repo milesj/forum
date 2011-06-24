@@ -1,10 +1,12 @@
 
 <?php // Crumbs
-$this->Html->addCrumb($topic['ForumCategory']['Forum']['title'], array('controller' => 'home', 'action' => 'index'));
-if (!empty($topic['ForumCategory']['Parent']['slug'])) {
-	$this->Html->addCrumb($topic['ForumCategory']['Parent']['title'], array('controller' => 'categories', 'action' => 'view', $topic['ForumCategory']['Parent']['slug']));
+$this->Html->addCrumb($topic['Forum']['title'], array('controller' => 'home', 'action' => 'index'));
+
+if (!empty($topic['Forum']['Parent']['slug'])) {
+	$this->Html->addCrumb($topic['Forum']['Parent']['title'], array('controller' => 'categories', 'action' => 'view', $topic['Forum']['Parent']['slug']));
 }
-$this->Html->addCrumb($topic['ForumCategory']['title'], array('controller' => 'categories', 'action' => 'view', $topic['ForumCategory']['slug'])); ?>
+
+$this->Html->addCrumb($topic['Forum']['title'], array('controller' => 'categories', 'action' => 'view', $topic['Forum']['slug'])); ?>
 
 <div class="forumHeader">
 	<?php if (!$this->Common->user()) { ?>
@@ -16,26 +18,9 @@ $this->Html->addCrumb($topic['ForumCategory']['title'], array('controller' => 'c
 	<h2><?php echo $topic['Topic']['title']; ?></h2>
 </div>
 
-<?php if ($this->Common->user()) { ?>
-<div class="forumOptions">
-	<?php if ($this->Common->hasAccess('mod', $topic['ForumCategory']['id'])) {
-		echo $this->Html->link(__d('forum', 'Moderate', true), array('controller' => 'topics', 'action' => 'moderate', $topic['Topic']['id']));
-	} ?>
-	<?php if ($this->Common->hasAccess($topic['ForumCategory']['accessPost'])) {
-		echo $this->Html->link(__d('forum', 'Create Topic', true), array('controller' => 'topics', 'action' => 'add', $topic['ForumCategory']['id']));
-	} ?>
-    <?php if ($this->Common->hasAccess($topic['ForumCategory']['accessPoll'])) {
-		echo $this->Html->link(__d('forum', 'Create Poll', true), array('controller' => 'topics', 'action' => 'add', $topic['ForumCategory']['id'], 'poll'));
-	} ?>
-    <?php if ($this->Common->hasAccess($topic['ForumCategory']['accessReply'])) {
-		if ($topic['Topic']['status'] == 0) {
-			echo $this->Html->link(__d('forum', 'Post Reply', true), array('controller' => 'posts', 'action' => 'add', $topic['Topic']['id']));
-		} else {
-			echo '<span>'. __d('forum', 'Closed', true) .'</span>';
-		}	
-	} ?>
-</div>
-<?php } ?>
+<?php echo $this->element('forum/topic_controls', array(
+	'topic' => $topic
+)); ?>
 
 <?php // Topic Poll
 if (!empty($topic['Poll']['id'])) { ?>
@@ -99,12 +84,16 @@ if (!empty($topic['Poll']['id'])) { ?>
 	<table cellspacing="0" class="table">
     
     <?php foreach ($posts as $post) { ?>
+		
     <tr class="altRow" id="post_<?php echo $post['Post']['id']; ?>">
-		<td class="ar gray"><?php echo $this->Time->niceShort($post['Post']['created'], $this->Common->timezone()); ?></td>
+		<td class="ar gray">
+			<?php echo $this->Time->niceShort($post['Post']['created'], $this->Common->timezone()); ?>
+		</td>
         <td class="ar gray">
         	<?php // Commands
 			if ($this->Common->user()) {
 				$links = array();
+				
 				if ($this->Common->hasAccess('super', $topic['ForumCategory']['id']) || $this->Common->user('id') == $post['Post']['user_id']) {
 					if ($topic['Topic']['firstPost_id'] == $post['Post']['id']) {
 						$links[] = $this->Html->link(__d('forum', 'Edit', true), array('controller' => 'topics', 'action' => 'edit', $topic['Topic']['id']));
@@ -135,7 +124,7 @@ if (!empty($topic['Poll']['id'])) { ?>
         	<?php } ?>
 
 			<?php // Gravatar
-			if ($settings['enable_gravatar'] == 1) {
+			if ($settings['enable_gravatar']) {
 				if ($avatar = $this->Common->gravatar($post['User']['email'])) { ?>
 			<p><?php echo $avatar; ?></p>
 			<?php } } ?>
@@ -154,6 +143,7 @@ if (!empty($topic['Poll']['id'])) { ?>
             <?php } ?>
        	</td>
  	</tr>
+	
     <?php } ?>
     
     </table>
@@ -161,51 +151,36 @@ if (!empty($topic['Poll']['id'])) { ?>
     <?php echo $this->element('pagination'); ?>
 </div>
 
-<?php if ($this->Common->user()) { ?>
-<div class="forumOptions">
-	<?php if ($this->Common->hasAccess('mod', $topic['ForumCategory']['id'])) {
-		echo $this->Html->link(__d('forum', 'Moderate', true), array('controller' => 'topics', 'action' => 'moderate', $topic['Topic']['id']));
-	} ?>
-	<?php if ($this->Common->hasAccess($topic['ForumCategory']['accessPost'])) {
-		echo $this->Html->link(__d('forum', 'Create Topic', true), array('controller' => 'topics', 'action' => 'add', $topic['ForumCategory']['id']));
-	} ?>
-    <?php if ($this->Common->hasAccess($topic['ForumCategory']['accessPoll'])) {
-		echo $this->Html->link(__d('forum', 'Create Poll', true), array('controller' => 'topics', 'action' => 'add', $topic['ForumCategory']['id'], 'poll'));
-	} ?>
-    <?php if ($this->Common->hasAccess($topic['ForumCategory']['accessReply'])) {
-		if ($topic['Topic']['status'] == 0) {
-			echo $this->Html->link(__d('forum', 'Post Reply', true), array('controller' => 'posts', 'action' => 'add', $topic['Topic']['id']));
-		} else {
-			echo '<span>'. __d('forum', 'Closed', true) .'</span>';
-		}
-	} ?>
-</div>
+<?php echo $this->element('forum/topic_controls', array(
+	'topic' => $topic
+)); ?>
 
-<?php // Quick Reply
-if ($settings['enable_quick_reply'] == 1 && $this->Common->hasAccess($topic['ForumCategory']['accessReply'])) { ?>
-<div id="quickReply">
-	<h3><?php __d('forum', 'Quick Reply'); ?></h3>
-    
-    <?php echo $this->Form->create('Post', array('url' => array('controller' => 'posts', 'action' => 'add', $topic['Topic']['id']))); ?>
-    <table cellspacing="0" class="table">
-    <tr>
-    	<td style="width: 25%">
-        	<strong><?php echo $this->Form->label('content', __d('forum', 'Message', true) .':'); ?></strong><br /><br />
-            
-            <?php echo $this->Html->link(__d('forum', 'Advanced Reply', true), array('controller' => 'posts', 'action' => 'add', $topic['Topic']['id'])); ?><br />
-            <?php __d('forum', 'BBCode Enabled'); ?>
-        </td>
-        <td>
-			<?php echo $this->Form->input('content', array('type' => 'textarea', 'rows' => 5, 'style' => 'width: 99%', 'div' => false, 'error' => false, 'label' => false)); ?>
-			<?php echo $this->element('markitup', array('textarea' => 'PostContent')); ?>
-		</td>
-  	</tr>
-    <tr class="altRow">
-    	<td colspan="2" class="ac">
-        	<?php echo $this->Form->submit(__d('forum', 'Post Reply', true)); ?>
-        </td>
-   	</tr> 
-    </table>
-    <?php echo $this->Form->end(); ?>
-</div>
-<?php } } ?>
+<?php if ($settings['enable_quick_reply'] && $this->Common->hasAccess($topic['Forum']['accessReply'])) { ?>
+
+	<div id="quickReply">
+		<h3><?php __d('forum', 'Quick Reply'); ?></h3>
+
+		<?php echo $this->Form->create('Post', array('url' => array('controller' => 'posts', 'action' => 'add', $topic['Topic']['id']))); ?>
+		<table cellspacing="0" class="table">
+		<tr>
+			<td style="width: 25%">
+				<strong><?php echo $this->Form->label('content', __d('forum', 'Message', true) .':'); ?></strong><br /><br />
+
+				<?php echo $this->Html->link(__d('forum', 'Advanced Reply', true), array('controller' => 'posts', 'action' => 'add', $topic['Topic']['id'])); ?><br />
+				<?php __d('forum', 'BBCode Enabled'); ?>
+			</td>
+			<td>
+				<?php echo $this->Form->input('content', array('type' => 'textarea', 'rows' => 5, 'style' => 'width: 99%', 'div' => false, 'error' => false, 'label' => false)); ?>
+				<?php echo $this->element('markitup', array('textarea' => 'PostContent')); ?>
+			</td>
+		</tr>
+		<tr class="altRow">
+			<td colspan="2" class="ac">
+				<?php echo $this->Form->submit(__d('forum', 'Post Reply', true)); ?>
+			</td>
+		</tr> 
+		</table>
+		<?php echo $this->Form->end(); ?>
+	</div>
+
+<?php } ?>

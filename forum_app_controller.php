@@ -115,6 +115,7 @@ class ForumAppController extends AppController {
 		
 		// Initialize
 		$this->Toolbar->initForum();
+		$this->settings = Configure::read('Forum.settings');
 	}
 
 	/**
