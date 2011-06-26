@@ -80,10 +80,11 @@ class ForumAppController extends AppController {
 		parent::beforeFilter();
 
 		// Settings
-		Configure::write('Forum.settings', ClassRegistry::init('Forum.Setting')->getSettings());
+		$this->settings = ClassRegistry::init('Forum.Setting')->getSettings();
+		Configure::write('Forum.settings', $this->settings);
 		
 		// Localization
-		$locale = $this->Auth->user('locale') ? $this->Auth->user('locale') : Configure::read('Forum.settings.default_locale');
+		$locale = $this->Auth->user('locale') ? $this->Auth->user('locale') : $this->settings['default_locale'];
 		Configure::write('Config.language', $locale);
 		setlocale(LC_ALL, $locale .'UTF8', $locale .'UTF-8', $locale, 'eng.UTF8', 'eng.UTF-8', 'eng', 'en_US');
 		
@@ -95,7 +96,7 @@ class ForumAppController extends AppController {
 			$referer = array('plugin' => 'forum', 'controller' => 'forum', 'action' => 'index');
 		}
 
-		$this->Auth->loginAction = Configure::read('Forum.routes.login');
+		$this->Auth->loginAction = $routes['login'];
 		$this->Auth->loginRedirect = $referer;
 		$this->Auth->logoutRedirect = $referer;
 		$this->Auth->autoRedirect = false;
@@ -107,15 +108,14 @@ class ForumAppController extends AppController {
 			'loginAction' => $routes['login']['action'],
 			'logoutAction' => $routes['logout']['action']
 		);
-
+		
 		// Helpers
-		if ($censored = Configure::read('Forum.settings.censored_words')) {
+		if ($censored = $this->settings['censored_words']) {
 			$this->helpers['Forum.Decoda'] = array('censored' => explode(',', str_replace(', ', ',', $censored)));
 		}
 		
 		// Initialize
 		$this->Toolbar->initForum();
-		$this->settings = Configure::read('Forum.settings');
 	}
 
 	/**

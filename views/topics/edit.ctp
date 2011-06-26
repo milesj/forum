@@ -2,9 +2,9 @@
 <?php // Crumbs
 $this->Html->addCrumb($topic['ForumCategory']['Forum']['title'], array('controller' => 'home', 'action' => 'index'));
 if (!empty($topic['ForumCategory']['Parent']['slug'])) {
-	$this->Html->addCrumb($topic['ForumCategory']['Parent']['title'], array('controller' => 'categories', 'action' => 'view', $topic['ForumCategory']['Parent']['slug']));
+	$this->Html->addCrumb($topic['ForumCategory']['Parent']['title'], array('controller' => 'stations', 'action' => 'view', $topic['ForumCategory']['Parent']['slug']));
 }
-$this->Html->addCrumb($topic['ForumCategory']['title'], array('controller' => 'categories', 'action' => 'view', $topic['ForumCategory']['slug']));
+$this->Html->addCrumb($topic['ForumCategory']['title'], array('controller' => 'stations', 'action' => 'view', $topic['ForumCategory']['slug']));
 $this->Html->addCrumb($topic['Topic']['title'], array('controller' => 'topics', 'action' => 'view', $topic['Topic']['slug'])); ?>
 
 <div class="forumHeader">
@@ -15,7 +15,7 @@ $this->Html->addCrumb($topic['Topic']['title'], array('controller' => 'topics', 
 <?php echo $this->Form->input('title', array('label' => __d('forum', 'Title', true))); ?>
 
 <?php if ($this->Common->hasAccess('super', $topic['ForumCategory']['id'])) {
-	echo $this->Form->input('forum_category_id', array('label' => __d('forum', 'Forum Category', true), 'options' => $forums, 'escape' => false, 'empty' => '-- '. __d('forum', 'Select a Forum', true) .' --'));
+	echo $this->Form->input('forum_id', array('label' => __d('forum', 'Forum Category', true), 'options' => $forums, 'escape' => false, 'empty' => '-- '. __d('forum', 'Select a Forum', true) .' --'));
 	echo $this->Form->input('status', array('label' => __d('forum', 'Status', true), 'options' => $this->Common->options(2)));
 	echo $this->Form->input('type', array('options' => array(
 		0 => __d('forum', 'Normal', true),
@@ -24,7 +24,7 @@ $this->Html->addCrumb($topic['Topic']['title'], array('controller' => 'topics', 
 		3 => __d('forum', 'Announcement', true)
 	), 'label' => __d('forum', 'Type', true)));
 } else {
-	echo $this->Form->input('forum_category_id', array('type' => 'hidden'));
+	echo $this->Form->input('forum_id', array('type' => 'hidden'));
 } ?>
 
 <?php // Has a poll?

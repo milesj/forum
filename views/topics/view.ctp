@@ -3,10 +3,10 @@
 $this->Html->addCrumb($topic['Forum']['title'], array('controller' => 'home', 'action' => 'index'));
 
 if (!empty($topic['Forum']['Parent']['slug'])) {
-	$this->Html->addCrumb($topic['Forum']['Parent']['title'], array('controller' => 'categories', 'action' => 'view', $topic['Forum']['Parent']['slug']));
+	$this->Html->addCrumb($topic['Forum']['Parent']['title'], array('controller' => 'stations', 'action' => 'view', $topic['Forum']['Parent']['slug']));
 }
 
-$this->Html->addCrumb($topic['Forum']['title'], array('controller' => 'categories', 'action' => 'view', $topic['Forum']['slug'])); ?>
+$this->Html->addCrumb($topic['Forum']['title'], array('controller' => 'stations', 'action' => 'view', $topic['Forum']['slug'])); ?>
 
 <div class="forumHeader">
 	<?php if (!$this->Common->user()) { ?>

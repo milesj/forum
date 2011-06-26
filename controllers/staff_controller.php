@@ -177,7 +177,7 @@ class StaffController extends ForumAppController {
 	 */
 	public function admin_add_moderator() {
 		if (!empty($this->data)) {
-			if ($this->Moderator->save($this->data, true, array('user_id', 'forum_category_id'))) {
+			if ($this->Moderator->save($this->data, true, array('user_id', 'forum_id'))) {
 				$this->redirect(array('controller' => 'staff', 'action' => 'index', 'admin' => true));
 			}
 		}
@@ -203,7 +203,7 @@ class StaffController extends ForumAppController {
 		if (!empty($this->data)) {
 			$this->Moderator->id = $id;
 			
-			if ($this->Moderator->save($this->data, true, array('user_id', 'forum_category_id'))) {
+			if ($this->Moderator->save($this->data, true, array('user_id', 'forum_id'))) {
 				$this->redirect(array('controller' => 'staff', 'action' => 'index', 'admin' => true));
 			}
 		} else {

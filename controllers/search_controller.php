@@ -27,7 +27,7 @@ class SearchController extends ForumAppController {
 	public $paginate = array( 
 		'Topic' => array(
 			'order' => array('LastPost.created' => 'DESC'),
-			'contain' => array('ForumCategory.title', 'ForumCategory.slug', 'User.id', 'User.username', 'LastPost.created', 'LastUser.username', 'Poll.id', 'FirstPost.content')
+			'contain' => array('Forum.title', 'Forum.slug', 'User.id', 'User.username', 'LastPost.created', 'LastUser.username', 'Poll.id', 'FirstPost.content')
 		)
 	); 
 	
@@ -71,11 +71,11 @@ class SearchController extends ForumAppController {
 			}
 
 			if (!empty($this->data['Topic']['category'])) {
-				$this->paginate['Topic']['conditions']['Topic.forum_category_id'] = $this->data['Topic']['category'];
+				$this->paginate['Topic']['conditions']['Topic.forum_id'] = $this->data['Topic']['category'];
 			} else {
 				$this->data['Topic']['category'] = array();
-				foreach ($forums as $forum_category_ids) {
-					$this->data['Topic']['category'] = array_merge($this->data['Topic']['category'], array_keys($forum_category_ids));
+				foreach ($forums as $forum_ids) {
+					$this->data['Topic']['category'] = array_merge($this->data['Topic']['category'], array_keys($forum_ids));
 				}
 			}
 			

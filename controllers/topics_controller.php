@@ -81,7 +81,7 @@ class TopicsController extends ForumAppController {
 				$this->Toolbar->goToPage($topic_id);
 			}
 		} else {
-			$this->data['Topic']['forum_category_id'] = $category_id;
+			$this->data['Topic']['forum_id'] = $category_id;
 		}
 		
 		$this->Toolbar->pageTitle($pageTitle);
@@ -105,7 +105,7 @@ class TopicsController extends ForumAppController {
 		// Access
 		$this->Toolbar->verifyAccess(array(
 			'exists' => $topic, 
-			'moderate' => $topic['Topic']['forum_category_id'],
+			'moderate' => $topic['Topic']['forum_id'],
 			'ownership' => $topic['Topic']['user_id']
 		));
 		
@@ -158,17 +158,17 @@ class TopicsController extends ForumAppController {
 	 * @param int $id
 	 */
 	public function delete($id) {
-		$topic = $this->Topic->get($id, array('id', 'forum_category_id'));
+		$topic = $this->Topic->get($id, array('id', 'forum_id'));
 		
 		// Access
 		$this->Toolbar->verifyAccess(array(
 			'exists' => $topic, 
-			'moderate' => $topic['Topic']['forum_category_id']
+			'moderate' => $topic['Topic']['forum_id']
 		));
 		
 		// Delete All
 		$this->Topic->destroy($id);
-		$this->redirect(array('controller' => 'categories', 'action' => 'view', $topic['Topic']['forum_category_id']));
+		$this->redirect(array('controller' => 'stations', 'action' => 'view', $topic['Topic']['forum_id']));
 	}
 	
 	/**
@@ -251,7 +251,7 @@ class TopicsController extends ForumAppController {
 		$this->Toolbar->verifyAccess(array(
 			'exists' => $topic, 
 			'permission' => $topic['ForumCategory']['accessRead'],
-			'moderate' => $topic['Topic']['forum_category_id']
+			'moderate' => $topic['Topic']['forum_id']
 		));
 		
 		// Processing

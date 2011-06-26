@@ -9,7 +9,7 @@
 <?php } else { ?>
 <p><?php printf(__d('forum', 'Before you delete the category %s , please select which forum all topics should be moved to upon deletion. Additionally, any sub-forums will be moved to the main parent forum and any moderators will be deleted.', true), '<strong>'. $category['ForumCategory']['title'] .'</strong>'); ?></p>
 
-	<?php echo $this->Form->create('ForumCategory', array('url' => array('controller' => 'categories', 'action' => 'delete_category', $id, 'admin' => true)));
+	<?php echo $this->Form->create('ForumCategory', array('url' => array('controller' => 'stations', 'action' => 'delete_category', $id, 'admin' => true)));
 	echo $this->Form->input('category_id', array('options' => $categories, 'escape' => false, 'label' => __d('forum', 'Move Topics To', true)));
 	echo $this->Form->end(__d('forum', 'Delete', true));
 }?>

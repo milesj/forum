@@ -19,7 +19,7 @@ array_unshift($levels, '-- '. __d('forum', 'None', true) .' --'); ?>
 <p><?php __d('forum', 'When applying a read, post, reply or poll access, it states that all users with that access level and above will be able to commit the respective action. It does not mean only that type of access can view the forum category. However, the restricted access will limit only users with that access level to view the forum category.'); ?></p>
 
 <?php 
-echo $this->Form->create('ForumCategory', array('url' => array('controller' => 'categories', 'action' => $action, 'admin' => true)));
+echo $this->Form->create('ForumCategory', array('url' => array('controller' => 'stations', 'action' => $action, 'admin' => true)));
 echo $this->Form->input('title', array('label' => __d('forum', 'Title', true)));
 echo $this->Form->input('description', array('type' => 'textarea', 'label' => __d('forum', 'Description', true)));
 echo $this->Form->input('forum_id', array('options' => $forums, 'label' => __d('forum', 'Forum', true)));

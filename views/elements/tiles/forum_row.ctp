@@ -5,14 +5,14 @@ $subForums = array();
 
 if (!empty($forum['SubForum'])) {
 	foreach ($forum['SubForum'] as $sub) {
-		$subForums[] = $this->Html->link($sub['title'], array('controller' => 'categories', 'action' => 'view', $sub['slug']));
+		$subForums[] = $this->Html->link($sub['title'], array('controller' => 'stations', 'action' => 'view', $sub['slug']));
 	}
 } ?>
 
 <tr id="category_<?php echo $forum['id']; ?>"<?php if ($counter % 2) echo ' class="altRow"'; ?>>
 	<td class="ac" style="width: 35px"><?php echo $this->Common->forumIcon($forum); ?></td>
 	<td>
-		<strong><?php echo $this->Html->link($forum['title'], array('controller' => 'categories', 'action' => 'view', $forum['slug'])); ?></strong><br />
+		<strong><?php echo $this->Html->link($forum['title'], array('controller' => 'stations', 'action' => 'view', $forum['slug'])); ?></strong><br />
 		<?php echo $forum['description']; ?>
 
 		<?php if (!empty($subForums)) { ?>

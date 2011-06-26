@@ -3,17 +3,17 @@
 $this->Html->addCrumb($settings['site_name'], array('controller' => 'home', 'action' => 'index'));
 
 if (!empty($forum['Parent']['slug'])) {
-	$this->Html->addCrumb($forum['Parent']['title'], array('controller' => 'categories', 'action' => 'view', $forum['Parent']['slug']));
+	$this->Html->addCrumb($forum['Parent']['title'], array('controller' => 'stations', 'action' => 'view', $forum['Parent']['slug']));
 }
 
-$this->Html->addCrumb($forum['Forum']['title'], array('controller' => 'categories', 'action' => 'view', $forum['Forum']['slug'])); ?>
+$this->Html->addCrumb($forum['Forum']['title'], array('controller' => 'stations', 'action' => 'view', $forum['Forum']['slug'])); ?>
 
 <div class="forumHeader">
 	<h2><?php __d('forum', 'Moderate'); ?>: <?php echo $forum['Forum']['title']; ?></h2>
 </div>
 
 <div class="forumOptions">
-	<?php echo $this->Html->link(__d('forum', 'Return to Forum', true), array('controller' => 'categories', 'action' => 'view', $forum['Forum']['slug'])); ?>
+	<?php echo $this->Html->link(__d('forum', 'Return to Forum', true), array('controller' => 'stations', 'action' => 'view', $forum['Forum']['slug'])); ?>
 </div>
 
 <?php echo $this->Form->create('Topic', array('url' => $this->here)); ?>
@@ -78,5 +78,5 @@ $this->Html->addCrumb($forum['Forum']['title'], array('controller' => 'categorie
 <?php echo $this->Form->end(); ?>
 
 <div class="forumOptions">
-	<?php echo $this->Html->link(__d('forum', 'Return to Forum', true), array('controller' => 'categories', 'action' => 'view', $forum['Forum']['slug'])); ?>
+	<?php echo $this->Html->link(__d('forum', 'Return to Forum', true), array('controller' => 'stations', 'action' => 'view', $forum['Forum']['slug'])); ?>
 </div>

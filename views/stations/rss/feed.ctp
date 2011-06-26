@@ -2,7 +2,7 @@
 <?php // Channel
 $this->set('channel', array(
 	'title' => $settings['site_name'] .' - '. __d('forum', 'Forum', true) .': '. $forum['Forum']['title'],
-	'link' => array('plugin' => 'forum', 'controller' => 'categories', 'action' => 'view', $forum['Forum']['slug']),
+	'link' => array('plugin' => 'forum', 'controller' => 'stations', 'action' => 'view', $forum['Forum']['slug']),
 	'description' => $forum['Forum']['description'],
 	'language' => 'en-us',
 ));

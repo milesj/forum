@@ -2,7 +2,7 @@
 <?php if ($this->Common->user()) { ?>
     <div class="forumOptions <?php echo isset($class) ? $class : ''; ?>">
 		<?php if ($this->Common->hasAccess('mod', $forum['Forum']['id'])) {
-            echo $this->Html->link(__d('forum', 'Moderate', true), array('controller' => 'categories', 'action' => 'moderate', $forum['Forum']['id']));
+            echo $this->Html->link(__d('forum', 'Moderate', true), array('controller' => 'stations', 'action' => 'moderate', $forum['Forum']['id']));
         } ?>
 		
         <?php if ($forum['Forum']['status'] == 0) {

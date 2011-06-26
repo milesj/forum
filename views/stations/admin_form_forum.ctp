@@ -19,7 +19,7 @@ array_unshift($levels, '-- '. __d('forum', 'None', true) .' --'); ?>
 <p><?php __d('forum', 'When applying a view access, it states that all users with that access level and above will be able to view the forum and all its child forum categories. However, the restricted access will limit only users with that access level to view the forum.'); ?></p>
 
 <?php 
-echo $this->Form->create('Forum', array('url' => array('controller' => 'categories', 'action' => $action, 'admin' => true)));
+echo $this->Form->create('Forum', array('url' => array('controller' => 'stations', 'action' => $action, 'admin' => true)));
 echo $this->Form->input('title', array('label' => __d('forum', 'Title', true)));
 echo $this->Form->input('status', array('options' => $this->Common->options(3), 'label' => __d('forum', 'Status', true)));
 echo $this->Form->input('orderNo', array('style' => 'width: 50px', 'label' => __d('forum', 'Order No', true)));

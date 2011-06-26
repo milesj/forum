@@ -43,7 +43,7 @@ if ($searching === true) { ?>
 	<table cellspacing="0" class="table">
     <tr>
         <th colspan="2"><?php echo $this->Paginator->sort(__d('forum', 'Topic', true), 'Topic.title'); ?></th>
-        <th><?php echo $this->Paginator->sort(__d('forum', 'Forum', true), 'Topic.forum_category_id'); ?></th>
+        <th><?php echo $this->Paginator->sort(__d('forum', 'Forum', true), 'Topic.forum_id'); ?></th>
         <th><?php echo $this->Paginator->sort(__d('forum', 'Author', true), 'User.username'); ?></th>
         <th><?php echo $this->Paginator->sort(__d('forum', 'Created', true), 'Topic.created'); ?></th>
         <th><?php echo $this->Paginator->sort(__d('forum', 'Posts', true), 'Topic.post_count'); ?></th>
@@ -74,7 +74,7 @@ if ($searching === true) { ?>
             <br /><span class="gray"><?php __d('forum', 'Pages'); ?>: [ <?php echo implode(', ', $pages); ?> ]</span>
             <?php } ?>
         </td>
-        <td class="ac"><?php echo $this->Html->link($topic['ForumCategory']['title'], array('controller' => 'categories', 'action' => 'view', $topic['ForumCategory']['slug'])); ?></td>
+        <td class="ac"><?php echo $this->Html->link($topic['ForumCategory']['title'], array('controller' => 'stations', 'action' => 'view', $topic['ForumCategory']['slug'])); ?></td>
         <td class="ac"><?php echo $this->Html->link($topic['User']['username'], array('controller' => 'users', 'action' => 'profile', $topic['User']['id'])); ?></td>
         <td class="ac"><?php echo $this->Time->niceShort($topic['Topic']['created'], $this->Common->timezone()); ?></td>
         <td class="ac"><?php echo number_format($topic['Topic']['post_count']); ?></td>

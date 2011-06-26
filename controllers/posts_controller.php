@@ -90,7 +90,7 @@ class PostsController extends ForumAppController {
 		// Access
 		$this->Toolbar->verifyAccess(array(
 			'exists' => $post, 
-			'moderate' => $post['Topic']['forum_category_id'],
+			'moderate' => $post['Topic']['forum_id'],
 			'ownership' => $post['Post']['user_id']
 		));
 		
@@ -117,13 +117,13 @@ class PostsController extends ForumAppController {
 	 * @param int $id
 	 */
 	public function delete($id) {
-		$post = $this->Post->get($id, array('id', 'user_id', 'topic_id'), array('Topic.forum_category_id', 'Topic.slug'));
+		$post = $this->Post->get($id, array('id', 'user_id', 'topic_id'), array('Topic.forum_id', 'Topic.slug'));
 		$user_id = $this->Auth->user('id');
 		
 		// Access
 		$this->Toolbar->verifyAccess(array(
 			'exists' => $post, 
-			'moderate' => $post['Topic']['forum_category_id'],
+			'moderate' => $post['Topic']['forum_id'],
 			'ownership' => $post['Post']['user_id']
 		));
 		

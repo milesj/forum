@@ -3,10 +3,10 @@
 $this->Html->addCrumb($settings['site_name'], array('controller' => 'home', 'action' => 'index'));
 
 if (!empty($forum['Parent']['slug'])) {
-	$this->Html->addCrumb($forum['Parent']['title'], array('controller' => 'categories', 'action' => 'view', $forum['Parent']['slug']));
+	$this->Html->addCrumb($forum['Parent']['title'], array('controller' => 'stations', 'action' => 'view', $forum['Parent']['slug']));
 }
 
-$this->Html->addCrumb($forum['Forum']['title'], array('controller' => 'categories', 'action' => 'view', $forum['Forum']['slug'])); ?>
+$this->Html->addCrumb($forum['Forum']['title'], array('controller' => 'stations', 'action' => 'view', $forum['Forum']['slug'])); ?>
 
 <div class="forumHeader">
 	<?php if (!$this->Common->user()) { ?>
@@ -19,7 +19,7 @@ $this->Html->addCrumb($forum['Forum']['title'], array('controller' => 'categorie
 	<p><?php echo $forum['Forum']['description']; ?></p>
 </div>
 
-<?php echo $this->element('forum/controls', array(
+<?php echo $this->element('forum/forum_controls', array(
 	'forum' => $forum
 )); ?>
 
@@ -112,7 +112,7 @@ if (!empty($forum['SubForum'])) { ?>
 </div>
 
 <div id="categoryStats">
-	<?php echo $this->element('forum/controls', array(
+	<?php echo $this->element('forum/forum_controls', array(
 		'forum' => $forum,
 		'class' => 'fr'
 	)); ?>

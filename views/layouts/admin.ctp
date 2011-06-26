@@ -19,7 +19,7 @@
         <ul id="menu">
         	<li<?php if ($menuTab == 'home') echo ' class="active"'; ?>><?php echo $this->Html->link(__d('forum', 'Home', true), array('controller' => 'home', 'action' => 'index', 'admin' => true)); ?></li>
         	<li<?php if ($menuTab == 'settings') echo ' class="active"'; ?>><?php echo $this->Html->link(__d('forum', 'Settings', true), array('controller' => 'home', 'action' => 'settings', 'admin' => true)); ?></li>
-        	<li<?php if ($menuTab == 'forums') echo ' class="active"'; ?>><?php echo $this->Html->link(__d('forum', 'Forums', true), array('controller' => 'categories', 'action' => 'index', 'admin' => true)); ?></li>
+        	<li<?php if ($menuTab == 'forums') echo ' class="active"'; ?>><?php echo $this->Html->link(__d('forum', 'Forums', true), array('controller' => 'stations', 'action' => 'index', 'admin' => true)); ?></li>
         	<li<?php if ($menuTab == 'staff') echo ' class="active"'; ?>><?php echo $this->Html->link(__d('forum', 'Staff', true), array('controller' => 'staff', 'action' => 'index', 'admin' => true)); ?></li>
         	<li<?php if ($menuTab == 'reports') echo ' class="active"'; ?>><?php echo $this->Html->link(__d('forum', 'Reported', true), array('controller' => 'reports', 'action' => 'index', 'admin' => true)); ?></li>
         	<li<?php if ($menuTab == 'users') echo ' class="active"'; ?>><?php echo $this->Html->link(__d('forum', 'Users', true), array('controller' => 'users', 'action' => 'index', 'admin' => true)); ?></li>

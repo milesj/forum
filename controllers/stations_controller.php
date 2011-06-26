@@ -1,6 +1,6 @@
 <?php
 /** 
- * Forum - Categories Controller
+ * Forum - Station Controller
  *
  * @author		Miles Johnson - http://milesj.me
  * @copyright	Copyright 2006-2010, Miles Johnson, Inc.
@@ -8,7 +8,7 @@
  * @link		http://milesj.me/resources/script/forum-plugin
  */
  
-class CategoriesController extends ForumAppController {
+class StationsController extends ForumAppController {
 
 	/**
 	 * Models.
@@ -39,7 +39,7 @@ class CategoriesController extends ForumAppController {
 	}
 
 	/**
-	 * Read a category.
+	 * Read a forum.
 	 *
 	 * @param string $slug
 	 */
@@ -65,7 +65,7 @@ class CategoriesController extends ForumAppController {
 	}
 
 	/**
-	 * Moderate a category.
+	 * Moderate a forum.
 	 *
 	 * @param string $slug
 	 */
@@ -99,7 +99,7 @@ class CategoriesController extends ForumAppController {
 						$this->Session->setFlash(sprintf(__d('forum', 'A total of %d topic(s) have been re-opened', true), count($items)));
 
 					} else if ($action == 'move') {
-						$this->Forum->Topic->saveField('forum_category_id', $this->data['Topic']['move_id']);
+						$this->Forum->Topic->saveField('forum_id', $this->data['Topic']['move_id']);
 						$this->Session->setFlash(sprintf(__d('forum', 'A total of %d topic(s) have been moved to another forum category', true), count($items)));
 					}
 				}
@@ -165,7 +165,7 @@ class CategoriesController extends ForumAppController {
 			}
 			
 			if ($this->Forum->save($this->data, true)) {
-				$this->redirect(array('controller' => 'categories', 'action' => 'index', 'admin' => true));
+				$this->redirect(array('controller' => 'stations', 'action' => 'index', 'admin' => true));
 			}
 		}
 
@@ -196,7 +196,7 @@ class CategoriesController extends ForumAppController {
 			}
 			
 			if ($this->Forum->save($this->data, true)) {
-				$this->redirect(array('controller' => 'categories', 'action' => 'index', 'admin' => true));
+				$this->redirect(array('controller' => 'stations', 'action' => 'index', 'admin' => true));
 			}
 		} else {
 			$this->data = $forum;
@@ -224,8 +224,8 @@ class CategoriesController extends ForumAppController {
 			$this->Forum->moveAll($id, $this->data['Forum']['move_forums']);
 			$this->Forum->delete($id, true);
 
-			$this->Session->setFlash(sprintf(__d('forum', 'The forum category %s has been deleted, and all its sub-forums and topics have been moved!', true), '<strong>'. $forum['Forum']['title'] .'</strong>'));
-			$this->redirect(array('controller' => 'categories', 'action' => 'index', 'admin' => true));
+			$this->Session->setFlash(sprintf(__d('forum', 'The forum %s has been deleted, and all its sub-forums and topics have been moved!', true), '<strong>'. $forum['Forum']['title'] .'</strong>'));
+			$this->redirect(array('controller' => 'stations', 'action' => 'index', 'admin' => true));
 		}
 		
 		$this->Toolbar->pageTitle(__d('forum', 'Delete Forum', true), $forum['Forum']['title']);
@@ -241,12 +241,11 @@ class CategoriesController extends ForumAppController {
 	public function beforeFilter() {
 		parent::beforeFilter();
 		
-		//$this->Auth->allow('index', 'view', 'feed');
-		$this->Auth->allow('*');
+		$this->Auth->allow('index', 'view', 'feed');
 		$this->Security->disabledFields = array('items');
 		
 		if (isset($this->params['admin'])) {
-			//$this->Toolbar->verifyAdmin();
+			$this->Toolbar->verifyAdmin();
 			$this->layout = 'admin';
 			$this->set('menuTab', 'forums');
 		} else {

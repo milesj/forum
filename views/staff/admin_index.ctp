@@ -94,7 +94,7 @@ echo $this->Form->create('Moderator', array('url' => array('controller' => 'staf
     
     <tr id="mod_<?php echo $user['Moderator']['id']; ?>">
         <td><strong><?php echo $this->Html->link($user['User']['username'], array('controller' => 'users', 'action' => 'edit', $user['Moderator']['id'], 'admin' => true)); ?></strong></td>
-        <td class="ac"><?php echo $this->Html->link($user['ForumCategory']['title'], array('controller' => 'categories', 'action' => 'edit_category', $user['ForumCategory']['id'], 'admin' => true)); ?></td>
+        <td class="ac"><?php echo $this->Html->link($user['ForumCategory']['title'], array('controller' => 'stations', 'action' => 'edit_category', $user['ForumCategory']['id'], 'admin' => true)); ?></td>
         <td class="ac"><?php echo $this->Time->nice($user['Moderator']['created'], $this->Common->timezone()); ?></td>
         <td class="ac gray">
         	<?php echo $this->Html->link(__d('forum', 'Edit', true), array('action' => 'edit_moderator', $user['Moderator']['id'])); ?> -

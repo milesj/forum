@@ -2,9 +2,9 @@
 <?php // Crumbs
 $this->Html->addCrumb($category['Forum']['title'], array('controller' => 'home', 'action' => 'index'));
 if (!empty($category['Parent']['slug'])) {
-	$this->Html->addCrumb($category['Parent']['title'], array('controller' => 'categories', 'action' => 'view', $category['Parent']['slug']));
+	$this->Html->addCrumb($category['Parent']['title'], array('controller' => 'stations', 'action' => 'view', $category['Parent']['slug']));
 }
-$this->Html->addCrumb($category['ForumCategory']['title'], array('controller' => 'categories', 'action' => 'view', $category['ForumCategory']['slug'])); ?>
+$this->Html->addCrumb($category['ForumCategory']['title'], array('controller' => 'stations', 'action' => 'view', $category['ForumCategory']['slug'])); ?>
 
 <div class="forumHeader">
 	<h2><?php echo $pageTitle; ?></h2>
@@ -12,7 +12,7 @@ $this->Html->addCrumb($category['ForumCategory']['title'], array('controller' =>
 
 <?php echo $this->Form->create('Topic', array('url' => array('controller' => 'topics', 'action' => 'add', $id, $type))); ?>
 <?php echo $this->Form->input('title', array('label' => __d('forum', 'Title', true))); ?>
-<?php echo $this->Form->input('forum_category_id', array('options' => $forums, 'escape' => false, 'empty' => '-- '. __d('forum', 'Select a Forum', true) .' --', 'label' => __d('forum', 'Forum Category', true))); ?>
+<?php echo $this->Form->input('forum_id', array('options' => $forums, 'escape' => false, 'empty' => '-- '. __d('forum', 'Select a Forum', true) .' --', 'label' => __d('forum', 'Forum Category', true))); ?>
 
 <?php if ($this->Common->hasAccess('super', $category['ForumCategory']['id'])) {
 	echo $this->Form->input('status', array('options' => $this->Common->options(2), 'label' => __d('forum', 'Status', true)));
