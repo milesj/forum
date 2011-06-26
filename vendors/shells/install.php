@@ -307,6 +307,8 @@ class InstallShell extends Shell {
 		// Replace $tablePrefix in AppModel
 		$appModel = file_get_contents(FORUM_PLUGIN .'forum_app_model.php');
 		$appModel = preg_replace('/public \$tablePrefix = \'(.*?)\';/', 'public \$tablePrefix = \''. $this->install['prefix'] .'\';', $appModel);
+		$appModel = preg_replace('/public \$useDbConfig = \'(.*?)\';/', 'public \$useDbConfig = \''. $this->install['database'] .'\';', $appModel);
+		
 		file_put_contents(FORUM_PLUGIN .'forum_app_model.php', $appModel);
 		
 		// Add routes if necessary
@@ -324,6 +326,8 @@ class InstallShell extends Shell {
 		$this->out();
 		$this->out(sprintf('Username: %s', $this->install['username']));
 		$this->out(sprintf('Email: %s', $this->install['email']));
+		$this->out();
+		$this->out('Please read the install.md file for further configuration instructions.');
 	}
 	
 	/**
