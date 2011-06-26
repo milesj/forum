@@ -23,9 +23,7 @@ class PollVote extends ForumAppModel {
 		'PollOption' => array(
 			'className' => 'Forum.PollOption'
 		), 
-		'User' => array(
-			'className' => 'Forum.User'
-		)
+		'User'
 	);
 	
 	/**

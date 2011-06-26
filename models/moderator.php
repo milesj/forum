@@ -21,9 +21,7 @@ class Moderator extends ForumAppModel {
 			'className' => 'Forum.Forum',
 			'fields' => array('Forum.id', 'Forum.title', 'Forum.slug')
 		), 
-		'User' => array(
-			'className' => 'Forum.User'
-		)
+		'User'
 	);
 	
 	/**

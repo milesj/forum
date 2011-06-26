@@ -16,11 +16,7 @@ class Profile extends ForumAppModel {
 	 * @access public
 	 * @var array
 	 */
-	public $belongsTo = array(
-		'User' => array(
-			'className' => 'Forum.User'
-		)
-	);
+	public $belongsTo = array('User');
 
 	/**
 	 * Get the newest signup.

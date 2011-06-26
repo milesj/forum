@@ -41,9 +41,7 @@ class Topic extends ForumAppModel {
 			'className' 	=> 'Forum.Forum',
 			'counterCache' 	=> true
 		),
-		'User' => array(
-			'className' 	=> 'Forum.User'
-		),
+		'User',
 		'FirstPost' => array(
 			'className' 	=> 'Forum.Post',
 			'foreignKey'	=> 'firstPost_id'
@@ -53,7 +51,7 @@ class Topic extends ForumAppModel {
 			'foreignKey'	=> 'lastPost_id'
 		),
 		'LastUser' => array(
-			'className' 	=> 'Forum.User',
+			'className'		=> 'User',
 			'foreignKey'	=> 'lastUser_id'
 		)
 	);

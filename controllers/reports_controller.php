@@ -132,7 +132,7 @@ class ReportsController extends ForumAppController {
 	public function admin_users() {
 		if (!empty($this->data)) {
 			if (!empty($this->data['Report']['items'])) {
-				$this->loadModel('Forum.User');
+				$this->loadModel('User');
 				
 				$counter = 0;
 				foreach ($this->data['Report']['items'] as $item) {

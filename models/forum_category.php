@@ -46,7 +46,7 @@ class ForumCategory extends ForumAppModel {
 			'foreignKey'	=> 'lastPost_id'
 		),
 		'LastUser' => array(
-			'className' 	=> 'Forum.User',
+			'className'		=> 'User',
 			'foreignKey'	=> 'lastUser_id'
 		),
 		'AccessLevel' => array(

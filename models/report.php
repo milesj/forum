@@ -33,7 +33,7 @@ class Report extends ForumAppModel {
 	 */
 	public $belongsTo = array(
 		'Reporter' => array(
-			'className' 	=> 'Forum.User',
+			'className'		=> 'User',
 			'foreignKey'	=> 'user_id'
 		),
 		'Topic' => array(
@@ -47,7 +47,7 @@ class Report extends ForumAppModel {
 			'conditions' 	=> array('Report.itemType' => self::POST)
 		),
 		'User' => array(
-			'className' 	=> 'Forum.User',
+			'className'		=> 'User',
 			'foreignKey' 	=> 'item_id',
 			'conditions' 	=> array('Report.itemType' => self::USER)
 		)

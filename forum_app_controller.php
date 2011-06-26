@@ -44,7 +44,7 @@ class ForumAppController extends AppController {
 	 * @return void
 	 */
 	public function _autoLogin($user) {
-		ClassRegistry::init('Forum.User')->login($user);
+		ClassRegistry::init('Forum.Profile')->login($user);
 
 		$this->Session->delete('Forum');
 		$this->Toolbar->initForum();
@@ -65,7 +65,7 @@ class ForumAppController extends AppController {
 			if (isset($this->User)) {
 				$this->Auth->login($this->User->read(false, $this->Auth->user('id')));
 			} else {
-				$this->Auth->login(ClassRegistry::init('Forum.User')->findById($this->Auth->user('id')));
+				$this->Auth->login(ClassRegistry::init('Forum.Profile')->User->findById($this->Auth->user('id')));
 			}
 		}
 	}

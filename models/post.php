@@ -21,9 +21,7 @@ class Post extends ForumAppModel {
 			'className' => 'Forum.Topic',
 			'counterCache' => true
 		),
-		'User' => array(
-			'className' => 'Forum.User'
-		)
+		'User'
 	);
 	
 	/**

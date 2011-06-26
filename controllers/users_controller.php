@@ -16,7 +16,7 @@ class UsersController extends ForumAppController {
 	 * @access public
 	 * @var array
 	 */
-	public $uses = array('Forum.User');  
+	public $uses = array('User');  
 
 	/**
 	 * Components.
