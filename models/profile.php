@@ -41,7 +41,8 @@ class Profile extends ForumAppModel {
 	 */
 	public function getUserProfile($user_id) {
 		$profile = $this->find('first', array(
-			'conditions' => array('Profile.user_id' => $user_id)
+			'conditions' => array('Profile.user_id' => $user_id),
+			'contain' => array('User')
 		));
 
 		if (empty($profile) && $user_id) {

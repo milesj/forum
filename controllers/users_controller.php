@@ -125,11 +125,11 @@ class UsersController extends ForumAppController {
 	public function report($id) {
 		$this->loadModel('Forum.Report');
 		
-		$user = $this->User->get($id, array('id', 'username'));
 		$user_id = $this->Auth->user('id');
+		$profile = $this->Profile->getUserProfile($id);
 		
 		// Access
-		$this->Toolbar->verifyAccess(array('exists' => $user));
+		$this->Toolbar->verifyAccess(array('exists' => $profile));
 		
 		// Submit Report
 		if (!empty($this->data)) {
@@ -144,8 +144,7 @@ class UsersController extends ForumAppController {
 		}
 		
 		$this->Toolbar->pageTitle(__d('forum', 'Report User', true));
-		$this->set('id', $id);
-		$this->set('user', $user);
+		$this->set('user', $profile);
 	}
 	
 	/**
