@@ -80,6 +80,7 @@ class ForumAppController extends AppController {
 		parent::beforeFilter();
 
 		// Settings
+		$this->config = Configure::read('Forum');
 		$this->settings = ClassRegistry::init('Forum.Setting')->getSettings();
 		Configure::write('Forum.settings', $this->settings);
 		
@@ -125,7 +126,7 @@ class ForumAppController extends AppController {
 	 * @return void
 	 */
 	public function beforeRender() {
-		$this->set('plugin', Configure::read('Forum'));
+		$this->set('config', Configure::read('Forum'));
 		$this->set('settings', Configure::read('Forum.settings'));
 	}
 

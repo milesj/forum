@@ -44,19 +44,14 @@ class Profile extends ForumAppModel {
 			'conditions' => array('Profile.user_id' => $user_id)
 		));
 
-		// Update login and return
-		if (!empty($profile)) {
-			$this->login($profile['Profile']['id'], $profile['Profile']['currentLogin']);
+		if (empty($profile) && $user_id) {
+			$this->create();
+			$this->save(array('user_id' => $user_id), false);
 
-			return $profile['Profile'];
-
-		// Create new record
-		} else {
-			//$this->create();
-			//$this->save(array('user_id' => $user_id), false);
-
-			//return $this->getUserProfile($user_id);
+			return $this->getUserProfile($user_id);
 		}
+		
+		return $profile;
 	}
 
 	/**
@@ -67,7 +62,7 @@ class Profile extends ForumAppModel {
 	 * @return boolean
 	 */
 	public function increasePosts($id) {
-		return $this->query("UPDATE `". $this->tablePrefix ."profiles` AS `Profile` SET `Profile`.`totalPosts` = `Profile`.`totalPosts` + 1 WHERE `Profile`.`id` = $id");
+		return $this->query('UPDATE `'. $this->tablePrefix .'profiles` AS `Profile` SET `Profile`.`totalPosts` = `Profile`.`totalPosts` + 1 WHERE `Profile`.`id` = '. $id);
 	}
 
 	/**
@@ -78,24 +73,23 @@ class Profile extends ForumAppModel {
 	 * @return boolean
 	 */
 	public function increaseTopics($id) {
-		return $this->query("UPDATE `". $this->tablePrefix ."profiles` AS `Profile` SET `Profile`.`totalTopics` = `Profile`.`totalTopics` + 1 WHERE `Profile`.`id` = $id");
+		return $this->query('UPDATE `'. $this->tablePrefix .'profiles` AS `Profile` SET `Profile`.`totalTopics` = `Profile`.`totalTopics` + 1 WHERE `Profile`.`id` = '. $id);
 	}
 	
 	/**
 	 * Login the user and update records.
 	 *
 	 * @access public
-	 * @param int $id
-	 * @param string $login
+	 * @param int $user_id
 	 * @return boolean
 	 */
-	public function login($id, $login) {
-		$this->id = $id;
-
-		return $this->save(array(
-			'currentLogin' => date('Y-m-d H:i:s'),
-			'lastLogin' => $login
-		), false);
+	public function login($user_id) {
+		if ($profile = $this->getUserProfile($user_id)) {
+			return $this->save(array(
+				'currentLogin' => date('Y-m-d H:i:s'),
+				'lastLogin' => $profile['Profile']['currentLogin']
+			), false);
+		}
 	}
 
 	/**
@@ -107,7 +101,7 @@ class Profile extends ForumAppModel {
 	 */
 	public function whosOnline($minutes = null) {
 		if (!$minutes) {
-			$minutes = Configure::read('Forum.settings.whos_online_interval');
+			$minutes = $this->settings['whos_online_interval'];
 		}
 		
 		return $this->find('all', array(

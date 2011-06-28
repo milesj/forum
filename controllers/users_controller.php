@@ -16,7 +16,7 @@ class UsersController extends ForumAppController {
 	 * @access public
 	 * @var array
 	 */
-	public $uses = array('User');  
+	public $uses = array('User', 'Forum.Profile');  
 
 	/**
 	 * Components.
@@ -33,20 +33,25 @@ class UsersController extends ForumAppController {
 	 * @var array      
 	 */ 
 	public $paginate = array(  
-		'User' => array(
+		'Profile' => array(
 			'order' => array('User.username' => 'ASC'),
-			'limit' => 25,
-			'contain' => false
+			'contain' => array('User'),
+			'limit' => 25
 		) 
 	);
 	
 	/**
-	 * Redirect.
-	 *
-	 * @access public 
+	 * List of users.
 	 */
 	public function index() {
-		$this->Toolbar->goToPage();
+		if (!empty($this->data)) {
+			if (!empty($this->data['User']['username'])) {
+				$this->paginate['Profile']['conditions']['User.username LIKE'] = '%'. Sanitize::clean($this->data['User']['username']) .'%';
+			}
+		}
+		
+		$this->Toolbar->pageTitle(__d('forum', 'User List', true));
+		$this->set('users', $this->paginate('Profile'));
 	}
 	
 	/**
@@ -87,38 +92,17 @@ class UsersController extends ForumAppController {
 		
 		$this->Toolbar->pageTitle(__d('forum', 'Edit Profile', true));
 	}
-	
-	/**
-	 * Forgot credentials.
-	 *
-	 * @access public
-	 */
-	public function forgot() {
-		if (!empty($this->data)) {
-			if ($user = $this->User->forgotRetrieval($this->data)) {
-				$this->Toolbar->resetPassword($user);
-				
-				$this->Session->setFlash(__d('forum', 'Your new password and information has been sent to your email.', true));
-				unset($this->data['User']);
-			}
-		}
-		
-		$this->Toolbar->pageTitle(__d('forum', 'Forgot Password', true));
-	}
-	
+
 	/**
 	 * Login.
-	 *
-	 * @access public
 	 */
 	public function login() {
 		if (!empty($this->data)) {
 			$this->User->set($this->data);
-			$this->User->action = 'login';
 			
 			if ($this->User->validates()) {
 				if ($user = $this->Auth->user()) {
-					$this->User->login($user);
+					$this->Profile->login($user['User']['id']);
 					$this->Session->delete('Forum');
 					$this->redirect($this->Auth->loginRedirect);
 				}
@@ -130,30 +114,12 @@ class UsersController extends ForumAppController {
 	
 	/**
 	 * Logout.
-	 *
-	 * @access public
 	 */
 	public function logout() {
 		$this->Session->delete('Forum');
 		$this->redirect($this->Auth->logout());
 	}
-	
-	/**
-	 * List of all users.
-	 *
-	 * @access public
-	 */
-	public function listing() {
-		if (!empty($this->data)) {
-			if (!empty($this->data['User']['username'])) {
-				$this->paginate['User']['conditions']['User.username LIKE'] = '%'. $this->data['User']['username'] .'%';
-			}
-		}
-		
-		$this->Toolbar->pageTitle(__d('forum', 'User List', true));
-		$this->set('users', $this->paginate('User'));
-	}
-	
+
 	/**
 	 * User profile.
 	 *
@@ -342,7 +308,7 @@ class UsersController extends ForumAppController {
 	public function beforeFilter() {
 		parent::beforeFilter();
 		
-		$this->Auth->allow('index', 'forgot', 'login', 'logout', 'listing', 'profile', 'signup');
+		$this->Auth->allow('index', 'login', 'logout', 'profile', 'signup');
 
 		if (isset($this->params['admin'])) {
 			$this->Toolbar->verifyAdmin();

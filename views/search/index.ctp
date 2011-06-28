@@ -44,7 +44,7 @@ if ($searching === true) { ?>
     <tr>
         <th colspan="2"><?php echo $this->Paginator->sort(__d('forum', 'Topic', true), 'Topic.title'); ?></th>
         <th><?php echo $this->Paginator->sort(__d('forum', 'Forum', true), 'Topic.forum_id'); ?></th>
-        <th><?php echo $this->Paginator->sort(__d('forum', 'Author', true), 'User.username'); ?></th>
+        <th><?php echo $this->Paginator->sort(__d('forum', 'Author', true), 'User.'. $config['userMap']['username']); ?></th>
         <th><?php echo $this->Paginator->sort(__d('forum', 'Created', true), 'Topic.created'); ?></th>
         <th><?php echo $this->Paginator->sort(__d('forum', 'Posts', true), 'Topic.post_count'); ?></th>
         <th><?php echo $this->Paginator->sort(__d('forum', 'Views', true), 'Topic.view_count'); ?></th>
@@ -75,7 +75,7 @@ if ($searching === true) { ?>
             <?php } ?>
         </td>
         <td class="ac"><?php echo $this->Html->link($topic['ForumCategory']['title'], array('controller' => 'stations', 'action' => 'view', $topic['ForumCategory']['slug'])); ?></td>
-        <td class="ac"><?php echo $this->Html->link($topic['User']['username'], array('controller' => 'users', 'action' => 'profile', $topic['User']['id'])); ?></td>
+        <td class="ac"><?php echo $this->Html->link($topic['User'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'profile', $topic['User']['id'])); ?></td>
         <td class="ac"><?php echo $this->Time->niceShort($topic['Topic']['created'], $this->Common->timezone()); ?></td>
         <td class="ac"><?php echo number_format($topic['Topic']['post_count']); ?></td>
         <td class="ac"><?php echo number_format($topic['Topic']['view_count']); ?></td>
@@ -85,7 +85,7 @@ if ($searching === true) { ?>
                 $lastTime = (!empty($topic['LastPost']['created'])) ? $topic['LastPost']['created'] : $topic['Topic']['modified']; ?>
                 
                 <em><?php echo $this->Time->relativeTime($lastTime, array('userOffset' => $this->Common->timezone())); ?></em><br />
-                <span class="gray"><?php __d('forum', 'by'); ?> <?php echo $this->Html->link($topic['LastUser']['username'], array('controller' => 'users', 'action' => 'profile', $topic['Topic']['lastUser_id'])); ?></span>
+                <span class="gray"><?php __d('forum', 'by'); ?> <?php echo $this->Html->link($topic['LastUser'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'profile', $topic['Topic']['lastUser_id'])); ?></span>
                 <?php echo $this->Html->image('/forum/img/goto.png', array('alt' => '', 'url' => array('controller' => 'topics', 'action' => 'view', $topic['Topic']['slug'], 'page' => $topic['Topic']['page_count'], '#' => 'post_'. $topic['Topic']['lastPost_id']))); ?>
             <?php } else {
 				__d('forum', 'No latest activity to display');

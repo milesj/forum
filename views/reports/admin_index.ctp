@@ -18,7 +18,7 @@
     <tr>
         <th><?php __d('forum', 'Type'); ?></th>
         <th><?php __d('forum', 'Item'); ?></th>
-        <th><?php echo $this->Paginator->sort(__d('forum', 'Reported By', true), 'Reporter.username'); ?></th>
+        <th><?php echo $this->Paginator->sort(__d('forum', 'Reported By', true), 'Reporter.'. $config['userMap']['username']); ?></th>
         <th><?php __d('forum', 'Comment'); ?></th>
         <th><?php echo $this->Paginator->sort(__d('forum', 'Reported On', true), 'Report.created'); ?></th>
     </tr>
@@ -34,12 +34,12 @@
         	<?php if ($report['Report']['itemType'] == 'topic') {
 				echo $this->Html->link($report['Topic']['title'], array('controller' => 'topics', 'action' => 'view', $report['Topic']['slug'], 'admin' => false));
 			} else if ($report['Report']['itemType'] == 'user') {
-				echo $this->Html->link($report['User']['username'], array('controller' => 'users', 'action' => 'edit', $report['User']['id'], 'admin' => true));
+				echo $this->Html->link($report['User'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'edit', $report['User']['id'], 'admin' => true));
 			} else if ($report['Report']['itemType'] == 'post') {
 				echo $report['Post']['content'];
 			} ?>
         </td>
-        <td><?php echo $this->Html->link($report['Reporter']['username'], array('controller' => 'users', 'action' => 'edit', $report['Reporter']['id'], 'admin' => true)); ?></td>
+        <td><?php echo $this->Html->link($report['Reporter'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'edit', $report['Reporter']['id'], 'admin' => true)); ?></td>
         <td><?php echo $report['Report']['comment']; ?></td>
         <td><?php echo $this->Time->nice($report['Report']['created'], $this->Common->timezone()); ?></td>
     </tr>

@@ -18,7 +18,7 @@
     <tr>
     	<th style="width: 25px">&nbsp;</th>
         <th><?php __d('forum', 'User'); ?></th>
-        <th><?php echo $this->Paginator->sort(__d('forum', 'Reported By', true), 'Reporter.username'); ?></th>
+        <th><?php echo $this->Paginator->sort(__d('forum', 'Reported By', true), 'Reporter.'. $config['userMap']['username']); ?></th>
         <th><?php __d('forum', 'Comment'); ?></th>
         <th><?php echo $this->Paginator->sort(__d('forum', 'Reported On', true), 'Report.created'); ?></th>
     </tr>
@@ -30,8 +30,8 @@
         
     <tr<?php if ($counter % 2) echo ' class="altRow"'; ?>>
     	<td class="ac"><input type="checkbox" name="data[Report][items][]" value="<?php echo $report['Report']['id']; ?>:<?php echo $report['User']['id']; ?>" /></td>
-        <td><?php echo $this->Html->link($report['User']['username'], array('controller' => 'users', 'action' => 'edit', $report['User']['id'], 'admin' => true)); ?></td>
-        <td><?php echo $this->Html->link($report['Reporter']['username'], array('controller' => 'users', 'action' => 'edit', $report['Reporter']['id'], 'admin' => true)); ?></td>
+        <td><?php echo $this->Html->link($report['User'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'edit', $report['User']['id'], 'admin' => true)); ?></td>
+        <td><?php echo $this->Html->link($report['Reporter'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'edit', $report['Reporter']['id'], 'admin' => true)); ?></td>
         <td><?php echo $report['Report']['comment']; ?></td>
         <td><?php echo $this->Time->nice($report['Report']['created'], $this->Common->timezone()); ?></td>
     </tr>

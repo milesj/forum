@@ -37,7 +37,7 @@ $this->Html->addCrumb($topic['ForumCategory']['title'], array('controller' => 's
         	<input type="checkbox" name="data[Post][items][]" value="<?php echo $post['Post']['id']; ?>" />
             <?php } ?>
         </td>
-        <td><?php echo $this->Html->link($post['User']['username'], array('controller' => 'users', 'action' => 'profile', $post['User']['id'])); ?></td>
+        <td><?php echo $this->Html->link($post['User'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'profile', $post['User']['id'])); ?></td>
         <td><?php echo $this->Text->truncate($post['Post']['content'], 100); ?></td>
 		<td class="ac"><?php echo $this->Time->niceShort($post['Post']['created'], $this->Common->timezone()); ?></td>
     </tr>

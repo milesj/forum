@@ -77,6 +77,7 @@ class ForumAppModel extends AppModel {
 		parent::__construct($id, $table, $ds);
 
 		$this->Session = new CakeSession();
+		$this->settings = Configure::read('Forum.settings');
 
 		if (Cache::config('sql') === false) {
 			Cache::config('sql', array(

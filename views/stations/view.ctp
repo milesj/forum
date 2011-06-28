@@ -56,7 +56,7 @@ if (!empty($forum['SubForum'])) { ?>
 	<table cellspacing="0" class="table">
     <tr>
         <th colspan="2"><?php echo $this->Paginator->sort(__d('forum', 'Topic', true), 'Topic.title'); ?></th>
-        <th><?php echo $this->Paginator->sort(__d('forum', 'Author', true), 'User.username'); ?></th>
+        <th><?php echo $this->Paginator->sort(__d('forum', 'Author', true), 'User.'. $config['userMap']['username']); ?></th>
         <th><?php echo $this->Paginator->sort(__d('forum', 'Created', true), 'Topic.created'); ?></th>
         <th><?php echo $this->Paginator->sort(__d('forum', 'Posts', true), 'Topic.post_count'); ?></th>
         <th><?php echo $this->Paginator->sort(__d('forum', 'Views', true), 'Topic.view_count'); ?></th>
@@ -121,7 +121,7 @@ if (!empty($forum['SubForum'])) { ?>
 	$moderators = array();
 	if (!empty($forum['Moderator'])) {
 		foreach ($forum['Moderator'] as $mod) {
-			$moderators[] = $this->Html->link($mod['User']['username'], array('controller' => 'users', 'action' => 'profile', $mod['User']['id'])); 
+			$moderators[] = $this->Html->link($mod['User'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'profile', $mod['User']['id'])); 
 		}	
 	} ?>
 

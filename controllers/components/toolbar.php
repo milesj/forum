@@ -57,7 +57,7 @@ class ToolbarComponent extends Object {
 
 			// Save last visit time
 			if (!$this->Session->check('Forum.lastVisit')) {
-				$lastVisit = ($user_id) ? $profile['lastLogin'] : date('Y-m-d H:i:s');
+				$lastVisit = ($user_id) ? $profile['Profile']['lastLogin'] : date('Y-m-d H:i:s');
 				$this->Session->write('Forum.lastVisit', $lastVisit);
 			}
 

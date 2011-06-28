@@ -22,7 +22,7 @@
     	<td class="ac"><?php echo number_format($totalUsers); ?></td>
     	<td class="ac"><?php echo number_format($totalReports); ?></td>
     	<td class="ac"><?php echo number_format($totalMods); ?></td>
-    	<td class="ac"><?php echo $this->Html->link($newestUser['User']['username'], array('controller' => 'users', 'action' => 'edit', $newestUser['User']['id'], 'admin' => true)); ?></td>
+    	<td class="ac"><?php echo $this->Html->link($newestUser['User'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'edit', $newestUser['User']['id'], 'admin' => true)); ?></td>
     </tr>
     </table>
 </div>	
@@ -50,12 +50,12 @@
         	<?php if ($report['Report']['itemType'] == 'topic') {
 				echo $this->Html->link($report['Topic']['title'], array('controller' => 'topics', 'action' => 'view', $report['Topic']['id'], 'admin' => false));
 			} else if ($report['Report']['itemType'] == 'user') {
-				echo $this->Html->link($report['User']['username'], array('controller' => 'users', 'action' => 'edit', $report['User']['id'], 'admin' => true));
+				echo $this->Html->link($report['User'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'edit', $report['User']['id'], 'admin' => true));
 			} else if ($report['Report']['itemType'] == 'post') {
 				echo $report['Post']['content'];
 			} ?>
         </td>
-        <td><?php echo $this->Html->link($report['Reporter']['username'], array('controller' => 'users', 'action' => 'edit', $report['Reporter']['id'], 'admin' => true)); ?></td>
+        <td><?php echo $this->Html->link($report['Reporter'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'edit', $report['Reporter']['id'], 'admin' => true)); ?></td>
         <td><?php echo $report['Report']['comment']; ?></td>
         <td><?php echo $this->Time->nice($report['Report']['created'], $this->Common->timezone()); ?></td>
     </tr>
@@ -84,7 +84,7 @@
 	foreach ($latestUsers as $user) { ?>
         
     <tr<?php if ($counter % 2) echo ' class="altRow"'; ?>>
-        <td><?php echo $this->Html->link($user['User']['username'], array('controller' => 'users', 'action' => 'edit', $user['User']['id'], 'admin' => true)); ?></td>
+        <td><?php echo $this->Html->link($user['User'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'edit', $user['User']['id'], 'admin' => true)); ?></td>
         <td><?php echo $user['User']['email']; ?></td>
         <td class="ac"><?php echo $this->Time->nice($user['User']['created'], $this->Common->timezone()); ?></td>
         <td class="ac"><?php echo number_format($user['User']['totalTopics']); ?></td>

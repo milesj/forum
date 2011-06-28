@@ -56,7 +56,7 @@ if (!empty($forums)) {
     
     <?php // Newest user
 	if (!empty($newestUser)) { ?>
-    <strong><?php __d('forum', 'Newest User'); ?></strong>: <?php echo $this->Html->link($newestUser['User']['username'], array('controller' => 'users', 'action' => 'profile', $newestUser['User']['id'])); ?>
+    <strong><?php __d('forum', 'Newest User'); ?></strong>: <?php echo $this->Html->link($newestUser['User'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'profile', $newestUser['User']['id'])); ?>
    	<?php } ?>
      
     <?php // Whos online
@@ -64,7 +64,7 @@ if (!empty($forums)) {
 		$online = array();
 		
 		foreach ($whosOnline as $user) {
-			$online[] = $this->Html->link($user['User']['username'], array('controller' => 'users', 'action' => 'profile', $user['User']['id']));
+			$online[] = $this->Html->link($user['User'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'profile', $user['User']['id']));
 		} ?>
         
     <div id="whosOnline">

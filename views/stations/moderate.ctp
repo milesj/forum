@@ -26,7 +26,7 @@ $this->Html->addCrumb($forum['Forum']['title'], array('controller' => 'stations'
     	<th style="width: 25px" class="ac"><input type="checkbox" onclick="toggleCheckboxes(this, 'Topic', 'items');" /></th>
         <th><?php echo $this->Paginator->sort(__d('forum', 'Topic', true), 'Topic.title'); ?></th>
         <th><?php echo $this->Paginator->sort(__d('forum', 'Status', true), 'Topic.status'); ?></th>
-        <th><?php echo $this->Paginator->sort(__d('forum', 'Author', true), 'User.username'); ?></th>
+        <th><?php echo $this->Paginator->sort(__d('forum', 'Author', true), 'User.'. $config['userMap']['username']); ?></th>
         <th><?php echo $this->Paginator->sort(__d('forum', 'Created', true), 'Topic.created'); ?></th>
         <th><?php echo $this->Paginator->sort(__d('forum', 'Posts', true), 'Topic.post_count'); ?></th>
         <th><?php echo $this->Paginator->sort(__d('forum', 'Views', true), 'Topic.view_count'); ?></th>

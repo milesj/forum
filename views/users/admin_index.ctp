@@ -22,7 +22,7 @@
     <table class="table" cellspacing="0">
     <tr>
     	<th>#</th>
-        <th><?php echo $this->Paginator->sort(__d('forum', 'Username', true), 'User.username'); ?></th>
+        <th><?php echo $this->Paginator->sort(__d('forum', 'Username', true), 'User.'. $config['userMap']['username']); ?></th>
         <th><?php echo $this->Paginator->sort(__d('forum', 'Email', true), 'User.email'); ?></th>
         <th><?php echo $this->Paginator->sort(__d('forum', 'Joined', true), 'User.created'); ?></th>
         <th><?php echo $this->Paginator->sort(__d('forum', 'Last Active', true), 'User.'. $this->Common->columnMap['lastLogin']); ?></th>
@@ -38,7 +38,7 @@
         
     <tr<?php if ($counter % 2) echo ' class="altRow"'; ?>>
     	<td class="ac"><?php echo $user['User']['id']; ?></td>
-        <td><?php echo $this->Html->link($user['User']['username'], array('action' => 'edit', $user['User']['id'], 'admin' => true)); ?></td>
+        <td><?php echo $this->Html->link($user['User'][$config['userMap']['username']], array('action' => 'edit', $user['User']['id'], 'admin' => true)); ?></td>
         <td><?php echo $user['User']['email']; ?></td>
         <td class="ac"><?php echo $this->Time->nice($user['User']['created'], $this->Common->timezone()); ?></td>
         <td class="ac">

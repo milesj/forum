@@ -32,7 +32,7 @@ if (!empty($forum['SubForum'])) {
 			<?php echo $this->Html->image('/forum/img/goto.png', array('alt' => '', 'url' => array('controller' => 'topics', 'action' => 'view', $forum['LastTopic']['slug'], 'page' => $forum['LastTopic']['page_count'], '#' => 'post_'. $forum['lastPost_id']))); ?><br />
 
 			<em><?php echo $this->Time->relativeTime($lastTime, array('userOffset' => $this->Common->timezone())); ?></em> 
-			<span class="gray"><?php __d('forum', 'by'); ?> <?php echo $this->Html->link($forum['LastUser']['username'], array('controller' => 'users', 'action' => 'profile', $forum['lastUser_id'])); ?></span>
+			<span class="gray"><?php __d('forum', 'by'); ?> <?php echo $this->Html->link($forum['LastUser'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'profile', $forum['lastUser_id'])); ?></span>
 		<?php } else {
 			__d('forum', 'No latest activity to display');
 		} ?>

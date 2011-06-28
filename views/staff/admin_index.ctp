@@ -58,7 +58,7 @@ echo $this->Form->create('Access', array('url' => array('controller' => 'staff',
 	foreach ($staff as $user) { ?>
     
     <tr id="staff_<?php echo $user['Access']['id']; ?>">
-        <td><strong><?php echo $this->Html->link($user['User']['username'], array('controller' => 'users', 'action' => 'edit', $user['User']['id'], 'admin' => true)); ?></strong></td>
+        <td><strong><?php echo $this->Html->link($user['User'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'edit', $user['User']['id'], 'admin' => true)); ?></strong></td>
         <td class="ac"><?php echo $user['AccessLevel']['title']; ?></td>
         <td class="ac"><?php echo $this->Time->nice($user['Access']['created'], $this->Common->timezone()); ?></td>
         <td class="ac gray">
@@ -93,7 +93,7 @@ echo $this->Form->create('Moderator', array('url' => array('controller' => 'staf
 		foreach ($mods as $user) { ?>
     
     <tr id="mod_<?php echo $user['Moderator']['id']; ?>">
-        <td><strong><?php echo $this->Html->link($user['User']['username'], array('controller' => 'users', 'action' => 'edit', $user['Moderator']['id'], 'admin' => true)); ?></strong></td>
+        <td><strong><?php echo $this->Html->link($user['User'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'edit', $user['Moderator']['id'], 'admin' => true)); ?></strong></td>
         <td class="ac"><?php echo $this->Html->link($user['ForumCategory']['title'], array('controller' => 'stations', 'action' => 'edit_category', $user['ForumCategory']['id'], 'admin' => true)); ?></td>
         <td class="ac"><?php echo $this->Time->nice($user['Moderator']['created'], $this->Common->timezone()); ?></td>
         <td class="ac gray">

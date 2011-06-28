@@ -118,7 +118,7 @@ if (!empty($topic['Poll']['id'])) { ?>
     </tr>
     <tr>
     	<td valign="top" style="width: 25%">
-        	<h4><?php echo $this->Html->link($post['User']['username'], array('controller' => 'users', 'action' => 'profile', $post['User']['id'])); ?></h4>
+        	<h4><?php echo $this->Html->link($post['User'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'profile', $post['User']['id'])); ?></h4>
         	<?php if (!empty($post['User']['Access'][0]['AccessLevel']['title'])) { ?>
         	<p><strong><?php echo $post['User']['Access'][0]['AccessLevel']['title']; ?></strong></p>
         	<?php } ?>

@@ -4,7 +4,7 @@ if (!empty($user)) { ?>
 
 <div class="forumHeader">
 	<button type="button" onclick="goTo('<?php echo $this->Html->url(array('action' => 'report', $user['User']['id'])); ?>');" class="fr button"><?php __d('forum', 'Report User'); ?></button>
-	<h2><?php echo $user['User']['username']; ?></h2>
+	<h2><?php echo $user['User'][$config['userMap']['username']]; ?></h2>
 </div>
 
 <?php if (!empty($user['User'][$this->Common->columnMap['signature']])) { ?>
@@ -102,7 +102,7 @@ if (!empty($posts)) { ?>
     <?php foreach($posts as $post) { ?>
     <tr class="altRow">
         <td><strong><?php echo $this->Html->link($post['Topic']['title'], array('controller' => 'topics', 'action' => 'view', $post['Topic']['slug'])); ?></strong></td>
-        <td><?php echo $this->Html->link($post['Topic']['User']['username'], array('controller' => 'users', 'action' => 'profile', $post['Topic']['User']['id'])); ?></td>
+        <td><?php echo $this->Html->link($post['Topic']['User'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'profile', $post['Topic']['User']['id'])); ?></td>
         <td class="ar"><?php echo $this->Time->relativeTime($post['Post']['created'], array('userOffset' => $this->Common->timezone())); ?></td>
     </tr>
     <tr>
