@@ -23,17 +23,22 @@ $moderate = isset($moderate) ? true : false; ?>
 	<?php if ($moderate) { ?>
 		<td class="ac"><?php echo $this->Common->options(2, $topic['Topic']['status']); ?></td>
 	<?php } ?>
-	<td class="ac"><?php echo $this->Html->link($topic['User'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'profile', $topic['User']['id'])); ?></td>
+	<td class="ac">
+		<?php echo $this->Html->link($topic['User'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'profile', $topic['User']['id'])); ?>
+	</td>
 	<td class="ac"><?php echo $this->Time->niceShort($topic['Topic']['created'], $this->Common->timezone()); ?></td>
 	<td class="ac"><?php echo number_format($topic['Topic']['post_count']); ?></td>
 	<td class="ac"><?php echo number_format($topic['Topic']['view_count']); ?></td>
 	<td>
-		<?php // Last activity
-		if (!empty($topic['LastPost']['id'])) {
+		<?php if (!empty($topic['LastPost']['id'])) {
 			$lastTime = !empty($topic['LastPost']['created']) ? $topic['LastPost']['created'] : $topic['Topic']['modified']; ?>
 
 			<em><?php echo $this->Time->relativeTime($lastTime, array('userOffset' => $this->Common->timezone())); ?></em><br />
-			<span class="gray"><?php __d('forum', 'by'); ?> <?php echo $this->Html->link($topic['LastUser'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'profile', $topic['Topic']['lastUser_id'])); ?></span>
+			
+			<?php if (!empty($topic['LastUser']['id'])) { ?>
+				<span class="gray"><?php __d('forum', 'by'); ?> <?php echo $this->Html->link($topic['LastUser'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'profile', $topic['Topic']['lastUser_id'])); ?></span>
+			<?php } ?>
+				
 			<?php echo $this->Html->image('/forum/img/goto.png', array('alt' => '', 'url' => array('controller' => 'topics', 'action' => 'view', $topic['Topic']['slug'], 'page' => $topic['Topic']['page_count'], '#' => 'post_'. $topic['Topic']['lastPost_id']))); ?>
 		<?php } else {
 			__d('forum', 'No latest activity to display');

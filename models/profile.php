@@ -17,7 +17,57 @@ class Profile extends ForumAppModel {
 	 * @var array
 	 */
 	public $belongsTo = array('User');
+		
+	/**
+	 * Validate.
+	 *
+	 * @access public
+	 * @var array
+	 */
+	public $validate = array(
+		'totalPosts' => array(
+			'numeric' => array(
+				'rule' => 'numeric',
+				'message' => 'Please supply a number'
+			),
+			'notEmpty' => array(
+				'rule' => 'notEmpty',
+				'message' => 'This field is required'
+			)
+		),
+		'totalTopics' => array(
+			'numeric' => array(
+				'rule' => 'numeric',
+				'message' => 'Please supply a number'
+			),
+			'notEmpty' => array(
+				'rule' => 'notEmpty',
+				'message' => 'This field is required'
+			)
+		)
+	);
 	
+	public function deleteUser($user_id) {
+		// profile
+		// access 
+		// mod
+		// reported
+	}
+	
+	/**
+	 * Grab a profile based on ID.
+	 *
+	 * @access public
+	 * @param int $id
+	 * @return array
+	 */
+	public function get($id) {
+		return $this->find('first', array(
+			'conditions' => array('Profile.id' => $id),
+			'contain' => array('User')
+		));
+	}
+		
 	/**
 	 * Get a users profile and all relevant information.
 	 * 
@@ -25,7 +75,7 @@ class Profile extends ForumAppModel {
 	 * @param int $user_id
 	 * @return array
 	 */
-	public function get($user_id) {
+	public function getByUser($user_id) {
 		$profile = $this->find('first', array(
 			'conditions' => array('Profile.user_id' => $user_id),
 			'contain' => array('User')

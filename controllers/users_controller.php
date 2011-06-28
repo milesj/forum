@@ -44,8 +44,8 @@ class UsersController extends ForumAppController {
 	 * List of users.
 	 */
 	public function index() {
-		if (!empty($this->data['User']['username'])) {
-			$this->paginate['Profile']['conditions']['User.username LIKE'] = '%'. Sanitize::clean($this->data['User']['username']) .'%';
+		if (!empty($this->data['Profile']['username'])) {
+			$this->paginate['Profile']['conditions']['User.username LIKE'] = '%'. Sanitize::clean($this->data['Profile']['username']) .'%';
 		}
 		
 		$this->Toolbar->pageTitle(__d('forum', 'User List', true));
@@ -105,7 +105,7 @@ class UsersController extends ForumAppController {
 	 * @param int $id
 	 */
 	public function profile($id) {
-		$user = $this->Profile->get($id);
+		$user = $this->Profile->getByUser($id);
 		
 		if (empty($user)) {
 			return $this->cakeError('error404');
@@ -126,7 +126,7 @@ class UsersController extends ForumAppController {
 	 */
 	public function report($id) {
 		$user_id = $this->Auth->user('id');
-		$user = $this->Profile->get($id);
+		$user = $this->Profile->getByUser($id);
 		
 		if (empty($user)) {
 			return $this->cakeError('error404');
@@ -151,92 +151,70 @@ class UsersController extends ForumAppController {
 	
 	/**
 	 * Admin index!
-	 *
-	 * @access public
-	 * @category Admin
 	 */
 	public function admin_index() {
 		if (!empty($this->data)) {
-			if (!empty($this->data['User']['username'])) {
-				$this->paginate['User']['conditions']['User.username LIKE'] = '%'. $this->data['User']['username'] .'%';
+			if (!empty($this->data['Profile']['username'])) {
+				$this->paginate['Profile']['conditions']['User.username LIKE'] = '%'. Sanitize::clean($this->data['Profile']['username']) .'%';
 			}
 			
-			if (!empty($this->data['User']['id'])) {
-				$this->paginate['User']['conditions']['User.id'] = $this->data['User']['id'];
+			if (!empty($this->data['Profile']['id'])) {
+				$this->paginate['Profile']['conditions']['User.id'] = $this->data['Profile']['id'];
 			}
 		}
 
-		$this->pageTitle = __d('forum', 'Manage Users', true);
-		$this->set('users', $this->paginate('User'));
+		$this->Toolbar->pageTitle(__d('forum', 'Manage Users', true));
+		$this->set('users', $this->paginate('Profile'));
 	}
 	
 	/**
 	 * Edit a user.
-	 *
-	 * @access public
-	 * @category Admin
+	 * 
 	 * @param int $id
 	 */
 	public function admin_edit($id) {
-		$user = $this->User->get($id);
-		$this->Toolbar->verifyAccess(array('exists' => $user));
+		$profile = $this->Profile->get($id);
+		
+		if (empty($profile)) {
+			return $this->cakeError('error404');
+		}
 		
 		// Form Processing
 		if (!empty($this->data)) {
-			$this->User->id = $id;
+			$this->Profile->id = $id;
 			
-			if ($this->User->save($this->data, true, array('username', 'email', $this->User->columnMap['totalPosts'], $this->User->columnMap['totalTopics']))) {
+			if ($this->Profile->save($this->data, true)) {
 				$this->redirect(array('controller' => 'users', 'action' => 'index', 'admin' => true));
 			}
 		} else {
-			$this->data = $user;
+			$this->data = $profile;
 		}
 		
-		$this->pageTitle = __d('forum', 'Edit User', true);
-		$this->set('id', $id);
+		$this->Toolbar->pageTitle(__d('forum', 'Edit User', true));
 	}
-	
+
 	/**
-	 * Reset users password.
+	 * Delets a users profile.
 	 *
-	 * @access public
-	 * @category Admin
-	 * @param int $id
-	 */
-	public function admin_reset($id) {
-		$user = $this->User->get($id);
-		$this->Toolbar->verifyAccess(array('exists' => $user));
-		
-		if (!empty($user)) {
-			$this->Toolbar->resetPassword($user, true);
-			$this->Session->setFlash(sprintf(__d('forum', 'The password for %s has been reset!', true), '<strong>'. $user['User']['username'] .'</strong>'));
-		}
-		
-		$this->redirect(array('controller' => 'users', 'action' => 'index', 'admin' => true));
-	}
-	
-	/**
-	 * Delets a user and all its content.
-	 *
-	 * @access public
-	 * @category Admin
 	 * @param int $id
 	 */
 	public function admin_delete($id) {
-		$user = $this->User->get($id);
-		$this->Toolbar->verifyAccess(array('exists' => $user));
+		$profile = $this->Profile->get($id);
 		
-		// Form Processing
-		if (!empty($this->data['User']['delete'])) {
-			$this->User->delete($id, true);
+		if (empty($profile)) {
+			return $this->cakeError('error404');
+		}
+		
+		if (!empty($this->data['Profile']['delete'])) {
+			$this->Profile->deleteUser($id, true);
 
-			$this->Session->setFlash(sprintf(__d('forum', 'The user %s and all of their associations have been deleted!', true), '<strong>'. $user['User']['username'] .'</strong>'));
+			$this->Session->setFlash(sprintf(__d('forum', 'The user %s and all of their associations have been deleted!', true), '<strong>'. $profile['User'][$this->config['userMap']['username']] .'</strong>'));
+			
 			$this->redirect(array('controller' => 'users', 'action' => 'index', 'admin' => true));
 		}
 		
-		$this->pageTitle = __d('forum', 'Delete User', true);
-		$this->set('id', $id);
-		$this->set('user', $user);
+		$this->Toolbar->pageTitle(__d('forum', 'Delete User', true));
+		$this->set('profile', $profile);
 	}
 	
 	/**
@@ -248,10 +226,10 @@ class UsersController extends ForumAppController {
 	public function beforeFilter() {
 		parent::beforeFilter();
 		
-		$this->Auth->allow('index', 'login', 'logout', 'profile', 'signup');
+		$this->Auth->allow('index', 'login', 'logout', 'profile');
 
 		if (isset($this->params['admin'])) {
-			$this->Toolbar->verifyAdmin();
+			//$this->Toolbar->verifyAdmin();
 			$this->layout = 'admin';
 		}
 		

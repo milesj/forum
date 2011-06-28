@@ -3,7 +3,7 @@
 	<h2><?php __d('forum', 'User List'); ?></h2>
 </div>
 
-<?php echo $this->Form->create('User', array('url' => array('controller' => 'users', 'action' => 'listing'))); ?>
+<?php echo $this->Form->create('Profile', array('url' => $this->here)); ?>
 
 <div class="filterBar">
 	<?php echo $this->Form->input('username', array('div' => false, 'label' => __d('forum', 'Search Users (Username)', true) .': ')); ?>

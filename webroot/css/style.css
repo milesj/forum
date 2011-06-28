@@ -47,8 +47,7 @@ h4 { font-size: 24px; }
 	-moz-border-radius: .3em;
 	clear: both; }
 	
-	.input input[type="text"],
-	.input input[type="password"],
+	.input input,
 	.input textarea,
 	#search input {
 		border: 1px solid #ccc;
@@ -57,6 +56,7 @@ h4 { font-size: 24px; }
 		font: normal 90% 'lucida grande',verdana,helvetica,arial,sans-serif; }
 		
 		.input textarea { width: 50%; }
+		.input .numeric { width: 75px; }
 	
 	.input select,
 	#search select {
@@ -82,6 +82,8 @@ h4 { font-size: 24px; }
 		padding: 5px 10px;
 		color: #003d4c;
 		font-weight: normal; }
+	
+input[readonly] { color: gray; }
 
 .error-message {
 	padding: 5px 0 0 10px;
