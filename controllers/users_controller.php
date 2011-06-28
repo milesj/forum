@@ -44,10 +44,8 @@ class UsersController extends ForumAppController {
 	 * List of users.
 	 */
 	public function index() {
-		if (!empty($this->data)) {
-			if (!empty($this->data['User']['username'])) {
-				$this->paginate['Profile']['conditions']['User.username LIKE'] = '%'. Sanitize::clean($this->data['User']['username']) .'%';
-			}
+		if (!empty($this->data['User']['username'])) {
+			$this->paginate['Profile']['conditions']['User.username LIKE'] = '%'. Sanitize::clean($this->data['User']['username']) .'%';
 		}
 		
 		$this->Toolbar->pageTitle(__d('forum', 'User List', true));
@@ -55,39 +53,20 @@ class UsersController extends ForumAppController {
 	}
 	
 	/**
-	 * Edit a users profile.
-	 *
-	 * @access public
+	 * Edit a forum profile.
 	 */
 	public function edit() {
 		$user_id = $this->Auth->user('id');
-		$user = $this->User->get($user_id);
+		$profile = $this->Profile->getUserProfile($user_id);
 		
-		// Form Processing
 		if (!empty($this->data)) {
-			$this->User->id = $user_id;
-			$this->User->set($this->data);
-			
-			if ($this->User->validates()) {
-				if (isset($this->data['User']['newPassword'])) {
-					$this->data['User']['password'] = $this->Auth->password($this->data['User']['newPassword']);
-				}
+			$this->Profile->id = $user_id;
 
-				$this->User->id = $user_id;
-				if ($this->User->save($this->data, false, array('email', 'password', $this->User->columnMap['signature'], $this->User->columnMap['locale'], $this->User->columnMap['timezone']))) {
-					$this->Session->setFlash(__d('forum', 'Your profile information has been updated!', true));
-
-					foreach ($this->data['User'] as $field => $value) {
-						$this->_refreshAuth($field, $value);
-					}
-				}
+			if ($this->Profile->save($this->data, false)) {
+				$this->Session->setFlash(__d('forum', 'Your profile information has been updated!', true));
 			}
-		}
-		
-		foreach ($user['User'] as $field => $value) {
-			if (empty($this->data['User'][$field])) {
-				$this->data['User'][$field] = $value;
-			}
+		} else {
+			$this->data = $profile;
 		}
 		
 		$this->Toolbar->pageTitle(__d('forum', 'Edit Profile', true));
@@ -123,7 +102,6 @@ class UsersController extends ForumAppController {
 	/**
 	 * User profile.
 	 *
-	 * @access public
 	 * @param int $id
 	 */
 	public function profile($id) {
@@ -142,7 +120,6 @@ class UsersController extends ForumAppController {
 	/**
 	 * Report a user.
 	 *
-	 * @access public
 	 * @param int $id
 	 */
 	public function report($id) {
@@ -169,44 +146,6 @@ class UsersController extends ForumAppController {
 		$this->Toolbar->pageTitle(__d('forum', 'Report User', true));
 		$this->set('id', $id);
 		$this->set('user', $user);
-	}
-	
-	/**
-	 * Signup.
-	 *
-	 * @access public
-	 */
-	public function signup() {
-		if (!empty($this->data)) {
-			$this->User->create();
-			$this->User->set($this->data);
-			$this->User->action = 'signup';
-			
-			if ($this->User->validates()) {
-				$this->data['User']['username'] = strip_tags($this->data['User']['username']);
-				$this->data['User']['password'] = $this->Auth->password($this->data['User']['newPassword']);
-				$this->data['User'][$this->User->columnMap['locale']] = Configure::read('Forum.settings.default_locale');
-
-				if ($this->User->save($this->data, false, array('username', 'email', 'password', $this->User->columnMap['locale']))) {
-					$this->Session->setFlash(__d('forum', 'You have successfully signed up, you may now login and begin posting.', true));
-
-					// Send email
-					$message  = sprintf(__d('forum', 'Thank you for signing up on %s, your information is listed below', true), $this->Toolbar->settings['site_name']) .":\n\n";
-					$message .= __d('forum', 'Username', true) .": ". $this->data['User']['username'] ."\n";
-					$message .= __d('forum', 'Password', true) .": ". $this->data['User']['newPassword'] ."\n\n";
-					$message .= __d('forum', 'Enjoy!', true);
-					
-					$this->Email->to = $this->data['User']['email'];
-					$this->Email->from = Configure::read('Forum.settings.site_name') .' <'. Configure::read('Forum.settings.site_email') .'>';
-					$this->Email->subject = Configure::read('Forum.settings.site_name') .' - '. __d('forum', 'Sign Up Confirmation', true);
-					$this->Email->send($message);
-					
-					unset($this->data['User']);
-				}
-			}
-		}
-		
-		$this->Toolbar->pageTitle(__d('forum', 'Sign Up', true));
 	}
 	
 	/**
