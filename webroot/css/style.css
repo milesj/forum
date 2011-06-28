@@ -56,7 +56,6 @@ h4 { font-size: 24px; }
 		font: normal 90% 'lucida grande',verdana,helvetica,arial,sans-serif; }
 		
 		.input textarea { width: 50%; }
-		.input .numeric { width: 75px; }
 	
 	.input select,
 	#search select {
@@ -84,6 +83,7 @@ h4 { font-size: 24px; }
 		font-weight: normal; }
 	
 input[readonly] { color: gray; }
+input.numeric { width: 75px; }
 
 .error-message {
 	padding: 5px 0 0 10px;

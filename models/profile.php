@@ -46,14 +46,7 @@ class Profile extends ForumAppModel {
 			)
 		)
 	);
-	
-	public function deleteUser($user_id) {
-		// profile
-		// access 
-		// mod
-		// reported
-	}
-	
+
 	/**
 	 * Grab a profile based on ID.
 	 *
@@ -101,6 +94,14 @@ class Profile extends ForumAppModel {
 		}
 		
 		return $profile;
+	}
+	
+	public function getLatest($limit = 10) {
+		return $this->find('all', array(
+			'order' => array('Profile.created' => 'DESC'),
+			'contain' => array('User'),
+			'limit' => $limit
+		));
 	}
 
 	/**

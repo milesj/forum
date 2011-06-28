@@ -9,6 +9,7 @@
  */
   
 Configure::load('Forum.config');
+App::import('Core', 'Sanitize');
 
 class ForumAppController extends AppController {
 

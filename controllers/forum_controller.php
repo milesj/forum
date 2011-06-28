@@ -66,18 +66,19 @@ class ForumController extends ForumAppController {
 	public function admin_index() {
 		$this->loadModel('Forum.Report');
 		$this->loadModel('Forum.Moderator');
+		$this->loadModel('Forum.Profile');
 		
 		$this->Toolbar->pageTitle(__d('forum', 'Administration', true));
 		$this->set('menuTab', 'home');
 		$this->set('totalPosts', 	$this->Topic->Post->getTotal());
 		$this->set('totalTopics', 	$this->Topic->getTotal());
-		$this->set('totalUsers', 	$this->Topic->User->getTotal());
+		$this->set('totalUsers', 	$this->Profile->getTotal());
 		$this->set('totalPolls', 	$this->Topic->Poll->getTotal());
 		$this->set('totalReports', 	$this->Report->getTotal());
 		$this->set('totalMods', 	$this->Moderator->getTotal());
-		$this->set('newestUser', 	$this->Topic->User->getNewestUser());
+		$this->set('newestUser', 	$this->Profile->getNewestUser());
+		$this->set('latestUsers', 	$this->Profile->getLatest());
 		$this->set('latestReports', $this->Report->getLatest());
-		$this->set('latestUsers', 	$this->Topic->User->getLatest());
 	}
 	
 	/**
@@ -110,7 +111,7 @@ class ForumController extends ForumAppController {
 		$this->Auth->allow('*');
 		
 		if (isset($this->params['admin'])) {
-			$this->Toolbar->verifyAdmin();
+			//$this->Toolbar->verifyAdmin();
 			$this->layout = 'admin';
 		}
 	}

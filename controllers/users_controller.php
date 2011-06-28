@@ -197,8 +197,9 @@ class UsersController extends ForumAppController {
 	 * Delets a users profile.
 	 *
 	 * @param int $id
+	 * @deprecated
 	 */
-	public function admin_delete($id) {
+	/*public function admin_delete($id) {
 		$profile = $this->Profile->get($id);
 		
 		if (empty($profile)) {
@@ -215,7 +216,7 @@ class UsersController extends ForumAppController {
 		
 		$this->Toolbar->pageTitle(__d('forum', 'Delete User', true));
 		$this->set('profile', $profile);
-	}
+	}*/
 	
 	/**
 	 * Before filter.
