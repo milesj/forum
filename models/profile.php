@@ -17,6 +17,41 @@ class Profile extends ForumAppModel {
 	 * @var array
 	 */
 	public $belongsTo = array('User');
+	
+	/**
+	 * Get a users profile and all relevant information.
+	 * 
+	 * @access public
+	 * @param int $user_id
+	 * @return array
+	 */
+	public function get($user_id) {
+		$profile = $this->find('first', array(
+			'conditions' => array('Profile.user_id' => $user_id),
+			'contain' => array('User')
+		));
+		
+		if (!empty($profile)) {
+			$mods = ClassRegistry::init('Forum.Moderator')->getListByUser($user_id);
+			$access = ClassRegistry::init('Forum.Access')->getListByUser($user_id);
+			
+			if (!empty($mods)) {
+				foreach ($mods as $mod) {
+					$mod['Moderator']['Forum'] = $mod['Forum'];
+					$profile['Moderator'][] = $mod['Moderator'];
+				}
+			}
+			
+			if (!empty($access)) {
+				foreach ($access as $level) {
+					$level['Access']['AccessLevel'] = $level['AccessLevel'];
+					$profile['Access'][] = $level['Access'];
+				}
+			}
+		}
+		
+		return $profile;
+	}
 
 	/**
 	 * Get the newest signup.

@@ -105,16 +105,18 @@ class UsersController extends ForumAppController {
 	 * @param int $id
 	 */
 	public function profile($id) {
-		$user = $this->User->getProfile($id);
+		$user = $this->Profile->get($id);
 		
-		if (!empty($user)) {
-			$this->loadModel('Forum.Topic');
-			$this->set('topics', $this->Topic->getLatestByUser($id));
-			$this->set('posts', $this->Topic->Post->getLatestByUser($id));
+		if (empty($user)) {
+			return $this->cakeError('error404');
 		}
-	
-		$this->Toolbar->pageTitle(__d('forum', 'User Profile', true), $user['User']['username']);
+		
+		$this->loadModel('Forum.Topic');
+
+		$this->Toolbar->pageTitle(__d('forum', 'User Profile', true), $user['User'][$this->config['userMap']['username']]);
 		$this->set('user', $user);
+		$this->set('topics', $this->Topic->getLatestByUser($id));
+		$this->set('posts', $this->Topic->Post->getLatestByUser($id));
 	}
 	
 	/**
@@ -123,15 +125,15 @@ class UsersController extends ForumAppController {
 	 * @param int $id
 	 */
 	public function report($id) {
-		$this->loadModel('Forum.Report');
-		
 		$user_id = $this->Auth->user('id');
-		$profile = $this->Profile->getUserProfile($id);
+		$user = $this->Profile->get($id);
 		
-		// Access
-		$this->Toolbar->verifyAccess(array('exists' => $profile));
+		if (empty($user)) {
+			return $this->cakeError('error404');
+		}
 		
-		// Submit Report
+		$this->loadModel('Forum.Report');
+
 		if (!empty($this->data)) {
 			$this->data['Report']['user_id'] = $user_id;
 			$this->data['Report']['item_id'] = $id;
@@ -144,7 +146,7 @@ class UsersController extends ForumAppController {
 		}
 		
 		$this->Toolbar->pageTitle(__d('forum', 'Report User', true));
-		$this->set('user', $profile);
+		$this->set('user', $user);
 	}
 	
 	/**

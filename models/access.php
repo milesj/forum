@@ -56,6 +56,20 @@ class Access extends ForumAppModel {
 	}
 	
 	/**
+	 * Get a list of all levels for a user.
+	 *
+	 * @access public
+	 * @param int $user_id
+	 * @return array
+	 */
+	public function getListByUser($user_id) {
+		return $this->find('all', array(
+			'contain' => array('AccessLevel'),
+			'conditions' => array('Access.user_id' => $user_id)
+		));
+	}
+	
+	/**
 	 * Get all my access.
 	 *
 	 * @access public

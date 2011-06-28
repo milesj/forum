@@ -49,6 +49,20 @@ class Moderator extends ForumAppModel {
 	}
 	
 	/**
+	 * Return a list of all forums a user moderates.
+	 *
+	 * @access public
+	 * @param int $user_id
+	 * @return array
+	 */
+	public function getListByUser($user_id) {
+		return $this->find('all', array(
+			'contain' => array('Forum'),
+			'conditions' => array('Moderator.user_id' => $user_id)
+		));
+	}
+	
+	/**
 	 * Get all forums you moderate.
 	 * 
 	 * @access public
