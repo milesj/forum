@@ -9,6 +9,6 @@
 </p>
 
 <?php 
-echo $this->Form->create('User', array('url' => $this->here));
+echo $this->Form->create('Profile', array('url' => $this->here));
 echo $this->Form->input('delete', array('type' => 'hidden', 'value' => 'yes'));
 echo $this->Form->end(__d('forum', 'Yes, Delete', true)); ?>

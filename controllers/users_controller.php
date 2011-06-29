@@ -45,7 +45,7 @@ class UsersController extends ForumAppController {
 	 */
 	public function index() {
 		if (!empty($this->data['Profile']['username'])) {
-			$this->paginate['Profile']['conditions']['User.username LIKE'] = '%'. Sanitize::clean($this->data['Profile']['username']) .'%';
+			$this->paginate['Profile']['conditions']['User.'. $this->config['userMap']['username'] .' LIKE'] = '%'. Sanitize::clean($this->data['Profile']['username']) .'%';
 		}
 		
 		$this->Toolbar->pageTitle(__d('forum', 'User List', true));
@@ -102,10 +102,10 @@ class UsersController extends ForumAppController {
 	/**
 	 * User profile.
 	 *
-	 * @param int $id
+	 * @param int $user_id
 	 */
-	public function profile($id) {
-		$user = $this->Profile->getByUser($id);
+	public function profile($user_id) {
+		$user = $this->Profile->getByUser($user_id);
 		
 		if (empty($user)) {
 			return $this->cakeError('error404');
@@ -115,18 +115,17 @@ class UsersController extends ForumAppController {
 
 		$this->Toolbar->pageTitle(__d('forum', 'User Profile', true), $user['User'][$this->config['userMap']['username']]);
 		$this->set('user', $user);
-		$this->set('topics', $this->Topic->getLatestByUser($id));
-		$this->set('posts', $this->Topic->Post->getLatestByUser($id));
+		$this->set('topics', $this->Topic->getLatestByUser($user_id));
+		$this->set('posts', $this->Topic->Post->getLatestByUser($user_id));
 	}
 	
 	/**
 	 * Report a user.
 	 *
-	 * @param int $id
+	 * @param int $user_id
 	 */
-	public function report($id) {
-		$user_id = $this->Auth->user('id');
-		$user = $this->Profile->getByUser($id);
+	public function report($user_id) {
+		$user = $this->Profile->getByUser($user_id);
 		
 		if (empty($user)) {
 			return $this->cakeError('error404');
@@ -135,8 +134,8 @@ class UsersController extends ForumAppController {
 		$this->loadModel('Forum.Report');
 
 		if (!empty($this->data)) {
-			$this->data['Report']['user_id'] = $user_id;
-			$this->data['Report']['item_id'] = $id;
+			$this->data['Report']['user_id'] = $this->Auth->user('id');
+			$this->data['Report']['item_id'] = $user_id;
 			$this->data['Report']['itemType'] = Report::USER;
 			
 			if ($this->Report->save($this->data, true, array('item_id', 'itemType', 'user_id', 'comment'))) {
@@ -155,7 +154,7 @@ class UsersController extends ForumAppController {
 	public function admin_index() {
 		if (!empty($this->data)) {
 			if (!empty($this->data['Profile']['username'])) {
-				$this->paginate['Profile']['conditions']['User.username LIKE'] = '%'. Sanitize::clean($this->data['Profile']['username']) .'%';
+				$this->paginate['Profile']['conditions']['User.'. $this->config['userMap']['username'] .' LIKE'] = '%'. Sanitize::clean($this->data['Profile']['username']) .'%';
 			}
 			
 			if (!empty($this->data['Profile']['id'])) {
