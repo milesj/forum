@@ -34,7 +34,6 @@ class UsersController extends ForumAppController {
 	 */ 
 	public $paginate = array(  
 		'Profile' => array(
-			'order' => array('User.username' => 'ASC'),
 			'contain' => array('User'),
 			'limit' => 25
 		) 
@@ -45,8 +44,10 @@ class UsersController extends ForumAppController {
 	 */
 	public function index() {
 		if (!empty($this->data['Profile']['username'])) {
-			$this->paginate['Profile']['conditions']['User.'. $this->config['userMap']['username'] .' LIKE'] = '%'. Sanitize::clean($this->data['Profile']['username']) .'%';
+			$this->paginate['Profile']['conditions'] = array('User.'. $this->config['userMap']['username'] .' LIKE' => '%'. Sanitize::clean($this->data['Profile']['username']) .'%');
 		}
+		
+		$this->paginate['Profile']['order'] = array('User.'. $this->config['userMap']['username'] => 'ASC');
 		
 		$this->Toolbar->pageTitle(__d('forum', 'User List', true));
 		$this->set('users', $this->paginate('Profile'));
@@ -161,6 +162,8 @@ class UsersController extends ForumAppController {
 				$this->paginate['Profile']['conditions']['User.id'] = $this->data['Profile']['id'];
 			}
 		}
+		
+		$this->paginate['Profile']['order'] = array('User.'. $this->config['userMap']['username'] => 'ASC');
 
 		$this->Toolbar->pageTitle(__d('forum', 'Manage Users', true));
 		$this->set('users', $this->paginate('Profile'));
@@ -219,19 +222,11 @@ class UsersController extends ForumAppController {
 	
 	/**
 	 * Before filter.
-	 * 
-	 * @access public
-	 * @return void
 	 */
 	public function beforeFilter() {
 		parent::beforeFilter();
 		
 		$this->Auth->allow('index', 'login', 'logout', 'profile');
-
-		if (isset($this->params['admin'])) {
-			//$this->Toolbar->verifyAdmin();
-			$this->layout = 'admin';
-		}
 		
 		$this->set('menuTab', 'users');
 	}

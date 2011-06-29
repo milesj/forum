@@ -47,7 +47,7 @@ h4 { font-size: 24px; }
 	-moz-border-radius: .3em;
 	clear: both; }
 	
-	.input input,
+	.input.text input,
 	.input textarea,
 	#search input {
 		border: 1px solid #ccc;

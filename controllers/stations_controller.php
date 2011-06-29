@@ -27,7 +27,7 @@ class StationsController extends ForumAppController {
 	public $paginate = array(  
 		'Topic' => array(
 			'order' => array('LastPost.created' => 'DESC'),
-			'contain' => array('User.id', 'User.username', 'LastPost.created', 'LastUser.username', 'Poll.id')
+			'contain' => array('User', 'LastPost.created', 'LastUser', 'Poll.id')
 		)
 	);
 	
@@ -132,7 +132,7 @@ class StationsController extends ForumAppController {
 		
 			$this->paginate['Topic']['limit'] = $this->settings['topics_per_page'];
 			$this->paginate['Topic']['conditions'] = array('Topic.forum_id' => $forum['Forum']['id']);
-			$this->paginate['Topic']['contain'] = array('User.id', 'User.username', 'LastPost.created', 'FirstPost.content');
+			$this->paginate['Topic']['contain'] = array('User', 'LastPost.created', 'FirstPost.content');
 
 			$this->set('topics', $this->paginate('Topic'));
 			$this->set('forum', $forum);
@@ -244,13 +244,7 @@ class StationsController extends ForumAppController {
 		$this->Auth->allow('index', 'view', 'feed');
 		$this->Security->disabledFields = array('items');
 		
-		if (isset($this->params['admin'])) {
-			$this->Toolbar->verifyAdmin();
-			$this->layout = 'admin';
-			$this->set('menuTab', 'forums');
-		} else {
-			$this->set('menuTab', '');
-		}
+		$this->set('menuTab', 'forums');
 	}
 
 }

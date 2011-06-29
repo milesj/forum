@@ -73,12 +73,14 @@ class ForumAppController extends AppController {
 	
 	/**
 	 * Before filter.
-	 * 
-	 * @access public
-	 * @return void
 	 */
 	public function beforeFilter() {
 		parent::beforeFilter();
+		
+		if (isset($this->params['admin'])) {
+			$this->Toolbar->verifyAdmin();
+			$this->layout = 'admin';
+		}
 
 		// Settings
 		$this->config = Configure::read('Forum');
@@ -122,9 +124,6 @@ class ForumAppController extends AppController {
 
 	/**
 	 * Before render.
-	 *
-	 * @access public
-	 * @return void
 	 */
 	public function beforeRender() {
 		$this->set('config', Configure::read('Forum'));
