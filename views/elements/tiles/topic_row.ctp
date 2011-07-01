@@ -1,10 +1,10 @@
 
 <?php 
 $pages = $this->Common->topicPages($topic['Topic']);
-$moderate = isset($moderate) ? true : false; ?>
+$columns = isset($columns) ? $columns : array(); ?>
 
 <tr<?php if ($counter % 2) echo ' class="altRow"'; ?>>
-	<?php if ($moderate) { ?>
+	<?php if (in_array('status', $columns)) { ?>
 		<td class="ac"><input type="checkbox" name="data[Topic][items][]" value="<?php echo $topic['Topic']['id']; ?>" /></td>
 	<?php } else { ?>
 		<td class="ac" style="width: 35px"><?php echo $this->Common->topicIcon($topic); ?></td>
@@ -20,7 +20,10 @@ $moderate = isset($moderate) ? true : false; ?>
 		<br /><span class="gray"><?php __d('forum', 'Pages'); ?>: [ <?php echo implode(', ', $pages); ?> ]</span>
 		<?php } ?>
 	</td>
-	<?php if ($moderate) { ?>
+	<?php if (in_array('forum', $columns)) { ?>
+		<td class="ac"><?php echo $this->Html->link($topic['Forum']['title'], array('controller' => 'stations', 'action' => 'view', $topic['Forum']['slug'])); ?></td>
+	<?php } ?>
+	<?php if (in_array('status', $columns)) { ?>
 		<td class="ac"><?php echo $this->Common->options('topicStatus', $topic['Topic']['status']); ?></td>
 	<?php } ?>
 	<td class="ac">

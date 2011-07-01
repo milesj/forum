@@ -27,20 +27,19 @@ class SearchController extends ForumAppController {
 	public $paginate = array( 
 		'Topic' => array(
 			'order' => array('LastPost.created' => 'DESC'),
-			'contain' => array('Forum.title', 'Forum.slug', 'User.id', 'User.username', 'LastPost.created', 'LastUser.username', 'Poll.id', 'FirstPost.content')
+			'contain' => array('Forum', 'User', 'LastPost', 'LastUser', 'Poll', 'FirstPost')
 		)
 	); 
 	
 	/**
 	 * Search the topics.
 	 *
-	 * @access public
 	 * @param string $type
 	 */
 	public function index($type = '') {
 		$searching = false;
+		$forums = $this->Topic->Forum->getGroupedHierarchy('accessRead');
 		
-		// Build
 		if (!empty($this->params['named'])) {
 			foreach ($this->params['named'] as $field => $value) {
 				$this->data['Topic'][$field] = urldecode($value);
@@ -52,40 +51,42 @@ class SearchController extends ForumAppController {
 			$this->paginate['Topic']['conditions']['LastPost.created >='] = $this->Session->read('Forum.lastVisit');
 		}
 
-		$forums = $this->Topic->ForumCategory->getHierarchy($this->Toolbar->getAccess(), $this->Session->read('Forum.access'), 'read');
-		
-		// Search
 		if (!empty($this->data)) {
 			$searching = true;
-			$this->paginate['Topic']['limit'] = Configure::read('Forum.settings.topics_per_page');
 			
 			if (!empty($this->data['Topic']['keywords'])) {
+				$keywords = Sanitize::clean($this->data['Topic']['keywords']);
+			
 				if ($this->data['Topic']['power'] == 0) {
-					$this->paginate['Topic']['conditions']['Topic.title LIKE'] = '%'. $this->data['Topic']['keywords'] .'%';
+					$this->paginate['Topic']['conditions']['Topic.title LIKE'] = '%'. $keywords .'%';
 				} else {
 					$this->paginate['Topic']['conditions']['OR'] = array(
-						array('Topic.title LIKE' => '%'. $this->data['Topic']['keywords'] .'%'),
-						array('FirstPost.content LIKE' => '%'. $this->data['Topic']['keywords'] .'%')
+						array('Topic.title LIKE' => '%'. $keywords .'%'),
+						array('FirstPost.content LIKE' => '%'. $keywords .'%')
 					);
 				}
 			}
 
-			if (!empty($this->data['Topic']['category'])) {
-				$this->paginate['Topic']['conditions']['Topic.forum_id'] = $this->data['Topic']['category'];
-			} else {
-				$this->data['Topic']['category'] = array();
+			if (empty($this->data['Topic']['forum_id'])) {
+				$this->data['Topic']['forum_id'] = array();
+				
 				foreach ($forums as $forum_ids) {
-					$this->data['Topic']['category'] = array_merge($this->data['Topic']['category'], array_keys($forum_ids));
+					$this->data['Topic']['forum_id'] = array_keys($forum_ids) + $this->data['Topic']['forum_id'];
 				}
 			}
 			
-			if (!empty($this->data['Topic']['orderBy'])) {
-				$this->paginate['Topic']['order'] = array($this->data['Topic']['orderBy'] => 'DESC');
+			if (empty($this->data['Topic']['orderBy'])) {
+				$this->data['Topic']['orderBy'] = 'LastPost.created';
 			}
-			
+
 			if (!empty($this->data['Topic']['byUser'])) {
-				$this->paginate['Topic']['conditions']['User.username LIKE'] = '%'. $this->data['Topic']['byUser'] .'%';
+				$this->paginate['Topic']['conditions']['User.'. $this->config['userMap']['username'] .' LIKE'] = '%'. $this->data['Topic']['byUser'] .'%';
 			}
+
+			$this->paginate['Topic']['conditions']['Forum.accessRead <='] = $this->Toolbar->getAccess();
+			$this->paginate['Topic']['conditions']['Topic.forum_id'] = $this->data['Topic']['forum_id'];
+			$this->paginate['Topic']['order'] = array($this->data['Topic']['orderBy'] => 'DESC');
+			$this->paginate['Topic']['limit'] = $this->settings['topics_per_page'];
 			
 			$this->set('topics', $this->paginate('Topic'));
 		}
@@ -98,26 +99,21 @@ class SearchController extends ForumAppController {
 	
 	/**
 	 * Proxy action to build named parameters.
-	 *
-	 * @access public
 	 */
 	public function proxy() {
 		$named = array();
+		
 		foreach ($this->data['Topic'] as $field => $value) {
 			if ($value != '') {
 				$named[$field] = urlencode(htmlentities($value, ENT_NOQUOTES, 'UTF-8'));
 			}	
 		}
 		
-		$destination = array_merge(array('controller' => 'search', 'action' => 'index'), $named);
-		$this->redirect($destination);
+		$this->redirect(array_merge(array('controller' => 'search', 'action' => 'index'), $named));
 	}
 	
 	/**
 	 * Before filter.
-	 * 
-	 * @access public
-	 * @return void
 	 */
 	public function beforeFilter() {
 		parent::beforeFilter();

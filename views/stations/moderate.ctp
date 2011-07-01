@@ -41,7 +41,7 @@ $this->Html->addCrumb($forum['Forum']['title'], array('controller' => 'stations'
 			echo $this->element('tiles/topic_row', array(
 				'topic' => $topic,
 				'counter' => $counter,
-				'moderate' => true
+				'columns' => array('status')
 			));
 			
 			++$counter;

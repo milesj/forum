@@ -129,50 +129,6 @@ class CommonHelper extends AppHelper {
 	}
 
 	/**
-	 * Generates a gravatar image.
-	 *
-	 * @param string $email
-	 * @param int $size
-	 * @param string $rating
-	 * @return string
-	 */
-	public function gravatar($email, $size = 100, $rating = 'g') {
-		$email = md5(strtolower($email));
-		
-		if (isset($this->__gravatars[$email])) {
-			if ($this->__gravatars[$email] != null) {
-				return $this->Html->image($this->__gravatars[$email]);
-			}
-		} else {
-			$properties = array('default' => 404);
-
-			if (!empty($size)) {
-				$properties['size'] = $size;
-			}
-
-			if (!empty($rating)) {
-				$properties['rating'] = strtolower($rating);
-			}
-
-			$url = 'http://www.gravatar.com/avatar/'. $email;
-			$query = http_build_query($properties);
-
-			$HttpSocket = new HttpSocket();
-			$response = $HttpSocket->get($url, $query);
-			$gravatar = $url .'?'. $query;
-
-			if ($response != '404 Not Found') {
-				$this->__gravatars[$email] = $gravatar;
-				return $this->Html->image($gravatar);
-			} else {
-				$this->__gravatars[$email] = null;
-			}
-		}
-
-		return;
-	}
-	
-	/**
 	 * Checks to see if the user has mod status.
 	 *
 	 * @access public
