@@ -22,6 +22,8 @@ class ForumController extends ForumAppController {
 	 * Forum index.  
 	 */
 	public function index() {
+		debug($_SESSION);
+		
 		$this->Toolbar->pageTitle(__d('forum', 'Index', true));
 		$this->set('menuTab', 'home');
 		$this->set('forums', 		$this->Topic->Forum->getIndex($this->Toolbar->getAccess()));
@@ -87,7 +89,6 @@ class ForumController extends ForumAppController {
 	public function admin_settings() {
 		$this->loadModel('Forum.Setting');
 		
-		// Form Processing
 		if (!empty($this->data)) {
 			$this->Setting->set($this->data);
 			
@@ -108,12 +109,7 @@ class ForumController extends ForumAppController {
 	public function beforeFilter() {
 		parent::beforeFilter();
 		
-		$this->Auth->allow('*');
-		
-		if (isset($this->params['admin'])) {
-			//$this->Toolbar->verifyAdmin();
-			$this->layout = 'admin';
-		}
+		$this->Auth->allow('index', 'feed', 'help', 'rules');
 	}
 
 }

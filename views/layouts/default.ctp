@@ -34,7 +34,7 @@ echo $scripts_for_layout; ?>
         	<li<?php if ($menuTab == 'users') echo ' class="active"'; ?>><?php echo $this->Html->link(__d('forum', 'Users', true), array('controller' => 'users', 'action' => 'index')); ?></li>
 
 			<?php if ($this->Common->user() && $this->Common->hasAccess('admin')) { ?>
-				<li><?php echo $this->Html->link(__d('forum', 'Admin', true), array('controller' => 'home', 'action' => 'index', 'admin' => true)); ?></li>
+				<li><?php echo $this->Html->link(__d('forum', 'Admin', true), array('controller' => 'forum', 'action' => 'index', 'admin' => true)); ?></li>
             <?php } ?>
         </ul>
         
