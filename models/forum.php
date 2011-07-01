@@ -103,137 +103,70 @@ class Forum extends ForumAppModel {
 	);
 	
 	/**
-	 * Get the list of forums for the board index.
-	 *
-	 * @access public
-	 * @param int $access
-	 * @return array
-	 */
-	public function getAdminIndex($access = 0) {
-		return $this->find('all', array(
-			'order' => array('Forum.orderNo' => 'ASC'),
-			'conditions' => array('Forum.forum_id' => 0),
-			'contain' => array('SubForum' => array('Children'))	
-		));
-	}
-
-	/**
-	 * Get all basic info for a forum.
-	 *
-	 * @access public
-	 * @param int $id
-	 * @return array
-	 */
-	public function getForum($id) {
-		return $this->find('first', array(
-			'conditions' => array('Forum.id' => $id),
-			'contain' => array('Parent')
-		));
-	}
-
-	/**
-	 * Get all required info for viewing a forum.
+	 * Get a forum.
 	 *
 	 * @access public
 	 * @param string $slug
-	 * @param int $access
-	 * @param array $accessLevels
 	 * @return array
 	 */
-	public function getForumForViewing($slug, $access = 0, $accessLevels = array()) {
-		return $this->find('first', array(
-			'conditions' => array(
-				'Forum.slug' => $slug,
-				'Forum.access_level_id' => $accessLevels
-			),
-			'contain' => array(
-				'Parent',
-				'SubForum' => array(
-					'conditions' => array(
-						'SubForum.accessRead <=' => $access,
-						'SubForum.access_level_id' => $accessLevels
-					),
-					'LastTopic.title', 'LastTopic.created', 'LastPost.created', 'LastUser.username', 'LastTopic.slug'
-				),
-				'Moderator' => array('User.id', 'User.username')
-			)
-		));
-	}
-
-	/**
-	 * Increase the post count.
-	 *
-	 * @access public
-	 * @param int $id
-	 * @return boolean
-	 */
-	public function increasePosts($id) {
-		return $this->query("UPDATE `". $this->tablePrefix ."forums` AS `Forum` SET `Forum`.`post_count` = `Forum`.`post_count` + 1 WHERE `Forum`.`id` = ". (int) $id);
-	}
-	
-	/**
-	 * NEW METHODS
-	 */
-
-	/**
-	 * Get the forum based on slug.
-	 *
-	 * @access public
-	 * @param string $slug
-	 * @param int $access
-	 * @return array
-	 */
-	public function get($slug, $access = 0) {
-		$accessLevels = $this->Session->read('Forum.access');
+	public function get($slug) {
+		$access = $this->access();
+		$accessLevels = $this->accessLevels();
 		
 		return $this->find('first', array(
 			'conditions' => array(
-				'Forum.slug' => $slug,
-				'Forum.access_level_id' => $accessLevels
+				'Forum.access_level_id' => $accessLevels,
+				'Forum.accessRead <=' => $access,
+				'Forum.slug' => $slug
 			),
 			'contain' => array(
 				'Parent', 
 				'SubForum' => array(
 					'conditions' => array(
-						'SubForum.accessRead <=' => $access,
-						'SubForum.access_level_id' => $accessLevels
+						'SubForum.access_level_id' => $accessLevels,
+						'SubForum.accessRead <=' => $access
 					),
-					'LastTopic.title', 'LastTopic.created', 'LastPost.created', 'LastUser.username', 'LastTopic.slug'
+					'LastTopic', 'LastPost', 'LastUser'
 				),
-				'Moderator' => array('User.id', 'User.username')
-			)
+				'Moderator' => array('User')
+			),
+			'cache' => __FUNCTION__ .'-'. $slug
 		));
 	}
 	
-	/**
-	 * Get a forum based on ID.
-	 * 
-	 * @access public
-	 * @param int $id
-	 * @return array
-	 */
 	public function getById($id) {
 		return $this->find('first', array(
 			'conditions' => array('Forum.id' => $id)
 		));
 	}
-	
+		
 	/**
-	 * Get the hierarchy.
+	 * Get the list of forums for the board index.
 	 *
 	 * @access public
-	 * @param int $access
+	 * @return array
+	 */
+	public function getAdminIndex() {
+		return $this->find('all', array(
+			'order' => array('Forum.orderNo' => 'ASC'),
+			'conditions' => array('Forum.forum_id' => 0),
+			'contain' => array('Children' => array('SubForum'))	
+		));
+	}
+	
+	/**
+	 * Get a grouped hierarchy.
+	 *
+	 * @access public
 	 * @param string $type
 	 * @param int $exclude
 	 * @return array
 	 */
-	public function getHierarchy($access = 1, $type = 'post', $exclude = null) {
-		$accessLevels = $this->Session->read('Forum.access');
-		$accessField = 'access'. ucfirst($type);
-		$conditions =array(
+	public function getGroupedHierarchy($type, $exclude = null) {
+		$conditions = array(
 			'Forum.status' => self::STATUS_OPEN,
-			'Forum.'. $accessField .' <=' => $access,
-			'Forum.access_level_id' => $accessLevels
+			'Forum.'. $type .' <=' => $this->access(),
+			'Forum.access_level_id' => $this->accessLevels()
 		);
 		
 		if (is_numeric($exclude)) {
@@ -267,16 +200,16 @@ class Forum extends ForumAppModel {
 
 		return $hierarchy;
 	}
-	
+
 	/**
-	 * Get the hierarchy for a list of forums.
+	 * Get the hierarchy.
 	 *
 	 * @access public
 	 * @param boolean $drill
 	 * @param int $exclude
 	 * @return array
 	 */
-	public function getList($drill = false, $exclude = null) {
+	public function getHierarchy($drill = false, $exclude = null) {
 		$conditions = array();
 		
 		if (is_numeric($exclude)) {
@@ -312,16 +245,16 @@ class Forum extends ForumAppModel {
 
 		return $hierarchy;
 	}
-	
+
 	/**
 	 * Get the list of forums for the board index.
 	 *
 	 * @access public
-	 * @param int $access
 	 * @return array
 	 */
-	public function getIndex($access = 0) {
-		$accessLevels = $this->Session->read('Forum.access');
+	public function getIndex() {
+		$access = $this->access();
+		$accessLevels = $this->accessLevels();
 		
 		return $this->find('all', array(
 			'order' => array('Forum.orderNo' => 'ASC'),
@@ -346,7 +279,8 @@ class Forum extends ForumAppModel {
 					),
 					'LastTopic.title', 'LastTopic.slug', 'LastTopic.created', 'LastTopic.post_count', 'LastPost.created', 'LastUser.username'
 				)
-			)	
+			),
+			'cache' => __FUNCTION__
 		));
 	}
 
@@ -401,6 +335,7 @@ class Forum extends ForumAppModel {
 	 * @access protected
 	 * @param array $categories
 	 * @param array $forum
+	 * @param boolean $drill
 	 * @param int $depth
 	 * @return array 
 	 */

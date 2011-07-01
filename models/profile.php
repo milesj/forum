@@ -145,22 +145,22 @@ class Profile extends ForumAppModel {
 	 * Increase the post count.
 	 *
 	 * @access public
-	 * @param int $id
+	 * @param int $user_id
 	 * @return boolean
 	 */
-	public function increasePosts($id) {
-		return $this->query('UPDATE `'. $this->tablePrefix .'profiles` AS `Profile` SET `Profile`.`totalPosts` = `Profile`.`totalPosts` + 1 WHERE `Profile`.`id` = '. $id);
+	public function increasePosts($user_id) {
+		return $this->query('UPDATE `'. $this->tablePrefix .'profiles` AS `Profile` SET `Profile`.`totalPosts` = `Profile`.`totalPosts` + 1 WHERE `Profile`.`user_id` = '. $user_id);
 	}
 
 	/**
 	 * Increase the topic count.
 	 *
 	 * @access public
-	 * @param int $id
+	 * @param int $user_id
 	 * @return boolean
 	 */
-	public function increaseTopics($id) {
-		return $this->query('UPDATE `'. $this->tablePrefix .'profiles` AS `Profile` SET `Profile`.`totalTopics` = `Profile`.`totalTopics` + 1 WHERE `Profile`.`id` = '. $id);
+	public function increaseTopics($user_id) {
+		return $this->query('UPDATE `'. $this->tablePrefix .'profiles` AS `Profile` SET `Profile`.`totalTopics` = `Profile`.`totalTopics` + 1 WHERE `Profile`.`user_id` = '. $user_id);
 	}
 	
 	/**

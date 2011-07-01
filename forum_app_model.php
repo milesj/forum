@@ -77,6 +77,7 @@ class ForumAppModel extends AppModel {
 		parent::__construct($id, $table, $ds);
 
 		$this->Session = new CakeSession();
+		$this->config = Configure::read('Forum');
 		$this->settings = Configure::read('Forum.settings');
 
 		if (Cache::config('sql') === false) {
@@ -88,6 +89,51 @@ class ForumAppModel extends AppModel {
 				'duration'	=> '+1 day'
 			));
 		}
+	}
+	
+	/**
+	 * Get the users highest access level.
+	 * 
+	 * @access public
+	 * @return int
+	 */
+	public function access() {
+		$accessLevels = $this->accessLevels(true);
+		$highest = 0;
+		
+		if (!empty($accessLevels)) {
+			foreach ($accessLevels as $level) {
+				if ($level > $highest) {
+					$highest = $level;
+				}
+			}
+		}
+		
+		return $highest;
+	}
+	
+	/**
+	 * Return an array of access levels or IDs.
+	 * 
+	 * @access public
+	 * @param boolean $getLevel
+	 * @return array
+	 */
+	public function accessLevels($getLevel = false) {
+		$accessLevels = array();
+		$levels = array(0 => 0);
+		
+		if ($this->Session->check('Forum.access')) {
+			$accessLevels = $this->Session->read('Forum.access');
+		} else {
+			return $levels;
+		}
+		
+		foreach ($accessLevels as $level) {
+			$levels[] = $level['AccessLevel'][($getLevel ? 'level' : 'id')];
+		}
+		
+		return $levels;
 	}
 
 	/**
@@ -109,12 +155,10 @@ class ForumAppModel extends AppModel {
 				$key = $fields['cache'];
 				$expires = '+1 hour';
 			}
+			
+			Cache::config('sql', array('duration' => $expires));
 
-			Cache::config('sql', array(
-				'prefix' 	=> strtolower($this->name) .'__',
-				'duration'	=> $expires
-			));
-
+			$key = $this->name .'.'. $key;
 			$results = Cache::read($key, 'sql');
 
 			if (!is_array($results)) {

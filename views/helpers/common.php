@@ -202,19 +202,31 @@ class CommonHelper extends AppHelper {
 	 * Prebuilt option lists for form selects.
 	 *
 	 * @access public
-	 * @param int $type
+	 * @param string $type
 	 * @param string $value
 	 * @param boolean $guest
 	 * @return array|string
 	 */
-	public function options($type = 1, $value = '', $guest = false) {
-		if ($type == 1) {
-			$options = array(0 => __d('forum', 'No', true), 1 => __d('forum', 'Yes', true));
-		} else if ($type == 2) {
-			$options = array(0 => __d('forum', 'Closed', true), 1 => __d('forum', 'Open', true));
-		} else if ($type == 3) {
-			$options = array(0 => __d('forum', 'Hidden', true), 1 => __d('forum', 'Visible', true));
-		} else if ($type == 4) {
+	public function options($type = 'status', $value = '', $guest = false) {
+		if ($type == 'status') {
+			$options = array(
+				0 => __d('forum', 'No', true), 
+				1 => __d('forum', 'Yes', true)
+			);
+			
+		} else if ($type == 'topicStatus') {
+			$options = array(
+				0 => __d('forum', 'Closed', true), 
+				1 => __d('forum', 'Open', true)
+			);
+			
+		} else if ($type == 'forumStatus') {
+			$options = array(
+				0 => __d('forum', 'Hidden', true), 
+				1 => __d('forum', 'Visible', true)
+			);
+			
+		} else if ($type == 'access') {
 			$options = array(
 				1 => '1 ('. __d('forum', 'Member', true) .')',
 				2 => '2',
@@ -231,8 +243,20 @@ class CommonHelper extends AppHelper {
 			if ($guest) {
 				array_unshift($options, '0 ('. __d('forum', 'Guest', true) .')');
 			}
-		} else if ($type == 5) {
-			$options = array(0 => __d('forum', 'Active', true), 1 => __d('forum', 'Banned', true));
+			
+		} else if ($type == 'userStatus') {
+			$options = array(
+				0 => __d('forum', 'Active', true), 
+				1 => __d('forum', 'Banned', true)
+			);
+			
+		} else if ($type == 'topicTypes') {
+			$options = array(
+				0 => __d('forum', 'Normal', true),
+				1 => __d('forum', 'Sticky', true),
+				2 => __d('forum', 'Important', true),
+				3 => __d('forum', 'Announcement', true)
+			);
 		}
 		
 		if (isset($options[$value])) {
@@ -334,15 +358,14 @@ class CommonHelper extends AppHelper {
 	 * @param int $type
 	 * @return string
 	 */
-	public function topicType($type) {
-		switch ($type) {
-			case 0:	$t = ''; break;
-			case 1: $t = __d('forum', 'Sticky', true) .':'; break;
-			case 2: $t = __d('forum', 'Important', true) .':'; break;
-			case 3: $t = __d('forum', 'Announcement', true) .':'; break;
+	public function topicType($type = '') {
+		if (empty($type)) {
+			return;
 		}
 		
-		return $this->output('<strong>'. $t .'</strong>');
+		$types = $this->options('topicTypes');
+
+		return $this->output('<strong>'. $types[$type] .'</strong>');
 	}
 	
 	/**

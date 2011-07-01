@@ -5,7 +5,7 @@
             echo $this->Html->link(__d('forum', 'Moderate', true), array('controller' => 'stations', 'action' => 'moderate', $forum['Forum']['id']));
         } ?>
 		
-        <?php if ($forum['Forum']['status'] == 0) {
+        <?php if ($forum['Forum']['status']) {
             if ($this->Common->hasAccess($forum['Forum']['accessPost'])) {
                 echo $this->Html->link(__d('forum', 'Create Topic', true), array('controller' => 'topics', 'action' => 'add', $forum['Forum']['id']));
             } ?>

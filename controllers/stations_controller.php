@@ -27,7 +27,7 @@ class StationsController extends ForumAppController {
 	public $paginate = array(  
 		'Topic' => array(
 			'order' => array('LastPost.created' => 'DESC'),
-			'contain' => array('User', 'LastPost.created', 'LastUser', 'Poll.id')
+			'contain' => array('User', 'LastPost', 'LastUser', 'Poll')
 		)
 	);
 	
@@ -44,7 +44,7 @@ class StationsController extends ForumAppController {
 	 * @param string $slug
 	 */
 	public function view($slug) {
-		$forum = $this->Forum->get($slug, $this->Toolbar->getAccess());
+		$forum = $this->Forum->get($slug);
 		
 		$this->Toolbar->verifyAccess(array(
 			'exists' => $forum, 
@@ -67,10 +67,10 @@ class StationsController extends ForumAppController {
 	/**
 	 * Moderate a forum.
 	 *
-	 * @param string $slug
+	 * @param string $id
 	 */
-	public function moderate($slug) {
-		$forum = $this->Forum->get($slug, $this->Toolbar->getAccess());
+	public function moderate($id) {
+		$forum = $this->Forum->getById($id);
 		
 		$this->Toolbar->verifyAccess(array(
 			'exists' => $forum, 
@@ -87,7 +87,7 @@ class StationsController extends ForumAppController {
 					$this->Forum->Topic->id = $topic_id;
 
 					if ($action == 'delete') {
-						$this->Forum->Topic->destroy($post_id);
+						$this->Forum->Topic->destroy($topic_id);
 						$this->Session->setFlash(sprintf(__d('forum', 'A total of %d topic(s) have been permanently deleted', true), count($items)));
 
 					} else if ($action == 'close') {
@@ -115,8 +115,8 @@ class StationsController extends ForumAppController {
 		$this->Toolbar->pageTitle(__d('forum', 'Moderate', true), $forum['Forum']['title']);
 		$this->set('forum', $forum);
 		$this->set('topics', $this->paginate('Topic'));
-		$this->set('forums', $this->Forum->getHierarchy($this->Toolbar->getAccess(), 'read'));
-		$this->set('feedId', $slug);
+		$this->set('forums', $this->Forum->getGroupedHierarchy('accessRead'));
+		$this->set('feedId', $forum['Forum']['slug']);
 	}
 	
 	/**
@@ -172,7 +172,7 @@ class StationsController extends ForumAppController {
 		$this->Toolbar->pageTitle(__d('forum', 'Add Forum', true));
 		$this->set('method', 'add');
 		$this->set('levels', $this->Forum->AccessLevel->getHigherLevels());
-		$this->set('forums', $this->Forum->getList());
+		$this->set('forums', $this->Forum->getHierarchy());
 		$this->render('admin_form');
 	}
 	
@@ -205,7 +205,7 @@ class StationsController extends ForumAppController {
 		$this->Toolbar->pageTitle(__d('forum', 'Edit Forum', true), $forum['Forum']['title']);
 		$this->set('method', 'edit');
 		$this->set('levels', $this->Forum->AccessLevel->getHigherLevels());
-		$this->set('forums', $this->Forum->getList());
+		$this->set('forums', $this->Forum->getHierarchy());
 		$this->render('admin_form');
 	}
 	
@@ -231,8 +231,8 @@ class StationsController extends ForumAppController {
 		$this->Toolbar->pageTitle(__d('forum', 'Delete Forum', true), $forum['Forum']['title']);
 		$this->set('forum', $forum);
 		$this->set('levels', $this->Forum->AccessLevel->getHigherLevels());
-		$this->set('topicForums', $this->Forum->getList(true, $id));
-		$this->set('subForums', $this->Forum->getList(false, $id));
+		$this->set('topicForums', $this->Forum->getHierarchy(true, $id));
+		$this->set('subForums', $this->Forum->getHierarchy(false, $id));
 	}
 
 	/**

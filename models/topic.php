@@ -37,11 +37,11 @@ class Topic extends ForumAppModel {
 	 * @var array
 	 */
 	public $belongsTo = array(
+		'User',
 		'Forum' => array(
 			'className' 	=> 'Forum.Forum',
 			'counterCache' 	=> true
 		),
-		'User',
 		'FirstPost' => array(
 			'className' 	=> 'Forum.Post',
 			'foreignKey'	=> 'firstPost_id'

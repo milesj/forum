@@ -20,8 +20,8 @@ $config['Forum']['userMap'] = array(
 );
 
 /**
- * A map of status values for the users "status" column. This column determines if the user is pending,
- * currently active, or banned.
+ * A map of status values for the users "status" column. 
+ * This column determines if the user is pending, currently active, or banned.
  */
 $config['Forum']['statusMap'] = array(
 	'pending'	=> 0,
@@ -86,7 +86,7 @@ $config['Forum']['timezones'] = array(
 /**
  * List of translated locales.
  */
-$config['Forum']['locales'] = $locales = array(
+$config['Forum']['locales'] = array(
 	'eng' => 'English',
 	'deu' => 'German',
 	'fre' => 'French',

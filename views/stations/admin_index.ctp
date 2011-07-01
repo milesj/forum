@@ -26,7 +26,7 @@ if (!empty($forums)) {
         echo $this->Form->input('Forum.'. $forum['Forum']['id'] .'.id', array('value' => $forum['Forum']['id'], 'type' => 'hidden')); ?>
         
 		<?php echo $forum['Forum']['title']; ?> 
-        <span class="gray">(<?php echo $this->Common->options(3, $forum['Forum']['status']); ?>)</span>
+        <span class="gray">(<?php echo $this->Common->options('forumStatus', $forum['Forum']['status']); ?>)</span>
     </h3>
      
     <table cellspacing="0" class="table">
@@ -44,16 +44,16 @@ if (!empty($forums)) {
     </tr>
     
     <?php // Categories
-	if (!empty($forum['SubForum'])) {
-		foreach ($forum['SubForum'] as $subForum) {
+	if (!empty($forum['Children'])) {
+		foreach ($forum['Children'] as $child) {
 			echo $this->element('admin/forum_row', array(
-				'forum' => $subForum
+				'forum' => $child
 			));
 
-			if (!empty($subForum['Children'])) {
-				foreach ($subForum['Children'] as $child) {
+			if (!empty($subForum['SubForum'])) {
+				foreach ($subForum['SubForum'] as $subForum) {
 					echo $this->element('admin/forum_row', array(
-						'forum' => $child,
+						'forum' => $subForum,
 						'child' => true
 					));
 				}

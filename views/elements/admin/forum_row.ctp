@@ -16,13 +16,13 @@
 		</td>
 		<td colspan="2"><strong><?php echo $this->Html->link($forum['title'], array('action' => 'edit', $forum['id'])); ?></strong></td>
 	<?php } ?>
-	<td class="ac"><?php echo $this->Common->options(2, $forum['status']); ?></td>
+	<td class="ac"><?php echo $this->Common->options('forumStatus', $forum['status']); ?></td>
 	<td class="ac"><?php echo number_format($forum['topic_count']); ?></td>
 	<td class="ac"><?php echo number_format($forum['post_count']); ?></td>
-	<td class="ac"><?php echo $this->Common->options(4, $forum['accessRead'], true); ?></td>
-	<td class="ac"><?php echo $this->Common->options(4, $forum['accessPost']); ?></td>
-	<td class="ac"><?php echo $this->Common->options(4, $forum['accessReply']); ?></td>
-	<td class="ac"><?php echo $this->Common->options(4, $forum['accessPoll']); ?></td>
+	<td class="ac"><?php echo $this->Common->options('access', $forum['accessRead'], true); ?></td>
+	<td class="ac"><?php echo $this->Common->options('access', $forum['accessPost']); ?></td>
+	<td class="ac"><?php echo $this->Common->options('access', $forum['accessReply']); ?></td>
+	<td class="ac"><?php echo $this->Common->options('access', $forum['accessPoll']); ?></td>
 	<td class="ac gray">
 		<?php echo $this->Html->link(__d('forum', 'Edit', true), array('action' => 'edit', $forum['id'])); ?> -
 		<?php echo $this->Html->link(__d('forum', 'Delete', true), array('action' => 'delete', $forum['id'])); ?>

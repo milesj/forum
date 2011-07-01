@@ -21,7 +21,7 @@ $moderate = isset($moderate) ? true : false; ?>
 		<?php } ?>
 	</td>
 	<?php if ($moderate) { ?>
-		<td class="ac"><?php echo $this->Common->options(2, $topic['Topic']['status']); ?></td>
+		<td class="ac"><?php echo $this->Common->options('topicStatus', $topic['Topic']['status']); ?></td>
 	<?php } ?>
 	<td class="ac">
 		<?php echo $this->Html->link($topic['User'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'profile', $topic['User']['id'])); ?>
@@ -33,7 +33,7 @@ $moderate = isset($moderate) ? true : false; ?>
 		<?php if (!empty($topic['LastPost']['id'])) {
 			$lastTime = !empty($topic['LastPost']['created']) ? $topic['LastPost']['created'] : $topic['Topic']['modified']; ?>
 
-			<em><?php echo $this->Time->relativeTime($lastTime, array('userOffset' => $this->Common->timezone())); ?></em><br />
+			<em><?php echo $this->Time->relativeTime($lastTime, array('userOffset' => $this->Common->timezone())); ?></em> 
 			
 			<?php if (!empty($topic['LastUser']['id'])) { ?>
 				<span class="gray"><?php __d('forum', 'by'); ?> <?php echo $this->Html->link($topic['LastUser'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'profile', $topic['Topic']['lastUser_id'])); ?></span>
