@@ -154,6 +154,20 @@ class CommonHelper extends AppHelper {
 		return ($this->getAccess() >= $level) ? true : false;
 	}
 	
+	public function highestAccessLevel($levels) {
+		$highest = array();
+		
+		foreach ($levels as $level) {
+			if (empty($highest)) {
+				$highest = $level;
+			} else if ($level['AccessLevel']['level'] > $highest['AccessLevel']['level']) {
+				$highest = $level;
+			}
+		}
+		
+		return $highest['AccessLevel']['title'];
+	}
+	
 	/**
 	 * Prebuilt option lists for form selects.
 	 *
@@ -166,20 +180,20 @@ class CommonHelper extends AppHelper {
 	public function options($type = 'status', $value = '', $guest = false) {
 		if ($type == 'status') {
 			$options = array(
-				0 => __d('forum', 'No', true), 
-				1 => __d('forum', 'Yes', true)
+				1 => __d('forum', 'Yes', true),
+				0 => __d('forum', 'No', true)
 			);
 			
 		} else if ($type == 'topicStatus') {
 			$options = array(
-				0 => __d('forum', 'Closed', true), 
-				1 => __d('forum', 'Open', true)
+				1 => __d('forum', 'Open', true),
+				0 => __d('forum', 'Closed', true)
 			);
 			
 		} else if ($type == 'forumStatus') {
 			$options = array(
-				0 => __d('forum', 'Hidden', true), 
-				1 => __d('forum', 'Visible', true)
+				1 => __d('forum', 'Visible', true),
+				0 => __d('forum', 'Hidden', true)
 			);
 			
 		} else if ($type == 'access') {
@@ -259,7 +273,7 @@ class CommonHelper extends AppHelper {
 			$lastPost = $topic['Topic']['created'];
 		}
 		
-		if ($topic['Topic']['status'] == 1) {
+		if (!$topic['Topic']['status']) {
 			$icon = 'closed';
 		} else {
 			if (isset($lastPost) && $lastPost > $lastVisit &&  !in_array($topic['Topic']['id'], $readTopics)) {

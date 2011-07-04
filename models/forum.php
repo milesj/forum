@@ -134,6 +134,13 @@ class Forum extends ForumAppModel {
 		));
 	}
 	
+	/**
+	 * Return a forum based on ID.
+	 * 
+	 * @acccess public
+	 * @param int $id
+	 * @return array
+	 */
 	public function getById($id) {
 		return $this->find('first', array(
 			'conditions' => array('Forum.id' => $id)
@@ -277,7 +284,7 @@ class Forum extends ForumAppModel {
 							'SubForum.access_level_id' => $accessLevels
 						)
 					),
-					'LastTopic.title', 'LastTopic.slug', 'LastTopic.created', 'LastTopic.post_count', 'LastPost.created', 'LastUser.username'
+					'LastTopic', 'LastPost', 'LastUser'
 				)
 			),
 			'cache' => __FUNCTION__

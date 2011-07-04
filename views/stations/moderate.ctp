@@ -59,6 +59,10 @@ $this->Html->addCrumb($forum['Forum']['title'], array('controller' => 'stations'
     <?php echo $this->element('pagination'); ?>
 </div>
 
+<div class="forumOptions">
+	<?php echo $this->Html->link(__d('forum', 'Return to Forum', true), array('controller' => 'stations', 'action' => 'view', $forum['Forum']['slug'])); ?>
+</div>
+
 <div class="moderateOptions">
 	<?php echo $this->Form->input('action', array(
 		'options' => array(
@@ -76,7 +80,3 @@ $this->Html->addCrumb($forum['Forum']['title'], array('controller' => 'stations'
 </div>
 
 <?php echo $this->Form->end(); ?>
-
-<div class="forumOptions">
-	<?php echo $this->Html->link(__d('forum', 'Return to Forum', true), array('controller' => 'stations', 'action' => 'view', $forum['Forum']['slug'])); ?>
-</div>

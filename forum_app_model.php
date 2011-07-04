@@ -166,13 +166,7 @@ class ForumAppModel extends AppModel {
 	 * @return array
 	 */
 	public function get($id, $fields = array(), $contain = false) {
-		if (is_array($id)) {
-			$column = $id[0];
-			$value = $id[1];
-		} else {
-			$column = 'id';
-			$value = $id;
-		}
+		$column = is_string($id) ? 'slug' : 'id';
 
 		if (empty($fields)) {
 			$fields = $this->alias .'.*';
@@ -183,7 +177,7 @@ class ForumAppModel extends AppModel {
 		}
 		
 		return $this->find('first', array(
-			'conditions' => array($this->alias .'.'. $column => $value),
+			'conditions' => array($this->alias .'.'. $column => $id),
 			'fields' => $fields,
 			'contain' => $contain
 		));
@@ -206,30 +200,13 @@ class ForumAppModel extends AppModel {
 	/**
 	 * Adds locale functions to errors.
 	 *
+	 * @access public
 	 * @param string $field
 	 * @param mixed $value
 	 * @return string
 	 */
 	public function invalidate($field, $value = true) {
 		return parent::invalidate($field, __d('forum', $value, true));
-	}
-	
-	/**
-	 * Detect if the user has admin access.
-	 * 
-	 * @access public
-	 * @return boolean
-	 */
-	public function isAdmin() {
-		$accessLevels = $this->accessLevels('isAdmin');
-		
-		foreach ($accessLevels as $isAdmin) {
-			if ($isAdmin) {
-				return true;
-			}
-		}
-		
-		return false;
 	}
 	
 	/**
@@ -246,24 +223,6 @@ class ForumAppModel extends AppModel {
 		$var2 = isset($this->data[$this->name][$confirmField]) ? $this->data[$this->name][$confirmField] : '';
 
 		return ($var1 === $var2);
-	}
-	
-	/**
-	 * Detect if the user has super mod access.
-	 * 
-	 * @access public
-	 * @return boolean
-	 */
-	public function isSuper() {
-		$accessLevels = $this->accessLevels('isSuper');
-		
-		foreach ($accessLevels as $isSuper) {
-			if ($isSuper) {
-				return true;
-			}
-		}
-		
-		return false;
 	}
 
 	/**

@@ -1,10 +1,10 @@
 
 <?php // Crumbs
-$this->Html->addCrumb($topic['ForumCategory']['Forum']['title'], array('controller' => 'home', 'action' => 'index'));
-if (!empty($topic['ForumCategory']['Parent']['slug'])) {
-	$this->Html->addCrumb($topic['ForumCategory']['Parent']['title'], array('controller' => 'stations', 'action' => 'view', $topic['ForumCategory']['Parent']['slug']));
+if (!empty($topic['Forum']['Parent']['slug'])) {
+	$this->Html->addCrumb($topic['Forum']['Parent']['title'], array('controller' => 'stations', 'action' => 'view', $topic['Forum']['Parent']['slug']));
 }
-$this->Html->addCrumb($topic['ForumCategory']['title'], array('controller' => 'stations', 'action' => 'view', $topic['ForumCategory']['slug'])); ?>
+
+$this->Html->addCrumb($topic['Forum']['title'], array('controller' => 'stations', 'action' => 'view', $topic['Forum']['slug'])); ?>
 
 <div class="forumHeader">
 	<h2><?php __d('forum', 'Moderate'); ?>: <?php echo $topic['Topic']['title']; ?></h2>
@@ -14,7 +14,8 @@ $this->Html->addCrumb($topic['ForumCategory']['title'], array('controller' => 's
 	<?php echo $this->Html->link(__d('forum', 'Return to Topic', true), array('controller' => 'topics', 'action' => 'view', $topic['Topic']['slug'])); ?>
 </div>
 
-<?php echo $this->Form->create('Post', array('url' => array('controller' => 'topics', 'action' => 'moderate', $topic['Topic']['slug']))); ?>
+<?php echo $this->Form->create('Post', array('url' => $this->here)); ?>
+
 <div id="postWrap">
 	<?php echo $this->element('pagination'); ?>
     
@@ -50,10 +51,14 @@ $this->Html->addCrumb($topic['ForumCategory']['title'], array('controller' => 's
     <?php echo $this->element('pagination'); ?>
 </div>
 
-<?php echo $this->Form->input('action', array('options' => array('delete' => __d('forum', 'Delete Post(s)', true)), 'div' => false, 'label' => __d('forum', 'Perform Action', true) .': ')); ?>
-<?php echo $this->Form->submit(__d('forum', 'Process', true), array('div' => false)); ?>
-<?php echo $this->Form->end(); ?>
-
 <div class="forumOptions">
 	<?php echo $this->Html->link(__d('forum', 'Return to Topic', true), array('controller' => 'topics', 'action' => 'view', $topic['Topic']['slug'])); ?>
 </div>
+
+<div class="moderateOptions">
+	<?php 
+	echo $this->Form->input('action', array('options' => array('delete' => __d('forum', 'Delete Post(s)', true)), 'div' => false, 'label' => __d('forum', 'Perform Action', true) .': '));
+	echo $this->Form->submit(__d('forum', 'Process', true), array('div' => false)); ?>
+</div>
+
+<?php echo $this->Form->end(); ?>

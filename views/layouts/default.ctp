@@ -14,8 +14,8 @@ echo $this->Html->script('/forum/js/script.js');
 
 if ($this->params['controller'] == 'home') {
 	echo $this->Html->meta(__d('forum', 'RSS Feed - Latest Topics', true), array('action' => 'feed', 'ext' => 'rss'), array('type' => 'rss'));
-} else if (isset($feedId) && in_array($this->params['controller'], array('categories', 'topics'))) {
-	echo $this->Html->meta(__d('forum', 'RSS Feed - Content Review', true), array('action' => 'feed', $feedId, 'ext' => 'rss'), array('type' => 'rss'));
+} else if (isset($rssFeed) && in_array($this->params['controller'], array('stations', 'topics'))) {
+	echo $this->Html->meta(__d('forum', 'RSS Feed - Content Review', true), array('action' => 'feed', $rssFeed, 'ext' => 'rss'), array('type' => 'rss'));
 }
 
 echo $scripts_for_layout; ?>

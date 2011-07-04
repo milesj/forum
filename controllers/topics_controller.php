@@ -16,7 +16,7 @@ class TopicsController extends ForumAppController {
 	 * @access public
 	 * @var array
 	 */
-	public $uses = array('Forum.Topic');  
+	public $uses = array('Forum.Topic', 'Forum.Profile');  
 	
 	/**
 	 * Pagination.
@@ -27,9 +27,22 @@ class TopicsController extends ForumAppController {
 	public $paginate = array( 
 		'Post' => array(
 			'order' => array('Post.created' => 'ASC'),
-			'contain' => array('User' => array('Access' => array('AccessLevel')))
+			'contain' => array(
+				'User' => array(
+					'Profile', 
+					'Access' => array('AccessLevel')
+				)
+			)
 		) 
 	);
+	
+	/**
+	 * Helpers.
+	 * 
+	 * @access public
+	 * @var array
+	 */
+	public $helpers = array('Utils.Gravatar');
 	
 	/**
 	 * Redirect.
@@ -41,79 +54,71 @@ class TopicsController extends ForumAppController {
 	/**
 	 * Post a new topic or poll.
 	 *
-	 * @access public
-	 * @param int $category_id
+	 * @param string $slug
 	 * @param string $type
 	 */
-	public function add($category_id, $type = '') {
-		$category = $this->Topic->ForumCategory->getCategory($category_id);
+	public function add($slug, $type = '') {
+		$forum = $this->Topic->Forum->get($slug);
 		$user_id = $this->Auth->user('id');
 		
 		if ($type == 'poll') {
 			$pageTitle = __d('forum', 'Post Poll', true);
 			$access = 'accessPoll';
-			$isPoll = true;
 		} else {
 			$pageTitle = __d('forum', 'Post Topic', true);
 			$access = 'accessPost';
-			$isPoll = false;
 		}
 		
-		// Access
 		$this->Toolbar->verifyAccess(array(
-			'exists' => $category, 
-			'status' => $category['ForumCategory']['status'], 
-			'permission' => $category['ForumCategory'][$access]
+			'exists' => $forum, 
+			'status' => $forum['Forum']['status'], 
+			'permission' => $forum['Forum'][$access]
 		));
 		
-		// Form Processing
 		if (!empty($this->data)) {
 			$this->data['Topic']['user_id'] = $user_id;
+			$this->data['Topic']['forum_id'] = $forum['Forum']['id'];
 			$this->data['Topic']['userIP'] = $this->RequestHandler->getClientIp();
 
-			if ($topic_id = $this->Topic->addTopic($this->data, $isPoll)) {
-				if ($category['ForumCategory']['settingPostCount'] == 1) {
-					$this->Topic->User->increasePosts($user_id);
-					$this->Topic->User->increaseTopics($user_id);
+			if ($topic_id = $this->Topic->addTopic($this->data['Topic'])) {
+				if ($forum['Forum']['settingPostCount']) {
+					$this->Profile->increasePosts($user_id);
+					$this->Profile->increaseTopics($user_id);
 				}
 				
 				$this->Toolbar->updateTopics($topic_id);
 				$this->Toolbar->goToPage($topic_id);
 			}
 		} else {
-			$this->data['Topic']['forum_id'] = $category_id;
+			$this->data['Topic']['forum_id'] = $forum['Forum']['id'];
 		}
 		
 		$this->Toolbar->pageTitle($pageTitle);
-		$this->set('id', $category_id);
-		$this->set('type', $type);
-		$this->set('category', $category);
 		$this->set('pageTitle', $pageTitle);
-		$this->set('forums', $this->Topic->ForumCategory->getHierarchy($this->Toolbar->getAccess(), $this->Session->read('Forum.access'), 'post'));
+		$this->set('type', $type);
+		$this->set('forum', $forum);
+		$this->set('forums', $this->Topic->Forum->getGroupedHierarchy($access));
 	}
 	
 	/**
 	 * Edit a topic.
 	 *
-	 * @access public
-	 * @param int $id
+	 * @param string $slug
 	 */
-	public function edit($id) {
-		$topic = $this->Topic->getTopicForEdit($id);
+	public function edit($slug) {
+		$topic = $this->Topic->get($slug);
 		$user_id = $this->Auth->user('id');
 		
-		// Access
 		$this->Toolbar->verifyAccess(array(
 			'exists' => $topic, 
 			'moderate' => $topic['Topic']['forum_id'],
 			'ownership' => $topic['Topic']['user_id']
 		));
 		
-		// Form Processing
 		if (!empty($this->data)) {
 			if ($this->Topic->saveAll($this->data, array('validate' => 'only'))) {
-				if ($this->Topic->editTopic($id, $this->data)) {
-					$this->Toolbar->goToPage($id);
+				if ($this->Topic->editTopic($topic['Topic']['id'], $this->data)) {
+					$this->Toolbar->goToPage($topic['Topic']['id']);
 				}
 			}
 		} else {
@@ -121,25 +126,26 @@ class TopicsController extends ForumAppController {
 		}
 		
 		$this->Toolbar->pageTitle(__d('forum', 'Edit Topic', true));
-		$this->set('id', $id);
 		$this->set('topic', $topic);
-		$this->set('forums', $this->Topic->ForumCategory->getHierarchy($this->Toolbar->getAccess(), $this->Session->read('Forum.access'), 'post'));
-		$this->set('feedId', $id);
+		$this->set('forums', $this->Topic->Forum->getGroupedHierarchy('accessPost'));
+		$this->set('rssFeed', $slug);
 	}
 	
 	/**
 	 * RSS Feed.
 	 *
-	 * @access public
-	 * @param int $id
+	 * @param string $slug
 	 */
-	public function feed($id) {
+	public function feed($slug) {
 		if ($this->RequestHandler->isRss()) {
-			$topic = $this->Topic->get($id, null, array('FirstPost.content'));
-			$this->Toolbar->verifyAccess(array('exists' => $topic));
+			$topic = $this->Topic->get($slug);
+			
+			$this->Toolbar->verifyAccess(array(
+				'exists' => $topic
+			));
 		
-			$this->paginate['Post']['limit'] = Configure::read('Forum.settings.posts_per_page');
-			$this->paginate['Post']['conditions']['Post.topic_id'] = $id;
+			$this->paginate['Post']['limit'] = $this->settings['posts_per_page'];
+			$this->paginate['Post']['conditions'] = array('Post.topic_id' => $topic['Topic']['id']);
 			$this->paginate['Post']['contain'] = array('User');
 			$this->paginate['Post']['order'] = array('Post.created' => 'DESC');
 
@@ -147,49 +153,47 @@ class TopicsController extends ForumAppController {
 			$this->set('topic', $topic);
 			$this->set('document', array('xmlns:dc' => 'http://purl.org/dc/elements/1.1/'));
 		} else {
-			$this->redirect('/forum/topics/feed/'. $id .'.rss');
+			$this->redirect('/forum/topics/feed/'. $slug .'.rss');
 		}
 	}
 	
 	/**
 	 * Delete a topic.
 	 *
-	 * @access public
-	 * @param int $id
+	 * @param string $slug
 	 */
-	public function delete($id) {
-		$topic = $this->Topic->get($id, array('id', 'forum_id'));
+	public function delete($slug) {
+		$topic = $this->Topic->get($slug);
 		
-		// Access
 		$this->Toolbar->verifyAccess(array(
 			'exists' => $topic, 
 			'moderate' => $topic['Topic']['forum_id']
 		));
 		
-		// Delete All
-		$this->Topic->destroy($id);
-		$this->redirect(array('controller' => 'stations', 'action' => 'view', $topic['Topic']['forum_id']));
+		// @todo - delete cache
+		
+		$this->Topic->delete($id, true);
+		$this->redirect(array('controller' => 'stations', 'action' => 'view', $topic['Forum']['slug']));
 	}
 	
 	/**
 	 * Report a topic.
 	 *
-	 * @access public
-	 * @param int $id
+	 * @param string $slug
 	 */
-	public function report($id) {
+	public function report($slug) {
 		$this->loadModel('Forum.Report');
 		
-		$topic = $this->Topic->get($id, array('id', 'title', 'slug'));
+		$topic = $this->Topic->get($slug);
 		$user_id = $this->Auth->user('id');
 		
-		// Access
-		$this->Toolbar->verifyAccess(array('exists' => $topic));
+		$this->Toolbar->verifyAccess(array(
+			'exists' => $topic
+		));
 		
-		// Submit Report
 		if (!empty($this->data)) {
 			$this->data['Report']['user_id'] = $user_id;
-			$this->data['Report']['item_id'] = $id;
+			$this->data['Report']['item_id'] = $topic['Topic']['id'];
 			$this->data['Report']['itemType'] = Report::TOPIC;
 			
 			if ($this->Report->save($this->data, true, array('item_id', 'itemType', 'user_id', 'comment'))) {
@@ -199,20 +203,18 @@ class TopicsController extends ForumAppController {
 		}
 		
 		$this->Toolbar->pageTitle(__d('forum', 'Report Topic', true));
-		$this->set('id', $id);
 		$this->set('topic', $topic);
-		$this->set('feedId', $id);
+		$this->set('rssFeed', $slug);
 	}
 
 	/**
 	 * Read a topic.
 	 *
-	 * @access public
 	 * @param string $slug
 	 */
 	public function view($slug) {
+		$topic = $this->Topic->get($slug);
 		$user_id = $this->Auth->user('id');
-		$topic = $this->Topic->get($slug, $user_id);
 
 		$this->Toolbar->verifyAccess(array(
 			'exists' => $topic, 
@@ -225,73 +227,63 @@ class TopicsController extends ForumAppController {
 		$this->paginate['Post']['limit'] = $this->settings['posts_per_page'];
 		$this->paginate['Post']['conditions'] = array('Post.topic_id' => $topic['Topic']['id']);
 		
-		// Poll Voting
 		if (!empty($this->data['Poll']['option'])) {
 			$this->Topic->Poll->vote($topic['Poll']['id'], $this->data['Poll']['option'], $user_id);
 			$this->redirect(array('plugin' => 'forum', 'controller' => 'topics', 'action' => 'view', $slug));
 		}
-		
+
 		$this->Toolbar->pageTitle($topic['Forum']['title'], $topic['Topic']['title']);
 		$this->set('topic', $topic);
 		$this->set('posts', $this->paginate('Post'));
-		$this->set('feedId', $topic['Topic']['id']);
+		$this->set('rssFeed', $slug);
 	}
 	
 	/**
 	 * Moderate a topic.
 	 *
-	 * @access public
-	 * @param int $id
+	 * @param string $slug
 	 */
-	public function moderate($id) {
+	public function moderate($slug) {
+		$topic = $this->Topic->get($slug);
 		$user_id = $this->Auth->user('id');
-		$topic = $this->Topic->getTopicForViewing($id, $user_id, 'id');
 		
-		// Access
 		$this->Toolbar->verifyAccess(array(
 			'exists' => $topic, 
-			'permission' => $topic['ForumCategory']['accessRead'],
+			'permission' => $topic['Forum']['accessRead'],
 			'moderate' => $topic['Topic']['forum_id']
 		));
 		
-		// Processing
-		if ($this->RequestHandler->isPost()) {
-			if (!empty($this->data['Post']['items'])) {
-				$items = $this->data['Post']['items'];
-				$action = $this->data['Post']['action'];
-				
-				foreach ($items as $post_id) {
-					if (is_numeric($post_id)) {
-						if ($action == 'delete') {
-							$this->Topic->Post->destroy($post_id);
-							$this->Session->setFlash(sprintf(__d('forum', 'A total of %d post(s) have been permanently deleted', true), count($items)));
-						}
+		if (!empty($this->data['Post']['items'])) {
+			$items = $this->data['Post']['items'];
+			$action = $this->data['Post']['action'];
+
+			foreach ($items as $post_id) {
+				if (is_numeric($post_id)) {
+					if ($action == 'delete') {
+						$this->Topic->Post->delete($post_id, true);
+						$this->Session->setFlash(sprintf(__d('forum', 'A total of %d post(s) have been permanently deleted', true), count($items)));
 					}
 				}
 			}
 		}
 		
-		// Paginate
-		$this->paginate['Post']['limit'] = Configure::read('Forum.settings.posts_per_page');
-		$this->paginate['Post']['conditions']['Post.topic_id'] = $id;
+		$this->paginate['Post']['limit'] = $this->settings['posts_per_page'];
+		$this->paginate['Post']['conditions'] = array('Post.topic_id' => $topic['Topic']['id']);
 		
 		$this->Toolbar->pageTitle(__d('forum', 'Moderate', true), $topic['Topic']['title']);
-		$this->set('id', $id);
 		$this->set('topic', $topic);
 		$this->set('posts', $this->paginate('Post'));
 	}
 	
 	/**
 	 * Before filter.
-	 * 
-	 * @access public
-	 * @return void
 	 */
 	public function beforeFilter() {
 		parent::beforeFilter();
 		
 		$this->Auth->allow('index', 'view', 'feed');
 		$this->Security->disabledFields = array('option', 'items');
+
 		$this->set('menuTab', '');
 	}
 

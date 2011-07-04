@@ -53,7 +53,7 @@ class Poll extends ForumAppModel {
 	public function addPoll($topic_id, $data) {
 		$poll = array(
 			'topic_id' => $topic_id,
-			'expires' => !empty($data['expires']) ? date('Y-m-d H:i:s', strtotime('+'. $data['expires'] .' days')) : NULL
+			'expires' => !empty($data['expires']) ? date('Y-m-d H:i:s', strtotime('+'. $data['expires'] .' days')) : null
 		);
 		
 		if ($this->save($poll, false, array('topic_id', 'expires'))) {
@@ -84,27 +84,24 @@ class Poll extends ForumAppModel {
 	 *
 	 * @access public
 	 * @param array $poll
-	 * @param int $user_id
 	 * @return array
 	 */
-	public function process($poll, $user_id) {
-		if (!empty($poll)) {
+	public function process($poll) {
+		$user_id = $this->Session->read('Auth.User.id');
 		
-			// Total votes
+		if (!empty($poll)) {
 			$totalVotes = 0;
+			
 			foreach ($poll['PollOption'] as $option) {
 				$totalVotes = $totalVotes + $option['vote_count'];
 			}
-			$poll['totalVotes'] = $totalVotes;
-			
-			// Percentage
+
 			foreach ($poll['PollOption'] as &$option) {
-				$percent = ($totalVotes > 0) ? round(($option['vote_count'] / $totalVotes) * 100) : 0;
-				$option['percentage'] = $percent;
+				$option['percentage'] = ($totalVotes > 0) ? round(($option['vote_count'] / $totalVotes) * 100) : 0;
 			}
 			
-			// Has voted
 			$poll['hasVoted'] = $this->PollVote->hasVoted($user_id, $poll['id']);
+			$poll['totalVotes'] = $totalVotes;
 		}
 		
 		return $poll;

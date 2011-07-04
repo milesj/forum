@@ -119,31 +119,6 @@ class Post extends ForumAppModel {
 	}
 	
 	/**
-	 * Save the first post with a topic.
-	 *
-	 * @access public
-	 * @param int $topic_id
-	 * @param array $data
-	 * @return int
-	 */
-	public function addFirstPost($topic_id, $data) {
-		$post = array(
-			'topic_id' => $topic_id,
-			'user_id' => $data['user_id'],
-			'userIP' => $data['userIP'],
-			'content' => strip_tags($data['content']),
-			'contentHtml' => strip_tags($data['content']) // DECODA HERE
-		);
-		
-		$this->create();
-		$this->save($post, false, array_keys($post));
-		
-		$this->Topic->Forum->increasePosts($data['forum_id']);
-		
-		return $this->id;
-	}
-	
-	/**
 	 * Check the posting flood interval.
 	 *
 	 * @access public
@@ -194,30 +169,6 @@ class Post extends ForumAppModel {
 		return false;
 	}
 
-	/**
-	 * Delete a post and process any required logic.
-	 *
-	 * @param int $id
-	 * @param array $post
-	 * @return boolean
-	 */
-	public function destroy($id, $post = array()) {
-		if (empty($post)) {
-			$post = $this->get($id, array('id'), array('Topic.id', 'Topic.forum_id'));
-		}
-		
-		if (!empty($post)) {
-			$totalPosts = $this->find('count', array(
-				'conditions' => array('Topic.forum_id' => $post['Topic']['forum_id']),
-				'contain' => array('Topic.forum_id')
-			));
-
-			$this->Topic->Forum->update($post['Topic']['forum_id'], array('post_count' => $totalPosts));
-		}
-
-		return $this->delete($id, true);
-	}
-	
 	/**
 	 * Get the latest posts by a user.
 	 *
@@ -306,6 +257,34 @@ class Post extends ForumAppModel {
 			'conditions' => array('Post.topic_id' => $topic_id),
 			'order' => array('Post.id' => 'ASC')
 		));
+	}
+	
+	/**
+	 * NEW
+	 */
+	
+	/**
+	 * Save the first post with a topic.
+	 *
+	 * @access public
+	 * @param int $topic_id
+	 * @param array $data
+	 * @return int
+	 */
+	public function addFirstPost($topic_id, $data) {
+		$post = array(
+			'topic_id' => $topic_id,
+			'forum_id' => $data['forum_id'],
+			'user_id' => $data['user_id'],
+			'userIP' => $data['userIP'],
+			'content' => Sanitize::clean($data['content']),
+			'contentHtml' => Sanitize::clean($data['content']) // DECODA HERE
+		);
+		
+		$this->create();
+		$this->save($post, false, array_keys($post));
+
+		return $this->id;
 	}
 
 }

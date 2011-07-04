@@ -57,11 +57,14 @@ class PollVote extends ForumAppModel {
 	 */
 	public function hasVoted($user_id, $poll_id) {
 		$vote = $this->find('first', array(
-			'conditions' => array('PollVote.poll_id' => $poll_id, 'PollVote.user_id' => $user_id),
+			'conditions' => array(
+				'PollVote.poll_id' => $poll_id, 
+				'PollVote.user_id' => $user_id
+			),
 			'contain' => false
 		));
 		
-		return empty($vote) ? 'no' : $vote['PollVote']['poll_option_id'];
+		return empty($vote) ? false : $vote['PollVote']['poll_option_id'];
 	}
 	
 }

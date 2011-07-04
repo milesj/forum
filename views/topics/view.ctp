@@ -1,6 +1,5 @@
 
 <?php // Crumbs
-$this->Html->addCrumb($topic['Forum']['title'], array('controller' => 'home', 'action' => 'index'));
 
 if (!empty($topic['Forum']['Parent']['slug'])) {
 	$this->Html->addCrumb($topic['Forum']['Parent']['title'], array('controller' => 'stations', 'action' => 'view', $topic['Forum']['Parent']['slug']));
@@ -29,50 +28,50 @@ if (!empty($topic['Poll']['id'])) { ?>
 	<?php echo $this->Form->create('Poll', array('url' => array('controller' => 'topics', 'action' => 'view', $topic['Topic']['slug']))); ?>
   	
 	<table cellspacing="0" class="table">
-    <tr>
-    	<th colspan="3"><?php echo $topic['Topic']['title']; ?></th>
-	</tr>
-    
+
     <?php // Has not voted
-	if ($topic['Poll']['hasVoted'] == 'no') {
+	if (!$topic['Poll']['hasVoted']) {
 		$counter = 0;
 		foreach ($topic['Poll']['PollOption'] as $row => $option) { ?>
-        
-    <tr<?php if ($counter % 2) echo ' class="altRow"'; ?>>
-    	<td style="width: 20px" class="ac"><input type="radio" name="data[Poll][option]" value="<?php echo $option['id']; ?>"<?php if ($row == 0) echo ' checked="checked"'; ?> /></td>
-        <td colspan="2"><?php echo $option['option']; ?></td>
-    </tr>
-    <?php ++$counter; } ?>
+
+		<tr<?php if ($counter % 2) echo ' class="altRow"'; ?>>
+			<td style="width: 20px" class="ac"><input type="radio" name="data[Poll][option]" value="<?php echo $option['id']; ?>"<?php if ($row == 0) echo ' checked="checked"'; ?> /></td>
+			<td colspan="2"><?php echo $option['option']; ?></td>
+		</tr>
+	
+		<?php ++$counter; 
+	} ?>
     
-    <tr class="altRow2">
-    	<td colspan="3" class="ac">
-			<?php if ($this->Common->user()) {
-				if (!empty($topic['Poll']['expires']) && $topic['Poll']['expires'] <= date('Y-m-d H:i:s')) { 
-					__d('forum', 'Voting on this poll has been closed');
-				} else { 
-					echo $this->Form->submit(__d('forum', 'Vote', true), array('div' => false));
-				}
-			} else {
-				__d('forum', 'Please login to vote!');
-           	} ?>
-      	</td>
-   	</tr>
+		<tr class="altRow2">
+			<td colspan="3" class="ac">
+				<?php if ($this->Common->user()) {
+					if (!empty($topic['Poll']['expires']) && $topic['Poll']['expires'] <= date('Y-m-d H:i:s')) { 
+						__d('forum', 'Voting on this poll has been closed');
+					} else { 
+						echo $this->Form->submit(__d('forum', 'Vote', true), array('div' => false));
+					}
+				} else {
+					__d('forum', 'Please login to vote!');
+				} ?>
+			</td>
+		</tr>
     
     <?php // Has voted
 	} else {
 		$counter = 0;
 		foreach ($topic['Poll']['PollOption'] as $row => $option) { ?>
         
-    <tr<?php if ($counter % 2) echo ' class="altRow"'; ?>>
-        <td><?php echo $option['option']; ?></td>
-        <td style="width: 50%"><div class="pollBar" style="width: <?php echo $option['percentage']; ?>%"></div></td>
-        <td>
-			<?php echo number_format($option['vote_count']); ?> votes (<?php echo $option['percentage']; ?>%) 
-            <?php if ($topic['Poll']['hasVoted'] == $option['id']) {
-				echo '<em>('. __d('forum', 'Your Vote', true) .')</em>';
-			} ?>
-        </td>
-    </tr>
+		<tr<?php if ($counter % 2) echo ' class="altRow"'; ?>>
+			<td><?php echo $option['option']; ?></td>
+			<td style="width: 50%"><div class="pollBar" style="width: <?php echo $option['percentage']; ?>%"></div></td>
+			<td>
+				<?php echo number_format($option['vote_count']); ?> votes (<?php echo $option['percentage']; ?>%) 
+				<?php if ($topic['Poll']['hasVoted'] == $option['id']) {
+					echo '<em>('. __d('forum', 'Your Vote', true) .')</em>';
+				} ?>
+			</td>
+		</tr>
+	
     	<?php ++$counter; } 
 	} ?>
     </table>
@@ -99,18 +98,18 @@ if (!empty($topic['Poll']['id'])) { ?>
 				
 				if ($this->Common->hasAccess('super', $topic['Forum']['id']) || $this->Common->user('id') == $post['Post']['user_id']) {
 					if ($topic['Topic']['firstPost_id'] == $post['Post']['id']) {
-						$links[] = $this->Html->link(__d('forum', 'Edit', true), array('controller' => 'topics', 'action' => 'edit', $topic['Topic']['id']));
-						$links[] = $this->Html->link(__d('forum', 'Delete', true), array('controller' => 'topics', 'action' => 'delete', $topic['Topic']['id']), array('confirm' => __d('forum', 'Are you sure you want to delete?', true)));
-						$links[] = $this->Html->link(__d('forum', 'Report Topic', true), array('controller' => 'topics', 'action' => 'report', $topic['Topic']['id']));
+						$links[] = $this->Html->link(__d('forum', 'Edit', true), array('controller' => 'topics', 'action' => 'edit', $topic['Topic']['slug']));
+						$links[] = $this->Html->link(__d('forum', 'Delete', true), array('controller' => 'topics', 'action' => 'delete', $topic['Topic']['slug']), array('confirm' => __d('forum', 'Are you sure you want to delete?', true)));
+						$links[] = $this->Html->link(__d('forum', 'Report Topic', true), array('controller' => 'topics', 'action' => 'report', $topic['Topic']['slug']));
 					} else {
-						$links[] = $this->Html->link(__d('forum', 'Edit', true), array('controller' => 'posts', 'action' => 'edit', $post['Post']['id']));
-						$links[] = $this->Html->link(__d('forum', 'Delete', true), array('controller' => 'posts', 'action' => 'delete', $post['Post']['id']), array('confirm' => __d('forum', 'Are you sure you want to delete?', true)));
-						$links[] = $this->Html->link(__d('forum', 'Report Post', true), array('controller' => 'posts', 'action' => 'report', $post['Post']['id']));
+						$links[] = $this->Html->link(__d('forum', 'Edit', true), array('controller' => 'posts', 'action' => 'edit', $post['Post']['slug']));
+						$links[] = $this->Html->link(__d('forum', 'Delete', true), array('controller' => 'posts', 'action' => 'delete', $post['Post']['slug']), array('confirm' => __d('forum', 'Are you sure you want to delete?', true)));
+						$links[] = $this->Html->link(__d('forum', 'Report Post', true), array('controller' => 'posts', 'action' => 'report', $post['Post']['slug']));
 					}
 				}
 				
 				if ($this->Common->hasAccess($topic['Forum']['accessReply'])) {
-					$links[] = $this->Html->link(__d('forum', 'Quote', true), array('controller' => 'posts', 'action' => 'add', $topic['Topic']['id'], $post['Post']['id']));
+					$links[] = $this->Html->link(__d('forum', 'Quote', true), array('controller' => 'posts', 'action' => 'add', $topic['Topic']['slug'], $post['Post']['id']));
 				}
 				
 				if (!empty($links)) {

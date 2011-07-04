@@ -98,7 +98,7 @@ class ToolbarComponent extends Object {
 	 * @return mixed
 	 */
 	public function goToPage($topic_id = null, $post_id = null, $return = false) {
-		$topic = ClassRegistry::init('Forum.Topic')->get($topic_id, array('Topic.slug'));
+		$topic = ClassRegistry::init('Forum.Topic')->getById($topic_id);
 		$slug = !empty($topic['Topic']['slug']) ? $topic['Topic']['slug'] : null;
 
 		// Certain page

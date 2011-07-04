@@ -196,31 +196,6 @@ class UsersController extends ForumAppController {
 	}
 
 	/**
-	 * Delets a users profile.
-	 *
-	 * @param int $id
-	 * @deprecated
-	 */
-	/*public function admin_delete($id) {
-		$profile = $this->Profile->get($id);
-		
-		if (empty($profile)) {
-			return $this->cakeError('error404');
-		}
-		
-		if (!empty($this->data['Profile']['delete'])) {
-			$this->Profile->deleteUser($id, true);
-
-			$this->Session->setFlash(sprintf(__d('forum', 'The user %s and all of their associations have been deleted!', true), '<strong>'. $profile['User'][$this->config['userMap']['username']] .'</strong>'));
-			
-			$this->redirect(array('controller' => 'users', 'action' => 'index', 'admin' => true));
-		}
-		
-		$this->Toolbar->pageTitle(__d('forum', 'Delete User', true));
-		$this->set('profile', $profile);
-	}*/
-	
-	/**
 	 * Before filter.
 	 */
 	public function beforeFilter() {
