@@ -55,6 +55,16 @@ class ForumController extends ForumAppController {
 	}
 	
 	/**
+	 * Jump to a specific topic and post.
+	 * 
+	 * @param int $topic_id
+	 * @param int $post_id 
+	 */
+	public function jump($topic_id, $post_id = null) {
+		$this->Toolbar->goToPage($topic_id, $post_id);
+	}
+	
+	/**
 	 * Rules.
 	 */
 	public function rules() {

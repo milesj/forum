@@ -16,12 +16,10 @@ class PostsController extends ForumAppController {
 	 * @access public
 	 * @var array
 	 */
-	public $uses = array('Forum.Post'); 
+	public $uses = array('Forum.Post', 'Forum.Profile'); 
 	
 	/**
 	 * Redirect.
-	 *
-	 * @access public  
 	 */ 
 	public function index() {
 		$this->Toolbar->goToPage(); 
@@ -30,71 +28,63 @@ class PostsController extends ForumAppController {
 	/**
 	 * Add post / reply to topic.
 	 *
-	 * @access public
-	 * @param int $topic_id
+	 * @param string $slug
 	 * @param int $quote_id
 	 */
-	public function add($topic_id, $quote_id = null) {
-		$topic = $this->Post->Topic->getTopicForReply($topic_id);
+	public function add($slug, $quote_id = null) {
+		$topic = $this->Post->Topic->get($slug);
 		$user_id = $this->Auth->user('id');
 		
-		// Access
 		$this->Toolbar->verifyAccess(array(
 			'exists' => $topic,
 			'status' => $topic['Topic']['status'], 
-			'permission' => $topic['ForumCategory']['accessReply']
+			'permission' => $topic['Forum']['accessReply']
 		));
 		
-		// Form Processing
 		if (!empty($this->data)) {
-			$this->data['Post']['topic_id'] = $topic_id;
+			$this->data['Post']['forum_id'] = $topic['Topic']['forum_id'];
+			$this->data['Post']['topic_id'] = $topic['Topic']['id'];
 			$this->data['Post']['user_id'] = $user_id;
 			$this->data['Post']['userIP'] = $this->RequestHandler->getClientIp();
 
-			if ($post_id = $this->Post->addPost($this->data)) {
-				if ($topic['ForumCategory']['settingPostCount'] == 1) {
-					$this->Post->User->increasePosts($user_id);
+			if ($post_id = $this->Post->addPost($this->data['Post'])) {
+				if ($topic['Forum']['settingPostCount']) {
+					$this->Profile->increasePosts($user_id);
 				}
 				
 				$this->Toolbar->updatePosts($post_id);
-				$this->Toolbar->goToPage($topic_id, $post_id);
+				$this->Toolbar->goToPage($topic['Topic']['id'], $post_id);
 			}
 		}
 		
-		// Quoteing
 		if (!empty($quote_id) && empty($this->data)) {
 			$quote = $this->Post->getQuote($quote_id);
 			
 			if (!empty($quote)) {
-				$this->data['Post']['content'] = '[quote="'. $quote['User']['username'] .'" date="'. $quote['Post']['created'] .'"]'. $quote['Post']['content'] .'[/quote]';
+				$this->data['Post']['content'] = '[quote="'. $quote['User'][$this->config['userMap']['username']] .'" date="'. $quote['Post']['created'] .'"]'. $quote['Post']['content'] .'[/quote]';
 			}
 		}
 		
 		$this->Toolbar->pageTitle(__d('forum', 'Post Reply', true));
-		$this->set('id', $topic_id);
-		$this->set('quote_id', $quote_id);
 		$this->set('topic', $topic);
-		$this->set('review', $this->Post->getTopicReview($topic_id));
+		$this->set('review', $this->Post->getTopicReview($topic['Topic']['id']));
 	}
 	
 	/**
 	 * Edit a post.
 	 *
-	 * @access public
 	 * @param int $id
 	 */
 	public function edit($id) {
-		$post = $this->Post->getPostForEdit($id);
+		$post = $this->Post->get($id);
 		$user_id = $this->Auth->user('id');
 		
-		// Access
 		$this->Toolbar->verifyAccess(array(
 			'exists' => $post, 
 			'moderate' => $post['Topic']['forum_id'],
 			'ownership' => $post['Post']['user_id']
 		));
 		
-		// Form Processing
 		if (!empty($this->data)) {
 			$this->Post->id = $id;
 			
@@ -106,48 +96,43 @@ class PostsController extends ForumAppController {
 		}
 		
 		$this->Toolbar->pageTitle(__d('forum', 'Edit Post', true));
-		$this->set('id', $id);
 		$this->set('post', $post);
 	}
 	
 	/**
 	 * Delete a post.
 	 *
-	 * @access public
 	 * @param int $id
 	 */
 	public function delete($id) {
-		$post = $this->Post->get($id, array('id', 'user_id', 'topic_id'), array('Topic.forum_id', 'Topic.slug'));
+		$post = $this->Post->get($id);
 		$user_id = $this->Auth->user('id');
 		
-		// Access
 		$this->Toolbar->verifyAccess(array(
 			'exists' => $post, 
 			'moderate' => $post['Topic']['forum_id'],
 			'ownership' => $post['Post']['user_id']
 		));
 		
-		// Delete All
-		$this->Post->destroy($id, $post);
+		$this->Post->delete($id, true);
 		$this->redirect(array('controller' => 'topics', 'action' => 'view', $post['Topic']['slug']));
 	}
 	
 	/**
 	 * Report a post.
 	 *
-	 * @access public
 	 * @param int $id
 	 */
 	public function report($id) {
 		$this->loadModel('Forum.Report');
 		
-		$post = $this->Post->get($id, array('content'), array('Topic.id', 'Topic.title', 'Topic.slug'));
+		$post = $this->Post->get($id);
 		$user_id = $this->Auth->user('id');
 		
-		// Access
-		$this->Toolbar->verifyAccess(array('exists' => $post));
+		$this->Toolbar->verifyAccess(array(
+			'exists' => $post
+		));
 		
-		// Submit Report
 		if (!empty($this->data)) {
 			$this->data['Report']['user_id'] = $user_id;
 			$this->data['Report']['item_id'] = $id;
@@ -160,20 +145,17 @@ class PostsController extends ForumAppController {
 		}
 		
 		$this->Toolbar->pageTitle(__d('forum', 'Report Post', true));
-		$this->set('id', $id);
 		$this->set('post', $post);
 	}
 	
 	/**
 	 * Before filter.
-	 * 
-	 * @access public
-	 * @return void
 	 */
 	public function beforeFilter() {
 		parent::beforeFilter();
 		
 		$this->Auth->allow('index');
+		
 		$this->set('menuTab', '');
 	}
 

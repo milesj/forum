@@ -103,6 +103,25 @@ class Forum extends ForumAppModel {
 	);
 	
 	/**
+	 * Update all forums by going up the parent chain.
+	 * 
+	 * @access public
+	 * @param int $id
+	 * @param array $data 
+	 * @return void
+	 */
+	public function chainUpdate($id, array $data) {
+		$this->id = $id;
+		$this->save($data, false, array_keys($data));
+		
+		$forum = $this->getById($id);
+		
+		if ($forum['Forum']['forum_id'] != 0) {
+			$this->chainUpdate($forum['Forum']['forum_id'], $data);
+		}
+	}
+	
+	/**
 	 * Get a forum.
 	 *
 	 * @access public

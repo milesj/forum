@@ -46,13 +46,12 @@ class Poll extends ForumAppModel {
 	 * Add a poll attached to a topic.
 	 *
 	 * @access public
-	 * @param int $topic_id
 	 * @param array $data
 	 * @return boolean
 	 */
-	public function addPoll($topic_id, $data) {
+	public function addPoll($data) {
 		$poll = array(
-			'topic_id' => $topic_id,
+			'topic_id' => $data['topic_id'],
 			'expires' => !empty($data['expires']) ? date('Y-m-d H:i:s', strtotime('+'. $data['expires'] .' days')) : null
 		);
 		

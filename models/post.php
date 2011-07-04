@@ -37,7 +37,7 @@ class Post extends ForumAppModel {
 	public $validate = array(
 		'content' => 'notEmpty'
 	);
-	
+
 	/**
 	 * Validate and add a post.
 	 *
@@ -48,70 +48,38 @@ class Post extends ForumAppModel {
 	public function addPost($data) {
 		$this->set($data);
 		
-		// Validate
 		if ($this->validates()) {
-			$settings = Configure::read('Forum.settings');
-			$isAdmin = ($this->Session->read('Forum.isAdmin') > 0);
-			$posts = $this->Session->read('Forum.posts');
+			$isAdmin = $this->Session->read('Forum.isAdmin');
 
-			if (($secondsLeft = $this->checkFlooding($posts, $settings['post_flood_interval'])) > 0 && !$isAdmin) {
+			if (($secondsLeft = $this->checkFlooding($this->settings['post_flood_interval'])) > 0 && !$isAdmin) {
 				return $this->invalidate('content', 'You must wait '. $secondsLeft .' more second(s) till you can post a reply');
 				
-			} else if ($this->checkHourly($posts, $settings['posts_per_hour']) && !$isAdmin) {
-				return $this->invalidate('content', 'You are only allowed to post '. $settings['topics_per_hour'] .' time(s) per hour');
+			} else if ($this->checkHourly($this->settings['posts_per_hour']) && !$isAdmin) {
+				return $this->invalidate('content', 'You are only allowed to post '. $this->settings['topics_per_hour'] .' time(s) per hour');
 				
 			} else {
-				$data['Post']['content'] = strip_tags($data['Post']['content']);
-				$data['Post']['contentHtml'] = $data['Post']['content']; // DECODA HERE
+				$data['content'] = Sanitize::clean($data['content']);
+				$data['contentHtml'] = $data['content'];
 				
-				// Save Topic
+				// @todo - decoda
+				
 				$this->create();
-				$this->save($data, false, array('topic_id', 'user_id', 'userIP', 'content'));
+				$this->save($data, false, array('topic_id', 'forum_id', 'user_id', 'userIP', 'content'));
+
+				$data['post_id'] = $this->id;
 				
-				$topic_id = $data['Post']['topic_id'];
-				$user_id = $data['Post']['user_id'];
-				$post_id = $this->id;
-				
-				// Update legend
-				$this->Topic->update($topic_id, array(
-					'lastPost_id' => $post_id,
-					'lastUser_id' => $user_id,
+				$this->Topic->update($data['topic_id'], array(
+					'lastPost_id' => $data['post_id'],
+					'lastUser_id' => $data['user_id'],
+				));
+
+				$this->Topic->Forum->chainUpdate($data['forum_id'], array(
+					'lastTopic_id' => $data['topic_id'],
+					'lastPost_id' => $data['post_id'],
+					'lastUser_id' => $data['user_id']
 				));
 				
-				$topic = $this->Topic->find('first', array(
-					'conditions' => array('Topic.id' => $topic_id),
-					'fields' => array('Topic.forum_id'),
-					'contain' => array(
-						'Forum' => array(
-							'fields' => array('Forum.id', 'Forum.forum_id'),
-							'Parent'
-						)
-					)
-				));
-				
-				// Get total posts for forum
-				$totalPosts = $this->find('count', array(
-					'conditions' => array('Topic.forum_id' => $topic['Topic']['forum_id']),
-					'contain' => array('Topic.forum_id')
-				));
-				
-				$this->Topic->Forum->update($topic['Topic']['forum_id'], array(
-					'lastTopic_id' => $topic_id,
-					'lastPost_id' => $post_id,
-					'lastUser_id' => $user_id,
-					'post_count' => $totalPosts
-				));
-				
-				// Update parent forum as well
-				if (isset($topic['Forum']['Parent']['id']) && $topic['Forum']['forum_id'] != 0) {
-					$this->Topic->Forum->update($topic['Forum']['Parent']['id'], array(
-						'lastTopic_id' => $topic_id,
-						'lastPost_id' => $post_id,
-						'lastUser_id' => $user_id,
-					));	
-				}
-				
-				return $post_id;
+				return $data['post_id'];
 			}
 		}
 		
@@ -119,20 +87,40 @@ class Post extends ForumAppModel {
 	}
 	
 	/**
+	 * Save the first post with a topic.
+	 *
+	 * @access public
+	 * @param array $data
+	 * @return int
+	 */
+	public function addFirstPost($data) {
+		$this->create();
+		$this->save(array(
+			'topic_id' => $data['topic_id'],
+			'forum_id' => $data['forum_id'],
+			'user_id' => $data['user_id'],
+			'userIP' => $data['userIP'],
+			'content' => Sanitize::clean($data['content']),
+			'contentHtml' => Sanitize::clean($data['content'])
+		), false);
+		
+		// @todo - decoda
+
+		return $this->id;
+	}
+	
+	/**
 	 * Check the posting flood interval.
 	 *
 	 * @access public
-	 * @param array $posts
+	 * @param int $interval
 	 * @return boolean
 	 */
-	public function checkFlooding($posts, $interval) {
-		if (!empty($topics)) {
-			$lastPost = array_slice($posts, -1, 1);
-			$lastTime = $lastPost[0];
-		}
-
-		if (isset($lastTime)) {
-			$timeLeft = time() - $lastTime;
+	public function checkFlooding($interval) {
+		$posts = $this->Session->read('Forum.posts');
+		
+		if (!empty($posts)) {
+			$timeLeft = time() - array_pop($posts);
 			
 			if ($timeLeft <= $interval) {
 				return $interval - $timeLeft;
@@ -146,15 +134,16 @@ class Post extends ForumAppModel {
 	 * Check the hourly posting.
 	 *
 	 * @access public
-	 * @param array $posts
 	 * @param int $max
 	 * @return boolean
 	 */
-	public function checkHourly($posts, $max) {
+	public function checkHourly($max) {
+		$posts = $this->Session->read('Forum.posts');
 		$pastHour = strtotime('-1 hour');
 			
 		if (!empty($posts)) {
 			$count = 0;
+			
 			foreach ($posts as $id => $time) {
 				if ($time >= $pastHour) {
 					++$count;
@@ -168,9 +157,40 @@ class Post extends ForumAppModel {
 		
 		return false;
 	}
+	
+	/**
+	 * Return a post based on ID.
+	 * 
+	 * @access public
+	 * @param int $id
+	 * @return array
+	 */
+	public function get($id) {
+		return $this->find('first', array(
+			'conditions' => array('Post.id' => $id),
+			'contain' => array(
+				'Topic', 'User',
+				'Forum' => array('Parent')
+			)
+		));
+	}
 
 	/**
-	 * Get the latest posts by a user.
+	 * Return a list of IDs within a topic.
+	 *
+	 * @access public
+	 * @param int $topic_id
+	 * @return array
+	 */
+	public function getIdsForTopic($topic_id) {
+		return $this->find('list', array(
+			'conditions' => array('Post.topic_id' => $topic_id),
+			'order' => array('Post.id' => 'ASC')
+		));
+	}
+	
+	/**
+	 * Return the latest posts by a user.
 	 *
 	 * @access public
 	 * @param int $user_id
@@ -183,38 +203,13 @@ class Post extends ForumAppModel {
 			'order' => array('Post.created' => 'DESC'),
 			'limit' => $limit,
 			'contain' => array(
-				'Topic' => array(
-					'fields' => array('Topic.id', 'Topic.title', 'Topic.slug', 'Topic.user_id'),
-					'User.id', 'User.username'
-				)
+				'Topic' => array('User')
 			)
 		));
 	}
 	
 	/**
-	 * Get all info for editing a post.
-	 *
-	 * @access public
-	 * @param int $id
-	 * @return array
-	 */
-	public function getPostForEdit($id) {
-		return $this->find('first', array(
-			'conditions' => array('Post.id' => $id),
-			'contain' => array(
-				'Topic' => array(
-					'fields' => array('Topic.id', 'Topic.title', 'Topic.slug'),
-					'Forum' => array(
-						'fields' => array('Forum.id', 'Forum.title', 'Forum.slug'),
-						'Parent'
-					)
-				)
-			)
-		));
-	}
-	
-	/**
-	 * Get a post for quoting.
+	 * Return a post for quoting.
 	 *
 	 * @access public
 	 * @param int $id
@@ -223,13 +218,12 @@ class Post extends ForumAppModel {
 	public function getQuote($id) {
 		return $this->find('first', array(
 			'conditions' => array('Post.id' => $id),
-			'fields' => array('Post.content', 'Post.created'),
-			'contain' => array('User.username')
+			'contain' => array('User')
 		));
 	}
 	
 	/**
-	 * Get the latest posts in a topic.
+	 * Return the latest posts in a topic.
 	 * 
 	 * @access public
 	 * @param int $topic_id
@@ -239,52 +233,10 @@ class Post extends ForumAppModel {
 	public function getTopicReview($topic_id, $limit = 10) {
 		return $this->find('all', array(
 			'conditions' => array('Post.topic_id' => $topic_id),
-			'contain' => array('User.id', 'User.username', 'User.created'),
+			'contain' => array('User'),
 			'order' => array('Post.created' => 'DESC'),
 			'limit' => $limit
 		));
-	}
-
-	/**
-	 * Get a list of IDs for determining paging.
-	 *
-	 * @access public
-	 * @param int $topic_id
-	 * @return array
-	 */
-	public function getIdsForPaging($topic_id) {
-		return $this->find('list', array(
-			'conditions' => array('Post.topic_id' => $topic_id),
-			'order' => array('Post.id' => 'ASC')
-		));
-	}
-	
-	/**
-	 * NEW
-	 */
-	
-	/**
-	 * Save the first post with a topic.
-	 *
-	 * @access public
-	 * @param int $topic_id
-	 * @param array $data
-	 * @return int
-	 */
-	public function addFirstPost($topic_id, $data) {
-		$post = array(
-			'topic_id' => $topic_id,
-			'forum_id' => $data['forum_id'],
-			'user_id' => $data['user_id'],
-			'userIP' => $data['userIP'],
-			'content' => Sanitize::clean($data['content']),
-			'contentHtml' => Sanitize::clean($data['content']) // DECODA HERE
-		);
-		
-		$this->create();
-		$this->save($post, false, array_keys($post));
-
-		return $this->id;
 	}
 
 }

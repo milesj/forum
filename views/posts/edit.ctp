@@ -1,10 +1,10 @@
 
 <?php // Crumbs
-$this->Html->addCrumb($post['Topic']['ForumCategory']['Forum']['title'], array('controller' => 'home', 'action' => 'index'));
-if (!empty($post['Topic']['ForumCategory']['Parent']['slug'])) {
-	$this->Html->addCrumb($post['Topic']['ForumCategory']['Parent']['title'], array('controller' => 'stations', 'action' => 'view', $post['Topic']['ForumCategory']['Parent']['slug']));
+if (!empty($post['Forum']['Parent']['slug'])) {
+	$this->Html->addCrumb($post['Forum']['Parent']['title'], array('controller' => 'stations', 'action' => 'view', $post['Forum']['Parent']['slug']));
 }
-$this->Html->addCrumb($post['Topic']['ForumCategory']['title'], array('controller' => 'stations', 'action' => 'view', $post['Topic']['ForumCategory']['slug']));
+
+$this->Html->addCrumb($post['Forum']['title'], array('controller' => 'stations', 'action' => 'view', $post['Forum']['slug']));
 $this->Html->addCrumb($post['Topic']['title'], array('controller' => 'topics', 'action' => 'view', $post['Topic']['slug'])); ?>
 
 <div class="forumHeader">

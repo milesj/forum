@@ -103,7 +103,7 @@ class ToolbarComponent extends Object {
 
 		// Certain page
 		if ($topic_id && $post_id) {
-			$posts = ClassRegistry::init('Forum.Post')->getIdsForPaging($topic_id);
+			$posts = ClassRegistry::init('Forum.Post')->getIdsForTopic($topic_id);
 			$totalPosts = count($posts);
 			$perPage = $this->settings['posts_per_page'];
 			
