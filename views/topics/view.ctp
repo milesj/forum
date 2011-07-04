@@ -10,23 +10,25 @@ $this->Html->addCrumb($topic['Forum']['title'], array('controller' => 'stations'
 
 <div class="forumHeader">
 	<?php if (!$this->Common->user()) { ?>
-	<div class="fr">
-		<?php echo $this->element('login'); ?>
-	</div>
+		<div class="fr">
+			<?php echo $this->element('login'); ?>
+		</div>
 	<?php } ?>
 
 	<h2><?php echo $topic['Topic']['title']; ?></h2>
 </div>
 
-<?php echo $this->element('forum/topic_controls', array(
+<?php echo $this->element('tiles/topic_controls', array(
 	'topic' => $topic
 )); ?>
 
 <?php // Topic Poll
 if (!empty($topic['Poll']['id'])) { ?>
+
 <div id="pollWrap">
 	<?php echo $this->Form->create('Poll', array('url' => array('controller' => 'topics', 'action' => 'view', $topic['Topic']['slug']))); ?>
-  	<table cellspacing="0" class="table">
+  	
+	<table cellspacing="0" class="table">
     <tr>
     	<th colspan="3"><?php echo $topic['Topic']['title']; ?></th>
 	</tr>
@@ -74,8 +76,10 @@ if (!empty($topic['Poll']['id'])) { ?>
     	<?php ++$counter; } 
 	} ?>
     </table>
+	
     <?php echo $this->Form->end(); ?>
 </div>
+
 <?php } ?>
 
 <div id="postWrap">
@@ -90,11 +94,10 @@ if (!empty($topic['Poll']['id'])) { ?>
 			<?php echo $this->Time->niceShort($post['Post']['created'], $this->Common->timezone()); ?>
 		</td>
         <td class="ar gray">
-        	<?php // Commands
-			if ($this->Common->user()) {
+        	<?php if ($this->Common->user()) {
 				$links = array();
 				
-				if ($this->Common->hasAccess('super', $topic['ForumCategory']['id']) || $this->Common->user('id') == $post['Post']['user_id']) {
+				if ($this->Common->hasAccess('super', $topic['Forum']['id']) || $this->Common->user('id') == $post['Post']['user_id']) {
 					if ($topic['Topic']['firstPost_id'] == $post['Post']['id']) {
 						$links[] = $this->Html->link(__d('forum', 'Edit', true), array('controller' => 'topics', 'action' => 'edit', $topic['Topic']['id']));
 						$links[] = $this->Html->link(__d('forum', 'Delete', true), array('controller' => 'topics', 'action' => 'delete', $topic['Topic']['id']), array('confirm' => __d('forum', 'Are you sure you want to delete?', true)));
@@ -106,7 +109,7 @@ if (!empty($topic['Poll']['id'])) { ?>
 					}
 				}
 				
-				if ($this->Common->hasAccess($topic['ForumCategory']['accessReply'])) {
+				if ($this->Common->hasAccess($topic['Forum']['accessReply'])) {
 					$links[] = $this->Html->link(__d('forum', 'Quote', true), array('controller' => 'posts', 'action' => 'add', $topic['Topic']['id'], $post['Post']['id']));
 				}
 				
@@ -119,27 +122,26 @@ if (!empty($topic['Poll']['id'])) { ?>
     <tr>
     	<td valign="top" style="width: 25%">
         	<h4><?php echo $this->Html->link($post['User'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'profile', $post['User']['id'])); ?></h4>
-        	<?php if (!empty($post['User']['Access'][0]['AccessLevel']['title'])) { ?>
-        	<p><strong><?php echo $post['User']['Access'][0]['AccessLevel']['title']; ?></strong></p>
+        	
+			<?php if (!empty($post['User']['Access'])) { ?>
+				<p><strong><?php echo $this->Common->highestAccessLevel($post['User']['Access']); ?></strong></p>
         	<?php } ?>
 
-			<?php // Gravatar
-			if ($settings['enable_gravatar']) {
-				if ($avatar = $this->Common->gravatar($post['User']['email'])) { ?>
-			<p><?php echo $avatar; ?></p>
-			<?php } } ?>
+			<?php if ($settings['enable_gravatar']) { ?>
+				<p><?php echo $this->Gravatar->image($post['User'][$config['userMap']['email']]); ?></p>
+			<?php } ?>
         	
         	<strong><?php __d('forum', 'Joined'); ?>:</strong> <?php echo $this->Time->niceShort($post['User']['created'], $this->Common->timezone()); ?><br />
-            <strong><?php __d('forum', 'Total Topics'); ?>:</strong> <?php echo number_format($post['User']['totalTopics']); ?><br />
-            <strong><?php __d('forum', 'Total Posts'); ?>:</strong> <?php echo number_format($post['User']['totalPosts']); ?>
+            <strong><?php __d('forum', 'Total Topics'); ?>:</strong> <?php echo number_format($post['User']['Profile']['totalTopics']); ?><br />
+            <strong><?php __d('forum', 'Total Posts'); ?>:</strong> <?php echo number_format($post['User']['Profile']['totalPosts']); ?>
         </td>
         <td valign="top">
 			<?php $this->Decoda->parse($post['Post']['content']); ?>
             
             <?php if (!empty($post['User']['signature'])) { ?>
-            <div class="signature">
-            	<?php $this->Decoda->parse($post['User']['signature'], false, array('b', 'i', 'u', 'img', 'url', 'align', 'color', 'size', 'code')); ?>
-            </div>
+				<div class="signature">
+					<?php $this->Decoda->parse($post['User']['signature'], false, array('b', 'i', 'u', 'img', 'url', 'align', 'color', 'size', 'code')); ?>
+				</div>
             <?php } ?>
        	</td>
  	</tr>
@@ -151,7 +153,7 @@ if (!empty($topic['Poll']['id'])) { ?>
     <?php echo $this->element('pagination'); ?>
 </div>
 
-<?php echo $this->element('forum/topic_controls', array(
+<?php echo $this->element('tiles/topic_controls', array(
 	'topic' => $topic
 )); ?>
 

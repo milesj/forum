@@ -19,7 +19,7 @@ $this->Html->addCrumb($forum['Forum']['title'], array('controller' => 'stations'
 	<p><?php echo $forum['Forum']['description']; ?></p>
 </div>
 
-<?php echo $this->element('forum/forum_controls', array(
+<?php echo $this->element('tiles/forum_controls', array(
 	'forum' => $forum
 )); ?>
 
@@ -112,7 +112,7 @@ if (!empty($forum['SubForum'])) { ?>
 </div>
 
 <div id="categoryStats">
-	<?php echo $this->element('forum/forum_controls', array(
+	<?php echo $this->element('tiles/forum_controls', array(
 		'forum' => $forum,
 		'class' => 'fr'
 	)); ?>

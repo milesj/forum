@@ -83,7 +83,7 @@ class SearchController extends ForumAppController {
 				$this->paginate['Topic']['conditions']['User.'. $this->config['userMap']['username'] .' LIKE'] = '%'. $this->data['Topic']['byUser'] .'%';
 			}
 
-			$this->paginate['Topic']['conditions']['Forum.accessRead <='] = $this->Toolbar->getAccess();
+			$this->paginate['Topic']['conditions']['Forum.accessRead <='] = $this->Session->read('Forum.access');
 			$this->paginate['Topic']['conditions']['Topic.forum_id'] = $this->data['Topic']['forum_id'];
 			$this->paginate['Topic']['order'] = array($this->data['Topic']['orderBy'] => 'DESC');
 			$this->paginate['Topic']['limit'] = $this->settings['topics_per_page'];

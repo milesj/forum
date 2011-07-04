@@ -98,39 +98,21 @@ class ForumAppModel extends AppModel {
 	 * @return int
 	 */
 	public function access() {
-		$accessLevels = $this->accessLevels(true);
-		$highest = 0;
-		
-		if (!empty($accessLevels)) {
-			foreach ($accessLevels as $level) {
-				if ($level > $highest) {
-					$highest = $level;
-				}
-			}
-		}
-		
-		return $highest;
+		return $this->Session->read('Forum.access');
 	}
 	
 	/**
 	 * Return an array of access levels or IDs.
 	 * 
 	 * @access public
-	 * @param boolean $getLevel
+	 * @param string $field
 	 * @return array
 	 */
-	public function accessLevels($getLevel = false) {
-		$accessLevels = array();
-		$levels = array(0 => 0);
+	public function accessLevels($field = 'id') {
+		$levels = array(0 => 0) + (array) $this->Session->read('Forum.accessLevels');
 		
-		if ($this->Session->check('Forum.access')) {
-			$accessLevels = $this->Session->read('Forum.access');
-		} else {
-			return $levels;
-		}
-		
-		foreach ($accessLevels as $level) {
-			$levels[] = $level['AccessLevel'][($getLevel ? 'level' : 'id')];
+		if ($field == 'id') {
+			$levels = array_keys($levels);
 		}
 		
 		return $levels;
@@ -228,8 +210,26 @@ class ForumAppModel extends AppModel {
 	 * @param mixed $value
 	 * @return string
 	 */
-	function invalidate($field, $value = true) {
+	public function invalidate($field, $value = true) {
 		return parent::invalidate($field, __d('forum', $value, true));
+	}
+	
+	/**
+	 * Detect if the user has admin access.
+	 * 
+	 * @access public
+	 * @return boolean
+	 */
+	public function isAdmin() {
+		$accessLevels = $this->accessLevels('isAdmin');
+		
+		foreach ($accessLevels as $isAdmin) {
+			if ($isAdmin) {
+				return true;
+			}
+		}
+		
+		return false;
 	}
 	
 	/**
@@ -246,6 +246,24 @@ class ForumAppModel extends AppModel {
 		$var2 = isset($this->data[$this->name][$confirmField]) ? $this->data[$this->name][$confirmField] : '';
 
 		return ($var1 === $var2);
+	}
+	
+	/**
+	 * Detect if the user has super mod access.
+	 * 
+	 * @access public
+	 * @return boolean
+	 */
+	public function isSuper() {
+		$accessLevels = $this->accessLevels('isSuper');
+		
+		foreach ($accessLevels as $isSuper) {
+			if ($isSuper) {
+				return true;
+			}
+		}
+		
+		return false;
 	}
 
 	/**

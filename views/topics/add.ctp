@@ -1,30 +1,28 @@
 
 <?php // Crumbs
-$this->Html->addCrumb($category['Forum']['title'], array('controller' => 'home', 'action' => 'index'));
-if (!empty($category['Parent']['slug'])) {
-	$this->Html->addCrumb($category['Parent']['title'], array('controller' => 'stations', 'action' => 'view', $category['Parent']['slug']));
+$this->Html->addCrumb($forum['Forum']['title'], array('controller' => 'forum', 'action' => 'index'));
+
+if (!empty($forum['Parent']['slug'])) {
+	$this->Html->addCrumb($forum['Parent']['title'], array('controller' => 'stations', 'action' => 'view', $forum['Parent']['slug']));
 }
-$this->Html->addCrumb($category['ForumCategory']['title'], array('controller' => 'stations', 'action' => 'view', $category['ForumCategory']['slug'])); ?>
+
+$this->Html->addCrumb($forum['Forum']['title'], array('controller' => 'stations', 'action' => 'view', $forum['Forum']['slug'])); ?>
 
 <div class="forumHeader">
 	<h2><?php echo $pageTitle; ?></h2>
 </div>
 
-<?php echo $this->Form->create('Topic', array('url' => array('controller' => 'topics', 'action' => 'add', $id, $type))); ?>
-<?php echo $this->Form->input('title', array('label' => __d('forum', 'Title', true))); ?>
-<?php echo $this->Form->input('forum_id', array('options' => $forums, 'escape' => false, 'empty' => '-- '. __d('forum', 'Select a Forum', true) .' --', 'label' => __d('forum', 'Forum Category', true))); ?>
+<?php 
+echo $this->Form->create('Topic', array('url' => $this->here));
+echo $this->Form->input('title', array('label' => __d('forum', 'Title', true)));
+echo $this->Form->input('forum_id', array('options' => $forums, 'escape' => false, 'empty' => '-- '. __d('forum', 'Select a Forum', true) .' --', 'label' => __d('forum', 'Forum', true)));
 
-<?php if ($this->Common->hasAccess('super', $category['ForumCategory']['id'])) {
-	echo $this->Form->input('status', array('options' => $this->Common->options(2), 'label' => __d('forum', 'Status', true)));
-	echo $this->Form->input('type', array('options' => array(
-		0 => __d('forum', 'Normal', true),
-		1 => __d('forum', 'Sticky', true),
-		2 => __d('forum', 'Important', true),
-		3 => __d('forum', 'Announcement', true)
-	), 'label' => __d('forum', 'Type', true)));
-} ?>
+if ($this->Common->hasAccess('super', $forum['Forum']['id'])) {
+	echo $this->Form->input('status', array('options' => $this->Common->options('topicStatus'), 'label' => __d('forum', 'Status', true)));
+	echo $this->Form->input('type', array('options' => $this->Common->options('topicTypes'), 'label' => __d('forum', 'Type', true)));
+} 
 
-<?php if ($type == 'poll') {
+if ($type == 'poll') {
 	echo $this->Form->input('options', array('label' => __d('forum', 'Poll Options', true), 'type' => 'textarea', 'label' => __d('forum', 'Poll Options', true), 'after' => '<div class="inputText">'. __d('forum', 'One option per line. Max 10 options', true) .'</div>'));
 	echo $this->Form->input('expires', array('label' => __d('forum', 'Expiration Date', true), 'after' => ' '. __d('forum', 'How many days till expiration? Leave blank to last forever.', true), 'style' => 'width: 50px'));
 } ?>
