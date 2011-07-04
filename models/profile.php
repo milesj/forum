@@ -69,33 +69,24 @@ class Profile extends ForumAppModel {
 	 * @return array
 	 */
 	public function getByUser($user_id) {
-		$profile = $this->find('first', array(
+		return $this->find('first', array(
 			'conditions' => array('Profile.user_id' => $user_id),
-			'contain' => array('User')
+			'contain' => array(
+				'User' => array(
+					'Moderator' => array('Forum.id', 'Forum.slug', 'Forum.title'),
+					'Access' => array('AccessLevel')
+				)
+			)
 		));
-		
-		if (!empty($profile)) {
-			$mods = ClassRegistry::init('Forum.Moderator')->getListByUser($user_id);
-			$access = ClassRegistry::init('Forum.Access')->getListByUser($user_id);
-			
-			if (!empty($mods)) {
-				foreach ($mods as $mod) {
-					$mod['Moderator']['Forum'] = $mod['Forum'];
-					$profile['Moderator'][] = $mod['Moderator'];
-				}
-			}
-			
-			if (!empty($access)) {
-				foreach ($access as $level) {
-					$level['Access']['AccessLevel'] = $level['AccessLevel'];
-					$profile['Access'][] = $level['Access'];
-				}
-			}
-		}
-		
-		return $profile;
 	}
 	
+	/**
+	 * Return the latest user profiles.
+	 * 
+	 * @access profile
+	 * @param int $limit
+	 * @return int
+	 */
 	public function getLatest($limit = 10) {
 		return $this->find('all', array(
 			'order' => array('Profile.created' => 'DESC'),
@@ -149,7 +140,7 @@ class Profile extends ForumAppModel {
 	 * @return boolean
 	 */
 	public function increasePosts($user_id) {
-		return $this->query('UPDATE `'. $this->tablePrefix .'profiles` AS `Profile` SET `Profile`.`totalPosts` = `Profile`.`totalPosts` + 1 WHERE `Profile`.`user_id` = '. $user_id);
+		return $this->query('UPDATE `'. $this->tablePrefix .'profiles` AS `Profile` SET `Profile`.`totalPosts` = `Profile`.`totalPosts` + 1 WHERE `Profile`.`user_id` = '. (int) $user_id);
 	}
 
 	/**
@@ -160,7 +151,7 @@ class Profile extends ForumAppModel {
 	 * @return boolean
 	 */
 	public function increaseTopics($user_id) {
-		return $this->query('UPDATE `'. $this->tablePrefix .'profiles` AS `Profile` SET `Profile`.`totalTopics` = `Profile`.`totalTopics` + 1 WHERE `Profile`.`user_id` = '. $user_id);
+		return $this->query('UPDATE `'. $this->tablePrefix .'profiles` AS `Profile` SET `Profile`.`totalTopics` = `Profile`.`totalTopics` + 1 WHERE `Profile`.`user_id` = '. (int) $user_id);
 	}
 	
 	/**

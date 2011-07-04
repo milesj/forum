@@ -125,17 +125,8 @@ class Poll extends ForumAppModel {
 			if (!empty($poll['Poll']['expires']) && $poll['Poll']['expires'] <= date('Y-m-d H:i:s')) {
 				return false;
 			}
-			
-			// Has user voted?
-			$voted = $this->PollVote->find('count', array(
-				'conditions' => array(
-					'PollVote.poll_id' => $poll_id, 
-					'PollVote.user_id' => $user_id
-				),
-				'contain' => false
-			));
-			
-			if ($voted <= 0) {
+
+			if (!$this->PollVote->hasVoted($user_id, $poll_id)) {
 				$this->PollOption->addVote($option_id);
 				$this->PollVote->addVoter($poll_id, $option_id, $user_id);
 			}

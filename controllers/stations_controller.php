@@ -61,16 +61,16 @@ class StationsController extends ForumAppController {
 		$this->set('forum', $forum);
 		$this->set('topics', $this->paginate('Topic'));
 		$this->set('stickies', $this->Forum->Topic->getStickiesInForum($forum['Forum']['id']));
-		$this->set('feedId', $slug);
+		$this->set('rssFeed', $slug);
 	}
 
 	/**
 	 * Moderate a forum.
 	 *
-	 * @param string $id
+	 * @param string $slug
 	 */
-	public function moderate($id) {
-		$forum = $this->Forum->getById($id);
+	public function moderate($slug) {
+		$forum = $this->Forum->get($slug);
 		
 		$this->Toolbar->verifyAccess(array(
 			'exists' => $forum, 
@@ -87,7 +87,7 @@ class StationsController extends ForumAppController {
 					$this->Forum->Topic->id = $topic_id;
 
 					if ($action == 'delete') {
-						$this->Forum->Topic->destroy($topic_id);
+						$this->Forum->Topic->delete($topic_id, true);
 						$this->Session->setFlash(sprintf(__d('forum', 'A total of %d topic(s) have been permanently deleted', true), count($items)));
 
 					} else if ($action == 'close') {
@@ -116,7 +116,7 @@ class StationsController extends ForumAppController {
 		$this->set('forum', $forum);
 		$this->set('topics', $this->paginate('Topic'));
 		$this->set('forums', $this->Forum->getGroupedHierarchy('accessRead'));
-		$this->set('feedId', $forum['Forum']['slug']);
+		$this->set('rssFeed', $forum['Forum']['slug']);
 	}
 	
 	/**
@@ -128,17 +128,19 @@ class StationsController extends ForumAppController {
 		if ($this->RequestHandler->isRss()) {
 			$forum = $this->Forum->get($slug);
 			
-			$this->Toolbar->verifyAccess(array('exists' => $forum));
+			$this->Toolbar->verifyAccess(array(
+				'exists' => $forum
+			));
 		
 			$this->paginate['Topic']['limit'] = $this->settings['topics_per_page'];
 			$this->paginate['Topic']['conditions'] = array('Topic.forum_id' => $forum['Forum']['id']);
-			$this->paginate['Topic']['contain'] = array('User', 'LastPost.created', 'FirstPost.content');
+			$this->paginate['Topic']['contain'] = array('User', 'LastPost', 'FirstPost');
 
 			$this->set('topics', $this->paginate('Topic'));
 			$this->set('forum', $forum);
 			$this->set('document', array('xmlns:dc' => 'http://purl.org/dc/elements/1.1/'));
 		} else {
-			$this->redirect('/forum/categories/feed/'. $slug .'.rss');
+			$this->redirect('/forum/stations/feed/'. $slug .'.rss');
 		}
 	}
 	
@@ -184,7 +186,9 @@ class StationsController extends ForumAppController {
 	public function admin_edit($id) {
 		$forum = $this->Forum->getById($id);
 		
-		$this->Toolbar->verifyAccess(array('exists' => $forum));
+		$this->Toolbar->verifyAccess(array(
+			'exists' => $forum
+		));
 		
 		if (!empty($this->data)) {
 			$this->Forum->id = $id;
@@ -217,7 +221,9 @@ class StationsController extends ForumAppController {
 	public function admin_delete($id) {
 		$forum = $this->Forum->getById($id);
 		
-		$this->Toolbar->verifyAccess(array('exists' => $forum));
+		$this->Toolbar->verifyAccess(array(
+			'exists' => $forum
+		));
 		
 		if (!empty($this->data)) {
 			$this->Forum->Topic->moveAll($id, $this->data['Forum']['move_topics']);

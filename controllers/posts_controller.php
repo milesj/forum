@@ -55,13 +55,13 @@ class PostsController extends ForumAppController {
 				$this->Toolbar->updatePosts($post_id);
 				$this->Toolbar->goToPage($topic['Topic']['id'], $post_id);
 			}
-		}
-		
-		if (!empty($quote_id) && empty($this->data)) {
-			$quote = $this->Post->getQuote($quote_id);
-			
-			if (!empty($quote)) {
-				$this->data['Post']['content'] = '[quote="'. $quote['User'][$this->config['userMap']['username']] .'" date="'. $quote['Post']['created'] .'"]'. $quote['Post']['content'] .'[/quote]';
+		} else {
+			if ($quote_id) {
+				$quote = $this->Post->getQuote($quote_id);
+
+				if (!empty($quote)) {
+					$this->data['Post']['content'] = '[quote="'. $quote['User'][$this->config['userMap']['username']] .'" date="'. $quote['Post']['created'] .'"]'. $quote['Post']['content'] .'[/quote]';
+				}
 			}
 		}
 		

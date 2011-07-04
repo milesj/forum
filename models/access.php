@@ -68,65 +68,7 @@ class Access extends ForumAppModel {
 			'conditions' => array('Access.user_id' => $user_id)
 		));
 	}
-	
-	/**
-	 * Get all my access.
-	 *
-	 * @access public
-	 * @param int $user_id
-	 * @return array
-	 */
-	public function getMyAccess($user_id) {
-		$levels = $this->find('all', array(
-			'conditions' => array('Access.user_id' => $user_id),
-			'contain' => array('AccessLevel')
-		));
-		
-		$clean = array();
-		
-		if (!empty($levels)) {
-			foreach ($levels as $level) {
-				$clean[$level['AccessLevel']['title']] = $level['AccessLevel']['level'];
-			}
-		}
-		
-		return $clean;
-	}
-	
-	/**
-	 * Check to see if the user has the admin role.
-	 *
-	 * @access public
-	 * @param int $user_id
-	 * @return int
-	 */
-	public function isAdmin($user_id) {
-		return $this->find('count', array(
-			'conditions' => array(
-				'Access.user_id' => $user_id,
-				'AccessLevel.isAdmin' => self::BOOL_YES
-			),
-			'contain' => array('AccessLevel.isAdmin')
-		));	
-	}
-	
-	/**
-	 * Check to see if the user has the super moderator role.
-	 *
-	 * @access public
-	 * @param int $user_id
-	 * @return int
-	 */
-	public function isSuper($user_id) {
-		return $this->find('count', array(
-			'conditions' => array(
-				'Access.user_id' => $user_id,
-				'AccessLevel.isSuper' => self::BOOL_YES
-			),
-			'contain' => array('AccessLevel.isSuper')
-		));	
-	}
-	
+
 	/**
 	 * Move all users to a new level.
 	 * 

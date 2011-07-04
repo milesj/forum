@@ -216,7 +216,6 @@ class Topic extends ForumAppModel {
 	public function checkOptions($data) {
 		$data = array_values($data);
 		$options = explode("\n", $data[0]);
-		
 		$clean = array();
 
 		if (!empty($options)) {
@@ -299,7 +298,7 @@ class Topic extends ForumAppModel {
 		return true;
 	}
 	
-		/**
+	/**
 	 * Get all info for reading a topic.
 	 *
 	 * @access public
@@ -403,7 +402,7 @@ class Topic extends ForumAppModel {
 		return $this->query('UPDATE `'. $this->tablePrefix .'topics` AS `Topic` SET `Topic`.`view_count` = `Topic`.`view_count` + 1 WHERE `Topic`.`id` = '. (int) $id);
 	}
 	
-		/**
+	/**
 	 * Move all topics to a new forum.
 	 *
 	 * @access public

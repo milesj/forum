@@ -61,9 +61,9 @@ class UsersController extends ForumAppController {
 		$profile = $this->Profile->getUserProfile($user_id);
 		
 		if (!empty($this->data)) {
-			$this->Profile->id = $user_id;
+			$this->Profile->id = $profile['Profile']['id'];
 
-			if ($this->Profile->save($this->data, false)) {
+			if ($this->Profile->save($this->data, true)) {
 				$this->Session->setFlash(__d('forum', 'Your profile information has been updated!', true));
 			}
 		} else {
@@ -181,7 +181,6 @@ class UsersController extends ForumAppController {
 			return $this->cakeError('error404');
 		}
 		
-		// Form Processing
 		if (!empty($this->data)) {
 			$this->Profile->id = $id;
 			

@@ -16,9 +16,9 @@
     <td><?php echo number_format($user['Profile']['totalTopics']); ?></td>
     <td><strong><?php __d('forum', 'Roles'); ?>:</strong></td>
     <td>
-    	<?php if (!empty($user['Access'])) { 
+    	<?php if (!empty($user['User']['Access'])) { 
 			$roles = array();
-			foreach ($user['Access'] as $access) {
+			foreach ($user['User']['Access'] as $access) {
 				$roles[] = $access['AccessLevel']['title'];
 			}
 			echo implode(', ', $roles);
@@ -40,9 +40,9 @@
     <td><?php echo number_format($user['Profile']['totalPosts']); ?></td>
     <td><strong><?php __d('forum', 'Moderates'); ?>:</strong></td>
     <td>
-    	<?php if (!empty($user['Moderator'])) { 
+    	<?php if (!empty($user['User']['Moderator'])) { 
 			$mods = array();
-			foreach ($user['Moderator'] as $mod) {
+			foreach ($user['User']['Moderator'] as $mod) {
 				$mods[] = $this->Html->link($mod['Forum']['title'], array('controller' => 'stations', 'action' => 'view', $mod['Forum']['slug']));
 			}
 			echo implode(', ', $mods);

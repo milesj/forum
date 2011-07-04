@@ -22,8 +22,6 @@ class ForumController extends ForumAppController {
 	 * Forum index.  
 	 */
 	public function index() {
-		debug($_SESSION);
-		
 		$this->Toolbar->pageTitle(__d('forum', 'Index', true));
 		$this->set('menuTab', 'home');
 		$this->set('forums', 		$this->Topic->Forum->getIndex());
@@ -47,7 +45,7 @@ class ForumController extends ForumAppController {
 	}
 	
 	/**
-	 * Help / FAQ.
+	 * Help.
 	 */
 	public function help() {
 		$this->Toolbar->pageTitle(__d('forum', 'Help', true));
@@ -100,8 +98,6 @@ class ForumController extends ForumAppController {
 		$this->loadModel('Forum.Setting');
 		
 		if (!empty($this->data)) {
-			$this->Setting->set($this->data);
-			
 			if ($this->Setting->save($this->data, true)) {
 				$this->Session->setFlash(__d('forum', 'Settings have been updated!', true));
 			}
@@ -119,7 +115,7 @@ class ForumController extends ForumAppController {
 	public function beforeFilter() {
 		parent::beforeFilter();
 		
-		$this->Auth->allow('index', 'feed', 'help', 'rules');
+		$this->Auth->allow('index', 'feed', 'help', 'rules', 'jump');
 	}
 
 }
