@@ -1,4 +1,37 @@
 
+var forum = {
+	
+	/**
+	 * Open or close child forums.
+	 * 
+	 * @param string node
+	 * @param string id
+	 */
+	toggle: function(self, id) {
+		var node = $(self),
+			target = $('#forums-'+ id);
+
+		if (target.is(':hidden'))
+			target.slideDown();
+		else
+			target.slideUp();
+
+		if (node.text() == '+')
+			node.html('-');
+		else
+			node.html('+');
+
+		return false;
+	},
+	
+	toggleCheckboxes: function(self) {
+		var node = $(self),
+			form = node.parents('form');
+			
+		form.find(':checkbox').attr('checked', self.checked);
+	}
+}
+
 /**
  * Relocates the page to a new URL
  * @param string url
@@ -32,24 +65,3 @@ function toggleCheckboxes(current, form, field) {
 	}
 }
 
-/**
- * Toggle to show/hide an element
- * @param string target
- * @param string toggler
- */
-function toggleElement(target, toggler) {
-	var element = document.getElementById(target);
-	var text = toggler.innerHTML;
-
-	if (element.style.display == 'none')
-		element.style.display = 'block';
-	else
-		element.style.display = 'none';
-	
-	if (text == '+')
-		toggler.innerHTML = '-';
-	else
-		toggler.innerHTML = '+';
-		
-	return false;
-}

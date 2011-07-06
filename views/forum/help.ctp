@@ -1,5 +1,9 @@
+<?php 
 
-<div class="forumHeader">
+$this->Html->addCrumb($settings['site_name'], array('controller' => 'forum', 'action' => 'index'));
+$this->Html->addCrumb(__d('forum', 'Help Desk', true), array('controller' => 'forum', 'action' => 'help'));?>
+
+<div class="title">
 	<h2><?php __d('forum', 'Help Desk'); ?></h2>
 </div>
 

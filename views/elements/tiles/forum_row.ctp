@@ -9,8 +9,10 @@ if (!empty($forum['SubForum'])) {
 	}
 } ?>
 
-<tr id="category_<?php echo $forum['id']; ?>"<?php if ($counter % 2) echo ' class="altRow"'; ?>>
-	<td class="ac" style="width: 35px"><?php echo $this->Common->forumIcon($forum); ?></td>
+<tr id="forum-<?php echo $forum['id']; ?>"<?php if ($counter % 2) echo ' class="altRow"'; ?>>
+	<td class="icon">
+		<?php echo $this->Common->forumIcon($forum); ?>
+	</td>
 	<td>
 		<strong><?php echo $this->Html->link($forum['title'], array('controller' => 'stations', 'action' => 'view', $forum['slug'])); ?></strong><br />
 		<?php echo $forum['description']; ?>
@@ -21,22 +23,21 @@ if (!empty($forum['SubForum'])) {
 			</div>     
 		<?php } ?>
 	</td>
-	<td class="ac"><?php echo number_format($forum['topic_count']); ?></td>
-	<td class="ac"><?php echo number_format($forum['post_count']); ?></td>
-	<td>
+	<td class="stat"><?php echo number_format($forum['topic_count']); ?></td>
+	<td class="stat"><?php echo number_format($forum['post_count']); ?></td>
+	<td class="activity">
 		<?php if (!empty($forum['LastTopic']['id'])) {
-			$lastTime = !empty($forum['LastPost']['created']) ? $forum['LastPost']['created'] : $forum['LastTopic']['created']; ?>
+			echo $this->Html->link($forum['LastTopic']['title'], array('controller' => 'topics', 'action' => 'view', $forum['LastTopic']['slug'])); ?> 
+		
+			<?php echo $this->Html->image('/forum/img/goto.png', array('alt' => '', 'url' => array('controller' => 'topics', 'action' => 'view', $forum['LastTopic']['slug'], 'page' => $forum['LastTopic']['page_count'], '#' => 'post-'. $forum['lastPost_id']))); ?><br />
 
-			<?php echo $this->Html->link($forum['LastTopic']['title'], array('controller' => 'topics', 'action' => 'view', $forum['LastTopic']['slug'])); ?>
-			<?php echo $this->Html->image('/forum/img/goto.png', array('alt' => '', 'url' => array('controller' => 'topics', 'action' => 'view', $forum['LastTopic']['slug'], 'page' => $forum['LastTopic']['page_count'], '#' => 'post_'. $forum['lastPost_id']))); ?> 
-
-			<em><?php echo $this->Time->relativeTime($lastTime, array('userOffset' => $this->Common->timezone())); ?></em> 
+			<em><?php echo $this->Time->relativeTime($forum['LastPost']['created'], array('userOffset' => $this->Common->timezone())); ?></em> 
 			
 			<?php if (!empty($forum['LastUser']['id'])) { ?>
 				<span class="gray"><?php __d('forum', 'by'); ?> <?php echo $this->Html->link($forum['LastUser'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'profile', $forum['lastUser_id'])); ?></span>
 			<?php }
-		} else {
-			__d('forum', 'No latest activity to display');
-		} ?>
+		} else { ?>
+			<em class="gray"><?php __d('forum', 'No latest activity to display'); ?></em>
+		<?php } ?>
 	</td>
 </tr>
