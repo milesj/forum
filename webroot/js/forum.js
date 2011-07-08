@@ -1,25 +1,25 @@
 
-var forum = {
+var Forum = {
 	
 	/**
 	 * Open or close child forums.
 	 * 
-	 * @param string node
-	 * @param string id
+	 * @param object self
+	 * @param int id
 	 */
-	toggle: function(self, id) {
+	toggleForums: function(self, id) {
 		var node = $(self),
 			target = $('#forums-'+ id);
 
-		if (target.is(':hidden'))
-			target.slideDown();
-		else
-			target.slideUp();
-
-		if (node.text() == '+')
+		if (target.is(':hidden')) {
 			node.html('-');
-		else
+			node.parent().removeClass('closed');
+			target.slideDown();
+		} else {
 			node.html('+');
+			node.parent().addClass('closed');
+			target.slideUp();
+		}
 
 		return false;
 	},

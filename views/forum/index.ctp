@@ -7,7 +7,7 @@ if (!empty($forums)) {
 
 <div class="container" id="forum-<?php echo $forum['Forum']['id']; ?>">
 	<div class="containerHeader">
-		<a href="javascript:;" onclick="return forum.toggle(this, <?php echo $forum['Forum']['id']; ?>);" class="toggle">-</a>
+		<a href="javascript:;" onclick="return Forum.toggleForums(this, <?php echo $forum['Forum']['id']; ?>);" class="toggle">-</a>
 		<h3><?php echo $forum['Forum']['title']; ?></h3>
 	</div>
     

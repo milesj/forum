@@ -12,11 +12,11 @@ $this->Html->addCrumb($forum['Forum']['title'], array('controller' => 'stations'
 	<h2><?php __d('forum', 'Moderate'); ?>: <?php echo $forum['Forum']['title']; ?></h2>
 </div>
 
+<?php echo $this->Form->create('Topic', array('url' => $this->here)); ?>
+
 <div class="controls">
 	<?php echo $this->Html->link(__d('forum', 'Return to Forum', true), array('controller' => 'stations', 'action' => 'view', $forum['Forum']['slug']), array('class' => 'button')); ?>
 </div>
-
-<?php echo $this->Form->create('Topic', array('url' => $this->here)); ?>
 
 <div class="container" id="topics">
 	<div class="containerContent">
@@ -78,7 +78,7 @@ $this->Html->addCrumb($forum['Forum']['title'], array('controller' => 'stations'
 	));
 	
 	echo $this->Form->input('move_id', array('options' => $forums, 'div' => false, 'label' => __d('forum', 'Move To', true) .': ', 'escape' => false));
-	echo $this->Form->submit(__d('forum', 'Process', true), array('div' => false)); ?>
+	echo $this->Form->submit(__d('forum', 'Process', true), array('div' => false, 'class' => 'buttonSmall')); ?>
 </div>
 
 <?php echo $this->Form->end(); ?>

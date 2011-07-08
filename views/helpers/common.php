@@ -21,14 +21,6 @@ class CommonHelper extends AppHelper {
 	public $helpers = array('Html', 'Session');
 
 	/**
-	 * Array of current gravatars to try and limit HTTP requests.
-	 *
-	 * @access private
-	 * @var array
-	 */
-	private $__gravatars = array();
-	
-	/**
 	 * Load forum settings.
 	 *
 	 * @access public
@@ -60,7 +52,10 @@ class CommonHelper extends AppHelper {
 			$icon = 'new';
 		}
 		
-		return $this->Html->image('/forum/img/forum_'. $icon .'.png', array('alt' => ucfirst($icon)));
+		return $this->Html->image('/forum/img/forum_'. $icon .'.png', array(
+			'alt' => ucfirst($icon),
+			'title' => $this->options('topicStatus', $forum['status'])
+		));
 	}
 	
 	/**
@@ -293,7 +288,10 @@ class CommonHelper extends AppHelper {
 			}
 		}
 		
-		return $this->Html->image('/forum/img/topic_'. $icon .'.png', array('alt' => ucfirst($icon)));
+		return $this->Html->image('/forum/img/topic_'. $icon .'.png', array(
+			'alt' => ucfirst($icon),
+			'title' => $this->options('topicTypes', $topic['Topic']['type'])
+		));
 	}
 		
 	/**

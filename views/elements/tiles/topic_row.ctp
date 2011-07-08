@@ -29,7 +29,7 @@ $columns = isset($columns) ? $columns : array(); ?>
 	<td class="author">
 		<?php echo $this->Html->link($topic['User'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'profile', $topic['User']['id'])); ?>
 	</td>
-	<td class="ac">
+	<td class="created">
 		<?php echo $this->Time->niceShort($topic['Topic']['created'], $this->Common->timezone()); ?>
 	</td>
 	<td class="stat">

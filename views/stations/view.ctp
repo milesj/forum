@@ -9,20 +9,22 @@ if (!empty($forum['Parent']['slug'])) {
 $this->Html->addCrumb($forum['Forum']['title'], array('controller' => 'stations', 'action' => 'view', $forum['Forum']['slug'])); ?>
 
 <div class="title">
-	<?php echo $this->element('login'); ?>
-
 	<h2><?php echo $forum['Forum']['title']; ?></h2>
-	<p><?php echo $forum['Forum']['description']; ?></p>
+	
+	<?php if (!empty($forum['Forum']['description'])) { ?>
+		<p><?php echo $forum['Forum']['description']; ?></p>
+	<?php } ?>
 </div>
 
 <?php if (!empty($forum['SubForum'])) { ?>
 
-	<div class="container" id="forums-<?php echo $forum['Forum']['id']; ?>">
+	<div class="container">
 		<div class="containerHeader">
+			<a href="javascript:;" onclick="return Forum.toggleForums(this, <?php echo $forum['Forum']['id']; ?>);" class="toggle">-</a>
 			<h3><?php __d('forum', 'Sub-Forums'); ?></h3>
 		</div>
 		
-		<div class="containerContent">
+		<div class="containerContent" id="forums-<?php echo $forum['Forum']['id']; ?>">
 			<table cellspacing="0" class="table">
 				<thead>
 					<tr>
@@ -56,7 +58,7 @@ if ($forum['Forum']['forum_id'] > 0) {
 		<div class="containerContent">
 			<?php echo $this->element('pagination'); ?>
 
-			<table cellspacing="0" class="table topics">
+			<table class="table topics">
 				<thead>
 					<tr>
 						<th colspan="2"><?php echo $this->Paginator->sort(__d('forum', 'Topic', true), 'Topic.title'); ?></th>
@@ -72,18 +74,18 @@ if ($forum['Forum']['forum_id'] > 0) {
 				<?php if (!empty($stickies)) { ?>
 
 					<tr class="headRow">
-						<td colspan="7"><?php __d('forum', 'Important Topics'); ?></td>
+						<td colspan="7" class="dark"><?php __d('forum', 'Important Topics'); ?></td>
 					</tr>
 
 					<?php foreach ($stickies as $counter => $topic) {
-						echo $this->element('tiles/forum_row', array(
+						echo $this->element('tiles/topic_row', array(
 							'counter' => $counter,
 							'topic' => $topic
 						));
 					} ?>
 
 					<tr class="headRow">
-						<td colspan="7"><?php __d('forum', 'Regular Topics'); ?></td>
+						<td colspan="7" class="dark"><?php __d('forum', 'Regular Topics'); ?></td>
 					</tr>
 
 				<?php }
@@ -110,11 +112,11 @@ if ($forum['Forum']['forum_id'] > 0) {
 		</div>
 	</div>
 
-	<div class="statistics">
-		<?php echo $this->element('tiles/forum_controls', array(
-			'forum' => $forum
-		)); ?>
+	<?php echo $this->element('tiles/forum_controls', array(
+		'forum' => $forum
+	)); ?>
 
+	<div class="statistics">
 		<?php $moderators = array();
 		
 		if (!empty($forum['Moderator'])) {
