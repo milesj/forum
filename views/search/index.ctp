@@ -1,5 +1,8 @@
+<?php 
 
-<?php // Search orderbY
+$this->Html->addCrumb($settings['site_name'], array('controller' => 'forum', 'action' => 'index'));
+$this->Html->addCrumb(__d('forum', 'Search', true), array('controller' => 'search', 'action' => 'index'));
+
 $orderBy = array(
 	'LastPost.created' => __d('forum', 'Last post time', true),
 	'Topic.created' => __d('forum', 'Topic created time', true),
@@ -7,11 +10,11 @@ $orderBy = array(
 	'Topic.view_count' => __d('forum', 'Total views', true)
 ); ?>
 
-<div class="forumHeader">
-	<h2>Search</h2>
+<div class="title">
+	<h2><?php __d('forum', 'Search'); ?></h2>
 </div>
 
-<?php echo $this->Form->create('Topic', array('url' => $this->here)); ?>
+<?php echo $this->Form->create('Topic', array('url' => array('controller' => 'search', 'action' => 'proxy'))); ?>
 
 	<div id="search">
 		<table cellpadding="5" style="width: 100%">
@@ -34,47 +37,49 @@ $orderBy = array(
 		</table>
 	</div>
 
-<?php echo $this->Form->end(__d('forum', 'Search Topics', true)); ?>
+<?php echo $this->Form->end(__d('forum', 'Search Topics', true)); 
 
-<?php if ($searching ) { ?>
+if ($searching ) { ?>
 
-<div class="forumWrap">
-	<?php echo $this->element('pagination'); ?>
-    
-	<table cellspacing="0" class="table">
-    <tr>
-        <th colspan="2"><?php echo $this->Paginator->sort(__d('forum', 'Topic', true), 'Topic.title'); ?></th>
-        <th><?php echo $this->Paginator->sort(__d('forum', 'Forum', true), 'Topic.forum_id'); ?></th>
-        <th><?php echo $this->Paginator->sort(__d('forum', 'Author', true), 'User.'. $config['userMap']['username']); ?></th>
-        <th><?php echo $this->Paginator->sort(__d('forum', 'Created', true), 'Topic.created'); ?></th>
-        <th><?php echo $this->Paginator->sort(__d('forum', 'Posts', true), 'Topic.post_count'); ?></th>
-        <th><?php echo $this->Paginator->sort(__d('forum', 'Views', true), 'Topic.view_count'); ?></th>
-        <th><?php echo $this->Paginator->sort(__d('forum', 'Activity', true), 'LastPost.created'); ?></th>
-    </tr>
-    
-    <?php if (empty($topics)) { ?>
-	
-		<tr>
-			<td colspan="8" class="empty"><?php __d('forum', 'No results were found, please refine your search criteria.'); ?></td>
-		</tr>
-	
-    <?php } else {
-		$counter = 0;
-		
-		foreach ($topics as $topic) {
-			echo $this->element('tiles/topic_row', array(
-				'topic' => $topic,
-				'counter' => $counter,
-				'columns' => array('forum')
-			));
-			
-			++$counter; 
-		} 
-	} ?>
-	
-    </table>
-    
-	<?php echo $this->element('pagination'); ?>
+<div class="container">
+	<div class="containerContent">
+		<?php echo $this->element('pagination'); ?>
+
+		<table class="table topics">
+			<thead>
+				<tr>
+					<th colspan="2"><?php echo $this->Paginator->sort(__d('forum', 'Topic', true), 'Topic.title'); ?></th>
+					<th><?php echo $this->Paginator->sort(__d('forum', 'Forum', true), 'Topic.forum_id'); ?></th>
+					<th><?php echo $this->Paginator->sort(__d('forum', 'Author', true), 'User.'. $config['userMap']['username']); ?></th>
+					<th><?php echo $this->Paginator->sort(__d('forum', 'Created', true), 'Topic.created'); ?></th>
+					<th><?php echo $this->Paginator->sort(__d('forum', 'Posts', true), 'Topic.post_count'); ?></th>
+					<th><?php echo $this->Paginator->sort(__d('forum', 'Views', true), 'Topic.view_count'); ?></th>
+					<th><?php echo $this->Paginator->sort(__d('forum', 'Activity', true), 'LastPost.created'); ?></th>
+				</tr>
+			</thead>
+			<tbody>
+
+			<?php if (empty($topics)) { ?>
+
+				<tr>
+					<td colspan="8" class="empty"><?php __d('forum', 'No results were found, please refine your search criteria.'); ?></td>
+				</tr>
+
+			<?php } else {
+				foreach ($topics as $counter => $topic) {
+					echo $this->element('tiles/topic_row', array(
+						'topic' => $topic,
+						'counter' => $counter,
+						'columns' => array('forum')
+					));
+				} 
+			} ?>
+
+			</tbody>
+		</table>
+
+		<?php echo $this->element('pagination'); ?>
+	</div>
 </div>
 
 <?php } ?>

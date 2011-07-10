@@ -24,7 +24,11 @@ echo $scripts_for_layout; ?>
 		<?php echo $this->element('navigation'); ?>
 		
 		<div class="header">
-			<h1><?php echo $this->Html->link($settings['site_name'], $settings['site_main_url']); ?></h1>
+			<?php echo $this->element('search'); ?>
+			
+			<h1 class="logo">
+				<?php echo $this->Html->link($settings['site_name'], $settings['site_main_url']); ?>
+			</h1>
 
 			<ul class="menu">
 				<li<?php if ($menuTab == 'home') echo ' class="active"'; ?>><?php echo $this->Html->link(__d('forum', 'Home', true), array('controller' => 'forum', 'action' => 'index')); ?></li>
@@ -42,6 +46,7 @@ echo $scripts_for_layout; ?>
 		</div>
 
 		<div class="content">
+			<?php //echo $this->element('login'); ?>
 			<?php echo $this->element('breadcrumbs'); ?>
 
 			<?php echo $this->Session->flash(); ?>

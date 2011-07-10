@@ -57,13 +57,13 @@ class SearchController extends ForumAppController {
 			if (!empty($this->data['Topic']['keywords'])) {
 				$keywords = Sanitize::clean($this->data['Topic']['keywords']);
 			
-				if ($this->data['Topic']['power'] == 0) {
-					$this->paginate['Topic']['conditions']['Topic.title LIKE'] = '%'. $keywords .'%';
-				} else {
+				if (isset($this->data['Topic']['power']) && $this->data['Topic']['power']) {
 					$this->paginate['Topic']['conditions']['OR'] = array(
 						array('Topic.title LIKE' => '%'. $keywords .'%'),
 						array('FirstPost.content LIKE' => '%'. $keywords .'%')
 					);
+				} else {
+					$this->paginate['Topic']['conditions']['Topic.title LIKE'] = '%'. $keywords .'%';
 				}
 			}
 
@@ -102,6 +102,10 @@ class SearchController extends ForumAppController {
 	 */
 	public function proxy() {
 		$named = array();
+		
+		if (isset($this->data['Search'])) {
+			$this->data['Topic'] = $this->data['Search'];
+		}
 		
 		foreach ($this->data['Topic'] as $field => $value) {
 			if ($value != '') {

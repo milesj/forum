@@ -50,23 +50,17 @@ if (!empty($forums)) {
 <?php } } ?>
 
 <div class="statistics">
-	<?php if (!$this->Common->user()) { ?>
-		<div class="fr">
-			<?php echo $this->element('login'); ?>
-		</div>
-    <?php } ?>
-    
 	<div class="totalStats">
-		<strong><?php __d('forum', 'Statistics'); ?></strong>: <?php printf(__d('forum', '%d topics, %d posts, and %d users', true), $totalTopics, $totalPosts, $totalUsers); ?>
+		<strong><?php __d('forum', 'Statistics'); ?>:</strong> <?php printf(__d('forum', '%d topics, %d posts, and %d users', true), $totalTopics, $totalPosts, $totalUsers); ?>
 	</div>
     
     <?php if (!empty($newestUser)) { ?>
 		<div class="newestUser">
-			<strong><?php __d('forum', 'Newest User'); ?></strong>: <?php echo $this->Html->link($newestUser['User'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'profile', $newestUser['User']['id'])); ?>
+			<strong><?php __d('forum', 'Newest User'); ?>:</strong> <?php echo $this->Html->link($newestUser['User'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'profile', $newestUser['User']['id'])); ?>
 		</div>
-   	<?php } ?>
-     
-    <?php if (!empty($whosOnline)) {
+   	<?php }
+	
+	if (!empty($whosOnline)) {
 		$onlineUsers = array();
 		
 		foreach ($whosOnline as $online) {
@@ -74,7 +68,7 @@ if (!empty($forums)) {
 		} ?>
         
 		<div class="whosOnline">
-			<strong><?php __d('forum', 'Whos Online'); ?></strong>: <?php echo implode(', ', $onlineUsers); ?>
+			<strong><?php __d('forum', 'Whos Online'); ?>:</strong> <?php echo implode(', ', $onlineUsers); ?>
 		</div>
     <?php } ?>
 </div>

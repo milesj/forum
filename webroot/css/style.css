@@ -3,20 +3,114 @@
 ------------------------------------------------------*/
 
 body {
-	background: #293e57;
+	background: #204066;
 	color: #5e5e5e; 
 	font: normal 13px Verdana, Arial, sans-serif; }
 	
 p { margin: 0 0 15px 0; }
 	
 a {
-	color: #352b39;
+	color: #823382;
 	text-decoration: none; }
 
-a:hover { 
-	color: #605063; }
+	a:hover { color: #605063; }
+	
+.clear { 
+	clear: both; 
+	display: block; }
 
+/*------------------------------------------------------
+	Forms
+------------------------------------------------------*/
+	
+.input.text input,
+.input.textarea textarea {
+	background: #fff;
+	padding: 5px;
+	border: 0;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px; }
 
+/*------------------------------------------------------
+	Header / Footer
+------------------------------------------------------*/
+	
+.navigation {
+	padding: 10px 20px;
+	color: #8f8f8f;
+	text-align: right;
+	background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.37, #131313), color-stop(0.85, #323232));
+	background-image: -moz-linear-gradient(center bottom, #131313 37%, #323232 85%); }
+
+	.navigation a { color: #dbe4ef; }
+	.navigation a:hover { color: #fff; }
+
+.header {
+	padding: 20px 20px 0 20px;
+	border-top: 1px solid #5095d7;
+	background-image: -webkit-gradient(linear, right bottom, left top, color-stop(0.37, #2c5687), color-stop(0.85, #4283c1));
+	background-image: -moz-linear-gradient(right bottom, #2c5687 37%, #4283c1 85%); }
+
+.logo {
+	margin-bottom: 20px; }
+
+	.logo a {
+		color: #fff;
+		font-size: 24px;
+		font-weight: normal;
+		text-shadow: 0 1px 0 #204066; }
+	
+.search {
+	width: 25%;
+	text-align: right;
+	float: right; }
+
+	.search div { 
+		display: inline-block; 
+		vertical-align: top; }
+	
+	.search .input.text input { width: 300px; }
+	.search .submit { margin-left: 10px; }
+
+.menu {
+	display: block;
+	list-style: none; }
+
+	.menu li { display: inline-block; }
+
+	.menu li a {
+		display: block;
+		background: #204066;
+		text-shadow: 0 1px 0 #0c2038;
+		color: #d8dde8;
+		padding: 8px 13px;
+		-webkit-border-top-left-radius: 5px;
+		-webkit-border-top-right-radius: 5px;
+		-moz-border-radius-topleft: 5px;
+		-moz-border-radius-topright: 5px;
+		border-top-left-radius: 5px;
+		border-top-right-radius: 5px; }
+
+		.menu li a:hover {
+			background: #323232;
+			text-shadow: 0 1px 0 #000;
+			color: #fff; }
+		
+		.menu li.active a {
+			background: #fff;
+			color: #225985;
+			text-shadow: none;
+			font-weight: bold; }
+	
+.footer {
+	color: #fff;
+	border-top: 1px solid #4283c1;
+	text-align: center;
+	padding: 20px; }
+
+	.footer a { color: #d8dde8; }
+	
 /*------------------------------------------------------
 	Content
 ------------------------------------------------------*/
@@ -30,11 +124,8 @@ a:hover {
 	
 .content { 
 	padding: 20px; 
-	background: #fff; }
-
-.clear { 
-	clear: both; 
-	display: block; }
+	background: #fff;
+	border-bottom: 1px solid #204066; }
 
 /* Button */
 
@@ -65,7 +156,6 @@ a:hover {
 	display: inline-block;
 	text-align: center;
 	text-shadow: 0 1px 0 #fff;
-	vertical-align: middle;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
 	border-radius: 5px;
@@ -85,9 +175,6 @@ a:hover {
 		-moz-box-shadow: inset 0 0 1px 1px #f6f6f6;
 		-webkit-box-shadow: inset 0 0 1px 1px #f6f6f6;
 		box-shadow: inset 0 0 1px 1px #f6f6f6; }
-
-
-/* Pagination */
 
 .pagination { color: #225985; }
 
@@ -133,6 +220,9 @@ a:hover {
 		font-weight: bold;
 		padding: 5px;
 		text-shadow: 0 1px 0 #fff; }
+	
+		.table th a { color: #225985; }
+		.table th a:hover { color: #323232; }
 	
 	.table td {
 		border: 1px solid #dbe4ef;
@@ -208,6 +298,7 @@ a:hover {
 	-moz-border-radius-topright: 5px;
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
+	border-bottom: 1px solid #204066;
 	background: transparent;
 	background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.15, #2c5687), color-stop(0.85, #4774a2));
 	background-image: -moz-linear-gradient(center bottom, #2c5687 15%, #4774a2 85%); }
@@ -219,8 +310,9 @@ a:hover {
 
 	.containerHeader h3 {
 		color: #ebf0f3;
+		text-shadow: 0 1px 0 #0c2038;
 		text-transform: uppercase;
-		font-weight: bold; }
+		font-weight: normal; }
 
 /*------------------------------------------------------
 	Forums
@@ -241,7 +333,7 @@ a:hover {
 
 	.title h2 { 
 		font-size: 24px; 
-		color: #85688a; 
+		color: #823382; 
 		margin-bottom: 10px; }
 
 .statistics { margin: 20px 0; }
