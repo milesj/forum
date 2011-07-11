@@ -1,5 +1,7 @@
+<?php 
 
-<?php // Crumbs
+$this->Html->addCrumb($settings['site_name'], array('controller' => 'forum', 'action' => 'index'));
+
 if (!empty($post['Forum']['Parent']['slug'])) {
 	$this->Html->addCrumb($post['Forum']['Parent']['title'], array('controller' => 'stations', 'action' => 'view', $post['Forum']['Parent']['slug']));
 }
@@ -7,7 +9,7 @@ if (!empty($post['Forum']['Parent']['slug'])) {
 $this->Html->addCrumb($post['Forum']['title'], array('controller' => 'stations', 'action' => 'view', $post['Forum']['slug']));
 $this->Html->addCrumb($post['Topic']['title'], array('controller' => 'topics', 'action' => 'view', $post['Topic']['slug'])); ?>
 
-<div class="forumHeader">
+<div class="title">
 	<h2><?php __d('forum', 'Edit Post'); ?></h2>
 </div>
 
@@ -24,8 +26,11 @@ $this->Html->addCrumb($post['Topic']['title'], array('controller' => 'topics', '
 	<?php echo $this->element('markitup', array('textarea' => 'PostContent')); ?>
 </div>
 
-<div class="input ac">
-	<strong><?php __d('forum', 'Allowed Tags'); ?>:</strong> [b], [u], [i], [img], [url], [email], [code], [align], [list], [li], [color], [size], [quote]
+<div class="input">
+	<label><?php __d('forum', 'Allowed Tags'); ?>:</label> 
+	[b], [u], [i], [img], [url], [email], [code], [align], [list], [li], [color], [size], [quote]
 </div>
 
-<?php echo $this->Form->end(__d('forum', 'Update', true)); ?>
+<?php 
+echo $this->Form->submit(__d('forum', 'Update', true), array('class' => 'button'));
+echo $this->Form->end(); ?>

@@ -17,7 +17,7 @@ $this->Html->addCrumb(__d('forum', 'Help Desk', true), array('controller' => 'fo
 <?php __d('forum', 'The server might be having technicaly difficulties so your request could not be processed. It may also be that your account has been deleted or banned.'); ?></p>
 
 <p><strong><?php __d('forum', 'Oh no, I forgot my password!'); ?></strong><br />
-<?php printf(__d('forum', 'If you have forgotten your password, you can reset it using the %s form.', true), $this->Html->link('forgotten password', $config['routes']['forgotPass'])); ?></p>
+<?php printf(__d('forum', 'If you have forgotten your password, you can reset it using the %s form.', true), $this->Html->link(__d('forum', 'forgotten password', true), $config['routes']['forgotPass'])); ?></p>
 
 <p><strong><?php __d('forum', 'What does reporting do?'); ?></strong><br />
 <?php __d('forum', 'If you find a piece of content that you find inappropriate or offensive, you can report the content for a moderator to delete or fix.'); ?></p>

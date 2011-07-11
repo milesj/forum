@@ -1,12 +1,15 @@
+<?php 
 
-<?php // Crumbs
-if (!empty($topic['Forum']['Parent']['slug'])) {
-	$this->Html->addCrumb($topic['Forum']['Parent']['title'], array('controller' => 'stations', 'action' => 'view', $topic['Forum']['Parent']['slug']));
+$this->Html->addCrumb($settings['site_name'], array('controller' => 'forum', 'action' => 'index'));
+
+if (!empty($post['Forum']['Parent']['slug'])) {
+	$this->Html->addCrumb($post['Forum']['Parent']['title'], array('controller' => 'stations', 'action' => 'view', $post['Forum']['Parent']['slug']));
 }
-$this->Html->addCrumb($topic['Forum']['title'], array('controller' => 'stations', 'action' => 'view', $topic['Forum']['slug']));
-$this->Html->addCrumb($topic['Topic']['title'], array('controller' => 'topics', 'action' => 'view', $topic['Topic']['slug'])); ?>
 
-<div class="forumHeader">
+$this->Html->addCrumb($post['Forum']['title'], array('controller' => 'stations', 'action' => 'view', $post['Forum']['slug']));
+$this->Html->addCrumb($post['Topic']['title'], array('controller' => 'topics', 'action' => 'view', $post['Topic']['slug'])); ?>
+
+<div class="title">
 	<h2><?php __d('forum', 'Post Reply'); ?></h2>
 </div>
 
@@ -23,32 +26,40 @@ $this->Html->addCrumb($topic['Topic']['title'], array('controller' => 'topics', 
 	<?php echo $this->element('markitup', array('textarea' => 'PostContent')); ?>
 </div>
 
-<div class="input ac">
-	<strong><?php __d('forum', 'Allowed Tags'); ?>:</strong> [b], [u], [i], [img], [url], [email], [code], [align], [list], [li], [color], [size], [quote]
+<div class="input">
+	<label><?php __d('forum', 'Allowed Tags'); ?>:</label> 
+	[b], [u], [i], [img], [url], [email], [code], [align], [list], [li], [color], [size], [quote]
 </div>
 
-<?php echo $this->Form->end(__d('forum', 'Post', true)); ?>
+<?php 
+echo $this->Form->submit(__d('forum', 'Post', true), array('class' => 'button'));
+echo $this->Form->end();
 
-<?php // Topic review
 if (!empty($review)) { ?>
 
-<div class="forumWrap">
-    <h3><?php __d('forum', 'Topic Review - Last 10 Replies'); ?></h3>
+<div class="container">
+	<div class="containerHeader">
+		<h3><?php __d('forum', 'Topic Review - Last 10 Replies'); ?></h3>
+	</div>
     
-    <div id="topicReview">
-        <table class="table" cellspacing="0">
+    <div class="containerContent" id="topicReview">
+        <table class="table">
         
         <?php foreach ($review as $post) { ?>
 			
-			<tr class="altRow" id="post_<?php echo $post['Post']['id']; ?>">
-				<td colspan="2" class="ar"><?php echo $this->Time->niceShort($post['Post']['created'], $this->Common->timezone()); ?></td>
+			<tr class="altRow">
+				<td colspan="2" class="align-right dark">
+					<?php echo $this->Time->niceShort($post['Post']['created'], $this->Common->timezone()); ?>
+				</td>
 			</tr>
 			<tr>
 				<td valign="top" style="width: 25%">
 					<h4><?php echo $this->Html->link($post['User'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'profile', $post['User']['id'])); ?></h4>
 					<strong><?php __d('forum', 'Joined'); ?>:</strong> <?php echo $this->Time->niceShort($post['User']['created'], $this->Common->timezone()); ?>
 				</td>
-				<td valign="top"><?php $this->Decoda->parse($post['Post']['content']); ?></td>
+				<td valign="top">
+					<?php $this->Decoda->parse($post['Post']['content']); ?>
+				</td>
 			</tr>
 			
         <?php } ?>

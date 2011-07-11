@@ -1,5 +1,15 @@
+<?php 
 
-<div class="forumHeader">
+$this->Html->addCrumb($settings['site_name'], array('controller' => 'forum', 'action' => 'index'));
+
+if (!empty($post['Forum']['Parent']['slug'])) {
+	$this->Html->addCrumb($post['Forum']['Parent']['title'], array('controller' => 'stations', 'action' => 'view', $post['Forum']['Parent']['slug']));
+}
+
+$this->Html->addCrumb($post['Forum']['title'], array('controller' => 'stations', 'action' => 'view', $post['Forum']['slug']));
+$this->Html->addCrumb($post['Topic']['title'], array('controller' => 'topics', 'action' => 'view', $post['Topic']['slug'])); ?>
+
+<div class="title">
 	<h2><?php __d('forum', 'Report Post'); ?></h2>
 </div>
 

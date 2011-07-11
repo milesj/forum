@@ -24,15 +24,11 @@ if (!empty($forums)) {
 			<tbody>
 
 			<?php if (!empty($forum['Children'])) {
-				$counter = 0;
-
-				foreach ($forum['Children'] as $child) {
+				foreach ($forum['Children'] as $counter => $child) {
 					echo $this->element('tiles/forum_row', array(
 						'forum' => $child,
 						'counter' => $counter
 					));
-
-					++$counter;
 				}
 			} else { ?>
 

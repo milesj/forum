@@ -21,16 +21,6 @@ class CommonHelper extends AppHelper {
 	public $helpers = array('Html', 'Session');
 
 	/**
-	 * Load forum settings.
-	 *
-	 * @access public
-	 * @return void
-	 */
-	public function __construct() {
-		parent::__construct();
-	}
-
-	/**
 	 * Determine the forum icon state.
 	 *
 	 * @access public
@@ -132,7 +122,7 @@ class CommonHelper extends AppHelper {
 	 * @return boolean 
 	 */
 	public function hasAccess($level = 1, $forum_id = NULL) { 
-		if (($this->Session->read('Forum.isSuperMod') >= 1) || ($this->Session->read('Forum.isAdmin') >= 1)) {
+		if (($this->Session->read('Forum.isSuper') >= 1) || ($this->Session->read('Forum.isAdmin') >= 1)) {
 			return true;
 		} else if ($level == 'super' || $level == 'admin') {
 			return false;
