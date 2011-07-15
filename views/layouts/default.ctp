@@ -46,7 +46,7 @@ echo $scripts_for_layout; ?>
 		</div>
 
 		<div class="content">
-			<?php //echo $this->element('login'); ?>
+			<?php echo $this->element('login'); ?>
 			<?php echo $this->element('breadcrumbs'); ?>
 
 			<?php echo $this->Session->flash(); ?>

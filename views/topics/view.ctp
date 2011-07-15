@@ -61,7 +61,7 @@ if (!empty($topic['Poll']['id'])) { ?>
 				foreach ($topic['Poll']['PollOption'] as $counter => $option) { ?>
 
 				<tr<?php if ($counter % 2) echo ' class="altRow"'; ?>>
-					<td class="dark">
+					<td class="dark align-right">
 						<strong><?php echo $option['option']; ?></strong>
 					</td>
 					<td style="width: 50%">

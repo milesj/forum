@@ -119,10 +119,10 @@ class Topic extends ForumAppModel {
 		if ($this->validates()) {
 			$isAdmin = $this->Session->read('Forum.isAdmin');
 
-			if (($secondsLeft = $this->checkFlooding($topics, $this->settings['topic_flood_interval'])) > 0 && !$isAdmin) {
+			if (($secondsLeft = $this->checkFlooding($this->settings['topic_flood_interval'])) > 0 && !$isAdmin) {
 				return $this->invalidate('title', 'You must wait '. $secondsLeft .' more second(s) till you can post a topic');
 				
-			} else if ($this->checkHourly($topics, $this->settings['topics_per_hour']) && !$isAdmin) {
+			} else if ($this->checkHourly($this->settings['topics_per_hour']) && !$isAdmin) {
 				return $this->invalidate('title', 'You are only allowed to post '. $this->settings['topics_per_hour'] .' topic(s) per hour');
 				
 			} else {
@@ -169,7 +169,7 @@ class Topic extends ForumAppModel {
 		
 		if (!empty($topics)) {
 			$timeLeft = time() - array_pop($topics);
-			
+
 			if ($timeLeft <= $interval) {
 				return $interval - $timeLeft;
 			}

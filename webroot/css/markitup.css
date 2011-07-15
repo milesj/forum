@@ -2,7 +2,7 @@
 // markItUp! Universal MarkUp Engine, JQuery plugin
 // By Jay Salvat - http://markitup.jaysalvat.com/
 // ------------------------------------------------------------------*/
-.markItUp * {
+/*.markItUp * {
 	margin:0px; padding:0px;
 	outline:none;
 }
@@ -12,13 +12,12 @@
 	text-decoration:none;
 }
 .markItUp  {
-	/*width:75%;*/
+	width:75%;
 	margin:5px 0 5px 0;
 }
 .markItUpHeader  {
 	font:11px Verdana, Arial, Helvetica, sans-serif;
-}
-/*.markItUpEditor {
+}.markItUpEditor {
 	font:12px 'Courier New', Courier, monospace;
 	padding:5px;
 	width:690px;
@@ -26,7 +25,7 @@
 	clear:both; display:block;
 	line-height:18px;
 	overflow:auto;
-}*/
+}
 .markItUpPreviewFrame	{
 	overflow:auto;
 	background-color:#FFF;
@@ -36,21 +35,21 @@
 }
 .markItUpFooter {
 	width:75%;
-}
+}*/
 .markItUpResizeHandle {
+	display: none;/*
 	overflow:hidden;
 	width:22px; height:5px;
 	margin-left:auto;
 	margin-right:auto;
 	background-image:url(../img/markitup/handle.png);
-	cursor:n-resize;
+	cursor:n-resize;*/
 }
 /***************************************************************************************/
 /* first row of buttons */
 .markItUpHeader ul li	{
-	list-style:none;
-	float:left;
-	position:relative;
+	display: inline-block;
+	position: relative;
 }
 .markItUpHeader ul li:hover > ul{
 	display:block;

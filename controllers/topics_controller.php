@@ -62,10 +62,10 @@ class TopicsController extends ForumAppController {
 		$user_id = $this->Auth->user('id');
 		
 		if ($type == 'poll') {
-			$pageTitle = __d('forum', 'Post Poll', true);
+			$pageTitle = __d('forum', 'Create Poll', true);
 			$access = 'accessPoll';
 		} else {
-			$pageTitle = __d('forum', 'Post Topic', true);
+			$pageTitle = __d('forum', 'Create Topic', true);
 			$access = 'accessPost';
 		}
 		
