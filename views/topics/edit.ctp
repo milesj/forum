@@ -19,7 +19,7 @@ $this->Html->addCrumb($topic['Topic']['title'], array('controller' => 'stations'
 	<div class="containerContent">
 		<?php echo $this->Form->input('title', array('label' => __d('forum', 'Title', true)));
 
-		if ($this->Common->hasAccess('super', $topic['Forum']['id'])) {
+		if ($this->Common->hasAccess(AccessLevel::SUPER, $topic['Forum']['id'])) {
 			echo $this->Form->input('forum_id', array('label' => __d('forum', 'Forum', true), 'options' => $forums, 'escape' => false, 'empty' => '-- '. __d('forum', 'Select a Forum', true) .' --'));
 			echo $this->Form->input('status', array('label' => __d('forum', 'Status', true), 'options' => $this->Common->options('topicStatus')));
 			echo $this->Form->input('type', array('options' => $this->Common->options('topicTypes'), 'label' => __d('forum', 'Type', true)));

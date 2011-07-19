@@ -35,7 +35,7 @@ class ForumAppController extends AppController {
 	 * @access public
 	 * @var array
 	 */
-	public $helpers = array('Html', 'Session', 'Form', 'Time', 'Text', 'Forum.Common', 'Forum.Decoda' => array());
+	public $helpers = array('Html', 'Session', 'Form', 'Time', 'Text', 'Forum.Common');
 
 	/**
 	 * Run auto login logic.
@@ -112,12 +112,7 @@ class ForumAppController extends AppController {
 			'loginAction' => $routes['login']['action'],
 			'logoutAction' => $routes['logout']['action']
 		);
-		
-		// Helpers
-		if ($censored = $this->settings['censored_words']) {
-			$this->helpers['Forum.Decoda'] = array('censored' => explode(',', str_replace(', ', ',', $censored)));
-		}
-		
+
 		// Initialize
 		$this->Toolbar->initForum();
 	}

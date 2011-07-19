@@ -1,22 +1,20 @@
 
-<?php // Channel
-$this->set('channel', array(
-	'title' 		=> $settings['site_name'] .' - '. __d('forum', 'Topic', true) .': '. $topic['Topic']['title'],
-	'link' 			=> array('plugin' => 'forum', 'controller' => 'topics', 'action' => 'view', $topic['Topic']['slug']),
-	'description' 	=> $this->Text->truncate($this->Decoda->parse($topic['FirstPost']['content'], true)),
-	'language' 		=> 'en-us',
+<?php $this->set('channel', array(
+	'title' => $settings['site_name'] .' - '. __d('forum', 'Topic', true) .': '. $topic['Topic']['title'],
+	'link' => array('plugin' => 'forum', 'controller' => 'topics', 'action' => 'view', $topic['Topic']['slug']),
+	'description' => $this->Text->truncate($topic['FirstPost']['contentHtml']),
+	'language' => 'en-us'
 ));
-			
-// Loop rss
+
 if (!empty($items)) {
 	foreach ($items as $item) {
-		$link = array('plugin' => 'forum', 'controller' => 'topics', 'action' => 'view', $topic['Topic']['slug'], '#' => 'post_'. $item['Post']['id']);
+		$link = array('plugin' => 'forum', 'controller' => 'topics', 'action' => 'view', $topic['Topic']['slug'], '#' => 'post-'. $item['Post']['id']);
 	
 		echo $rss->item(array(), array(
 			'title' => 'Post #'. $item['Post']['id'] .' - '. $item['User'][$config['userMap']['username']],
 			'link' => $link,
 			'guid' => array('url' => $link, 'isPermaLink' => 'true'),
-			'description' => $this->Decoda->parse($item['Post']['content'], true),
+			'description' => $item['Post']['contentHtml'],
 			'dc:creator' => $item['User'][$config['userMap']['username']],
 			'pubDate' => $item['Post']['created']
 		));

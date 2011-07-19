@@ -11,13 +11,13 @@
 class AccessLevel extends ForumAppModel {
 
 	/**
-	 * Constants for DB IDs.
+	 * Constants for DB levels.
 	 */
 	const GUEST = 0;
 	const MEMBER = 1;
-	const MOD = 2;
-	const SUPER = 3;
-	const ADMIN = 4;
+	const MOD = 4;
+	const SUPER = 7;
+	const ADMIN = 10;
 	
 	/**
 	 * Validation.

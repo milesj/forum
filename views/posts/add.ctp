@@ -55,7 +55,7 @@ if (!empty($review)) { ?>
 						<strong><?php __d('forum', 'Joined'); ?>:</strong> <?php echo $this->Time->niceShort($post['User']['created'], $this->Common->timezone()); ?>
 					</td>
 					<td valign="top">
-						<?php $this->Decoda->parse($post['Post']['content']); ?>
+						<?php echo $post['Post']['contentHtml']; ?>
 					</td>
 				</tr>
 

@@ -10,7 +10,7 @@ $this->Html->addCrumb($user['User'][$config['userMap']['username']], $this->here
 </div>
 
 <?php if (!empty($user['Profile']['signature'])) { ?>
-	<p><?php $this->Decoda->parse($user['Profile']['signature'], false, array('b', 'i', 'u', 'img', 'url', 'align', 'color', 'size', 'code')); ?></p>
+	<p><?php echo $user['Profile']['signatureHtml']; ?></p>
 <?php } ?>
 
 <table class="table">
@@ -130,14 +130,14 @@ if (!empty($posts)) { ?>
 				
 			<?php foreach($posts as $post) { ?>
 
-			<tr class="altRow">
-				<td><strong><?php echo $this->Html->link($post['Topic']['title'], array('controller' => 'topics', 'action' => 'view', $post['Topic']['slug'])); ?></strong></td>
-				<td><?php echo $this->Html->link($post['Topic']['User'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'profile', $post['Topic']['User']['id'])); ?></td>
-				<td class="ar"><?php echo $this->Time->relativeTime($post['Post']['created'], array('userOffset' => $this->Common->timezone())); ?></td>
-			</tr>
-			<tr>
-				<td colspan="3"><?php echo $this->Decoda->parse($post['Post']['content']); ?></td>
-			</tr>
+				<tr class="altRow">
+					<td><strong><?php echo $this->Html->link($post['Topic']['title'], array('controller' => 'topics', 'action' => 'view', $post['Topic']['slug'])); ?></strong></td>
+					<td><?php echo $this->Html->link($post['Topic']['User'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'profile', $post['Topic']['User']['id'])); ?></td>
+					<td class="ar"><?php echo $this->Time->relativeTime($post['Post']['created'], array('userOffset' => $this->Common->timezone())); ?></td>
+				</tr>
+				<tr>
+					<td colspan="3"><?php echo $post['Post']['contentHtml']; ?></td>
+				</tr>
 
 			<?php } ?>
 

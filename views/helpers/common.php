@@ -8,8 +8,6 @@
  * @link		www.milesj.me/resources/script/forum-plugin
  */
 
-App::import('Core', 'HttpSocket');
- 
 class CommonHelper extends AppHelper {
 
 	/**
@@ -43,8 +41,7 @@ class CommonHelper extends AppHelper {
 		}
 		
 		return $this->Html->image('/forum/img/forum_'. $icon .'.png', array(
-			'alt' => ucfirst($icon),
-			'title' => $this->options('topicStatus', $forum['status'])
+			'alt' => ucfirst($icon)
 		));
 	}
 	
@@ -55,18 +52,7 @@ class CommonHelper extends AppHelper {
 	 * @return int
 	 */
 	public function getAccess() {
-		$access = $this->Session->read('Forum.access');
-		$level = 0;
-		 
-		if (!empty($access)) {
-			foreach ($access as $no) {
-				if ($no > $level) {
-					$level = $no;
-				}
-			}
-		}
-		
-		return $level;
+		return $this->Session->read('Forum.access');
 	}
 
 	/**
@@ -78,8 +64,8 @@ class CommonHelper extends AppHelper {
 	public function getTopicsMade() {
 		$topics = $this->Session->read('Forum.topics');
 		$pastHour = strtotime('-1 hour');
-			
 		$count = 0;
+		
 		if (!empty($topics)) {
 			foreach ($topics as $id => $time) {
 				if ($time >= $pastHour) {
@@ -100,8 +86,8 @@ class CommonHelper extends AppHelper {
 	public function getPostsMade() {
 		$posts = $this->Session->read('Forum.posts');
 		$pastHour = strtotime('-1 hour');
-			
 		$count = 0;
+		
 		if (!empty($posts)) {
 			foreach ($posts as $id => $time) {
 				if ($time >= $pastHour) {
@@ -117,28 +103,31 @@ class CommonHelper extends AppHelper {
 	 * Checks to see if the user has mod status.
 	 *
 	 * @access public
-	 * @param string $level
+	 * @param int $level
 	 * @param int $forum_id
 	 * @return boolean 
 	 */
-	public function hasAccess($level = 1, $forum_id = NULL) { 
-		if (($this->Session->read('Forum.isSuper') >= 1) || ($this->Session->read('Forum.isAdmin') >= 1)) {
+	public function hasAccess($level = 1, $forum_id = null) { 
+		if ($level == AccessLevel::SUPER && $this->Session->read('Forum.isSuper')) {
 			return true;
-		} else if ($level == 'super' || $level == 'admin') {
-			return false;
+			
+		} else if ($level == AccessLevel::ADMIN && $this->Session->read('Forum.isAdmin')) {
+			return true;
+			
+		} else if ($level == AccessLevel::MOD && !empty($forum_id)) {
+			return in_array($forum_id, $this->Session->read('Forum.moderates'));
 		}
 		
-		if (!empty($forum_id) && $level == 'mod') {
-			if (in_array($forum_id, $this->Session->read('Forum.moderates'))) {
-				return true;
-			} else {
-				return false;
-			}
-		}
-		
-		return ($this->getAccess() >= $level) ? true : false;
+		return ($this->getAccess() >= $level);
 	}
 	
+	/**
+	 * Output the highest access level.
+	 * 
+	 * @access public
+	 * @param array $levels
+	 * @return string 
+	 */
 	public function highestAccessLevel($levels) {
 		$highest = array();
 		
@@ -279,8 +268,7 @@ class CommonHelper extends AppHelper {
 		}
 		
 		return $this->Html->image('/forum/img/topic_'. $icon .'.png', array(
-			'alt' => ucfirst($icon),
-			'title' => $this->options('topicTypes', $topic['Topic']['type'])
+			'alt' => ucfirst($icon)
 		));
 	}
 		
@@ -298,6 +286,7 @@ class CommonHelper extends AppHelper {
 		}
 		
 		$topicPages = array();
+		
 		for ($i = 1; $i <= $topic['page_count']; ++$i) {
 			$topicPages[] = $this->Html->link($i, array('controller' => 'topics', 'action' => 'view', $topic['slug'], 'page' => $i));
 		}

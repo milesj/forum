@@ -103,7 +103,7 @@ if (!empty($topic['Poll']['id'])) { ?>
 						<?php if ($this->Common->user()) {
 							$links = array();
 
-							if ($this->Common->hasAccess('super', $topic['Forum']['id']) || $this->Common->user('id') == $post['Post']['user_id']) {
+							if ($this->Common->hasAccess(AccessLevel::SUPER, $topic['Forum']['id']) || $this->Common->user('id') == $post['Post']['user_id']) {
 								if ($topic['Topic']['firstPost_id'] == $post['Post']['id']) {
 									$links[] = $this->Html->link(__d('forum', 'Edit', true), array('controller' => 'topics', 'action' => 'edit', $topic['Topic']['slug']));
 									$links[] = $this->Html->link(__d('forum', 'Delete', true), array('controller' => 'topics', 'action' => 'delete', $topic['Topic']['slug']), array('confirm' => __d('forum', 'Are you sure you want to delete?', true)));
@@ -142,11 +142,11 @@ if (!empty($topic['Poll']['id'])) { ?>
 						<strong><?php __d('forum', 'Total Posts'); ?>:</strong> <?php echo number_format($post['User']['Profile']['totalPosts']); ?>
 					</td>
 					<td valign="top">
-						<?php $this->Decoda->parse($post['Post']['content']); ?>
+						<?php echo $post['Post']['contentHtml']; ?>
 
-						<?php if (!empty($post['User']['signature'])) { ?>
+						<?php if (!empty($post['User']['signatureHtml'])) { ?>
 							<div class="signature">
-								<?php $this->Decoda->parse($post['User']['signature'], false, array('b', 'i', 'u', 'img', 'url', 'align', 'color', 'size', 'code')); ?>
+								<?php echo $post['User']['signatureHtml']; ?>
 							</div>
 						<?php } ?>
 					</td>
