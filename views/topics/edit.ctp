@@ -72,4 +72,6 @@ $this->Html->addCrumb($topic['Topic']['title'], array('controller' => 'stations'
 	</div>
 </div>
 
-<?php echo $this->Form->end(__d('forum', 'Edit Topic', true)); ?>
+<?php 
+echo $this->Form->submit(__d('forum', 'Edit Topic', true), array('class' => 'button'));
+echo $this->Form->end(); ?>

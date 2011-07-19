@@ -1,13 +1,17 @@
+<?php 
 
-<div class="title">
-	<h2><?php __d('forum', 'User List'); ?></h2>
-</div>
+$this->Html->addCrumb($settings['site_name'], array('controller' => 'forum', 'action' => 'index'));
+$this->Html->addCrumb(__d('forum', 'Users', true), array('controller' => 'users', 'action' => 'index')); ?>
 
 <?php echo $this->Form->create('Profile', array('url' => $this->here)); ?>
 
-<div class="moderate">
+<div class="filter">
 	<?php echo $this->Form->input('username', array('div' => false, 'label' => __d('forum', 'Search Users (Username)', true) .': ')); ?>
 	<?php echo $this->Form->submit(__d('forum', 'Search', true), array('div' => false, 'class' => 'buttonSmall')); ?>
+</div>
+
+<div class="title">
+	<h2><?php __d('forum', 'User List'); ?></h2>
 </div>
 
 <?php echo $this->Form->end(); ?>

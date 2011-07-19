@@ -46,7 +46,7 @@ $columns = isset($columns) ? $columns : array(); ?>
 				<span class="gray"><?php __d('forum', 'by'); ?> <?php echo $this->Html->link($topic['LastUser'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'profile', $topic['Topic']['lastUser_id'])); ?></span>
 			<?php } ?>
 				
-			<?php echo $this->Html->image('/forum/img/goto.png', array('alt' => '', 'url' => array('controller' => 'topics', 'action' => 'view', $topic['Topic']['slug'], 'page' => $topic['Topic']['page_count'], '#' => 'post_'. $topic['Topic']['lastPost_id']))); ?>
+			<?php echo $this->Html->image('/forum/img/goto.png', array('alt' => '', 'url' => array('controller' => 'topics', 'action' => 'view', $topic['Topic']['slug'], 'page' => $topic['Topic']['page_count'], '#' => 'post-'. $topic['Topic']['lastPost_id']))); ?>
 		<?php } else { ?>
 			<em class="gray"><?php __d('forum', 'No latest activity to display'); ?></em>
 		<?php } ?>

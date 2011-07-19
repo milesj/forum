@@ -51,4 +51,6 @@ $this->Html->addCrumb($forum['Forum']['title'], array('controller' => 'stations'
 	</div>
 </div>
 
-<?php echo $this->Form->end($pageTitle); ?>
+<?php 
+echo $this->Form->submit($pageTitle, array('class' => 'button'));
+echo $this->Form->end(); ?>

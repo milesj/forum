@@ -22,19 +22,6 @@ a {
 /*------------------------------------------------------
 	Forms
 ------------------------------------------------------*/
-
-.container .input { margin-bottom: 15px; }
-.container .input.text input { width: 25%; }
-.container .input.textarea textarea { width: 50%; }
-.container .input.textarea .bbcode textarea { width: 71%; }
-.container .input label {
-	display: inline-block;
-	width: 25%;
-	text-align: right;
-	margin: 5px 15px 0 0;
-	font-weight: bold;
-	color: #323232;
-	vertical-align: top; }
 	
 input,
 textarea,
@@ -47,16 +34,36 @@ select {
 	border-radius: 5px; }
 
 	select { padding: 4px; }
-	
-.submit { text-align: center; }
+	input[type="checkbox"] { vertical-align: bottom; }
+
+.container .input { margin-bottom: 15px; }
+.container .input.text input,
+.container .input.password input { width: 25%; }
+.container .input.textarea textarea { width: 50%; }
+.container .input.textarea .bbcode textarea { width: 71%; }
+.container .input label {
+	display: inline-block;
+	width: 25%;
+	text-align: right;
+	margin: 5px 15px 0 0;
+	font-weight: bold;
+	color: #323232;
+	vertical-align: top; }
+
+.submit { 
+	margin: 20px 0;
+	text-align: center; }
 
 .inputText,
 .error-message {
 	display: block;
-	margin:  10px 0 0 25%;
+	margin: 10px 0 0 25%;
 	padding-left: 15px; }
 
-	.error-message { color: red; }
+	.error-message { 
+		padding-left: 37px;
+		background: url("/forum/img/error.png") 15px 50% no-repeat;
+		color: red; }
 
 .pollOptions {
 	display: inline-block;
@@ -174,9 +181,11 @@ select {
 .align-center { text-align: center; }
 .align-right { text-align: right; }
 
+.float-left { float: left; }
+.float-right { float: right; }
+
 .button,
-.buttonSmall,
-.submit input {
+.buttonSmall {
 	background: #7f537f;
 	border: 1px solid #823382;
 	color: #f1e0f1;
@@ -198,8 +207,7 @@ select {
 		font-size: 11px; }
 
 	.button:hover,
-	.buttonSmall:hover,
-	.submit input:hover {
+	.buttonSmall:hover {
 		color: #fff; 
 		background: #8f5f8f;
 		-moz-box-shadow: inset 0 0 1px 1px #d0b2d0;
@@ -249,32 +257,30 @@ select {
 	.pagination span { float: right; }
 	
 .subForums { margin-top: 10px; }
-
-.topics,
-.posts { margin: 10px 0; }
-
-.controls { 
-	margin: 20px 0; 
-	text-align: right; }
-
-	.controls .button { margin-left: 10px; }
-	
-.title { margin: 20px 0; }
-
-	.title h2 { 
-		font-size: 24px; 
-		color: #823382; 
-		margin-bottom: 10px; }
-
 .statistics { margin: 20px 0; }
-
-.moderate { margin: 20px 0; }
-.moderate select { margin-right: 10px; }
 
 .pollBar {
 	height: 10px;
 	background: #823382;
 	display: block; }
+
+.topics,
+.posts { margin: 10px 0; }
+
+.controls { margin: 20px 0; text-align: right; }
+.controls .button { margin-left: 10px; }
+	
+.title { margin: 20px 0; }
+.title h2 { 
+	font-size: 24px; 
+	color: #823382; 
+	margin-bottom: 10px; }
+
+.moderate { margin: 20px 0; }
+.moderate select { margin-right: 10px; }
+
+.filter { float: right; }
+.filter .buttonSmall { margin: 0 0 0 6px; vertical-align: top; }
 
 /*------------------------------------------------------
 	Table

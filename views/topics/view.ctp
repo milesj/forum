@@ -18,72 +18,72 @@ $this->Html->addCrumb($topic['Forum']['title'], array('controller' => 'stations'
 
 if (!empty($topic['Poll']['id'])) { ?>
 
-<div id="poll" class="container">
-	<div class="containerHeader">
-		<h3><?php echo $topic['Topic']['title']; ?></h3>
+	<div id="poll" class="container">
+		<div class="containerHeader">
+			<h3><?php echo $topic['Topic']['title']; ?></h3>
+		</div>
+
+		<div class="containerContent">
+			<?php echo $this->Form->create('Poll', array('url' => array('controller' => 'topics', 'action' => 'view', $topic['Topic']['slug']))); ?>
+
+			<table class="table">
+				<tbody>
+
+				<?php if (!$topic['Poll']['hasVoted']) {
+					foreach ($topic['Poll']['PollOption'] as $counter => $option) { ?>
+
+					<tr<?php if ($counter % 2) echo ' class="altRow"'; ?>>
+						<td class="icon">
+							<input type="radio" name="data[Poll][option]" value="<?php echo $option['id']; ?>"<?php if ($counter == 0) echo ' checked="checked"'; ?> />
+						</td>
+						<td colspan="2">
+							<?php echo $option['option']; ?>
+						</td>
+					</tr>
+
+					<?php } ?>
+
+					<tr class="headRow">
+						<td colspan="3" class="align-center">
+							<?php if ($this->Common->user()) {
+								if (!empty($topic['Poll']['expires']) && $topic['Poll']['expires'] <= date('Y-m-d H:i:s')) { 
+									__d('forum', 'Voting on this poll has been closed');
+								} else { 
+									echo $this->Form->submit(__d('forum', 'Vote', true), array('div' => false, 'class' => 'button'));
+								}
+							} else {
+								__d('forum', 'Please login to vote!');
+							} ?>
+						</td>
+					</tr>
+
+				<?php } else {
+					foreach ($topic['Poll']['PollOption'] as $counter => $option) { ?>
+
+					<tr<?php if ($counter % 2) echo ' class="altRow"'; ?>>
+						<td class="dark align-right">
+							<strong><?php echo $option['option']; ?></strong>
+						</td>
+						<td style="width: 50%">
+							<div class="pollBar" style="width: <?php echo $option['percentage']; ?>%"></div>
+						</td>
+						<td>
+							<?php echo sprintf(__d('forum', '%d votes', true), number_format($option['vote_count'])); ?> (<?php echo $option['percentage']; ?>%) 
+
+							<?php if ($topic['Poll']['hasVoted'] == $option['id']) {
+								echo '<em>('. __d('forum', 'Your Vote', true) .')</em>';
+							} ?>
+						</td>
+					</tr>
+
+				<?php } } ?>
+
+				</tbody>
+			</table>
+
+			<?php echo $this->Form->end(); ?>
+		</div>
 	</div>
-	
-	<div class="containerContent">
-		<?php echo $this->Form->create('Poll', array('url' => array('controller' => 'topics', 'action' => 'view', $topic['Topic']['slug']))); ?>
-
-		<table class="table">
-			<tbody>
-				
-			<?php if (!$topic['Poll']['hasVoted']) {
-				foreach ($topic['Poll']['PollOption'] as $counter => $option) { ?>
-
-				<tr<?php if ($counter % 2) echo ' class="altRow"'; ?>>
-					<td class="icon">
-						<input type="radio" name="data[Poll][option]" value="<?php echo $option['id']; ?>"<?php if ($counter == 0) echo ' checked="checked"'; ?> />
-					</td>
-					<td colspan="2">
-						<?php echo $option['option']; ?>
-					</td>
-				</tr>
-
-				<?php } ?>
-
-				<tr class="headRow">
-					<td colspan="3" class="align-center">
-						<?php if ($this->Common->user()) {
-							if (!empty($topic['Poll']['expires']) && $topic['Poll']['expires'] <= date('Y-m-d H:i:s')) { 
-								__d('forum', 'Voting on this poll has been closed');
-							} else { 
-								echo $this->Form->submit(__d('forum', 'Vote', true), array('div' => false, 'class' => 'button'));
-							}
-						} else {
-							__d('forum', 'Please login to vote!');
-						} ?>
-					</td>
-				</tr>
-
-			<?php } else {
-				foreach ($topic['Poll']['PollOption'] as $counter => $option) { ?>
-
-				<tr<?php if ($counter % 2) echo ' class="altRow"'; ?>>
-					<td class="dark align-right">
-						<strong><?php echo $option['option']; ?></strong>
-					</td>
-					<td style="width: 50%">
-						<div class="pollBar" style="width: <?php echo $option['percentage']; ?>%"></div>
-					</td>
-					<td>
-						<?php echo number_format($option['vote_count']); ?> votes (<?php echo $option['percentage']; ?>%) 
-						
-						<?php if ($topic['Poll']['hasVoted'] == $option['id']) {
-							echo '<em>('. __d('forum', 'Your Vote', true) .')</em>';
-						} ?>
-					</td>
-				</tr>
-
-			<?php } } ?>
-				
-			</tbody>
-		</table>
-
-		<?php echo $this->Form->end(); ?>
-	</div>
-</div>
 
 <?php } ?>
 
@@ -190,7 +190,7 @@ if ($settings['enable_quick_reply'] && $this->Common->hasAccess($topic['Forum'][
 					</tr>
 					<tr class="headRow">
 						<td colspan="2" class="align-center">
-							<?php echo $this->Form->submit(__d('forum', 'Post Reply', true), array('class' => 'button')); ?>
+							<?php echo $this->Form->submit(__d('forum', 'Post Reply', true), array('class' => 'button', 'div' => false)); ?>
 						</td>
 					</tr> 
 				</tbody>

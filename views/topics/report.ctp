@@ -13,7 +13,7 @@ $this->Html->addCrumb($topic['Topic']['title'], array('controller' => 'stations'
 	<h2><?php __d('forum', 'Report Topic'); ?></h2>
 </div>
 
-<p><?php printf(__d('forum', 'Are you sure you want to report the topic %s ? If so, please add a comment as to why you are reporting it, 255 max characters.', true), $this->Html->link($topic['Topic']['title'], array('action' => 'view', $topic['Topic']['slug']))); ?></p>
+<p><?php printf(__d('forum', 'Are you sure you want to report the topic %s? If so, please add a comment as to why you are reporting it, 255 max characters.', true), '<strong>'. $this->Html->link($topic['Topic']['title'], array('action' => 'view', $topic['Topic']['slug'])) .'</strong>'); ?></p>
 
 <?php echo $this->Form->create('Report', array('url' => $this->here)); ?>
 
@@ -23,4 +23,6 @@ $this->Html->addCrumb($topic['Topic']['title'], array('controller' => 'stations'
 	</div>
 </div>
 
-<?php echo $this->Form->end(__d('forum', 'Report', true)); ?>
+<?php 
+echo $this->Form->submit(__d('forum', 'Report', true), array('class' => 'button'));
+echo $this->Form->end(); ?>
