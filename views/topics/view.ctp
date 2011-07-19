@@ -127,7 +127,7 @@ if (!empty($topic['Poll']['id'])) { ?>
 				</tr>
 				<tr>
 					<td valign="top" style="width: 25%">
-						<h4><?php echo $this->Html->link($post['User'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'profile', $post['User']['id'])); ?></h4>
+						<h4 class="username"><?php echo $this->Html->link($post['User'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'profile', $post['User']['id'])); ?></h4>
 
 						<?php if (!empty($post['User']['Access'])) { ?>
 							<p><strong><?php echo $this->Common->highestAccessLevel($post['User']['Access']); ?></strong></p>

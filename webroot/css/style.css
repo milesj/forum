@@ -5,6 +5,8 @@
 body {
 	background: #204066;
 	color: #5e5e5e; 
+	margin: 0;
+	padding: 0;
 	font: normal 13px Verdana, Arial, sans-serif; }
 	
 p { margin: 0 0 15px 0; }
@@ -35,6 +37,8 @@ select {
 
 	select { padding: 4px; }
 	input[type="checkbox"] { vertical-align: bottom; }
+	input[readonly],
+	textarea[readonly] { color: #A4A4A4; }
 
 .container .input { margin-bottom: 15px; }
 .container .input.text input,
@@ -258,6 +262,7 @@ select {
 	
 .subForums { margin-top: 10px; }
 .statistics { margin: 20px 0; }
+.username { font-size: 20px; }
 
 .pollBar {
 	height: 10px;

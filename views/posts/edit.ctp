@@ -15,22 +15,19 @@ $this->Html->addCrumb($post['Topic']['title'], array('controller' => 'topics', '
 
 <?php echo $this->Form->create('Post'); ?>
 
-<div class="input textarea">
-	<?php echo $this->Form->label('content', __d('forum', 'Content', true)); ?>
-
-	<div id="textarea">
-		<?php echo $this->Form->input('content', array('type' => 'textarea', 'rows' => 15, 'label' => false, 'div' => false)); ?>
+<div class="container">
+	<div class="containerContent">
+		<?php 
+		echo $this->Form->input('content', array(
+			'type' => 'textarea', 
+			'rows' => 15, 
+			'after' => '<span class="inputText">[b], [u], [i], [img], [url], [email], [code], [align], [list], [li], [color], [size], [quote]</span>',
+			'label' => __d('forum', 'Content', true)));
+		
+		echo $this->element('markitup', array('textarea' => 'PostContent')); ?>
 	</div>
-
-	<span class="clear"><!-- --></span>
-	<?php echo $this->element('markitup', array('textarea' => 'PostContent')); ?>
-</div>
-
-<div class="input">
-	<label><?php __d('forum', 'Allowed Tags'); ?>:</label> 
-	[b], [u], [i], [img], [url], [email], [code], [align], [list], [li], [color], [size], [quote]
 </div>
 
 <?php 
-echo $this->Form->submit(__d('forum', 'Update', true), array('class' => 'button'));
+echo $this->Form->submit(__d('forum', 'Update Post', true), array('class' => 'button'));
 echo $this->Form->end(); ?>

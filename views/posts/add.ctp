@@ -13,26 +13,26 @@ $this->Html->addCrumb($topic['Topic']['title'], array('controller' => 'topics', 
 	<h2><?php __d('forum', 'Post Reply'); ?></h2>
 </div>
 
+<?php echo $this->Form->create('Post', array('url' => $this->here)); ?>
+
 <div class="container">
 	<div class="containerContent">
 		<?php 
-		echo $this->Form->create('Post', array('url' => $this->here));
-		echo $this->Form->input('content', array('type' => 'textarea', 'rows' => 15, 'label' => __d('forum', 'Content', true)));?>
-
-		<?php echo $this->element('markitup', array('textarea' => 'PostContent')); ?>
-
-		<div class="input">
-			<label><?php __d('forum', 'Allowed Tags'); ?>:</label> 
-			[b], [u], [i], [img], [url], [email], [code], [align], [list], [li], [color], [size], [quote]
-		</div>
-
-		<?php 
-		echo $this->Form->submit(__d('forum', 'Post', true), array('class' => 'button'));
-		echo $this->Form->end(); ?>
+		echo $this->Form->input('content', array(
+			'type' => 'textarea', 
+			'rows' => 15, 
+			'after' => '<span class="inputText">[b], [u], [i], [img], [url], [email], [code], [align], [list], [li], [color], [size], [quote]</span>',
+			'label' => __d('forum', 'Content', true)));
+		
+		echo $this->element('markitup', array('textarea' => 'PostContent')); ?>
 	</div>
 </div>
 
-<?php if (!empty($review)) { ?>
+<?php 
+echo $this->Form->submit(__d('forum', 'Post Reply', true), array('class' => 'button'));
+echo $this->Form->end();
+
+if (!empty($review)) { ?>
 
 	<div class="container">
 		<div class="containerHeader">
@@ -51,7 +51,7 @@ $this->Html->addCrumb($topic['Topic']['title'], array('controller' => 'topics', 
 				</tr>
 				<tr>
 					<td valign="top" style="width: 25%">
-						<h4><?php echo $this->Html->link($post['User'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'profile', $post['User']['id'])); ?></h4>
+						<h4 class="username"><?php echo $this->Html->link($post['User'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'profile', $post['User']['id'])); ?></h4>
 						<strong><?php __d('forum', 'Joined'); ?>:</strong> <?php echo $this->Time->niceShort($post['User']['created'], $this->Common->timezone()); ?>
 					</td>
 					<td valign="top">
