@@ -16,30 +16,36 @@ $orderBy = array(
 
 <?php echo $this->Form->create('Topic', array('url' => array('controller' => 'search', 'action' => 'proxy'))); ?>
 
-	<div id="search">
-		<table cellpadding="5" style="width: 100%">
-		<tr>
-			<td class="ar"><?php echo $this->Form->label('keywords', __d('forum', 'Keywords', true) .':'); ?></td>
-			<td><?php echo $this->Form->input('keywords', array('div' => false, 'label' => false, 'style' => 'width: 300px')); ?></td>
+<div class="container searchForm" id="search">
+	<div class="containerContent">
+		<table style="width: 100%">
+			<tbody>
+				<tr>
+					<td class="align-right"><?php echo $this->Form->label('keywords', __d('forum', 'Keywords', true) .':'); ?></td>
+					<td><?php echo $this->Form->input('keywords', array('div' => false, 'label' => false, 'style' => 'width: 300px')); ?></td>
 
-			<td class="ar"><?php echo $this->Form->input('power', array('div' => false, 'label' => false, 'type' => 'checkbox')); ?></td>
-			<td><?php echo $this->Form->label('power', __d('forum', 'Power Search?', true)); ?></td>
+					<td class="align-right"><?php echo $this->Form->input('power', array('div' => false, 'label' => false, 'type' => 'checkbox')); ?></td>
+					<td><?php echo $this->Form->label('power', __d('forum', 'Power Search?', true)); ?></td>
 
-			<td class="ar"><?php echo $this->Form->label('forum_id', __d('forum', 'Within Forum Category', true) .':'); ?></td>
-			<td><?php echo $this->Form->input('forum_id', array('div' => false, 'label' => false, 'options' => $forums, 'escape' => false, 'empty' => true)); ?></td>
+					<td class="align-right"><?php echo $this->Form->label('forum_id', __d('forum', 'Within Forum Category', true) .':'); ?></td>
+					<td><?php echo $this->Form->input('forum_id', array('div' => false, 'label' => false, 'options' => $forums, 'escape' => false, 'empty' => true)); ?></td>
 
-			<td class="ar"><?php echo $this->Form->label('orderBy', __d('forum', 'Order By', true) .':'); ?></td>
-			<td><?php echo $this->Form->input('orderBy', array('div' => false, 'label' => false, 'options' => $orderBy)); ?></td>
+					<td class="align-right"><?php echo $this->Form->label('orderBy', __d('forum', 'Order By', true) .':'); ?></td>
+					<td><?php echo $this->Form->input('orderBy', array('div' => false, 'label' => false, 'options' => $orderBy)); ?></td>
 
-			<td class="ar"><?php echo $this->Form->label('byUser', __d('forum', 'By User (Username)', true) .':'); ?></td>
-			<td><?php echo $this->Form->input('byUser', array('div' => false, 'label' => false, 'style' => 'width: 150px')); ?></td>
-		</tr>
+					<td class="align-right"><?php echo $this->Form->label('byUser', __d('forum', 'By User (Username)', true) .':'); ?></td>
+					<td><?php echo $this->Form->input('byUser', array('div' => false, 'label' => false, 'style' => 'width: 150px')); ?></td>
+				</tr>
+			</tbody>
 		</table>
 	</div>
+</div>
 
-<?php echo $this->Form->end(__d('forum', 'Search Topics', true)); 
+<?php 
+echo $this->Form->submit(__d('forum', 'Search Topics', true), array('class' => 'button'));
+echo $this->Form->end(); 
 
-if ($searching ) { ?>
+if ($searching) { ?>
 
 <div class="container">
 	<div class="containerContent">

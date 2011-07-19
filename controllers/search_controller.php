@@ -68,11 +68,15 @@ class SearchController extends ForumAppController {
 			}
 
 			if (empty($this->data['Topic']['forum_id'])) {
-				$this->data['Topic']['forum_id'] = array();
+				$forum_ids = array();
 				
-				foreach ($forums as $forum_ids) {
-					$this->data['Topic']['forum_id'] = array_keys($forum_ids) + $this->data['Topic']['forum_id'];
+				foreach ($forums as $ids) {
+					$forum_ids += array_keys($ids);
 				}
+				
+				$this->paginate['Topic']['conditions']['Topic.forum_id'] = $forum_ids;
+			} else {
+				$this->paginate['Topic']['conditions']['Topic.forum_id'] = $this->data['Topic']['forum_id'];
 			}
 			
 			if (empty($this->data['Topic']['orderBy'])) {
@@ -84,7 +88,6 @@ class SearchController extends ForumAppController {
 			}
 
 			$this->paginate['Topic']['conditions']['Forum.accessRead <='] = $this->Session->read('Forum.access');
-			$this->paginate['Topic']['conditions']['Topic.forum_id'] = $this->data['Topic']['forum_id'];
 			$this->paginate['Topic']['order'] = array($this->data['Topic']['orderBy'] => 'DESC');
 			$this->paginate['Topic']['limit'] = $this->settings['topics_per_page'];
 			

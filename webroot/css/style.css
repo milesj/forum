@@ -278,9 +278,13 @@ select {
 
 .moderate { margin: 20px 0; }
 .moderate select { margin-right: 10px; }
+.moderate .buttonSmall { vertical-align: top; }
 
 .filter { float: right; }
-.filter .buttonSmall { margin: 0 0 0 6px; vertical-align: top; }
+.filter .buttonSmall { margin: 0 0 0 5px; vertical-align: top; }
+
+.searchForm table td { padding-left: 10px; }
+.searchForm label { color: #323232; }
 
 /*------------------------------------------------------
 	Table
