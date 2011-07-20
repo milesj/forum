@@ -8,7 +8,7 @@ $this->Html->addCrumb(__d('forum', 'Report User', true), $this->here); ?>
 	<h2><?php __d('forum', 'Report User'); ?></h2>
 </div>
 
-<p><?php printf(__d('forum', 'Are you sure you want to report the user %s? If so, please add a comment as to why you are reporting this user, and please be descriptive. Are they spamming, trolling, flaming, etc. 255 max characters.', true), '<strong>'. $this->Html->link($user['User'][$config['userMap']['username']], array('action' => 'profile', $user['User']['id'])) .'</strong>'); ?></p>
+<p><?php printf(__d('forum', 'Are you sure you want to report the user %s? If so, please add a comment as to why you are reporting this user, and please be descriptive. Are they spamming, trolling, flaming, etc. 255 max characters.', true), '<strong>'. $this->Html->link($profile['User'][$config['userMap']['username']], array('action' => 'profile', $user['User']['id'])) .'</strong>'); ?></p>
 
 <?php echo $this->Form->create('Report', array('url' => $this->here)); ?>
 

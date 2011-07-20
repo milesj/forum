@@ -3,7 +3,7 @@
 $this->Html->addCrumb($settings['site_name'], array('controller' => 'forum', 'action' => 'index'));
 $this->Html->addCrumb(__d('forum', 'Users', true), array('controller' => 'users', 'action' => 'index')); ?>
 
-<?php echo $this->Form->create('Profile', array('url' => $this->here)); ?>
+<?php echo $this->Form->create('Profile', array('url' => array('controller' => 'users', 'action' => 'proxy'))); ?>
 
 <div class="filter">
 	<?php echo $this->Form->input('username', array('div' => false, 'label' => __d('forum', 'Search Users (Username)', true) .': ')); ?>

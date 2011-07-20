@@ -78,6 +78,16 @@ select {
 	.pollOptions table td { padding: 0 5px 5px 0; }
 	.pollOptions input[type="text"] { width: 90%; }
 
+.message {
+	background: #d7ffcf;
+	margin-top: 20px;
+	border: 10px solid #aedca5;
+	padding: 10px;
+	color: #567b54;
+	-moz-border-radius: 5px; 
+	-webkit-border-radius: 5px;  
+	border-radius: 5px; }
+
 /*------------------------------------------------------
 	Header / Footer
 ------------------------------------------------------*/
@@ -171,7 +181,7 @@ select {
 	.login input[type="text"] { width: 125px; }
 	
 	.login div { 
-		margin-left: 15px;
+		margin-right: 15px;
 		display: inline-block;  }
 	
 /*------------------------------------------------------

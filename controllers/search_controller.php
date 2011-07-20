@@ -27,7 +27,7 @@ class SearchController extends ForumAppController {
 	public $paginate = array( 
 		'Topic' => array(
 			'order' => array('LastPost.created' => 'DESC'),
-			'contain' => array('Forum', 'User', 'LastPost', 'LastUser', 'Poll', 'FirstPost')
+			'contain' => array('Forum', 'User', 'Poll', 'LastPost', 'LastUser')
 		)
 	); 
 	
@@ -39,6 +39,12 @@ class SearchController extends ForumAppController {
 	public function index($type = '') {
 		$searching = false;
 		$forums = $this->Topic->Forum->getGroupedHierarchy('accessRead');
+		$orderBy = array(
+			'LastPost.created' => __d('forum', 'Last post time', true),
+			'Topic.created' => __d('forum', 'Topic created time', true),
+			'Topic.post_count' => __d('forum', 'Total posts', true),
+			'Topic.view_count' => __d('forum', 'Total views', true)
+		);
 		
 		if (!empty($this->params['named'])) {
 			foreach ($this->params['named'] as $field => $value) {
@@ -50,41 +56,24 @@ class SearchController extends ForumAppController {
 			$this->data['Topic']['orderBy'] = 'LastPost.created';
 			$this->paginate['Topic']['conditions']['LastPost.created >='] = $this->Session->read('Forum.lastVisit');
 		}
-
+		
 		if (!empty($this->data)) {
 			$searching = true;
 			
 			if (!empty($this->data['Topic']['keywords'])) {
-				$keywords = Sanitize::clean($this->data['Topic']['keywords']);
-			
-				if (isset($this->data['Topic']['power']) && $this->data['Topic']['power']) {
-					$this->paginate['Topic']['conditions']['OR'] = array(
-						array('Topic.title LIKE' => '%'. $keywords .'%'),
-						array('FirstPost.content LIKE' => '%'. $keywords .'%')
-					);
-				} else {
-					$this->paginate['Topic']['conditions']['Topic.title LIKE'] = '%'. $keywords .'%';
-				}
+				$this->paginate['Topic']['conditions']['Topic.title LIKE'] = '%'. Sanitize::clean($this->data['Topic']['keywords']) .'%';
 			}
 
-			if (empty($this->data['Topic']['forum_id'])) {
-				$forum_ids = array();
-				
-				foreach ($forums as $ids) {
-					$forum_ids += array_keys($ids);
-				}
-				
-				$this->paginate['Topic']['conditions']['Topic.forum_id'] = $forum_ids;
-			} else {
+			if (!empty($this->data['Topic']['forum_id'])) {
 				$this->paginate['Topic']['conditions']['Topic.forum_id'] = $this->data['Topic']['forum_id'];
-			}
-			
-			if (empty($this->data['Topic']['orderBy'])) {
-				$this->data['Topic']['orderBy'] = 'LastPost.created';
 			}
 
 			if (!empty($this->data['Topic']['byUser'])) {
-				$this->paginate['Topic']['conditions']['User.'. $this->config['userMap']['username'] .' LIKE'] = '%'. $this->data['Topic']['byUser'] .'%';
+				$this->paginate['Topic']['conditions']['User.'. $this->config['userMap']['username'] .' LIKE'] = '%'. Sanitize::clean($this->data['Topic']['byUser']) .'%';
+			}
+			
+			if (empty($this->data['Topic']['orderBy']) || !isset($orderBy[$this->data['Topic']['orderBy']])) {
+				$this->data['Topic']['orderBy'] = 'LastPost.created';
 			}
 
 			$this->paginate['Topic']['conditions']['Forum.accessRead <='] = $this->Session->read('Forum.access');
@@ -97,6 +86,7 @@ class SearchController extends ForumAppController {
 		$this->Toolbar->pageTitle(__d('forum', 'Search', true));
 		$this->set('menuTab', 'search');
 		$this->set('searching', $searching);
+		$this->set('orderBy', $orderBy);
 		$this->set('forums', $forums);
 	}
 	
@@ -112,7 +102,7 @@ class SearchController extends ForumAppController {
 		
 		foreach ($this->data['Topic'] as $field => $value) {
 			if ($value != '') {
-				$named[$field] = urlencode(htmlentities($value, ENT_NOQUOTES, 'UTF-8'));
+				$named[$field] = urlencode($value);
 			}	
 		}
 		

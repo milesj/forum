@@ -2,15 +2,15 @@
 
 $this->Html->addCrumb($settings['site_name'], array('controller' => 'forum', 'action' => 'index'));
 $this->Html->addCrumb(__d('forum', 'Users', true), array('controller' => 'users', 'action' => 'index'));
-$this->Html->addCrumb($user['User'][$config['userMap']['username']], $this->here); ?>
+$this->Html->addCrumb($profile['User'][$config['userMap']['username']], $this->here); ?>
 
 <div class="title">
-	<?php echo $this->Html->link(__d('forum', 'Report User', true), array('action' => 'report', $user['User']['id']), array('class' => 'button float-right')); ?>
-	<h2><?php echo $user['User'][$config['userMap']['username']]; ?></h2>
+	<?php echo $this->Html->link(__d('forum', 'Report User', true), array('action' => 'report', $profile['User']['id']), array('class' => 'button float-right')); ?>
+	<h2><?php echo $profile['User'][$config['userMap']['username']]; ?></h2>
 </div>
 
-<?php if (!empty($user['Profile']['signature'])) { ?>
-	<p><?php echo $user['Profile']['signatureHtml']; ?></p>
+<?php if (!empty($profile['Profile']['signatureHtml'])) { ?>
+	<p><?php echo $profile['Profile']['signatureHtml']; ?></p>
 <?php } ?>
 
 <table class="table">
@@ -18,22 +18,22 @@ $this->Html->addCrumb($user['User'][$config['userMap']['username']], $this->here
 		<tr>
 			<?php if ($settings['enable_gravatar']) { ?>
 				<td rowspan="2" style="width: 80px;">
-					<?php echo $this->Gravatar->image($user['User'][$config['userMap']['email']]); ?>
+					<?php echo $this->Gravatar->image($profile['User'][$config['userMap']['email']]); ?>
 				</td>
 			<?php } ?>
 			
 			<td><strong><?php __d('forum', 'Joined'); ?>:</strong></td>
-			<td><?php echo $this->Time->nice($user['User']['created'], $this->Common->timezone()); ?></td>
+			<td><?php echo $this->Time->nice($profile['User']['created'], $this->Common->timezone()); ?></td>
 			
 			<td><strong><?php __d('forum', 'Total Topics'); ?>:</strong></td>
 			
-			<td><?php echo number_format($user['Profile']['totalTopics']); ?></td>
+			<td><?php echo number_format($profile['Profile']['totalTopics']); ?></td>
 			<td><strong><?php __d('forum', 'Roles'); ?>:</strong></td>
 			
 			<td>
-				<?php if (!empty($user['User']['Access'])) { 
+				<?php if (!empty($profile['User']['Access'])) { 
 					$roles = array();
-					foreach ($user['User']['Access'] as $access) {
+					foreach ($profile['User']['Access'] as $access) {
 						$roles[] = $access['AccessLevel']['title'];
 					}
 					echo implode(', ', $roles);
@@ -45,21 +45,21 @@ $this->Html->addCrumb($user['User'][$config['userMap']['username']], $this->here
 		<tr>
 			<td><strong><?php __d('forum', 'Last Login'); ?>:</strong></td>
 			<td>
-				<?php if (!empty($user['Profile']['lastLogin'])) {
-					echo $this->Time->relativeTime($user['Profile']['lastLogin'], array('userOffset' => $this->Common->timezone()));
+				<?php if (!empty($profile['Profile']['lastLogin'])) {
+					echo $this->Time->relativeTime($profile['Profile']['lastLogin'], array('userOffset' => $this->Common->timezone()));
 				} else {
 					echo '<em>'. __d('forum', 'Never', true) .'</em>';
 				} ?>
 			</td>
 			
 			<td><strong><?php __d('forum', 'Total Posts'); ?>:</strong></td>
-			<td><?php echo number_format($user['Profile']['totalPosts']); ?></td>
+			<td><?php echo number_format($profile['Profile']['totalPosts']); ?></td>
 			
 			<td><strong><?php __d('forum', 'Moderates'); ?>:</strong></td>
 			<td>
-				<?php if (!empty($user['User']['Moderator'])) { 
+				<?php if (!empty($profile['User']['Moderator'])) { 
 					$mods = array();
-					foreach ($user['User']['Moderator'] as $mod) {
+					foreach ($profile['User']['Moderator'] as $mod) {
 						$mods[] = $this->Html->link($mod['Forum']['title'], array('controller' => 'stations', 'action' => 'view', $mod['Forum']['slug']));
 					}
 					echo implode(', ', $mods);

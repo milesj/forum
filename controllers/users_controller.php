@@ -51,14 +51,30 @@ class UsersController extends ForumAppController {
 	 * List of users.
 	 */
 	public function index() {
-		if (!empty($this->data['Profile']['username'])) {
-			$this->paginate['Profile']['conditions'] = array('User.'. $this->config['userMap']['username'] .' LIKE' => '%'. Sanitize::clean($this->data['Profile']['username']) .'%');
+		if (!empty($this->params['named']['username'])) {
+			$this->data['Profile']['username'] = $this->params['named']['username'];
+			$this->paginate['Profile']['conditions'] = array('User.'. $this->config['userMap']['username'] .' LIKE' => '%'. Sanitize::clean($this->params['named']['username']) .'%');
 		}
 		
 		$this->paginate['Profile']['order'] = array('User.'. $this->config['userMap']['username'] => 'ASC');
 		
 		$this->Toolbar->pageTitle(__d('forum', 'User List', true));
 		$this->set('users', $this->paginate('Profile'));
+	}
+	
+	/**
+	 * Proxy action to build named parameters.
+	 */
+	public function proxy() {
+		$named = array();
+
+		foreach ($this->data['Profile'] as $field => $value) {
+			if ($value != '') {
+				$named[$field] = urlencode($value);
+			}	
+		}
+		
+		$this->redirect(array_merge(array('controller' => 'users', 'action' => 'index'), $named));
 	}
 	
 	/**
@@ -114,16 +130,16 @@ class UsersController extends ForumAppController {
 	 * @param int $user_id
 	 */
 	public function profile($user_id) {
-		$user = $this->Profile->getByUser($user_id);
+		$profile = $this->Profile->getByUser($user_id);
 		
-		if (empty($user)) {
+		if (empty($profile)) {
 			return $this->cakeError('error404');
 		}
 		
 		$this->loadModel('Forum.Topic');
 
-		$this->Toolbar->pageTitle(__d('forum', 'User Profile', true), $user['User'][$this->config['userMap']['username']]);
-		$this->set('user', $user);
+		$this->Toolbar->pageTitle(__d('forum', 'User Profile', true), $profile['User'][$this->config['userMap']['username']]);
+		$this->set('profile', $profile);
 		$this->set('topics', $this->Topic->getLatestByUser($user_id));
 		$this->set('posts', $this->Topic->Post->getLatestByUser($user_id));
 	}
@@ -134,9 +150,9 @@ class UsersController extends ForumAppController {
 	 * @param int $user_id
 	 */
 	public function report($user_id) {
-		$user = $this->Profile->getByUser($user_id);
+		$profile = $this->Profile->getByUser($user_id);
 		
-		if (empty($user)) {
+		if (empty($profile)) {
 			return $this->cakeError('error404');
 		}
 		
@@ -153,8 +169,8 @@ class UsersController extends ForumAppController {
 			}
 		}
 		
-		$this->Toolbar->pageTitle(__d('forum', 'Report User', true));
-		$this->set('user', $user);
+		$this->Toolbar->pageTitle(__d('forum', 'Report User', true), $profile['User'][$this->config['userMap']['username']]);
+		$this->set('profile', $profile);
 	}
 	
 	/**
@@ -208,7 +224,7 @@ class UsersController extends ForumAppController {
 	public function beforeFilter() {
 		parent::beforeFilter();
 		
-		$this->Auth->allow('index', 'login', 'logout', 'profile');
+		$this->Auth->allow('index', 'login', 'logout', 'profile', 'proxy');
 		
 		$this->set('menuTab', 'users');
 	}

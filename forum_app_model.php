@@ -157,33 +157,6 @@ class ForumAppModel extends AppModel {
 	}
 
 	/**
-	 * Grab a row and defined fields/containables.
-	 *
-	 * @access public
-	 * @param int $id
-	 * @param array $fields
-	 * @param array|boolean $contain
-	 * @return array
-	 */
-	public function get($id, $fields = array(), $contain = false) {
-		$column = is_string($id) ? 'slug' : 'id';
-
-		if (empty($fields)) {
-			$fields = $this->alias .'.*';
-		} else {
-			foreach ($fields as $row => $field) {
-				$fields[$row] = $this->alias .'.'. $field;
-			}
-		}
-		
-		return $this->find('first', array(
-			'conditions' => array($this->alias .'.'. $column => $id),
-			'fields' => $fields,
-			'contain' => $contain
-		));
-	}
-
-	/**
 	 * Get a count of all rows.
 	 *
 	 * @access public

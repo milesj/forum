@@ -1,14 +1,7 @@
 <?php 
 
 $this->Html->addCrumb($settings['site_name'], array('controller' => 'forum', 'action' => 'index'));
-$this->Html->addCrumb(__d('forum', 'Search', true), array('controller' => 'search', 'action' => 'index'));
-
-$orderBy = array(
-	'LastPost.created' => __d('forum', 'Last post time', true),
-	'Topic.created' => __d('forum', 'Topic created time', true),
-	'Topic.post_count' => __d('forum', 'Total posts', true),
-	'Topic.view_count' => __d('forum', 'Total views', true)
-); ?>
+$this->Html->addCrumb(__d('forum', 'Search', true), array('controller' => 'search', 'action' => 'index')); ?>
 
 <div class="title">
 	<h2><?php __d('forum', 'Search'); ?></h2>
@@ -23,9 +16,6 @@ $orderBy = array(
 				<tr>
 					<td class="align-right"><?php echo $this->Form->label('keywords', __d('forum', 'Keywords', true) .':'); ?></td>
 					<td><?php echo $this->Form->input('keywords', array('div' => false, 'label' => false, 'style' => 'width: 300px')); ?></td>
-
-					<td class="align-right"><?php echo $this->Form->input('power', array('div' => false, 'label' => false, 'type' => 'checkbox')); ?></td>
-					<td><?php echo $this->Form->label('power', __d('forum', 'Power Search?', true)); ?></td>
 
 					<td class="align-right"><?php echo $this->Form->label('forum_id', __d('forum', 'Within Forum Category', true) .':'); ?></td>
 					<td><?php echo $this->Form->input('forum_id', array('div' => false, 'label' => false, 'options' => $forums, 'escape' => false, 'empty' => true)); ?></td>

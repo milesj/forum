@@ -126,7 +126,10 @@ class Profile extends ForumAppModel {
 			$this->create();
 			$this->save(array('user_id' => $user_id), false);
 
-			return $this->getUserProfile($user_id);
+			return $this->find('first', array(
+				'conditions' => array('Profile.id' => $this->id),
+				'contain' => array('User')
+			));
 		}
 		
 		return $profile;
@@ -181,7 +184,7 @@ class Profile extends ForumAppModel {
 		if (!$minutes) {
 			$minutes = $this->settings['whos_online_interval'];
 		}
-		
+
 		return $this->find('all', array(
 			'conditions' => array('Profile.currentLogin >' => date('Y-m-d H:i:s', strtotime('-'. $minutes .' minutes'))),
 			'contain' => array('User')

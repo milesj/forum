@@ -7,7 +7,7 @@
 		echo $this->Form->input($config['userMap']['username'], array('error' => false, 'label' => __d('forum', 'Username', true) .': '));
 		echo $this->Form->input($config['userMap']['password'], array('error' => false, 'label' => __d('forum', 'Password', true) .': '));
 		echo $this->Form->input('auto_login', array('type' => 'checkbox', 'error' => false, 'label' => false, 'after' => ' '. __d('forum', 'Remember Me?', true)));
-		echo $this->Form->submit(__d('forum', 'Login', true), array('class' => 'buttonSmall'));
+		echo $this->Form->submit(__d('forum', 'Login', true), array('class' => 'buttonSmall', 'div' => false));
 		echo $this->Form->end(); ?>
 	</div>
 

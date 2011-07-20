@@ -9,6 +9,8 @@
  */
   
 Configure::load('Forum.config');
+Configure::write('Forum.settings', ClassRegistry::init('Forum.Setting')->getSettings());
+
 App::import('Core', 'Sanitize');
 
 class ForumAppController extends AppController {
@@ -70,7 +72,7 @@ class ForumAppController extends AppController {
 			}
 		}
 	}
-	
+
 	/**
 	 * Before filter.
 	 */
@@ -84,8 +86,7 @@ class ForumAppController extends AppController {
 
 		// Settings
 		$this->config = Configure::read('Forum');
-		$this->settings = ClassRegistry::init('Forum.Setting')->getSettings();
-		Configure::write('Forum.settings', $this->settings);
+		$this->settings = Configure::read('Forum.settings');
 		
 		// Localization
 		$locale = $this->Auth->user('locale') ? $this->Auth->user('locale') : $this->settings['default_locale'];
@@ -121,8 +122,9 @@ class ForumAppController extends AppController {
 	 * Before render.
 	 */
 	public function beforeRender() {
-		$this->set('config', Configure::read('Forum'));
-		$this->set('settings', Configure::read('Forum.settings'));
+		$this->set('user', $this->Auth->user());
+		$this->set('config', $this->config);
+		$this->set('settings', $this->settings);
 	}
 
 }
