@@ -9,7 +9,15 @@ if (!empty($topic['Forum']['Parent']['slug'])) {
 $this->Html->addCrumb($topic['Forum']['title'], array('controller' => 'stations', 'action' => 'view', $topic['Forum']['slug'])); ?>
 
 <div class="title">
-	<h2><?php echo $topic['Topic']['title']; ?></h2>
+	<h2>
+		<?php if ($topic['Topic']['type'] > 0) {
+			echo '<span>'. $this->Common->options('topicTypes', $topic['Topic']['type']) .':</span> ';
+		} else if ($topic['Topic']['status'] == 0) {
+			echo '<span>'. __d('forum', 'Closed', true) .':</span> ';
+		}
+		
+		echo $topic['Topic']['title']; ?>
+	</h2>
 </div>
 
 <?php echo $this->element('tiles/topic_controls', array(
@@ -45,7 +53,7 @@ if (!empty($topic['Poll']['id'])) { ?>
 
 					<tr class="headRow">
 						<td colspan="3" class="align-center">
-							<?php if ($this->Common->user()) {
+							<?php if ($user) {
 								if (!empty($topic['Poll']['expires']) && $topic['Poll']['expires'] <= date('Y-m-d H:i:s')) { 
 									__d('forum', 'Voting on this poll has been closed');
 								} else { 
@@ -100,19 +108,26 @@ if (!empty($topic['Poll']['id'])) { ?>
 						<?php echo $this->Time->niceShort($post['Post']['created'], $this->Common->timezone()); ?>
 					</td>
 					<td class="align-right dark">
-						<?php if ($this->Common->user()) {
+						<?php if ($user) {
 							$links = array();
 
-							if ($this->Common->hasAccess(AccessLevel::SUPER, $topic['Forum']['id']) || $this->Common->user('id') == $post['Post']['user_id']) {
-								if ($topic['Topic']['firstPost_id'] == $post['Post']['id']) {
-									$links[] = $this->Html->link(__d('forum', 'Edit', true), array('controller' => 'topics', 'action' => 'edit', $topic['Topic']['slug']));
-									$links[] = $this->Html->link(__d('forum', 'Delete', true), array('controller' => 'topics', 'action' => 'delete', $topic['Topic']['slug']), array('confirm' => __d('forum', 'Are you sure you want to delete?', true)));
-									$links[] = $this->Html->link(__d('forum', 'Report Topic', true), array('controller' => 'topics', 'action' => 'report', $topic['Topic']['slug']));
-								} else {
-									$links[] = $this->Html->link(__d('forum', 'Edit', true), array('controller' => 'posts', 'action' => 'edit', $post['Post']['id']));
-									$links[] = $this->Html->link(__d('forum', 'Delete', true), array('controller' => 'posts', 'action' => 'delete', $post['Post']['id']), array('confirm' => __d('forum', 'Are you sure you want to delete?', true)));
-									$links[] = $this->Html->link(__d('forum', 'Report Post', true), array('controller' => 'posts', 'action' => 'report', $post['Post']['id']));
+							if ($topic['Topic']['firstPost_id'] == $post['Post']['id']) {
+								if ($this->Common->hasAccess(AccessLevel::SUPER, $topic['Forum']['id']) || ($topic['Topic']['status'] && $user['User']['id'] == $post['Post']['user_id'])) {
+									$links[] = $this->Html->link(__d('forum', 'Edit Topic', true), array('controller' => 'topics', 'action' => 'edit', $topic['Topic']['slug']));
 								}
+
+								if ($this->Common->hasAccess(AccessLevel::SUPER, $topic['Forum']['id'])) {
+									$links[] = $this->Html->link(__d('forum', 'Delete Topic', true), array('controller' => 'topics', 'action' => 'delete', $topic['Topic']['slug']), array('confirm' => __d('forum', 'Are you sure you want to delete?', true)));
+								}
+
+								$links[] = $this->Html->link(__d('forum', 'Report Topic', true), array('controller' => 'topics', 'action' => 'report', $topic['Topic']['slug']));
+							} else {
+								if ($user['User']['id'] == $post['Post']['user_id']) {
+									$links[] = $this->Html->link(__d('forum', 'Edit Post', true), array('controller' => 'posts', 'action' => 'edit', $post['Post']['id']));
+									$links[] = $this->Html->link(__d('forum', 'Delete Post', true), array('controller' => 'posts', 'action' => 'delete', $post['Post']['id']), array('confirm' => __d('forum', 'Are you sure you want to delete?', true)));
+								}
+								
+								$links[] = $this->Html->link(__d('forum', 'Report Post', true), array('controller' => 'posts', 'action' => 'report', $post['Post']['id']));
 							}
 
 							if ($this->Common->hasAccess($topic['Forum']['accessReply'])) {
@@ -164,7 +179,7 @@ if (!empty($topic['Poll']['id'])) { ?>
 	'topic' => $topic
 ));
 
-if ($settings['enable_quick_reply'] && $this->Common->hasAccess($topic['Forum']['accessReply'])) { ?>
+if ($user && $settings['enable_quick_reply'] && $this->Common->hasAccess($topic['Forum']['accessReply'])) { ?>
 
 	<div id="quickReply" class="container">
 		<div class="containerHeader">

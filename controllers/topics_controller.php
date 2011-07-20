@@ -77,7 +77,6 @@ class TopicsController extends ForumAppController {
 		
 		if (!empty($this->data)) {
 			$this->data['Topic']['user_id'] = $user_id;
-			$this->data['Topic']['forum_id'] = $forum['Forum']['id'];
 			$this->data['Topic']['userIP'] = $this->RequestHandler->getClientIp();
 
 			if ($topic_id = $this->Topic->addTopic($this->data['Topic'])) {
@@ -128,7 +127,6 @@ class TopicsController extends ForumAppController {
 		$this->Toolbar->pageTitle(__d('forum', 'Edit Topic', true));
 		$this->set('topic', $topic);
 		$this->set('forums', $this->Topic->Forum->getGroupedHierarchy('accessPost'));
-		$this->set('rssFeed', $slug);
 	}
 	
 	/**
@@ -204,7 +202,6 @@ class TopicsController extends ForumAppController {
 		
 		$this->Toolbar->pageTitle(__d('forum', 'Report Topic', true));
 		$this->set('topic', $topic);
-		$this->set('rssFeed', $slug);
 	}
 
 	/**
@@ -221,21 +218,21 @@ class TopicsController extends ForumAppController {
 			'permission' => $topic['Forum']['accessRead']
 		));
 		
+		if (!empty($this->data['Poll']['option'])) {
+			$this->Topic->Poll->vote($topic['Poll']['id'], $this->data['Poll']['option'], $user_id);
+			$this->redirect(array('plugin' => 'forum', 'controller' => 'topics', 'action' => 'view', $slug));
+		}
+		
 		$this->Toolbar->markAsRead($topic['Topic']['id']);
 		$this->Topic->increaseViews($topic['Topic']['id']);
 		
 		$this->paginate['Post']['limit'] = $this->settings['posts_per_page'];
 		$this->paginate['Post']['conditions'] = array('Post.topic_id' => $topic['Topic']['id']);
 		
-		if (!empty($this->data['Poll']['option'])) {
-			$this->Topic->Poll->vote($topic['Poll']['id'], $this->data['Poll']['option'], $user_id);
-			$this->redirect(array('plugin' => 'forum', 'controller' => 'topics', 'action' => 'view', $slug));
-		}
-
 		$this->Toolbar->pageTitle($topic['Forum']['title'], $topic['Topic']['title']);
 		$this->set('topic', $topic);
 		$this->set('posts', $this->paginate('Post'));
-		$this->set('rssFeed', $slug);
+		$this->set('rss', $slug);
 	}
 	
 	/**
@@ -284,7 +281,7 @@ class TopicsController extends ForumAppController {
 		$this->Auth->allow('index', 'view', 'feed');
 		$this->Security->disabledFields = array('option', 'items');
 
-		$this->set('menuTab', '');
+		$this->set('menuTab', 'forums');
 	}
 
 }

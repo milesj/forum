@@ -7,7 +7,7 @@ if (!empty($topic['Forum']['Parent']['slug'])) {
 }
 
 $this->Html->addCrumb($topic['Forum']['title'], array('controller' => 'stations', 'action' => 'view', $topic['Forum']['slug']));
-$this->Html->addCrumb($topic['Topic']['title'], array('controller' => 'stations', 'action' => 'view', $topic['Topic']['slug'])); ?>
+$this->Html->addCrumb($topic['Topic']['title'], array('controller' => 'topics', 'action' => 'view', $topic['Topic']['slug'])); ?>
 
 <div class="title">
 	<h2><?php __d('forum', 'Edit Topic'); ?></h2>

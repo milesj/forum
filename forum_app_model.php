@@ -176,10 +176,11 @@ class ForumAppModel extends AppModel {
 	 * @access public
 	 * @param string $field
 	 * @param mixed $value
+	 * @param mixed $param
 	 * @return string
 	 */
-	public function invalidate($field, $value = true) {
-		return parent::invalidate($field, __d('forum', $value, true));
+	public function invalidate($field, $value = true, $param = '') {
+		return parent::invalidate($field, sprintf(__d('forum', $value, true), $param));
 	}
 	
 	/**

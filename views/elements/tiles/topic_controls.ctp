@@ -1,4 +1,4 @@
-<?php if ($this->Common->user()) { ?>
+<?php if ($user) { ?>
 	<div class="controls">
 		<?php if ($this->Common->hasAccess(AccessLevel::MOD, $topic['Forum']['id'])) {
 			echo $this->Html->link(__d('forum', 'Moderate', true), array('controller' => 'topics', 'action' => 'moderate', $topic['Topic']['slug']), array('class' => 'button'));

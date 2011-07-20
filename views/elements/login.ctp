@@ -1,5 +1,5 @@
 
-<?php if (!$this->Common->user()) { ?>
+<?php if (!$user) { ?>
 
 	<div class="login">
 		<?php 

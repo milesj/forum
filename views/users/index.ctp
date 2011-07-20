@@ -30,27 +30,27 @@ $this->Html->addCrumb(__d('forum', 'Users', true), array('controller' => 'users'
 		</tr>
 
 		<?php if (!empty($users)) {
-			foreach ($users as $counter => $user) { ?>
+			foreach ($users as $counter => $profile) { ?>
 
 			<tr<?php if ($counter % 2) echo ' class="altRow"'; ?>>
-				<td><?php echo $this->Html->link($user['User'][$config['userMap']['username']], array('action' => 'profile', $user['User']['id'])); ?></td>
-				<td class="created"><?php echo $this->Time->nice($user['Profile']['created'], $this->Common->timezone()); ?></td>
+				<td><?php echo $this->Html->link($profile['User'][$config['userMap']['username']], array('action' => 'profile', $profile['User']['id'])); ?></td>
+				<td class="created"><?php echo $this->Time->nice($profile['Profile']['created'], $this->Common->timezone()); ?></td>
 				<td class="created">
-					<?php if (!empty($user['Profile']['lastLogin'])) {
-						echo $this->Time->relativeTime($user['Profile']['lastLogin'], array('userOffset' => $this->Common->timezone()));
+					<?php if (!empty($profile['Profile']['lastLogin'])) {
+						echo $this->Time->relativeTime($profile['Profile']['lastLogin'], array('userOffset' => $this->Common->timezone()));
 					} else {
 						echo '<em class="gray">'. __d('forum', 'Never', true) .'</em>';
 					} ?>
 				</td>
-				<td class="stat"><?php echo number_format($user['Profile']['totalTopics']); ?></td>
-				<td class="stat"><?php echo number_format($user['Profile']['totalPosts']); ?></td>
+				<td class="stat"><?php echo number_format($profile['Profile']['totalTopics']); ?></td>
+				<td class="stat"><?php echo number_format($profile['Profile']['totalPosts']); ?></td>
 			</tr>
 
 			<?php }
 		} else { ?>
 
 			<tr>
-				<td colspan="5" class="empty"><?php __d('forum', 'There are no users signed up on this forum.'); ?></td>
+				<td colspan="5" class="empty"><?php __d('forum', 'There are no users to display.'); ?></td>
 			</tr>
 
 		<?php } ?>

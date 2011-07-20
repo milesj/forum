@@ -1,5 +1,5 @@
 
-<?php if ($this->Common->user()) { ?>
+<?php if ($user) { ?>
     <div class="controls <?php echo isset($class) ? $class : ''; ?>">
 		<?php if ($this->Common->hasAccess(AccessLevel::MOD, $forum['Forum']['id'])) {
             echo $this->Html->link(__d('forum', 'Moderate', true), array('controller' => 'stations', 'action' => 'moderate', $forum['Forum']['slug']), array('class' => 'button'));

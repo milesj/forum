@@ -314,32 +314,5 @@ class CommonHelper extends AppHelper {
 
 		return $this->output('<strong>'. $types[$type] .'</strong>');
 	}
-	
-	/**
-	 * Checks to see if a user is logged in.
-	 * 
-	 * @access public
-	 * @param string $key
-	 * @return boolean|string
-	 */
-	public function user($key = '') {
-		if (empty($key)) {
-			return $this->Session->check('Auth.User');
-		}
-		
-		if ($key == 'id') {
-			$user_id = $this->Session->read('Auth.User.id');
-			
-			if (is_numeric($user_id) && $user_id > 0) {
-				return $user_id;
-			}
-		} else {
-			if ($this->Session->check('Auth.User.'. $key)) {
-				return $this->Session->read('Auth.User.'. $key);
-			}
-		}
-		
-		return false;
-	}
 
 }

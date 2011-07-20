@@ -65,7 +65,7 @@ class PostsController extends ForumAppController {
 			}
 		}
 		
-		$this->Toolbar->pageTitle(__d('forum', 'Post Reply', true));
+		$this->Toolbar->pageTitle(__d('forum', 'Post Reply', true), $topic['Topic']['title']);
 		$this->set('topic', $topic);
 		$this->set('review', $this->Post->getTopicReview($topic['Topic']['id']));
 	}
@@ -88,7 +88,7 @@ class PostsController extends ForumAppController {
 		if (!empty($this->data)) {
 			$this->Post->id = $id;
 			
-			if ($this->Post->save($this->data, true, array('content'))) {
+			if ($this->Post->save($this->data, true, array('content', 'contentHtml'))) {
 				$this->Toolbar->goToPage($post['Post']['topic_id'], $id);
 			}
 		} else {
@@ -156,7 +156,7 @@ class PostsController extends ForumAppController {
 		
 		$this->Auth->allow('index');
 		
-		$this->set('menuTab', '');
+		$this->set('menuTab', 'forums');
 	}
 
 }

@@ -286,10 +286,8 @@ select {
 .controls .button { margin-left: 10px; }
 	
 .title { margin: 20px 0; }
-.title h2 { 
-	font-size: 24px; 
-	color: #823382; 
-	margin-bottom: 10px; }
+.title h2 { font-size: 24px; color: #823382; margin-bottom: 10px; }
+.title h2 span { color: #A4A4A4; }
 
 .moderate { margin: 20px 0; }
 .moderate select { margin-right: 10px; }

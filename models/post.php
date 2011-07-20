@@ -52,19 +52,18 @@ class Post extends ForumAppModel {
 			$isAdmin = $this->Session->read('Forum.isAdmin');
 
 			if (($secondsLeft = $this->checkFlooding($this->settings['post_flood_interval'])) > 0 && !$isAdmin) {
-				return $this->invalidate('content', 'You must wait '. $secondsLeft .' more second(s) till you can post a reply');
+				return $this->invalidate('content', 'You must wait %s more second(s) till you can post a reply', $secondsLeft);
 				
 			} else if ($this->checkHourly($this->settings['posts_per_hour']) && !$isAdmin) {
-				return $this->invalidate('content', 'You are only allowed to post '. $this->settings['topics_per_hour'] .' time(s) per hour');
+				return $this->invalidate('content', 'You are only allowed to post %s time(s) per hour', $this->settings['posts_per_hour']);
 				
 			} else {
 				$data['content'] = Sanitize::clean($data['content']);
-				$data['contentHtml'] = $data['content'];
 				
 				// @todo - decoda
 				
 				$this->create();
-				$this->save($data, false, array('topic_id', 'forum_id', 'user_id', 'userIP', 'content'));
+				$this->save($data, false, array('topic_id', 'forum_id', 'user_id', 'userIP', 'content', 'contentHtml'));
 
 				$data['post_id'] = $this->id;
 				
@@ -100,8 +99,7 @@ class Post extends ForumAppModel {
 			'forum_id' => $data['forum_id'],
 			'user_id' => $data['user_id'],
 			'userIP' => $data['userIP'],
-			'content' => Sanitize::clean($data['content']),
-			'contentHtml' => Sanitize::clean($data['content'])
+			'content' => Sanitize::clean($data['content'])
 		), false);
 		
 		// @todo - decoda
@@ -239,4 +237,15 @@ class Post extends ForumAppModel {
 		));
 	}
 
+	/**
+	 * Parse the HTML version.
+	 */
+	public function beforeSave($options) {
+		if (isset($this->data['Post']['content'])) {
+			$this->data['Post']['contentHtml'] = $this->data['Post']['content'];
+		}
+		
+		return true;
+	}
+	
 }

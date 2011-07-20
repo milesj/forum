@@ -27,7 +27,11 @@ class StationsController extends ForumAppController {
 	public $paginate = array(  
 		'Topic' => array(
 			'order' => array('LastPost.created' => 'DESC'),
-			'contain' => array('User', 'LastPost', 'LastUser', 'Poll')
+			'contain' => array(
+				'User', 'LastPost', 'LastUser', 
+				'Poll.id', 
+				'Forum.id', 'Forum.settingPostCount', 'Forum.settingAutoLock'
+			)
 		)
 	);
 	
@@ -61,7 +65,7 @@ class StationsController extends ForumAppController {
 		$this->set('forum', $forum);
 		$this->set('topics', $this->paginate('Topic'));
 		$this->set('stickies', $this->Forum->Topic->getStickiesInForum($forum['Forum']['id']));
-		$this->set('rssFeed', $slug);
+		$this->set('rss', $slug);
 	}
 
 	/**
@@ -116,7 +120,6 @@ class StationsController extends ForumAppController {
 		$this->set('forum', $forum);
 		$this->set('topics', $this->paginate('Topic'));
 		$this->set('forums', $this->Forum->getGroupedHierarchy('accessRead'));
-		$this->set('rssFeed', $forum['Forum']['slug']);
 	}
 	
 	/**

@@ -29,7 +29,7 @@ $this->Html->addCrumb($forum['Forum']['title'], array('controller' => 'stations'
 			echo $this->Form->input('options', array(
 				'type' => 'textarea',
 				'label' => __d('forum', 'Poll Options', true), 
-				'after' => '<span class="inputText">'. __d('forum', 'One option per line. Max 10 options', true) .'</span>', 
+				'after' => '<span class="inputText">'. __d('forum', 'One option per line. Max 10 options.', true) .'</span>', 
 				'rows' => 5
 			));
 			

@@ -12,8 +12,8 @@ echo $this->Html->script('/forum/js/forum.js');
 
 if ($this->params['controller'] == 'home') {
 	echo $this->Html->meta(__d('forum', 'RSS Feed - Latest Topics', true), array('action' => 'feed', 'ext' => 'rss'), array('type' => 'rss'));
-} else if (isset($rssFeed) && in_array($this->params['controller'], array('stations', 'topics'))) {
-	echo $this->Html->meta(__d('forum', 'RSS Feed - Content Review', true), array('action' => 'feed', $rssFeed, 'ext' => 'rss'), array('type' => 'rss'));
+} else if (isset($rss) && in_array($this->params['controller'], array('stations', 'topics'))) {
+	echo $this->Html->meta(__d('forum', 'RSS Feed - Content Review', true), array('action' => 'feed', $rss, 'ext' => 'rss'), array('type' => 'rss'));
 }
 
 echo $scripts_for_layout; ?>
@@ -31,13 +31,14 @@ echo $scripts_for_layout; ?>
 			</h1>
 
 			<ul class="menu">
-				<li<?php if ($menuTab == 'home') echo ' class="active"'; ?>><?php echo $this->Html->link(__d('forum', 'Home', true), array('controller' => 'forum', 'action' => 'index')); ?></li>
+				<li<?php if ($menuTab == 'home') echo ' class="active"'; ?>><?php echo $this->Html->link(__d('forum', 'Home', true), $settings['site_main_url']); ?></li>
+				<li<?php if ($menuTab == 'forums') echo ' class="active"'; ?>><?php echo $this->Html->link(__d('forum', 'Forums', true), array('controller' => 'forum', 'action' => 'index')); ?></li>
 				<li<?php if ($menuTab == 'search') echo ' class="active"'; ?>><?php echo $this->Html->link(__d('forum', 'Search', true), array('controller' => 'search', 'action' => 'index')); ?></li>
 				<li<?php if ($menuTab == 'rules') echo ' class="active"'; ?>><?php echo $this->Html->link(__d('forum', 'Rules', true), array('controller' => 'forum', 'action' => 'rules')); ?></li>
 				<li<?php if ($menuTab == 'help') echo ' class="active"'; ?>><?php echo $this->Html->link(__d('forum', 'Help', true), array('controller' => 'forum', 'action' => 'help')); ?></li>
 				<li<?php if ($menuTab == 'users') echo ' class="active"'; ?>><?php echo $this->Html->link(__d('forum', 'Users', true), array('controller' => 'users', 'action' => 'index')); ?></li>
 
-				<?php if ($this->Common->user() && $this->Common->hasAccess(AccessLevel::ADMIN)) { ?>
+				<?php if ($user && $this->Common->hasAccess(AccessLevel::ADMIN)) { ?>
 					<li><?php echo $this->Html->link(__d('forum', 'Admin', true), array('controller' => 'forum', 'action' => 'index', 'admin' => true)); ?></li>
 				<?php } ?>
 			</ul>

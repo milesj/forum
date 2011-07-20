@@ -120,10 +120,10 @@ class Topic extends ForumAppModel {
 			$isAdmin = $this->Session->read('Forum.isAdmin');
 
 			if (($secondsLeft = $this->checkFlooding($this->settings['topic_flood_interval'])) > 0 && !$isAdmin) {
-				return $this->invalidate('title', 'You must wait '. $secondsLeft .' more second(s) till you can post a topic');
+				return $this->invalidate('title', 'You must wait %s more second(s) till you can post a topic', $secondsLeft);
 				
 			} else if ($this->checkHourly($this->settings['topics_per_hour']) && !$isAdmin) {
-				return $this->invalidate('title', 'You are only allowed to post '. $this->settings['topics_per_hour'] .' topic(s) per hour');
+				return $this->invalidate('title', 'You are only allowed to post %s topic(s) per hour', $this->settings['topics_per_hour']);
 				
 			} else {
 				$data['title'] = Sanitize::clean($data['title']);
@@ -219,9 +219,9 @@ class Topic extends ForumAppModel {
 		$clean = array();
 
 		if (!empty($options)) {
-			foreach ($options as $o) {
-				if ($o != '') {
-					$clean[] = $o;
+			foreach ($options as $option) {
+				if ($option !== '') {
+					$clean[] = $option;
 				}
 			}
 		}
@@ -281,13 +281,12 @@ class Topic extends ForumAppModel {
 					
 					if (!empty($data['PollOption'])) {
 						foreach ($data['PollOption'] as $option) {
-							if ($option['delete'] != 0) {
+							if ($option['delete']) {
 								$this->Poll->PollOption->delete($option['id'], true);
-							} else {
-								if ($option['option'] != '') {
-									$this->Poll->PollOption->id = $option['id'];
-									$this->Poll->PollOption->save($option, false, array('option', 'vote_count'));
-								}
+								
+							} else if ($option['option'] !== '') {
+								$this->Poll->PollOption->id = $option['id'];
+								$this->Poll->PollOption->save($option, false, array('option', 'vote_count'));
 							}
 						}
 					}
@@ -420,61 +419,33 @@ class Topic extends ForumAppModel {
 	/**
 	 * After find.
 	 * 
-	 * @todo
-	 * 
 	 * @access public
 	 * @param array $results
 	 * @param boolean $primary
 	 * @return array
 	 */
-	public function afterFind($results, $primary = NULL) {
-		if (!empty($results)) {
-			$postsPerPage = Configure::read('Forum.settings.posts_per_page');
-			$autoLock = Configure::read('Forum.settings.days_till_autolock');
+	public function afterFind($results, $primary = false) {
+		if (!empty($results) && $primary) {
+			$postsPerPage = $this->settings['posts_per_page'];
+			$autoLock = $this->settings['days_till_autolock'];
 			
-			if ($primary === true) {	
-				foreach ($results as &$result) {
-					if (isset($result['Topic'])) {
+			foreach ($results as &$result) {
+				if (isset($result['Topic'])) {
+					$lock = isset($result['Forum']) ? $result['Forum']['settingAutoLock'] : false;
 					
-						// Get total pages
-						if (!empty($result['Topic']['post_count'])) {
-							$result['Topic']['page_count'] = ($result['Topic']['post_count'] > $postsPerPage) ? ceil($result['Topic']['post_count'] / $postsPerPage) : 1;
-						} else {
-							$result['Topic']['page_count'] = 1;
-						}
-						
-						// Automatically lock threads
-						if (!empty($result['Topic']['forum_id'])) {
-							$forum = ClassRegistry::init('Forum.Forum')->find('first', array(
-								'fields' => array('Forum.settingAutoLock'),
-								'conditions' => array('Forum.id' => $result['Topic']['forum_id']),
-								'contain' => false
-							));
-							$lock = ($forum['Forum']['settingAutoLock'] == 1) ? 'yes' : 'no';
-						} else {
-							$lock = 'yes';
-						}
-			
-						if (isset($result['LastPost']['created'])) {
-							$lastTime = $result['LastPost']['created'];
-						} else if (isset($result['Topic']['modified'])) {
-							$lastTime = $result['Topic']['modified'];
-						}
-						
-						if (!empty($lastTime) && $lock == 'yes') {
-							if (strtotime($lastTime) < strtotime('-'. $autoLock .' days')) {
-								$result['Topic']['status'] = 1;
-							}
-						}
+					if (isset($result['LastPost'])) {
+						$lastTime = $result['LastPost']['created'];
+					} else if (isset($result['Topic']['modified'])) {
+						$lastTime = $result['Topic']['modified'];
 					}
-				}
-				
-			} else {
-				// Get total pages
-				if (!empty($results['post_count'])) {
-					$results['page_count'] = ($results['post_count'] > $postsPerPage) ? ceil($results['post_count'] / $postsPerPage) : 1;
-				} else {
-					$results['page_count'] = 1;
+					
+					if (isset($result['Topic']['post_count'])) {
+						$result['Topic']['page_count'] = ($result['Topic']['post_count'] > $postsPerPage) ? ceil($result['Topic']['post_count'] / $postsPerPage) : 1;
+					}
+
+					if ($lock && $lastTime && (strtotime($lastTime) < strtotime('-'. $autoLock .' days'))) {
+						$result['Topic']['status'] = 1;
+					}
 				}
 			}
 		}

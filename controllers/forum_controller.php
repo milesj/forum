@@ -23,7 +23,7 @@ class ForumController extends ForumAppController {
 	 */
 	public function index() {
 		$this->Toolbar->pageTitle(__d('forum', 'Index', true));
-		$this->set('menuTab', 'home');
+		$this->set('menuTab', 'forums');
 		$this->set('forums', 		$this->Topic->Forum->getIndex());
 		$this->set('totalPosts', 	$this->Topic->Post->getTotal());
 		$this->set('totalTopics', 	$this->Topic->getTotal());
