@@ -142,6 +142,8 @@ class PostsController extends ForumAppController {
 				$this->Session->setFlash(__d('forum', 'You have succesfully reported this post! A moderator will review this post and take the necessary action.', true));
 				unset($this->data['Report']);
 			}
+		} else {
+			$this->data['Report']['post'] = $post['Post']['content'];
 		}
 		
 		$this->Toolbar->pageTitle(__d('forum', 'Report Post', true));

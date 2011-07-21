@@ -25,7 +25,7 @@ $this->Html->addCrumb($forum['Forum']['title'], array('controller' => 'stations'
 		<table class="table topics">
 			<thead>
 				<tr>
-					<th><input type="checkbox" onclick="forum.toggleCheckboxes(this);" /></th>
+					<th><input type="checkbox" onclick="Forum.toggleCheckboxes(this);" /></th>
 					<th><?php echo $this->Paginator->sort(__d('forum', 'Topic', true), 'Topic.title'); ?></th>
 					<th><?php echo $this->Paginator->sort(__d('forum', 'Status', true), 'Topic.status'); ?></th>
 					<th><?php echo $this->Paginator->sort(__d('forum', 'Author', true), 'User.'. $config['userMap']['username']); ?></th>
@@ -48,7 +48,7 @@ $this->Html->addCrumb($forum['Forum']['title'], array('controller' => 'stations'
 			} else { ?>
 
 				<tr>
-					<td colspan="7" class="empty"><?php __d('forum', 'There are no topics within this forum category.'); ?></td>
+					<td colspan="8" class="empty"><?php __d('forum', 'There are no topics within this forum.'); ?></td>
 				</tr>
 
 			<?php } ?>
@@ -68,9 +68,9 @@ $this->Html->addCrumb($forum['Forum']['title'], array('controller' => 'stations'
 	<?php 
 	echo $this->Form->input('action', array(
 		'options' => array(
-			'move' => __d('forum', 'Move Topic(s)', true),
 			'open' => __d('forum', 'Open Topic(s)', true),
 			'close' => __d('forum', 'Close Topic(s)', true),
+			'move' => __d('forum', 'Move Topic(s)', true),
 			'delete' => __d('forum', 'Delete Topic(s)', true)
 		),
 		'div' => false, 

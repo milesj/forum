@@ -43,34 +43,12 @@ class ForumAppController extends AppController {
 	 * Run auto login logic.
 	 *
 	 * @access public
-	 * @param array $user - The logged in User
+	 * @param array $user
 	 * @return void
 	 */
 	public function _autoLogin($user) {
-		ClassRegistry::init('Forum.Profile')->login($user);
-
+		ClassRegistry::init('Forum.Profile')->login($user['User']['id']);
 		$this->Session->delete('Forum');
-		$this->Toolbar->initForum();
-	}
-
-	/**
-	 * Refreshes the Auth to get new data.
-	 *
-	 * @access public
-	 * @param string $field
-	 * @param string $value
-	 * @return void
-	 */
-	public function _refreshAuth($field = '', $value = '') {
-		if (!empty($field) && !empty($value)) {
-			$this->Session->write($this->Auth->sessionKey .'.'. $field, $value);
-		} else {
-			if (isset($this->User)) {
-				$this->Auth->login($this->User->read(false, $this->Auth->user('id')));
-			} else {
-				$this->Auth->login(ClassRegistry::init('Forum.Profile')->User->findById($this->Auth->user('id')));
-			}
-		}
 	}
 
 	/**
@@ -95,7 +73,7 @@ class ForumAppController extends AppController {
 		
 		// Authorization
 		$referer = $this->referer();
-		$routes = Configure::read('Forum.routes');
+		$routes = $this->config['routes'];
 
 		if (empty($referer) || $referer == '/forum/users/login' || $referer == '/admin/forum/users/login') {
 			$referer = array('plugin' => 'forum', 'controller' => 'forum', 'action' => 'index');

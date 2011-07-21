@@ -166,6 +166,8 @@ class Profile extends ForumAppModel {
 	 */
 	public function login($user_id) {
 		if ($profile = $this->getUserProfile($user_id)) {
+			$this->id = $profile['Profile']['id'];
+			
 			return $this->save(array(
 				'currentLogin' => date('Y-m-d H:i:s'),
 				'lastLogin' => $profile['Profile']['currentLogin']
@@ -189,6 +191,19 @@ class Profile extends ForumAppModel {
 			'conditions' => array('Profile.currentLogin >' => date('Y-m-d H:i:s', strtotime('-'. $minutes .' minutes'))),
 			'contain' => array('User')
 		));
+	}
+
+	/**
+	 * Parse the HTML version.
+	 */
+	public function beforeSave($options) {
+		if (isset($this->data['Profile']['signature'])) {
+			$this->data['Profile']['signatureHtml'] = $this->data['Profile']['signature'];
+		}
+		
+		// @todo - decoda
+		
+		return true;
 	}
 
 }

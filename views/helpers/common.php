@@ -108,13 +108,13 @@ class CommonHelper extends AppHelper {
 	 * @return boolean 
 	 */
 	public function hasAccess($level = 1, $forum_id = null) { 
-		if ($level == AccessLevel::SUPER && $this->Session->read('Forum.isSuper')) {
+		if ($this->Session->read('Forum.isAdmin')) {
 			return true;
 			
-		} else if ($level == AccessLevel::ADMIN && $this->Session->read('Forum.isAdmin')) {
+		} else if ($level <= AccessLevel::SUPER && $this->Session->read('Forum.isSuper')) {
 			return true;
 			
-		} else if ($level == AccessLevel::MOD && !empty($forum_id)) {
+		} else if ($level <= AccessLevel::MOD && $forum_id) {
 			return in_array($forum_id, $this->Session->read('Forum.moderates'));
 		}
 		

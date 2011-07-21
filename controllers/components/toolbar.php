@@ -52,6 +52,7 @@ class ToolbarComponent extends Object {
 			
 			if ($user_id && $this->Controller->Auth->user($this->config['userMap']['status']) != $this->config['statusMap']['banned']) {
 				$access = ClassRegistry::init('Forum.Access')->getListByUser($user_id);
+				$highestAccess = 1;
 				
 				if (!empty($access)) {
 					foreach ($access as $level) {

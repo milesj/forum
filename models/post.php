@@ -58,10 +58,6 @@ class Post extends ForumAppModel {
 				return $this->invalidate('content', 'You are only allowed to post %s time(s) per hour', $this->settings['posts_per_hour']);
 				
 			} else {
-				$data['content'] = Sanitize::clean($data['content']);
-				
-				// @todo - decoda
-				
 				$this->create();
 				$this->save($data, false, array('topic_id', 'forum_id', 'user_id', 'userIP', 'content', 'contentHtml'));
 
@@ -99,10 +95,8 @@ class Post extends ForumAppModel {
 			'forum_id' => $data['forum_id'],
 			'user_id' => $data['user_id'],
 			'userIP' => $data['userIP'],
-			'content' => Sanitize::clean($data['content'])
+			'content' => $data['content']
 		), false);
-		
-		// @todo - decoda
 
 		return $this->id;
 	}
@@ -244,6 +238,8 @@ class Post extends ForumAppModel {
 		if (isset($this->data['Post']['content'])) {
 			$this->data['Post']['contentHtml'] = $this->data['Post']['content'];
 		}
+		
+		// @todo - decoda
 		
 		return true;
 	}

@@ -182,22 +182,6 @@ class ForumAppModel extends AppModel {
 	public function invalidate($field, $value = true, $param = '') {
 		return parent::invalidate($field, sprintf(__d('forum', $value, true), $param));
 	}
-	
-	/**
-	 * Validates two inputs against each other.
-	 *
-	 * @access public
-	 * @param array $data
-	 * @param string $confirmField
-	 * @return boolean
-	 */
-	public function isMatch($data, $confirmField) {
-		$data = array_values($data);
-		$var1 = $data[0];
-		$var2 = isset($this->data[$this->name][$confirmField]) ? $this->data[$this->name][$confirmField] : '';
-
-		return ($var1 === $var2);
-	}
 
 	/**
 	 * Update a row with certain fields.

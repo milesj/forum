@@ -93,6 +93,10 @@ class Topic extends ForumAppModel {
 	public $validate = array(
 		'title' => 'notEmpty',
 		'forum_id' => 'notEmpty',
+		'expires' => array(
+			'rule' => 'numeric',
+			'message' => 'Expiration must be a numerical value for days'
+		),
 		'options' => array(
 			'checkOptions' => array(
 				'rule' => array('checkOptions'),
@@ -425,28 +429,32 @@ class Topic extends ForumAppModel {
 	 * @return array
 	 */
 	public function afterFind($results, $primary = false) {
-		if (!empty($results) && $primary) {
+		if (!empty($results)) {
 			$postsPerPage = $this->settings['posts_per_page'];
 			$autoLock = $this->settings['days_till_autolock'];
 			
-			foreach ($results as &$result) {
-				if (isset($result['Topic'])) {
-					$lock = isset($result['Forum']) ? $result['Forum']['settingAutoLock'] : false;
-					
-					if (isset($result['LastPost'])) {
-						$lastTime = $result['LastPost']['created'];
-					} else if (isset($result['Topic']['modified'])) {
-						$lastTime = $result['Topic']['modified'];
-					}
-					
-					if (isset($result['Topic']['post_count'])) {
-						$result['Topic']['page_count'] = ($result['Topic']['post_count'] > $postsPerPage) ? ceil($result['Topic']['post_count'] / $postsPerPage) : 1;
-					}
+			if (isset($results[0])) {
+				foreach ($results as &$result) {
+					if (isset($result['Topic'])) {
+						$lock = isset($result['Forum']) ? $result['Forum']['settingAutoLock'] : false;
 
-					if ($lock && $lastTime && (strtotime($lastTime) < strtotime('-'. $autoLock .' days'))) {
-						$result['Topic']['status'] = 1;
+						if (isset($result['LastPost'])) {
+							$lastTime = $result['LastPost']['created'];
+						} else if (isset($result['Topic']['modified'])) {
+							$lastTime = $result['Topic']['modified'];
+						}
+
+						if (isset($result['Topic']['post_count'])) {
+							$result['Topic']['page_count'] = ($result['Topic']['post_count'] > $postsPerPage) ? ceil($result['Topic']['post_count'] / $postsPerPage) : 1;
+						}
+
+						if ($lock && $lastTime && (strtotime($lastTime) < strtotime('-'. $autoLock .' days'))) {
+							$result['Topic']['status'] = 1;
+						}
 					}
 				}
+			} else if (isset($results['post_count'])) {
+				$results['page_count'] = ($results['post_count'] > $postsPerPage) ? ceil($results['post_count'] / $postsPerPage) : 1;
 			}
 		}
 		

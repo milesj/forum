@@ -130,7 +130,7 @@ if (!empty($topic['Poll']['id'])) { ?>
 								$links[] = $this->Html->link(__d('forum', 'Report Post', true), array('controller' => 'posts', 'action' => 'report', $post['Post']['id']));
 							}
 
-							if ($this->Common->hasAccess($topic['Forum']['accessReply'])) {
+							if ($topic['Topic']['status'] && $this->Common->hasAccess($topic['Forum']['accessReply'])) {
 								$links[] = $this->Html->link(__d('forum', 'Quote', true), array('controller' => 'posts', 'action' => 'add', $topic['Topic']['slug'], $post['Post']['id']));
 							}
 
@@ -145,11 +145,13 @@ if (!empty($topic['Poll']['id'])) { ?>
 						<h4 class="username"><?php echo $this->Html->link($post['User'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'profile', $post['User']['id'])); ?></h4>
 
 						<?php if (!empty($post['User']['Access'])) { ?>
-							<p><strong><?php echo $this->Common->highestAccessLevel($post['User']['Access']); ?></strong></p>
+							<strong><?php echo $this->Common->highestAccessLevel($post['User']['Access']); ?></strong><br />
 						<?php } ?>
 
 						<?php if ($settings['enable_gravatar']) { ?>
-							<p><?php echo $this->Gravatar->image($post['User'][$config['userMap']['email']]); ?></p>
+							<div class="avatar">
+								<?php echo $this->Gravatar->image($post['User'][$config['userMap']['email']]); ?>
+							</div>
 						<?php } ?>
 
 						<strong><?php __d('forum', 'Joined'); ?>:</strong> <?php echo $this->Time->niceShort($post['User']['created'], $this->Common->timezone()); ?><br />
@@ -157,11 +159,13 @@ if (!empty($topic['Poll']['id'])) { ?>
 						<strong><?php __d('forum', 'Total Posts'); ?>:</strong> <?php echo number_format($post['User']['Profile']['totalPosts']); ?>
 					</td>
 					<td valign="top">
-						<?php echo $post['Post']['contentHtml']; ?>
+						<div class="post">
+							<?php echo $post['Post']['contentHtml']; ?>
+						</div>
 
-						<?php if (!empty($post['User']['signatureHtml'])) { ?>
+						<?php if (!empty($post['User']['Profile']['signatureHtml'])) { ?>
 							<div class="signature">
-								<?php echo $post['User']['signatureHtml']; ?>
+								<?php echo $post['User']['Profile']['signatureHtml']; ?>
 							</div>
 						<?php } ?>
 					</td>

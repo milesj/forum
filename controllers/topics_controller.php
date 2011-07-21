@@ -76,6 +76,7 @@ class TopicsController extends ForumAppController {
 		));
 		
 		if (!empty($this->data)) {
+			$this->data['Topic']['status'] = 1;
 			$this->data['Topic']['user_id'] = $user_id;
 			$this->data['Topic']['userIP'] = $this->RequestHandler->getClientIp();
 
@@ -121,6 +122,7 @@ class TopicsController extends ForumAppController {
 				}
 			}
 		} else {
+			$topic['Poll']['expires'] = $this->Topic->daysBetween($topic['Poll']['created'], $topic['Poll']['expires']);
 			$this->data = $topic;
 		}
 		
@@ -258,10 +260,12 @@ class TopicsController extends ForumAppController {
 				if (is_numeric($post_id)) {
 					if ($action == 'delete') {
 						$this->Topic->Post->delete($post_id, true);
-						$this->Session->setFlash(sprintf(__d('forum', 'A total of %d post(s) have been permanently deleted', true), count($items)));
+						$message = __d('forum', 'A total of %d post(s) have been permanently deleted', true);
 					}
 				}
 			}
+			
+			$this->Session->setFlash(sprintf($message, count($items)));
 		}
 		
 		$this->paginate['Post']['limit'] = $this->settings['posts_per_page'];

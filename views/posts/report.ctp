@@ -20,7 +20,7 @@ $this->Html->addCrumb($post['Topic']['title'], array('controller' => 'topics', '
 <div class="container">
 	<div class="containerContent">
 		<?php
-		echo $this->Form->input('post', array('type' => 'textarea', 'value' => $post['Post']['content'], 'readonly' => 'readonly', 'label' => __d('forum', 'Post', true)));
+		echo $this->Form->input('post', array('type' => 'textarea', 'readonly' => 'readonly', 'escape' => false, 'label' => __d('forum', 'Post', true)));
 		echo $this->Form->input('comment', array('type' => 'textarea', 'label' => __d('forum', 'Comment', true))); ?>
 	</div>
 </div>

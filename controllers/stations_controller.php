@@ -92,22 +92,24 @@ class StationsController extends ForumAppController {
 
 					if ($action == 'delete') {
 						$this->Forum->Topic->delete($topic_id, true);
-						$this->Session->setFlash(sprintf(__d('forum', 'A total of %d topic(s) have been permanently deleted', true), count($items)));
+						$message = __d('forum', 'A total of %d topic(s) have been permanently deleted', true);
 
 					} else if ($action == 'close') {
 						$this->Forum->Topic->saveField('status', Topic::STATUS_CLOSED);
-						$this->Session->setFlash(sprintf(__d('forum', 'A total of %d topic(s) have been locked to the public', true), count($items)));
+						$message = __d('forum', 'A total of %d topic(s) have been locked to the public', true);
 
 					} else if ($action == 'open') {
 						$this->Forum->Topic->saveField('status', Topic::STATUS_OPEN);
-						$this->Session->setFlash(sprintf(__d('forum', 'A total of %d topic(s) have been re-opened', true), count($items)));
+						$message = __d('forum', 'A total of %d topic(s) have been re-opened', true);
 
 					} else if ($action == 'move') {
 						$this->Forum->Topic->saveField('forum_id', $this->data['Topic']['move_id']);
-						$this->Session->setFlash(sprintf(__d('forum', 'A total of %d topic(s) have been moved to another forum category', true), count($items)));
+						$message = __d('forum', 'A total of %d topic(s) have been moved to another forum category', true);
 					}
 				}
 			}
+			
+			$this->Session->setFlash(sprintf($message, count($items)));
 		}
 		
 		$this->paginate['Topic']['limit'] = $this->settings['topics_per_page'];

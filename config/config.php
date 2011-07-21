@@ -35,8 +35,8 @@ $config['Forum']['statusMap'] = array(
 $config['Forum']['routes'] = array(
 	'login' => array('plugin' => 'forum', 'admin' => false, 'controller' => 'users', 'action' => 'login'),
 	'logout' => array('plugin' => 'forum', 'admin' => false, 'controller' => 'users', 'action' => 'logout'),
-	'signup' => array('plugin' => false, 'admin' => false, 'controller' => 'users', 'action' => 'signup'),
-	'forgotPass' => array('plugin' => false, 'admin' => false, 'controller' => 'users', 'action' => 'forgot_password')
+	'signup' => array(),
+	'forgotPass' => array()
 );
 
 /***************************************************

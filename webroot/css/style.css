@@ -93,7 +93,6 @@ select {
 ------------------------------------------------------*/
 	
 .navigation {
-	padding: 10px 20px;
 	color: #8f8f8f;
 	text-align: right;
 	background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.37, #131313), color-stop(0.85, #323232));
@@ -101,6 +100,12 @@ select {
 
 	.navigation a { color: #dbe4ef; }
 	.navigation a:hover { color: #fff; }
+	
+	.navigation div {
+		float: right;
+		padding: 10px;
+		border-left: 1px solid #323232;
+		border-right: 1px solid #131313; }
 
 .header {
 	padding: 20px 20px 0 20px;
@@ -168,7 +173,8 @@ select {
 	text-align: center;
 	padding: 20px; }
 
-	.footer a { color: #d8dde8; }
+	.footer a { color: #ab87ab; }
+	.footer a:hover { color: #f1e0f1; }
 	
 .content { 
 	padding: 20px; 
@@ -269,18 +275,27 @@ select {
 			color: #fff; }
 		
 	.pagination span { float: right; }
-	
-.subForums { margin-top: 10px; }
-.statistics { margin: 20px 0; }
-.username { font-size: 20px; }
 
 .pollBar {
 	height: 10px;
 	background: #823382;
 	display: block; }
 
+.signature { 
+	margin-top: 10px; 
+	padding-top: 10px;
+	height: 100px; 
+	border-top: 1px dotted #DBE4EF;
+	overflow: hidden; }
+	
+.subForums { margin-top: 10px; }
+.statistics { margin: 20px 0; }
+.username { font-size: 20px; }
+
 .topics,
 .posts { margin: 10px 0; }
+.post { width: 100%; overflow-x: hidden; }
+.avatar { margin: 10px 0; }
 
 .controls { margin: 20px 0; text-align: right; }
 .controls .button { margin-left: 10px; }

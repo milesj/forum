@@ -9,7 +9,7 @@
 // ----------------------------------------------------------------------------
 // Feel free to add more tags
 // ----------------------------------------------------------------------------
-mySettings = {
+var bbcodeSettings = {
 	nameSpace: 'bbcode',
 	previewParserPath: '', // path to your BBCode parser
 	markupSet: [
