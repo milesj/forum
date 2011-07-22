@@ -39,6 +39,7 @@ select {
 	input[type="checkbox"] { vertical-align: bottom; }
 	input[readonly],
 	textarea[readonly] { color: #A4A4A4; }
+	input.numeric { width: 100px !important; }
 
 .container .input { margin-bottom: 15px; }
 .container .input.text input,

@@ -8,15 +8,15 @@ if (!empty($forum['Parent']['slug'])) {
 
 $this->Html->addCrumb($forum['Forum']['title'], array('controller' => 'stations', 'action' => 'view', $forum['Forum']['slug'])); ?>
 
+<div class="controls float-right">
+	<?php echo $this->Html->link(__d('forum', 'Return to Forum', true), array('controller' => 'stations', 'action' => 'view', $forum['Forum']['slug']), array('class' => 'button')); ?>
+</div>
+
 <div class="title">
 	<h2><?php __d('forum', 'Moderate'); ?>: <?php echo $forum['Forum']['title']; ?></h2>
 </div>
 
 <?php echo $this->Form->create('Topic', array('url' => $this->here)); ?>
-
-<div class="controls">
-	<?php echo $this->Html->link(__d('forum', 'Return to Forum', true), array('controller' => 'stations', 'action' => 'view', $forum['Forum']['slug']), array('class' => 'button')); ?>
-</div>
 
 <div class="container" id="topics">
 	<div class="containerContent">
@@ -58,10 +58,6 @@ $this->Html->addCrumb($forum['Forum']['title'], array('controller' => 'stations'
 
 		<?php echo $this->element('pagination'); ?>
 	</div>
-</div>
-
-<div class="controls">
-	<?php echo $this->Html->link(__d('forum', 'Return to Forum', true), array('controller' => 'stations', 'action' => 'view', $forum['Forum']['slug']), array('class' => 'button')); ?>
 </div>
 
 <div class="moderate">

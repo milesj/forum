@@ -43,6 +43,20 @@ class Access extends ForumAppModel {
 	);
 	
 	/**
+	 * Return an access level and its user.
+	 * 
+	 * @access public
+	 * @param int $id
+	 * @return array 
+	 */
+	public function get($id) {
+		return $this->find('first', array(
+			'conditions' => array('Access.id' => $id),
+			'contain' => array('User', 'AccessLevel')
+		));
+	}
+	
+	/**
 	 * Get a list of all staff and their levels.
 	 *
 	 * @access public

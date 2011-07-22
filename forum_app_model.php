@@ -155,6 +155,20 @@ class ForumAppModel extends AppModel {
 		// Not caching
 		return parent::find($conditions, $fields, $order, $recursive);
 	}
+	
+	/**
+	 * Return data based on ID.
+	 * 
+	 * @access public
+	 * @param int $id
+	 * @return array
+	 */
+	public function get($id) {
+		return $this->find('first', array(
+			'conditions' => array('id' => $id),
+			'contain' => false
+		));
+	}
 
 	/**
 	 * Get a count of all rows.

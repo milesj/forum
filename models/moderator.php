@@ -34,6 +34,20 @@ class Moderator extends ForumAppModel {
 		'user_id' => 'notEmpty',
 		'forum_id' => 'notEmpty'
 	);
+		
+	/**
+	 * Return an moderator and their forum.
+	 * 
+	 * @access public
+	 * @param int $id
+	 * @return array 
+	 */
+	public function get($id) {
+		return $this->find('first', array(
+			'conditions' => array('Moderator.id' => $id),
+			'contain' => array('User', 'Forum')
+		));
+	}
 	
 	/**
 	 * Return a list of all moderators and their forums.

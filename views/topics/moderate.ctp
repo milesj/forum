@@ -9,14 +9,14 @@ if (!empty($topic['Forum']['Parent']['slug'])) {
 $this->Html->addCrumb($topic['Forum']['title'], array('controller' => 'stations', 'action' => 'view', $topic['Forum']['slug']));
 $this->Html->addCrumb($topic['Topic']['title'], array('controller' => 'topics', 'action' => 'view', $topic['Topic']['slug'])); ?>
 
-<div class="title">
-	<h2><span><?php __d('forum', 'Moderate'); ?>:</span> <?php echo $topic['Topic']['title']; ?></h2>
-</div>
-
-<div class="controls">
+<div class="controls float-right">
 	<?php 
 	echo $this->Html->link(__d('forum', 'Delete Topic', true), array('controller' => 'topics', 'action' => 'delete', $topic['Topic']['slug']), array('class' => 'button', 'confirm' => __d('forum', 'Are you sure you want to delete?', true)));
 	echo $this->Html->link(__d('forum', 'Return to Topic', true), array('controller' => 'topics', 'action' => 'view', $topic['Topic']['slug']), array('class' => 'button')); ?>
+</div>
+
+<div class="title">
+	<h2><span><?php __d('forum', 'Moderate'); ?>:</span> <?php echo $topic['Topic']['title']; ?></h2>
 </div>
 
 <?php echo $this->Form->create('Post', array('url' => $this->here)); ?>
@@ -64,12 +64,6 @@ $this->Html->addCrumb($topic['Topic']['title'], array('controller' => 'topics', 
 
 		<?php echo $this->element('pagination'); ?>
 	</div>
-</div>
-
-<div class="controls">
-	<?php 
-	echo $this->Html->link(__d('forum', 'Delete Topic', true), array('controller' => 'topics', 'action' => 'delete', $topic['Topic']['slug']), array('class' => 'button', 'confirm' => __d('forum', 'Are you sure you want to delete?', true)));
-	echo $this->Html->link(__d('forum', 'Return to Topic', true), array('controller' => 'topics', 'action' => 'view', $topic['Topic']['slug']), array('class' => 'button')); ?>
 </div>
 
 <div class="moderate">

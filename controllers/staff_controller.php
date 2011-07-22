@@ -16,16 +16,13 @@ class StaffController extends ForumAppController {
 	 * @access public
 	 * @var array
 	 */
-	public $uses = array('Forum.Access', 'Forum.Moderator');
+	public $uses = array('Forum.Access', 'Forum.Moderator', 'Forum.Forum');
 	
 	/**
 	 * List all staff.
-	 *
-	 * @access private
-	 * @category Admin
 	 */
 	public function admin_index() {
-		$this->pageTitle = 'Staff';
+		$this->Toolbar->pageTitle(__d('forum', 'Staff', true));
 		$this->set('levels', $this->Access->AccessLevel->getList());
 		$this->set('staff', $this->Access->getList());
 		$this->set('mods', $this->Moderator->getList());
@@ -33,9 +30,6 @@ class StaffController extends ForumAppController {
 	
 	/**
 	 * Add an access / staff.
-	 *
-	 * @access private
-	 * @category Admin
 	 */
 	public function admin_add_access() {
 		if (!empty($this->data)) {
@@ -44,7 +38,7 @@ class StaffController extends ForumAppController {
 			}
 		}
 		
-		$this->pageTitle = __d('forum', 'Add Access', true);
+		$this->Toolbar->pageTitle(__d('forum', 'Add Access', true));
 		$this->set('method', 'add');
 		$this->set('levels', $this->Access->AccessLevel->getHigherLevels());
 		$this->render('admin_form_access');
@@ -52,16 +46,14 @@ class StaffController extends ForumAppController {
 	
 	/**
 	 * Edit an access / staff.
-	 *
-	 * @access private
-	 * @category Admin
+	 * 
 	 * @param int $id
 	 */
 	public function admin_edit_access($id) {
 		$access = $this->Access->get($id);
+		
 		$this->Toolbar->verifyAccess(array('exists' => $access));
 		
-		// Form Processing
 		if (!empty($this->data)) {
 			$this->Access->id = $id;
 			
@@ -72,7 +64,7 @@ class StaffController extends ForumAppController {
 			$this->data = $access;
 		}
 		
-		$this->pageTitle = __d('forum', 'Edit Access', true);
+		$this->Toolbar->pageTitle(__d('forum', 'Edit Access', true));
 		$this->set('method', 'edit');
 		$this->set('levels', $this->Access->AccessLevel->getHigherLevels());
 		$this->render('admin_form_access');
@@ -80,18 +72,17 @@ class StaffController extends ForumAppController {
 	
 	/**
 	 * Delete an access / staff.
-	 *
-	 * @access private
-	 * @category Admin
+	 * 
 	 * @param int $id
 	 */
 	public function admin_delete_access($id) {
-		$access = $this->Access->get($id, false, array('User.username'));
+		$access = $this->Access->get($id);
+		
 		$this->Toolbar->verifyAccess(array('exists' => $access));
 		
 		if (!empty($access)) {
 			$this->Access->delete($id, true);
-			$this->Session->setFlash(sprintf(__d('forum', 'The access levels for %s have been succesfully removed.', true), '<strong>'. $access['User']['username'] .'</strong>'));
+			$this->Session->setFlash(sprintf(__d('forum', 'The access levels for %s have been succesfully removed.', true), '<strong>'. $access['User'][$this->config['userMap']['username']] .'</strong>'));
 		}
 		
 		$this->redirect(array('controller' => 'staff', 'action' => 'index', 'admin' => true));
@@ -99,9 +90,6 @@ class StaffController extends ForumAppController {
 	
 	/**
 	 * Add an access level.
-	 *
-	 * @access private
-	 * @category Admin
 	 */
 	public function admin_add_access_level() {
 		if (!empty($this->data)) {
@@ -110,23 +98,21 @@ class StaffController extends ForumAppController {
 			}
 		}
 		
-		$this->pageTitle = __d('forum', 'Add Access Level', true);
+		$this->Toolbar->pageTitle(__d('forum', 'Add Access Level', true));
 		$this->set('method', 'add');
 		$this->render('admin_form_access_level');
 	}
 	
 	/**
 	 * Edit an access level.
-	 *
-	 * @access private
-	 * @category Admin
+	 * 
 	 * @param $id
 	 */
 	public function admin_edit_access_level($id) {
 		$access = $this->Access->AccessLevel->get($id);
+		
 		$this->Toolbar->verifyAccess(array('exists' => $access));
 		
-		// Form Processing
 		if (!empty($this->data)) {
 			$this->Access->AccessLevel->id = $id;
 			
@@ -137,24 +123,21 @@ class StaffController extends ForumAppController {
 			$this->data = $access;
 		}
 		
-		$this->pageTitle = __d('forum', 'Edit Access Level', true);
+		$this->Toolbar->pageTitle(__d('forum', 'Edit Access Level', true));
 		$this->set('method', 'edit');
-		$this->set('id', $id);
 		$this->render('admin_form_access_level');
 	}
 	
 	/**
 	 * Delete an access level.
-	 *
-	 * @access private
-	 * @category Admin
+	 * 
 	 * @param $id
 	 */
 	public function admin_delete_access_level($id) {
 		$access = $this->Access->AccessLevel->get($id);
+		
 		$this->Toolbar->verifyAccess(array('exists' => $access));
 		
-		// Form Processing
 		if (!empty($this->data['AccessLevel']['access_level_id'])) {
 			$this->Access->moveAll($id, $this->data['AccessLevel']['access_level_id']);
 			$this->Access->AccessLevel->delete($id, true);
@@ -163,17 +146,13 @@ class StaffController extends ForumAppController {
 			$this->redirect(array('controller' => 'staff', 'action' => 'index', 'admin' => true));
 		}
 		
-		$this->pageTitle = __d('forum', 'Delete Access Level', true);
-		$this->set('id', $id);
+		$this->Toolbar->pageTitle(__d('forum', 'Delete Access Level', true));
 		$this->set('access', $access);
 		$this->set('levels', $this->Access->AccessLevel->getHigherLevels($id));
 	}
 	
 	/**
 	 * Adds a moderator.
-	 *
-	 * @access private
-	 * @category Admin
 	 */
 	public function admin_add_moderator() {
 		if (!empty($this->data)) {
@@ -182,24 +161,22 @@ class StaffController extends ForumAppController {
 			}
 		}
 		
-		$this->pageTitle = __d('forum', 'Add Moderator', true);
+		$this->Toolbar->pageTitle(__d('forum', 'Add Moderator', true));
 		$this->set('method', 'add');
-		$this->set('forums', $this->Moderator->ForumCategory->getHierarchy(10, $this->Session->read('Forum.access'), 'read'));
+		$this->set('forums', $this->Forum->getGroupedHierarchy('accessRead'));
 		$this->render('admin_form_moderator');
 	}
 	
 	/**
 	 * Edit a moderator.
-	 *
-	 * @access private
-	 * @category Admin
+	 * 
 	 * @param $id
 	 */
 	public function admin_edit_moderator($id) {
 		$mod = $this->Moderator->get($id);
+		
 		$this->Toolbar->verifyAccess(array('exists' => $mod));
 		
-		// Form Processing
 		if (!empty($this->data)) {
 			$this->Moderator->id = $id;
 			
@@ -210,26 +187,25 @@ class StaffController extends ForumAppController {
 			$this->data = $mod;
 		}
 		
-		$this->pageTitle = __d('forum', 'Edit Moderator', true);
+		$this->Toolbar->pageTitle(__d('forum', 'Edit Moderator', true));
 		$this->set('method', 'edit');
-		$this->set('forums', $this->Moderator->ForumCategory->getHierarchy(10, $this->Session->read('Forum.access'), 'read'));
+		$this->set('forums', $this->Forum->getGroupedHierarchy('accessRead'));
 		$this->render('admin_form_moderator');
 	}
 	
 	/**
 	 * Delete a moderator.
-	 *
-	 * @access private
-	 * @category Admin
+	 * 
 	 * @param $id
 	 */
 	public function admin_delete_moderator($id) {
-		$mod = $this->Moderator->get($id, false, array('User.username'));
+		$mod = $this->Moderator->get($id);
+		
 		$this->Toolbar->verifyAccess(array('exists' => $mod));
 		
 		if (!empty($mod)) {
 			$this->Moderator->delete($id, true);
-			$this->Session->setFlash(sprintf(__d('forum', 'The moderator %s has been succesfully removed!', true), '<strong>'. $access['AccessLevel']['title'] .'</strong>'));
+			$this->Session->setFlash(sprintf(__d('forum', 'The moderator %s has been succesfully removed!', true), '<strong>'. $mod['User'][$this->config['userMap']['username']] .'</strong>'));
 		}
 		
 		$this->redirect(array('controller' => 'staff', 'action' => 'index', 'admin' => true));
@@ -237,18 +213,11 @@ class StaffController extends ForumAppController {
 	
 	/**
 	 * Before filter.
-	 * 
-	 * @access public
-	 * @return void
 	 */
 	public function beforeFilter() {
 		parent::beforeFilter();
 		
-		if (isset($this->params['admin'])) {
-			$this->Toolbar->verifyAdmin();
-			$this->layout = 'admin';
-			$this->set('menuTab', 'staff');
-		}
+		$this->set('menuTab', 'staff');
 	}
 	
 }
