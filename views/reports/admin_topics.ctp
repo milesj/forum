@@ -21,7 +21,7 @@ $this->Html->addCrumb(__d('forum', 'Topics', true), array('controller' => 'repor
 	<div class="containerContent">
 		<?php echo $this->element('pagination'); ?>
 
-		<table class="table">
+		<table class="table topics">
 			<thead>
 				<tr>
 					<th>&nbsp;</th>

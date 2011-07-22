@@ -160,6 +160,7 @@ class ReportsController extends ForumAppController {
 		parent::beforeFilter();
 		
 		$this->Security->disabledFields = array('items');
+		
 		$this->set('menuTab', 'reports');
 	}
 	
