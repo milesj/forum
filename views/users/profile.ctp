@@ -13,63 +13,65 @@ $this->Html->addCrumb($profile['User'][$config['userMap']['username']], $this->h
 	<p><?php echo $profile['Profile']['signatureHtml']; ?></p>
 <?php } ?>
 
-<table class="table">
-	<tbody>
-		<tr>
-			<?php if ($settings['enable_gravatar']) { ?>
-				<td rowspan="2" style="width: 80px;">
-					<?php echo $this->Gravatar->image($profile['User'][$config['userMap']['email']]); ?>
+<div class="container">
+	<table class="table">
+		<tbody>
+			<tr>
+				<?php if ($settings['enable_gravatar']) { ?>
+					<td rowspan="2" style="width: 80px;">
+						<?php echo $this->Gravatar->image($profile['User'][$config['userMap']['email']]); ?>
+					</td>
+				<?php } ?>
+
+				<td><strong><?php __d('forum', 'Joined'); ?>:</strong></td>
+				<td><?php echo $this->Time->nice($profile['User']['created'], $this->Common->timezone()); ?></td>
+
+				<td><strong><?php __d('forum', 'Total Topics'); ?>:</strong></td>
+
+				<td><?php echo number_format($profile['Profile']['totalTopics']); ?></td>
+				<td><strong><?php __d('forum', 'Roles'); ?>:</strong></td>
+
+				<td>
+					<?php if (!empty($profile['User']['Access'])) { 
+						$roles = array();
+						foreach ($profile['User']['Access'] as $access) {
+							$roles[] = $access['AccessLevel']['title'];
+						}
+						echo implode(', ', $roles);
+					} else {
+						echo '<em>'. __d('forum', 'N/A', true) .'</em>';
+					} ?>
 				</td>
-			<?php } ?>
-			
-			<td><strong><?php __d('forum', 'Joined'); ?>:</strong></td>
-			<td><?php echo $this->Time->nice($profile['User']['created'], $this->Common->timezone()); ?></td>
-			
-			<td><strong><?php __d('forum', 'Total Topics'); ?>:</strong></td>
-			
-			<td><?php echo number_format($profile['Profile']['totalTopics']); ?></td>
-			<td><strong><?php __d('forum', 'Roles'); ?>:</strong></td>
-			
-			<td>
-				<?php if (!empty($profile['User']['Access'])) { 
-					$roles = array();
-					foreach ($profile['User']['Access'] as $access) {
-						$roles[] = $access['AccessLevel']['title'];
-					}
-					echo implode(', ', $roles);
-				} else {
-					echo '<em>'. __d('forum', 'N/A', true) .'</em>';
-				} ?>
-			</td>
-		</tr>
-		<tr>
-			<td><strong><?php __d('forum', 'Last Login'); ?>:</strong></td>
-			<td>
-				<?php if (!empty($profile['Profile']['lastLogin'])) {
-					echo $this->Time->relativeTime($profile['Profile']['lastLogin'], array('userOffset' => $this->Common->timezone()));
-				} else {
-					echo '<em>'. __d('forum', 'Never', true) .'</em>';
-				} ?>
-			</td>
-			
-			<td><strong><?php __d('forum', 'Total Posts'); ?>:</strong></td>
-			<td><?php echo number_format($profile['Profile']['totalPosts']); ?></td>
-			
-			<td><strong><?php __d('forum', 'Moderates'); ?>:</strong></td>
-			<td>
-				<?php if (!empty($profile['User']['Moderator'])) { 
-					$mods = array();
-					foreach ($profile['User']['Moderator'] as $mod) {
-						$mods[] = $this->Html->link($mod['Forum']['title'], array('controller' => 'stations', 'action' => 'view', $mod['Forum']['slug']));
-					}
-					echo implode(', ', $mods);
-				} else {
-					echo '<em>'. __d('forum', 'N/A', true) .'</em>';
-				} ?>
-			</td>
-		</tr>
-	</tbody>
-</table>
+			</tr>
+			<tr>
+				<td><strong><?php __d('forum', 'Last Login'); ?>:</strong></td>
+				<td>
+					<?php if (!empty($profile['Profile']['lastLogin'])) {
+						echo $this->Time->relativeTime($profile['Profile']['lastLogin'], array('userOffset' => $this->Common->timezone()));
+					} else {
+						echo '<em>'. __d('forum', 'Never', true) .'</em>';
+					} ?>
+				</td>
+
+				<td><strong><?php __d('forum', 'Total Posts'); ?>:</strong></td>
+				<td><?php echo number_format($profile['Profile']['totalPosts']); ?></td>
+
+				<td><strong><?php __d('forum', 'Moderates'); ?>:</strong></td>
+				<td>
+					<?php if (!empty($profile['User']['Moderator'])) { 
+						$mods = array();
+						foreach ($profile['User']['Moderator'] as $mod) {
+							$mods[] = $this->Html->link($mod['Forum']['title'], array('controller' => 'stations', 'action' => 'view', $mod['Forum']['slug']));
+						}
+						echo implode(', ', $mods);
+					} else {
+						echo '<em>'. __d('forum', 'N/A', true) .'</em>';
+					} ?>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
 	
 <?php if (!empty($topics)) { ?>
 	

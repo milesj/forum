@@ -34,35 +34,41 @@ class ReportsController extends ForumAppController {
 	
 	/**
 	 * List of all reports.
-	 *
-	 * @access public
-	 * @category Admin
+	 * 
+	 * @param int $type
 	 */
-	public function admin_index() {
-		$this->paginate['Report']['contain'] = array('Reporter.id', 'Reporter.username', 'Topic.title', 'Topic.id', 'Post', 'User.id', 'User.username');
+	public function admin_index($type = 0) {
+		if ($type == Report::TOPIC) {
+			$this->setAction('admin_topics');
+			
+		} else if ($type == Report::POST) {
+			$this->setAction('admin_posts');
+			
+		} else if ($type == Report::USER) {
+			$this->setAction('admin_users');
 		
-		$this->pageTitle = __d('forum', 'Reported Items', true);
-		$this->set('reports', $this->paginate('Report'));
+		} else {
+			$this->paginate['Report']['contain'] = array('Reporter', 'Topic', 'Post', 'User');
+
+			$this->Toolbar->pageTitle(__d('forum', 'Reported Items', true));
+			$this->set('reports', $this->paginate('Report'));
+		}
 	}
 	
 	/**
 	 * Reported topics.
-	 *
-	 * @access public
-	 * @category Admin
 	 */
 	public function admin_topics() {
 		if (!empty($this->data)) {
 			if (!empty($this->data['Report']['items'])) {
 				$this->loadModel('Forum.Topic');
 				
-				$counter = 0;
 				foreach ($this->data['Report']['items'] as $item) {
 					list($report_id, $item_id) = explode(':', $item);
 					
 					switch ($this->data['Report']['action']) {
 						case 'delete':
-							$this->Topic->destroy($item_id);
+							$this->Topic->delete($item_id, true);
 						break;
 						case 'close':
 							$this->Topic->id = $item_id;
@@ -71,115 +77,90 @@ class ReportsController extends ForumAppController {
 					}
 					
 					$this->Report->delete($report_id, true);
-					++$counter;
 				}
 
-				$this->Session->setFlash(sprintf(__d('forum', 'A total of %d topics have been processed', true), $counter));
+				$this->Session->setFlash(sprintf(__d('forum', 'A total of %d topics have been processed', true), count($this->data['Report']['items'])));
 			}
 		}
 		
-		// Paginate
-		$this->paginate['Report']['conditions']['Report.itemType'] = 'topic';
-		$this->paginate['Report']['contain']= array('Reporter.id', 'Reporter.username', 'Topic.title', 'Topic.id');
+		$this->paginate['Report']['conditions']['Report.itemType'] = Report::TOPIC;
+		$this->paginate['Report']['contain']= array('Reporter', 'Topic');
 		
-		$this->pageTitle = __d('forum', 'Reported Topics', true);
+		$this->Toolbar->pageTitle(__d('forum', 'Reported Topics', true));
 		$this->set('reports', $this->paginate('Report'));
 	}
 	
 	/**
 	 * Reported posts.
-	 *
-	 * @access public
-	 * @category Admin
 	 */
 	public function admin_posts() {
 		if (!empty($this->data)) {
 			if (!empty($this->data['Report']['items'])) {
 				$this->loadModel('Forum.Post');
 				
-				$counter = 0;
 				foreach ($this->data['Report']['items'] as $item) {
 					list($report_id, $item_id) = explode(':', $item);
 					
 					switch ($this->data['Report']['action']) {
 						case 'delete':
-							$this->Post->destroy($item_id);
+							$this->Post->delete($item_id);
 						break;
 					}
 					
 					$this->Report->delete($report_id, true);
-					++$counter;
 				}
 
-				$this->Session->setFlash(sprintf(__d('forum', 'A total of %d posts have been processed', true), $counter));
+				$this->Session->setFlash(sprintf(__d('forum', 'A total of %d posts have been processed', true), count($this->data['Report']['items'])));
 			}
 		}
 		
-		// Paginate
-		$this->paginate['Report']['conditions']['Report.itemType'] = 'post';
-		$this->paginate['Report']['contain'] = array('Reporter.id', 'Reporter.username', 'Post');
+		$this->paginate['Report']['conditions']['Report.itemType'] = Report::POST;
+		$this->paginate['Report']['contain'] = array('Reporter', 'Post');
 		
-		$this->pageTitle = __d('forum', 'Reported Posts', true);
+		$this->Toolbar->pageTitle(__d('forum', 'Reported Posts', true));
 		$this->set('reports', $this->paginate('Report'));
 	}
 	
 	/**
 	 * Reported users.
-	 *
-	 * @access public
-	 * @category Admin
 	 */
 	public function admin_users() {
 		if (!empty($this->data)) {
 			if (!empty($this->data['Report']['items'])) {
 				$this->loadModel('User');
 				
-				$counter = 0;
 				foreach ($this->data['Report']['items'] as $item) {
 					list($report_id, $item_id) = explode(':', $item);
 					
 					switch ($this->data['Report']['action']) {
-						case 'delete':
-							$this->User->delete($item_id, true);
-						break;
 						case 'ban':
 							$this->User->id = $item_id;
-							$this->User->saveField('status', $this->config['statusMap']['banned']);
+							$this->User->saveField($this->config['userMap']['status'], $this->config['statusMap']['banned']);
 						break;
 					}
 					
 					$this->Report->delete($report_id, true);
-					++$counter;
 				}
 				
-				$this->Session->setFlash(sprintf(__d('forum', 'A total of %d users have been processed', true), $counter));
+				$this->Session->setFlash(sprintf(__d('forum', 'A total of %d users have been processed', true), count($this->data['Report']['items'])));
 			}
 		}
 		
-		// Paginate
-		$this->paginate['Report']['conditions']['Report.itemType'] = 'user';
-		$this->paginate['Report']['contain']= array('Reporter.id', 'Reporter.username', 'User.id', 'User.username');
+		$this->paginate['Report']['conditions']['Report.itemType'] = Report::USER;
+		$this->paginate['Report']['contain']= array('Reporter', 'User');
 		
-		$this->pageTitle = __d('forum', 'Reported Users', true);
+		$this->Toolbar->pageTitle(__d('forum', 'Reported Users', true));
 		$this->set('reports', $this->paginate('Report'));
 	}
 	
 	/**
 	 * Before filter.
-	 * 
-	 * @access public
-	 * @return void
 	 */
 	public function beforeFilter() {
 		parent::beforeFilter();
 		
 		$this->Security->disabledFields = array('items');
-		
-		if (isset($this->params['admin'])) {
-			$this->Toolbar->verifyAdmin();
-			$this->layout = 'admin';
-			$this->set('menuTab', 'reports');
-		}
+		$this->set('menuTab', 'reports');
 	}
 	
 }

@@ -115,13 +115,13 @@ class ToolbarComponent extends Object {
 			}
 			
 			if ($totalPages <= 1) {
-				$url = array('plugin' => 'forum', 'controller' => 'topics', 'action' => 'view', $slug, '#' => 'post_'. $post_id);
+				$url = array('plugin' => 'forum', 'controller' => 'topics', 'action' => 'view', $slug, '#' => 'post-'. $post_id);
 			} else {
 				$posts = array_values($posts);
 				$flips = array_flip($posts);
 				$position = $flips[$post_id] + 1;
 				$goTo = ceil($position / $perPage);
-				$url = array('plugin' => 'forum', 'controller' => 'topics', 'action' => 'view', $slug, 'page' => $goTo, '#' => 'post_'. $post_id);
+				$url = array('plugin' => 'forum', 'controller' => 'topics', 'action' => 'view', $slug, 'page' => $goTo, '#' => 'post-'. $post_id);
 			}
 			
 		// First post

@@ -56,7 +56,7 @@ $this->Html->addCrumb(__d('forum', 'Administration', true), array('controller' =
 				<?php foreach ($latestReports as $counter => $report) { ?>
 
 				<tr<?php if ($counter % 2) echo ' class="altRow"'; ?>>
-					<td><?php echo $this->Html->link($this->Common->reportType($report['Report']['itemType']), array('controller' => 'reports', 'action' => $report['Report']['itemType'])); ?></td>
+					<td><?php echo $this->Html->link($this->Common->reportType($report['Report']['itemType']), array('controller' => 'reports', $report['Report']['itemType'])); ?></td>
 					<td>	
 						<?php if ($report['Report']['itemType'] == Report::TOPIC) {
 							echo $this->Html->link($report['Topic']['title'], array('controller' => 'topics', 'action' => 'view', $report['Topic']['slug'], 'admin' => false));
