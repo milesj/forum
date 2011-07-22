@@ -82,7 +82,8 @@ class ForumController extends ForumAppController {
 		$this->set('menuTab', 'home');
 		$this->set('totalPosts', 	$this->Topic->Post->getTotal());
 		$this->set('totalTopics', 	$this->Topic->getTotal());
-		$this->set('totalUsers', 	$this->Profile->getTotal());
+		$this->set('totalUsers', 	$this->Profile->User->find('count'));
+		$this->set('totalProfiles', $this->Profile->getTotal());
 		$this->set('totalPolls', 	$this->Topic->Poll->getTotal());
 		$this->set('totalReports', 	$this->Report->getTotal());
 		$this->set('totalMods', 	$this->Moderator->getTotal());

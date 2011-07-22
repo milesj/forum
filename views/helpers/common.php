@@ -209,6 +209,23 @@ class CommonHelper extends AppHelper {
 			return $options;
 		}
 	}
+	
+	/**
+	 * Return the report type as a string name.
+	 * 
+	 * @access public
+	 * @param int $type
+	 * @return string 
+	 */
+	public function reportType($type) {
+		$types = array(
+			1 => __d('forum', 'Topic', true),
+			2 => __d('forum', 'Post', true),
+			3 => __d('forum', 'User', true)
+		);
+		
+		return $types[$type];
+	}
 
 	/**
 	 * Get the users timezone.

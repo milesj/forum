@@ -2,9 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <?php echo $this->Html->charset(); ?>
-<title><?php echo $settings['site_name']; ?> - <?php echo $title_for_layout; ?></title>
-
-<?php // Scripts
+<title><?php echo $title_for_layout; ?></title>
+<?php
 echo $this->Html->css('/forum/css/base.css');
 echo $this->Html->css('/forum/css/style.css');
 echo $this->Html->script('/forum/js/jquery-1.6.2.min.js');

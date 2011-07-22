@@ -174,6 +174,7 @@ class ToolbarComponent extends Object {
 	public function pageTitle() {
 		$args = func_get_args();
 		array_unshift($args, __d('forum', 'Forum', true));
+		array_unshift($args, $this->settings['site_name']);
 		
 		$this->Controller->set('title_for_layout', implode($this->settings['title_separator'], $args));
 	}
