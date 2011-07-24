@@ -43,6 +43,35 @@ class Access extends ForumAppModel {
 	);
 	
 	/**
+	 * Add an access to a user, validating conditions.
+	 * 
+	 * @access public
+	 * @param int $user_id
+	 * @param int $level_id
+	 * @return type 
+	 */
+	public function add($user_id, $level_id) {
+		$count = $this->find('count', array(
+			'conditions' => array(
+				'Access.user_id' => $user_id,
+				'Access.access_level_id' => $level_id
+			)
+		));
+		
+		if ($count) {
+			return false;
+		}
+		
+		$this->create();
+		$this->save(array(
+			'user_id' => $user_id,
+			'access_level_id' => $level_id
+		));
+		
+		return true;
+	}
+
+	/**
 	 * Return an access level and its user.
 	 * 
 	 * @access public

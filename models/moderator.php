@@ -34,6 +34,39 @@ class Moderator extends ForumAppModel {
 		'user_id' => 'notEmpty',
 		'forum_id' => 'notEmpty'
 	);
+	
+	/**
+	 * Add a moderator after validating conditions.
+	 * 
+	 * @access public
+	 * @param array $data
+	 * @return boolean
+	 */
+	public function add($data) {
+		if ($this->validate($data)) {
+			$this->create();
+			return $this->save($data, false);
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * Edit a moderator after validating conditions.
+	 * 
+	 * @access public
+	 * @param int $id
+	 * @param array $data
+	 * @return boolean
+	 */
+	public function edit($id, $data) {
+		if ($this->validate($data)) {
+			$this->id = $id;
+			return $this->save($data, false);
+		}
+		
+		return false;
+	}
 		
 	/**
 	 * Return an moderator and their forum.
@@ -88,6 +121,42 @@ class Moderator extends ForumAppModel {
 			'conditions' => array('Moderator.user_id' => $user_id),
 			'fields' => array('Moderator.forum_id')
 		));
+	}
+	
+	/**
+	 * Validate logical conditions.
+	 * 
+	 * @access public
+	 * @param array $data
+	 * @return boolean
+	 */
+	public function validate($data) {
+		$this->set($data);
+		
+		if ($this->validates()) {
+			$userCount = $this->User->find('count', array(
+				'conditions' => array('User.id' => $data['user_id'])
+			));
+
+			if ($userCount <= 0) {
+				return $this->invalidate('user_id', 'No user exists with this ID');
+			}
+
+			$forumCount = $this->find('count', array(
+				'conditions' => array(
+					'Moderator.user_id' => $data['user_id'],
+					'Moderator.forum_id' => $data['forum_id']
+				)
+			));
+
+			if ($forumCount >= 1) {
+				return $this->invalidate('user_id', 'This user is already a moderator for this forum');
+			}
+
+			return true;
+		}
+		
+		return false;
 	}
 
 }

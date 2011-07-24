@@ -117,7 +117,7 @@ class Topic extends ForumAppModel {
 	 * @param array $data
 	 * @return boolean|int
 	 */
-	public function addTopic($data) {
+	public function add($data) {
 		$this->set($data);
 		
 		if ($this->validates()) {
@@ -266,7 +266,7 @@ class Topic extends ForumAppModel {
 	 * @param array $topic
 	 * @return boolean
 	 */
-	public function editTopic($id, $topic) {
+	public function edit($id, $topic) {
 		if (!empty($topic)) {
 			foreach ($topic as $model => $data) {
 				if ($model == 'Topic') {

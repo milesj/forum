@@ -45,7 +45,7 @@ class Post extends ForumAppModel {
 	 * @param array $data
 	 * @return boolean|int
 	 */
-	public function addPost($data) {
+	public function add($data) {
 		$this->set($data);
 		
 		if ($this->validates()) {

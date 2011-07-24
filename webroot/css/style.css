@@ -42,6 +42,7 @@ select {
 	input.numeric { width: 100px !important; }
 
 .container .input { margin-bottom: 15px; }
+.container .input:last-child { margin: 0; }
 .container .input.text input,
 .container .input.password input { width: 25%; }
 .container .input.textarea textarea { width: 50%; }

@@ -156,7 +156,8 @@ class StaffController extends ForumAppController {
 	 */
 	public function admin_add_moderator() {
 		if (!empty($this->data)) {
-			if ($this->Moderator->save($this->data, true, array('user_id', 'forum_id'))) {
+			if ($this->Moderator->add($this->data['Moderator'])) {
+				$this->Access->add($this->data['Moderator']['user_id'], 2); // moderator
 				$this->redirect(array('controller' => 'staff', 'action' => 'index', 'admin' => true));
 			}
 		}
@@ -178,9 +179,7 @@ class StaffController extends ForumAppController {
 		$this->Toolbar->verifyAccess(array('exists' => $mod));
 		
 		if (!empty($this->data)) {
-			$this->Moderator->id = $id;
-			
-			if ($this->Moderator->save($this->data, true, array('user_id', 'forum_id'))) {
+			if ($this->Moderator->edit($id, $this->data['Moderator'])) {
 				$this->redirect(array('controller' => 'staff', 'action' => 'index', 'admin' => true));
 			}
 		} else {
@@ -205,6 +204,14 @@ class StaffController extends ForumAppController {
 		
 		if (!empty($mod)) {
 			$this->Moderator->delete($id, true);
+
+			if (!$this->Moderator->getModerations($mod['Moderator']['user_id'])) {
+				$this->Access->deleteAll(array(
+					'Access.user_id' => $mod['Moderator']['user_id'],
+					'Access.access_level_id' => 2 // moderator
+				));
+			}
+			
 			$this->Session->setFlash(sprintf(__d('forum', 'The moderator %s has been succesfully removed!', true), '<strong>'. $mod['User'][$this->config['userMap']['username']] .'</strong>'));
 		}
 		

@@ -47,7 +47,7 @@ class PostsController extends ForumAppController {
 			$this->data['Post']['user_id'] = $user_id;
 			$this->data['Post']['userIP'] = $this->RequestHandler->getClientIp();
 
-			if ($post_id = $this->Post->addPost($this->data['Post'])) {
+			if ($post_id = $this->Post->add($this->data['Post'])) {
 				if ($topic['Forum']['settingPostCount']) {
 					$this->Profile->increasePosts($user_id);
 				}
