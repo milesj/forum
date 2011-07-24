@@ -428,6 +428,14 @@ select {
 		text-shadow: 0 1px 0 #0c2038;
 		text-transform: uppercase;
 		font-weight: normal; }
+	
+		.containerHeader h3 a {
+			text-transform: none;
+			color: #DBE4EF; }
+		
+		.containerHeader h3 a:hover { color: #fff; }
+	
+	.containerHeader input { padding: 2px; border: none; }
 
 /*------------------------------------------------------
 	BB Code
