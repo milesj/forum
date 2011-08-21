@@ -198,10 +198,15 @@ class Profile extends ForumAppModel {
 	 */
 	public function beforeSave($options) {
 		if (isset($this->data['Profile']['signature'])) {
-			$this->data['Profile']['signatureHtml'] = $this->data['Profile']['signature'];
+			$censored = array_map('trim', explode(',', $this->settings['censored_words']));
+
+			$decoda = new Decoda($this->data['Profile']['signature']);
+			$decoda->useXhtml();
+			$decoda->locale($this->config['decodaLocales'][Configure::read('Config.language')]);
+			$decoda->getHook('Censor')->blacklist($censored);
+			
+			$this->data['Profile']['signatureHtml'] = $decoda->parse();
 		}
-		
-		// @todo - decoda
 		
 		return true;
 	}
