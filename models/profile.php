@@ -8,6 +8,10 @@
  * @link		http://milesj.me/resources/script/forum-plugin
  */
 
+App::import('Vendor', 'Forum.Decoda', array(
+	'file' => 'decoda/Decoda.php'
+));
+
 class Profile extends ForumAppModel {
 
 	/**
@@ -199,10 +203,10 @@ class Profile extends ForumAppModel {
 	public function beforeSave($options) {
 		if (isset($this->data['Profile']['signature'])) {
 			$censored = array_map('trim', explode(',', $this->settings['censored_words']));
-
+			$locale = $this->config['decodaLocales'][Configure::read('Config.language')];
+			
 			$decoda = new Decoda($this->data['Profile']['signature']);
-			$decoda->useXhtml();
-			$decoda->locale($this->config['decodaLocales'][Configure::read('Config.language')]);
+			$decoda->defaults()->setXhtml()->setLocale($locale);
 			$decoda->getHook('Censor')->blacklist($censored);
 			
 			$this->data['Profile']['signatureHtml'] = $decoda->parse();

@@ -275,7 +275,7 @@ class Topic extends ForumAppModel {
 					
 				} else if ($model == 'FirstPost') {
 					$this->Post->id = $data['id'];
-					$this->Post->save($data, false, array('content'));
+					$this->Post->save($data, false, array('content', 'contentHtml'));
 					
 				} else if ($model == 'Poll') {
 					$data['expires'] = !empty($data['expires']) ? date('Y-m-d H:i:s', strtotime('+'. $data['expires'] .' days')) : null;

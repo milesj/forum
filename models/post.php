@@ -7,7 +7,11 @@
  * @license		http://opensource.org/licenses/mit-license.php - Licensed under The MIT License
  * @link		http://milesj.me/resources/script/forum-plugin
  */
- 
+
+App::import('Vendor', 'Forum.Decoda', array(
+	'file' => 'decoda/Decoda.php'
+));
+
 class Post extends ForumAppModel {
 
 	/**
@@ -237,10 +241,10 @@ class Post extends ForumAppModel {
 	public function beforeSave($options) {
 		if (isset($this->data['Post']['content'])) {
 			$censored = array_map('trim', explode(',', $this->settings['censored_words']));
-
+			$locale = $this->config['decodaLocales'][Configure::read('Config.language')];
+			
 			$decoda = new Decoda($this->data['Post']['content']);
-			$decoda->useXhtml();
-			$decoda->locale($this->config['decodaLocales'][Configure::read('Config.language')]);
+			$decoda->defaults()->setXhtml()->setLocale($locale);
 			$decoda->getHook('Censor')->blacklist($censored);
 			
 			$this->data['Post']['contentHtml'] = $decoda->parse();
