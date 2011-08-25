@@ -80,12 +80,12 @@ class ForumAppModel extends AppModel {
 		$this->config = Configure::read('Forum');
 		$this->settings = Configure::read('Forum.settings');
 
-		if (Cache::config('sql') === false) {
-			Cache::config('sql', array(
+		if (Cache::config('forum') === false) {
+			Cache::config('forum', array(
 				'engine' 	=> 'File',
 				'serialize' => true,
 				'prefix'	=> '',
-				'path' 		=> CACHE .'sql'. DS,
+				'path' 		=> CACHE .'forum'. DS,
 				'duration'	=> '+1 day'
 			));
 		}

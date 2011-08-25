@@ -26,7 +26,8 @@ class Topic extends ForumAppModel {
 	 */
 	public $actsAs = array(
 		'Utils.Sluggable' => array(
-			'separator' => '-'
+			'separator' => '-',
+			'update' => true
 		)
 	);
 
@@ -271,7 +272,7 @@ class Topic extends ForumAppModel {
 			foreach ($topic as $model => $data) {
 				if ($model == 'Topic') {
 					$this->id = $id;
-					$this->save($data, false, array_keys($data));
+					$this->save($data, false);
 					
 				} else if ($model == 'FirstPost') {
 					$this->Post->id = $data['id'];

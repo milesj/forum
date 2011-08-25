@@ -1,20 +1,44 @@
 # Forum Installation #
 
-There are 2 forms of installation, automated (command line) and manual. I suggest using the automated process. Before you begin, the following requirements are needed: 
+To begin, upload the forum into your applications plugins folder.
 
-* users table - The forum does not provide a users table, you must create that yourself. You can configure the plugin to interact with your users table by editing the values in forum/config/config.php.
-* admin routing - Admin prefix routing must be enabled, see below.
-* rss parsing - RSS parsing must be enabled to use the RSS feeds, see below.
+## 1. Creating your users table ##
 
-## Automated ##
+If you already have a users table, please verify the configuration for $userMap and $statusMap in forum/config/config.php.
 
-For your convenience, there is an automated installation script that you can run through the command line. If you do not have access to a command line, please jump down to the manual installation section.
+If you do not have a users table, please create one with these minimum fields: id, username, email, password and status (active, pending, banned, etc). You may name the columns as you please as long as you configure it correctly in the $userMap and $statusMap in forum/config/config.php.
 
-To begin, upload the forum into your applications plugins folder. Once uploaded, run the following command in your command line and follow the on screen instructions.
+## 2. Modifying your user model ##
+
+Once your users table and user model is created, add the following to the user model:
+
+	public $hasOne = array('Forum.Profile');
+
+	public $hasMany = array('Forum.Access', 'Forum.Moderator');
+
+## 3. Preparing your app ##
+
+Admin routing must be enabled in app/config/core.php.
+
+	Configure::write('Routing.prefixes', array('admin'));
+
+As well as RSS parsing in app/config/routes.php.
+
+	Router::parseExtensions('rss');
+
+And finally applying these routes.
+
+	Router::connect('/forum/help/*', array('plugin' => 'forum', 'controller' => 'forum', 'action' => 'help'));
+	Router::connect('/forum/rules/*', array('plugin' => 'forum', 'controller' => 'forum', 'action' => 'rules'));
+	Router::connect('/admin/forum/settings/*', array('plugin' => 'forum', 'controller' => 'forum', 'action' => 'settings', 'admin' => true));
+
+## 4. Run the installer ##
+
+For your convenience, there is an automated installation script that you can run through the command line. If you do not have access to a command line, please jump down to the manual installation section. Now run the following command in your command line and follow the on screen instructions.
 
 	cake -app /path/to/app install
 
-## Manual ##
+# Manual Installation #
 
 The manual process is a bit tedious, so bare with.
 
@@ -31,13 +55,3 @@ Up next is creating your admin users. All you need to do is get the ID of the us
 ### Setting up the AppModel ###
 
 After the tables are created, open up the plugins ForumAppModel and change the values for $tablePrefix to the prefix you have chosen, and $useDbConfig to the database configuration you created the tables in (usually default).
-
-## Requirements ##
-
-The final steps are to make sure your routing settings are correct. Append the following code to your app/config/routes.php file if it does not exist already.
-
-	Router::parseExtensions('rss');
-
-And that admin prefix routing is enabled in app/config/core.php.
-
-	Configure::write('Routing.prefixes', array('admin'));

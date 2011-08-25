@@ -40,7 +40,7 @@ class ForumController extends ForumAppController {
 			$this->set('items', $this->Topic->getLatest());
 			$this->set('document', array('xmlns:dc' => 'http://purl.org/dc/elements/1.1/'));
 		} else {
-			$this->redirect('/forum/home/feed.rss');
+			$this->redirect('/forum/feed/feed.rss');
 		}
 	}
 	
@@ -101,6 +101,9 @@ class ForumController extends ForumAppController {
 		if (!empty($this->data)) {
 			if ($this->Setting->save($this->data, true)) {
 				$this->Session->setFlash(__d('forum', 'Settings have been updated!', true));
+				
+				Cache::delete('Setting.getSettings', 'forum');
+				Configure::write('Forum.settings', $this->data['Setting']);
 			}
 		} else {
 			$this->data['Setting'] = $this->settings;

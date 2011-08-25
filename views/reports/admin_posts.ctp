@@ -39,8 +39,12 @@ $this->Html->addCrumb(__d('forum', 'Posts', true), array('controller' => 'report
 				<tr<?php if ($counter % 2) echo ' class="altRow"'; ?>>
 					<td class="icon"><input type="checkbox" name="data[Report][items][]" value="<?php echo $report['Report']['id']; ?>:<?php echo $report['Post']['id']; ?>" /></td>
 					<td>
-						<?php echo $report['Post']['content']; ?> 
-						(<?php echo $this->Html->link(__d('forum', 'View Topic', true), array('controller' => 'forum', 'action' => 'jump', $report['Post']['topic_id'], $report['Post']['id'], 'admin' => false)); ?>)
+						<?php if (!empty($report['Post']['id'])) {
+							echo $report['Post']['content']; ?> 
+							(<?php echo $this->Html->link(__d('forum', 'View Topic', true), array('controller' => 'forum', 'action' => 'jump', $report['Post']['topic_id'], $report['Post']['id'], 'admin' => false));
+						} else {
+							echo '<em class="gray">('. __d('forum', 'Deleted', true) .')</em>';
+						} ?>
 					</td>
 					<td><?php echo $this->Html->link($report['Reporter'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'edit', $report['Reporter']['id'], 'admin' => true)); ?></td>
 					<td><?php echo $report['Report']['comment']; ?></td>

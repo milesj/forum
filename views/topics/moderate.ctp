@@ -28,7 +28,7 @@ $this->Html->addCrumb($topic['Topic']['title'], array('controller' => 'topics', 
 		<table class="table topics">
 			<thead>
 				<tr>
-					<th><input type="checkbox" onclick="toggleCheckboxes(this, 'Post', 'items');" /></th>
+					<th><input type="checkbox" onclick="Forum.toggleCheckboxes(this, 'Post', 'items');" /></th>
 					<th><?php __d('forum', 'User'); ?></th>
 					<th><?php __d('forum', 'Post'); ?></th>
 					<th><?php __d('forum', 'Date'); ?></th>
@@ -50,7 +50,7 @@ $this->Html->addCrumb($topic['Topic']['title'], array('controller' => 'topics', 
 						<?php echo $this->Html->link($post['User'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'profile', $post['User']['id'])); ?>
 					</td>
 					<td>
-						<?php echo $this->Text->truncate($post['Post']['content'], 100); ?>
+						<?php echo str_replace('\n', '', $this->Text->truncate($post['Post']['content'], 100)); ?>
 					</td>
 					<td class="created">
 						<?php echo $this->Time->niceShort($post['Post']['created'], $this->Common->timezone()); ?>

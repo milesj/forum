@@ -18,7 +18,8 @@ class Forum extends ForumAppModel {
 	 */
 	public $actsAs = array(
 		'Utils.Sluggable' => array(
-			'separator' => '-'
+			'separator' => '-',
+			'update' => true
 		)
 	);
 

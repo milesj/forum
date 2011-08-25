@@ -2,19 +2,26 @@
 
 A fully robust and powerful CakePHP forum plugin.
 
+Todo:
+* Rebuild all locale strings
+* Verify all admin actions work 100%
+* Add Decoda markup styling
+* Setup caching
+
 ## Requirements ##
 
 * CakePHP 1.3.x
 * PHP 5.2.x, 5.3.x
+* Utils Plugin - https://github.com/CakeDC/utils
 
 ## Documentation ##
 
-Thorough documentation can be found here: http://milesj.me/resources/script/forum-plugin
+Thorough documentation can be found here: http://milesj.me/code/cakephp/forum
 
 ## Installation ##
 
 * Clone the repo into a folder called "forum" within your CakePHP's plugins directory.
-* Hit the installer script at: www.yourdomain.com/forum/install/
+* Follow the instructions found in install.md.
 
 ## Contributors ##
 
@@ -24,7 +31,6 @@ Thorough documentation can be found here: http://milesj.me/resources/script/foru
 * Rachman Chavik - Indonesian
 * Alexey Kondratyev - Russian
 * Walter Mairena - Spanish
-* CakeDC - Utils Plugin (Sluggable Behavior)
 
 ## Features ##
 
@@ -63,8 +69,7 @@ Thorough documentation can be found here: http://milesj.me/resources/script/foru
 * Form protection against bots and hackers
 
 ### Miscellaneous ###
-* BBCode support using the Decoda Helper
-* Uses the GeSHi class for code syntax highlighting
+* BBCode support using the Decoda package
 * Utilizes remember me features
 * Mark topics as read (Session)
 * Log created topics and posts (Session)
@@ -83,9 +88,9 @@ Once you have done that, just follow these steps.
 1 - Open the program and go to File > New catalog from POT file
 2 - Fill in the settings box with the following information
 
-	Project: Cupcake Forum Plugin
+	Project: Forum Plugin
 	Team: Miles Johnson
-	Team Email: contact@milesj.me
+	Team Email: mileswjohnson@gmail.com
 	Language: <Pick the language>
 	Country: <Pick the country>
 	Charset: UTF-8

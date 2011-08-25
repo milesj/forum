@@ -151,7 +151,8 @@ class Setting extends ForumAppModel {
 	 */
 	public function getSettings() {
 		return $this->find('list', array(
-			'fields' => array('Setting.key', 'Setting.value')
+			'fields' => array('Setting.key', 'Setting.value'),
+			'cache' => __FUNCTION__
 		));
 	}
 	

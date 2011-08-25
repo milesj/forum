@@ -58,14 +58,17 @@ $this->Html->addCrumb(__d('forum', 'Administration', true), array('controller' =
 				<tr<?php if ($counter % 2) echo ' class="altRow"'; ?>>
 					<td><?php echo $this->Html->link($this->Common->reportType($report['Report']['itemType']), array('controller' => 'reports', $report['Report']['itemType'])); ?></td>
 					<td>	
-						<?php if ($report['Report']['itemType'] == Report::TOPIC) {
+						<?php if ($report['Report']['itemType'] == Report::TOPIC && !empty($report['Topic']['id'])) {
 							echo $this->Html->link($report['Topic']['title'], array('controller' => 'topics', 'action' => 'view', $report['Topic']['slug'], 'admin' => false));
 
-						} else if ($report['Report']['itemType'] == Report::USER) {
+						} else if ($report['Report']['itemType'] == Report::USER && !empty($report['User']['id'])) {
 							echo $this->Html->link($report['User'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'edit', $report['User']['id'], 'admin' => true));
 
-						} else if ($report['Report']['itemType'] == Report::POST) {
+						} else if ($report['Report']['itemType'] == Report::POST && !empty($report['Post']['id'])) {
 							echo $report['Post']['content'];
+						
+						} else {
+							echo '<em class="gray">('. __d('forum', 'Deleted', true) .')</em>';
 						} ?>
 					</td>
 					<td><?php echo $this->Html->link($report['Reporter'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'edit', $report['Reporter']['id'], 'admin' => true)); ?></td>

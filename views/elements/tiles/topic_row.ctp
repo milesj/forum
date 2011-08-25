@@ -39,8 +39,8 @@ $columns = isset($columns) ? $columns : array(); ?>
 		<?php echo number_format($topic['Topic']['view_count']); ?>
 	</td>
 	<td class="activity">
-		<?php if (!empty($topic['LastPost']['id'])) { ?>
-			<?php echo $this->Time->relativeTime($topic['LastPost']['created'], array('userOffset' => $this->Common->timezone())); ?>
+		<?php if (!empty($topic['LastPost']['id'])) {
+			echo $this->Time->relativeTime($topic['LastPost']['created'], array('userOffset' => $this->Common->timezone())); ?>
 			
 			<?php if (!empty($topic['LastUser']['id'])) { ?>
 				<span class="gray"><?php __d('forum', 'by'); ?> <?php echo $this->Html->link($topic['LastUser'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'profile', $topic['Topic']['lastUser_id'])); ?></span>
