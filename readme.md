@@ -5,7 +5,6 @@ A fully robust and powerful CakePHP forum plugin.
 Todo:
 * Rebuild all locale strings
 * Verify all admin actions work 100%
-* Add Decoda markup styling
 
 ## Requirements ##
 
