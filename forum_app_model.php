@@ -138,15 +138,15 @@ class ForumAppModel extends AppModel {
 				$expires = '+1 hour';
 			}
 			
-			Cache::config('sql', array('duration' => $expires));
+			Cache::config('forum', array('duration' => $expires));
 
 			$key = $this->name .'.'. $key;
-			$results = Cache::read($key, 'sql');
+			$results = Cache::read($key, 'forum');
 
 			if (!is_array($results)) {
 				$results = parent::find($conditions, $fields, $order, $recursive);
 				
-				Cache::write($key, $results, 'sql');
+				Cache::write($key, $results, 'forum');
 			}
 
 			return $results;

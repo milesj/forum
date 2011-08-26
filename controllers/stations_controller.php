@@ -172,6 +172,7 @@ class StationsController extends ForumAppController {
 			}
 			
 			if ($this->Forum->save($this->data, true)) {
+				Cache::delete('Forum.getIndex', 'forum');
 				$this->redirect(array('controller' => 'stations', 'action' => 'index', 'admin' => true));
 			}
 		}
@@ -205,6 +206,7 @@ class StationsController extends ForumAppController {
 			}
 			
 			if ($this->Forum->save($this->data, true)) {
+				Cache::delete('Forum.get-'. $forum['Forum']['slug'], 'forum');
 				$this->redirect(array('controller' => 'stations', 'action' => 'index', 'admin' => true));
 			}
 		} else {
@@ -234,6 +236,8 @@ class StationsController extends ForumAppController {
 			$this->Forum->Topic->moveAll($id, $this->data['Forum']['move_topics']);
 			$this->Forum->moveAll($id, $this->data['Forum']['move_forums']);
 			$this->Forum->delete($id, true);
+			
+			Cache::delete('Forum.getIndex', 'forum');
 
 			$this->Session->setFlash(sprintf(__d('forum', 'The forum %s has been deleted, and all its sub-forums and topics have been moved!', true), '<strong>'. $forum['Forum']['title'] .'</strong>'));
 			$this->redirect(array('controller' => 'stations', 'action' => 'index', 'admin' => true));

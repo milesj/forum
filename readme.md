@@ -6,7 +6,6 @@ Todo:
 * Rebuild all locale strings
 * Verify all admin actions work 100%
 * Add Decoda markup styling
-* Setup caching
 
 ## Requirements ##
 

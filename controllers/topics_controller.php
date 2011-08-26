@@ -118,6 +118,7 @@ class TopicsController extends ForumAppController {
 		if (!empty($this->data)) {
 			if ($this->Topic->saveAll($this->data, array('validate' => 'only'))) {
 				if ($this->Topic->edit($topic['Topic']['id'], $this->data)) {
+					Cache::delete('Topic.get-'. $slug, 'forum');
 					$this->Toolbar->goToPage($topic['Topic']['id']);
 				}
 			}
@@ -170,7 +171,7 @@ class TopicsController extends ForumAppController {
 			'moderate' => $topic['Topic']['forum_id']
 		));
 		
-		// @todo - delete cache
+		Cache::delete('Topic.get-'. $slug, 'forum');
 		
 		$this->Topic->delete($topic['Topic']['id'], true);
 		$this->redirect(array('controller' => 'stations', 'action' => 'view', $topic['Forum']['slug']));

@@ -317,7 +317,8 @@ class Topic extends ForumAppModel {
 				'FirstPost', 
 				'Forum' => array('Parent'), 
 				'Poll' => array('PollOption')
-			)
+			),
+			'cache' => __FUNCTION__ .'-'. $slug
 		));
 		
 		if (!empty($topic['Poll']['id'])) {
@@ -351,7 +352,8 @@ class Topic extends ForumAppModel {
 		return $this->find('all', array(
 			'order' => array('Topic.created' => 'DESC'),
 			'contain' => array('User', 'LastPost', 'FirstPost'),
-			'limit' => $limit
+			'limit' => $limit,
+			'cache' => array(__FUNCTION__ .'-'. $limit, '+5 minutes')
 		));
 	}
 	

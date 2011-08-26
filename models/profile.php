@@ -193,7 +193,8 @@ class Profile extends ForumAppModel {
 
 		return $this->find('all', array(
 			'conditions' => array('Profile.currentLogin >' => date('Y-m-d H:i:s', strtotime('-'. $minutes .' minutes'))),
-			'contain' => array('User')
+			'contain' => array('User'),
+			'cache' => array(__FUNCTION__ .'-'. $minutes, '+15 minutes')
 		));
 	}
 

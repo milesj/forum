@@ -177,7 +177,7 @@ class Forum extends ForumAppModel {
 		return $this->find('all', array(
 			'order' => array('Forum.orderNo' => 'ASC'),
 			'conditions' => array('Forum.forum_id' => 0),
-			'contain' => array('Children' => array('SubForum'))	
+			'contain' => array('Children' => array('SubForum'))
 		));
 	}
 	
