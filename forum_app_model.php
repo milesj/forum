@@ -109,7 +109,7 @@ class ForumAppModel extends AppModel {
 	 * @return array
 	 */
 	public function accessLevels($field = 'id') {
-		$levels = array(0 => 0) + (array) $this->Session->read('Forum.accessLevels');
+		$levels = array(0) + (array) $this->Session->read('Forum.accessLevels');
 		
 		if ($field == 'id') {
 			$levels = array_keys($levels);

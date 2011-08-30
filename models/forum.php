@@ -189,12 +189,16 @@ class Forum extends ForumAppModel {
 	 * @param int $exclude
 	 * @return array
 	 */
-	public function getGroupedHierarchy($type, $exclude = null) {
-		$conditions = array(
-			'Forum.status' => self::STATUS_OPEN,
-			'Forum.'. $type .' <=' => $this->access(),
-			'Forum.access_level_id' => $this->accessLevels()
-		);
+	public function getGroupedHierarchy($type = null, $exclude = null) {
+		$conditions = array();
+		
+		if ($type) {
+			$conditions = array(
+				'Forum.status' => self::STATUS_OPEN,
+				'Forum.'. $type .' <=' => $this->access(),
+				'Forum.access_level_id' => $this->accessLevels()
+			);
+		}
 		
 		if (is_numeric($exclude)) {
 			$conditions['Forum.id !='] = $exclude;

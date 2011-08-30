@@ -171,8 +171,14 @@ class StationsController extends ForumAppController {
 				$this->data['Forum']['forum_id'] = 0;
 			}
 			
+			if (empty($this->data['Forum']['access_level_id'])) {
+				$this->data['Forum']['access_level_id'] = 0;
+			}
+			
 			if ($this->Forum->save($this->data, true)) {
 				Cache::delete('Forum.getIndex', 'forum');
+				
+				$this->Session->setFlash(sprintf(__d('forum', 'The %s forum has been added.', true), '<strong>'. $this->data['Forum']['title'] .'</strong>'));
 				$this->redirect(array('controller' => 'stations', 'action' => 'index', 'admin' => true));
 			}
 		}
@@ -199,14 +205,19 @@ class StationsController extends ForumAppController {
 		if (!empty($this->data)) {
 			$this->Forum->id = $id;
 			
-			if (empty($this->data['Forum']['forum_id'])) {
+			if (empty($this->data['Forum']['forum_id']) || $this->data['Forum']['forum_id'] == $id) {
 				$this->data['Forum']['forum_id'] = 0;
-			} else if ($this->data['Forum']['forum_id'] == $id) {
-				$this->data['Forum']['forum_id'] = $forum['Forum']['forum_id'];
+			}
+			
+			if (empty($this->data['Forum']['access_level_id'])) {
+				$this->data['Forum']['access_level_id'] = 0;
 			}
 			
 			if ($this->Forum->save($this->data, true)) {
+				Cache::delete('Forum.getIndex', 'forum');
 				Cache::delete('Forum.get-'. $forum['Forum']['slug'], 'forum');
+				
+				$this->Session->setFlash(sprintf(__d('forum', 'The %s forum has been updated.', true), '<strong>'. $forum['Forum']['title'] .'</strong>'));
 				$this->redirect(array('controller' => 'stations', 'action' => 'index', 'admin' => true));
 			}
 		} else {
@@ -239,15 +250,15 @@ class StationsController extends ForumAppController {
 			
 			Cache::delete('Forum.getIndex', 'forum');
 
-			$this->Session->setFlash(sprintf(__d('forum', 'The forum %s has been deleted, and all its sub-forums and topics have been moved!', true), '<strong>'. $forum['Forum']['title'] .'</strong>'));
+			$this->Session->setFlash(sprintf(__d('forum', 'The %s forum has been deleted, and all its sub-forums and topics have been moved!', true), '<strong>'. $forum['Forum']['title'] .'</strong>'));
 			$this->redirect(array('controller' => 'stations', 'action' => 'index', 'admin' => true));
 		}
 		
 		$this->Toolbar->pageTitle(__d('forum', 'Delete Forum', true), $forum['Forum']['title']);
 		$this->set('forum', $forum);
 		$this->set('levels', $this->Forum->AccessLevel->getHigherLevels());
-		$this->set('topicForums', $this->Forum->getHierarchy(true, $id));
-		$this->set('subForums', $this->Forum->getHierarchy(false, $id));
+		$this->set('topicForums', $this->Forum->getGroupedHierarchy());
+		$this->set('subForums', $this->Forum->getGroupedHierarchy());
 	}
 
 	/**

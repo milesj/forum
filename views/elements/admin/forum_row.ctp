@@ -4,7 +4,7 @@
 		<td>&nbsp;</td>
     	<td style="width: 35px">
 			<?php
-			echo $this->Form->input('Forum.'. $forum['id'] .'.orderNo', array('value' => $forum['orderNo'], 'div' => false, 'label' => false, 'style' => 'width: 20px'));
+			echo $this->Form->input('Forum.'. $forum['id'] .'.orderNo', array('value' => $forum['orderNo'], 'div' => false, 'label' => false, 'style' => 'width: 20px', 'maxlength' => 2, 'class' => 'align-center'));
 			echo $this->Form->input('Forum.'. $forum['id'] .'.id', array('value' => $forum['id'], 'type' => 'hidden')); ?>
         </td>
         <td>
@@ -14,7 +14,7 @@
     <?php } else { ?>
 		<td class="icon">
 			<?php
-			echo $this->Form->input('Forum.'. $forum['id'] .'.orderNo', array('value' => $forum['orderNo'], 'div' => false, 'label' => false, 'style' => 'width: 20px'));
+			echo $this->Form->input('Forum.'. $forum['id'] .'.orderNo', array('value' => $forum['orderNo'], 'div' => false, 'label' => false, 'style' => 'width: 20px', 'maxlength' => 2, 'class' => 'align-center'));
 			echo $this->Form->input('Forum.'. $forum['id'] .'.id', array('value' => $forum['id'], 'type' => 'hidden')); ?>
 		</td>
 		<td colspan="2">

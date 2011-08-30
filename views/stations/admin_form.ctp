@@ -16,8 +16,6 @@ $this->Html->addCrumb($title, $this->here); ?>
 	<h2><?php echo $title; ?></h2>
 </div>
 
-<p><?php __d('forum', 'When applying a read, post, reply or poll access, it states that all users with that access level and above will be able to commit the respective action. It does not mean only that type of access can view the forum category. However, the restricted access will limit only users with that access level to view the forum category.'); ?></p>
-
 <?php echo $this->Form->create('Forum', array('url' => $this->here)); ?>
 
 <div class="container">
@@ -25,9 +23,9 @@ $this->Html->addCrumb($title, $this->here); ?>
 		<?php
 		echo $this->Form->input('title', array('label' => __d('forum', 'Title', true)));
 		echo $this->Form->input('status', array('options' => $this->Common->options('forumStatus'), 'label' => __d('forum', 'Status', true)));
-		echo $this->Form->input('orderNo', array('style' => 'width: 50px', 'label' => __d('forum', 'Order No', true))); ?>
+		echo $this->Form->input('orderNo', array('style' => 'width: 50px', 'maxlength' => 2, 'label' => __d('forum', 'Order No', true))); ?>
 
-		<div class="inputDivider"><?php __d('forum', 'The fields below only apply to non-top level forums.'); ?></div>
+		<div class="inputDivider"><?php __d('forum', 'The fields below apply to child level forums.'); ?></div>
 
 		<?php
 		echo $this->Form->input('description', array('type' => 'textarea', 'label' => __d('forum', 'Description', true)));

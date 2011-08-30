@@ -156,4 +156,30 @@ class Setting extends ForumAppModel {
 		));
 	}
 	
+	/**
+	 * Update all the settings.
+	 * 
+	 * @access public
+	 * @param array $data
+	 * @return boolean 
+	 */
+	public function update($data) {
+		$this->set($data);
+		
+		if ($this->validates()) {
+			$list = $this->find('list', array(
+				'fields' => array('Setting.key', 'Setting.id')
+			));
+			
+			foreach ($data['Setting'] as $key => $value) {
+				$this->id = $list[$key];
+				$this->saveField('value', $value);
+			}
+			
+			return true;
+		}
+		
+		return false;
+	}
+	
 }

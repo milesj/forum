@@ -25,7 +25,7 @@ if (!empty($forums)) {
 			</span>
 			
 			<?php
-			echo $this->Form->input('Forum.'. $forum['Forum']['id'] .'.orderNo', array('value' => $forum['Forum']['orderNo'], 'div' => false, 'label' => false, 'style' => 'width: 20px'));
+			echo $this->Form->input('Forum.'. $forum['Forum']['id'] .'.orderNo', array('value' => $forum['Forum']['orderNo'], 'div' => false, 'label' => false, 'style' => 'width: 20px', 'maxlength' => 2, 'class' => 'align-center'));
 			echo $this->Form->input('Forum.'. $forum['Forum']['id'] .'.id', array('value' => $forum['Forum']['id'], 'type' => 'hidden')); ?>
 
 			<?php echo $forum['Forum']['title']; ?> 
@@ -69,7 +69,10 @@ if (!empty($forums)) {
 			} else { ?>
 
 				<tr>
-					<td colspan="11" class="empty"><?php __d('forum', 'There are no forums to display.'); ?> <?php echo $this->Html->link(__d('forum', 'Add Category', true), array('action' => 'add_category')); ?>.</td>
+					<td colspan="11" class="empty">
+						<?php __d('forum', 'There are no forums to display.'); ?> 
+						<?php echo $this->Html->link(__d('forum', 'Add Forum', true), array('action' => 'add')); ?>.
+					</td>
 				</tr>
 
 			<?php } ?>
