@@ -53,7 +53,7 @@ class InstallShell extends Shell {
 		$this->out('Shell: Installer');
 		$this->out();
 		$this->out('This shell installs the forum plugin by creating the required database tables,');
-		$this->out('setting up the admin user, applying necessary routes and table prefixes, and more.');
+		$this->out('setting up the admin user, applying necessary table prefixes, and more.');
 		
 		$this->hr(1);
 		$this->out('Installation Steps:');
@@ -310,16 +310,6 @@ class InstallShell extends Shell {
 		$appModel = preg_replace('/public \$useDbConfig = \'(.*?)\';/', 'public \$useDbConfig = \''. $this->install['database'] .'\';', $appModel);
 		
 		file_put_contents(FORUM_PLUGIN .'forum_app_model.php', $appModel);
-		
-		// Add routes if necessary
-		$routes = file_get_contents(CONFIGS .'routes.php');
-		$routes = str_replace('?>', '', $routes);
-		
-		if (strpos($routes, "Router::parseExtensions('rss');") === false) {
-			$routes .= "\n\nRouter::parseExtensions('rss');";
-		}
-		
-		file_put_contents(CONFIGS .'routes.php', $routes);
 		
 		$this->hr(1);
 		$this->out('Forum installation complete! Your admin credentials:');

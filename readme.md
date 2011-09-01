@@ -4,7 +4,7 @@ A fully robust and powerful CakePHP forum plugin.
 
 Todo:
 * Rebuild all locale strings
-* Verify all admin actions work 100%
+* Finalize Decoda
 
 ## Requirements ##
 

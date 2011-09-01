@@ -32,6 +32,8 @@ And finally applying these routes.
 	Router::connect('/forum/rules/*', array('plugin' => 'forum', 'controller' => 'forum', 'action' => 'rules'));
 	Router::connect('/admin/forum/settings/*', array('plugin' => 'forum', 'controller' => 'forum', 'action' => 'settings', 'admin' => true));
 
+It is also a good idea to create a "forum" folder within your app/tmp folder, and chmod it to 777.
+
 ## 4. Run the installer ##
 
 For your convenience, there is an automated installation script that you can run through the command line. If you do not have access to a command line, please jump down to the manual installation section. Now run the following command in your command line and follow the on screen instructions.
