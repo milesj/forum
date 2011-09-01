@@ -9,6 +9,15 @@
  */
  
 class Access extends ForumAppModel {
+	
+	/**
+	 * Access IDs.
+	 */
+	const GUEST = 0;
+	const MEMBER = 1;
+	const MOD = 2;
+	const SUPER = 3;
+	const ADMIN = 4;
 
 	/**
 	 * DB Table.
@@ -43,14 +52,31 @@ class Access extends ForumAppModel {
 	);
 	
 	/**
-	 * Add an access to a user, validating conditions.
+	 * Add a user once conditions are validated.
+	 * 
+	 * @access public
+	 * @param array $data
+	 * @return mixed
+	 */
+	public function add($data) {
+		if ($user = $this->validate($data)) {
+			if ($this->grant($data['user_id'], $data['access_level_id'])) {
+				return $user;
+			}
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * Grant access to a user, validating conditions.
 	 * 
 	 * @access public
 	 * @param int $user_id
 	 * @param int $level_id
 	 * @return type 
 	 */
-	public function add($user_id, $level_id) {
+	public function grant($user_id, $level_id) {
 		$count = $this->find('count', array(
 			'conditions' => array(
 				'Access.user_id' => $user_id,
@@ -59,7 +85,7 @@ class Access extends ForumAppModel {
 		));
 		
 		if ($count) {
-			return false;
+			return $this->invalidate('user_id', 'User already has this access');
 		}
 		
 		$this->create();
@@ -93,7 +119,7 @@ class Access extends ForumAppModel {
 	 */
 	public function getList() {
 		return $this->find('all', array(
-			'contain' => array('User', 'AccessLevel'),
+			'contain' => array('User' => array('Profile'), 'AccessLevel'),
 			'order' => array('Access.access_level_id' => 'ASC')
 		));
 	}
@@ -125,6 +151,31 @@ class Access extends ForumAppModel {
 			array('Access.access_level_id' => $moved_id),
 			array('Access.access_level_id' => $start_id)
 		);
+	}
+	
+	/**
+	 * Validate logical conditions.
+	 * 
+	 * @access public
+	 * @param array $data
+	 * @return boolean
+	 */
+	public function validate($data) {
+		$this->set($data);
+		
+		if ($this->validates()) {
+			$userCount = $this->User->find('count', array(
+				'conditions' => array('User.id' => $data['user_id'])
+			));
+
+			if ($userCount <= 0) {
+				return $this->invalidate('user_id', 'No user exists with this ID');
+			}
+
+			return ClassRegistry::init('Profile')->getUserProfile($data['user_id']);
+		}
+		
+		return false;
 	}
 	
 }

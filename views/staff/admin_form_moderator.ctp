@@ -25,7 +25,11 @@ $this->Html->addCrumb($title, $this->here); ?>
 <div class="container">
 	<div class="containerContent">
 		<?php
-		echo $this->Form->input('user_id', array('type' => 'text', 'class' => 'numeric', 'label' => __d('forum', 'User ID', true)));
+		if ($method == 'add') {
+			echo $this->Form->input('user_id', array('type' => 'text', 'class' => 'numeric', 'label' => __d('forum', 'User ID', true)));
+		} else {
+			echo $this->Form->input('User.'. $config['userMap']['username'], array('type' => 'text',  'label' => __d('forum', 'User', true), 'readonly' => true));
+		}
 		echo $this->Form->input('forum_id', array('label' => __d('forum', 'Forum', true), 'empty' => true, 'escape' => false)); ?>
 	</div>
 </div>

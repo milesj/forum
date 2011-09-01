@@ -33,7 +33,8 @@ class StaffController extends ForumAppController {
 	 */
 	public function admin_add_access() {
 		if (!empty($this->data)) {
-			if ($this->Access->save($this->data, true, array('user_id', 'access_level_id'))) {
+			if ($user = $this->Access->add($this->data['Access'])) {
+				$this->Session->setFlash(sprintf(__d('forum', 'Access has been granted to %s.', true), '<strong>'. $user['User'][$this->config['userMap']['username']] .'</strong>'));
 				$this->redirect(array('controller' => 'staff', 'action' => 'index', 'admin' => true));
 			}
 		}
@@ -57,7 +58,8 @@ class StaffController extends ForumAppController {
 		if (!empty($this->data)) {
 			$this->Access->id = $id;
 			
-			if ($this->Access->save($this->data, true, array('user_id', 'access_level_id'))) {
+			if ($this->Access->save($this->data, true, array('access_level_id'))) {
+				$this->Session->setFlash(sprintf(__d('forum', 'Access for %s has been updated.', true), '<strong>'. $access['User'][$this->config['userMap']['username']] .'</strong>'));
 				$this->redirect(array('controller' => 'staff', 'action' => 'index', 'admin' => true));
 			}
 		} else {
@@ -94,6 +96,7 @@ class StaffController extends ForumAppController {
 	public function admin_add_access_level() {
 		if (!empty($this->data)) {
 			if ($this->Access->AccessLevel->save($this->data, true, array('level', 'title', 'isSuper', 'isAdmin'))) {
+				$this->Session->setFlash(sprintf(__d('forum', 'Access level %s has been added.', true), '<strong>'. $this->data['AccessLevel']['title'] .'</strong>'));
 				$this->redirect(array('controller' => 'staff', 'action' => 'index', 'admin' => true));
 			}
 		}
@@ -117,6 +120,7 @@ class StaffController extends ForumAppController {
 			$this->Access->AccessLevel->id = $id;
 			
 			if ($this->Access->AccessLevel->save($this->data, true, array('level', 'title', 'isSuper', 'isAdmin'))) {
+				$this->Session->setFlash(sprintf(__d('forum', 'Access level %s has been updated.', true), '<strong>'. $access['AccessLevel']['title'] .'</strong>'));
 				$this->redirect(array('controller' => 'staff', 'action' => 'index', 'admin' => true));
 			}
 		} else {
@@ -157,7 +161,7 @@ class StaffController extends ForumAppController {
 	public function admin_add_moderator() {
 		if (!empty($this->data)) {
 			if ($this->Moderator->add($this->data['Moderator'])) {
-				$this->Access->add($this->data['Moderator']['user_id'], 2); // moderator
+				$this->Access->grant($this->data['Moderator']['user_id'], Access::MOD);
 				$this->redirect(array('controller' => 'staff', 'action' => 'index', 'admin' => true));
 			}
 		}
@@ -180,6 +184,7 @@ class StaffController extends ForumAppController {
 		
 		if (!empty($this->data)) {
 			if ($this->Moderator->edit($id, $this->data['Moderator'])) {
+				$this->Session->setFlash(sprintf(__d('forum', 'Moderator %s has been updated.', true), '<strong>'. $mod['User'][$this->config['userMap']['username']] .'</strong>'));
 				$this->redirect(array('controller' => 'staff', 'action' => 'index', 'admin' => true));
 			}
 		} else {
@@ -208,7 +213,7 @@ class StaffController extends ForumAppController {
 			if (!$this->Moderator->getModerations($mod['Moderator']['user_id'])) {
 				$this->Access->deleteAll(array(
 					'Access.user_id' => $mod['Moderator']['user_id'],
-					'Access.access_level_id' => 2 // moderator
+					'Access.access_level_id' => Access::MOD
 				));
 			}
 			

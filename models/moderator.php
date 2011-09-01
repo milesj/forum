@@ -62,7 +62,7 @@ class Moderator extends ForumAppModel {
 	public function edit($id, $data) {
 		if ($this->validate($data)) {
 			$this->id = $id;
-			return $this->save($data, false);
+			return $this->save($data, false, array('forum_id'));
 		}
 		
 		return false;
@@ -90,7 +90,7 @@ class Moderator extends ForumAppModel {
 	 */
 	public function getList() {
 		return $this->find('all', array(
-			'contain' => array('Forum', 'User'),
+			'contain' => array('Forum', 'User' => array('Profile')),
 			'order' => array('Moderator.forum_id' => 'ASC')
 		));
 	}
@@ -134,12 +134,14 @@ class Moderator extends ForumAppModel {
 		$this->set($data);
 		
 		if ($this->validates()) {
-			$userCount = $this->User->find('count', array(
-				'conditions' => array('User.id' => $data['user_id'])
-			));
+			if (!empty($data['user_id'])) {
+				$userCount = $this->User->find('count', array(
+					'conditions' => array('User.id' => $data['user_id'])
+				));
 
-			if ($userCount <= 0) {
-				return $this->invalidate('user_id', 'No user exists with this ID');
+				if ($userCount <= 0) {
+					return $this->invalidate('user_id', 'No user exists with this ID');
+				}
 			}
 
 			$forumCount = $this->find('count', array(

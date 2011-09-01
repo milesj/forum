@@ -23,9 +23,11 @@ $this->Html->addCrumb(__d('forum', 'Staff', true), array('controller' => 'staff'
 		<table class="table">
 			<thead>
 				<tr>
-					<th style="width: 33%"><?php __d('forum', 'Title'); ?></th>
-					<th style="width: 33%"><?php __d('forum', 'Level'); ?></th>
-					<th style="width: 33%"><?php __d('forum', 'Options'); ?></th>
+					<th style="width: 20%"><?php __d('forum', 'Title'); ?></th>
+					<th style="width: 20%"><?php __d('forum', 'Level'); ?></th>
+					<th style="width: 20%"><?php __d('forum', 'Is Admin'); ?></th>
+					<th style="width: 20%"><?php __d('forum', 'Is Super Mod'); ?></th>
+					<th style="width: 20%"><?php __d('forum', 'Options'); ?></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -35,6 +37,8 @@ $this->Html->addCrumb(__d('forum', 'Staff', true), array('controller' => 'staff'
 				<tr>
 					<td class="align-center"><?php echo $level['AccessLevel']['title']; ?></td>
 					<td class="align-center"><?php echo $level['AccessLevel']['level']; ?></td>
+					<td class="align-center"><?php __d('forum', $level['AccessLevel']['isAdmin'] ? 'Yes' : 'No'); ?></td>
+					<td class="align-center"><?php __d('forum', $level['AccessLevel']['isSuper'] ? 'Yes' : 'No'); ?></td>
 					<td class="align-center gray">
 						<?php if ($level['AccessLevel']['id'] <= 4) { ?>
 							<em><?php __d('forum', 'Restricted'); ?></em>
@@ -72,7 +76,7 @@ $this->Html->addCrumb(__d('forum', 'Staff', true), array('controller' => 'staff'
 			<?php foreach ($staff as $user) { ?>
 
 				<tr>
-					<td><strong><?php echo $this->Html->link($user['User'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'edit', $user['User']['id'], 'admin' => true)); ?></strong></td>
+					<td><strong><?php echo $this->Html->link($user['User'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'edit', $user['User']['Profile']['id'], 'admin' => true)); ?></strong></td>
 					<td class="align-center"><?php echo $user['AccessLevel']['title']; ?></td>
 					<td class="align-center"><?php echo $this->Time->nice($user['Access']['created'], $this->Common->timezone()); ?></td>
 					<td class="align-center gray">
@@ -109,7 +113,7 @@ $this->Html->addCrumb(__d('forum', 'Staff', true), array('controller' => 'staff'
 				foreach ($mods as $user) { ?>
 
 				<tr >
-					<td><strong><?php echo $this->Html->link($user['User'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'edit', $user['Moderator']['id'], 'admin' => true)); ?></strong></td>
+					<td><strong><?php echo $this->Html->link($user['User'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'edit', $user['User']['Profile']['id'], 'admin' => true)); ?></strong></td>
 					<td class="align-center"><?php echo $this->Html->link($user['Forum']['title'], array('controller' => 'stations', 'action' => 'edit', $user['Forum']['id'], 'admin' => true)); ?></td>
 					<td class="align-center"><?php echo $this->Time->nice($user['Moderator']['created'], $this->Common->timezone()); ?></td>
 					<td class="align-center gray">

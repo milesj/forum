@@ -18,14 +18,20 @@ $this->Html->addCrumb($title, $this->here); ?>
 	<h2><?php echo $title; ?></h2>
 </div>
 
-<p><?php printf(__d('forum', 'To find the users ID, you can search for them in the %s.', true), $this->Html->link(strtolower(__d('forum', 'Users listing', true)), array('controller' => 'users', 'action' => 'index', 'admin' => true))); ?></p>
+<?php if ($method == 'add') { ?>
+	<p><?php printf(__d('forum', 'To find the users ID, you can search for them in the %s.', true), $this->Html->link(strtolower(__d('forum', 'Users listing', true)), array('controller' => 'users', 'action' => 'index', 'admin' => true))); ?></p>
+<?php }
 
-<?php echo $this->Form->create('Access', array('url' => $this->here)); ?>
+echo $this->Form->create('Access', array('url' => $this->here)); ?>
 
 <div class="container">
 	<div class="containerContent">
 		<?php
-		echo $this->Form->input('user_id', array('type' => 'text', 'class' => 'numeric', 'label' => __d('forum', 'User ID', true)));
+		if ($method == 'add') {
+			echo $this->Form->input('user_id', array('type' => 'text', 'class' => 'numeric', 'label' => __d('forum', 'User ID', true)));
+		} else {
+			echo $this->Form->input('User.'. $config['userMap']['username'], array('type' => 'text',  'label' => __d('forum', 'User', true), 'readonly' => true));
+		}
 		echo $this->Form->input('access_level_id', array('options' => $levels, 'label' => __d('forum', 'Access Level', true), 'empty' => false)); ?>
 	</div>
 </div>
