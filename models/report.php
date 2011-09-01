@@ -38,17 +38,14 @@ class Report extends ForumAppModel {
 		),
 		'Topic' => array(
 			'className' 	=> 'Forum.Topic',
-			'foreignKey' 	=> 'item_id',
-			'conditions' 	=> array('Report.itemType' => self::TOPIC)
+			'foreignKey' 	=> 'item_id'
 		),
 		'Post' => array(
 			'className' 	=> 'Forum.Post',
-			'foreignKey' 	=> 'item_id',
-			'conditions' 	=> array('Report.itemType' => self::POST)
+			'foreignKey' 	=> 'item_id'
 		),
 		'User' => array(
-			'foreignKey' 	=> 'item_id',
-			'conditions' 	=> array('Report.itemType' => self::USER)
+			'foreignKey' 	=> 'item_id'
 		)
 	);
 	

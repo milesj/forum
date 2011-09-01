@@ -48,7 +48,7 @@ class ReportsController extends ForumAppController {
 			$this->setAction('admin_users');
 		
 		} else {
-			$this->paginate['Report']['contain'] = array('Reporter', 'Topic', 'Post', 'User');
+			$this->paginate['Report']['contain'] = array('Reporter' => array('Profile'), 'Topic', 'Post', 'User' => array('Profile'));
 
 			$this->Toolbar->pageTitle(__d('forum', 'Reported Items', true));
 			$this->set('reports', $this->paginate('Report'));
@@ -84,8 +84,8 @@ class ReportsController extends ForumAppController {
 		}
 		
 		$this->paginate['Report']['conditions']['Report.itemType'] = Report::TOPIC;
-		$this->paginate['Report']['contain']= array('Reporter', 'Topic');
-		
+		$this->paginate['Report']['contain']= array('Reporter' => array('Profile'), 'Topic');
+
 		$this->Toolbar->pageTitle(__d('forum', 'Reported Topics', true));
 		$this->set('reports', $this->paginate('Report'));
 	}
@@ -103,7 +103,7 @@ class ReportsController extends ForumAppController {
 					
 					switch ($this->data['Report']['action']) {
 						case 'delete':
-							$this->Post->delete($item_id);
+							$this->Post->delete($item_id, true);
 						break;
 					}
 					
@@ -115,7 +115,7 @@ class ReportsController extends ForumAppController {
 		}
 		
 		$this->paginate['Report']['conditions']['Report.itemType'] = Report::POST;
-		$this->paginate['Report']['contain'] = array('Reporter', 'Post');
+		$this->paginate['Report']['contain'] = array('Reporter' => array('Profile'), 'Post' => array('Topic'));
 		
 		$this->Toolbar->pageTitle(__d('forum', 'Reported Posts', true));
 		$this->set('reports', $this->paginate('Report'));
@@ -147,7 +147,7 @@ class ReportsController extends ForumAppController {
 		}
 		
 		$this->paginate['Report']['conditions']['Report.itemType'] = Report::USER;
-		$this->paginate['Report']['contain']= array('Reporter', 'User');
+		$this->paginate['Report']['contain']= array('Reporter' => array('Profile'), 'User' => array('Profile'));
 		
 		$this->Toolbar->pageTitle(__d('forum', 'Reported Users', true));
 		$this->set('reports', $this->paginate('Report'));

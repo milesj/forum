@@ -45,7 +45,7 @@ $this->Html->addCrumb(__d('forum', 'Topics', true), array('controller' => 'repor
 							echo '<em class="gray">('. __d('forum', 'Deleted', true) .')</em>';
 						} ?>
 					</td>
-					<td><?php echo $this->Html->link($report['Reporter'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'edit', $report['Reporter']['id'], 'admin' => true)); ?></td>
+					<td><?php echo $this->Html->link($report['Reporter'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'edit', $report['Reporter']['Profile']['id'], 'admin' => true)); ?></td>
 					<td><?php echo $report['Report']['comment']; ?></td>
 					<td><?php echo $this->Time->nice($report['Report']['created'], $this->Common->timezone()); ?></td>
 				</tr>
