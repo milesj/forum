@@ -1,10 +1,6 @@
-# Forum v2.0 (DEVELOPMENT) #
+# Forum v2.0 BETA #
 
 A fully robust and powerful CakePHP forum plugin.
-
-Todo:
-* Rebuild all locale strings
-* Finalize Decoda
 
 ## Requirements ##
 
