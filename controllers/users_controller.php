@@ -1,11 +1,11 @@
 <?php
 /** 
- * Cupcake - Users Controller
+ * Forum - Users Controller
  *
- * @author 		Miles Johnson - www.milesj.me
- * @copyright	Copyright 2006-2009, Miles Johnson, Inc.
- * @license 	http://www.opensource.org/licenses/mit-license.php - Licensed under The MIT License
- * @link		www.milesj.me/resources/script/forum-plugin
+ * @author		Miles Johnson - http://milesj.me
+ * @copyright	Copyright 2006-2010, Miles Johnson, Inc.
+ * @license		http://opensource.org/licenses/mit-license.php - Licensed under The MIT License
+ * @link		http://milesj.me/resources/script/forum-plugin
  */
  
 class UsersController extends ForumAppController {
@@ -16,7 +16,7 @@ class UsersController extends ForumAppController {
 	 * @access public
 	 * @var array
 	 */
-	public $uses = array('Forum.User');
+	public $uses = array('User', 'Forum.Profile');  
 
 	/**
 	 * Components.
@@ -24,7 +24,15 @@ class UsersController extends ForumAppController {
 	 * @access public
 	 * @var array
 	 */
-	public $components = array('Auth', 'Forum.AutoLogin', 'Email');
+	public $components = array('Email');  
+	
+	/**
+	 * Helpers.
+	 * 
+	 * @access public
+	 * @var array
+	 */
+	public $helpers = array('Utils.Gravatar');
 	
 	/**
 	 * Pagination.
@@ -33,92 +41,72 @@ class UsersController extends ForumAppController {
 	 * @var array      
 	 */ 
 	public $paginate = array(  
-		'User' => array(
-			'order' => 'User.username ASC',
-			'limit' => 25,
-			'contain' => false
+		'Profile' => array(
+			'contain' => array('User'),
+			'limit' => 25
 		) 
 	);
 	
 	/**
-	 * Redirect.
-	 *
-	 * @access public 
+	 * List of users.
 	 */
 	public function index() {
-		$this->Toolbar->goToPage();
+		if (!empty($this->params['named']['username'])) {
+			$this->data['Profile']['username'] = $this->params['named']['username'];
+			$this->paginate['Profile']['conditions'] = array('User.'. $this->config['userMap']['username'] .' LIKE' => '%'. Sanitize::clean($this->params['named']['username']) .'%');
+		}
+		
+		$this->paginate['Profile']['order'] = array('User.'. $this->config['userMap']['username'] => 'ASC');
+		
+		$this->Toolbar->pageTitle(__d('forum', 'User List', true));
+		$this->set('users', $this->paginate('Profile'));
 	}
 	
 	/**
-	 * Edit a users profile.
-	 *
-	 * @access public
+	 * Proxy action to build named parameters.
+	 */
+	public function proxy() {
+		$named = array();
+
+		foreach ($this->data['Profile'] as $field => $value) {
+			if ($value != '') {
+				$named[$field] = urlencode($value);
+			}	
+		}
+		
+		$this->redirect(array_merge(array('controller' => 'users', 'action' => 'index'), $named));
+	}
+	
+	/**
+	 * Edit a forum profile.
 	 */
 	public function edit() {
 		$user_id = $this->Auth->user('id');
-		$user = $this->User->get($user_id);
+		$profile = $this->Profile->getUserProfile($user_id);
 		
-		// Form Processing
 		if (!empty($this->data)) {
-			$this->User->id = $user_id;
-			$this->User->set($this->data);
-			
-			if ($this->User->validates()) {
-				if (isset($this->data['User']['newPassword'])) {
-					$this->data['User']['password'] = $this->Auth->password($this->data['User']['newPassword']);
-				}
+			$this->Profile->id = $profile['Profile']['id'];
 
-				$this->User->id = $user_id;
-				if ($this->User->save($this->data, false, array('email', 'password', $this->User->columnMap['signature'], $this->User->columnMap['locale'], $this->User->columnMap['timezone']))) {
-					$this->Session->setFlash(__d('forum', 'Your profile information has been updated!', true));
-
-					foreach ($this->data['User'] as $field => $value) {
-						$this->_refreshAuth($field, $value);
-					}
-				}
+			if ($this->Profile->save($this->data, true)) {
+				$this->Session->setFlash(__d('forum', 'Your profile information has been updated!', true));
 			}
-		}
-		
-		foreach ($user['User'] as $field => $value) {
-			if (empty($this->data['User'][$field])) {
-				$this->data['User'][$field] = $value;
-			}
+		} else {
+			$this->data = $profile;
 		}
 		
 		$this->Toolbar->pageTitle(__d('forum', 'Edit Profile', true));
 	}
-	
-	/**
-	 * Forgot credentials.
-	 *
-	 * @access public
-	 */
-	public function forgot() {
-		if (!empty($this->data)) {
-			if ($user = $this->User->forgotRetrieval($this->data)) {
-				$this->Toolbar->resetPassword($user);
-				
-				$this->Session->setFlash(__d('forum', 'Your new password and information has been sent to your email.', true));
-				unset($this->data['User']);
-			}
-		}
-		
-		$this->Toolbar->pageTitle(__d('forum', 'Forgot Password', true));
-	}
-	
+
 	/**
 	 * Login.
-	 *
-	 * @access public
 	 */
 	public function login() {
 		if (!empty($this->data)) {
 			$this->User->set($this->data);
-			$this->User->action = 'login';
 			
 			if ($this->User->validates()) {
 				if ($user = $this->Auth->user()) {
-					$this->User->login($user);
+					$this->Profile->login($user['User']['id']);
 					$this->Session->delete('Forum');
 					$this->redirect($this->Auth->loginRedirect);
 				}
@@ -130,69 +118,50 @@ class UsersController extends ForumAppController {
 	
 	/**
 	 * Logout.
-	 *
-	 * @access public
 	 */
 	public function logout() {
 		$this->Session->delete('Forum');
 		$this->redirect($this->Auth->logout());
 	}
-	
-	/**
-	 * List of all users.
-	 *
-	 * @access public
-	 */
-	public function listing() {
-		if (!empty($this->data)) {
-			if (!empty($this->data['User']['username'])) {
-				$this->paginate['User']['conditions']['User.username LIKE'] = '%'. $this->data['User']['username'] .'%';
-			}
-		}
-		
-		$this->Toolbar->pageTitle(__d('forum', 'User List', true));
-		$this->set('users', $this->paginate('User'));
-	}
-	
+
 	/**
 	 * User profile.
 	 *
-	 * @access public
-	 * @param int $id
+	 * @param int $user_id
 	 */
-	public function profile($id) {
-		$user = $this->User->getProfile($id);
+	public function profile($user_id) {
+		$profile = $this->Profile->getByUser($user_id);
 		
-		if (!empty($user)) {
-			$this->loadModel('Forum.Topic');
-			$this->set('topics', $this->Topic->getLatestByUser($id));
-			$this->set('posts', $this->Topic->Post->getLatestByUser($id));
+		if (empty($profile)) {
+			return $this->cakeError('error404');
 		}
-	
-		$this->Toolbar->pageTitle(__d('forum', 'User Profile', true), $user['User']['username']);
-		$this->set('user', $user);
+		
+		$this->loadModel('Forum.Topic');
+
+		$this->Toolbar->pageTitle(__d('forum', 'User Profile', true), $profile['User'][$this->config['userMap']['username']]);
+		$this->set('profile', $profile);
+		$this->set('topics', $this->Topic->getLatestByUser($user_id));
+		$this->set('posts', $this->Topic->Post->getLatestByUser($user_id));
 	}
 	
 	/**
 	 * Report a user.
 	 *
-	 * @access public
-	 * @param int $id
+	 * @param int $user_id
 	 */
-	public function report($id) {
+	public function report($user_id) {
+		$profile = $this->Profile->getByUser($user_id);
+		
+		if (empty($profile)) {
+			return $this->cakeError('error404');
+		}
+		
 		$this->loadModel('Forum.Report');
-		
-		$user = $this->User->get($id, array('id', 'username'));
-		$user_id = $this->Auth->user('id');
-		
-		// Access
-		$this->Toolbar->verifyAccess(array('exists' => $user));
-		
-		// Submit Report
+
 		if (!empty($this->data)) {
-			$this->data['Report']['user_id'] = $user_id;
-			$this->data['Report']['item_id'] = $id;
-			$this->data['Report']['itemType'] = 'user';
+			$this->data['Report']['user_id'] = $this->Auth->user('id');
+			$this->data['Report']['item_id'] = $user_id;
+			$this->data['Report']['itemType'] = Report::USER;
 			
 			if ($this->Report->save($this->data, true, array('item_id', 'itemType', 'user_id', 'comment'))) {
 				$this->Session->setFlash(__d('forum', 'You have succesfully reported this user! A moderator will review this topic and take the necessary action.', true));
@@ -200,154 +169,63 @@ class UsersController extends ForumAppController {
 			}
 		}
 		
-		$this->Toolbar->pageTitle(__d('forum', 'Report User', true));
-		$this->set('id', $id);
-		$this->set('user', $user);
-	}
-	
-	/**
-	 * Signup.
-	 *
-	 * @access public
-	 */
-	public function signup() {
-		if (!empty($this->data)) {
-			$this->User->create();
-			$this->User->set($this->data);
-			$this->User->action = 'signup';
-			
-			if ($this->User->validates()) {
-				$this->data['User']['username'] = strip_tags($this->data['User']['username']);
-				$this->data['User']['password'] = $this->Auth->password($this->data['User']['newPassword']);
-				$this->data['User'][$this->User->columnMap['locale']] = $this->Toolbar->settings['default_locale'];
-
-				if ($this->User->save($this->data, false, array('username', 'email', 'password', $this->User->columnMap['locale']))) {
-					$this->Session->setFlash(__d('forum', 'You have successfully signed up, you may now login and begin posting.', true));
-
-					// Send email
-					$message  = sprintf(__d('forum', 'Thank you for signing up on %s, your information is listed below', true), $this->Toolbar->settings['site_name']) .":\n\n";
-					$message .= __d('forum', 'Username', true) .": ". $this->data['User']['username'] ."\n";
-					$message .= __d('forum', 'Password', true) .": ". $this->data['User']['newPassword'] ."\n\n";
-					$message .= __d('forum', 'Enjoy!', true);
-					
-					$this->Email->to = $this->data['User']['email'];
-					$this->Email->from = $this->Toolbar->settings['site_name'] .' <'. $this->Toolbar->settings['site_email'] .'>';
-					$this->Email->subject = $this->Toolbar->settings['site_name'] .' - '. __d('forum', 'Sign Up Confirmation', true);
-					$this->Email->send($message);
-					
-					unset($this->data['User']);
-				}
-			}
-		}
-		
-		$this->Toolbar->pageTitle(__d('forum', 'Sign Up', true));
+		$this->Toolbar->pageTitle(__d('forum', 'Report User', true), $profile['User'][$this->config['userMap']['username']]);
+		$this->set('profile', $profile);
 	}
 	
 	/**
 	 * Admin index!
-	 *
-	 * @access public
-	 * @category Admin
 	 */
 	public function admin_index() {
 		if (!empty($this->data)) {
-			if (!empty($this->data['User']['username'])) {
-				$this->paginate['User']['conditions']['User.username LIKE'] = '%'. $this->data['User']['username'] .'%';
+			if (!empty($this->data['Profile']['username'])) {
+				$this->paginate['Profile']['conditions']['User.'. $this->config['userMap']['username'] .' LIKE'] = '%'. Sanitize::clean($this->data['Profile']['username']) .'%';
 			}
 			
-			if (!empty($this->data['User']['id'])) {
-				$this->paginate['User']['conditions']['User.id'] = $this->data['User']['id'];
+			if (!empty($this->data['Profile']['id'])) {
+				$this->paginate['Profile']['conditions']['User.id'] = $this->data['Profile']['id'];
 			}
 		}
+		
+		$this->paginate['Profile']['order'] = array('User.'. $this->config['userMap']['username'] => 'ASC');
 
-		$this->pageTitle = __d('forum', 'Manage Users', true);
-		$this->set('users', $this->paginate('User'));
+		$this->Toolbar->pageTitle(__d('forum', 'Manage Users', true));
+		$this->set('users', $this->paginate('Profile'));
 	}
 	
 	/**
 	 * Edit a user.
-	 *
-	 * @access public
-	 * @category Admin
+	 * 
 	 * @param int $id
 	 */
 	public function admin_edit($id) {
-		$user = $this->User->get($id);
-		$this->Toolbar->verifyAccess(array('exists' => $user));
+		$profile = $this->Profile->get($id);
 		
-		// Form Processing
+		if (empty($profile)) {
+			return $this->cakeError('error404');
+		}
+		
 		if (!empty($this->data)) {
-			$this->User->id = $id;
+			$this->Profile->id = $id;
 			
-			if ($this->User->save($this->data, true, array('username', 'email', $this->User->columnMap['totalPosts'], $this->User->columnMap['totalTopics']))) {
+			if ($this->Profile->save($this->data, true)) {
+				$this->Session->setFlash(sprintf(__d('forum', 'Profile for %s has been updated.', true), '<strong>'. $profile['User']['username'] .'</strong>'));
 				$this->redirect(array('controller' => 'users', 'action' => 'index', 'admin' => true));
 			}
 		} else {
-			$this->data = $user;
+			$this->data = $profile;
 		}
 		
-		$this->pageTitle = __d('forum', 'Edit User', true);
-		$this->set('id', $id);
+		$this->Toolbar->pageTitle(__d('forum', 'Edit User', true));
 	}
-	
-	/**
-	 * Reset users password.
-	 *
-	 * @access public
-	 * @category Admin
-	 * @param int $id
-	 */
-	public function admin_reset($id) {
-		$user = $this->User->get($id);
-		$this->Toolbar->verifyAccess(array('exists' => $user));
-		
-		if (!empty($user)) {
-			$this->Toolbar->resetPassword($user, true);
-			$this->Session->setFlash(sprintf(__d('forum', 'The password for %s has been reset!', true), '<strong>'. $user['User']['username'] .'</strong>'));
-		}
-		
-		$this->redirect(array('controller' => 'users', 'action' => 'index', 'admin' => true));
-	}
-	
-	/**
-	 * Delets a user and all its content.
-	 *
-	 * @access public
-	 * @category Admin
-	 * @param int $id
-	 */
-	public function admin_delete($id) {
-		$user = $this->User->get($id);
-		$this->Toolbar->verifyAccess(array('exists' => $user));
-		
-		// Form Processing
-		if (!empty($this->data['User']['delete'])) {
-			$this->User->delete($id, true);
 
-			$this->Session->setFlash(sprintf(__d('forum', 'The user %s and all of their associations have been deleted!', true), '<strong>'. $user['User']['username'] .'</strong>'));
-			$this->redirect(array('controller' => 'users', 'action' => 'index', 'admin' => true));
-		}
-		
-		$this->pageTitle = __d('forum', 'Delete User', true);
-		$this->set('id', $id);
-		$this->set('user', $user);
-	}
-	
 	/**
 	 * Before filter.
-	 * 
-	 * @access public
-	 * @return void
 	 */
 	public function beforeFilter() {
 		parent::beforeFilter();
 		
-		$this->Auth->allow('index', 'forgot', 'login', 'logout', 'listing', 'profile', 'signup');
-
-		if (isset($this->params['admin'])) {
-			$this->Toolbar->verifyAdmin();
-			$this->layout = 'admin';
-		}
+		$this->Auth->allow('index', 'login', 'logout', 'profile', 'proxy');
 		
 		$this->set('menuTab', 'users');
 	}

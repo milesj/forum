@@ -1,11 +1,11 @@
 <?php
 /** 
- * Cupcake - PollOption Model
+ * Forum - PollOption Model
  *
- * @author 		Miles Johnson - www.milesj.me
- * @copyright	Copyright 2006-2009, Miles Johnson, Inc.
- * @license 	http://www.opensource.org/licenses/mit-license.php - Licensed under The MIT License
- * @link		www.milesj.me/resources/script/forum-plugin
+ * @author		Miles Johnson - http://milesj.me
+ * @copyright	Copyright 2006-2010, Miles Johnson, Inc.
+ * @license		http://opensource.org/licenses/mit-license.php - Licensed under The MIT License
+ * @link		http://milesj.me/resources/script/forum-plugin
  */
  
 class PollOption extends ForumAppModel {
@@ -30,7 +30,7 @@ class PollOption extends ForumAppModel {
 	 * @return boolean
 	 */
 	public function addVote($id) {
-		return $this->query("UPDATE `". $this->tablePrefix ."poll_options` AS `PollOption` SET `PollOption`.`vote_count` = `PollOption`.`vote_count` + 1 WHERE `PollOption`.`id` = $id");
+		return $this->query('UPDATE `'. $this->tablePrefix .'poll_options` AS `PollOption` SET `PollOption`.`vote_count` = `PollOption`.`vote_count` + 1 WHERE `PollOption`.`id` = '. (int) $id);
 	}
 	
 }

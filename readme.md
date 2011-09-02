@@ -1,20 +1,21 @@
-# Forum v1.9.1 #
+# Forum v2.0 BETA #
 
 A fully robust and powerful CakePHP forum plugin.
 
 ## Requirements ##
 
-* CakePHP 1.3.x
-* PHP 5.2.x
+* CakePHP 1.3.x (Tested with 1.3.9)
+* PHP 5.2.x, 5.3.x
+* Utils Plugin - https://github.com/CakeDC/utils
 
 ## Documentation ##
 
-Thorough documentation can be found here: http://milesj.me/resources/script/forum-plugin
+Thorough documentation can be found here: http://milesj.me/code/cakephp/forum
 
 ## Installation ##
 
-* Clone the repo into a folder called "forum" within your CakePHP's plugins directory.
-* Hit the installer script at: www.yourdomain.com/forum/install/
+* Clone the repo into a folder called "forum" within your CakePHP's plugins directory
+* Follow the instructions found in install.md
 
 ## Contributors ##
 
@@ -24,15 +25,14 @@ Thorough documentation can be found here: http://milesj.me/resources/script/foru
 * Rachman Chavik - Indonesian
 * Alexey Kondratyev - Russian
 * Walter Mairena - Spanish
-* Mariano Iglesias - Sluggable Behavior
 
 ## Features ##
 
 ### Forums ###
-* Forum wrappers and forum categories
+* Forum stations and child forums
 * First tier sub-forums
 * Activity and latest post tracking
-* Auto-Lock old topics
+* Auto-locking old topics
 * Enable/Disable post count increments
 * Individual settings for reading, posting, replying, etc
 * Access/Private specific forums
@@ -63,8 +63,7 @@ Thorough documentation can be found here: http://milesj.me/resources/script/foru
 * Form protection against bots and hackers
 
 ### Miscellaneous ###
-* BBCode support using the Decoda Helper
-* Uses the GeSHi class for code syntax highlighting
+* BBCode support using the Decoda package
 * Utilizes remember me features
 * Mark topics as read (Session)
 * Log created topics and posts (Session)
@@ -83,9 +82,9 @@ Once you have done that, just follow these steps.
 1 - Open the program and go to File > New catalog from POT file
 2 - Fill in the settings box with the following information
 
-	Project: Cupcake Forum Plugin
+	Project: CakePHP Forum Plugin
 	Team: Miles Johnson
-	Team Email: contact@milesj.me
+	Team Email: mileswjohnson@gmail.com
 	Language: <Pick the language>
 	Country: <Pick the country>
 	Charset: UTF-8
@@ -117,5 +116,5 @@ You may find some others like %count% and %total%; leave those as they are as we
 	msgstr "<YOUR TRANSLATED VERSION HERE>"
 
 11 - Create a folder for your language within the locale folder, based on the 3 character locale: http://www.loc.gov/standards/iso639-2/php/code_list.php
-12 - Within the language folder, create the LC_MESSAGES folder and place the .po file within.
+12 - Within the language folder, create the LC_MESSAGES folder and place the files within.
 13 - Commit and push! Once done, I will review and merge with your changes.

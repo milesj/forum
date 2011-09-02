@@ -1,14 +1,23 @@
 <?php
 /** 
- * Cupcake - AccessLevel Model
+ * Forum - AccessLevel Model
  *
- * @author 		Miles Johnson - www.milesj.me
- * @copyright	Copyright 2006-2009, Miles Johnson, Inc.
- * @license 	http://www.opensource.org/licenses/mit-license.php - Licensed under The MIT License
- * @link		www.milesj.me/resources/script/forum-plugin
+ * @author		Miles Johnson - http://milesj.me
+ * @copyright	Copyright 2006-2010, Miles Johnson, Inc.
+ * @license		http://opensource.org/licenses/mit-license.php - Licensed under The MIT License
+ * @link		http://milesj.me/resources/script/forum-plugin
  */
  
 class AccessLevel extends ForumAppModel {
+
+	/**
+	 * Constants for DB levels.
+	 */
+	const GUEST = 0;
+	const MEMBER = 1;
+	const MOD = 4;
+	const SUPER = 7;
+	const ADMIN = 10;
 	
 	/**
 	 * Validation.
@@ -29,7 +38,8 @@ class AccessLevel extends ForumAppModel {
 	 * @return array
 	 */
 	public function getHigherLevels($exclude = null) {
-		$conditions = array('AccessLevel.level >' => 1);
+		$conditions = array('AccessLevel.level >' => self::MEMBER);
+		
 		if (is_numeric($exclude)) {
 			$conditions['AccessLevel.id !='] = $exclude;
 		}
@@ -48,7 +58,7 @@ class AccessLevel extends ForumAppModel {
 	 */
 	public function getList() {
 		return $this->find('all', array(
-			'order' => 'AccessLevel.level ASC'
+			'order' => array('AccessLevel.level' => 'ASC')
 		));
 	}
 	

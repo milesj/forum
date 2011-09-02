@@ -9,7 +9,7 @@
 // ----------------------------------------------------------------------------
 // Feel free to add more tags
 // ----------------------------------------------------------------------------
-mySettings = {
+var bbcodeSettings = {
 	nameSpace: 'bbcode',
 	previewParserPath: '', // path to your BBCode parser
 	markupSet: [
@@ -18,33 +18,33 @@ mySettings = {
 		{name:'Underline', key:'U', openWith:'[u]', closeWith:'[/u]'},
 		{separator:'---------------' },
 		{name:'Image', key:'I', replaceWith:'[img][![Url]!][/img]'},
-		{name:'Link', key:'L', openWith:'[url=[![Url]!]]', closeWith:'[/url]', placeHolder:'Your text to link here...'},
-		{name:'Email', key:'E', openWith:'[email=[![Email]!]]', closeWith:'[/email]', placeHolder:'Email address here...'},
+		{name:'Link', key:'L', openWith:'[url="[![Url]!]"]', closeWith:'[/url]', placeHolder:'Your text to link here...'},
+		{name:'Email', key:'E', openWith:'[email="[![Email]!]"]', closeWith:'[/email]', placeHolder:'Email address here...'},
 		{separator:'---------------' },
-		{name:'Colors', openWith:'[color=[![Color]!]]', closeWith:'[/color]', dropMenu: [
-			{name:'Yellow', openWith:'[color=yellow]', closeWith:'[/color]', className:"col1-1" },
-			{name:'Orange', openWith:'[color=orange]', closeWith:'[/color]', className:"col1-2" },
-			{name:'Red', openWith:'[color=red]', closeWith:'[/color]', className:"col1-3" },
-			{name:'Blue', openWith:'[color=blue]', closeWith:'[/color]', className:"col2-1" },
-			{name:'Purple', openWith:'[color=purple]', closeWith:'[/color]', className:"col2-2" },
-			{name:'Green', openWith:'[color=green]', closeWith:'[/color]', className:"col2-3" },
-			{name:'White', openWith:'[color=white]', closeWith:'[/color]', className:"col3-1" },
-			{name:'Gray', openWith:'[color=gray]', closeWith:'[/color]', className:"col3-2" },
-			{name:'Black', openWith:'[color=black]', closeWith:'[/color]', className:"col3-3" }
+		{name:'Colors', openWith:'[color="[![Color]!]"]', closeWith:'[/color]', dropMenu: [
+			{name:'Yellow', openWith:'[color="yellow"]', closeWith:'[/color]', className:"col1-1" },
+			{name:'Orange', openWith:'[color="orange"]', closeWith:'[/color]', className:"col1-2" },
+			{name:'Red', openWith:'[color="red"]', closeWith:'[/color]', className:"col1-3" },
+			{name:'Blue', openWith:'[color="blue"]', closeWith:'[/color]', className:"col2-1" },
+			{name:'Purple', openWith:'[color="purple"]', closeWith:'[/color]', className:"col2-2" },
+			{name:'Green', openWith:'[color="green"]', closeWith:'[/color]', className:"col2-3" },
+			{name:'White', openWith:'[color="white"]', closeWith:'[/color]', className:"col3-1" },
+			{name:'Gray', openWith:'[color="gray"]', closeWith:'[/color]', className:"col3-2" },
+			{name:'Black', openWith:'[color="black"]', closeWith:'[/color]', className:"col3-3" }
 		]},
-		{name:'Size', openWith:'[size=[![Text size]!]]', closeWith:'[/size]', dropMenu :[
-			{name:'Big', openWith:'[size=29]', closeWith:'[/size]' },
-			{name:'Normal', openWith:'[size=20]', closeWith:'[/size]' },
-			{name:'Small', openWith:'[size=10]', closeWith:'[/size]' }
+		{name:'Size', openWith:'[size="[![Text size]!]"]', closeWith:'[/size]', dropMenu :[
+			{name:'Big', openWith:'[size="29"]', closeWith:'[/size]' },
+			{name:'Normal', openWith:'[size="20"]', closeWith:'[/size]' },
+			{name:'Small', openWith:'[size="10"]', closeWith:'[/size]' }
 		]},
-		{name:'Alignments', openWith:'[align=[![Direction]!]]', closeWith:'[/align]', dropMenu:[
-			{name:'Left', className:'left', openWith:'[align=left]', closeWith:'[/align]' },
-			{name:'Center', className:'center', openWith:'[align=center]', closeWith:'[/align]' },
-			{name:'Right', className:'right', openWith:'[align=right]', closeWith:'[/align]' }
+		{name:'Alignments', openWith:'[align="[![Direction]!]"]', closeWith:'[/align]', dropMenu:[
+			{name:'Left', className:'left', openWith:'[align="left"]', closeWith:'[/align]' },
+			{name:'Center', className:'center', openWith:'[align="center"]', closeWith:'[/align]' },
+			{name:'Right', className:'right', openWith:'[align="right"]', closeWith:'[/align]' }
 		]},
 		{separator:'---------------' },
 		{name:'Bulleted list', openWith:'[list]\n', closeWith:'\n[/list]'},
-		//{name:'Numeric list', openWith:'[list=[![Starting number]!]]\n', closeWith:'\n[/list]'},
+		{name:'Numbered list', openWith:'[olist]\n', closeWith:'\n[/olist]'},
 		{name:'List item', openWith:'[li]', closeWith:'[/li]'},
 		{separator:'---------------' },
 		{name:'Quotes', key:'Q', openWith:'[quote]', closeWith:'[/quote]'},

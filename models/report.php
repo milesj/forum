@@ -1,14 +1,21 @@
 <?php
 /** 
- * Cupcake - Report Model
+ * Forum - Report Model
  *
- * @author 		Miles Johnson - www.milesj.me
- * @copyright	Copyright 2006-2009, Miles Johnson, Inc.
- * @license 	http://www.opensource.org/licenses/mit-license.php - Licensed under The MIT License
- * @link		www.milesj.me/resources/script/forum-plugin
+ * @author		Miles Johnson - http://milesj.me
+ * @copyright	Copyright 2006-2010, Miles Johnson, Inc.
+ * @license		http://opensource.org/licenses/mit-license.php - Licensed under The MIT License
+ * @link		http://milesj.me/resources/script/forum-plugin
  */
  
 class Report extends ForumAppModel {
+
+	/**
+	 * Report types.
+	 */
+	const TOPIC = 1;
+	const POST = 2;
+	const USER = 3;
 
 	/**
 	 * DB Table.
@@ -26,23 +33,19 @@ class Report extends ForumAppModel {
 	 */
 	public $belongsTo = array(
 		'Reporter' => array(
-			'className' 	=> 'Forum.User',
+			'className'		=> 'User',
 			'foreignKey'	=> 'user_id'
 		),
 		'Topic' => array(
 			'className' 	=> 'Forum.Topic',
-			'foreignKey' 	=> 'item_id',
-			'conditions' 	=> array('Report.itemType' => 'topic')
+			'foreignKey' 	=> 'item_id'
 		),
 		'Post' => array(
 			'className' 	=> 'Forum.Post',
-			'foreignKey' 	=> 'item_id',
-			'conditions' 	=> array('Report.itemType' => 'post')
+			'foreignKey' 	=> 'item_id'
 		),
 		'User' => array(
-			'className' 	=> 'Forum.User',
-			'foreignKey' 	=> 'item_id',
-			'conditions' 	=> array('Report.itemType' => 'user')
+			'foreignKey' 	=> 'item_id'
 		)
 	);
 	
@@ -66,8 +69,8 @@ class Report extends ForumAppModel {
 	public function getLatest($limit = 10) {
 		return $this->find('all', array(
 			'limit' => $limit,
-			'order' => 'Report.created ASC',
-			'contain' => array('Reporter', 'Topic.id', 'Topic.title', 'Topic.slug', 'Post.id', 'Post.content', 'User.id', 'User.username')
+			'order' => array('Report.created' => 'ASC'),
+			'contain' => array('Reporter', 'Topic', 'Post', 'User')
 		));
 	}
 	

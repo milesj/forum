@@ -1,11 +1,11 @@
 <?php
 /** 
- * Cupcake - Toolbar Component
+ * Forum - Toolbar Component
  *
- * @author 		Miles Johnson - www.milesj.me
- * @copyright	Copyright 2006-2009, Miles Johnson, Inc.
- * @license 	http://www.opensource.org/licenses/mit-license.php - Licensed under The MIT License
- * @link		www.milesj.me/resources/script/forum-plugin
+ * @author		Miles Johnson - http://milesj.me
+ * @copyright	Copyright 2006-2010, Miles Johnson, Inc.
+ * @license		http://opensource.org/licenses/mit-license.php - Licensed under The MIT License
+ * @link		http://milesj.me/resources/script/forum-plugin
  */
  
 class ToolbarComponent extends Object {
@@ -17,19 +17,19 @@ class ToolbarComponent extends Object {
 	 * @var array
 	 */
 	public $components = array('Session');
-	
+
 	/**
 	 * Initialize.
 	 *
 	 * @access public
-	 * @param obj $Controller
+	 * @param Controller $Controller
 	 * @param array $settings 
 	 * @return void
 	 */  
-	public function initialize(&$Controller, $settings = array()) {
+	public function initialize($Controller, $settings = array()) {
 		$this->Controller = $Controller;
-		$this->settings = ForumConfig::getInstance()->settings;
-		$this->columnMap = ForumConfig::getInstance()->columnMap;
+		$this->config = Configure::read('Forum');
+		$this->settings = Configure::read('Forum.settings');
 	}
 
 	/**
@@ -39,45 +39,52 @@ class ToolbarComponent extends Object {
 	 * @return void
 	 */
 	public function initForum() {
+		$user_id = $this->Controller->Auth->user('id');
+		
 		if (!$this->Session->check('Forum.isBrowsing')) {
-			$user_id = $this->Controller->Auth->user('id');
-
-			// How much access we have?
-			if (!$this->Session->check('Forum.access')) {
-				$access = array('Guest' => 0);
-
-				if ($user_id) {
-					$access['Member'] = 1;
-					$access = array_merge($access, ClassRegistry::init('Forum.Access')->getMyAccess($user_id));
+			$isSuper = false;
+			$isAdmin = false;
+			$highestAccess = 0;
+			$accessLevels = array();
+			$profile = array();
+			$moderates = array();
+			$lastVisit = date('Y-m-d H:i:s');
+			
+			if ($user_id && $this->Controller->Auth->user($this->config['userMap']['status']) != $this->config['statusMap']['banned']) {
+				$access = ClassRegistry::init('Forum.Access')->getListByUser($user_id);
+				$highestAccess = 1;
+				
+				if (!empty($access)) {
+					foreach ($access as $level) {
+						$accessLevels[$level['AccessLevel']['id']] = $level['AccessLevel']['level'];
+					
+						if ($level['AccessLevel']['level'] > $highestAccess) {
+							$highestAccess = $level['AccessLevel']['level'];
+						}
+					
+						if ($level['AccessLevel']['isSuper'] && !$isSuper) {
+							$isSuper = true;
+						}
+						
+						if ($level['AccessLevel']['isAdmin'] && !$isAdmin) {
+							$isAdmin = true;
+						}
+					}
 				}
-
-				$this->Session->write('Forum.access', $access);
+				
+				$moderates = ClassRegistry::init('Forum.Moderator')->getModerations($user_id);
+				$profile = ClassRegistry::init('Forum.Profile')->getUserProfile($user_id);
+				$profile = $profile['Profile'];
+				$lastVisit = $profile['lastLogin'];
 			}
-
-			// Save last visit time
-			if (!$this->Session->check('Forum.lastVisit')) {
-				$lastVisit = ($user_id) ? $this->Controller->Auth->user($this->columnMap['lastLogin']) : date('Y-m-d H:i:s');
-				$this->Session->write('Forum.lastVisit', $lastVisit);
-			}
-
-			// Moderator?
-			if (!$this->Session->check('Forum.moderates')) {
-				$moderates = ($user_id) ? ClassRegistry::init('Forum.Moderator')->getModerations($user_id) : array();
-				$this->Session->write('Forum.moderates', $moderates);
-			}
-
-			// Are we a super mod?
-			if (!$this->Session->check('Forum.isSuperMod')) {
-				$status = ($user_id) ? ClassRegistry::init('Forum.Access')->isSuper($user_id) : 0;
-				$this->Session->write('Forum.isSuperMod', $status);
-			}
-
-			// Are we an administrator?
-			if (!$this->Session->check('Forum.isAdmin')) {
-				$status = ($user_id) ? ClassRegistry::init('Forum.Access')->isAdmin($user_id) : 0;
-				$this->Session->write('Forum.isAdmin', $status);
-			}
-
+			
+			$this->Session->write('Forum.profile', $profile);
+			$this->Session->write('Forum.access', $highestAccess);
+			$this->Session->write('Forum.accessLevels', $accessLevels);
+			$this->Session->write('Forum.isSuper', $isSuper);
+			$this->Session->write('Forum.isAdmin', $isAdmin);
+			$this->Session->write('Forum.moderates', $moderates);
+			$this->Session->write('Forum.lastVisit', $lastVisit);
 			$this->Session->write('Forum.isBrowsing', true);
 		}
 	}
@@ -91,21 +98,13 @@ class ToolbarComponent extends Object {
 	 * @param boolean $return
 	 * @return mixed
 	 */
-	public function goToPage($topic_id = NULL, $post_id = NULL, $return = false) {
-		$topic = ClassRegistry::init('Forum.Topic')->find('first', array(
-			'conditions' => array('Topic.id' => $topic_id),
-			'fields' => array('Topic.slug')
-		));
-
-		$slug = (!empty($topic['Topic']['slug']) ? $topic['Topic']['slug'] : null);
+	public function goToPage($topic_id = null, $post_id = null, $return = false) {
+		$topic = ClassRegistry::init('Forum.Topic')->getById($topic_id);
+		$slug = !empty($topic['Topic']['slug']) ? $topic['Topic']['slug'] : null;
 
 		// Certain page
 		if ($topic_id && $post_id) {
-			$posts = ClassRegistry::init('Forum.Post')->find('list', array(
-				'conditions' => array('Post.topic_id' => $topic_id),
-				'order' => array('Post.id' => 'ASC')
-			));
-			
+			$posts = ClassRegistry::init('Forum.Post')->getIdsForTopic($topic_id);
 			$totalPosts = count($posts);
 			$perPage = $this->settings['posts_per_page'];
 			
@@ -116,13 +115,13 @@ class ToolbarComponent extends Object {
 			}
 			
 			if ($totalPages <= 1) {
-				$url = array('plugin' => 'forum', 'controller' => 'topics', 'action' => 'view', $slug, '#' => 'post_'. $post_id);
+				$url = array('plugin' => 'forum', 'controller' => 'topics', 'action' => 'view', $slug, '#' => 'post-'. $post_id);
 			} else {
 				$posts = array_values($posts);
 				$flips = array_flip($posts);
 				$position = $flips[$post_id] + 1;
 				$goTo = ceil($position / $perPage);
-				$url = array('plugin' => 'forum', 'controller' => 'topics', 'action' => 'view', $slug, 'page' => $goTo, '#' => 'post_'. $post_id);
+				$url = array('plugin' => 'forum', 'controller' => 'topics', 'action' => 'view', $slug, 'page' => $goTo, '#' => 'post-'. $post_id);
 			}
 			
 		// First post
@@ -133,39 +132,18 @@ class ToolbarComponent extends Object {
 		} else {
 			$url = $this->Controller->referer();
 		
-			if ((empty($url)) || (strpos($url, 'delete') !== false)) {
-				$url = array('plugin' => 'forum', 'controller' => 'home', 'action' => 'index');
+			if (empty($url) || (strpos($url, 'delete') !== false)) {
+				$url = array('plugin' => 'forum', 'controller' => 'forum', 'action' => 'index');
 			}
 		}
 		
-		if ($return === true) {
+		if ($return) {
 			return $url;
 		} else {
 			$this->Controller->redirect($url);
 		}
 	}
-	
-	/**
-	 * Gets the highest access level.
-	 *
-	 * @access public
-	 * @return int
-	 */
-	public function getAccess() {
-		$access = $this->Session->read('Forum.access');
-		$level = 0;
-		 
-		if (!empty($access)) {
-			foreach ($access as $no) {
-				if ($no > $level) {
-					$level = $no;
-				}
-			}
-		}
-		
-		return $level;
-	}
-	
+
 	/**
 	 * Simply marks a topic as read.
 	 *
@@ -180,11 +158,10 @@ class ToolbarComponent extends Object {
 			$readTopics[] = $topic_id;
 			$readTopics = array_unique($readTopics);
 			$this->Session->write('Forum.readTopics', $readTopics);
+			
 		} else {
 			$this->Session->write('Forum.readTopics', array($topic_id));
 		}
-		
-		return true;
 	}
 	
 	/**
@@ -197,40 +174,9 @@ class ToolbarComponent extends Object {
 	public function pageTitle() {
 		$args = func_get_args();
 		array_unshift($args, __d('forum', 'Forum', true));
+		array_unshift($args, $this->settings['site_name']);
 		
-		$this->Controller->set('title_for_layout', implode(' &raquo; ', $args));
-	}
-	
-	/**
-	 * Method for reseting a password.
-	 *
-	 * @access public
-	 * @param array $user
-	 * @param boolean $reset
-	 * @return void
-	 */
-	public function resetPassword($user, $reset = false) {
-		$User = ClassRegistry::init('Forum.User');
-		$password = $User->generate();
-		$User->resetPassword($user['User']['id'], $this->Controller->Auth->password($password));
-		
-		// Send email
-		if (!$reset) {
-			$message = sprintf(__d('forum', 'You have requested the login credentials for %s, your information is listed below', true), $this->settings['site_name']) .":\n\n";
-			$subject = __d('forum', 'Forgotten Password', true);
-		} else {
-			$message = sprintf(__d('forum', 'Your password has been reset for %s, your information is listed below', true), $this->settings['site_name']) .":\n\n";
-			$subject = __d('forum', 'Reset Password', true);
-		}
-		
-		$message .= __d('forum', 'Username', true) .": ". $user['User']['username'] ."\n";
-		$message .= __d('forum', 'Password', true) .": ". $password ."\n\n";
-		$message .= __d('forum', 'Please change your password once logging in.', true);
-		
-		$this->Controller->Email->to = $user['User']['username'] .' <'. $user['User']['email'] .'>';
-		$this->Controller->Email->from = $this->settings['site_name'] .' <'. $this->settings['site_email'] .'>';
-		$this->Controller->Email->subject = $this->settings['site_name'] .' - '. $subject;
-		$this->Controller->Email->send($message);
+		$this->Controller->set('title_for_layout', implode($this->settings['title_separator'], $args));
 	}
 	
 	/**
@@ -284,6 +230,10 @@ class ToolbarComponent extends Object {
 	 */
 	public function verifyAccess($validators = array()) {
 		$user_id = $this->Controller->Auth->user('id');
+
+		if (!$user_id) {
+			return false;
+		}
 		
 		// Does the data exist?
 		if (isset($validators['exists'])) {
@@ -301,21 +251,21 @@ class ToolbarComponent extends Object {
 		
 		// Do we have permission to do this action?
 		if (isset($validators['permission'])) {
-			if ($this->getAccess() < $validators['permission']) {
+			if ($this->Session->read('Forum.access') < $validators['permission']) {
 				$this->goToPage();
 			}
 		}
 		
 		// Is the item locked/unavailable?
 		if (isset($validators['status'])) {
-			if ($validators['status'] > 0) {
+			if (!$validators['status']) {
 				$this->goToPage();
 			}
 		}
 		
 		// Does the user own this item?
 		if (isset($validators['ownership'])) {
-			if (($this->Session->read('Forum.isSuperMod') >= 1) || ($this->Session->read('Forum.isAdmin') >= 1)) {
+			if ($this->Session->read('Forum.isSuper') || $this->Session->read('Forum.isAdmin')) {
 				return true;
 			} else if ($user_id != $validators['ownership']) {
 				$this->goToPage();
@@ -335,7 +285,7 @@ class ToolbarComponent extends Object {
 		$user_id = $this->Controller->Auth->user('id');
 		
 		if ($user_id) {
-			if ($this->Session->read('Forum.isAdmin') >= 1) {
+			if ($this->Session->read('Forum.isAdmin')) {
 				return true;
 			} else {
 				$this->goToPage();

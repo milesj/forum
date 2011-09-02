@@ -1,11 +1,11 @@
 <?php
 /** 
- * Cupcake - PollVote Model
+ * Forum - PollVote Model
  *
- * @author 		Miles Johnson - www.milesj.me
- * @copyright	Copyright 2006-2009, Miles Johnson, Inc.
- * @license 	http://www.opensource.org/licenses/mit-license.php - Licensed under The MIT License
- * @link		www.milesj.me/resources/script/forum-plugin
+ * @author		Miles Johnson - http://milesj.me
+ * @copyright	Copyright 2006-2010, Miles Johnson, Inc.
+ * @license		http://opensource.org/licenses/mit-license.php - Licensed under The MIT License
+ * @link		http://milesj.me/resources/script/forum-plugin
  */
  
 class PollVote extends ForumAppModel {
@@ -23,9 +23,7 @@ class PollVote extends ForumAppModel {
 		'PollOption' => array(
 			'className' => 'Forum.PollOption'
 		), 
-		'User' => array(
-			'className' => 'Forum.User'
-		)
+		'User'
 	);
 	
 	/**
@@ -45,6 +43,7 @@ class PollVote extends ForumAppModel {
 		);
 		
 		$this->create();
+		
 		return $this->save($data, false, array_keys($data));
 	}
 	
@@ -58,11 +57,14 @@ class PollVote extends ForumAppModel {
 	 */
 	public function hasVoted($user_id, $poll_id) {
 		$vote = $this->find('first', array(
-			'conditions' => array('PollVote.poll_id' => $poll_id, 'PollVote.user_id' => $user_id),
+			'conditions' => array(
+				'PollVote.poll_id' => $poll_id, 
+				'PollVote.user_id' => $user_id
+			),
 			'contain' => false
 		));
 		
-		return (empty($vote)) ? 'no' : $vote['PollVote']['poll_option_id'];
+		return empty($vote) ? false : $vote['PollVote']['poll_option_id'];
 	}
 	
 }

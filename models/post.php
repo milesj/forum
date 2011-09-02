@@ -1,13 +1,17 @@
 <?php
 /** 
- * Cupcake - Post Model
+ * Forum - Post Model
  *
- * @author 		Miles Johnson - www.milesj.me
- * @copyright	Copyright 2006-2009, Miles Johnson, Inc.
- * @license 	http://www.opensource.org/licenses/mit-license.php - Licensed under The MIT License
- * @link		www.milesj.me/resources/script/forum-plugin
+ * @author		Miles Johnson - http://milesj.me
+ * @copyright	Copyright 2006-2010, Miles Johnson, Inc.
+ * @license		http://opensource.org/licenses/mit-license.php - Licensed under The MIT License
+ * @link		http://milesj.me/resources/script/forum-plugin
  */
- 
+
+App::import('Vendor', 'Forum.Decoda', array(
+	'file' => 'decoda/Decoda.php'
+));
+
 class Post extends ForumAppModel {
 
 	/**
@@ -17,13 +21,15 @@ class Post extends ForumAppModel {
 	 * @var array
 	 */
 	public $belongsTo = array(
-		'Topic' => array(
-			'className'		=> 'Forum.Topic',
+		'Forum' => array(
+			'className' 	=> 'Forum.Forum',
 			'counterCache' 	=> true
 		),
-		'User' => array(
-			'className' 	=> 'Forum.User'
-		)
+		'Topic' => array(
+			'className'		=> 'Forum.Topic',
+			'counterCache'	=> true
+		),
+		'User'
 	);
 	
 	/**
@@ -35,80 +41,44 @@ class Post extends ForumAppModel {
 	public $validate = array(
 		'content' => 'notEmpty'
 	);
-	
+
 	/**
 	 * Validate and add a post.
 	 *
 	 * @access public
 	 * @param array $data
-	 * @param array $settings
-	 * @param array $posts
 	 * @return boolean|int
 	 */
-	public function addPost($data, $settings, $posts) {
+	public function add($data) {
 		$this->set($data);
 		
-		// Validate
 		if ($this->validates()) {
-			$isAdmin = ($_SESSION['Forum']['isAdmin'] > 0) ? true : false;
+			$isAdmin = $this->Session->read('Forum.isAdmin');
 
-			if (($secondsLeft = $this->checkFlooding($posts, $settings['post_flood_interval'])) > 0 && !$isAdmin) {
-				$this->invalidate('content', 'You must wait '. $secondsLeft .' more second(s) till you can post a reply');
+			if (($secondsLeft = $this->checkFlooding($this->settings['post_flood_interval'])) > 0 && !$isAdmin) {
+				return $this->invalidate('content', 'You must wait %s more second(s) till you can post a reply', $secondsLeft);
 				
-			} else if ($this->checkHourly($posts, $settings['posts_per_hour']) && !$isAdmin) {
-				$this->invalidate('content', 'You are only allowed to post '. $settings['topics_per_hour'] .' time(s) per hour');
+			} else if ($this->checkHourly($this->settings['posts_per_hour']) && !$isAdmin) {
+				return $this->invalidate('content', 'You are only allowed to post %s time(s) per hour', $this->settings['posts_per_hour']);
 				
 			} else {
-				$data['Post']['content'] = strip_tags($data['Post']['content']);
-				
-				// Save Topic
 				$this->create();
-				$this->save($data, false, array('topic_id', 'user_id', 'userIP', 'content'));
+				$this->save($data, false, array('topic_id', 'forum_id', 'user_id', 'userIP', 'content', 'contentHtml'));
+
+				$data['post_id'] = $this->id;
 				
-				$topic_id = $data['Post']['topic_id'];
-				$user_id = $data['Post']['user_id'];
-				$post_id = $this->id;
-				
-				// Update legend
-				$this->Topic->update($topic_id, array(
-					'lastPost_id' => $post_id,
-					'lastUser_id' => $user_id,
+				$this->Topic->update($data['topic_id'], array(
+					'lastPost_id' => $data['post_id'],
+					'lastUser_id' => $data['user_id'],
+				));
+
+				$this->Topic->Forum->chainUpdate($data['forum_id'], array(
+					'lastTopic_id' => $data['topic_id'],
+					'lastPost_id' => $data['post_id'],
+					'lastUser_id' => $data['user_id']
 				));
 				
-				$topic = $this->Topic->find('first', array(
-					'conditions' => array('Topic.id' => $topic_id),
-					'fields' => array('Topic.forum_category_id'),
-					'contain' => array(
-						'ForumCategory' => array(
-							'fields' => array('ForumCategory.id', 'ForumCategory.parent_id'),
-							'Parent'
-						)
-					)
-				));
-				
-				// Get total posts for forum category
-				$totalPosts = $this->find('count', array(
-					'conditions' => array('Topic.forum_category_id' => $topic['Topic']['forum_category_id']),
-					'contain' => array('Topic.forum_category_id')
-				));
-				
-				$this->Topic->ForumCategory->update($topic['Topic']['forum_category_id'], array(
-					'lastTopic_id' => $topic_id,
-					'lastPost_id' => $post_id,
-					'lastUser_id' => $user_id,
-					'post_count' => $totalPosts
-				));
-				
-				// Update parent forum as well
-				if (isset($topic['ForumCategory']['Parent']['id']) && $topic['ForumCategory']['parent_id'] != 0) {
-					$this->Topic->ForumCategory->update($topic['ForumCategory']['Parent']['id'], array(
-						'lastTopic_id' => $topic_id,
-						'lastPost_id' => $post_id,
-						'lastUser_id' => $user_id,
-					));	
-				}
-				
-				return $post_id;
+				return $data['post_id'];
 			}
 		}
 		
@@ -119,22 +89,19 @@ class Post extends ForumAppModel {
 	 * Save the first post with a topic.
 	 *
 	 * @access public
-	 * @param int $topic_id
 	 * @param array $data
 	 * @return int
 	 */
-	public function addFirstPost($topic_id, $data) {
-		$post = array(
-			'topic_id' => $topic_id,
+	public function addFirstPost($data) {
+		$this->create();
+		$this->save(array(
+			'topic_id' => $data['topic_id'],
+			'forum_id' => $data['forum_id'],
 			'user_id' => $data['user_id'],
 			'userIP' => $data['userIP'],
-			'content' => strip_tags($data['content'])
-		);
-		
-		$this->create();
-		$this->save($post, false, array_keys($post));
-		$this->Topic->ForumCategory->increasePosts($data['forum_category_id']);
-		
+			'content' => $data['content']
+		), false);
+
 		return $this->id;
 	}
 	
@@ -142,17 +109,14 @@ class Post extends ForumAppModel {
 	 * Check the posting flood interval.
 	 *
 	 * @access public
-	 * @param array $posts
+	 * @param int $interval
 	 * @return boolean
 	 */
-	public function checkFlooding($posts, $interval) {
-		if (!empty($topics)) {
-			$lastPost = array_slice($posts, -1, 1);
-			$lastTime = $lastPost[0];
-		}
-
-		if (isset($lastTime)) {
-			$timeLeft = time() - $lastTime;
+	public function checkFlooding($interval) {
+		$posts = $this->Session->read('Forum.posts');
+		
+		if (!empty($posts)) {
+			$timeLeft = time() - array_pop($posts);
 			
 			if ($timeLeft <= $interval) {
 				return $interval - $timeLeft;
@@ -166,15 +130,16 @@ class Post extends ForumAppModel {
 	 * Check the hourly posting.
 	 *
 	 * @access public
-	 * @param array $posts
 	 * @param int $max
 	 * @return boolean
 	 */
-	public function checkHourly($posts, $max) {
+	public function checkHourly($max) {
+		$posts = $this->Session->read('Forum.posts');
 		$pastHour = strtotime('-1 hour');
 			
 		if (!empty($posts)) {
 			$count = 0;
+			
 			foreach ($posts as $id => $time) {
 				if ($time >= $pastHour) {
 					++$count;
@@ -188,33 +153,40 @@ class Post extends ForumAppModel {
 		
 		return false;
 	}
+	
+	/**
+	 * Return a post based on ID.
+	 * 
+	 * @access public
+	 * @param int $id
+	 * @return array
+	 */
+	public function get($id) {
+		return $this->find('first', array(
+			'conditions' => array('Post.id' => $id),
+			'contain' => array(
+				'Topic', 'User',
+				'Forum' => array('Parent')
+			)
+		));
+	}
 
 	/**
-	 * Delete a post and process any required logic.
+	 * Return a list of IDs within a topic.
 	 *
-	 * @param int $id
-	 * @param array $post
-	 * @return boolean
+	 * @access public
+	 * @param int $topic_id
+	 * @return array
 	 */
-	public function destroy($id, $post = array()) {
-		if (empty($post)) {
-			$post = $this->get($id, array('id'), array('Topic.id', 'Topic.forum_category_id'));
-		}
-		
-		if (!empty($post)) {
-			$totalPosts = $this->find('count', array(
-				'conditions' => array('Topic.forum_category_id' => $post['Topic']['forum_category_id']),
-				'contain' => array('Topic.forum_category_id')
-			));
-
-			$this->Topic->ForumCategory->update($post['Topic']['forum_category_id'], array('post_count' => $totalPosts));
-		}
-
-		return $this->delete($id, true);
+	public function getIdsForTopic($topic_id) {
+		return $this->find('list', array(
+			'conditions' => array('Post.topic_id' => $topic_id),
+			'order' => array('Post.id' => 'ASC')
+		));
 	}
 	
 	/**
-	 * Get the latest posts by a user.
+	 * Return the latest posts by a user.
 	 *
 	 * @access public
 	 * @param int $user_id
@@ -224,41 +196,16 @@ class Post extends ForumAppModel {
 	public function getLatestByUser($user_id, $limit = 5) {
 		return $this->find('all', array(
 			'conditions' => array('Post.user_id' => $user_id),
-			'order' => 'Post.created DESC',
+			'order' => array('Post.created' => 'DESC'),
 			'limit' => $limit,
 			'contain' => array(
-				'Topic' => array(
-					'fields' => array('Topic.id', 'Topic.title', 'Topic.slug', 'Topic.user_id'),
-					'User.id', 'User.username'
-				)
+				'Topic' => array('User')
 			)
 		));
 	}
 	
 	/**
-	 * Get all info for editing a post.
-	 *
-	 * @access public
-	 * @param int $id
-	 * @return array
-	 */
-	public function getPostForEdit($id) {
-		return $this->find('first', array(
-			'conditions' => array('Post.id' => $id),
-			'contain' => array(
-				'Topic' => array(
-					'fields' => array('Topic.id', 'Topic.title', 'Topic.slug'),
-					'ForumCategory' => array(
-						'fields' => array('ForumCategory.id', 'ForumCategory.title', 'ForumCategory.slug'),
-						'Forum', 'Parent'
-					)
-				)
-			)
-		));
-	}
-	
-	/**
-	 * Get a post for quoting.
+	 * Return a post for quoting.
 	 *
 	 * @access public
 	 * @param int $id
@@ -267,13 +214,12 @@ class Post extends ForumAppModel {
 	public function getQuote($id) {
 		return $this->find('first', array(
 			'conditions' => array('Post.id' => $id),
-			'fields' => array('Post.content', 'Post.created'),
-			'contain' => array('User.username')
+			'contain' => array('User')
 		));
 	}
 	
 	/**
-	 * Get the latest posts in a topic.
+	 * Return the latest posts in a topic.
 	 * 
 	 * @access public
 	 * @param int $topic_id
@@ -283,10 +229,28 @@ class Post extends ForumAppModel {
 	public function getTopicReview($topic_id, $limit = 10) {
 		return $this->find('all', array(
 			'conditions' => array('Post.topic_id' => $topic_id),
-			'contain' => array('User.id', 'User.username', 'User.created'),
+			'contain' => array('User'),
 			'order' => array('Post.created' => 'DESC'),
 			'limit' => $limit
 		));
 	}
 
+	/**
+	 * Parse the HTML version.
+	 */
+	public function beforeSave($options) {
+		if (isset($this->data['Post']['content'])) {
+			$censored = array_map('trim', explode(',', $this->settings['censored_words']));
+			$locale = $this->config['decodaLocales'][Configure::read('Config.language')];
+			
+			$decoda = new Decoda($this->data['Post']['content']);
+			$decoda->defaults()->setXhtml()->setLocale($locale);
+			$decoda->getHook('Censor')->blacklist($censored);
+			
+			$this->data['Post']['contentHtml'] = $decoda->parse();
+		}
+		
+		return true;
+	}
+	
 }

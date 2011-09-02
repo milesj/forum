@@ -1,4 +1,5 @@
 <?php
+
 echo $rss->header();
 
 if (!isset($document)) {
