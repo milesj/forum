@@ -50,7 +50,7 @@ $this->Html->addCrumb($topic['Topic']['title'], array('controller' => 'topics', 
 						<?php echo $this->Html->link($post['User'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'profile', $post['User']['id'])); ?>
 					</td>
 					<td>
-						<?php echo str_replace('\n', '', $this->Text->truncate($post['Post']['content'], 100)); ?>
+						<?php echo str_replace("\n", '', $this->Text->truncate($post['Post']['content'], 100)); ?>
 					</td>
 					<td class="created">
 						<?php echo $this->Time->niceShort($post['Post']['created'], $this->Common->timezone()); ?>

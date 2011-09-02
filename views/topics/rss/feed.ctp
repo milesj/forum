@@ -2,7 +2,7 @@
 <?php $this->set('channel', array(
 	'title' => $settings['site_name'] .' - '. __d('forum', 'Topic', true) .': '. $topic['Topic']['title'],
 	'link' => array('plugin' => 'forum', 'controller' => 'topics', 'action' => 'view', $topic['Topic']['slug']),
-	'description' => $this->Text->truncate($topic['FirstPost']['contentHtml']),
+	'description' => $this->Text->truncate(strip_tags($topic['FirstPost']['contentHtml'])),
 	'language' => 'en-us'
 ));
 

@@ -107,7 +107,7 @@ class CommonHelper extends AppHelper {
 	 * @param int $forum_id
 	 * @return boolean 
 	 */
-	public function hasAccess($level = 1, $forum_id = null) { 
+	public function hasAccess($level = AccessLevel::MEMBER, $forum_id = null) { 
 		if ($this->Session->read('Forum.isAdmin')) {
 			return true;
 			

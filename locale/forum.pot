@@ -1677,6 +1677,66 @@ msgstr ""
 msgid "Are you sure you want to report the user %s? If so, please add a comment as to why you are reporting this user, and please be descriptive. Are they spamming, trolling, flaming, etc. 255 max characters."
 msgstr ""
 
-#: models/access.php:88;88
+#: models/access.php:88
 msgid "User already has this access"
+msgstr ""
+
+#: models/access.php:172
+#: models/moderator.php:143
+msgid "No user exists with this ID"
+msgstr ""
+
+#: models/forum.php:97
+#: models/setting.php:46,56,66,76,86,96,106,116,126,136
+#: models/profile.php:35,45
+msgid "Please supply a number"
+msgstr ""
+
+#: models/forum.php:101
+#: models/setting.php:28,38,50,60,70,80,90,100,110,120,130,140
+msgid "This setting is required"
+msgstr ""
+
+#: models/moderator.php:155
+msgid "This user is already a moderator for this forum"
+msgstr ""
+
+#: models/post.php:59
+msgid "You must wait %s more second(s) till you can post a reply"
+msgstr ""
+
+#: models/post.php:62
+msgid "You are only allowed to post %s time(s) per hour"
+msgstr ""
+
+#: models/topic.php:128
+msgid "You must wait %s more second(s) till you can post a topic"
+msgstr ""
+
+#: models/topic.php:131
+msgid "You are only allowed to post %s topic(s) per hour"
+msgstr ""
+
+#: models/topic.php:99
+msgid "Expiration must be a numerical value for days"
+msgstr ""
+
+#: models/topic.php:104
+msgid "You must supply a minimum of 2 options and a max of 10"
+msgstr ""
+
+#: models/topic.php:108
+msgid "Please supply some answer options for your poll"
+msgstr ""
+
+#: models/setting.php:24
+msgid "Please supply a valid email address"
+msgstr ""
+
+#: models/setting.php:34
+msgid "Please supply a valid URL"
+msgstr ""
+
+#: models/profile.php:39,49
+msgid "This field is required"
 msgstr ""

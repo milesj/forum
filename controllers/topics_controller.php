@@ -174,6 +174,7 @@ class TopicsController extends ForumAppController {
 		Cache::delete('Topic.get-'. $slug, 'forum');
 		
 		$this->Topic->delete($topic['Topic']['id'], true);
+		
 		$this->redirect(array('controller' => 'stations', 'action' => 'view', $topic['Forum']['slug']));
 	}
 	

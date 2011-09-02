@@ -8,7 +8,7 @@ Todo:
 
 ## Requirements ##
 
-* CakePHP 1.3.x
+* CakePHP 1.3.x (Tested with 1.3.9)
 * PHP 5.2.x, 5.3.x
 * Utils Plugin - https://github.com/CakeDC/utils
 
@@ -18,8 +18,8 @@ Thorough documentation can be found here: http://milesj.me/code/cakephp/forum
 
 ## Installation ##
 
-* Clone the repo into a folder called "forum" within your CakePHP's plugins directory.
-* Follow the instructions found in install.md.
+* Clone the repo into a folder called "forum" within your CakePHP's plugins directory
+* Follow the instructions found in install.md
 
 ## Contributors ##
 
