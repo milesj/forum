@@ -29,10 +29,10 @@ Thorough documentation can be found here: http://milesj.me/code/cakephp/forum
 ## Features ##
 
 ### Forums ###
-* Forum wrappers and forum categories
+* Forum stations and child forums
 * First tier sub-forums
 * Activity and latest post tracking
-* Auto-Lock old topics
+* Auto-locking old topics
 * Enable/Disable post count increments
 * Individual settings for reading, posting, replying, etc
 * Access/Private specific forums
@@ -82,7 +82,7 @@ Once you have done that, just follow these steps.
 1 - Open the program and go to File > New catalog from POT file
 2 - Fill in the settings box with the following information
 
-	Project: Forum Plugin
+	Project: CakePHP Forum Plugin
 	Team: Miles Johnson
 	Team Email: mileswjohnson@gmail.com
 	Language: <Pick the language>
@@ -116,5 +116,5 @@ You may find some others like %count% and %total%; leave those as they are as we
 	msgstr "<YOUR TRANSLATED VERSION HERE>"
 
 11 - Create a folder for your language within the locale folder, based on the 3 character locale: http://www.loc.gov/standards/iso639-2/php/code_list.php
-12 - Within the language folder, create the LC_MESSAGES folder and place the .po file within.
+12 - Within the language folder, create the LC_MESSAGES folder and place the files within.
 13 - Commit and push! Once done, I will review and merge with your changes.
