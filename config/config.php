@@ -88,20 +88,20 @@ $config['Forum']['timezones'] = array(
  */
 $config['Forum']['locales'] = array(
 	'eng' => 'English',
-	'deu' => 'German',
+	/*'deu' => 'German',
 	'fre' => 'French',
 	'spa' => 'Spanish',
 	'rus' => 'Russian',
 	'ind' => 'Indonesian',
-	'bul' => 'Bulgarian'
+	'bul' => 'Bulgarian'*/
 );
 
 $config['Forum']['decodaLocales'] = array(
 	'eng' => 'en-us',
-	'deu' => 'de-de',
+	/*'deu' => 'de-de',
 	'fre' => 'fr-fr',
 	'spa' => 'es-mx',
 	'rus' => 'ru-ru',
 	'ind' => 'id-id',
-	'bul' => 'bg-bg'
+	'bul' => 'bg-bg'*/
 );
