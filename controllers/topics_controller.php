@@ -86,6 +86,14 @@ class TopicsController extends ForumAppController {
 					$this->Profile->increaseTopics($user_id);
 				}
 				
+				if($this->config['subscription']['enable'] && $this->config['subscription']['autoSubscribeSelf']){
+					try{
+						$this->Topic->subscribe($user_id);
+					}catch (Exception $e) {
+					    $this->Session->setFlash($e->getMessage());
+					}
+				}
+				
 				$this->Toolbar->updateTopics($topic_id);
 				$this->Toolbar->goToPage($topic_id);
 			}
@@ -237,6 +245,7 @@ class TopicsController extends ForumAppController {
 		$this->set('topic', $topic);
 		$this->set('posts', $this->paginate('Post'));
 		$this->set('rss', $slug);
+		$this->set("isSubscribed", $this->Topic->userIsSubscribed($user_id));
 	}
 	
 	/**
@@ -289,5 +298,51 @@ class TopicsController extends ForumAppController {
 
 		$this->set('menuTab', 'forums');
 	}
-
+	
+	public function unsubscribe($slug){
+		$topic = $this->Topic->get($slug);
+		$user_id = $this->Auth->user('id');
+		if(empty($this->Topic->id)){
+			$this->Session->setFlash("No such topic");
+			$this->redirect($this->referer());
+			exit();
+		}
+		$this->Toolbar->verifyAccess(array(
+			'exists' => $topic, 
+			'permission' => $topic['Forum']['accessRead']
+		));
+		
+		try{
+			if($this->Topic->unsubscribe($user_id))
+				$this->Session->setFlash("You have been unsubscribed");
+			else
+				$this->Session->setFlash("There was a problem unsubscribing");
+		}catch (Exception $e) {
+		    $this->Session->setFlash($e->getMessage());
+		}
+		$this->redirect($this->referer());
+	}
+	public function subscribe($slug){
+		$topic = $this->Topic->get($slug);
+		$user_id = $this->Auth->user('id');
+		if(empty($this->Topic->id)){
+			$this->Session->setFlash("No such topic");
+			$this->redirect($this->referer());
+			exit();
+		}
+		$this->Toolbar->verifyAccess(array(
+			'exists' => $topic, 
+			'permission' => $topic['Forum']['accessRead']
+		));
+		
+		try{
+			if($this->Topic->subscribe($user_id))
+				$this->Session->setFlash("You have been subscribed");
+			else
+				$this->Session->setFlash("There was a problem subscribing");
+		}catch (Exception $e) {
+		    $this->Session->setFlash($e->getMessage());
+		}
+		$this->redirect($this->referer());
+	}	
 }
