@@ -39,6 +39,18 @@ $config['Forum']['routes'] = array(
 	'forgotPass' => array()
 );
 
+
+/*
+* subscription options
+*/
+$config['Forum']['subscription']=array(
+	"enable"=>true,
+	"autoSubscribeSelf"=>true,
+	"sendImmediately"=>true, // this is only option currently
+	"emailFrom"=>"noreply@".env("HTTP_HOST"),
+	"emailSubject"=>"New post on ".env("HTTP_HOST")." forum"
+);
+
 /***************************************************
  * DO NOT EDIT BELOW
  ***************************************************/
