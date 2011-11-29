@@ -401,7 +401,7 @@ class InstallShell extends Shell {
 		
 		} else {
 			$data = $user->find('first', array(
-				'conditions' => array('id' => $user_id)
+				'conditions' => array('User.id' => $user_id)
 			));
 					
 			if (empty($data)) {
