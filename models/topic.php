@@ -82,6 +82,9 @@ class Topic extends ForumAppModel {
 			'exclusive' => true,
 			'dependent' => true,
 			'order' 	=> array('Post.created' => 'DESC'),
+		),
+		"Subscription"=>array(
+			"className"=>"Forum.Subscription"
 		)
 	);
 	
@@ -324,7 +327,7 @@ class Topic extends ForumAppModel {
 		if (!empty($topic['Poll']['id'])) {
 			$topic['Poll'] = $this->Poll->process($topic['Poll']);
 		}
-		
+		$this->id=$topic['Topic']['id'];
 		return $topic;
 	}
 	
@@ -463,5 +466,55 @@ class Topic extends ForumAppModel {
 		
 		return $results;
 	}
+	
+	public function subscribe($user_id=null){
+		if(empty($this->id))
+			throw new Exception("Could not subscibe user to topic as no topic id set");
+		if(empty($user_id))
+			throw new Exception("Could not subscibe user to topic as no user id set");
+		
+		if($this->userIsSubscribed($user_id)){
+			throw new Exception("Already Subscribed");
+		}else{
+			$s=array(
+				"Subscription"=>array(
+					"topic_id"=>$this->id,
+					"user_id"=>$user_id				
+				)
+			);
+			$this->Subscription->create();
+			return $this->Subscription->save($s);
+		}
+		return false;
+	}
 
+	public function unsubscribe($user_id=null){
+		if(empty($this->id))
+			throw new Exception("Could not unsubscibe user to topic as no topic id set");
+		if(empty($user_id))
+			throw new Exception("Could not unsubscibe user to topic as no user id set");
+		
+		if(!$this->userIsSubscribed($user_id)){
+			throw new Exception("you are not subscribed");
+		}else{
+			return $this->Subscription->deleteAll(array(
+				"Subscription.topic_id"=>$this->id,
+				"Subscription.user_id"=>$user_id
+			));
+		}
+	}
+		
+	public function userIsSubscribed($user_id){
+		if(empty($this->id))
+			throw new Exception("no topic id set");
+		if(empty($user_id))
+			return false;
+		return $count=$this->Subscription->find("count",array(
+			"conditions"=>array(
+				"topic_id"=>$this->id,
+				"user_id"=>$user_id
+			)
+		));
+	}
+	
 }
