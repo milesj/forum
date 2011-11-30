@@ -47,6 +47,17 @@ $this->Html->addCrumb(__d('forum', 'Settings', true), array('controller' => 'for
 		echo $this->Form->input('enable_gravatar', array('options' => $this->Common->options(), 'label' => __d('forum', 'Enable Gravatar', true)));
 		echo $this->Form->input('censored_words', array('type' => 'textarea', 'label' => __d('forum', 'Censored Words', true), 'after' => ' ('. __d('forum', 'Separate with commas', true) .')')); ?>
 
+
+		<div class="inputDivider"><?php __d('forum', 'Subscriptions Settings'); ?></div>
+		<?php
+		
+		echo $this->Form->input('enable_subscriptions', array('type' => 'select','options' => $this->Common->options())); 
+		echo $this->Form->input('enable_forum_subscriptions', array('type' => 'select','options' => $this->Common->options())); 
+		echo $this->Form->input('subscription_email_topic_subject');
+		echo $this->Form->input('subscription_email_post_subject');
+		echo $this->Form->input('auto_subscribe_self', array('type' => 'select','options' => $this->Common->options())); 
+
+		?>
 	</div>
 </div>
 

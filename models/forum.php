@@ -79,7 +79,11 @@ class Forum extends ForumAppModel {
 			'className'		=> 'Forum.Moderator',
 			'dependent'		=> true,
 			'exclusive'		=> true
-		)
+		),
+		'Subscription' => array(
+			'className'		=> 'Forum.Subscription',
+			'dependent'		=> false
+		)	
 	);
 	
 	/**
@@ -133,7 +137,7 @@ class Forum extends ForumAppModel {
 		$access = $this->access();
 		$accessLevels = $this->accessLevels();
 		
-		return $this->find('first', array(
+		$forum=$this->find('first', array(
 			'conditions' => array(
 				'Forum.access_level_id' => $accessLevels,
 				'Forum.accessRead <=' => $access,
@@ -152,6 +156,8 @@ class Forum extends ForumAppModel {
 			),
 			'cache' => __FUNCTION__ .'-'. $slug
 		));
+		$this->id=$forum['Forum']['id'];
+		return $forum;
 	}
 	
 	/**
@@ -392,5 +398,53 @@ class Forum extends ForumAppModel {
 		
 		return $options;
 	}
-	
+	public function subscribe($user_id=null){
+		if(empty($this->id))
+			throw new Exception("Could not subscibe user to forum as no forum id set");
+		if(empty($user_id))
+			throw new Exception("Could not subscibe user to forum as no user id set");
+		
+		if($this->userIsSubscribed($user_id)){
+			throw new Exception("Already Subscribed");
+		}else{
+			$s=array(
+				"Subscription"=>array(
+					"forum_id"=>$this->id,
+					"user_id"=>$user_id				
+				)
+			);
+			$this->Subscription->create();
+			return $this->Subscription->save($s);
+		}
+		return false;
+	}
+
+	public function unsubscribe($user_id=null){
+		if(empty($this->id))
+			throw new Exception("Could not unsubscibe user to forum as no forum id set");
+		if(empty($user_id))
+			throw new Exception("Could not unsubscibe user to forum as no user id set");
+		
+		if(!$this->userIsSubscribed($user_id)){
+			throw new Exception("you are not subscribed");
+		}else{
+			return $this->Subscription->deleteAll(array(
+				"Subscription.forum_id"=>$this->id,
+				"Subscription.user_id"=>$user_id
+			));
+		}
+	}
+		
+	public function userIsSubscribed($user_id){
+		if(empty($this->id))
+			throw new Exception("no forum id set");
+		if(empty($user_id))
+			return false;
+		return $count=$this->Subscription->find("count",array(
+			"conditions"=>array(
+				"forum_id"=>$this->id,
+				"user_id"=>$user_id
+			)
+		));
+	}	
 }

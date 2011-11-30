@@ -15,6 +15,14 @@
             }
         } else {
             echo '<span class="button disabled">'. __d('forum', 'Closed', true) .'</span>';
-        } ?>
+        } 
+		if(!empty($settings['enable_forum_subscriptions']) && $settings['enable_forum_subscriptions']){
+			if($isSubscribed){
+				echo $this->Html->link(__d('forum', 'Unsubscribe from Forum', true), array('controller' => 'stations', 'action' => 'unsubscribe', $forum['Forum']['slug']), array('class' => 'button'));
+			}else{
+				echo $this->Html->link(__d('forum', 'Subscribe to Forum', true), array('controller' => 'stations', 'action' => 'subscribe', $forum['Forum']['slug']), array('class' => 'button'));	
+			}
+		}
+		?>
     </div>
 <?php } ?>

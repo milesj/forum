@@ -10,6 +10,8 @@
  
 class TopicsController extends ForumAppController {
 
+	public $components = array('RequestHandler', 'Session', 'Security', 'Cookie', 'Auth', 'Forum.Toolbar', 'Forum.AutoLogin', 'Email');
+	
 	/**
 	 * Models.
 	 *
@@ -86,6 +88,17 @@ class TopicsController extends ForumAppController {
 					$this->Profile->increaseTopics($user_id);
 				}
 				
+				if($this->settings['enable_subscriptions']){
+					if($this->settings['auto_subscribe_self']){
+						try{
+							$this->Topic->subscribe($user_id);
+						}catch (Exception $e) {
+						    $this->Session->setFlash($e->getMessage());
+						}	
+					}
+					$this->_processSubscriptions();
+				}
+				
 				$this->Toolbar->updateTopics($topic_id);
 				$this->Toolbar->goToPage($topic_id);
 			}
@@ -98,6 +111,44 @@ class TopicsController extends ForumAppController {
 		$this->set('type', $type);
 		$this->set('forum', $forum);
 		$this->set('forums', $this->Topic->Forum->getGroupedHierarchy($access));
+	}
+
+
+	public function _processSubscriptions(){
+		if(empty($this->Topic->id)){
+			return false;
+		}else{
+			/*
+			* get post, topic and subscription details
+			*/
+			$topic=$this->Topic->find("first", array(
+				"conditions"=>array(
+					"Topic.id"=>$this->Topic->id,
+				),
+				"contain"=>array(
+					"FirstPost",
+					"Forum"=>array(
+						"Subscription"=>array(
+							"User"
+						)
+					),
+					"User"
+				)
+			));
+			$this->set("topic", $topic);
+			$this->Email->template="subscription_topic";
+			$this->Email->subject=$this->settings['subscription_email_topic_subject'];
+			$this->Email->from=$this->settings['site_name']."<".$this->settings['site_email'].">";
+			foreach($topic['Forum']['Subscription'] as $subscriber){
+				/*
+				* don't notify yourself
+				*/
+				if($subscriber['User']['id']!=$topic['Topic']['user_id']){
+					$this->Email->to=$subscriber['User'][$this->config['userMap']['email']];
+					$this->Email->send();					
+				}
+			}
+		}
 	}
 	
 	/**
@@ -237,6 +288,7 @@ class TopicsController extends ForumAppController {
 		$this->set('topic', $topic);
 		$this->set('posts', $this->paginate('Post'));
 		$this->set('rss', $slug);
+		$this->set("isSubscribed", $this->Topic->userIsSubscribed($user_id));
 	}
 	
 	/**
@@ -289,5 +341,51 @@ class TopicsController extends ForumAppController {
 
 		$this->set('menuTab', 'forums');
 	}
-
+	
+	public function unsubscribe($slug){
+		$topic = $this->Topic->get($slug);
+		$user_id = $this->Auth->user('id');
+		if(empty($this->Topic->id)){
+			$this->Session->setFlash("No such topic");
+			$this->redirect($this->referer());
+			exit();
+		}
+		$this->Toolbar->verifyAccess(array(
+			'exists' => $topic, 
+			'permission' => $topic['Forum']['accessRead']
+		));
+		
+		try{
+			if($this->Topic->unsubscribe($user_id))
+				$this->Session->setFlash("You have been unsubscribed");
+			else
+				$this->Session->setFlash("There was a problem unsubscribing");
+		}catch (Exception $e) {
+		    $this->Session->setFlash($e->getMessage());
+		}
+		$this->redirect($this->referer());
+	}
+	public function subscribe($slug){
+		$topic = $this->Topic->get($slug);
+		$user_id = $this->Auth->user('id');
+		if(empty($this->Topic->id)){
+			$this->Session->setFlash("No such topic");
+			$this->redirect($this->referer());
+			exit();
+		}
+		$this->Toolbar->verifyAccess(array(
+			'exists' => $topic, 
+			'permission' => $topic['Forum']['accessRead']
+		));
+		
+		try{
+			if($this->Topic->subscribe($user_id))
+				$this->Session->setFlash("You have been subscribed");
+			else
+				$this->Session->setFlash("There was a problem subscribing");
+		}catch (Exception $e) {
+		    $this->Session->setFlash($e->getMessage());
+		}
+		$this->redirect($this->referer());
+	}	
 }

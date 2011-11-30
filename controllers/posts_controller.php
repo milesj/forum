@@ -10,6 +10,8 @@
  
 class PostsController extends ForumAppController {
 
+	public $components = array('RequestHandler', 'Session', 'Security', 'Cookie', 'Auth', 'Forum.Toolbar', 'Forum.AutoLogin', 'Email');
+	
 	/**
 	 * Models.
 	 *
@@ -52,6 +54,17 @@ class PostsController extends ForumAppController {
 					$this->Profile->increasePosts($user_id);
 				}
 				
+				if($this->settings['enable_subscriptions']){
+					if($this->settings['auto_subscribe_self']){
+						try{
+							$this->Post->Topic->subscribe($user_id);
+						}catch(Exception $e){
+							
+						}
+					}
+					$this->_processSubscriptions();	
+				}
+				
 				$this->Toolbar->updatePosts($post_id);
 				$this->Toolbar->goToPage($topic['Topic']['id'], $post_id);
 			}
@@ -68,6 +81,42 @@ class PostsController extends ForumAppController {
 		$this->Toolbar->pageTitle(__d('forum', 'Post Reply', true), $topic['Topic']['title']);
 		$this->set('topic', $topic);
 		$this->set('review', $this->Post->getTopicReview($topic['Topic']['id']));
+	}
+	
+	public function _processSubscriptions(){
+		if(empty($this->Post->id)){
+			return false;
+		}else{
+			/*
+			* get post, topic and subscription details
+			*/
+			$post=$this->Post->find("first", array(
+				"conditions"=>array(
+					"Post.id"=>$this->Post->id,
+				),
+				"contain"=>array(
+					"Topic"=>array(
+						"Subscription"=>array(
+							"User"
+						)
+					),
+					"User"
+				)
+			));
+			$this->set("post", $post);
+			$this->Email->template="subscription_post";
+			$this->Email->subject=$this->settings['subscription_email_post_subject'];
+			$this->Email->from=$this->settings['site_name']."<".$this->settings['site_email'].">";
+			foreach($post['Topic']['Subscription'] as $subscriber){
+				/*
+				* don't notify yourself
+				*/
+				if($subscriber['User']['id']!=$post['Post']['user_id']){
+					$this->Email->to=$subscriber['User'][$this->config['userMap']['email']];
+					$this->Email->send();					
+				}
+			}
+		}
 	}
 	
 	/**

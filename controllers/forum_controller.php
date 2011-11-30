@@ -121,5 +121,4 @@ class ForumController extends ForumAppController {
 		
 		$this->Auth->allow('index', 'feed', 'help', 'rules', 'jump');
 	}
-
 }
