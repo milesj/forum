@@ -40,19 +40,6 @@ $config['Forum']['routes'] = array(
 );
 
 
-/*
-* subscription options
-*/
-$config['Forum']['subscription']=array(
-	"enable"=>true,
-	"enableForumSubscriptions"=>true, 	//this will enable subscription to a forum (as opposed to a topic) so that people will get an email when a new topic is created
-	"autoSubscribeSelf"=>true,
-	"sendImmediately"=>true, // this is only option currently
-	"emailFrom"=>"noreply@".env("HTTP_HOST"),
-	"emailSubject"=>"New post on ".env("HTTP_HOST")." forum",
-	"emailTopicSubject"=>"New topic created"
-);
-
 /***************************************************
  * DO NOT EDIT BELOW
  ***************************************************/

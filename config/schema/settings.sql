@@ -31,4 +31,10 @@ INSERT INTO `{prefix}settings` (`id`, `key`, `value`, `modified`) VALUES
 	(NULL, 'censored_words', '', NOW()),
 	(NULL, 'default_locale', 'eng', NOW()),
 	(NULL, 'default_timezone', '-8', NOW()),
-	(NULL, 'title_separator', ' - ', NOW());
+	(NULL, 'title_separator', ' - ', NOW()),
+	(NULL, 'enable_subscriptions', 1, NOW()),
+	(NULL, 'enable_forum_subscriptions', 1, NOW()),
+	(NULL, 'subscription_email_topic_subject', 'New Topic Created', NOW()),
+	(NULL, 'subscription_email_post_subject', 'New Post Created', NOW()),
+	(NULL, 'auto_subscribe_self', 1, NOW()),	
+	(NULL, 'send_subscriptions_immediately', 1, NOW());

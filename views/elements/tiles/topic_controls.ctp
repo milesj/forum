@@ -19,7 +19,7 @@
 				echo '<span class="button disabled">'. __d('forum', 'Closed', true) .'</span>';
 			}	
 		}
-		if(!empty($config['subscription']['enable']) && $config['subscription']['enable']){
+		if(!empty($settings['enable_subscriptions']) && $settings['enable_subscriptions']){
 			if($isSubscribed){
 				echo $this->Html->link(__d('forum', 'Unsubscribe from Topic', true), array('controller' => 'topics', 'action' => 'unsubscribe', $topic['Topic']['slug']), array('class' => 'button'));
 			}else{

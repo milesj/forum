@@ -54,8 +54,8 @@ class PostsController extends ForumAppController {
 					$this->Profile->increasePosts($user_id);
 				}
 				
-				if($this->config['subscription']['enable']){
-					if($this->config['subscription']['autoSubscribeSelf']){
+				if($this->settings['enable_subscriptions']){
+					if($this->settings['auto_subscribe_self']){
 						try{
 							$this->Post->Topic->subscribe($user_id);
 						}catch(Exception $e){
@@ -105,8 +105,8 @@ class PostsController extends ForumAppController {
 			));
 			$this->set("post", $post);
 			$this->Email->template="subscription_post";
-			$this->Email->subject=$this->config['subscription']['emailSubject'];
-			$this->Email->from=$this->config['subscription']['emailFrom'];				
+			$this->Email->subject=$this->settings['subscription_email_post_subject'];
+			$this->Email->from=$this->settings['site_name']."<".$this->settings['site_email'].">";
 			foreach($post['Topic']['Subscription'] as $subscriber){
 				/*
 				* don't notify yourself

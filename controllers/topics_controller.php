@@ -88,8 +88,8 @@ class TopicsController extends ForumAppController {
 					$this->Profile->increaseTopics($user_id);
 				}
 				
-				if($this->config['subscription']['enable']){
-					if($this->config['subscription']['autoSubscribeSelf']){
+				if($this->settings['enable_subscriptions']){
+					if($this->settings['auto_subscribe_self']){
 						try{
 							$this->Topic->subscribe($user_id);
 						}catch (Exception $e) {
@@ -137,8 +137,8 @@ class TopicsController extends ForumAppController {
 			));
 			$this->set("topic", $topic);
 			$this->Email->template="subscription_topic";
-			$this->Email->subject=$this->config['subscription']['emailTopicSubject'];
-			$this->Email->from=$this->config['subscription']['emailFrom'];				
+			$this->Email->subject=$this->settings['subscription_email_topic_subject'];
+			$this->Email->from=$this->settings['site_name']."<".$this->settings['site_email'].">";
 			foreach($topic['Forum']['Subscription'] as $subscriber){
 				/*
 				* don't notify yourself
