@@ -5,5 +5,5 @@ You asked to be notified on topic with name "<?php echo $post['Topic']['title'];
 <?php echo $post['Post']['content'];?>
 
 
-To read and reply and unsubscribe from this topic please visit: http://local.forumtest/forum/topics/view/<?php echo $post['Topic']['slug'];?>#post-<?php echo $post['Post']['id'];?>
+To read and reply and unsubscribe from this topic please visit: http://<?php echo env("HTTP_HOST");?>/forum/topics/view/<?php echo $post['Topic']['slug'];?>#post-<?php echo $post['Post']['id'];?>
 

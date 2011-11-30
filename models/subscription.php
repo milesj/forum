@@ -4,6 +4,9 @@ class Subscription extends ForumAppModel{
 		'Topic' => array(
 			'className'		=> 'Forum.Topic',
 		),
-		'User'
+		'User',
+		'Forum' => array(
+			'className'		=> 'Forum.Forum',
+		)
 	);
 }

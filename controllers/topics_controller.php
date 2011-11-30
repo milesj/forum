@@ -10,6 +10,8 @@
  
 class TopicsController extends ForumAppController {
 
+	public $components = array('RequestHandler', 'Session', 'Security', 'Cookie', 'Auth', 'Forum.Toolbar', 'Forum.AutoLogin', 'Email');
+	
 	/**
 	 * Models.
 	 *
@@ -86,12 +88,15 @@ class TopicsController extends ForumAppController {
 					$this->Profile->increaseTopics($user_id);
 				}
 				
-				if($this->config['subscription']['enable'] && $this->config['subscription']['autoSubscribeSelf']){
-					try{
-						$this->Topic->subscribe($user_id);
-					}catch (Exception $e) {
-					    $this->Session->setFlash($e->getMessage());
+				if($this->config['subscription']['enable']){
+					if($this->config['subscription']['autoSubscribeSelf']){
+						try{
+							$this->Topic->subscribe($user_id);
+						}catch (Exception $e) {
+						    $this->Session->setFlash($e->getMessage());
+						}	
 					}
+					$this->_processSubscriptions();
 				}
 				
 				$this->Toolbar->updateTopics($topic_id);
@@ -106,6 +111,44 @@ class TopicsController extends ForumAppController {
 		$this->set('type', $type);
 		$this->set('forum', $forum);
 		$this->set('forums', $this->Topic->Forum->getGroupedHierarchy($access));
+	}
+
+
+	public function _processSubscriptions(){
+		if(empty($this->Topic->id)){
+			return false;
+		}else{
+			/*
+			* get post, topic and subscription details
+			*/
+			$topic=$this->Topic->find("first", array(
+				"conditions"=>array(
+					"Topic.id"=>$this->Topic->id,
+				),
+				"contain"=>array(
+					"FirstPost",
+					"Forum"=>array(
+						"Subscription"=>array(
+							"User"
+						)
+					),
+					"User"
+				)
+			));
+			$this->set("topic", $topic);
+			$this->Email->template="subscription_topic";
+			$this->Email->subject=$this->config['subscription']['emailTopicSubject'];
+			$this->Email->from=$this->config['subscription']['emailFrom'];				
+			foreach($topic['Forum']['Subscription'] as $subscriber){
+				/*
+				* don't notify yourself
+				*/
+				if($subscriber['User']['id']!=$topic['Topic']['user_id']){
+					$this->Email->to=$subscriber['User'][$this->config['userMap']['email']];
+					$this->Email->send();					
+				}
+			}
+		}
 	}
 	
 	/**

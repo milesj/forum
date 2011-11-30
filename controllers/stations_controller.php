@@ -66,6 +66,7 @@ class StationsController extends ForumAppController {
 		$this->set('topics', $this->paginate('Topic'));
 		$this->set('stickies', $this->Forum->Topic->getStickiesInForum($forum['Forum']['id']));
 		$this->set('rss', $slug);
+		$this->set("isSubscribed", $this->Forum->userIsSubscribed($this->Auth->user("id")));
 	}
 
 	/**
@@ -273,4 +274,50 @@ class StationsController extends ForumAppController {
 		$this->set('menuTab', 'forums');
 	}
 
+	public function unsubscribe($slug){
+		$forum = $this->Forum->get($slug);
+		$user_id = $this->Auth->user('id');
+		if(empty($this->Forum->id)){
+			$this->Session->setFlash("No such forum");
+			$this->redirect($this->referer());
+			exit();
+		}
+		$this->Toolbar->verifyAccess(array(
+			'exists' => $forum, 
+			'permission' => $forum['Forum']['accessRead']
+		));
+		
+		try{
+			if($this->Forum->unsubscribe($user_id))
+				$this->Session->setFlash("You have been unsubscribed");
+			else
+				$this->Session->setFlash("There was a problem unsubscribing");
+		}catch (Exception $e) {
+		    $this->Session->setFlash($e->getMessage());
+		}
+		$this->redirect($this->referer());
+	}
+	public function subscribe($slug){
+		$forum = $this->Forum->get($slug);
+		$user_id = $this->Auth->user('id');
+		if(empty($this->Forum->id)){
+			$this->Session->setFlash("No such forum");
+			$this->redirect($this->referer());
+			exit();
+		}
+		$this->Toolbar->verifyAccess(array(
+			'exists' => $forum, 
+			'permission' => $forum['Forum']['accessRead']
+		));
+		
+		try{
+			if($this->Forum->subscribe($user_id))
+				$this->Session->setFlash("You have been subscribed");
+			else
+				$this->Session->setFlash("There was a problem subscribing");
+		}catch (Exception $e) {
+		    $this->Session->setFlash($e->getMessage());
+		}
+		$this->redirect($this->referer());
+	}
 }
