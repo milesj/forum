@@ -1,11 +1,11 @@
 <?php
-/**
- * Forum - Core Configuration
+/** 
+ * Forum - Configuration
  *
- * @author		Miles Johnson - http://milesj.me
- * @copyright	Copyright 2006-2010, Miles Johnson, Inc.
- * @license		http://opensource.org/licenses/mit-license.php - Licensed under The MIT License
- * @link		http://milesj.me/resources/script/forum-plugin
+ * @author      Miles Johnson - http://milesj.me
+ * @copyright   Copyright 2006-2011, Miles Johnson, Inc.
+ * @license     http://opensource.org/licenses/mit-license.php - Licensed under The MIT License
+ * @link        http://milesj.me/code/cakephp/forum
  */
 
 /**
@@ -46,7 +46,7 @@ $config['Forum']['routes'] = array(
 /**
  * Current version.
  */
-$config['Forum']['version'] = '2.0';
+$config['Forum']['version'] = '2.1';
 
 /**
  * List of all timezones.
