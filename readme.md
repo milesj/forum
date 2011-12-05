@@ -15,6 +15,7 @@ Thorough documentation can be found here: http://milesj.me/code/cakephp/forum
 ## Features ##
 
 Forums
+
 * Parent and children forums
 * Activity and latest post tracking
 * Auto-Lock old topics
@@ -25,6 +26,7 @@ Forums
 * Reply to topics, or quote previous posts
 
 Moderation
+
 * Moderators, Super Moderators and Admin levels
 * Restrict moderators to specific forums
 * Inline moderation and management
@@ -32,6 +34,7 @@ Moderation
 * Ability to edit and manage users content
 
 Administration
+
 * Full admin panel using CakePHP admin routes
 * Requires the administration access level
 * Can add, edit, order, delete forums and categories
@@ -41,6 +44,7 @@ Administration
 * Manage all aspects and content
 
 Security
+
 * Utilizes CakePHPs Auth and Security Components
 * Advanced flood protection (Posts and Topics)
 * Hourly post limitations
@@ -48,6 +52,7 @@ Security
 * Form protection against bots and hackers
 
 Miscellaneous
+
 * BBCode support using Decoda
 * Utilizes remember me features using AutoLogin
 * Mark topics as read (Session)
