@@ -82,6 +82,11 @@ class Topic extends ForumAppModel {
 			'exclusive' => true,
 			'dependent' => true,
 			'order' 	=> array('Post.created' => 'DESC'),
+		),
+		'Subscription' => array(
+			'className'	=> 'Forum.Subscription',
+			'exclusive' => true,
+			'dependent' => true
 		)
 	);
 	
@@ -153,6 +158,11 @@ class Topic extends ForumAppModel {
 
 				if (isset($data['options'])) {
 					$this->Poll->addPoll($data);
+				}
+				
+				// Subscribe
+				if ($this->settings['auto_subscribe_self']) {
+					$this->Subscription->subscribe($data['user_id'], $data['topic_id']);
 				}
 				
 				return $data['topic_id'];

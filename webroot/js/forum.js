@@ -52,7 +52,7 @@ var Forum = {
 			url: node.attr('href'),
 			type: 'post',
 			success: function(response) {
-				node.text(response.data).addClass('disabled');
+				$('.subscription').text(response.data).addClass('disabled');
 			}
 		});
 		

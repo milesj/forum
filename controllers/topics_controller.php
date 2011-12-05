@@ -254,9 +254,17 @@ class TopicsController extends ForumAppController {
 	 * @param type $id 
 	 */
 	public function subscribe($id) {
+		$success = false;
+		$data = __d('forum', 'Failed To Subscribe', true);
+		
+		if ($this->settings['enable_subscriptions'] && $this->Subscription->subscribe($this->Auth->user('id'), $id)) {
+			$success = true;
+			$data = __d('forum', 'Subscribed', true); 
+		}
+		
 		$this->AjaxHandler->respond('json', array(
-			'success' => (bool) $this->Subscription->subscribe($this->Auth->user('id'), $id),
-			'data' => __d('forum', 'Subscribed', true)
+			'success' => $success,
+			'data' => $data
 		));
 	}
 	
@@ -266,9 +274,17 @@ class TopicsController extends ForumAppController {
 	 * @param type $id 
 	 */
 	public function unsubscribe($id) {
+		$success = false;
+		$data = __d('forum', 'Failed To Unsubscribe', true);
+		
+		if ($this->settings['enable_subscriptions'] && $this->Subscription->unsubscribe($id)) {
+			$success = true;
+			$data = __d('forum', 'Unsubscribed', true); 
+		}
+		
 		$this->AjaxHandler->respond('json', array(
-			'success' => (bool) $this->Subscription->unsubscribe($id),
-			'data' => __d('forum', 'Unsubscribed', true) 
+			'success' => $success,
+			'data' => $data
 		));
 	}
 	

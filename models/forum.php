@@ -79,6 +79,11 @@ class Forum extends ForumAppModel {
 			'className'		=> 'Forum.Moderator',
 			'dependent'		=> true,
 			'exclusive'		=> true
+		),
+		'Subscription' => array(
+			'className'		=> 'Forum.Subscription',
+			'exclusive'		=> true,
+			'dependent'		=> true
 		)
 	);
 	
