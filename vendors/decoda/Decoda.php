@@ -12,12 +12,29 @@
  */
 
 // Constants
-define('DECODA', dirname(__FILE__) .'/');
-define('DECODA_HOOKS', DECODA .'hooks/');
-define('DECODA_CONFIG', DECODA .'config/');
-define('DECODA_FILTERS', DECODA .'filters/');
-define('DECODA_TEMPLATES', DECODA .'templates/');
-define('DECODA_EMOTICONS', DECODA .'emoticons/');
+if (!defined('DECODA')) {
+	define('DECODA', dirname(__FILE__) . '/');
+}
+
+if (!defined('DECODA_HOOKS')) {
+	define('DECODA_HOOKS', DECODA . 'hooks/');
+}
+
+if (!defined('DECODA_CONFIG')) {
+	define('DECODA_CONFIG', DECODA . 'config/');
+}
+
+if (!defined('DECODA_FILTERS')) {
+	define('DECODA_FILTERS', DECODA . 'filters/');
+}
+
+if (!defined('DECODA_TEMPLATES')) {
+	define('DECODA_TEMPLATES', DECODA . 'templates/');
+}
+
+if (!defined('DECODA_EMOTICONS')) {
+	define('DECODA_EMOTICONS', DECODA . 'emoticons/');
+}
 
 // Includes
 include_once DECODA .'DecodaAbstract.php';
@@ -32,6 +49,14 @@ class Decoda {
 	const TAG_NONE = 0;
 	const TAG_OPEN = 1;
 	const TAG_CLOSE = 2;
+	
+	/**
+	 * Error type constants.
+	 */
+	const ERROR_ALL = 0;
+	const ERROR_NESTING = 1;
+	const ERROR_CLOSING = 2;
+	const ERROR_SCOPE = 3;
 
 	/**
 	 * Extracted chunks of text and tags.
@@ -55,6 +80,14 @@ class Decoda {
 		'xhtml' => false,
 		'locale' => 'en-us'
 	);
+	
+	/**
+	 * Logged errors for incorrectly nested nodes and types.
+	 * 
+	 * @access protected
+	 * @var array
+	 */
+	protected $_errors = array();
 
 	/**
 	 * List of all instantiated filter objects.
@@ -231,6 +264,8 @@ class Decoda {
 	 */
 	public function disable($status = true) {
 		$this->_config['disabled'] = (bool) $status;
+		
+		return $this;
 	}
 	
 	/**
@@ -262,6 +297,37 @@ class Decoda {
 		$this->addHook(new EmptyHook());
 		
 		return $this;
+	}
+	
+	/**
+	 * Return the parsing errors.
+	 * 
+	 * @access public
+	 * @param int $type
+	 * @return array
+	 */
+	public function getErrors($type = self::ERROR_ALL) {
+		if ($type == self::ERROR_ALL) {
+			return $this->_errors;
+		}
+		
+		$clean = array();
+		
+		if (!empty($this->_errors)) {
+			foreach ($this->_errors as $error) {
+				if ($error['type'] == self::ERROR_NESTING) {
+					$clean[] = $error;
+					
+				} else if ($error['type'] == self::ERROR_CLOSING) {
+					$clean[] = $error;
+					
+				} else if ($error['type'] == self::ERROR_SCOPE) {
+					$clean[] = $error;
+				}
+			}
+		}
+		
+		return $clean;
 	}
 
 	/**
@@ -339,6 +405,23 @@ class Decoda {
 	}
 
 	/**
+	 * Inserts HTML line breaks before all newlines in a string.
+	 * If the server is running PHP 5.2, the second parameter will be ignored.
+	 * 
+	 * @access public
+	 * @param string $string
+	 * @param boolean $xhtml
+	 * @return string
+	 */
+	public static function nl2br($string, $xhtml = true) {
+		if (version_compare(PHP_VERSION, '5.3.0', '<')) {
+			return nl2br($string);
+		} else {
+			return nl2br($string, $xhtml);
+		}
+	}
+
+	/**
 	 * Parse the node list by looping through each one, validating, applying filters, building and finally concatenating the string.
 	 * 
 	 * @access public
@@ -355,7 +438,7 @@ class Decoda {
 			$this->_extractChunks();
 			$this->_parsed = $this->_parse($this->_nodes);
 		} else {
-			$this->_parsed = nl2br($this->_string, $this->config('xhtml'));
+			$this->_parsed = self::nl2br($this->_string, $this->config('xhtml'));
 		}
 
 		$this->_parsed = $this->_trigger('afterParse', $this->_parsed);
@@ -511,7 +594,13 @@ class Decoda {
 	 * @chainable 
 	 */
 	public function whitelist() {
-		$this->_whitelist += array_map('strtolower', func_get_args());
+		$args = func_get_args();
+		
+		if (isset($args[0]) && is_array($args[0])) {
+			$args = $args[0];
+		}
+		
+		$this->_whitelist += array_map('strtolower', $args);
 		$this->_whitelist = array_filter($this->_whitelist);
 		
 		return $this;
@@ -634,7 +723,7 @@ class Decoda {
 
 			switch ($chunk['type']) {
 				case self::TAG_NONE:
-					if (empty($disallowed)) {
+					if (empty($parent['children'])) {
 						if (!empty($prevChunk) && $prevChunk['type'] === self::TAG_NONE) {
 							$chunk['text'] = $prevChunk['text'] . $chunk['text'];
 							array_pop($clean);
@@ -705,7 +794,7 @@ class Decoda {
 
 						if ($root && !empty($openTags)) {
 							$last = end($openTags);
-
+							
 							if ($last['tag'] == $tag) {
 								array_pop($openTags);
 							} else {
@@ -713,6 +802,11 @@ class Decoda {
 									$last = array_pop($openTags);
 
 									if ($last['tag'] != $tag) {
+										$this->_errors[] = array(
+											'type' => self::ERROR_NESTING,
+											'tag' => $last['tag']
+										);
+										
 										unset($clean[$last['index']]);
 									}
 								}
@@ -729,7 +823,12 @@ class Decoda {
 		// Remove any unclosed tags
 		while (!empty($openTags)) {
 			$last = array_pop($openTags);
-
+			
+			$this->_errors[] = array(
+				'type' => self::ERROR_CLOSING,
+				'tag' => $last['tag']
+			);
+			
 			unset($clean[$last['index']]);
 		}
 
@@ -917,6 +1016,12 @@ class Decoda {
 		} else if (($parent['allowed'] == DecodaFilter::TYPE_INLINE || $parent['allowed'] == DecodaFilter::TYPE_BLOCK) && $child['type'] == DecodaFilter::TYPE_INLINE) {
 			return true;
 		}
+		
+		$this->_errors[] = array(
+			'type' => self::ERROR_SCOPE,
+			'parent' => $parent['key'],
+			'child' => $child['key']
+		);
 
 		return false;
 	}
@@ -956,7 +1061,7 @@ class Decoda {
 		foreach ($nodes as $node) {
 			if (is_string($node)) {
 				if (empty($wrapper)) {
-					$parsed .= nl2br($node, $xhtml);
+					$parsed .= self::nl2br($node, $xhtml);
 				} else {
 					$parsed .= $node;
 				}
