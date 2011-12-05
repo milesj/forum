@@ -16,7 +16,15 @@ class TopicsController extends ForumAppController {
 	 * @access public
 	 * @var array
 	 */
-	public $uses = array('Forum.Topic', 'Forum.Profile');  
+	public $uses = array('Forum.Topic', 'Forum.Profile', 'Forum.Subscription'); 
+	
+	/**
+	 * Components.
+	 * 
+	 * @access public
+	 * @var array
+	 */
+	public $components = array('Forum.AjaxHandler');
 	
 	/**
 	 * Pagination.
@@ -240,6 +248,28 @@ class TopicsController extends ForumAppController {
 	}
 	
 	/**
+	 * Subscribe to a topic.
+	 * 
+	 * @param type $id 
+	 */
+	public function subscribe($id) {
+		$this->AjaxHandler->respond('json', array(
+			'success' => (bool) $this->Subscription->subscribe($this->Auth->user('id'), $id) 
+		));
+	}
+	
+	/**
+	 * Unsubscribe from a topic.
+	 * 
+	 * @param type $id 
+	 */
+	public function unsubscribe($id) {
+		$this->AjaxHandler->respond('json', array(
+			'success' => (bool) $this->Subscription->unsubscribe($id) 
+		));
+	}
+	
+	/**
 	 * Moderate a topic.
 	 *
 	 * @param string $slug
@@ -285,6 +315,7 @@ class TopicsController extends ForumAppController {
 		parent::beforeFilter();
 		
 		$this->Auth->allow('index', 'view', 'feed');
+		$this->AjaxHandler->handle('subscribe', 'unsubscribe');
 		$this->Security->disabledFields = array('option', 'items');
 
 		$this->set('menuTab', 'forums');
