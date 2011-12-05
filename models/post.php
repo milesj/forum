@@ -205,6 +205,27 @@ class Post extends ForumAppModel {
 	}
 	
 	/**
+	 * Return the latest posts by a user, grouped by the topic ID.
+	 * 
+	 * @access public
+	 * @param int $user_id
+	 * @param int $limit
+	 * @return array 
+	 */
+	public function getGroupedLatestByUser($user_id, $limit = 10) {
+		return $this->find('all', array(
+			'conditions' => array('Post.user_id' => $user_id),
+			'order' => array('Post.created' => 'DESC'),
+			'group' => array('Post.topic_id'),
+			'limit' => $limit,
+			'contain' => array(
+				'Topic' => array('LastUser', 'LastPost', 'User')
+			),
+			'cache' => array(__FUNCTION__ . '-' . $user_id . '-' . $limit, '+5 minutes')
+		));
+	}
+	
+	/**
 	 * Return a post for quoting.
 	 *
 	 * @access public

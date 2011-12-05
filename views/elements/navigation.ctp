@@ -9,7 +9,7 @@
 	if ($user) {
 		$links[] = $this->Html->link(__d('forum', 'Logout', true), $config['routes']['logout']);
 		$links[] = $this->Html->link(__d('forum', 'View New Posts', true), array('controller' => 'search', 'action' => 'index', 'new_posts', 'admin' => false));
-		$links[] = $this->Html->link(__d('forum', 'Edit Profile', true), array('controller' => 'users', 'action' => 'edit', 'admin' => false));
+		$links[] = $this->Html->link(__d('forum', 'Dashboard', true), array('controller' => 'users', 'action' => 'dashboard', 'admin' => false));
 		
 	} else {
 		if (!empty($config['routes']['forgotPass'])) {

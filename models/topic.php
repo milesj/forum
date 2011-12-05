@@ -369,7 +369,7 @@ class Topic extends ForumAppModel {
 		return $this->find('all', array(
 			'conditions' => array('Topic.user_id' => $user_id),
 			'order' => array('Topic.created' => 'DESC'),
-			'contain' => array('LastPost'),
+			'contain' => array('LastPost', 'LastUser'),
 			'limit' => $limit,
 		));
 	}

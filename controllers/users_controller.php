@@ -78,6 +78,19 @@ class UsersController extends ForumAppController {
 	}
 	
 	/**
+	 * Dashboard and activity.
+	 */
+	public function dashboard() {
+		$this->loadModel('Topic');
+		
+		$user_id = $this->Auth->user('id');
+		
+		$this->Toolbar->pageTitle(__d('forum', 'Dashboard', true));
+		$this->set('topics', $this->Topic->getLatestByUser($user_id));
+		$this->set('activity', $this->Topic->Post->getGroupedLatestByUser($user_id));
+	}
+	
+	/**
 	 * Edit a forum profile.
 	 */
 	public function edit() {

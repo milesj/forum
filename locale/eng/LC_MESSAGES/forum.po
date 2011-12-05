@@ -1754,3 +1754,19 @@ msgstr ""
 msgid "The following tags can not be placed within a specific tag: %s"
 msgstr ""
 
+#: controllers/users_controller.php:88
+#: views/users/dashboard.ctp:5,9
+#: views/elements/navigation.ctp:12
+msgid "Dashboard"
+msgstr ""
+
+#: views/users/dashboard.ctp:16
+msgid "Your Latest Activity"
+msgstr ""
+
+#: views/users/dashboard.ctp:65
+msgid "Your Latest Topics"
+msgstr ""
+
+
+
