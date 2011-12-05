@@ -1742,3 +1742,15 @@ msgstr ""
 msgid "This field is required"
 msgstr ""
 
+#: forum_app_model.php:251
+msgid "The following tags have been nested in the wrong order: %s"
+msgstr ""
+
+#: forum_app_model.php:255
+msgid "The following tags have no closing tag: %s"
+msgstr ""
+
+#: forum_app_model.php:259
+msgid "The following tags can not be placed within a specific tag: %s"
+msgstr ""
+

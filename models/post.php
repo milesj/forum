@@ -237,17 +237,14 @@ class Post extends ForumAppModel {
 
 	/**
 	 * Parse the HTML version.
+	 * 
+	 * @access public
+	 * @param array $options
+	 * @return boolean
 	 */
 	public function beforeSave($options) {
 		if (isset($this->data['Post']['content'])) {
-			$censored = array_map('trim', explode(',', $this->settings['censored_words']));
-			$locale = $this->config['decodaLocales'][Configure::read('Config.language')];
-			
-			$decoda = new Decoda($this->data['Post']['content']);
-			$decoda->defaults()->setXhtml()->setLocale($locale);
-			$decoda->getHook('Censor')->blacklist($censored);
-			
-			$this->data['Post']['contentHtml'] = $decoda->parse();
+			return $this->validateDecoda('Post');
 		}
 		
 		return true;

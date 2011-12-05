@@ -68,7 +68,7 @@ select {
 
 	.error-message { 
 		padding-left: 37px;
-		background: url("/forum/img/error.png") 15px 50% no-repeat;
+		background: url("../img/error.png") 15px 50% no-repeat;
 		color: red; }
 	
 .inputDivider {

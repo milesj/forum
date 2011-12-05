@@ -424,6 +424,21 @@ class Topic extends ForumAppModel {
 	}
 	
 	/**
+	 * Parse the HTML version.
+	 * 
+	 * @access public
+	 * @param array $options
+	 * @return boolean
+	 */
+	public function beforeSave($options) {
+		if (isset($this->data['Topic']['content'])) {
+			return $this->validateDecoda('Topic');
+		}
+		
+		return true;
+	}
+	
+	/**
 	 * After find.
 	 * 
 	 * @access public

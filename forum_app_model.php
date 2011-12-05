@@ -211,5 +211,56 @@ class ForumAppModel extends AppModel {
 		return $this->save($data, false, array_keys($data));
 	}
 	
+	/**
+	 * Validate the Decoda markup.
+	 * 
+	 * @access public
+	 * @param string $model
+	 * @return boolean
+	 */
+	public function validateDecoda($model) {
+		$censored = array_map('trim', explode(',', $this->settings['censored_words']));
+		$locale = $this->config['decodaLocales'][Configure::read('Config.language')];
+
+		$decoda = new Decoda($this->data[$model]['content']);
+		$decoda->defaults()->setXhtml()->setLocale($locale);
+		$decoda->getHook('Censor')->blacklist($censored);
+
+		$parsed = $decoda->parse();
+		$errors = $decoda->getErrors();
+
+		if (empty($errors)) {
+			$this->data[$model]['contentHtml'] = $parsed;
+
+			return true;
+		}
+
+		$nesting = array(); 
+		$closing = array();
+		$scope = array();
+
+		foreach ($errors as $error) {
+			switch ($error['type']) {
+				case Decoda::ERROR_NESTING:	$nesting[] = $error['tag']; break;
+				case Decoda::ERROR_CLOSING:	$closing[] = $error['tag']; break;
+				case Decoda::ERROR_SCOPE:	$scope[] = $error['child'] . ' -> ' . $error['parent']; break;
+			}
+		}
+
+		if (!empty($nesting)) {
+			return $this->invalidate('content', 'The following tags have been nested in the wrong order: %s', implode(', ', $nesting));
+		}
+
+		if (!empty($closing)) {
+			return $this->invalidate('content', 'The following tags have no closing tag: %s', implode(', ', $closing));
+		}
+
+		if (!empty($scope)) {
+			return $this->invalidate('content', 'The following tags can not be placed within a specific tag: %s', implode(', ', $scope));
+		}
+		
+		return true;
+	}
+	
 }
   
