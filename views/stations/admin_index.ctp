@@ -11,7 +11,9 @@ $this->Html->addCrumb(__d('forum', 'Forums', true), array('controller' => 'stati
 	<h2><?php __d('forum', 'Manage Forums'); ?></h2>
 </div>
 
-<?php echo $this->Form->create('Forum', array('url' => $this->here));
+<?php echo $this->Form->create('Forum', array(
+	'url' => array('controller' => 'stations')
+));
 
 if (!empty($forums)) {
 	foreach ($forums as $forum) { ?>

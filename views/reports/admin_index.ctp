@@ -14,13 +14,13 @@ $this->Html->addCrumb(__d('forum', 'Reported', true), array('controller' => 'rep
 	<h2><?php __d('forum', 'Reported Items'); ?></h2>
 </div>
 
-<?php echo $this->Form->create('Report', array('url' => $this->here)); ?>
+<?php echo $this->Form->create('Report'); ?>
 
 <div class="container">
 	<div class="containerContent">
 		<?php echo $this->element('pagination'); ?>
 
-		<table class="table">
+		<table class="table topics">
 			<thead>
 				<tr>
 					<th><?php __d('forum', 'Type'); ?></th>

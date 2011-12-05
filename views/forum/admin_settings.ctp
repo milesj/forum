@@ -7,7 +7,7 @@ $this->Html->addCrumb(__d('forum', 'Settings', true), array('controller' => 'for
 	<h2><?php __d('forum', 'Settings'); ?></h2>
 </div>
 
-<?php echo $this->Form->create('Setting', array('url' => $this->here)); ?>
+<?php echo $this->Form->create('Setting'); ?>
 
 <div class="container">
 	<div class="containerContent">

@@ -8,7 +8,9 @@ $this->Html->addCrumb($this->data['User']['username'], $this->here); ?>
 	<h2><?php __d('forum', 'Edit User'); ?></h2>
 </div>
 
-<?php echo $this->Form->create('Profile', array('url' => $this->here)); ?>
+<?php echo $this->Form->create('Profile', array(
+	'url' => array('controller' => 'users')
+)); ?>
 
 <div class="container">
 	<div class="containerContent">

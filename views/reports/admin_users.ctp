@@ -15,7 +15,7 @@ $this->Html->addCrumb(__d('forum', 'Users', true), array('controller' => 'report
 	<h2><?php __d('forum', 'Reported Users'); ?></h2>
 </div>
 
-<?php echo $this->Form->create('Report', array('url' => $this->here)); ?>
+<?php echo $this->Form->create('Report'); ?>
 
 <div class="container">
 	<div class="containerContent">

@@ -23,7 +23,9 @@ $this->Html->addCrumb($title, $this->here); ?>
 	<p><?php __d('forum', 'You are unable to edit core levels, they are restricted.'); ?></p>
 
 <?php } else {
-	echo $this->Form->create('AccessLevel', array('url' => $this->here)); ?>
+	echo $this->Form->create('AccessLevel', array(
+		'url' => array('controller' => 'staff')
+	)); ?>
 	
 <div class="container">
 	<div class="containerContent">
@@ -35,7 +37,7 @@ $this->Html->addCrumb($title, $this->here); ?>
 	</div>
 </div>
 
-	<?php
+<?php
 	echo $this->Form->submit($button, array('class' => 'button'));
 	echo $this->Form->end();
 } ?>

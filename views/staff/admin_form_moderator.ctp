@@ -20,7 +20,9 @@ $this->Html->addCrumb($title, $this->here); ?>
 
 <p><?php printf(__d('forum', 'To find the users ID, you can search for them on the %s.', true), $this->Html->link(__d('forum', 'Users listing', true), array('controller' => 'users', 'action' => 'index', 'admin' => true))); ?></p>
 
-<?php echo $this->Form->create('Moderator', array('url' => $this->here)); ?>
+<?php echo $this->Form->create('Moderator', array(
+	'url' => array('controller' => 'staff')
+)); ?>
 
 <div class="container">
 	<div class="containerContent">

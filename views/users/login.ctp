@@ -8,7 +8,7 @@ $this->Html->addCrumb(__d('forum', 'Login', true), array('controller' => 'users'
 	<h2><?php __d('forum', 'Login'); ?></h2>
 </div>
 
-<?php echo $this->Form->create('User', array('url' => $this->here)); ?>
+<?php echo $this->Form->create('User'); ?>
 
 <div class="container">
 	<div class="containerContent">

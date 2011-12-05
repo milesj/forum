@@ -15,7 +15,9 @@ $this->Html->addCrumb($topic['Topic']['title'], array('controller' => 'stations'
 
 <p><?php printf(__d('forum', 'Are you sure you want to report the topic %s? If so, please add a comment as to why you are reporting it, 255 max characters.', true), '<strong>'. $this->Html->link($topic['Topic']['title'], array('action' => 'view', $topic['Topic']['slug'])) .'</strong>'); ?></p>
 
-<?php echo $this->Form->create('Report', array('url' => $this->here)); ?>
+<?php echo $this->Form->create('Report', array(
+	'url' => array('controller' => 'topics', $topic['Topic']['slug'])
+)); ?>
 
 <div class="container">
 	<div class="containerContent">
