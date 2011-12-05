@@ -244,6 +244,7 @@ class TopicsController extends ForumAppController {
 		$this->Toolbar->pageTitle($topic['Forum']['title'], $topic['Topic']['title']);
 		$this->set('topic', $topic);
 		$this->set('posts', $this->paginate('Post'));
+		$this->set('subscription', $this->Subscription->isSubscribed($user_id, $topic['Topic']['id']));
 		$this->set('rss', $slug);
 	}
 	
@@ -254,7 +255,8 @@ class TopicsController extends ForumAppController {
 	 */
 	public function subscribe($id) {
 		$this->AjaxHandler->respond('json', array(
-			'success' => (bool) $this->Subscription->subscribe($this->Auth->user('id'), $id) 
+			'success' => (bool) $this->Subscription->subscribe($this->Auth->user('id'), $id),
+			'data' => __d('forum', 'Subscribed', true)
 		));
 	}
 	
@@ -265,7 +267,8 @@ class TopicsController extends ForumAppController {
 	 */
 	public function unsubscribe($id) {
 		$this->AjaxHandler->respond('json', array(
-			'success' => (bool) $this->Subscription->unsubscribe($id) 
+			'success' => (bool) $this->Subscription->unsubscribe($id),
+			'data' => __d('forum', 'Unsubscribed', true) 
 		));
 	}
 	

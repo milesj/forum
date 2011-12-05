@@ -1,6 +1,12 @@
 <?php if ($user) { ?>
 	<div class="controls">
-		<?php if ($this->Common->hasAccess(AccessLevel::MOD, $topic['Forum']['id'])) {
+		<?php if (empty($subscription)) {
+			echo $this->Html->link(__d('forum', 'Subscribe', true), array('controller' => 'topics', 'action' => 'subscribe', $topic['Topic']['id']), array('class' => 'button', 'onclick' => 'return Forum.subscribe(this);'));
+		} else {
+			echo $this->Html->link(__d('forum', 'Unsubscribe', true), array('controller' => 'topics', 'action' => 'unsubscribe', $subscription['Subscription']['id']), array('class' => 'button', 'onclick' => 'return Forum.unsubscribe(this);'));
+		} 
+		
+		if ($this->Common->hasAccess(AccessLevel::MOD, $topic['Forum']['id'])) {
 			echo $this->Html->link(__d('forum', 'Moderate', true), array('controller' => 'topics', 'action' => 'moderate', $topic['Topic']['slug']), array('class' => 'button'));
 		} 
 		

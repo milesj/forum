@@ -34,6 +34,38 @@ var Forum = {
 			form = node.parents('form');
 			
 		form.find(':checkbox').attr('checked', self.checked);
+	},
+	
+	/**
+	 * AJAX call to subscribe to a topic. Use the button's href attribute as the AJAX URL.
+	 * 
+	 * @param object node
+	 */
+	subscribe: function(node) {
+		node = $(node);
+		
+		if (node.hasClass('disabled')) {
+			return false;
+		}
+		
+		$.ajax({
+			url: node.attr('href'),
+			type: 'post',
+			success: function(response) {
+				node.text(response.data).addClass('disabled');
+			}
+		});
+		
+		return false;
+	},
+	
+	/**
+	 * Unsubscribe from a topic.
+	 * 
+	 * @param object node
+	 */
+	unsubscribe: function(node) {
+		return Forum.subscribe(node);
 	}
 	
 }
