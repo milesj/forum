@@ -81,13 +81,15 @@ class UsersController extends ForumAppController {
 	 * Dashboard and activity.
 	 */
 	public function dashboard() {
-		$this->loadModel('Topic');
+		$this->loadModel('Forum.Topic');
+		$this->loadModel('Forum.Subscription');
 		
 		$user_id = $this->Auth->user('id');
 		
 		$this->Toolbar->pageTitle(__d('forum', 'Dashboard', true));
 		$this->set('topics', $this->Topic->getLatestByUser($user_id));
 		$this->set('activity', $this->Topic->Post->getGroupedLatestByUser($user_id));
+		$this->set('subscriptions', $this->Subscription->getSubscriptionsByUser($user_id));
 	}
 	
 	/**

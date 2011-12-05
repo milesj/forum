@@ -29,6 +29,24 @@ class Subscription extends ForumAppModel {
 	);
 	
 	/**
+	 * Get all subscribed topics from a user.
+	 * 
+	 * @access public
+	 * @param int $user_id
+	 * @param int $limit
+	 * @return array
+	 */
+	public function getSubscriptionsByUser($user_id, $limit = 10) {
+		return $this->find('all', array(
+			'conditions' => array('Subscription.user_id' => $user_id),
+			'contain' => array(
+				'Topic' => array('LastPost', 'LastUser', 'User')
+			),
+			'limit' => $limit
+		));
+	}
+	
+	/**
 	 * Determine if the user is already subscribed to a topic?
 	 * 
 	 * @access public
