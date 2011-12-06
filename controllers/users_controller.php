@@ -89,7 +89,7 @@ class UsersController extends ForumAppController {
 		$this->Toolbar->pageTitle(__d('forum', 'Dashboard', true));
 		$this->set('topics', $this->Topic->getLatestByUser($user_id));
 		$this->set('activity', $this->Topic->Post->getGroupedLatestByUser($user_id));
-		$this->set('subscriptions', $this->Subscription->getSubscriptionsByUser($user_id));
+		$this->set('subscriptions', $this->Subscription->getTopicSubscriptionsByUser($user_id));
 	}
 	
 	/**

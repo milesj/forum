@@ -32,5 +32,6 @@ INSERT INTO `{prefix}settings` (`id`, `key`, `value`, `modified`) VALUES
 	(NULL, 'default_locale', 'eng', NOW()),
 	(NULL, 'default_timezone', '-8', NOW()),
 	(NULL, 'title_separator', ' - ', NOW()),
-	(NULL, 'enable_subscriptions', 1, NOW()),
+	(NULL, 'enable_topic_subscriptions', 1, NOW()),
+	(NULL, 'enable_forum_subscriptions', 1, NOW()),
 	(NULL, 'auto_subscribe_self', 1, NOW());

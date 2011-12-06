@@ -244,7 +244,7 @@ class TopicsController extends ForumAppController {
 		$this->Toolbar->pageTitle($topic['Forum']['title'], $topic['Topic']['title']);
 		$this->set('topic', $topic);
 		$this->set('posts', $this->paginate('Post'));
-		$this->set('subscription', $this->Subscription->isSubscribed($user_id, $topic['Topic']['id']));
+		$this->set('subscription', $this->Subscription->isSubscribedToTopic($user_id, $topic['Topic']['id']));
 		$this->set('rss', $slug);
 	}
 	
@@ -257,7 +257,7 @@ class TopicsController extends ForumAppController {
 		$success = false;
 		$data = __d('forum', 'Failed To Subscribe', true);
 		
-		if ($this->settings['enable_subscriptions'] && $this->Subscription->subscribe($this->Auth->user('id'), $id)) {
+		if ($this->settings['enable_topic_subscriptions'] && $this->Subscription->subscribeToTopic($this->Auth->user('id'), $id)) {
 			$success = true;
 			$data = __d('forum', 'Subscribed', true); 
 		}
@@ -277,7 +277,7 @@ class TopicsController extends ForumAppController {
 		$success = false;
 		$data = __d('forum', 'Failed To Unsubscribe', true);
 		
-		if ($this->settings['enable_subscriptions'] && $this->Subscription->unsubscribe($id)) {
+		if ($this->settings['enable_topic_subscriptions'] && $this->Subscription->unsubscribe($id)) {
 			$success = true;
 			$data = __d('forum', 'Unsubscribed', true); 
 		}

@@ -13,7 +13,7 @@ $this->Html->addCrumb(__d('forum', 'Dashboard', true), $this->here); ?>
 
 <div class="container">
 	<div class="containerHeader">
-		<h3><?php __d('forum', 'Your Subscriptions'); ?></h3>
+		<h3><?php __d('forum', 'Your Topic Subscriptions'); ?></h3>
 	</div>
 	
 	<div class="containerContent">

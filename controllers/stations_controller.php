@@ -16,7 +16,15 @@ class StationsController extends ForumAppController {
 	 * @access public
 	 * @var array
 	 */
-	public $uses = array('Forum.Forum');  
+	public $uses = array('Forum.Forum', 'Forum.Subscription');
+	
+	/**
+	 * Components.
+	 * 
+	 * @access public
+	 * @var array
+	 */
+	public $components = array('Forum.AjaxHandler');  
 	
 	/**
 	 * Pagination.
@@ -49,6 +57,7 @@ class StationsController extends ForumAppController {
 	 */
 	public function view($slug) {
 		$forum = $this->Forum->get($slug);
+		$user_id = $this->Auth->user('id');
 		
 		$this->Toolbar->verifyAccess(array(
 			'exists' => $forum, 
@@ -65,6 +74,7 @@ class StationsController extends ForumAppController {
 		$this->set('forum', $forum);
 		$this->set('topics', $this->paginate('Topic'));
 		$this->set('stickies', $this->Forum->Topic->getStickiesInForum($forum['Forum']['id']));
+		$this->set('subscription', $this->Subscription->isSubscribedToForum($user_id, $forum['Forum']['id']));
 		$this->set('rss', $slug);
 	}
 
@@ -147,6 +157,46 @@ class StationsController extends ForumAppController {
 		} else {
 			$this->redirect('/forum/stations/feed/'. $slug .'.rss');
 		}
+	}
+	
+	/**
+	 * Subscribe to a forum.
+	 * 
+	 * @param type $id 
+	 */
+	public function subscribe($id) {
+		$success = false;
+		$data = __d('forum', 'Failed To Subscribe', true);
+		
+		if ($this->settings['enable_forum_subscriptions'] && $this->Subscription->subscribeToForum($this->Auth->user('id'), $id)) {
+			$success = true;
+			$data = __d('forum', 'Subscribed', true); 
+		}
+		
+		$this->AjaxHandler->respond('json', array(
+			'success' => $success,
+			'data' => $data
+		));
+	}
+	
+	/**
+	 * Unsubscribe from a forum.
+	 * 
+	 * @param type $id 
+	 */
+	public function unsubscribe($id) {
+		$success = false;
+		$data = __d('forum', 'Failed To Unsubscribe', true);
+		
+		if ($this->settings['enable_forum_subscriptions'] && $this->Subscription->unsubscribe($id)) {
+			$success = true;
+			$data = __d('forum', 'Unsubscribed', true); 
+		}
+		
+		$this->AjaxHandler->respond('json', array(
+			'success' => $success,
+			'data' => $data
+		));
 	}
 	
 	/**
@@ -268,6 +318,7 @@ class StationsController extends ForumAppController {
 		parent::beforeFilter();
 		
 		$this->Auth->allow('index', 'view', 'feed');
+		$this->AjaxHandler->handle('subscribe', 'unsubscribe');
 		$this->Security->disabledFields = array('items');
 		
 		$this->set('menuTab', 'forums');

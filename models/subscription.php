@@ -29,6 +29,25 @@ class Subscription extends ForumAppModel {
 	);
 	
 	/**
+	 * Get all subscribed forums from a user.
+	 * 
+	 * @access public
+	 * @param int $user_id
+	 * @param int $limit
+	 * @return array
+	 */
+	public function getForumSubscriptionsByUser($user_id, $limit = 10) {
+		return $this->find('all', array(
+			'conditions' => array(
+				'Subscription.user_id' => $user_id,
+				'Subscription.forum_id !=' => null
+			),
+			'contain' => array('Forum'),
+			'limit' => $limit
+		));
+	}
+	
+	/**
 	 * Get all subscribed topics from a user.
 	 * 
 	 * @access public
@@ -36,9 +55,12 @@ class Subscription extends ForumAppModel {
 	 * @param int $limit
 	 * @return array
 	 */
-	public function getSubscriptionsByUser($user_id, $limit = 10) {
+	public function getTopicSubscriptionsByUser($user_id, $limit = 10) {
 		return $this->find('all', array(
-			'conditions' => array('Subscription.user_id' => $user_id),
+			'conditions' => array(
+				'Subscription.user_id' => $user_id,
+				'Subscription.topic_id !=' => null
+			),
 			'contain' => array(
 				'Topic' => array('LastPost', 'LastUser', 'User')
 			),
@@ -47,20 +69,60 @@ class Subscription extends ForumAppModel {
 	}
 	
 	/**
-	 * Determine if the user is already subscribed to a topic?
+	 * Determine if the user is already subscribed to a forum.
+	 * 
+	 * @access public
+	 * @param int $user_id
+	 * @param int $forum_id
+	 * @return int
+	 */
+	public function isSubscribedToForum($user_id, $forum_id) {
+		return $this->find('first', array(
+			'conditions' => array(
+				'Subscription.user_id' => $user_id,
+				'Subscription.forum_id' => $forum_id
+			)
+		));
+	}
+	
+	/**
+	 * Determine if the user is already subscribed to a topic.
 	 * 
 	 * @access public
 	 * @param int $user_id
 	 * @param int $topic_id
 	 * @return int
 	 */
-	public function isSubscribed($user_id, $topic_id) {
+	public function isSubscribedToTopic($user_id, $topic_id) {
 		return $this->find('first', array(
 			'conditions' => array(
 				'Subscription.user_id' => $user_id,
 				'Subscription.topic_id' => $topic_id
 			)
 		));
+	}
+	
+	/**
+	 * Subscribe a user to a forum.
+	 * 
+	 * @access public
+	 * @param int $user_id
+	 * @param int $forum_id
+	 * @return boolean
+	 */
+	public function subscribeToForum($user_id, $forum_id) {
+		$forum = $this->Forum->getById($forum_id);
+		
+		if (empty($forum) || $this->isSubscribedToForum($user_id, $forum_id)) {
+			return false;
+		}
+		
+		$this->create();
+		
+		return $this->save(array(
+			'user_id' => $user_id,
+			'forum_id' => $forum_id
+		), false);
 	}
 	
 	/**
@@ -71,10 +133,10 @@ class Subscription extends ForumAppModel {
 	 * @param int $topic_id
 	 * @return boolean
 	 */
-	public function subscribe($user_id, $topic_id) {
+	public function subscribeToTopic($user_id, $topic_id) {
 		$topic = $this->Topic->getById($topic_id);
 		
-		if (empty($topic) || $this->isSubscribed($user_id, $topic_id)) {
+		if (empty($topic) || $this->isSubscribedToTopic($user_id, $topic_id)) {
 			return false;
 		}
 		
@@ -82,13 +144,12 @@ class Subscription extends ForumAppModel {
 		
 		return $this->save(array(
 			'user_id' => $user_id,
-			'topic_id' => $topic_id,
-			'forum_id' => $topic['Topic']['forum_id']
+			'topic_id' => $topic_id
 		), false);
 	}
 	
 	/**
-	 * Unsubscribe a user from a topic.
+	 * Unsubscribe a user subscription.
 	 * 
 	 * @access public
 	 * @param int $id
