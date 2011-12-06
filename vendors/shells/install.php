@@ -247,7 +247,7 @@ class InstallShell extends Shell {
 			$this->out('Rolling back and dropping any created tables.');
 			
 			foreach ($tables as $table) {
-				$db->execute(sprintf('DROP TABLE %s;', $table));
+				$db->execute(sprintf('DROP TABLE `%s`;', $table));
 			}
 		} else {
 			$this->out('Tables created successfully...');
@@ -295,7 +295,10 @@ class InstallShell extends Shell {
 		
 		$access = ClassRegistry::init('Forum.Access');
 		$access->create();
-		$access->save(array('access_level_id' => 4, 'user_id' => $this->install['user_id']), false);
+		$access->save(array(
+			'access_level_id' => 4, 
+			'user_id' => $this->install['user_id']
+		), false);
 		
 		if (!$access->id) {
 			$this->out('An error occured while granting administrator access.');
@@ -317,7 +320,7 @@ class InstallShell extends Shell {
 		$appModel = preg_replace('/public \$tablePrefix = \'(.*?)\';/', 'public \$tablePrefix = \''. $this->install['prefix'] .'\';', $appModel);
 		$appModel = preg_replace('/public \$useDbConfig = \'(.*?)\';/', 'public \$useDbConfig = \''. $this->install['database'] .'\';', $appModel);
 		
-		file_put_contents(FORUM_PLUGIN .'forum_app_model.php', $appModel);
+		file_put_contents(FORUM_PLUGIN . 'forum_app_model.php', $appModel);
 		
 		$this->hr(1);
 		$this->out('Forum installation complete! Your admin credentials:');
@@ -325,7 +328,7 @@ class InstallShell extends Shell {
 		$this->out(sprintf('Username: %s', $this->install['username']));
 		$this->out(sprintf('Email: %s', $this->install['email']));
 		$this->out();
-		$this->out('Please read the install.md file for further configuration instructions.');
+		$this->out('Please read the documentation for further configuration instructions.');
 	}
 	
 	/**
@@ -346,7 +349,7 @@ class InstallShell extends Shell {
 					$username = $this->_newUser($mode);
 				} else {
 					$count = $user->find('count', array(
-						'conditions' => array($this->config['userMap']['username'] => $username)
+						'conditions' => array('User.' . $this->config['userMap']['username'] => $username)
 					));
 					
 					if ($count > 0) {
@@ -380,7 +383,7 @@ class InstallShell extends Shell {
 					
 				} else {
 					$count = $user->find('count', array(
-						'conditions' => array($this->config['userMap']['email'] => $email)
+						'conditions' => array('User.' . $this->config['userMap']['email'] => $email)
 					));
 					
 					if ($count > 0) {
