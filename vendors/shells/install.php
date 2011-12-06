@@ -11,11 +11,11 @@
 Configure::write('debug', 2);
 Configure::load('Forum.config');
 
-App::import('Core', array('File', 'Security', 'Sanitize', 'Validation'));
+App::import('Core', array('Security', 'Sanitize', 'Validation'));
 App::import('Model', 'ConnectionManager', false);
 
 define('FORUM_PLUGIN', dirname(dirname(dirname(__FILE__))) . DS);
-define('FORUM_SCHEMA', FORUM_PLUGIN .'config'. DS .'schema'. DS);
+define('FORUM_SCHEMA', FORUM_PLUGIN . 'config' . DS . 'schema' . DS);
 
 include_once CONFIGS . 'database.php';
 
@@ -216,7 +216,7 @@ class InstallShell extends Shell {
 	 */
 	public function createTables() {
 		$db = ConnectionManager::getDataSource($this->install['database']);
-		$schemas = glob(FORUM_SCHEMA .'*.sql');
+		$schemas = glob(FORUM_SCHEMA . '*.sql');
 		$executed = 0;
 		$total = count($schemas);
 		$tables = array();
@@ -232,7 +232,7 @@ class InstallShell extends Shell {
 			foreach ($queries as $query) {
 				$query = trim($query);
 
-				if (!empty($query) && $db->execute($query)) {
+				if ($query !== '' && $db->execute($query)) {
 					$command = trim(substr($query, 0, 6));
 
 					if ($command == 'CREATE' || $command == 'ALTER') {

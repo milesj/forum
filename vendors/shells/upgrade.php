@@ -11,13 +11,10 @@
 Configure::write('debug', 2);
 Configure::load('Forum.config');
 
-App::import('Core', array('File', 'Security', 'Sanitize', 'Validation'));
 App::import('Model', 'ConnectionManager', false);
 
 define('FORUM_PLUGIN', dirname(dirname(dirname(__FILE__))) . DS);
-define('FORUM_SCHEMA', FORUM_PLUGIN .'config'. DS .'schema'. DS);
-
-include_once CONFIGS . 'database.php';
+define('FORUM_SCHEMA', FORUM_PLUGIN . 'config' . DS . 'upgrade' . DS);
 
 class UpgradeShell extends Shell {
 	
@@ -30,12 +27,33 @@ class UpgradeShell extends Shell {
 	public $config = array();
 	
 	/**
-	 * The current version.
+	 * Array of completed version upgrades.
 	 * 
 	 * @access public
-	 * @var string
+	 * @var array
 	 */
-	public $version = '0.0';
+	public $complete = array();
+	
+	/**
+	 * Upgrade configuration.
+	 * 
+	 * @access public
+	 * @var array
+	 */
+	public $upgrade = array(
+		'prefix' => 'forum_',
+		'database' => 'default'
+	);
+	
+	/**
+	 * Available upgrade versions.
+	 * 
+	 * @access public
+	 * @var array
+	 */
+	public $versions = array(
+		'2.2' => 'Subscriptions'
+	);
 	
 	/**
 	 * Execute upgrader!
@@ -46,9 +64,19 @@ class UpgradeShell extends Shell {
 	public function main() {
 		$this->config = Configure::read('Forum');
 		
+		// Get values from AppModel
+		$appModel = file_get_contents(FORUM_PLUGIN . 'forum_app_model.php');
+		
+		$prefix = preg_match('/public \$tablePrefix = \'(.*?)\';/', $appModel, $matches);
+		$this->upgrade['prefix'] = $matches[1];
+		
+		$dbConfig = preg_match('/public \$useDbConfig = \'(.*?)\';/', $appModel, $matches);
+		$this->upgrade['database'] = $matches[1];
+
+		// Begin
 		$this->out();
 		$this->out('Plugin: Forum');
-		$this->out('Version: '. $this->config['version']);
+		$this->out('Version: ' . $this->config['version']);
 		$this->out('Copyright: Miles Johnson, 2010-'. date('Y'));
 		$this->out('Help: http://milesj.me/code/cakephp/forum');
 		$this->out('Shell: Upgrade');
@@ -57,7 +85,6 @@ class UpgradeShell extends Shell {
 		$this->out('Please do not skip versions, upgrade sequentially!');	
 		
 		$this->upgrade();
-		$this->finalize();
 	}
 	
 	/**
@@ -67,18 +94,32 @@ class UpgradeShell extends Shell {
 		$this->hr(1);
 		$this->out('Available versions:');
 		$this->out();
-		$this->out('[2.2] Subscriptions');
 		
-		$answer = $this->in('Which version do you want to upgrade to?', array('2.2'));
+		$versions = array();
 		
-		switch ($answer) {
-			case '2.2':
-				$this->version_2_2();
-			break;
-			default:
-				$this->out('Please select one of the following versions: 2.2');
-				$this->upgrade();
-			break;
+		foreach ($this->versions as $version => $title) {
+			if (!in_array($version, $this->complete)) {
+				$this->out(sprintf('[%s] %s', $version, $title));
+				$versions[] = $version;
+			}
+		}
+		
+		$this->out('[E]xit');
+		
+		$versions[] = 'E';
+		$version = strtoupper($this->in('Which version do you want to upgrade to?', $versions));
+		
+		if ($version == 'E') {
+			exit(0);
+		} else {
+			$this->hr(1);
+			$this->out(sprintf('Upgrading to %s...', $version));
+
+			$this->_querySql($version);
+			$this->complete[] = $version;
+
+			$this->out('Complete...');
+			$this->finalize();
 		}
 	}
 	
@@ -87,20 +128,33 @@ class UpgradeShell extends Shell {
 	 */
 	public function finalize() {
 		$this->out('You can now upgrade to another version or close the shell.');
-		$this->hr(1);
 		$this->upgrade();
 	}
 	
 	/**
-	 * Install the subscription system introduced in 2.2.
+	 * Execute the queries for the specific version SQL.
+	 * 
+	 * @access protected
+	 * @param string $version
+	 * @return void
 	 */
-	public function version_2_2() {
-		$this->hr(1);
-		$this->out('Upgrading to 2.2...');
+	protected function _querySql($version) {
+		sleep(1);
+				
+		$db = ConnectionManager::getDataSource($this->upgrade['database']);
+		$schema = FORUM_SCHEMA . $version . '.sql';
 		
-		// do something
-		
-		$this->out('Upgrade to 2.2 is complete.');
+		$sql = file_get_contents($schema);
+		$sql = String::insert($sql, array('prefix' => $this->upgrade['prefix']), array('before' => '{', 'after' => '}'));
+		$sql = preg_replace('!/\*[^*]*\*+([^/][^*]*\*+)*/!', '', $sql);
+
+		foreach (explode(';', $sql) as $query) {
+			$query = trim($query);
+			
+			if ($query !== '') {
+				$db->execute($query);
+			}
+		}
 	}
 	
 }
