@@ -472,7 +472,7 @@ class Topic extends ForumAppModel {
 							$lastTime = $result['Topic']['modified'];
 						}
 
-						if (isset($result['Topic']['post_count'])) {
+						if (isset($result['Topic']['post_count']) && $postsPerPage) {
 							$result['Topic']['page_count'] = ($result['Topic']['post_count'] > $postsPerPage) ? ceil($result['Topic']['post_count'] / $postsPerPage) : 1;
 						}
 
