@@ -36,6 +36,13 @@ $this->Html->addCrumb(__d('forum', 'Settings', true), array('controller' => 'for
 		echo $this->Form->input('post_flood_interval', array('class' => 'numeric', 'label' => __d('forum', 'Post Flood Interval', true), 'after' => ' ('. __d('forum', 'Seconds', true) .')'));
 		echo $this->Form->input('posts_till_hot_topic', array('class' => 'numeric', 'label' => __d('forum', 'Posts Till Hot Topic', true))); ?>
 
+		<div class="inputDivider"><?php __d('forum', 'Subscription Settings'); ?></div>
+
+		<?php // Subscriptions
+		echo $this->Form->input('enable_topic_subscriptions', array('options' => $this->Common->options(), 'label' => __d('forum', 'Enable Forum Subscriptions', true)));
+		echo $this->Form->input('enable_forum_subscriptions', array('options' => $this->Common->options(), 'label' => __d('forum', 'Enable Topic Subscriptions', true)));
+		echo $this->Form->input('auto_subscribe_self', array('options' => $this->Common->options(), 'label' => __d('forum', 'Auto-subscribe Author To Topic', true))); ?>
+		
 		<div class="inputDivider"><?php __d('forum', 'Misc Settings'); ?></div>
 
 		<?php // Misc
