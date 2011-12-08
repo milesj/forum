@@ -13,6 +13,7 @@ Configure::load('Forum.config');
 
 App::import('Core', array('Security', 'Sanitize', 'Validation'));
 App::import('Model', 'ConnectionManager', false);
+App::import('Model', 'User');
 
 define('FORUM_PLUGIN', dirname(dirname(dirname(__FILE__))) . DS);
 define('FORUM_SCHEMA', FORUM_PLUGIN . 'config' . DS . 'schema' . DS);
@@ -87,6 +88,7 @@ class InstallShell extends Shell {
 		
 		$this->steps(4);
 		$this->createTables();
+		$this->overrideAppModel();
 		$this->hr(1);
 		
 		$this->steps(5);
@@ -263,22 +265,24 @@ class InstallShell extends Shell {
 	public function setupAdmin() {
 		$answer = strtoupper($this->in('Would you like to [c]reate a new user, or use an [e]xisting user?', array('C', 'E')));
 
+		$this->user = new User(false, null, $this->install['database']);
+		
 		// New User
 		if ($answer == 'C') {
 			$this->install['username'] = $this->_newUser('username');
 			$this->install['password'] = $this->_newUser('password');
 			$this->install['email'] = $this->_newUser('email');
 			
-			$user = ClassRegistry::init('User');
-			$user->create();
-			$user->save(array(
+			$this->user->create();
+			$this->user->save(array(
 				$this->config['userMap']['username'] => Sanitize::clean($this->install['username']),
 				$this->config['userMap']['password'] => Security::hash($this->install['password'], null, true),
-				$this->config['userMap']['email'] => $this->install['email']
+				$this->config['userMap']['email'] => $this->install['email'],
+				$this->config['userMap']['status'] => $this->config['statusMap']['active']
 			), false);
 			
-			if ($user->id) {
-				$this->install['user_id'] = $user->id;
+			if ($this->user->id) {
+				$this->install['user_id'] = $this->user->id;
 			} else {
 				$this->out('An error has occured while creating the user.');
 				$this->setupAdmin();
@@ -307,21 +311,26 @@ class InstallShell extends Shell {
 	}
 	
 	/**
-	 * Finalize the installation, woop woop.
+	 * Rewrite specific AppModel variables.
 	 * 
-	 * @access protected
+	 * @access public
 	 * @return void
 	 */
-	public function finalize() {
-		$this->out('Finalizing forum installation...');
-		
-		// Replace $tablePrefix in AppModel
-		$appModel = file_get_contents(FORUM_PLUGIN .'forum_app_model.php');
+	public function overrideAppModel() {
+		$appModel = file_get_contents(FORUM_PLUGIN . 'forum_app_model.php');
 		$appModel = preg_replace('/public \$tablePrefix = \'(.*?)\';/', 'public \$tablePrefix = \''. $this->install['prefix'] .'\';', $appModel);
 		$appModel = preg_replace('/public \$useDbConfig = \'(.*?)\';/', 'public \$useDbConfig = \''. $this->install['database'] .'\';', $appModel);
 		
 		file_put_contents(FORUM_PLUGIN . 'forum_app_model.php', $appModel);
-		
+	}
+	
+	/**
+	 * Finalize the installation, woop woop.
+	 * 
+	 * @access public
+	 * @return void
+	 */
+	public function finalize() {
 		$this->hr(1);
 		$this->out('Forum installation complete! Your admin credentials:');
 		$this->out();
@@ -339,8 +348,6 @@ class InstallShell extends Shell {
 	 * @return string 
 	 */
 	protected function _newUser($mode) {
-		$user = ClassRegistry::init('User');
-
 		switch ($mode) {
 			case 'username':
 				$username = trim($this->in('Username:'));
@@ -348,7 +355,7 @@ class InstallShell extends Shell {
 				if (empty($username)) {
 					$username = $this->_newUser($mode);
 				} else {
-					$count = $user->find('count', array(
+					$count = $this->user->find('count', array(
 						'conditions' => array('User.' . $this->config['userMap']['username'] => $username)
 					));
 					
@@ -382,7 +389,7 @@ class InstallShell extends Shell {
 					$email = $this->_newUser($mode);
 					
 				} else {
-					$count = $user->find('count', array(
+					$count = $this->user->find('count', array(
 						'conditions' => array('User.' . $this->config['userMap']['email'] => $email)
 					));
 					
@@ -403,15 +410,14 @@ class InstallShell extends Shell {
 	 * @access protected
 	 * @return string
 	 */
-	protected function _oldUser() {
-		$user = ClassRegistry::init('User');
+	protected function _oldUser() {		
 		$user_id = trim($this->in('User ID:'));
 		
 		if (empty($user_id) || !is_numeric($user_id)) {
 			$user_id = $this->_oldUser();
 		
 		} else {
-			$data = $user->find('first', array(
+			$data = $this->user->find('first', array(
 				'conditions' => array('User.id' => $user_id)
 			));
 					
