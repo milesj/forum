@@ -11,17 +11,25 @@
 Configure::write('debug', 2);
 Configure::load('Forum.config');
 
-App::import('Core', 'Controller');
 App::import('Component', 'Email');
 
 class SubscriptionShell extends Shell {
 	
+	/**
+	 * Models.
+	 * 
+	 * @access public
+	 * @var array
+	 */
 	public $uses = array('Forum.Subscription');
 	
+	/**
+	 * Execute!
+	 */
 	public function main() {
 		$this->config = Configure::read('Forum');
 		$this->settings = ClassRegistry::init('Forum.Setting')->getSettings();
-		$this->timeframe = '-24 hours';
+		$this->timeframe = '-' . (isset($this->params['timeframe']) ? $this->params['timeframe'] : '24 hours');
 
 		// Begin
 		$this->out();
@@ -32,18 +40,20 @@ class SubscriptionShell extends Shell {
 		$this->out('Shell: Subscription');
 		$this->out();
 		$this->out('Queries the database for the latest activity within subscribed topics and forums, then notifies the subscribers with the updates.');	
-
-		// Gather
-		$this->topics = array();
-		$this->forums = array();
-		$this->users = array();
+		$this->hr(1);
+		
+		// Gather and organize subscriptions
+		$topicIds = array();
+		$forumIds = array();
+		$users = array();
+		$count = 0;
 		
 		$results = $this->Subscription->find('all', array(
 			'contain' => array('User')
 		));
 		
 		if (empty($results)) {
-			$this->out('No subscriptions to send.');
+			$this->out('No subscriptions to send...');
 			return;
 		}
 		
@@ -52,102 +62,177 @@ class SubscriptionShell extends Shell {
 			$topic_id = $result['Subscription']['topic_id'];
 			$forum_id = $result['Subscription']['forum_id'];
 			
+			if (empty($users[$user_id])) {
+				$users[$user_id] = $result['User'];
+				$users[$user_id]['topics'] = array();
+				$users[$user_id]['forums'] = array();
+			}
+			
 			if ($topic_id) {
-				if (isset($this->topics[$topic_id])) {
-					$this->topics[$topic_id][] = $user_id;
-				} else {
-					$this->topics[$topic_id] = array($user_id);
-				}
+				$users[$user_id]['topics'][] = $topic_id;
+				$topicIds[] = $topic_id;
 			}
 			
 			if ($forum_id) {
-				if (isset($this->forums[$forum_id])) {
-					$this->forums[$forum_id][] = $user_id;
-				} else {
-					$this->forums[$forum_id] = array($user_id);
-				}
+				$users[$user_id]['forums'][] = $forum_id;
+				$forumIds[] = $forum_id;
 			}
-			
-			$this->users[$user_id] = $result['User'];
 		}
 		
-		// Setup
-		$this->controller =& new Controller();
-		$this->email =& new EmailComponent(null);
-		$this->email->initialize($this->controller);
-		$this->email->to = $this->settings['site_email'];
-		$this->email->from = $this->settings['site_email'];
-		$this->email->replyTo = $this->settings['site_email'];
-		$this->email->sendAs = 'text';
+		// Query for the latest topics
+		$topics = $this->getTopics($forumIds, $topicIds);
 		
-		// Notify
-		$this->sendForumSubscriptions();
-		$this->sendTopicSubscriptions();
-	}
-	
-	public function sendForumSubscriptions() {
-		$this->hr(1);
-		$this->out('Sending forum subscriptions...');
-		
-		if (empty($this->forums)) {
-			$this->out('No subscriptions.');
+		if (empty($topics)) {
+			$this->out('No new activity...');
 			return;
 		}
 		
-		$forums = array();
+		// Loop over each user and send one email
+		$email = new EmailComponent(null);
+		$email->from = $this->settings['site_email'];
+		$email->replyTo = $this->settings['site_email'];
+		$email->sendAs = 'text';
+		
+		foreach ($users as $user_id => $user) {
+			$email->to = $user[$this->config['userMap']['email']];
+			$email->subject = sprintf(__d('forum', '%s [Subscriptions]', true), $this->settings['site_name']);
+			
+			if ($message = $this->formatEmail($user, $topics)) {
+				$email->send($message);
+				$this->out(sprintf('... %s', $user[$this->config['userMap']['username']]));
+				
+				$count++;
+			}
+		}
+		
+		$this->hr(1);
+		$this->out(sprintf('Notified %d user(s)', $count));
+	}
+	
+	/**
+	 * Return all topics with new activity found within specific forums or by a specific ID. 
+	 * Organize the topics array by ID before returning.
+	 * 
+	 * @access public
+	 * @param array $forumIds
+	 * @param array $topicIds
+	 * @return array 
+	 */
+	public function getTopics(array $forumIds, array $topicIds) {
+		$clean = array();
+		$timestamp = date('Y-m-d H:i:s', strtotime($this->timeframe));
+		
+		// Get topics based on forum IDs
 		$results = $this->Subscription->Topic->find('all', array(
 			'conditions' => array(
-				'Topic.forum_id' => array_keys($this->forums),
-				'Topic.created >=' => date('Y-m-d H:i:s', strtotime($this->timeframe))
+				'Topic.forum_id' => $forumIds,
+				'Topic.created >=' => $timestamp
 			),
-			'contain' => array('User', 'Forum')
+			'contain' => array('Forum')
 		));
 		
-		if (empty($results)) {
-			$this->out('No new activity.');
-			return;
+		if (!empty($results)) {
+			foreach ($results as &$result) {
+				$clean[$result['Topic']['id']] = $result;
+			}
 		}
 		
-		// Separate topics into their forums
-		foreach ($results as $topic) {
-			$forum_id = $topic['Topic']['forum_id'];
-			
-			if (empty($forums[$forum_id])) {
-				$forums[$forum_id] = array();
+		// Get topics based on ID
+		$results = $this->Subscription->Topic->find('all', array(
+			'conditions' => array(
+				'Topic.id' => $topicIds,
+				'Topic.modified >=' => $timestamp
+			),
+			'contain' => array('Forum')
+		));
+		
+		if (!empty($results)) {
+			foreach ($results as &$result) {
+				$result['Topic']['post_count_new'] = $this->Subscription->Topic->Post->find('count', array(
+					'conditions' => array(
+						'Post.topic_id' => $result['Topic']['id'],
+						'Post.created >=' => $timestamp
+					)
+				));
+				
+				$clean[$result['Topic']['id']] = $result;
 			}
-			
-			$forums[$forum_id][] = $topic;
 		}
 		
-		// Loop over each form and send email about the latest topics
-		foreach ($forums as $forum_id => $topics) {
-			$bcc = array();
-			$forum = $topics[0]['Forum'];
-			
-			foreach ($this->forums[$forum_id] as $user_id) {
-				$bcc[] = $this->users[$user_id][$this->config['userMap']['email']];
-			}
-			
-			$this->controller->set('topics', $topics);
-			$this->email->subject = sprintf(__d('forum', '%s [Forum Subscriptions] %s', true), $this->settings['site_name'], $forum['title']);
-			$this->email->bcc = $bcc;
-			$this->email->delivery = 'debug';
-			echo $this->email->send($this->_formatForumEmail($forum, $topics));
-			
-			$this->out(sprintf('... %s (%d)', $forum['title'], count($bcc)));
-		}
+		return $clean;
 	}
 	
-	public function sendTopicSubscriptions() {
-	}
-	
-	protected function _formatForumEmail($forum, $topics) {
-		$message = '';
+	/**
+	 * Format the email by looping over all topics.
+	 * 
+	 * @access public
+	 * @param array $user
+	 * @param array $topics
+	 * @return string 
+	 */
+	public function formatEmail(array $user, array $topics) {
+		$divider = "\n\n------------------------------\n\n";
+		$count = 0;
+		$url = trim($this->settings['site_main_url'], '/');
 		
-		foreach ($topics as $topic) {
-			$message .= sprintf(__d('forum', '%s - %s [%d posts, %d views]', true), $topic['Topic']['title'], $topic['User'][$this->config['userMap']['username']], $topic['Topic']['post_count'], $topic['Topic']['view_count']) . "\n";
-			$message .= trim($this->settings['site_main_url'], '/') . '/forum/topics/view/' . $topic['Topic']['slug'] . "\n\n";
+		$message  = sprintf(__d('forum', 'Hello %s,', true), $user[$this->config['userMap']['username']]) . "\n\n";
+		$message .= sprintf(__d('forum', 'You have asked to be notified for any new activity within %s. Below you will find an update on all your forum subscriptions. The last subscription update was sent on %s', true), $this->settings['site_name'], date('m/d/Y h:ia', strtotime($this->timeframe))) . "\n\n";
+		$message .= __d('forum', 'You may unsubscribe from a forum or topic by clicking the "Unsubscribe" button found within the respective forum or topic.', true);
+		
+		// Show forum topics first
+		if (!empty($user['forums'])) {
+			$message .= $divider;
+			$message .= __d('forum', 'Forum Subscriptions', true);
+			$message .= $divider;
+			$message .= __d('forum', 'The following topics have been created.', true) . "\n\n";
+			
+			foreach ($topics as $topic) {
+				if (!in_array($topic['Topic']['forum_id'], $user['forums'])) {
+					continue;
+				}
+				
+				$message .= sprintf(__d('forum', '%s [%s] %s', true), 
+					$topic['Topic']['title'], 
+					$topic['Forum']['title'], 
+					date('m/d/Y', strtotime($topic['Topic']['created']))) . "\n";
+				
+				$message .= $url . '/forum/topics/view/' . $topic['Topic']['slug'] . "\n\n";
+				
+				$count++;
+			}
 		}
+		
+		// Show updated topics last
+		if (!empty($user['topics'])) {
+			$message .= $divider;
+			$message .= __d('forum', 'Topic Subscriptions', true);
+			$message .= $divider;
+			$message .= __d('forum', 'The following topics have seen recent post activity.', true) . "\n\n";
+			
+			foreach ($topics as $topic) {
+				if (!in_array($topic['Topic']['id'], $user['topics'])) {
+					continue;
+				}
+				
+				$message .= sprintf(__d('forum', '%s [%s] %d new posts', true), 
+					$topic['Topic']['title'],  
+					$topic['Forum']['title'], 
+					$topic['Topic']['post_count_new']) . "\n";
+				
+				$message .= $url . '/forum/topics/view/' . $topic['Topic']['slug'] . "\n\n";
+				
+				$count++;
+			}
+		}
+		
+		// Fail if there are no updates
+		if ($count == 0) {
+			return false;
+		}
+		
+		$message .= $divider;
+		$message .= $this->settings['site_name'] . "\n";
+		$message .= $url;
 		
 		return $message;
 	}
