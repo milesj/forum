@@ -1,4 +1,3 @@
-
 <?php if ($user) { ?>
     <div class="controls <?php echo isset($class) ? $class : ''; ?>">
 		<?php if ($settings['enable_forum_subscriptions']) {

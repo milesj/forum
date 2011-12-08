@@ -176,7 +176,7 @@ class SubscriptionShell extends Shell {
 		$url = trim($this->settings['site_main_url'], '/');
 		
 		$message  = sprintf(__d('forum', 'Hello %s,', true), $user[$this->config['userMap']['username']]) . "\n\n";
-		$message .= sprintf(__d('forum', 'You have asked to be notified for any new activity within %s. Below you will find an update on all your forum subscriptions. The last subscription update was sent on %s', true), $this->settings['site_name'], date('m/d/Y h:ia', strtotime($this->timeframe))) . "\n\n";
+		$message .= sprintf(__d('forum', 'You have asked to be notified for any new activity within %s. Below you will find an update on all your forum subscriptions. The last subscription update was sent on %s.', true), $this->settings['site_name'], date('m/d/Y h:ia', strtotime($this->timeframe))) . "\n\n";
 		$message .= __d('forum', 'You may unsubscribe from a forum or topic by clicking the "Unsubscribe" button found within the respective forum or topic.', true);
 		
 		// Show forum topics first

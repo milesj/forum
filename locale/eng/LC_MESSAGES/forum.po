@@ -1768,5 +1768,96 @@ msgstr ""
 msgid "Your Latest Topics"
 msgstr ""
 
+#: vendors/shells/subscription.php:98
+msgid "%s [Subscriptions]"
+msgstr ""
 
+#: vendors/shells/subscription.php:178
+msgid "Hello %s,"
+msgstr ""
 
+#: vendors/shells/subscription.php:179
+msgid "You have asked to be notified for any new activity within %s. Below you will find an update on all your forum subscriptions. The last subscription update was sent on %s."
+msgstr ""
+
+#: vendors/shells/subscription.php:180
+msgid "You may unsubscribe from a forum or topic by clicking the "Unsubscribe" button found within the respective forum or topic."
+msgstr ""
+
+#: vendors/shells/subscription.php:185
+msgid "Forum Subscriptions"
+msgstr ""
+
+#: vendors/shells/subscription.php:187
+msgid "The following topics have been created."
+msgstr ""
+
+#: vendors/shells/subscription.php:194
+msgid "%s [%s] %s"
+msgstr ""
+
+#: vendors/shells/subscription.php:208
+msgid "Topic Subscriptions"
+msgstr ""
+
+#: vendors/shells/subscription.php:210
+msgid "The following topics have seen recent post activity."
+msgstr ""
+
+#: vendors/shells/subscription.php:217
+msgid "%s [%s] %d new posts"
+msgstr ""
+
+#: views/elements/tiles/forum_controls.ctp:5
+#: views/elements/tiles/topic_controls.ctp:5
+msgid "Subscribe"
+msgstr ""
+
+#: controllers/stations_controller.php:173
+#: controllers/topics_controller.php:262
+msgid "Subscribed"
+msgstr ""
+
+#: controllers/stations_controller.php:169
+#: controllers/topics_controller.php:258
+msgid "Failed To Subscribe"
+msgstr ""
+
+#: views/elements/tiles/forum_controls.ctp:7
+#: views/elements/tiles/topic_controls.ctp:7
+msgid "Unsubscribe"
+msgstr ""
+
+#: controllers/stations_controller.php:193
+#: controllers/topics_controller.php:282
+msgid "Unsubscribed"
+msgstr ""
+
+#: controllers/stations_controller.php:189
+#: controllers/topics_controller.php:278
+msgid "Failed To Unsubscribe"
+msgstr ""
+
+#: views/users/dashboard.ctp:16
+msgid "Your Topic Subscriptions"
+msgstr ""
+
+#: views/users/dashboard.ctp:27
+msgid "Subscribed On"
+msgstr ""
+
+#: views/forum/admin_settings.ctp:39
+msgid "Subscription Settings"
+msgstr ""
+
+#: views/forum/admin_settings.ctp:42
+msgid "Enable Forum Subscriptions"
+msgstr ""
+
+#: views/forum/admin_settings.ctp:43
+msgid "Enable Topic Subscriptions"
+msgstr ""
+
+#: views/forum/admin_settings.ctp:44
+msgid "Auto-subscribe Author To Topic"
+msgstr ""
