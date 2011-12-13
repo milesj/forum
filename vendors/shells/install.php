@@ -9,6 +9,7 @@
  */
 
 Configure::write('debug', 2);
+Configure::write('Cache.disable', true);
 Configure::load('Forum.config');
 
 App::import('Core', array('Security', 'Sanitize', 'Validation'));
@@ -356,7 +357,8 @@ class InstallShell extends Shell {
 					$username = $this->_newUser($mode);
 				} else {
 					$count = $this->user->find('count', array(
-						'conditions' => array('User.' . $this->config['userMap']['username'] => $username)
+						'conditions' => array('User.' . $this->config['userMap']['username'] => $username),
+						'contain' => false
 					));
 					
 					if ($count > 0) {
@@ -390,7 +392,8 @@ class InstallShell extends Shell {
 					
 				} else {
 					$count = $this->user->find('count', array(
-						'conditions' => array('User.' . $this->config['userMap']['email'] => $email)
+						'conditions' => array('User.' . $this->config['userMap']['email'] => $email),
+						'contain' => false
 					));
 					
 					if ($count > 0) {
@@ -418,7 +421,8 @@ class InstallShell extends Shell {
 		
 		} else {
 			$data = $this->user->find('first', array(
-				'conditions' => array('User.id' => $user_id)
+				'conditions' => array('User.id' => $user_id),
+				'contain' => false
 			));
 					
 			if (empty($data)) {
