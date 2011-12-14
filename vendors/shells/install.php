@@ -180,6 +180,7 @@ class InstallShell extends Shell {
 		
 		if (isset($list[$answer])) {
 			$this->install['database'] = $list[$answer];
+			$this->db = ConnectionManager::getDataSource($this->install['database']);
 		} else {
 			$this->databaseConfig();
 		}
@@ -192,16 +193,14 @@ class InstallShell extends Shell {
 	 * @return void
 	 */
 	public function checkStatus() {
-		$db = ConnectionManager::getDataSource($this->install['database']);
-		
 		// Check connection
-		if (!$db->isConnected()) {
+		if (!$this->db->isConnected()) {
 			$this->out(sprintf('Error: Database connection for %s failed!', $this->install['database']));
 			return;
 		}
 		
 		// Check the users tables
-		$tables = $db->listSources();
+		$tables = $this->db->listSources();
 
 		if (!in_array('users', $tables)) {
 			$this->out(sprintf('Error: No users table was found in %s.', $this->install['database']));
@@ -218,7 +217,6 @@ class InstallShell extends Shell {
 	 * @return void
 	 */
 	public function createTables() {
-		$db = ConnectionManager::getDataSource($this->install['database']);
 		$schemas = glob(FORUM_SCHEMA . '*.sql');
 		$executed = 0;
 		$total = count($schemas);
@@ -235,7 +233,7 @@ class InstallShell extends Shell {
 			foreach ($queries as $query) {
 				$query = trim($query);
 
-				if ($query !== '' && $db->execute($query)) {
+				if ($query !== '' && $this->db->execute($query)) {
 					$command = trim(substr($query, 0, 6));
 
 					if ($command == 'CREATE' || $command == 'ALTER') {
@@ -250,7 +248,7 @@ class InstallShell extends Shell {
 			$this->out('Rolling back and dropping any created tables.');
 			
 			foreach ($tables as $table) {
-				$db->execute(sprintf('DROP TABLE `%s`;', $table));
+				$this->db->execute(sprintf('DROP TABLE `%s`;', $table));
 			}
 		} else {
 			$this->out('Tables created successfully...');
@@ -266,24 +264,25 @@ class InstallShell extends Shell {
 	public function setupAdmin() {
 		$answer = strtoupper($this->in('Would you like to [c]reate a new user, or use an [e]xisting user?', array('C', 'E')));
 
-		$this->user = new User(false, null, $this->install['database']);
-		
 		// New User
 		if ($answer == 'C') {
 			$this->install['username'] = $this->_newUser('username');
 			$this->install['password'] = $this->_newUser('password');
 			$this->install['email'] = $this->_newUser('email');
 			
-			$this->user->create();
-			$this->user->save(array(
-				$this->config['userMap']['username'] => Sanitize::clean($this->install['username']),
-				$this->config['userMap']['password'] => Security::hash($this->install['password'], null, true),
-				$this->config['userMap']['email'] => $this->install['email'],
-				$this->config['userMap']['status'] => $this->config['statusMap']['active']
-			), false);
-			
-			if ($this->user->id) {
-				$this->install['user_id'] = $this->user->id;
+			$result = $this->db->execute(sprintf("INSERT INTO `users` (`%s`, `%s`, `%s`, `%s`) VALUES (%s, %s, %s, %s);",
+				$this->config['userMap']['username'], 
+				$this->config['userMap']['password'], 
+				$this->config['userMap']['email'], 
+				$this->config['userMap']['status'],
+				$this->db->value(Sanitize::clean($this->install['username'])),
+				$this->db->value(Security::hash($this->install['password'], null, true)),
+				$this->db->value($this->install['email']),
+				$this->db->value($this->config['statusMap']['active'])
+			));
+
+			if ($result) {
+				$this->install['user_id'] = $this->db->lastInsertId();
 			} else {
 				$this->out('An error has occured while creating the user.');
 				$this->setupAdmin();
@@ -298,14 +297,9 @@ class InstallShell extends Shell {
 			$this->setupAdmin();
 		}
 		
-		$access = ClassRegistry::init('Forum.Access');
-		$access->create();
-		$access->save(array(
-			'access_level_id' => 4, 
-			'user_id' => $this->install['user_id']
-		), false);
-		
-		if (!$access->id) {
+		$result = $this->db->execute(sprintf("INSERT INTO `%saccess` (`access_level_id`, `user_id`, `created`) VALUES (4, %d, NOW());", (string) $this->install['prefix'], (int) $this->install['user_id']));
+
+		if (!$result) {
 			$this->out('An error occured while granting administrator access.');
 			$this->setupAdmin();
 		}
@@ -356,12 +350,9 @@ class InstallShell extends Shell {
 				if (empty($username)) {
 					$username = $this->_newUser($mode);
 				} else {
-					$count = $this->user->find('count', array(
-						'conditions' => array('User.' . $this->config['userMap']['username'] => $username),
-						'contain' => false
-					));
+					$result = $this->db->fetchRow(sprintf("SELECT COUNT(*) AS `count` FROM `users` AS `User` WHERE `%s` = %s", $this->config['userMap']['username'], $this->db->value($username)));
 					
-					if ($count > 0) {
+					if ($this->db->hasResult() && $result[0]['count']) {
 						$this->out('Username already exists, please try again.');
 						$username = $this->_newUser($mode);
 					}
@@ -391,12 +382,9 @@ class InstallShell extends Shell {
 					$email = $this->_newUser($mode);
 					
 				} else {
-					$count = $this->user->find('count', array(
-						'conditions' => array('User.' . $this->config['userMap']['email'] => $email),
-						'contain' => false
-					));
-					
-					if ($count > 0) {
+					$result = $this->db->fetchRow(sprintf("SELECT COUNT(*) AS `count` FROM `users` AS `User` WHERE `%s` = %s", $this->config['userMap']['email'], $this->db->value($email)));
+
+					if ($this->db->hasResult() && $result[0]['count']) {
 						$this->out('Email already exists, please try again.');
 						$email = $this->_newUser($mode);
 					}
@@ -420,19 +408,16 @@ class InstallShell extends Shell {
 			$user_id = $this->_oldUser();
 		
 		} else {
-			$data = $this->user->find('first', array(
-				'conditions' => array('User.id' => $user_id),
-				'contain' => false
-			));
-					
-			if (empty($data)) {
+			$result = $this->db->fetchRow(sprintf("SELECT * FROM `users` AS `User` WHERE `id` = %d LIMIT 1", (int) $user_id));
+
+			if (empty($result)) {
 				$this->out('User ID does not exist, please try again.');
 				$user_id = $this->_oldUser();
 				
 			} else {
-				$this->install['username'] = $data['User'][$this->config['userMap']['username']];
-				$this->install['password'] = $data['User'][$this->config['userMap']['password']];
-				$this->install['email'] = $data['User'][$this->config['userMap']['email']];
+				$this->install['username'] = $result['User'][$this->config['userMap']['username']];
+				$this->install['password'] = $result['User'][$this->config['userMap']['password']];
+				$this->install['email'] = $result['User'][$this->config['userMap']['email']];
 			}
 		}
 		
