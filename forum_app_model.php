@@ -30,7 +30,7 @@ class ForumAppModel extends AppModel {
 	 * @access public
 	 * @var string
 	 */
-	public $tablePrefix = 'f_';
+	public $tablePrefix = 'forum_';
 	
 	/**
 	 * Database config.

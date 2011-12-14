@@ -10,12 +10,10 @@
  * @link        http://milesj.me/code/cakephp/ajax-handler
  */
 
-App::import(array(
-	'type' => 'Vendor',
-	'name' => 'TypeConverter',
+App::import('Vendor', 'Forum.TypeConverter', array(
 	'file' => 'TypeConverter.php'
 ));
- 
+
 class AjaxHandlerComponent extends Object {
 
 	/**
