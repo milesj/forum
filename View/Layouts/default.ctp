@@ -1,4 +1,5 @@
-<?php echo $this->Html->docType('xhtml-trans'); ?> 
+<?php App::uses('AccessLevel', 'Forum.Model'); ?>
+<?php echo $this->Html->docType('xhtml-trans'); ?>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <?php echo $this->Html->charset(); ?>
@@ -21,10 +22,10 @@ echo $scripts_for_layout; ?>
 <body>
 	<div class="wrapper">
 		<?php echo $this->element('navigation'); ?>
-		
+
 		<div class="header">
 			<?php echo $this->element('search'); ?>
-			
+
 			<h1 class="logo">
 				<?php echo $this->Html->link($settings['site_name'], $settings['site_main_url']); ?>
 			</h1>
@@ -52,7 +53,7 @@ echo $scripts_for_layout; ?>
 			<?php echo $this->Session->flash(); ?>
 
 			<?php echo $content_for_layout; ?>
-			
+
 			<?php echo $this->element('breadcrumbs'); ?>
 		</div>
 

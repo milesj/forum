@@ -1,5 +1,5 @@
 <?php
-/** 
+/**
  * ForumAppController
  *
  * @author      Miles Johnson - http://milesj.me
@@ -7,11 +7,12 @@
  * @license     http://opensource.org/licenses/mit-license.php - Licensed under The MIT License
  * @link        http://milesj.me/code/cakephp/forum
  */
-  
+
+App::uses('ClassRegistry', 'Utility');
+App::uses('Sanitize', 'Utility');
+
 Configure::load('Forum.config');
 Configure::write('Forum.settings', ClassRegistry::init('Forum.Setting')->getSettings());
-
-App::import('Core', 'Sanitize');
 
 class ForumAppController extends AppController {
 
@@ -30,7 +31,7 @@ class ForumAppController extends AppController {
 	 * @var array
 	 */
 	public $components = array('RequestHandler', 'Session', 'Security', 'Cookie', 'Auth', 'Forum.Toolbar', 'Forum.AutoLogin');
-	
+
 	/**
 	 * Helpers.
 	 *
@@ -56,7 +57,7 @@ class ForumAppController extends AppController {
 	 */
 	public function beforeFilter() {
 		parent::beforeFilter();
-		
+
 		if (isset($this->params['admin'])) {
 			$this->Toolbar->verifyAdmin();
 			$this->layout = 'admin';
@@ -65,12 +66,12 @@ class ForumAppController extends AppController {
 		// Settings
 		$this->config = Configure::read('Forum');
 		$this->settings = Configure::read('Forum.settings');
-		
+
 		// Localization
 		$locale = $this->Auth->user('locale') ? $this->Auth->user('locale') : $this->settings['default_locale'];
 		Configure::write('Config.language', $locale);
 		setlocale(LC_ALL, $locale .'UTF8', $locale .'UTF-8', $locale, 'eng.UTF8', 'eng.UTF-8', 'eng', 'en_US');
-		
+
 		// Authorization
 		$referer = $this->referer();
 		$routes = $this->config['routes'];
@@ -83,7 +84,7 @@ class ForumAppController extends AppController {
 		$this->Auth->loginRedirect = $referer;
 		$this->Auth->logoutRedirect = $referer;
 		$this->Auth->autoRedirect = false;
-		
+
 		// AutoLogin
 		$this->AutoLogin->settings = array(
 			'plugin' => $routes['login']['plugin'],
@@ -106,4 +107,3 @@ class ForumAppController extends AppController {
 	}
 
 }
- 

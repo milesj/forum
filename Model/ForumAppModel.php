@@ -1,5 +1,5 @@
 <?php
-/** 
+/**
  * ForumAppModel
  *
  * @author      Miles Johnson - http://milesj.me
@@ -8,7 +8,7 @@
  * @link        http://milesj.me/code/cakephp/forum
  */
 
-App::import('Core', 'CakeSession');
+App::uses('CakeSession', 'Model/Datasource');
 
 class ForumAppModel extends AppModel {
 
@@ -31,7 +31,7 @@ class ForumAppModel extends AppModel {
 	 * @var string
 	 */
 	public $tablePrefix = 'forum_';
-	
+
 	/**
 	 * Database config.
 	 *
@@ -90,31 +90,31 @@ class ForumAppModel extends AppModel {
 			));
 		}
 	}
-	
+
 	/**
 	 * Get the users highest access level.
-	 * 
+	 *
 	 * @access public
 	 * @return int
 	 */
 	public function access() {
 		return $this->Session->read('Forum.access');
 	}
-	
+
 	/**
 	 * Return an array of access levels or IDs.
-	 * 
+	 *
 	 * @access public
 	 * @param string $field
 	 * @return array
 	 */
 	public function accessLevels($field = 'id') {
 		$levels = array(0) + (array) $this->Session->read('Forum.accessLevels');
-		
+
 		if ($field == 'id') {
 			$levels = array_keys($levels);
 		}
-		
+
 		return $levels;
 	}
 
@@ -137,7 +137,7 @@ class ForumAppModel extends AppModel {
 				$key = $fields['cache'];
 				$expires = '+1 hour';
 			}
-			
+
 			Cache::config('forum', array('duration' => $expires));
 
 			$key = $this->name .'.'. $key;
@@ -145,7 +145,7 @@ class ForumAppModel extends AppModel {
 
 			if (!is_array($results)) {
 				$results = parent::find($conditions, $fields, $order, $recursive);
-				
+
 				Cache::write($key, $results, 'forum');
 			}
 
@@ -155,10 +155,10 @@ class ForumAppModel extends AppModel {
 		// Not caching
 		return parent::find($conditions, $fields, $order, $recursive);
 	}
-	
+
 	/**
 	 * Return data based on ID.
-	 * 
+	 *
 	 * @access public
 	 * @param int $id
 	 * @return array
@@ -199,7 +199,7 @@ class ForumAppModel extends AppModel {
 
 	/**
 	 * Update a row with certain fields.
-	 * 
+	 *
 	 * @access public
 	 * @param int $id
 	 * @param array $data
@@ -207,13 +207,13 @@ class ForumAppModel extends AppModel {
 	 */
 	public function update($id, $data) {
 		$this->id = $id;
-		
+
 		return $this->save($data, false, array_keys($data));
 	}
-	
+
 	/**
 	 * Validate the Decoda markup.
-	 * 
+	 *
 	 * @access public
 	 * @param string $model
 	 * @return boolean
@@ -235,7 +235,7 @@ class ForumAppModel extends AppModel {
 			return true;
 		}
 
-		$nesting = array(); 
+		$nesting = array();
 		$closing = array();
 		$scope = array();
 
@@ -258,9 +258,8 @@ class ForumAppModel extends AppModel {
 		if (!empty($scope)) {
 			return $this->invalidate('content', 'The following tags can not be placed within a specific tag: %s', implode(', ', $scope));
 		}
-		
+
 		return true;
 	}
-	
+
 }
-  
