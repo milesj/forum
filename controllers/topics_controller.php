@@ -91,9 +91,9 @@ class TopicsController extends ForumAppController {
 			if ($topic_id = $this->Topic->add($this->data['Topic'])) {
 				if ($forum['Forum']['settingPostCount']) {
 					$this->Profile->increasePosts($user_id);
-					$this->Profile->increaseTopics($user_id);
 				}
 				
+				$this->Profile->increaseTopics($user_id);
 				$this->Toolbar->updateTopics($topic_id);
 				$this->Toolbar->goToPage($topic_id);
 			}
