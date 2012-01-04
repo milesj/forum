@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 $this->Html->addCrumb($settings['site_name'], array('controller' => 'forum', 'action' => 'index'));
 $this->Html->addCrumb(__d('forum', 'Users'), array('controller' => 'users', 'action' => 'index')); ?>
@@ -22,11 +22,11 @@ $this->Html->addCrumb(__d('forum', 'Users'), array('controller' => 'users', 'act
 
 		<table class="table topics">
 		<tr>
-			<th><?php echo $this->Paginator->sort(__d('forum', 'Username'), 'User.'. $config['userMap']['username']); ?></th>
-			<th><?php echo $this->Paginator->sort(__d('forum', 'Joined'), 'Profile.created'); ?></th>
-			<th><?php echo $this->Paginator->sort(__d('forum', 'Last Active'), 'Profile.lastLogin'); ?></th>
-			<th><?php echo $this->Paginator->sort(__d('forum', 'Topics'), 'Profile.totalTopics'); ?></th>
-			<th><?php echo $this->Paginator->sort(__d('forum', 'Posts'), 'Profile.totalPosts'); ?></th>
+			<th><?php echo $this->Paginator->sort('User.'. $config['userMap']['username'], __d('forum', 'Username')); ?></th>
+			<th><?php echo $this->Paginator->sort('Profile.created', __d('forum', 'Joined')); ?></th>
+			<th><?php echo $this->Paginator->sort('Profile.lastLogin', __d('forum', 'Last Active')); ?></th>
+			<th><?php echo $this->Paginator->sort('Profile.totalTopics', __d('forum', 'Topics')); ?></th>
+			<th><?php echo $this->Paginator->sort('Profile.totalPosts', __d('forum', 'Posts')); ?></th>
 		</tr>
 
 		<?php if (!empty($users)) {
@@ -37,7 +37,7 @@ $this->Html->addCrumb(__d('forum', 'Users'), array('controller' => 'users', 'act
 				<td class="created"><?php echo $this->Time->nice($profile['Profile']['created'], $this->Common->timezone()); ?></td>
 				<td class="created">
 					<?php if (!empty($profile['Profile']['lastLogin'])) {
-						echo $this->Time->relativeTime($profile['Profile']['lastLogin'], array('userOffset' => $this->Common->timezone()));
+						echo $this->Time->timeAgoInWords($profile['Profile']['lastLogin'], array('userOffset' => $this->Common->timezone()));
 					} else {
 						echo '<em class="gray">'. __d('forum', 'Never') .'</em>';
 					} ?>
@@ -59,4 +59,4 @@ $this->Html->addCrumb(__d('forum', 'Users'), array('controller' => 'users', 'act
 
 		<?php echo $this->element('pagination'); ?>
 	</div>
-</div>	
+</div>
