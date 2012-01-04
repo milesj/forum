@@ -29,6 +29,7 @@ $this->Html->addCrumb(__d('forum', 'Users', true), array('controller' => 'users'
 				<tr>
 					<th><?php echo $this->Paginator->sort('#', 'Profile.id'); ?></th>
 					<th><?php echo $this->Paginator->sort(__d('forum', 'Username', true), 'User.'. $config['userMap']['username']); ?></th>
+					<th><?php echo $this->Paginator->sort(__d('forum', 'Status', true), 'User.'. $config['userMap']['status']); ?></th>
 					<th><?php echo $this->Paginator->sort(__d('forum', 'Email', true), 'User.' . $config['userMap']['email']); ?></th>
 					<th><?php echo $this->Paginator->sort(__d('forum', 'Joined', true), 'Profile.created'); ?></th>
 					<th><?php echo $this->Paginator->sort(__d('forum', 'Last Active', true), 'Profile.lastLogin'); ?></th>
@@ -45,7 +46,8 @@ $this->Html->addCrumb(__d('forum', 'Users', true), array('controller' => 'users'
 				<tr<?php if ($counter % 2) echo ' class="altRow"'; ?>>
 					<td class="icon"><?php echo $user['Profile']['id']; ?></td>
 					<td><?php echo $this->Html->link($user['User'][$config['userMap']['username']], array('action' => 'edit', $user['Profile']['id'], 'admin' => true)); ?></td>
-					<td><?php echo $user['User']['email']; ?></td>
+					<td><?php echo $this->Common->options('statusMap', $user['User'][$config['userMap']['status']]); ?></td>
+					<td><?php echo $user['User'][$config['userMap']['email']]; ?></td>
 					<td><?php echo $this->Time->nice($user['Profile']['created'], $this->Common->timezone()); ?></td>
 					<td>
 						<?php if (!empty($user['Profile']['lastLogin'])) {

@@ -1878,3 +1878,15 @@ msgstr ""
 #: controllers/users_controller.php:226
 msgid "User has been banned."
 msgstr ""
+
+#: views/helpers/common.php:210
+msgid "status.pending"
+msgstr "Pending"
+
+#: views/helpers/common.php:210
+msgid "status.active"
+msgstr "Active"
+
+#: views/helpers/common.php:210
+msgid "status.banned"
+msgstr "Banned"

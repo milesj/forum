@@ -2,7 +2,7 @@
 
 $this->Html->addCrumb(__d('forum', 'Administration', true), array('controller' => 'forum', 'action' => 'index'));
 $this->Html->addCrumb(__d('forum', 'Users', true), array('controller' => 'users', 'action' => 'index'));
-$this->Html->addCrumb($profile['User']['username'], $this->here); ?>
+$this->Html->addCrumb($profile['User'][$config['userMap']['username']], $this->here); ?>
 
 <div class="controls float-right">
 	<?php if ($profile['User'][$config['userMap']['status']] != $config['statusMap']['active']) {

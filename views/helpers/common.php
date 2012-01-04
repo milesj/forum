@@ -201,6 +201,14 @@ class CommonHelper extends AppHelper {
 				2 => __d('forum', 'Important', true),
 				3 => __d('forum', 'Announcement', true)
 			);
+			
+		} else if ($type == 'statusMap') {
+			$statuses = array_flip(Configure::read('Forum.statusMap'));
+			$options = array();
+			
+			foreach ($statuses as $key => $status) {
+				$options[$key] = __d('forum', 'status.' . $status, true);
+			}
 		}
 		
 		if (isset($options[$value])) {

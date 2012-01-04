@@ -199,7 +199,7 @@ class UsersController extends ForumAppController {
 			$this->Profile->id = $id;
 			
 			if ($this->Profile->save($this->data, true)) {
-				$this->Session->setFlash(sprintf(__d('forum', 'Profile for %s has been updated.', true), '<strong>'. $profile['User']['username'] .'</strong>'));
+				$this->Session->setFlash(sprintf(__d('forum', 'Profile for %s has been updated.', true), '<strong>'. $profile['User'][$this->config['userMap']['username']] .'</strong>'));
 				$this->redirect(array('controller' => 'users', 'action' => 'index', 'admin' => true));
 			}
 		} else {

@@ -109,7 +109,7 @@ if (!empty($latestUsers)) { ?>
 
 				<tr<?php if ($counter % 2) echo ' class="altRow"'; ?>>
 					<td><?php echo $this->Html->link($latest['User'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'edit', $latest['Profile']['id'], 'admin' => true)); ?></td>
-					<td><?php echo $latest['User']['email']; ?></td>
+					<td><?php echo $latest['User'][$config['userMap']['email']]; ?></td>
 					<td class="created"><?php echo $this->Time->nice($latest['Profile']['created'], $this->Common->timezone()); ?></td>
 					<td class="stat"><?php echo number_format($latest['Profile']['totalTopics']); ?></td>
 					<td class="stat"><?php echo number_format($latest['Profile']['totalPosts']); ?></td>
