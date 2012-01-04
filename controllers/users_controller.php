@@ -113,33 +113,6 @@ class UsersController extends ForumAppController {
 	}
 
 	/**
-	 * Login.
-	 */
-	public function login() {
-		if (!empty($this->data)) {
-			$this->User->set($this->data);
-			
-			if ($this->User->validates()) {
-				if ($user = $this->Auth->user()) {
-					$this->Profile->login($user['User']['id']);
-					$this->Session->delete('Forum');
-					$this->redirect($this->Auth->loginRedirect);
-				}
-			}
-		}
-		
-		$this->Toolbar->pageTitle(__d('forum', 'Login', true));
-	}
-	
-	/**
-	 * Logout.
-	 */
-	public function logout() {
-		$this->Session->delete('Forum');
-		$this->redirect($this->Auth->logout());
-	}
-
-	/**
 	 * User profile.
 	 *
 	 * @param int $user_id
