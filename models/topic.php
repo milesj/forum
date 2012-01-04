@@ -162,7 +162,7 @@ class Topic extends ForumAppModel {
 				
 				// Subscribe
 				if ($this->settings['auto_subscribe_self']) {
-					$this->Subscription->subscribe($data['user_id'], $data['topic_id']);
+					$this->Subscription->subscribeToTopic($data['user_id'], $data['topic_id']);
 				}
 				
 				return $data['topic_id'];

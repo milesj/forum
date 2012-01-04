@@ -154,7 +154,6 @@ if (!empty($topic['Poll']['id'])) { ?>
 							</div>
 						<?php } ?>
 
-						<strong><?php __d('forum', 'Joined'); ?>:</strong> <?php echo $this->Time->niceShort($post['User']['created'], $this->Common->timezone()); ?><br />
 						<strong><?php __d('forum', 'Total Topics'); ?>:</strong> <?php echo number_format($post['User']['Profile']['totalTopics']); ?><br />
 						<strong><?php __d('forum', 'Total Posts'); ?>:</strong> <?php echo number_format($post['User']['Profile']['totalPosts']); ?>
 					</td>
