@@ -1405,6 +1405,7 @@ msgstr ""
 #: views/stations/moderate.ctp:30;30
 #: views/topics/add.ctp:24;24
 #: views/topics/edit.ctp:24;24
+#: views/users/admin_edit.ctp:28
 msgid "Status"
 msgstr ""
 
@@ -1860,4 +1861,20 @@ msgstr ""
 
 #: views/forum/admin_settings.ctp:44
 msgid "Auto-subscribe Author To Topic"
+msgstr ""
+
+#: views/users/admin_edit.ctp:9
+msgid "Activate"
+msgstr ""
+
+#: views/users/admin_edit.ctp:11
+msgid "Ban"
+msgstr ""
+
+#: controllers/users_controller.php:224
+msgid "User has been activated."
+msgstr ""
+
+#: controllers/users_controller.php:226
+msgid "User has been banned."
 msgstr ""

@@ -29,7 +29,7 @@ $this->Html->addCrumb(__d('forum', 'Users', true), array('controller' => 'users'
 				<tr>
 					<th><?php echo $this->Paginator->sort('#', 'Profile.id'); ?></th>
 					<th><?php echo $this->Paginator->sort(__d('forum', 'Username', true), 'User.'. $config['userMap']['username']); ?></th>
-					<th><?php echo $this->Paginator->sort(__d('forum', 'Email', true), 'User.email'); ?></th>
+					<th><?php echo $this->Paginator->sort(__d('forum', 'Email', true), 'User.' . $config['userMap']['email']); ?></th>
 					<th><?php echo $this->Paginator->sort(__d('forum', 'Joined', true), 'Profile.created'); ?></th>
 					<th><?php echo $this->Paginator->sort(__d('forum', 'Last Active', true), 'Profile.lastLogin'); ?></th>
 					<th><?php echo $this->Paginator->sort(__d('forum', 'Topics', true), 'Profile.totalTopics'); ?></th>

@@ -2,7 +2,15 @@
 
 $this->Html->addCrumb(__d('forum', 'Administration', true), array('controller' => 'forum', 'action' => 'index'));
 $this->Html->addCrumb(__d('forum', 'Users', true), array('controller' => 'users', 'action' => 'index'));
-$this->Html->addCrumb($this->data['User']['username'], $this->here); ?>
+$this->Html->addCrumb($profile['User']['username'], $this->here); ?>
+
+<div class="controls float-right">
+	<?php if ($profile['User'][$config['userMap']['status']] != $config['statusMap']['active']) {
+		echo $this->Html->link(__d('forum', 'Activate', true), array('action' => 'status', $profile['User']['id'], 'active'), array('class' => 'button'));
+	} else {
+		echo $this->Html->link(__d('forum', 'Ban', true), array('action' => 'status', $profile['User']['id'], 'banned'), array('class' => 'button'));
+	} ?>
+</div>
 
 <div class="title">
 	<h2><?php __d('forum', 'Edit User'); ?></h2>
@@ -15,8 +23,9 @@ $this->Html->addCrumb($this->data['User']['username'], $this->here); ?>
 <div class="container">
 	<div class="containerContent">
 		<?php
-		echo $this->Form->input('User.username', array('label' => __d('forum', 'Username', true), 'readonly' => true));
-		echo $this->Form->input('User.email', array('label' => __d('forum', 'Email', true), 'readonly' => true));
+		echo $this->Form->input('User.' . $config['userMap']['username'], array('label' => __d('forum', 'Username', true), 'readonly' => true));
+		echo $this->Form->input('User.' . $config['userMap']['email'], array('label' => __d('forum', 'Email', true), 'readonly' => true));
+		echo $this->Form->input('User.' . $config['userMap']['status'], array('label' => __d('forum', 'Status', true), 'readonly' => true));
 		echo $this->Form->input('totalPosts', array('label' => __d('forum', 'Total Posts', true), 'class' => 'numeric'));
 		echo $this->Form->input('totalTopics', array('label' => __d('forum', 'Total Topics', true), 'class' => 'numeric'));
 		echo $this->Form->input('locale', array('options' => $config['locales'], 'label' => __d('forum', 'Language', true)));

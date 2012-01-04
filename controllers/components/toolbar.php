@@ -291,7 +291,7 @@ class ToolbarComponent extends Object {
 				$this->goToPage();
 			}
 		} else {
-			$this->Controller->redirect(array('plugin' => 'forum', 'controller' => 'users', 'action' => 'login', 'admin' => false));
+			$this->Controller->redirect($this->config['routes']['login']);
 		}
 		
 		return false;

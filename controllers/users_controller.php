@@ -207,6 +207,27 @@ class UsersController extends ForumAppController {
 		}
 		
 		$this->Toolbar->pageTitle(__d('forum', 'Edit User', true));
+		$this->set('profile', $profile);
+	}
+	
+	/**
+	 * Update the status for a user.
+	 * 
+	 * @param int $id
+	 * @param string $status 
+	 */
+	public function admin_status($user_id, $status) {
+		$this->User->id = $user_id;
+		$this->User->saveField($this->config['userMap']['status'], $this->config['statusMap'][$status]);
+		
+		if ($status == 'active') {
+			$message = __d('forum', 'User has been activated.', true);
+		} else if ($status == 'banned') {
+			$message = __d('forum', 'User has been banned.', true);
+		}
+		
+		$this->Session->setFlash($message);
+		$this->redirect($this->referer());
 	}
 
 	/**
