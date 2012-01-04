@@ -24,13 +24,12 @@ $this->Html->addCrumb($profile['User'][$config['userMap']['username']], $this->h
 				<?php } ?>
 
 				<td><strong><?php __d('forum', 'Joined'); ?>:</strong></td>
-				<td><?php echo $this->Time->nice($profile['User']['created'], $this->Common->timezone()); ?></td>
+				<td><?php echo $this->Time->nice($profile['Profile']['created'], $this->Common->timezone()); ?></td>
 
 				<td><strong><?php __d('forum', 'Total Topics'); ?>:</strong></td>
-
 				<td><?php echo number_format($profile['Profile']['totalTopics']); ?></td>
+				
 				<td><strong><?php __d('forum', 'Roles'); ?>:</strong></td>
-
 				<td>
 					<?php if (!empty($profile['User']['Access'])) { 
 						$roles = array();

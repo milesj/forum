@@ -51,9 +51,11 @@ class UsersController extends ForumAppController {
 	 * List of users.
 	 */
 	public function index() {
+		$this->paginate['Profile']['conditions']['User.' . $this->config['userMap']['status']] = $this->config['statusMap']['active'];
+		
 		if (!empty($this->params['named']['username'])) {
 			$this->data['Profile']['username'] = $this->params['named']['username'];
-			$this->paginate['Profile']['conditions'] = array('User.'. $this->config['userMap']['username'] .' LIKE' => '%'. Sanitize::clean($this->params['named']['username']) .'%');
+			$this->paginate['Profile']['conditions']['User.' . $this->config['userMap']['username'] . ' LIKE'] = '%' . Sanitize::clean($this->params['named']['username']) . '%';
 		}
 		
 		$this->paginate['Profile']['order'] = array('User.'. $this->config['userMap']['username'] => 'ASC');
