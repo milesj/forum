@@ -1,5 +1,5 @@
 
-<?php 
+<?php
 $pages = $this->Common->topicPages($topic['Topic']);
 $columns = isset($columns) ? $columns : array(); ?>
 
@@ -10,7 +10,7 @@ $columns = isset($columns) ? $columns : array(); ?>
 		<td class="icon"><?php echo $this->Common->topicIcon($topic); ?></td>
 	<?php } ?>
 	<td>
-		<?php if (!empty($topic['Poll']['id'])) { 
+		<?php if (!empty($topic['Poll']['id'])) {
 			echo $this->Html->image('/forum/img/poll.png', array('alt' => 'Poll'));
 		} ?>
 
@@ -40,12 +40,12 @@ $columns = isset($columns) ? $columns : array(); ?>
 	</td>
 	<td class="activity">
 		<?php if (!empty($topic['LastPost']['id'])) {
-			echo $this->Time->relativeTime($topic['LastPost']['created'], array('userOffset' => $this->Common->timezone())); ?>
-			
+			echo $this->Time->timeAgoInWords($topic['LastPost']['created'], array('userOffset' => $this->Common->timezone())); ?>
+
 			<?php if (!empty($topic['LastUser']['id'])) { ?>
 				<span class="gray"><?php echo __d('forum', 'by'); ?> <?php echo $this->Html->link($topic['LastUser'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'profile', $topic['Topic']['lastUser_id'])); ?></span>
 			<?php } ?>
-				
+
 			<?php echo $this->Html->image('/forum/img/goto.png', array('alt' => '', 'url' => array('controller' => 'topics', 'action' => 'view', $topic['Topic']['slug'], 'page' => $topic['Topic']['page_count'], '#' => 'post-'. $topic['Topic']['lastPost_id']))); ?>
 		<?php } else { ?>
 			<em class="gray"><?php echo __d('forum', 'No latest activity to display'); ?></em>

@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 $this->Html->addCrumb(__d('forum', 'Administration'), array('controller' => 'forum', 'action' => 'index'));
 $this->Html->addCrumb(__d('forum', 'Users'), array('controller' => 'users', 'action' => 'index')); ?>
@@ -51,7 +51,7 @@ $this->Html->addCrumb(__d('forum', 'Users'), array('controller' => 'users', 'act
 					<td><?php echo $this->Time->nice($user['Profile']['created'], $this->Common->timezone()); ?></td>
 					<td>
 						<?php if (!empty($user['Profile']['lastLogin'])) {
-							echo $this->Time->relativeTime($user['Profile']['lastLogin'], array('userOffset' => $this->Common->timezone()));
+							echo $this->Time->timeAgoInWords($user['Profile']['lastLogin'], array('userOffset' => $this->Common->timezone()));
 						} else {
 							echo '<em class="gray">'. __d('forum', 'Never') .'</em>';
 						} ?>
@@ -77,4 +77,4 @@ $this->Html->addCrumb(__d('forum', 'Users'), array('controller' => 'users', 'act
 
 		<?php echo $this->element('pagination'); ?>
 	</div>
-</div>	
+</div>
