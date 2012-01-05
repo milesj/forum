@@ -7,7 +7,7 @@
  * @license     http://opensource.org/licenses/mit-license.php - Licensed under The MIT License
  * @link        http://milesj.me/code/cakephp/forum
  */
-
+App::uses('Report', 'Forum.Model');
 class ReportsController extends ForumAppController {
 
 	/**
