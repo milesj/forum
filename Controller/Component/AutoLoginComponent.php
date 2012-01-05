@@ -97,7 +97,7 @@ class AutoLoginComponent extends Component {
 
 		$this->_debug = (isset($debug['email']) && isset($debug['ips']) && in_array(env('REMOTE_ADDR'), $debug['ips']));
 		$this->_hasInitialized = true;
-		
+
 		$this->_set($settings);
 	}
 
@@ -112,7 +112,7 @@ class AutoLoginComponent extends Component {
 		if ($this->_hasStartup) {
 			return;
 		}
-		
+
 		$cookie = $this->Cookie->read($this->cookieName);
 		$user = $this->Auth->user();
 
@@ -182,7 +182,7 @@ class AutoLoginComponent extends Component {
 
 		// Is called after user login/logout validates, but befire auth redirects
 		if ($Controller->plugin == $this->settings['plugin'] && $Controller->name == $this->settings['controller']) {
-			$data = $Controller->data;
+			$data = $Controller->request->data;
 
 			switch ($Controller->action) {
 				case $this->settings['loginAction']:

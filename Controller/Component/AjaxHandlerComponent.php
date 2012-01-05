@@ -111,7 +111,6 @@ class AjaxHandlerComponent extends Component {
 
 			// Must disable security component for AJAX
 			if (isset($Controller->Security)) {
-				$Controller->Security->validatePost = false;
 				$Controller->Security->csrfCheck = false;
 			}
 
