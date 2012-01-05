@@ -30,7 +30,7 @@ class ForumAppController extends AppController {
 	 * @access public
 	 * @var array
 	 */
-	public $components = array('RequestHandler', 'Session', 'Security', 'Cookie', 'Auth', 'Forum.Toolbar', 'Forum.AutoLogin');
+	public $components = array('RequestHandler', 'Session', 'Security', 'Cookie', 'Auth', 'Forum.ForumToolbar', 'Forum.AutoLogin');
 
 	/**
 	 * Helpers.
@@ -59,7 +59,7 @@ class ForumAppController extends AppController {
 		parent::beforeFilter();
 
 		if (isset($this->params['admin'])) {
-			$this->Toolbar->verifyAdmin();
+			$this->ForumToolbar->verifyAdmin();
 			$this->layout = 'admin';
 		}
 
@@ -94,7 +94,7 @@ class ForumAppController extends AppController {
 		);
 
 		// Initialize
-		$this->Toolbar->initForum();
+		$this->ForumToolbar->initForum();
 	}
 
 	/**
