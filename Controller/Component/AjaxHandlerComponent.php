@@ -1,5 +1,5 @@
 <?php
-/** 
+/**
  * Ajax Handler Component
  *
  * A CakePHP Component that will automatically handle and render AJAX calls and apply the appropriate returned format and headers.
@@ -85,6 +85,14 @@ class AjaxHandlerComponent extends Component {
 		'text'	=> 'text/plain'
 	);
 
+/**
+ * Constructor
+ *
+ **/
+	public function __construct(ComponentCollection $collection, $settings = array()) {
+		$this->Controller = $collection->getController();
+		parent::__construct($collection, array_merge($this->settings, (array)$settings));
+	}
 	/**
 	 * Load the Controller object.
 	 *
@@ -93,7 +101,7 @@ class AjaxHandlerComponent extends Component {
 	 * @return void
 	 */
 	public function initialize($Controller) {
-		if ($this->RequestHandler->isAjax()) {
+		if ($Controller->request->is('ajax')) {
 			if (isset($this->allowRemoteRequests)) {
 				$this->allowRemote = $this->allowRemoteRequests;
 			}
@@ -104,6 +112,7 @@ class AjaxHandlerComponent extends Component {
 			// Must disable security component for AJAX
 			if (isset($Controller->Security)) {
 				$Controller->Security->validatePost = false;
+				$Controller->Security->csrfCheck = false;
 			}
 
 			// If not from this domain, destroy
@@ -115,8 +124,6 @@ class AjaxHandlerComponent extends Component {
 				}
 			}
 		}
-
-		$this->Controller = $Controller;
 	}
 
 	/**
@@ -133,7 +140,7 @@ class AjaxHandlerComponent extends Component {
 			$handled = true;
 		}
 
-		if (!$this->RequestHandler->isAjax() && $handled) {
+		if (!$Controller->request->is('ajax') && $handled) {
 			if (isset($Controller->Security)) {
 				$Controller->Security->blackHole($Controller, 'You are not authorized to process this request!');
 			} else {
@@ -145,12 +152,12 @@ class AjaxHandlerComponent extends Component {
 		if ($handled) {
 			$data = array();
 
-			if (!empty($Controller->params['form'])) {
-				$data = $Controller->params['form'] + $data;
+			if (!empty($Controller->request->params['form'])) {
+				$data = $Controller->request->params['form'] + $data;
 			}
 
-			if (!empty($Controller->params['url'])) {
-				$data = $Controller->params['url'] + $data;
+			if (!empty($Controller->request->params['url'])) {
+				$data = $Controller->request->params['url'] + $data;
 				unset($data['ext'], $data['url']);
 			}
 
@@ -158,14 +165,12 @@ class AjaxHandlerComponent extends Component {
 				$data = array_map('urldecode', $data);
 
 				if (!empty($Controller->data)) {
-					$Controller->data = $data + $Controller->data;
+					$Controller->request->data = $data + $Controller->request->data;
 				} else {
-					$Controller->data = $data;
+					$Controller->request->data = $data;
 				}
 			}
 		}
-
-		$this->Controller = $Controller;
 	}
 
 	/**
