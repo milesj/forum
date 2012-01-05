@@ -62,6 +62,6 @@ echo $scripts_for_layout; ?>
 		</div>
 	</div>
 
-	<?php echo $this->element('sql_dump'); ?>
+	<?php if (!CakePlugin::loaded('DebugKit')) { echo $this->element('sql_dump');} ?>
 </body>
 </html>

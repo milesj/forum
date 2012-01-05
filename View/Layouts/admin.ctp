@@ -1,9 +1,9 @@
-<?php echo $this->Html->docType('xhtml-trans'); ?> 
+<?php echo $this->Html->docType('xhtml-trans'); ?>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <?php echo $this->Html->charset(); ?>
 <title><?php echo $title_for_layout; ?></title>
-<?php 
+<?php
 echo $this->Html->css('/forum/css/base.css');
 echo $this->Html->css('/forum/css/style.css');
 echo $this->Html->script('/forum/js/jquery-1.6.2.min.js');
@@ -14,10 +14,10 @@ echo $scripts_for_layout; ?>
 <body>
 	<div class="wrapper">
 		<?php echo $this->element('navigation'); ?>
-		
+
 		<div class="header">
 			<?php echo $this->element('search'); ?>
-			
+
 			<h1 class="logo">
 				<?php echo $this->Html->link(__d('forum', 'Forum Administration'), $settings['site_main_url']); ?>
 			</h1>
@@ -41,7 +41,7 @@ echo $scripts_for_layout; ?>
 			<?php echo $this->Session->flash(); ?>
 
 			<?php echo $content_for_layout; ?>
-			
+
 			<?php echo $this->element('breadcrumbs'); ?>
 		</div>
 
@@ -50,6 +50,6 @@ echo $scripts_for_layout; ?>
 		</div>
 	</div>
 
-	<?php echo $this->element('sql_dump'); ?>   
+	<?php if (!CakePlugin::loaded('DebugKit')) { echo $this->element('sql_dump');} ?>
 </body>
 </html>
