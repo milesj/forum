@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 $this->Html->addCrumb($settings['site_name'], array('controller' => 'forum', 'action' => 'index'));
 
@@ -28,13 +28,13 @@ $this->Html->addCrumb($forum['Forum']['title'], array('controller' => 'stations'
 			<thead>
 				<tr>
 					<th><input type="checkbox" onclick="Forum.toggleCheckboxes(this);" /></th>
-					<th><?php echo $this->Paginator->sort(__d('forum', 'Topic'), 'Topic.title'); ?></th>
-					<th><?php echo $this->Paginator->sort(__d('forum', 'Status'), 'Topic.status'); ?></th>
-					<th><?php echo $this->Paginator->sort(__d('forum', 'Author'), 'User.'. $config['userMap']['username']); ?></th>
-					<th><?php echo $this->Paginator->sort(__d('forum', 'Created'), 'Topic.created'); ?></th>
-					<th><?php echo $this->Paginator->sort(__d('forum', 'Posts'), 'Topic.post_count'); ?></th>
-					<th><?php echo $this->Paginator->sort(__d('forum', 'Views'), 'Topic.view_count'); ?></th>
-					<th><?php echo $this->Paginator->sort(__d('forum', 'Activity'), 'LastPost.created'); ?></th>
+					<th><?php echo $this->Paginator->sort('Topic.title', __d('forum', 'Topic')); ?></th>
+					<th><?php echo $this->Paginator->sort('Topic.status', __d('forum', 'Status')); ?></th>
+					<th><?php echo $this->Paginator->sort('User.'. $config['userMap']['username'], __d('forum', 'Author')); ?></th>
+					<th><?php echo $this->Paginator->sort('Topic.created', __d('forum', 'Created')); ?></th>
+					<th><?php echo $this->Paginator->sort('Topic.post_count', __d('forum', 'Posts')); ?></th>
+					<th><?php echo $this->Paginator->sort('Topic.view_count', __d('forum', 'Views')); ?></th>
+					<th><?php echo $this->Paginator->sort('LastPost.created', __d('forum', 'Activity')); ?></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -63,7 +63,7 @@ $this->Html->addCrumb($forum['Forum']['title'], array('controller' => 'stations'
 </div>
 
 <div class="moderate">
-	<?php 
+	<?php
 	echo $this->Form->input('action', array(
 		'options' => array(
 			'open' => __d('forum', 'Open Topic(s)'),
@@ -71,10 +71,10 @@ $this->Html->addCrumb($forum['Forum']['title'], array('controller' => 'stations'
 			'move' => __d('forum', 'Move Topic(s)'),
 			'delete' => __d('forum', 'Delete Topic(s)')
 		),
-		'div' => false, 
+		'div' => false,
 		'label' => __d('forum', 'Perform Action') .': '
 	));
-	
+
 	echo $this->Form->input('move_id', array('options' => $forums, 'div' => false, 'label' => __d('forum', 'Move To') .': ', 'escape' => false));
 	echo $this->Form->submit(__d('forum', 'Process'), array('div' => false, 'class' => 'buttonSmall')); ?>
 </div>

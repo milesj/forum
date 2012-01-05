@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 $this->Html->addCrumb($settings['site_name'], array('controller' => 'forum', 'action' => 'index'));
 $this->Html->addCrumb(__d('forum', 'Search'), array('controller' => 'search', 'action' => 'index')); ?>
@@ -31,9 +31,9 @@ $this->Html->addCrumb(__d('forum', 'Search'), array('controller' => 'search', 'a
 	</div>
 </div>
 
-<?php 
+<?php
 echo $this->Form->submit(__d('forum', 'Search Topics'), array('class' => 'button'));
-echo $this->Form->end(); 
+echo $this->Form->end();
 
 if ($searching) { ?>
 
@@ -44,13 +44,13 @@ if ($searching) { ?>
 		<table class="table topics">
 			<thead>
 				<tr>
-					<th colspan="2"><?php echo $this->Paginator->sort(__d('forum', 'Topic'), 'Topic.title'); ?></th>
-					<th><?php echo $this->Paginator->sort(__d('forum', 'Forum'), 'Topic.forum_id'); ?></th>
-					<th><?php echo $this->Paginator->sort(__d('forum', 'Author'), 'User.'. $config['userMap']['username']); ?></th>
-					<th><?php echo $this->Paginator->sort(__d('forum', 'Created'), 'Topic.created'); ?></th>
-					<th><?php echo $this->Paginator->sort(__d('forum', 'Posts'), 'Topic.post_count'); ?></th>
-					<th><?php echo $this->Paginator->sort(__d('forum', 'Views'), 'Topic.view_count'); ?></th>
-					<th><?php echo $this->Paginator->sort(__d('forum', 'Activity'), 'LastPost.created'); ?></th>
+					<th colspan="2"><?php echo $this->Paginator->sort('Topic.title', __d('forum', 'Topic')); ?></th>
+					<th><?php echo $this->Paginator->sort('Topic.forum_id', __d('forum', 'Forum')); ?></th>
+					<th><?php echo $this->Paginator->sort('User.'. $config['userMap']['username'], __d('forum', 'Author')); ?></th>
+					<th><?php echo $this->Paginator->sort('Topic.created', __d('forum', 'Created')); ?></th>
+					<th><?php echo $this->Paginator->sort('Topic.post_count', __d('forum', 'Posts')); ?></th>
+					<th><?php echo $this->Paginator->sort('Topic.view_count', __d('forum', 'Views')); ?></th>
+					<th><?php echo $this->Paginator->sort('LastPost.created', __d('forum', 'Activity')); ?></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -68,7 +68,7 @@ if ($searching) { ?>
 						'counter' => $counter,
 						'columns' => array('forum')
 					));
-				} 
+				}
 			} ?>
 
 			</tbody>

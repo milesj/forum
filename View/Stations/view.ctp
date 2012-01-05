@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 $this->Html->addCrumb($settings['site_name'], array('controller' => 'forum', 'action' => 'index'));
 
@@ -10,7 +10,7 @@ $this->Html->addCrumb($forum['Forum']['title'], array('controller' => 'stations'
 
 <div class="title">
 	<h2><?php echo $forum['Forum']['title']; ?></h2>
-	
+
 	<?php if (!empty($forum['Forum']['description'])) { ?>
 		<p><?php echo $forum['Forum']['description']; ?></p>
 	<?php } ?>
@@ -23,7 +23,7 @@ $this->Html->addCrumb($forum['Forum']['title'], array('controller' => 'stations'
 			<a href="javascript:;" onclick="return Forum.toggleForums(this, <?php echo $forum['Forum']['id']; ?>);" class="toggle">-</a>
 			<h3><?php echo __d('forum', 'Sub-Forums'); ?></h3>
 		</div>
-		
+
 		<div class="containerContent" id="forums-<?php echo $forum['Forum']['id']; ?>">
 			<table cellspacing="0" class="table">
 				<thead>
@@ -61,12 +61,12 @@ if ($forum['Forum']['forum_id'] > 0) {
 			<table class="table topics">
 				<thead>
 					<tr>
-						<th colspan="2"><?php echo $this->Paginator->sort(__d('forum', 'Topic'), 'Topic.title'); ?></th>
-						<th><?php echo $this->Paginator->sort(__d('forum', 'Author'), 'User.'. $config['userMap']['username']); ?></th>
-						<th><?php echo $this->Paginator->sort(__d('forum', 'Created'), 'Topic.created'); ?></th>
-						<th><?php echo $this->Paginator->sort(__d('forum', 'Posts'), 'Topic.post_count'); ?></th>
-						<th><?php echo $this->Paginator->sort(__d('forum', 'Views'), 'Topic.view_count'); ?></th>
-						<th><?php echo $this->Paginator->sort(__d('forum', 'Activity'), 'LastPost.created'); ?></th>
+						<th colspan="2"><?php echo $this->Paginator->sort('Topic.title', __d('forum', 'Topic')); ?></th>
+						<th><?php echo $this->Paginator->sort('User.'. $config['userMap']['username'], __d('forum', 'Author')); ?></th>
+						<th><?php echo $this->Paginator->sort('Topic.created', __d('forum', 'Created')); ?></th>
+						<th><?php echo $this->Paginator->sort('Topic.post_count', __d('forum', 'Posts')); ?></th>
+						<th><?php echo $this->Paginator->sort('Topic.view_count', __d('forum', 'Views')); ?></th>
+						<th><?php echo $this->Paginator->sort('LastPost.created', __d('forum', 'Activity')); ?></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -118,11 +118,11 @@ if ($forum['Forum']['forum_id'] > 0) {
 
 	<div class="statistics">
 		<?php $moderators = array();
-		
+
 		if (!empty($forum['Moderator'])) {
 			foreach ($forum['Moderator'] as $mod) {
-				$moderators[] = $this->Html->link($mod['User'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'profile', $mod['User']['id'])); 
-			}	
+				$moderators[] = $this->Html->link($mod['User'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'profile', $mod['User']['id']));
+			}
 		} ?>
 
 		<table class="table">

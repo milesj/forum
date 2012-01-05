@@ -1,11 +1,11 @@
-<?php 
+<?php
 
 $this->Html->addCrumb(__d('forum', 'Administration'), array('controller' => 'forum', 'action' => 'index'));
 $this->Html->addCrumb(__d('forum', 'Reported'), array('controller' => 'reports', 'action' => 'index'));
 $this->Html->addCrumb(__d('forum', 'Posts'), array('controller' => 'reports', 'action' => 'posts')); ?>
 
 <div class="controls float-right">
-	<?php 
+	<?php
 	echo $this->Html->link(__d('forum', 'Topics'), array('controller' => 'reports', 'action' => 'topics'), array('class' => 'button'));
 	echo $this->Html->link(__d('forum', 'Posts'), array('controller' => 'reports', 'action' => 'posts'), array('class' => 'button'));
 	echo $this->Html->link(__d('forum', 'Users'), array('controller' => 'reports', 'action' => 'users'), array('class' => 'button')); ?>
@@ -27,9 +27,9 @@ $this->Html->addCrumb(__d('forum', 'Posts'), array('controller' => 'reports', 'a
 					<th>&nbsp;</th>
 					<th><?php echo __d('forum', 'Topic'); ?></th>
 					<th><?php echo __d('forum', 'Post'); ?></th>
-					<th><?php echo $this->Paginator->sort(__d('forum', 'Reported By'), 'Reporter.'. $config['userMap']['username']); ?></th>
+					<th><?php echo $this->Paginator->sort('Reporter.'. $config['userMap']['username'], __d('forum', 'Reported By')); ?></th>
 					<th><?php echo __d('forum', 'Comment'); ?></th>
-					<th><?php echo $this->Paginator->sort(__d('forum', 'Reported On'), 'Report.created'); ?></th>
+					<th><?php echo $this->Paginator->sort('Report.created', __d('forum', 'Reported On')); ?></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -57,25 +57,25 @@ $this->Html->addCrumb(__d('forum', 'Posts'), array('controller' => 'reports', 'a
 					<td><?php echo $report['Report']['comment']; ?></td>
 					<td><?php echo $this->Time->nice($report['Report']['created'], $this->Common->timezone()); ?></td>
 				</tr>
-				
+
 				<?php }
 			} else { ?>
 
 				<tr>
 					<td colspan="5" class="empty"><?php echo __d('forum', 'There are no reported posts.'); ?></td>
 				</tr>
-				
+
 			<?php } ?>
-				
+
 			</tbody>
 		</table>
 
 		<?php echo $this->element('pagination'); ?>
 	</div>
-</div>	
+</div>
 
 <div class="moderate">
-	<?php 
+	<?php
 	echo $this->Form->input('action', array(
 		'options' => array(
 			'delete' => __d('forum', 'Delete Post(s)'),
@@ -84,7 +84,7 @@ $this->Html->addCrumb(__d('forum', 'Posts'), array('controller' => 'reports', 'a
 		'div' => false,
 		'label' => __d('forum', 'Perform Action') .': '
 	));
-	
+
 	echo $this->Form->submit(__d('forum', 'Process'), array('div' => false, 'class' => 'buttonSmall')); ?>
 </div>
 
