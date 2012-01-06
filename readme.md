@@ -1,12 +1,12 @@
-# Forum v2.3 #
+# Forum v2.3 # (modified for CakePHP 2.0)
 
 A fully robust and powerful CakePHP forum plugin.
 
 ## Requirements ##
 
-* CakePHP 1.3 (Tested with 1.3.9)
-* PHP 5.2, 5.3
-* Utils Plugin - https://github.com/CakeDC/utils
+* CakePHP 2.x (Tested with 2.0.5 and 2.1-dev)
+* PHP 5.3
+* Utils Plugin - https://github.com/CakeDC/utils 2.0 branch
 
 ## Documentation ##
 
