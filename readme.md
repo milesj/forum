@@ -1,4 +1,4 @@
-# Forum v2.3 #
+# Forum v2.4 #
 
 A fully robust and powerful CakePHP forum plugin. Integrates with an external user system, support for topic and forum subscriptions, and many more features listed below.
 

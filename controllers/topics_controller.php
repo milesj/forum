@@ -56,7 +56,7 @@ class TopicsController extends ForumAppController {
 	 * Redirect.
 	 */
 	public function index() {
-		$this->Toolbar->goToPage();
+		$this->ForumToolbar->goToPage();
 	}
 	
 	/**
@@ -77,7 +77,7 @@ class TopicsController extends ForumAppController {
 			$access = 'accessPost';
 		}
 		
-		$this->Toolbar->verifyAccess(array(
+		$this->ForumToolbar->verifyAccess(array(
 			'exists' => $forum, 
 			'status' => $forum['Forum']['status'], 
 			'permission' => $forum['Forum'][$access]
@@ -94,14 +94,14 @@ class TopicsController extends ForumAppController {
 				}
 				
 				$this->Profile->increaseTopics($user_id);
-				$this->Toolbar->updateTopics($topic_id);
-				$this->Toolbar->goToPage($topic_id);
+				$this->ForumToolbar->updateTopics($topic_id);
+				$this->ForumToolbar->goToPage($topic_id);
 			}
 		} else {
 			$this->data['Topic']['forum_id'] = $forum['Forum']['id'];
 		}
 		
-		$this->Toolbar->pageTitle($pageTitle);
+		$this->ForumToolbar->pageTitle($pageTitle);
 		$this->set('pageTitle', $pageTitle);
 		$this->set('type', $type);
 		$this->set('forum', $forum);
@@ -117,7 +117,7 @@ class TopicsController extends ForumAppController {
 		$topic = $this->Topic->get($slug);
 		$user_id = $this->Auth->user('id');
 		
-		$this->Toolbar->verifyAccess(array(
+		$this->ForumToolbar->verifyAccess(array(
 			'exists' => $topic, 
 			'moderate' => $topic['Topic']['forum_id'],
 			'ownership' => $topic['Topic']['user_id']
@@ -127,7 +127,7 @@ class TopicsController extends ForumAppController {
 			if ($this->Topic->saveAll($this->data, array('validate' => 'only'))) {
 				if ($this->Topic->edit($topic['Topic']['id'], $this->data)) {
 					Cache::delete('Topic.get-'. $slug, 'forum');
-					$this->Toolbar->goToPage($topic['Topic']['id']);
+					$this->ForumToolbar->goToPage($topic['Topic']['id']);
 				}
 			}
 		} else {
@@ -135,7 +135,7 @@ class TopicsController extends ForumAppController {
 			$this->data = $topic;
 		}
 		
-		$this->Toolbar->pageTitle(__d('forum', 'Edit Topic', true));
+		$this->ForumToolbar->pageTitle(__d('forum', 'Edit Topic', true));
 		$this->set('topic', $topic);
 		$this->set('forums', $this->Topic->Forum->getGroupedHierarchy('accessPost'));
 	}
@@ -149,7 +149,7 @@ class TopicsController extends ForumAppController {
 		if ($this->RequestHandler->isRss()) {
 			$topic = $this->Topic->get($slug);
 			
-			$this->Toolbar->verifyAccess(array(
+			$this->ForumToolbar->verifyAccess(array(
 				'exists' => $topic
 			));
 		
@@ -174,7 +174,7 @@ class TopicsController extends ForumAppController {
 	public function delete($slug) {
 		$topic = $this->Topic->get($slug);
 		
-		$this->Toolbar->verifyAccess(array(
+		$this->ForumToolbar->verifyAccess(array(
 			'exists' => $topic, 
 			'moderate' => $topic['Topic']['forum_id']
 		));
@@ -197,7 +197,7 @@ class TopicsController extends ForumAppController {
 		$topic = $this->Topic->get($slug);
 		$user_id = $this->Auth->user('id');
 		
-		$this->Toolbar->verifyAccess(array(
+		$this->ForumToolbar->verifyAccess(array(
 			'exists' => $topic
 		));
 		
@@ -212,7 +212,7 @@ class TopicsController extends ForumAppController {
 			}
 		}
 		
-		$this->Toolbar->pageTitle(__d('forum', 'Report Topic', true));
+		$this->ForumToolbar->pageTitle(__d('forum', 'Report Topic', true));
 		$this->set('topic', $topic);
 	}
 
@@ -225,7 +225,7 @@ class TopicsController extends ForumAppController {
 		$topic = $this->Topic->get($slug);
 		$user_id = $this->Auth->user('id');
 
-		$this->Toolbar->verifyAccess(array(
+		$this->ForumToolbar->verifyAccess(array(
 			'exists' => $topic, 
 			'permission' => $topic['Forum']['accessRead']
 		));
@@ -235,13 +235,13 @@ class TopicsController extends ForumAppController {
 			$this->redirect(array('plugin' => 'forum', 'controller' => 'topics', 'action' => 'view', $slug));
 		}
 		
-		$this->Toolbar->markAsRead($topic['Topic']['id']);
+		$this->ForumToolbar->markAsRead($topic['Topic']['id']);
 		$this->Topic->increaseViews($topic['Topic']['id']);
 		
 		$this->paginate['Post']['limit'] = $this->settings['posts_per_page'];
 		$this->paginate['Post']['conditions'] = array('Post.topic_id' => $topic['Topic']['id']);
 		
-		$this->Toolbar->pageTitle($topic['Forum']['title'], $topic['Topic']['title']);
+		$this->ForumToolbar->pageTitle($topic['Forum']['title'], $topic['Topic']['title']);
 		$this->set('topic', $topic);
 		$this->set('posts', $this->paginate('Post'));
 		$this->set('subscription', $this->Subscription->isSubscribedToTopic($user_id, $topic['Topic']['id']));
@@ -297,7 +297,7 @@ class TopicsController extends ForumAppController {
 		$topic = $this->Topic->get($slug);
 		$user_id = $this->Auth->user('id');
 		
-		$this->Toolbar->verifyAccess(array(
+		$this->ForumToolbar->verifyAccess(array(
 			'exists' => $topic, 
 			'permission' => $topic['Forum']['accessRead'],
 			'moderate' => $topic['Topic']['forum_id']
@@ -322,7 +322,7 @@ class TopicsController extends ForumAppController {
 		$this->paginate['Post']['limit'] = $this->settings['posts_per_page'];
 		$this->paginate['Post']['conditions'] = array('Post.topic_id' => $topic['Topic']['id']);
 		
-		$this->Toolbar->pageTitle(__d('forum', 'Moderate', true), $topic['Topic']['title']);
+		$this->ForumToolbar->pageTitle(__d('forum', 'Moderate', true), $topic['Topic']['title']);
 		$this->set('topic', $topic);
 		$this->set('posts', $this->paginate('Post'));
 	}

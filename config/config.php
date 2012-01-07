@@ -46,7 +46,7 @@ $config['Forum']['routes'] = array(
 /**
  * Current version.
  */
-$config['Forum']['version'] = '2.3';
+$config['Forum']['version'] = '2.4';
 
 /**
  * List of all timezones.

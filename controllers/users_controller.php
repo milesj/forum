@@ -60,7 +60,7 @@ class UsersController extends ForumAppController {
 		
 		$this->paginate['Profile']['order'] = array('User.'. $this->config['userMap']['username'] => 'ASC');
 		
-		$this->Toolbar->pageTitle(__d('forum', 'User List', true));
+		$this->ForumToolbar->pageTitle(__d('forum', 'User List', true));
 		$this->set('users', $this->paginate('Profile'));
 	}
 	
@@ -88,7 +88,7 @@ class UsersController extends ForumAppController {
 		
 		$user_id = $this->Auth->user('id');
 		
-		$this->Toolbar->pageTitle(__d('forum', 'Dashboard', true));
+		$this->ForumToolbar->pageTitle(__d('forum', 'Dashboard', true));
 		$this->set('topics', $this->Topic->getLatestByUser($user_id));
 		$this->set('activity', $this->Topic->Post->getGroupedLatestByUser($user_id));
 		$this->set('subscriptions', $this->Subscription->getTopicSubscriptionsByUser($user_id));
@@ -111,7 +111,7 @@ class UsersController extends ForumAppController {
 			$this->data = $profile;
 		}
 		
-		$this->Toolbar->pageTitle(__d('forum', 'Edit Profile', true));
+		$this->ForumToolbar->pageTitle(__d('forum', 'Edit Profile', true));
 	}
 
 	/**
@@ -128,7 +128,7 @@ class UsersController extends ForumAppController {
 		
 		$this->loadModel('Forum.Topic');
 
-		$this->Toolbar->pageTitle(__d('forum', 'User Profile', true), $profile['User'][$this->config['userMap']['username']]);
+		$this->ForumToolbar->pageTitle(__d('forum', 'User Profile', true), $profile['User'][$this->config['userMap']['username']]);
 		$this->set('profile', $profile);
 		$this->set('topics', $this->Topic->getLatestByUser($user_id));
 		$this->set('posts', $this->Topic->Post->getLatestByUser($user_id));
@@ -159,7 +159,7 @@ class UsersController extends ForumAppController {
 			}
 		}
 		
-		$this->Toolbar->pageTitle(__d('forum', 'Report User', true), $profile['User'][$this->config['userMap']['username']]);
+		$this->ForumToolbar->pageTitle(__d('forum', 'Report User', true), $profile['User'][$this->config['userMap']['username']]);
 		$this->set('profile', $profile);
 	}
 	
@@ -179,7 +179,7 @@ class UsersController extends ForumAppController {
 		
 		$this->paginate['Profile']['order'] = array('User.'. $this->config['userMap']['username'] => 'ASC');
 
-		$this->Toolbar->pageTitle(__d('forum', 'Manage Users', true));
+		$this->ForumToolbar->pageTitle(__d('forum', 'Manage Users', true));
 		$this->set('users', $this->paginate('Profile'));
 	}
 	
@@ -206,7 +206,7 @@ class UsersController extends ForumAppController {
 			$this->data = $profile;
 		}
 		
-		$this->Toolbar->pageTitle(__d('forum', 'Edit User', true));
+		$this->ForumToolbar->pageTitle(__d('forum', 'Edit User', true));
 		$this->set('profile', $profile);
 	}
 	

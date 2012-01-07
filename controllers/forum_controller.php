@@ -22,7 +22,7 @@ class ForumController extends ForumAppController {
 	 * Forum index.  
 	 */
 	public function index() {
-		$this->Toolbar->pageTitle(__d('forum', 'Index', true));
+		$this->ForumToolbar->pageTitle(__d('forum', 'Index', true));
 		$this->set('menuTab', 'forums');
 		$this->set('forums', 		$this->Topic->Forum->getIndex());
 		$this->set('totalPosts', 	$this->Topic->Post->getTotal());
@@ -48,7 +48,7 @@ class ForumController extends ForumAppController {
 	 * Help.
 	 */
 	public function help() {
-		$this->Toolbar->pageTitle(__d('forum', 'Help', true));
+		$this->ForumToolbar->pageTitle(__d('forum', 'Help', true));
 		$this->set('menuTab', 'help');
 	}
 	
@@ -59,14 +59,14 @@ class ForumController extends ForumAppController {
 	 * @param int $post_id 
 	 */
 	public function jump($topic_id, $post_id = null) {
-		$this->Toolbar->goToPage($topic_id, $post_id);
+		$this->ForumToolbar->goToPage($topic_id, $post_id);
 	}
 	
 	/**
 	 * Rules.
 	 */
 	public function rules() {
-		$this->Toolbar->pageTitle(__d('forum', 'Rules', true));
+		$this->ForumToolbar->pageTitle(__d('forum', 'Rules', true));
 		$this->set('menuTab', 'rules');
 	}
 	
@@ -78,7 +78,7 @@ class ForumController extends ForumAppController {
 		$this->loadModel('Forum.Moderator');
 		$this->loadModel('Forum.Profile');
 		
-		$this->Toolbar->pageTitle(__d('forum', 'Administration', true));
+		$this->ForumToolbar->pageTitle(__d('forum', 'Administration', true));
 		$this->set('menuTab', 'home');
 		$this->set('totalPosts', 	$this->Topic->Post->getTotal());
 		$this->set('totalTopics', 	$this->Topic->getTotal());
@@ -109,7 +109,7 @@ class ForumController extends ForumAppController {
 			$this->data['Setting'] = $this->settings;
 		}
 		
-		$this->Toolbar->pageTitle(__d('forum', 'Settings', true));
+		$this->ForumToolbar->pageTitle(__d('forum', 'Settings', true));
 		$this->set('menuTab', 'settings');
 	}
 	

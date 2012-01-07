@@ -8,7 +8,7 @@
  * @link        http://milesj.me/code/cakephp/forum
  */
  
-class ToolbarComponent extends Object {
+class ForumToolbarComponent extends Object {
 
 	/**
 	 * Components.
