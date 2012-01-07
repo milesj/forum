@@ -104,7 +104,13 @@ class ForumAppController extends AppController {
 	 * Before render.
 	 */
 	public function beforeRender() {
-		$this->set('user', $this->Auth->user());
+		$user = $this->Auth->user();
+		
+		if (!empty($user)) {
+			$user = array('User' => $user);
+		}
+		
+		$this->set('user', $user);
 		$this->set('config', $this->config);
 		$this->set('settings', $this->settings);
 	}

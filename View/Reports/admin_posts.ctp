@@ -62,7 +62,7 @@ $this->Html->addCrumb(__d('forum', 'Posts'), array('controller' => 'reports', 'a
 			} else { ?>
 
 				<tr>
-					<td colspan="5" class="empty"><?php echo __d('forum', 'There are no reported posts.'); ?></td>
+					<td colspan="6" class="empty"><?php echo __d('forum', 'There are no reported posts.'); ?></td>
 				</tr>
 				
 			<?php } ?>

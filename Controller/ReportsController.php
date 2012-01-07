@@ -8,6 +8,9 @@
  * @link        http://milesj.me/code/cakephp/forum
  */
  
+// Not sure why Cake isn't inheriting it from $uses
+App::uses('Report', 'Forum.Model');
+
 class ReportsController extends ForumAppController {
 
 	/**
@@ -45,7 +48,7 @@ class ReportsController extends ForumAppController {
 	 * 
 	 * @param int $type
 	 */
-	public function admin_index($type = 0) {
+	public function admin_index($type = 0) {		
 		if ($type == Report::TOPIC) {
 			$this->setAction('admin_topics');
 			
