@@ -1,8 +1,8 @@
-# Forum v2.3 #
+# Forum v3.0 ALPHA #
 
 A fully robust and powerful CakePHP forum plugin. Integrates with an external user system, support for topic and forum subscriptions, and many more features listed below.
 
-This version is only compatible with CakePHP 1.3.
+This version is only compatible with CakePHP 2.0.
 
 ## Compatibility ##
 
@@ -12,7 +12,7 @@ This version is only compatible with CakePHP 1.3.
 ## Requirements ##
 
 * PHP 5.2, 5.3
-* Utils Plugin - https://github.com/CakeDC/utils
+* Utils Plugin - https://github.com/CakeDC/utils/tree/2.0
 
 ## Documentation ##
 
