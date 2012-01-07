@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 $this->Html->addCrumb($settings['site_name'], array('controller' => 'forum', 'action' => 'index'));
 
@@ -10,7 +10,7 @@ $this->Html->addCrumb($forum['Forum']['title'], array('controller' => 'stations'
 
 <div class="title">
 	<h2><?php echo $forum['Forum']['title']; ?></h2>
-	
+
 	<?php if (!empty($forum['Forum']['description'])) { ?>
 		<p><?php echo $forum['Forum']['description']; ?></p>
 	<?php } ?>
@@ -23,7 +23,7 @@ $this->Html->addCrumb($forum['Forum']['title'], array('controller' => 'stations'
 			<a href="javascript:;" onclick="return Forum.toggleForums(this, <?php echo $forum['Forum']['id']; ?>);" class="toggle">-</a>
 			<h3><?php echo __d('forum', 'Sub-Forums'); ?></h3>
 		</div>
-		
+
 		<div class="containerContent" id="forums-<?php echo $forum['Forum']['id']; ?>">
 			<table cellspacing="0" class="table">
 				<thead>
@@ -118,11 +118,11 @@ if ($forum['Forum']['forum_id'] > 0) {
 
 	<div class="statistics">
 		<?php $moderators = array();
-		
+
 		if (!empty($forum['Moderator'])) {
 			foreach ($forum['Moderator'] as $mod) {
-				$moderators[] = $this->Html->link($mod['User'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'profile', $mod['User']['id'])); 
-			}	
+				$moderators[] = $this->Html->link($mod['User'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'profile', $mod['User']['id']));
+			}
 		} ?>
 
 		<table class="table">
@@ -132,26 +132,26 @@ if ($forum['Forum']['forum_id'] > 0) {
 					<td><strong><?php echo $forum['Forum']['topic_count']; ?></strong></td>
 
 					<td class="align-right"><?php echo __d('forum', 'Increases Post Count'); ?>: </td>
-					<td><strong><?php echo __d('forum', $forum['Forum']['settingPostCount'] ? 'Yes' : 'No'); ?></strong></td>
+					<td><strong><?php echo $forum['Forum']['settingPostCount'] ? __d('forum', 'Yes') : __d('forum', 'No'); ?></strong></td>
 
 					<td class="align-right"><?php echo __d('forum', 'Can Read Topics'); ?>: </td>
-					<td><strong><?php echo __d('forum', $this->Common->hasAccess($forum['Forum']['accessRead']) ? 'Yes' : 'No'); ?></strong></td>
+					<td><strong><?php echo $this->Common->hasAccess($forum['Forum']['accessRead']) ? __d('forum', 'Yes') : __d('forum', 'No'); ?></strong></td>
 
 					<td class="align-right"><?php echo __d('forum', 'Can Create Topics'); ?>: </td>
-					<td><strong><?php echo __d('forum', $this->Common->hasAccess($forum['Forum']['accessPost']) ? 'Yes' : 'No'); ?></strong></td>
+					<td><strong><?php echo $this->Common->hasAccess($forum['Forum']['accessPost']) ? __d('forum', 'Yes') : __d('forum', 'No'); ?></strong></td>
 				</tr>
 				<tr>
 					<td class="align-right"><?php echo __d('forum', 'Total Posts'); ?>: </td>
 					<td><strong><?php echo $forum['Forum']['post_count']; ?></strong></td>
 
 					<td class="align-right"><?php echo __d('forum', 'Auto-Lock Topics'); ?>: </td>
-					<td><strong><?php echo __d('forum', $forum['Forum']['settingAutoLock'] ? 'Yes' : 'No'); ?></strong></td>
+					<td><strong><?php echo $forum['Forum']['settingAutoLock'] ? __d('forum', 'Yes') : __d('forum', 'No'); ?></strong></td>
 
 					<td class="align-right"><?php echo __d('forum', 'Can Reply'); ?>: </td>
-					<td><strong><?php echo __d('forum', $this->Common->hasAccess($forum['Forum']['accessReply']) ? 'Yes' : 'No'); ?></strong></td>
+					<td><strong><?php echo $this->Common->hasAccess($forum['Forum']['accessReply']) ? __d('forum', 'Yes') : __d('forum', 'No'); ?></strong></td>
 
 					<td class="align-right"><?php echo __d('forum', 'Can Create Polls'); ?>: </td>
-					<td><strong><?php echo __d('forum', $this->Common->hasAccess($forum['Forum']['accessPoll']) ? 'Yes' : 'No'); ?></strong></td>
+					<td><strong><?php echo $this->Common->hasAccess($forum['Forum']['accessPoll']) ? __d('forum', 'Yes') : __d('forum', 'No'); ?></strong></td>
 				</tr>
 				<?php if (!empty($moderators)) { ?>
 					<tr>
