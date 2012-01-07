@@ -22,8 +22,8 @@ class AjaxHandlerComponent extends Component {
 	 * @access public
 	 * @var string
 	 */
-	public $version = '1.6';
-
+	public $version = '2.0';
+	
 	/**
 	 * Components.
 	 *
@@ -39,14 +39,6 @@ class AjaxHandlerComponent extends Component {
 	 * @var boolean
 	 */
 	public $allowRemote = false;
-
-	/**
-	 * Determines if the AJAX call was a success or failure.
-	 *
-	 * @access protected
-	 * @var boolean
-	 */
-	protected $_success = false;
 
 	/**
 	 * A user given code associated with failure / success messages.
@@ -70,102 +62,64 @@ class AjaxHandlerComponent extends Component {
 	 * @access protected
 	 * @var array
 	 */
-	private $__handledActions = array();
+	protected $_handled = array();
 
 	/**
-	 * Types to respond as.
+	 * Determines if the AJAX call was a success or failure.
 	 *
 	 * @access protected
-	 * @var array
+	 * @var boolean
 	 */
-	private $__responseTypes = array(
-		'json'	=> 'application/json',
-		'html'	=> 'text/html',
-		'xml'	=> 'text/xml',
-		'text'	=> 'text/plain'
-	);
+	protected $_success = false;
 
 	/**
 	 * Load the Controller object.
 	 *
 	 * @access public
-	 * @param object $Controller
+	 * @param Controller $controller
 	 * @return void
 	 */
-	public function initialize($Controller) {
-		if ($this->RequestHandler->isAjax()) {
-			if (isset($this->allowRemoteRequests)) {
-				$this->allowRemote = $this->allowRemoteRequests;
-			}
-
-			// Turn off debug, don't want to ruin our response
+	public function initialize($controller) {
+		if ($controller->request->is('ajax')) {
 			Configure::write('debug', 0);
 
 			// Must disable security component for AJAX
-			if (isset($Controller->Security)) {
-				$Controller->Security->validatePost = false;
+			if (isset($controller->Security)) {
+				$controller->Security->validatePost = false;
 			}
 
 			// If not from this domain, destroy
 			if (($this->allowRemote === false) && (strpos(env('HTTP_REFERER'), trim(env('HTTP_HOST'), '/')) === false)) {
-				if (isset($Controller->Security)) {
-					$Controller->Security->blackHole($Controller, 'Invalid referrer detected for this request!');
+				if (isset($controller->Security)) {
+					$controller->Security->blackHole($controller, 'Invalid referrer detected for this request.');
 				} else {
-					$Controller->redirect(null, 403, true);
+					$controller->redirect(null, 403, true);
 				}
 			}
 		}
 
-		$this->Controller = $Controller;
+		$this->controller = $controller;
 	}
 
 	/**
 	 * Determine if the action is an AJAX action and handle it.
 	 *
 	 * @access public
-	 * @param object $Controller
+	 * @param Controller $controller
 	 * @return void
 	 */
-	public function startup($Controller) {
-		$handled = false;
+	public function startup($controller) {
+		$handled = ($this->_handled === array('*') || in_array($controller->action, $this->_handled));
 
-		if ($this->__handledActions === array('*') || in_array($Controller->action, $this->__handledActions)) {
-			$handled = true;
-		}
-
-		if (!$this->RequestHandler->isAjax() && $handled) {
-			if (isset($Controller->Security)) {
-				$Controller->Security->blackHole($Controller, 'You are not authorized to process this request!');
+		if (!$controller->request->is('ajax') && $handled) {
+			if (isset($controller->Security)) {
+				$controller->Security->blackHole($controller, 'You are not authorized to process this request.');
 			} else {
-				$Controller->redirect(null, 401, true);
+				$controller->redirect(null, 401, true);
 			}
 		}
 
-		// Load up the controller with data
-		if ($handled) {
-			$data = array();
-
-			if (!empty($Controller->params['form'])) {
-				$data = $Controller->params['form'] + $data;
-			}
-
-			if (!empty($Controller->params['url'])) {
-				$data = $Controller->params['url'] + $data;
-				unset($data['ext'], $data['url']);
-			}
-
-			if (!empty($data)) {
-				$data = array_map('urldecode', $data);
-
-				if (!empty($Controller->data)) {
-					$Controller->data = $data + $Controller->data;
-				} else {
-					$Controller->data = $data;
-				}
-			}
-		}
-
-		$this->Controller = $Controller;
+		$this->controller = $controller;
 	}
 
 	/**
@@ -178,10 +132,9 @@ class AjaxHandlerComponent extends Component {
 		$actions = func_get_args();
 
 		if ($actions === array('*') || empty($actions)) {
-			$this->__handledActions = array('*');
-
-		} else if (is_array($actions) && !empty($actions)) {
-			$this->__handledActions = array_unique(array_intersect($actions, get_class_methods($this->Controller)));
+			$this->_handled = array('*');
+		} else {
+			$this->_handled = array_unique(array_intersect($actions, get_class_methods($this->controller)));
 		}
 	}
 
@@ -193,15 +146,10 @@ class AjaxHandlerComponent extends Component {
 	 * @param array $response
 	 * @return mixed
 	 */
-	public function respond($type = 'json', $response = array()) {
-		if (empty($this->__responseTypes[$type])) {
-			$type = 'json';
-		}
-
-		// Apply response
-		if (!empty($response) && is_array($response)) {
+	public function respond($type = 'json', array $response = array()) {
+		if (!empty($response)) {
 			$response = $response + array(
-				'success' => null,
+				'success' => false,
 				'data' => '',
 				'code' => null
 			);
@@ -209,18 +157,13 @@ class AjaxHandlerComponent extends Component {
 			$this->response($response['success'], $response['data'], $response['code']);
 		}
 
-		// Set to null for Cake 1.2
-		$this->RequestHandler->__responseTypeSet = null;
-
 		if ($type == 'html') {
-			$this->RequestHandler->renderAs($this->Controller, 'ajax');
-			$this->Controller->autoLayout = true;
-			$this->Controller->autoRender = true;
+			$this->RequestHandler->renderAs($this->controller, 'ajax');
 
 		} else {
-			$this->RequestHandler->respondAs($this->__responseTypes[$type]);
-			$this->Controller->autoLayout = false;
-			$this->Controller->autoRender = false;
+			$this->RequestHandler->respondAs($type);
+			$this->controller->autoLayout = false;
+			$this->controller->autoRender = false;
 
 			echo $this->__format($type);
 		}
@@ -236,30 +179,11 @@ class AjaxHandlerComponent extends Component {
 	 * @return void
 	 */
 	public function response($success, $data = '', $code = null) {
-		if (is_bool($success)) {
-			$this->_success = $success;
-		}
-
+		$this->_success = (bool) $success;
 		$this->_data = $data;
 		$this->_code = $code;
 	}
-
-	/**
-	 * Makes sure the params passed are clean.
-	 *
-	 * @access public
-	 * @param string|int $request
-	 * @param boolean $isString
-	 * @return mixed
-	 */
-	public function valid($request, $isString = false) {
-		if ($isString) {
-			return (isset($request) && is_string($request) && $request != '');
-		} else {
-			return (isset($request) && is_numeric($request));
-		}
-	}
-
+	
 	/**
 	 * What should happen if the class is called stand alone.
 	 *
@@ -297,7 +221,7 @@ class AjaxHandlerComponent extends Component {
 			case 'html';
 			case 'text':
 			default:
-				$format = (string)$this->_data;
+				$format = (string) $this->_data;
 			break;
 		}
 
