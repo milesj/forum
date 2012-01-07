@@ -1,10 +1,16 @@
 # Forum v2.3 #
 
-A fully robust and powerful CakePHP forum plugin.
+A fully robust and powerful CakePHP forum plugin. Integrates with an external user system, support for topic and forum subscriptions, and many more features listed below.
+
+This version is only compatible with CakePHP 1.3.
+
+## Compatibility ##
+
+* v2.x - CakePHP 1.3
+* v3.x - CakePHP 2.0
 
 ## Requirements ##
 
-* CakePHP 1.3 (Tested with 1.3.9)
 * PHP 5.2, 5.3
 * Utils Plugin - https://github.com/CakeDC/utils
 
@@ -18,12 +24,13 @@ Forums
 
 * Parent and children forums
 * Activity and latest post tracking
-* Auto-Lock old topics
-* Enable/Disable post count increments
+* Auto-lock old topics
+* Enable/disable post count increments
 * Individual settings for reading, posting, replying, etc
-* Access/Private specific forums
+* Access/private specific forums
 * Create topics or polls
 * Reply to topics, or quote previous posts
+* Topic and forum subscription with email notifications
 
 Moderation
 
@@ -37,7 +44,7 @@ Administration
 
 * Full admin panel using CakePHP admin routes
 * Requires the administration access level
-* Can add, edit, order, delete forums and categories
+* Can add, edit, order, delete forums
 * Manage all reported content
 * Promote, demote, create access levels, staff and moderators
 * Edit forum settings through the panel
