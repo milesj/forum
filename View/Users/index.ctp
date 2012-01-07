@@ -22,11 +22,11 @@ $this->Html->addCrumb(__d('forum', 'Users'), array('controller' => 'users', 'act
 
 		<table class="table topics">
 		<tr>
-			<th><?php echo $this->Paginator->sort(__d('forum', 'Username'), 'User.'. $config['userMap']['username']); ?></th>
-			<th><?php echo $this->Paginator->sort(__d('forum', 'Joined'), 'Profile.created'); ?></th>
-			<th><?php echo $this->Paginator->sort(__d('forum', 'Last Active'), 'Profile.lastLogin'); ?></th>
-			<th><?php echo $this->Paginator->sort(__d('forum', 'Topics'), 'Profile.totalTopics'); ?></th>
-			<th><?php echo $this->Paginator->sort(__d('forum', 'Posts'), 'Profile.totalPosts'); ?></th>
+			<th><?php echo $this->Paginator->sort('User.' . $config['userMap']['username'], __d('forum', 'Username')); ?></th>
+			<th><?php echo $this->Paginator->sort('Profile.created', __d('forum', 'Joined')); ?></th>
+			<th><?php echo $this->Paginator->sort('Profile.lastLogin', __d('forum', 'Last Active')); ?></th>
+			<th><?php echo $this->Paginator->sort('Profile.totalTopics', __d('forum', 'Topics')); ?></th>
+			<th><?php echo $this->Paginator->sort('Profile.totalPosts', __d('forum', 'Posts')); ?></th>
 		</tr>
 
 		<?php if (!empty($users)) {

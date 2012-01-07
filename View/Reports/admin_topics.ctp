@@ -25,10 +25,10 @@ $this->Html->addCrumb(__d('forum', 'Topics'), array('controller' => 'reports', '
 			<thead>
 				<tr>
 					<th>&nbsp;</th>
-					<th><?php echo $this->Paginator->sort(__d('forum', 'Topic'), 'Topic.title'); ?></th>
-					<th><?php echo $this->Paginator->sort(__d('forum', 'Reported By'), 'Reporter.'. $config['userMap']['username']); ?></th>
+					<th><?php echo $this->Paginator->sort('Topic.title', __d('forum', 'Topic')); ?></th>
+					<th><?php echo $this->Paginator->sort('Reporter.' . $config['userMap']['username'], __d('forum', 'Reported By')); ?></th>
 					<th><?php echo __d('forum', 'Comment'); ?></th>
-					<th><?php echo $this->Paginator->sort(__d('forum', 'Reported On'), 'Report.created'); ?></th>
+					<th><?php echo $this->Paginator->sort('Report.created', __d('forum', 'Reported On')); ?></th>
 				</tr>
 			</thead>
 			<tbody>
