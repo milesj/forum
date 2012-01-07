@@ -40,7 +40,7 @@ $columns = isset($columns) ? $columns : array(); ?>
 	</td>
 	<td class="activity">
 		<?php if (!empty($topic['LastPost']['id'])) {
-			echo $this->Time->relativeTime($topic['LastPost']['created'], array('userOffset' => $this->Common->timezone())); ?>
+			echo $this->Time->timeAgoInWords($topic['LastPost']['created'], array('userOffset' => $this->Common->timezone())); ?>
 			
 			<?php if (!empty($topic['LastUser']['id'])) { ?>
 				<span class="gray"><?php echo __d('forum', 'by'); ?> <?php echo $this->Html->link($topic['LastUser'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'profile', $topic['Topic']['lastUser_id'])); ?></span>

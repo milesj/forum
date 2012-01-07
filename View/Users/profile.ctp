@@ -46,7 +46,7 @@ $this->Html->addCrumb($profile['User'][$config['userMap']['username']], $this->h
 				<td><strong><?php echo __d('forum', 'Last Login'); ?>:</strong></td>
 				<td>
 					<?php if (!empty($profile['Profile']['lastLogin'])) {
-						echo $this->Time->relativeTime($profile['Profile']['lastLogin'], array('userOffset' => $this->Common->timezone()));
+						echo $this->Time->timeAgoInWords($profile['Profile']['lastLogin'], array('userOffset' => $this->Common->timezone()));
 					} else {
 						echo '<em>'. __d('forum', 'Never') .'</em>';
 					} ?>
@@ -99,7 +99,7 @@ $this->Html->addCrumb($profile['User'][$config['userMap']['username']], $this->h
 					<td class="created"><?php echo $this->Time->niceShort($topic['Topic']['created'], $this->Common->timezone()); ?></td>
 					<td class="stat"><?php echo number_format($topic['Topic']['post_count']); ?></td>
 					<td class="stat"><?php echo number_format($topic['Topic']['view_count']); ?></td>
-					<td class="activity"><?php echo $this->Time->relativeTime($topic['LastPost']['created'], array('userOffset' => $this->Common->timezone())); ?></td>
+					<td class="activity"><?php echo $this->Time->timeAgoInWords($topic['LastPost']['created'], array('userOffset' => $this->Common->timezone())); ?></td>
 				</tr>
 
 			<?php } ?>
@@ -134,7 +134,7 @@ if (!empty($posts)) { ?>
 				<tr class="altRow">
 					<td><strong><?php echo $this->Html->link($post['Topic']['title'], array('controller' => 'topics', 'action' => 'view', $post['Topic']['slug'])); ?></strong></td>
 					<td><?php echo $this->Html->link($post['Topic']['User'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'profile', $post['Topic']['User']['id'])); ?></td>
-					<td class="ar"><?php echo $this->Time->relativeTime($post['Post']['created'], array('userOffset' => $this->Common->timezone())); ?></td>
+					<td class="ar"><?php echo $this->Time->timeAgoInWords($post['Post']['created'], array('userOffset' => $this->Common->timezone())); ?></td>
 				</tr>
 				<tr>
 					<td colspan="3"><?php echo $post['Post']['contentHtml']; ?></td>

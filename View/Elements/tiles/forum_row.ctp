@@ -32,7 +32,7 @@ if (!empty($forum['SubForum'])) {
 			echo $this->Html->link($forum['LastTopic']['title'], array('controller' => 'topics', 'action' => 'view', $forum['LastTopic']['slug'])) .' ';
 			echo $this->Html->image('/forum/img/goto.png', array('alt' => '', 'url' => array('controller' => 'topics', 'action' => 'view', $forum['LastTopic']['slug'], 'page' => $forum['LastTopic']['page_count'], '#' => 'post-'. $forum['lastPost_id']))); ?><br />
 
-			<em><?php echo $this->Time->relativeTime($lastTime, array('userOffset' => $this->Common->timezone())); ?></em> 
+			<em><?php echo $this->Time->timeAgoInWords($lastTime, array('userOffset' => $this->Common->timezone())); ?></em> 
 			
 			<?php if (!empty($forum['LastUser']['id'])) { ?>
 				<span class="gray"><?php echo __d('forum', 'by'); ?> <?php echo $this->Html->link($forum['LastUser'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'profile', $forum['lastUser_id'])); ?></span>

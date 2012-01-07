@@ -41,7 +41,7 @@ $this->Html->addCrumb(__d('forum', 'Dashboard'), $this->here); ?>
 					<td class="stat"><?php echo number_format($topic['Topic']['view_count']); ?></td>
 					<td class="created"><?php echo $this->Time->niceShort($topic['Subscription']['created'], $this->Common->timezone()); ?></td>
 					<td class="activity">
-						<?php echo $this->Time->relativeTime($topic['Topic']['LastPost']['created'], array('userOffset' => $this->Common->timezone()));
+						<?php echo $this->Time->timeAgoInWords($topic['Topic']['LastPost']['created'], array('userOffset' => $this->Common->timezone()));
 						
 						if (!empty($topic['Topic']['LastUser'])) { ?>
 							<span class="gray"><?php echo __d('forum', 'by'); ?> <?php echo $this->Html->link($topic['Topic']['LastUser'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'profile', $topic['Topic']['lastUser_id'])); ?></span>
@@ -90,7 +90,7 @@ if (!empty($activity)) { ?>
 					<td class="stat"><?php echo number_format($topic['Topic']['view_count']); ?></td>
 					<td class="created"><?php echo $this->Time->niceShort($topic['Topic']['created'], $this->Common->timezone()); ?></td>
 					<td class="activity">
-						<?php echo $this->Time->relativeTime($topic['Topic']['LastPost']['created'], array('userOffset' => $this->Common->timezone()));
+						<?php echo $this->Time->timeAgoInWords($topic['Topic']['LastPost']['created'], array('userOffset' => $this->Common->timezone()));
 						
 						if (!empty($topic['Topic']['LastUser'])) { ?>
 							<span class="gray"><?php echo __d('forum', 'by'); ?> <?php echo $this->Html->link($topic['Topic']['LastUser'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'profile', $topic['Topic']['lastUser_id'])); ?></span>
@@ -135,7 +135,7 @@ if (!empty($topics)) { ?>
 					<td class="stat"><?php echo number_format($topic['Topic']['view_count']); ?></td>
 					<td class="created"><?php echo $this->Time->niceShort($topic['Topic']['created'], $this->Common->timezone()); ?></td>
 					<td class="activity">
-						<?php echo $this->Time->relativeTime($topic['LastPost']['created'], array('userOffset' => $this->Common->timezone()));
+						<?php echo $this->Time->timeAgoInWords($topic['LastPost']['created'], array('userOffset' => $this->Common->timezone()));
 						
 						if (!empty($topic['LastUser'])) { ?>
 							<span class="gray"><?php echo __d('forum', 'by'); ?> <?php echo $this->Html->link($topic['LastUser'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'profile', $topic['Topic']['lastUser_id'])); ?></span>

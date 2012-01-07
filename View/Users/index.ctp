@@ -37,7 +37,7 @@ $this->Html->addCrumb(__d('forum', 'Users'), array('controller' => 'users', 'act
 				<td class="created"><?php echo $this->Time->nice($profile['Profile']['created'], $this->Common->timezone()); ?></td>
 				<td class="created">
 					<?php if (!empty($profile['Profile']['lastLogin'])) {
-						echo $this->Time->relativeTime($profile['Profile']['lastLogin'], array('userOffset' => $this->Common->timezone()));
+						echo $this->Time->timeAgoInWords($profile['Profile']['lastLogin'], array('userOffset' => $this->Common->timezone()));
 					} else {
 						echo '<em class="gray">'. __d('forum', 'Never') .'</em>';
 					} ?>

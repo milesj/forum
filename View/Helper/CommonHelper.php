@@ -8,6 +8,8 @@
  * @link        http://milesj.me/code/cakephp/forum
  */
 
+App::uses('AccessLevel', 'Forum.Model');
+
 class CommonHelper extends AppHelper {
 
 	/**
