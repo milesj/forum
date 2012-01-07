@@ -101,7 +101,8 @@ class Topic extends ForumAppModel {
 		'forum_id' => 'notEmpty',
 		'expires' => array(
 			'rule' => 'numeric',
-			'message' => 'Expiration must be a numerical value for days'
+			'message' => 'Expiration must be a numerical value for days',
+			'allowEmpty' => true
 		),
 		'options' => array(
 			'checkOptions' => array(
