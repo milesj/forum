@@ -18,10 +18,10 @@ App::uses('Security', 'Utility');
 App::uses('Sanitize', 'Utility');
 App::uses('Validation', 'Utility');
 
-define('FORUM_PLUGIN', dirname(dirname(dirname(__FILE__))) . DS);
-define('FORUM_SCHEMA', FORUM_PLUGIN . 'config' . DS . 'schema' . DS);
+define('FORUM_PLUGIN', dirname(dirname(dirname(__FILE__))) . '/');
+define('FORUM_SCHEMA', FORUM_PLUGIN . 'Config/Schema/');
 
-include_once APP . 'Config' . DS . 'database.php';
+config('database');
 
 class InstallShell extends Shell {
 	
@@ -314,11 +314,11 @@ class InstallShell extends Shell {
 	 * @return void
 	 */
 	public function overrideAppModel() {
-		$appModel = file_get_contents(FORUM_PLUGIN . 'forum_app_model.php');
+		$appModel = file_get_contents(FORUM_PLUGIN . 'Model/ForumAppModel.php');
 		$appModel = preg_replace('/public \$tablePrefix = \'(.*?)\';/', 'public \$tablePrefix = \''. $this->install['prefix'] .'\';', $appModel);
 		$appModel = preg_replace('/public \$useDbConfig = \'(.*?)\';/', 'public \$useDbConfig = \''. $this->install['database'] .'\';', $appModel);
 		
-		file_put_contents(FORUM_PLUGIN . 'forum_app_model.php', $appModel);
+		file_put_contents(FORUM_PLUGIN . 'Model/ForumAppModel.php', $appModel);
 	}
 	
 	/**

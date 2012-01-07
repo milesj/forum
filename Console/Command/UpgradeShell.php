@@ -13,8 +13,8 @@ Configure::load('Forum.config');
 
 App::uses('ConnectionManager', 'Model');
 
-define('FORUM_PLUGIN', dirname(dirname(dirname(__FILE__))) . DS);
-define('FORUM_SCHEMA', FORUM_PLUGIN . 'config' . DS . 'upgrade' . DS);
+define('FORUM_PLUGIN', dirname(dirname(dirname(__FILE__))) . '/');
+define('FORUM_SCHEMA', FORUM_PLUGIN . 'Config/Schema/Upgrade/');
 
 class UpgradeShell extends Shell {
 	
@@ -65,7 +65,7 @@ class UpgradeShell extends Shell {
 		$this->config = Configure::read('Forum');
 		
 		// Get values from AppModel
-		$appModel = file_get_contents(FORUM_PLUGIN . 'forum_app_model.php');
+		$appModel = file_get_contents(FORUM_PLUGIN . 'Model/ForumAppModel.php');
 		
 		$prefix = preg_match('/public \$tablePrefix = \'(.*?)\';/', $appModel, $matches);
 		$this->upgrade['prefix'] = $matches[1];
