@@ -32,8 +32,8 @@ class StaffController extends ForumAppController {
 	 * Add an access / staff.
 	 */
 	public function admin_add_access() {
-		if (!empty($this->data)) {
-			if ($user = $this->Access->add($this->data['Access'])) {
+		if (!empty($this->request->data)) {
+			if ($user = $this->Access->add($this->request->data['Access'])) {
 				$this->Session->setFlash(sprintf(__d('forum', 'Access has been granted to %s.'), '<strong>'. $user['User'][$this->config['userMap']['username']] .'</strong>'));
 				$this->redirect(array('controller' => 'staff', 'action' => 'index', 'admin' => true));
 			}
@@ -55,15 +55,15 @@ class StaffController extends ForumAppController {
 		
 		$this->Toolbar->verifyAccess(array('exists' => $access));
 		
-		if (!empty($this->data)) {
+		if (!empty($this->request->data)) {
 			$this->Access->id = $id;
 			
-			if ($this->Access->save($this->data, true, array('access_level_id'))) {
+			if ($this->Access->save($this->request->data, true, array('access_level_id'))) {
 				$this->Session->setFlash(sprintf(__d('forum', 'Access for %s has been updated.'), '<strong>'. $access['User'][$this->config['userMap']['username']] .'</strong>'));
 				$this->redirect(array('controller' => 'staff', 'action' => 'index', 'admin' => true));
 			}
 		} else {
-			$this->data = $access;
+			$this->request->data = $access;
 		}
 		
 		$this->Toolbar->pageTitle(__d('forum', 'Edit Access'));
@@ -94,9 +94,9 @@ class StaffController extends ForumAppController {
 	 * Add an access level.
 	 */
 	public function admin_add_access_level() {
-		if (!empty($this->data)) {
-			if ($this->Access->AccessLevel->save($this->data, true, array('level', 'title', 'isSuper', 'isAdmin'))) {
-				$this->Session->setFlash(sprintf(__d('forum', 'Access level %s has been added.'), '<strong>'. $this->data['AccessLevel']['title'] .'</strong>'));
+		if (!empty($this->request->data)) {
+			if ($this->Access->AccessLevel->save($this->request->data, true, array('level', 'title', 'isSuper', 'isAdmin'))) {
+				$this->Session->setFlash(sprintf(__d('forum', 'Access level %s has been added.'), '<strong>'. $this->request->data['AccessLevel']['title'] .'</strong>'));
 				$this->redirect(array('controller' => 'staff', 'action' => 'index', 'admin' => true));
 			}
 		}
@@ -116,15 +116,15 @@ class StaffController extends ForumAppController {
 		
 		$this->Toolbar->verifyAccess(array('exists' => $access));
 		
-		if (!empty($this->data)) {
+		if (!empty($this->request->data)) {
 			$this->Access->AccessLevel->id = $id;
 			
-			if ($this->Access->AccessLevel->save($this->data, true, array('level', 'title', 'isSuper', 'isAdmin'))) {
+			if ($this->Access->AccessLevel->save($this->request->data, true, array('level', 'title', 'isSuper', 'isAdmin'))) {
 				$this->Session->setFlash(sprintf(__d('forum', 'Access level %s has been updated.'), '<strong>'. $access['AccessLevel']['title'] .'</strong>'));
 				$this->redirect(array('controller' => 'staff', 'action' => 'index', 'admin' => true));
 			}
 		} else {
-			$this->data = $access;
+			$this->request->data = $access;
 		}
 		
 		$this->Toolbar->pageTitle(__d('forum', 'Edit Access Level'));
@@ -142,8 +142,8 @@ class StaffController extends ForumAppController {
 		
 		$this->Toolbar->verifyAccess(array('exists' => $access));
 		
-		if (!empty($this->data['AccessLevel']['access_level_id'])) {
-			$this->Access->moveAll($id, $this->data['AccessLevel']['access_level_id']);
+		if (!empty($this->request->data['AccessLevel']['access_level_id'])) {
+			$this->Access->moveAll($id, $this->request->data['AccessLevel']['access_level_id']);
 			$this->Access->AccessLevel->delete($id, true);
 
 			$this->Session->setFlash(sprintf(__d('forum', 'The level %s has been deleted, and all its users have been moved!'), '<strong>'. $access['AccessLevel']['title'] .'</strong>'));
@@ -159,9 +159,9 @@ class StaffController extends ForumAppController {
 	 * Adds a moderator.
 	 */
 	public function admin_add_moderator() {
-		if (!empty($this->data)) {
-			if ($this->Moderator->add($this->data['Moderator'])) {
-				$this->Access->grant($this->data['Moderator']['user_id'], Access::MOD);
+		if (!empty($this->request->data)) {
+			if ($this->Moderator->add($this->request->data['Moderator'])) {
+				$this->Access->grant($this->request->data['Moderator']['user_id'], Access::MOD);
 				$this->redirect(array('controller' => 'staff', 'action' => 'index', 'admin' => true));
 			}
 		}
@@ -182,13 +182,13 @@ class StaffController extends ForumAppController {
 		
 		$this->Toolbar->verifyAccess(array('exists' => $mod));
 		
-		if (!empty($this->data)) {
-			if ($this->Moderator->edit($id, $this->data['Moderator'])) {
+		if (!empty($this->request->data)) {
+			if ($this->Moderator->edit($id, $this->request->data['Moderator'])) {
 				$this->Session->setFlash(sprintf(__d('forum', 'Moderator %s has been updated.'), '<strong>'. $mod['User'][$this->config['userMap']['username']] .'</strong>'));
 				$this->redirect(array('controller' => 'staff', 'action' => 'index', 'admin' => true));
 			}
 		} else {
-			$this->data = $mod;
+			$this->request->data = $mod;
 		}
 		
 		$this->Toolbar->pageTitle(__d('forum', 'Edit Moderator'));

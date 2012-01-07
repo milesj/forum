@@ -54,7 +54,7 @@ class UsersController extends ForumAppController {
 		$this->paginate['Profile']['conditions']['User.' . $this->config['userMap']['status']] = $this->config['statusMap']['active'];
 		
 		if (!empty($this->params['named']['username'])) {
-			$this->data['Profile']['username'] = $this->params['named']['username'];
+			$this->request->data['Profile']['username'] = $this->params['named']['username'];
 			$this->paginate['Profile']['conditions']['User.' . $this->config['userMap']['username'] . ' LIKE'] = '%' . Sanitize::clean($this->params['named']['username']) . '%';
 		}
 		
@@ -70,7 +70,7 @@ class UsersController extends ForumAppController {
 	public function proxy() {
 		$named = array();
 
-		foreach ($this->data['Profile'] as $field => $value) {
+		foreach ($this->request->data['Profile'] as $field => $value) {
 			if ($value != '') {
 				$named[$field] = urlencode($value);
 			}	
@@ -101,14 +101,14 @@ class UsersController extends ForumAppController {
 		$user_id = $this->Auth->user('id');
 		$profile = $this->Profile->getUserProfile($user_id);
 		
-		if (!empty($this->data)) {
+		if (!empty($this->request->data)) {
 			$this->Profile->id = $profile['Profile']['id'];
 
-			if ($this->Profile->save($this->data, true)) {
+			if ($this->Profile->save($this->request->data, true)) {
 				$this->Session->setFlash(__d('forum', 'Your profile information has been updated!'));
 			}
 		} else {
-			$this->data = $profile;
+			$this->request->data = $profile;
 		}
 		
 		$this->Toolbar->pageTitle(__d('forum', 'Edit Profile'));
@@ -148,14 +148,14 @@ class UsersController extends ForumAppController {
 		
 		$this->loadModel('Forum.Report');
 
-		if (!empty($this->data)) {
-			$this->data['Report']['user_id'] = $this->Auth->user('id');
-			$this->data['Report']['item_id'] = $user_id;
-			$this->data['Report']['itemType'] = Report::USER;
+		if (!empty($this->request->data)) {
+			$this->request->data['Report']['user_id'] = $this->Auth->user('id');
+			$this->request->data['Report']['item_id'] = $user_id;
+			$this->request->data['Report']['itemType'] = Report::USER;
 			
-			if ($this->Report->save($this->data, true, array('item_id', 'itemType', 'user_id', 'comment'))) {
+			if ($this->Report->save($this->request->data, true, array('item_id', 'itemType', 'user_id', 'comment'))) {
 				$this->Session->setFlash(__d('forum', 'You have succesfully reported this user! A moderator will review this topic and take the necessary action.'));
-				unset($this->data['Report']);
+				unset($this->request->data['Report']);
 			}
 		}
 		
@@ -167,13 +167,13 @@ class UsersController extends ForumAppController {
 	 * Admin index!
 	 */
 	public function admin_index() {
-		if (!empty($this->data)) {
-			if (!empty($this->data['Profile']['username'])) {
-				$this->paginate['Profile']['conditions']['User.'. $this->config['userMap']['username'] .' LIKE'] = '%'. Sanitize::clean($this->data['Profile']['username']) .'%';
+		if (!empty($this->request->data)) {
+			if (!empty($this->request->data['Profile']['username'])) {
+				$this->paginate['Profile']['conditions']['User.'. $this->config['userMap']['username'] .' LIKE'] = '%'. Sanitize::clean($this->request->data['Profile']['username']) .'%';
 			}
 			
-			if (!empty($this->data['Profile']['id'])) {
-				$this->paginate['Profile']['conditions']['User.id'] = $this->data['Profile']['id'];
+			if (!empty($this->request->data['Profile']['id'])) {
+				$this->paginate['Profile']['conditions']['User.id'] = $this->request->data['Profile']['id'];
 			}
 		}
 		
@@ -195,15 +195,15 @@ class UsersController extends ForumAppController {
 			return $this->cakeError('error404');
 		}
 		
-		if (!empty($this->data)) {
+		if (!empty($this->request->data)) {
 			$this->Profile->id = $id;
 			
-			if ($this->Profile->save($this->data, true)) {
+			if ($this->Profile->save($this->request->data, true)) {
 				$this->Session->setFlash(sprintf(__d('forum', 'Profile for %s has been updated.'), '<strong>'. $profile['User'][$this->config['userMap']['username']] .'</strong>'));
 				$this->redirect(array('controller' => 'users', 'action' => 'index', 'admin' => true));
 			}
 		} else {
-			$this->data = $profile;
+			$this->request->data = $profile;
 		}
 		
 		$this->Toolbar->pageTitle(__d('forum', 'Edit User'));

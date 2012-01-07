@@ -41,13 +41,13 @@ class PostsController extends ForumAppController {
 			'permission' => $topic['Forum']['accessReply']
 		));
 		
-		if (!empty($this->data)) {
-			$this->data['Post']['forum_id'] = $topic['Topic']['forum_id'];
-			$this->data['Post']['topic_id'] = $topic['Topic']['id'];
-			$this->data['Post']['user_id'] = $user_id;
-			$this->data['Post']['userIP'] = $this->RequestHandler->getClientIp();
+		if (!empty($this->request->data)) {
+			$this->request->data['Post']['forum_id'] = $topic['Topic']['forum_id'];
+			$this->request->data['Post']['topic_id'] = $topic['Topic']['id'];
+			$this->request->data['Post']['user_id'] = $user_id;
+			$this->request->data['Post']['userIP'] = $this->request->clientIp();
 
-			if ($post_id = $this->Post->add($this->data['Post'])) {
+			if ($post_id = $this->Post->add($this->request->data['Post'])) {
 				if ($topic['Forum']['settingPostCount']) {
 					$this->Profile->increasePosts($user_id);
 				}
@@ -60,7 +60,7 @@ class PostsController extends ForumAppController {
 				$quote = $this->Post->getQuote($quote_id);
 
 				if (!empty($quote)) {
-					$this->data['Post']['content'] = '[quote="'. $quote['User'][$this->config['userMap']['username']] .'" date="'. $quote['Post']['created'] .'"]'. $quote['Post']['content'] .'[/quote]';
+					$this->request->data['Post']['content'] = '[quote="'. $quote['User'][$this->config['userMap']['username']] .'" date="'. $quote['Post']['created'] .'"]'. $quote['Post']['content'] .'[/quote]';
 				}
 			}
 		}
@@ -85,14 +85,14 @@ class PostsController extends ForumAppController {
 			'ownership' => $post['Post']['user_id']
 		));
 		
-		if (!empty($this->data)) {
+		if (!empty($this->request->data)) {
 			$this->Post->id = $id;
 			
-			if ($this->Post->save($this->data, true, array('content', 'contentHtml'))) {
+			if ($this->Post->save($this->request->data, true, array('content', 'contentHtml'))) {
 				$this->Toolbar->goToPage($post['Post']['topic_id'], $id);
 			}
 		} else {
-			$this->data = $post;
+			$this->request->data = $post;
 		}
 		
 		$this->Toolbar->pageTitle(__d('forum', 'Edit Post'));
@@ -133,17 +133,17 @@ class PostsController extends ForumAppController {
 			'exists' => $post
 		));
 		
-		if (!empty($this->data)) {
-			$this->data['Report']['user_id'] = $user_id;
-			$this->data['Report']['item_id'] = $id;
-			$this->data['Report']['itemType'] = Report::POST;
+		if (!empty($this->request->data)) {
+			$this->request->data['Report']['user_id'] = $user_id;
+			$this->request->data['Report']['item_id'] = $id;
+			$this->request->data['Report']['itemType'] = Report::POST;
 			
-			if ($this->Report->save($this->data, true, array('item_id', 'itemType', 'user_id', 'comment'))) {
+			if ($this->Report->save($this->request->data, true, array('item_id', 'itemType', 'user_id', 'comment'))) {
 				$this->Session->setFlash(__d('forum', 'You have succesfully reported this post! A moderator will review this post and take the necessary action.'));
-				unset($this->data['Report']);
+				unset($this->request->data['Report']);
 			}
 		} else {
-			$this->data['Report']['post'] = $post['Post']['content'];
+			$this->request->data['Report']['post'] = $post['Post']['content'];
 		}
 		
 		$this->Toolbar->pageTitle(__d('forum', 'Report Post'));

@@ -67,14 +67,14 @@ class ReportsController extends ForumAppController {
 	 * Reported topics.
 	 */
 	public function admin_topics() {
-		if (!empty($this->data)) {
-			if (!empty($this->data['Report']['items'])) {
+		if (!empty($this->request->data)) {
+			if (!empty($this->request->data['Report']['items'])) {
 				$this->loadModel('Forum.Topic');
 				
-				foreach ($this->data['Report']['items'] as $item) {
+				foreach ($this->request->data['Report']['items'] as $item) {
 					list($report_id, $item_id) = explode(':', $item);
 					
-					switch ($this->data['Report']['action']) {
+					switch ($this->request->data['Report']['action']) {
 						case 'delete':
 							$this->Topic->delete($item_id, true);
 						break;
@@ -87,7 +87,7 @@ class ReportsController extends ForumAppController {
 					$this->Report->delete($report_id, true);
 				}
 
-				$this->Session->setFlash(sprintf(__d('forum', 'A total of %d topics have been processed'), count($this->data['Report']['items'])));
+				$this->Session->setFlash(sprintf(__d('forum', 'A total of %d topics have been processed'), count($this->request->data['Report']['items'])));
 			}
 		}
 		
@@ -102,14 +102,14 @@ class ReportsController extends ForumAppController {
 	 * Reported posts.
 	 */
 	public function admin_posts() {
-		if (!empty($this->data)) {
-			if (!empty($this->data['Report']['items'])) {
+		if (!empty($this->request->data)) {
+			if (!empty($this->request->data['Report']['items'])) {
 				$this->loadModel('Forum.Post');
 				
-				foreach ($this->data['Report']['items'] as $item) {
+				foreach ($this->request->data['Report']['items'] as $item) {
 					list($report_id, $item_id) = explode(':', $item);
 					
-					switch ($this->data['Report']['action']) {
+					switch ($this->request->data['Report']['action']) {
 						case 'delete':
 							$this->Post->delete($item_id, true);
 						break;
@@ -118,7 +118,7 @@ class ReportsController extends ForumAppController {
 					$this->Report->delete($report_id, true);
 				}
 
-				$this->Session->setFlash(sprintf(__d('forum', 'A total of %d posts have been processed'), count($this->data['Report']['items'])));
+				$this->Session->setFlash(sprintf(__d('forum', 'A total of %d posts have been processed'), count($this->request->data['Report']['items'])));
 			}
 		}
 		
@@ -133,14 +133,14 @@ class ReportsController extends ForumAppController {
 	 * Reported users.
 	 */
 	public function admin_users() {
-		if (!empty($this->data)) {
-			if (!empty($this->data['Report']['items'])) {
+		if (!empty($this->request->data)) {
+			if (!empty($this->request->data['Report']['items'])) {
 				$this->loadModel('User');
 				
-				foreach ($this->data['Report']['items'] as $item) {
+				foreach ($this->request->data['Report']['items'] as $item) {
 					list($report_id, $item_id) = explode(':', $item);
 					
-					switch ($this->data['Report']['action']) {
+					switch ($this->request->data['Report']['action']) {
 						case 'ban':
 							$this->User->id = $item_id;
 							$this->User->saveField($this->config['userMap']['status'], $this->config['statusMap']['banned']);
@@ -150,7 +150,7 @@ class ReportsController extends ForumAppController {
 					$this->Report->delete($report_id, true);
 				}
 				
-				$this->Session->setFlash(sprintf(__d('forum', 'A total of %d users have been processed'), count($this->data['Report']['items'])));
+				$this->Session->setFlash(sprintf(__d('forum', 'A total of %d users have been processed'), count($this->request->data['Report']['items'])));
 			}
 		}
 		

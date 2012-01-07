@@ -92,9 +92,9 @@ class StationsController extends ForumAppController {
 			'moderate' => $forum['Forum']['id']
 		));
 		
-		if (!empty($this->data['Topic']['items'])) {
-			$items = $this->data['Topic']['items'];
-			$action = $this->data['Topic']['action'];
+		if (!empty($this->request->data['Topic']['items'])) {
+			$items = $this->request->data['Topic']['items'];
+			$action = $this->request->data['Topic']['action'];
 
 			foreach ($items as $topic_id) {
 				if (is_numeric($topic_id)) {
@@ -113,7 +113,7 @@ class StationsController extends ForumAppController {
 						$message = __d('forum', 'A total of %d topic(s) have been re-opened');
 
 					} else if ($action == 'move') {
-						$this->Forum->Topic->saveField('forum_id', $this->data['Topic']['move_id']);
+						$this->Forum->Topic->saveField('forum_id', $this->request->data['Topic']['move_id']);
 						$message = __d('forum', 'A total of %d topic(s) have been moved to another forum category');
 					}
 				}
@@ -140,7 +140,7 @@ class StationsController extends ForumAppController {
 	 * @param string $slug
 	 */
 	public function feed($slug) {
-		if ($this->RequestHandler->isRss()) {
+		if ($this->request->is('rss')) {
 			$forum = $this->Forum->get($slug);
 			
 			$this->Toolbar->verifyAccess(array(
@@ -203,8 +203,8 @@ class StationsController extends ForumAppController {
 	 * Admin index.
 	 */
 	public function admin_index() {
-		if (!empty($this->data)) {
-			$this->Forum->updateOrder($this->data);
+		if (!empty($this->request->data)) {
+			$this->Forum->updateOrder($this->request->data);
 			$this->Session->setFlash(__d('forum', 'The order of the forums have been updated!'));
 		}
 		
@@ -216,19 +216,19 @@ class StationsController extends ForumAppController {
 	 * Add a forum.
 	 */
 	public function admin_add() {
-		if (!empty($this->data)) {
-			if (empty($this->data['Forum']['forum_id'])) {
-				$this->data['Forum']['forum_id'] = 0;
+		if (!empty($this->request->data)) {
+			if (empty($this->request->data['Forum']['forum_id'])) {
+				$this->request->data['Forum']['forum_id'] = 0;
 			}
 			
-			if (empty($this->data['Forum']['access_level_id'])) {
-				$this->data['Forum']['access_level_id'] = 0;
+			if (empty($this->request->data['Forum']['access_level_id'])) {
+				$this->request->data['Forum']['access_level_id'] = 0;
 			}
 			
-			if ($this->Forum->save($this->data, true)) {
+			if ($this->Forum->save($this->request->data, true)) {
 				Cache::delete('Forum.getIndex', 'forum');
 				
-				$this->Session->setFlash(sprintf(__d('forum', 'The %s forum has been added.'), '<strong>'. $this->data['Forum']['title'] .'</strong>'));
+				$this->Session->setFlash(sprintf(__d('forum', 'The %s forum has been added.'), '<strong>'. $this->request->data['Forum']['title'] .'</strong>'));
 				$this->redirect(array('controller' => 'stations', 'action' => 'index', 'admin' => true));
 			}
 		}
@@ -252,18 +252,18 @@ class StationsController extends ForumAppController {
 			'exists' => $forum
 		));
 		
-		if (!empty($this->data)) {
+		if (!empty($this->request->data)) {
 			$this->Forum->id = $id;
 			
-			if (empty($this->data['Forum']['forum_id']) || $this->data['Forum']['forum_id'] == $id) {
-				$this->data['Forum']['forum_id'] = 0;
+			if (empty($this->request->data['Forum']['forum_id']) || $this->request->data['Forum']['forum_id'] == $id) {
+				$this->request->data['Forum']['forum_id'] = 0;
 			}
 			
-			if (empty($this->data['Forum']['access_level_id'])) {
-				$this->data['Forum']['access_level_id'] = 0;
+			if (empty($this->request->data['Forum']['access_level_id'])) {
+				$this->request->data['Forum']['access_level_id'] = 0;
 			}
 			
-			if ($this->Forum->save($this->data, true)) {
+			if ($this->Forum->save($this->request->data, true)) {
 				Cache::delete('Forum.getIndex', 'forum');
 				Cache::delete('Forum.get-'. $forum['Forum']['slug'], 'forum');
 				
@@ -271,7 +271,7 @@ class StationsController extends ForumAppController {
 				$this->redirect(array('controller' => 'stations', 'action' => 'index', 'admin' => true));
 			}
 		} else {
-			$this->data = $forum;
+			$this->request->data = $forum;
 		}
 		
 		$this->Toolbar->pageTitle(__d('forum', 'Edit Forum'), $forum['Forum']['title']);
@@ -293,9 +293,9 @@ class StationsController extends ForumAppController {
 			'exists' => $forum
 		));
 		
-		if (!empty($this->data)) {
-			$this->Forum->Topic->moveAll($id, $this->data['Forum']['move_topics']);
-			$this->Forum->moveAll($id, $this->data['Forum']['move_forums']);
+		if (!empty($this->request->data)) {
+			$this->Forum->Topic->moveAll($id, $this->request->data['Forum']['move_topics']);
+			$this->Forum->moveAll($id, $this->request->data['Forum']['move_forums']);
 			$this->Forum->delete($id, true);
 			
 			Cache::delete('Forum.getIndex', 'forum');

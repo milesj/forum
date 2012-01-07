@@ -83,12 +83,12 @@ class TopicsController extends ForumAppController {
 			'permission' => $forum['Forum'][$access]
 		));
 		
-		if (!empty($this->data)) {
-			$this->data['Topic']['status'] = 1;
-			$this->data['Topic']['user_id'] = $user_id;
-			$this->data['Topic']['userIP'] = $this->RequestHandler->getClientIp();
+		if (!empty($this->request->data)) {
+			$this->request->data['Topic']['status'] = 1;
+			$this->request->data['Topic']['user_id'] = $user_id;
+			$this->request->data['Topic']['userIP'] = $this->request->clientIp();
 
-			if ($topic_id = $this->Topic->add($this->data['Topic'])) {
+			if ($topic_id = $this->Topic->add($this->request->data['Topic'])) {
 				if ($forum['Forum']['settingPostCount']) {
 					$this->Profile->increasePosts($user_id);
 				}
@@ -98,7 +98,7 @@ class TopicsController extends ForumAppController {
 				$this->Toolbar->goToPage($topic_id);
 			}
 		} else {
-			$this->data['Topic']['forum_id'] = $forum['Forum']['id'];
+			$this->request->data['Topic']['forum_id'] = $forum['Forum']['id'];
 		}
 		
 		$this->Toolbar->pageTitle($pageTitle);
@@ -123,16 +123,16 @@ class TopicsController extends ForumAppController {
 			'ownership' => $topic['Topic']['user_id']
 		));
 		
-		if (!empty($this->data)) {
-			if ($this->Topic->saveAll($this->data, array('validate' => 'only'))) {
-				if ($this->Topic->edit($topic['Topic']['id'], $this->data)) {
+		if (!empty($this->request->data)) {
+			if ($this->Topic->saveAll($this->request->data, array('validate' => 'only'))) {
+				if ($this->Topic->edit($topic['Topic']['id'], $this->request->data)) {
 					Cache::delete('Topic.get-'. $slug, 'forum');
 					$this->Toolbar->goToPage($topic['Topic']['id']);
 				}
 			}
 		} else {
 			$topic['Poll']['expires'] = $this->Topic->daysBetween($topic['Poll']['created'], $topic['Poll']['expires']);
-			$this->data = $topic;
+			$this->request->data = $topic;
 		}
 		
 		$this->Toolbar->pageTitle(__d('forum', 'Edit Topic'));
@@ -146,7 +146,7 @@ class TopicsController extends ForumAppController {
 	 * @param string $slug
 	 */
 	public function feed($slug) {
-		if ($this->RequestHandler->isRss()) {
+		if ($this->request->is('rss')) {
 			$topic = $this->Topic->get($slug);
 			
 			$this->Toolbar->verifyAccess(array(
@@ -201,14 +201,14 @@ class TopicsController extends ForumAppController {
 			'exists' => $topic
 		));
 		
-		if (!empty($this->data)) {
-			$this->data['Report']['user_id'] = $user_id;
-			$this->data['Report']['item_id'] = $topic['Topic']['id'];
-			$this->data['Report']['itemType'] = Report::TOPIC;
+		if (!empty($this->request->data)) {
+			$this->request->data['Report']['user_id'] = $user_id;
+			$this->request->data['Report']['item_id'] = $topic['Topic']['id'];
+			$this->request->data['Report']['itemType'] = Report::TOPIC;
 			
-			if ($this->Report->save($this->data, true, array('item_id', 'itemType', 'user_id', 'comment'))) {
+			if ($this->Report->save($this->request->data, true, array('item_id', 'itemType', 'user_id', 'comment'))) {
 				$this->Session->setFlash(__d('forum', 'You have succesfully reported this topic! A moderator will review this topic and take the necessary action.'));
-				unset($this->data['Report']);
+				unset($this->request->data['Report']);
 			}
 		}
 		
@@ -230,8 +230,8 @@ class TopicsController extends ForumAppController {
 			'permission' => $topic['Forum']['accessRead']
 		));
 		
-		if (!empty($this->data['Poll']['option'])) {
-			$this->Topic->Poll->vote($topic['Poll']['id'], $this->data['Poll']['option'], $user_id);
+		if (!empty($this->request->data['Poll']['option'])) {
+			$this->Topic->Poll->vote($topic['Poll']['id'], $this->request->data['Poll']['option'], $user_id);
 			$this->redirect(array('plugin' => 'forum', 'controller' => 'topics', 'action' => 'view', $slug));
 		}
 		
@@ -303,9 +303,9 @@ class TopicsController extends ForumAppController {
 			'moderate' => $topic['Topic']['forum_id']
 		));
 		
-		if (!empty($this->data['Post']['items'])) {
-			$items = $this->data['Post']['items'];
-			$action = $this->data['Post']['action'];
+		if (!empty($this->request->data['Post']['items'])) {
+			$items = $this->request->data['Post']['items'];
+			$action = $this->request->data['Post']['action'];
 
 			foreach ($items as $post_id) {
 				if (is_numeric($post_id)) {

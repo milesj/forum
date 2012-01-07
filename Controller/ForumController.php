@@ -36,7 +36,7 @@ class ForumController extends ForumAppController {
 	 * RSS Feed.
 	 */
 	public function feed() {
-		if ($this->RequestHandler->isRss()) {
+		if ($this->request->is('rss')) {
 			$this->set('items', $this->Topic->getLatest());
 			$this->set('document', array('xmlns:dc' => 'http://purl.org/dc/elements/1.1/'));
 		} else {
@@ -98,15 +98,15 @@ class ForumController extends ForumAppController {
 	public function admin_settings() {
 		$this->loadModel('Forum.Setting');
 		
-		if (!empty($this->data)) {
-			if ($this->Setting->update($this->data)) {
+		if (!empty($this->request->data)) {
+			if ($this->Setting->update($this->request->data)) {
 				$this->Session->setFlash(__d('forum', 'Settings have been updated!'));
 				
 				Cache::delete('Setting.getSettings', 'forum');
-				Configure::write('Forum.settings', $this->data['Setting']);
+				Configure::write('Forum.settings', $this->request->data['Setting']);
 			}
 		} else {
-			$this->data['Setting'] = $this->settings;
+			$this->request->data['Setting'] = $this->settings;
 		}
 		
 		$this->Toolbar->pageTitle(__d('forum', 'Settings'));
