@@ -22,7 +22,7 @@ class AjaxHandlerComponent extends Component {
 	 * @access public
 	 * @var string
 	 */
-	public $version = '2.0';
+	public $version = '2.0.1';
 	
 	/**
 	 * Components.
@@ -86,7 +86,7 @@ class AjaxHandlerComponent extends Component {
 			// Must disable security component for AJAX
 			if (isset($controller->Security)) {
 				$controller->Security->validatePost = false;
-				$Controller->Security->csrfCheck = false;
+				$controller->Security->csrfCheck = false;
 			}
 
 			// If not from this domain, destroy
@@ -112,7 +112,7 @@ class AjaxHandlerComponent extends Component {
 	public function startup($controller) {
 		$handled = ($this->_handled === array('*') || in_array($controller->action, $this->_handled));
 
-		if ($controller->request->is('ajax') && !$handled) {
+		if ($handled && !$controller->request->is('ajax')) {
 			if (isset($controller->Security)) {
 				$controller->Security->blackHole($controller, 'You are not authorized to process this request.');
 			} else {
@@ -131,7 +131,7 @@ class AjaxHandlerComponent extends Component {
 	 */
 	public function handle() {
 		$actions = func_get_args();
-		
+
 		if ($actions === array('*') || empty($actions)) {
 			$this->_handled = array('*');
 		} else {
