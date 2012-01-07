@@ -69,7 +69,7 @@ msgid "Edit Post"
 msgstr ""
 
 #: controllers/posts_controller.php:142;142
-msgid "You have succesfully reported this post! A moderator will review this post and take the necessary action."
+msgid "You have successfully reported this post! A moderator will review this post and take the necessary action."
 msgstr ""
 
 #: controllers/posts_controller.php:149;149

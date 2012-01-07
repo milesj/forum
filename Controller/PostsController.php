@@ -139,7 +139,7 @@ class PostsController extends ForumAppController {
 			$this->request->data['Report']['itemType'] = Report::POST;
 			
 			if ($this->Report->save($this->request->data, true, array('item_id', 'itemType', 'user_id', 'comment'))) {
-				$this->Session->setFlash(__d('forum', 'You have succesfully reported this post! A moderator will review this post and take the necessary action.'));
+				$this->Session->setFlash(__d('forum', 'You have successfully reported this post! A moderator will review this post and take the necessary action.'));
 				unset($this->request->data['Report']);
 			}
 		} else {
