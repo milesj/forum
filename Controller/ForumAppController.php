@@ -7,11 +7,12 @@
  * @license     http://opensource.org/licenses/mit-license.php - Licensed under The MIT License
  * @link        http://milesj.me/code/cakephp/forum
  */
-  
+ 
+App::uses('ClassRegistry', 'Utility');
+App::uses('Sanitize', 'Utility');
+
 Configure::load('Forum.config');
 Configure::write('Forum.settings', ClassRegistry::init('Forum.Setting')->getSettings());
-
-App::import('Core', 'Sanitize');
 
 class ForumAppController extends AppController {
 

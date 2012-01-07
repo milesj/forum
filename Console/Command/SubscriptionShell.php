@@ -11,7 +11,7 @@
 Configure::write('debug', 2);
 Configure::load('Forum.config');
 
-App::import('Component', 'Email');
+App::uses('EmailComponent', 'Controller/Component');
 
 class SubscriptionShell extends Shell {
 	

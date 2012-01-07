@@ -12,9 +12,11 @@ Configure::write('debug', 2);
 Configure::write('Cache.disable', true);
 Configure::load('Forum.config');
 
-App::import('Core', array('Security', 'Sanitize', 'Validation'));
-App::import('Model', 'ConnectionManager', false);
-App::import('Model', 'User');
+App::uses('ConnectionManager', 'Model');
+App::uses('User', 'Model');
+App::uses('Security', 'Utility');
+App::uses('Sanitize', 'Utility');
+App::uses('Validation', 'Utility');
 
 define('FORUM_PLUGIN', dirname(dirname(dirname(__FILE__))) . DS);
 define('FORUM_SCHEMA', FORUM_PLUGIN . 'config' . DS . 'schema' . DS);

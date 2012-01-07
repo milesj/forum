@@ -8,7 +8,7 @@
  * @link        http://milesj.me/code/cakephp/forum
  */
 
-App::import('Core', 'CakeSession');
+App::uses('CakeSession', 'Model/Datasource');
 
 class ForumAppModel extends AppModel {
 

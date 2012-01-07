@@ -11,7 +11,7 @@
 Configure::write('debug', 2);
 Configure::load('Forum.config');
 
-App::import('Model', 'ConnectionManager', false);
+App::uses('ConnectionManager', 'Model');
 
 define('FORUM_PLUGIN', dirname(dirname(dirname(__FILE__))) . DS);
 define('FORUM_SCHEMA', FORUM_PLUGIN . 'config' . DS . 'upgrade' . DS);
