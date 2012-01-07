@@ -47,7 +47,7 @@ class StationsController extends ForumAppController {
 	 * Redirect.
 	 */
 	public function index() {
-		$this->Toolbar->goToPage(); 
+		$this->ForumToolbar->goToPage(); 
 	}
 
 	/**
@@ -59,7 +59,7 @@ class StationsController extends ForumAppController {
 		$forum = $this->Forum->get($slug);
 		$user_id = $this->Auth->user('id');
 		
-		$this->Toolbar->verifyAccess(array(
+		$this->ForumToolbar->verifyAccess(array(
 			'exists' => $forum, 
 			'permission' => $forum['Forum']['accessRead']
 		));
@@ -70,7 +70,7 @@ class StationsController extends ForumAppController {
 			'Topic.type' => Topic::NORMAL
 		);
 		
-		$this->Toolbar->pageTitle($forum['Forum']['title']);
+		$this->ForumToolbar->pageTitle($forum['Forum']['title']);
 		$this->set('forum', $forum);
 		$this->set('topics', $this->paginate('Topic'));
 		$this->set('stickies', $this->Forum->Topic->getStickiesInForum($forum['Forum']['id']));
@@ -86,7 +86,7 @@ class StationsController extends ForumAppController {
 	public function moderate($slug) {
 		$forum = $this->Forum->get($slug);
 		
-		$this->Toolbar->verifyAccess(array(
+		$this->ForumToolbar->verifyAccess(array(
 			'exists' => $forum, 
 			'permission' => $forum['Forum']['accessRead'],
 			'moderate' => $forum['Forum']['id']
@@ -128,7 +128,7 @@ class StationsController extends ForumAppController {
 			'Topic.type' => Topic::NORMAL
 		);
 		
-		$this->Toolbar->pageTitle(__d('forum', 'Moderate'), $forum['Forum']['title']);
+		$this->ForumToolbar->pageTitle(__d('forum', 'Moderate'), $forum['Forum']['title']);
 		$this->set('forum', $forum);
 		$this->set('topics', $this->paginate('Topic'));
 		$this->set('forums', $this->Forum->getGroupedHierarchy('accessRead'));
@@ -143,7 +143,7 @@ class StationsController extends ForumAppController {
 		if ($this->request->is('rss')) {
 			$forum = $this->Forum->get($slug);
 			
-			$this->Toolbar->verifyAccess(array(
+			$this->ForumToolbar->verifyAccess(array(
 				'exists' => $forum
 			));
 		
@@ -208,7 +208,7 @@ class StationsController extends ForumAppController {
 			$this->Session->setFlash(__d('forum', 'The order of the forums have been updated!'));
 		}
 		
-		$this->Toolbar->pageTitle(__d('forum', 'Manage Forums'));
+		$this->ForumToolbar->pageTitle(__d('forum', 'Manage Forums'));
 		$this->set('forums', $this->Forum->getAdminIndex());
 	}
 	
@@ -233,7 +233,7 @@ class StationsController extends ForumAppController {
 			}
 		}
 
-		$this->Toolbar->pageTitle(__d('forum', 'Add Forum'));
+		$this->ForumToolbar->pageTitle(__d('forum', 'Add Forum'));
 		$this->set('method', 'add');
 		$this->set('levels', $this->Forum->AccessLevel->getHigherLevels());
 		$this->set('forums', $this->Forum->getHierarchy());
@@ -248,7 +248,7 @@ class StationsController extends ForumAppController {
 	public function admin_edit($id) {
 		$forum = $this->Forum->getById($id);
 		
-		$this->Toolbar->verifyAccess(array(
+		$this->ForumToolbar->verifyAccess(array(
 			'exists' => $forum
 		));
 		
@@ -274,7 +274,7 @@ class StationsController extends ForumAppController {
 			$this->request->data = $forum;
 		}
 		
-		$this->Toolbar->pageTitle(__d('forum', 'Edit Forum'), $forum['Forum']['title']);
+		$this->ForumToolbar->pageTitle(__d('forum', 'Edit Forum'), $forum['Forum']['title']);
 		$this->set('method', 'edit');
 		$this->set('levels', $this->Forum->AccessLevel->getHigherLevels());
 		$this->set('forums', $this->Forum->getHierarchy());
@@ -289,7 +289,7 @@ class StationsController extends ForumAppController {
 	public function admin_delete($id) {
 		$forum = $this->Forum->getById($id);
 		
-		$this->Toolbar->verifyAccess(array(
+		$this->ForumToolbar->verifyAccess(array(
 			'exists' => $forum
 		));
 		
@@ -304,7 +304,7 @@ class StationsController extends ForumAppController {
 			$this->redirect(array('controller' => 'stations', 'action' => 'index', 'admin' => true));
 		}
 		
-		$this->Toolbar->pageTitle(__d('forum', 'Delete Forum'), $forum['Forum']['title']);
+		$this->ForumToolbar->pageTitle(__d('forum', 'Delete Forum'), $forum['Forum']['title']);
 		$this->set('forum', $forum);
 		$this->set('levels', $this->Forum->AccessLevel->getHigherLevels());
 		$this->set('topicForums', $this->Forum->getGroupedHierarchy());

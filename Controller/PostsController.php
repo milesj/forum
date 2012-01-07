@@ -22,7 +22,7 @@ class PostsController extends ForumAppController {
 	 * Redirect.
 	 */ 
 	public function index() {
-		$this->Toolbar->goToPage(); 
+		$this->ForumToolbar->goToPage(); 
 	}
 	
 	/**
@@ -35,7 +35,7 @@ class PostsController extends ForumAppController {
 		$topic = $this->Post->Topic->get($slug);
 		$user_id = $this->Auth->user('id');
 		
-		$this->Toolbar->verifyAccess(array(
+		$this->ForumToolbar->verifyAccess(array(
 			'exists' => $topic,
 			'status' => $topic['Topic']['status'], 
 			'permission' => $topic['Forum']['accessReply']
@@ -52,8 +52,8 @@ class PostsController extends ForumAppController {
 					$this->Profile->increasePosts($user_id);
 				}
 				
-				$this->Toolbar->updatePosts($post_id);
-				$this->Toolbar->goToPage($topic['Topic']['id'], $post_id);
+				$this->ForumToolbar->updatePosts($post_id);
+				$this->ForumToolbar->goToPage($topic['Topic']['id'], $post_id);
 			}
 		} else {
 			if ($quote_id) {
@@ -65,7 +65,7 @@ class PostsController extends ForumAppController {
 			}
 		}
 		
-		$this->Toolbar->pageTitle(__d('forum', 'Post Reply'), $topic['Topic']['title']);
+		$this->ForumToolbar->pageTitle(__d('forum', 'Post Reply'), $topic['Topic']['title']);
 		$this->set('topic', $topic);
 		$this->set('review', $this->Post->getTopicReview($topic['Topic']['id']));
 	}
@@ -79,7 +79,7 @@ class PostsController extends ForumAppController {
 		$post = $this->Post->get($id);
 		$user_id = $this->Auth->user('id');
 		
-		$this->Toolbar->verifyAccess(array(
+		$this->ForumToolbar->verifyAccess(array(
 			'exists' => $post, 
 			'moderate' => $post['Topic']['forum_id'],
 			'ownership' => $post['Post']['user_id']
@@ -89,13 +89,13 @@ class PostsController extends ForumAppController {
 			$this->Post->id = $id;
 			
 			if ($this->Post->save($this->request->data, true, array('content', 'contentHtml'))) {
-				$this->Toolbar->goToPage($post['Post']['topic_id'], $id);
+				$this->ForumToolbar->goToPage($post['Post']['topic_id'], $id);
 			}
 		} else {
 			$this->request->data = $post;
 		}
 		
-		$this->Toolbar->pageTitle(__d('forum', 'Edit Post'));
+		$this->ForumToolbar->pageTitle(__d('forum', 'Edit Post'));
 		$this->set('post', $post);
 	}
 	
@@ -108,7 +108,7 @@ class PostsController extends ForumAppController {
 		$post = $this->Post->get($id);
 		$user_id = $this->Auth->user('id');
 		
-		$this->Toolbar->verifyAccess(array(
+		$this->ForumToolbar->verifyAccess(array(
 			'exists' => $post, 
 			'moderate' => $post['Topic']['forum_id'],
 			'ownership' => $post['Post']['user_id']
@@ -129,7 +129,7 @@ class PostsController extends ForumAppController {
 		$post = $this->Post->get($id);
 		$user_id = $this->Auth->user('id');
 		
-		$this->Toolbar->verifyAccess(array(
+		$this->ForumToolbar->verifyAccess(array(
 			'exists' => $post
 		));
 		
@@ -146,7 +146,7 @@ class PostsController extends ForumAppController {
 			$this->request->data['Report']['post'] = $post['Post']['content'];
 		}
 		
-		$this->Toolbar->pageTitle(__d('forum', 'Report Post'));
+		$this->ForumToolbar->pageTitle(__d('forum', 'Report Post'));
 		$this->set('post', $post);
 	}
 	
