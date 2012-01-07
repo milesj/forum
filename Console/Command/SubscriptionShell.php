@@ -11,7 +11,7 @@
 Configure::write('debug', 2);
 Configure::load('Forum.config');
 
-App::uses('EmailComponent', 'Controller/Component');
+App::uses('CakeEmail', 'Network/Email');
 
 class SubscriptionShell extends Shell {
 	
@@ -86,16 +86,16 @@ class SubscriptionShell extends Shell {
 			$this->out('No new activity...');
 			return;
 		}
+
+		$email = new CakeEmail();
+		$email->from($this->settings['site_email']);
+		$email->replyTo($this->settings['site_email']);
+		$email->emailFormat('text');
 		
 		// Loop over each user and send one email
-		$email = new EmailComponent(null);
-		$email->from = $this->settings['site_email'];
-		$email->replyTo = $this->settings['site_email'];
-		$email->sendAs = 'text';
-		
 		foreach ($users as $user_id => $user) {
-			$email->to = $user[$this->config['userMap']['email']];
-			$email->subject = sprintf(__d('forum', '%s [Subscriptions]'), $this->settings['site_name']);
+			$email->to($user[$this->config['userMap']['email']]);
+			$email->subject(sprintf(__d('forum', '%s [Subscriptions]'), $this->settings['site_name']));
 			
 			if ($message = $this->formatEmail($user, $topics)) {
 				$email->send($message);
