@@ -1,10 +1,10 @@
-<?php 
+<?php
 
 $this->Html->addCrumb(__d('forum', 'Administration'), array('controller' => 'forum', 'action' => 'index'));
 $this->Html->addCrumb(__d('forum', 'Staff'), array('controller' => 'staff', 'action' => 'index')); ?>
 
 <div class="controls float-right">
-	<?php 
+	<?php
 	echo $this->Html->link(__d('forum', 'Add Staff'), array('action' => 'add_access'), array('class' => 'button'));
 	echo $this->Html->link(__d('forum', 'Add Access Level'), array('action' => 'add_access_level'), array('class' => 'button'));
 	echo $this->Html->link(__d('forum', 'Add Moderator'), array('action' => 'add_moderator'), array('class' => 'button')); ?>
@@ -18,7 +18,7 @@ $this->Html->addCrumb(__d('forum', 'Staff'), array('controller' => 'staff', 'act
 	<div class="containerHeader">
 		<h3><?php echo __d('forum', 'Levels'); ?></h3>
 	</div>
-	
+
 	<div class="containerContent">
 		<table class="table">
 			<thead>
@@ -37,8 +37,8 @@ $this->Html->addCrumb(__d('forum', 'Staff'), array('controller' => 'staff', 'act
 				<tr>
 					<td class="align-center"><?php echo $level['AccessLevel']['title']; ?></td>
 					<td class="align-center"><?php echo $level['AccessLevel']['level']; ?></td>
-					<td class="align-center"><?php echo __d('forum', $level['AccessLevel']['isAdmin'] ? 'Yes' : 'No'); ?></td>
-					<td class="align-center"><?php echo __d('forum', $level['AccessLevel']['isSuper'] ? 'Yes' : 'No'); ?></td>
+					<td class="align-center"><?php echo $level['AccessLevel']['isAdmin'] ? __d('forum', 'Yes') : __d('forum', 'No'); ?></td>
+					<td class="align-center"><?php echo $level['AccessLevel']['isSuper'] ? __d('forum', 'Yes') : __d('forum', 'No'); ?></td>
 					<td class="align-center gray">
 						<?php if ($level['AccessLevel']['id'] <= 4) { ?>
 							<em><?php echo __d('forum', 'Restricted'); ?></em>
@@ -60,7 +60,7 @@ $this->Html->addCrumb(__d('forum', 'Staff'), array('controller' => 'staff', 'act
 	<div class="containerHeader">
 		<h3><?php echo __d('forum', 'Staff'); ?></h3>
 	</div>
-	
+
 	<div class="containerContent">
 		<table class="table">
 			<thead>
@@ -86,7 +86,7 @@ $this->Html->addCrumb(__d('forum', 'Staff'), array('controller' => 'staff', 'act
 				</tr>
 
 			<?php } ?>
-				
+
 			</tbody>
 		</table>
 	</div>
@@ -96,7 +96,7 @@ $this->Html->addCrumb(__d('forum', 'Staff'), array('controller' => 'staff', 'act
 	<div class="containerHeader">
 		<h3><?php echo __d('forum', 'Moderators'); ?></h3>
 	</div>
-	
+
 	<div class="containerContent">
 		<table class="table">
 			<thead>
@@ -108,7 +108,7 @@ $this->Html->addCrumb(__d('forum', 'Staff'), array('controller' => 'staff', 'act
 				</tr>
 			</thead>
 			<tbody>
-    
+
 			<?php if (!empty($mods)) {
 				foreach ($mods as $user) { ?>
 
@@ -130,14 +130,14 @@ $this->Html->addCrumb(__d('forum', 'Staff'), array('controller' => 'staff', 'act
 				</tr>
 
 			<?php } ?>
-    
+
 			</tbody>
 		</table>
 	</div>
 </div>
 
 <div class="controls">
-	<?php 
+	<?php
 	echo $this->Html->link(__d('forum', 'Add Staff'), array('action' => 'add_access'), array('class' => 'button'));
 	echo $this->Html->link(__d('forum', 'Add Access Level'), array('action' => 'add_access_level'), array('class' => 'button'));
 	echo $this->Html->link(__d('forum', 'Add Moderator'), array('action' => 'add_moderator'), array('class' => 'button')); ?>
