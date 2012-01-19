@@ -11,4 +11,4 @@ CREATE TABLE `{prefix}subscriptions` (
 	KEY `topic_id` (`topic_id`),
 	KEY `forum_id` (`forum_id`),
 	KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='User topic subscriptions.' AUTO_INCREMENT=1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='User topic and forum subscriptions.' AUTO_INCREMENT=1;

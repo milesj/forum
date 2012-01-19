@@ -52,7 +52,7 @@ class UpgradeShell extends Shell {
 	 * @var array
 	 */
 	public $versions = array(
-		'2.2' => 'Subscriptions'
+		//'2.2' => 'Subscriptions'
 	);
 	
 	/**
@@ -96,11 +96,13 @@ class UpgradeShell extends Shell {
 		$this->out();
 		
 		$versions = array();
-		
-		foreach ($this->versions as $version => $title) {
-			if (!in_array($version, $this->complete)) {
-				$this->out(sprintf('[%s] %s', $version, $title));
-				$versions[] = $version;
+
+		if (!empty($this->versions)) {
+			foreach ($this->versions as $version => $title) {
+				if (!in_array($version, $this->complete)) {
+					$this->out(sprintf('[%s] %s', $version, $title));
+					$versions[] = $version;
+				}
 			}
 		}
 		
