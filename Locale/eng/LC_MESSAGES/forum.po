@@ -1890,3 +1890,11 @@ msgstr "Active"
 #: views/helpers/common.php:210
 msgid "status.banned"
 msgstr "Banned"
+
+#: controllers/users_controller.php:126,146,195
+msgid "Profile does not exist."
+msgstr ""
+
+#: views/errors/error404.ctp:2
+msgid "Page Not Found"
+msgstr ""

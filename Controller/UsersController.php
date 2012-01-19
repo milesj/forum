@@ -123,7 +123,7 @@ class UsersController extends ForumAppController {
 		$profile = $this->Profile->getByUser($user_id);
 		
 		if (empty($profile)) {
-			return $this->cakeError('error404');
+			throw new NotFoundException(__d('forum', 'Profile does not exist.'));
 		}
 		
 		$this->loadModel('Forum.Topic');
@@ -143,7 +143,7 @@ class UsersController extends ForumAppController {
 		$profile = $this->Profile->getByUser($user_id);
 		
 		if (empty($profile)) {
-			return $this->cakeError('error404');
+			throw new NotFoundException(__d('forum', 'Profile does not exist.'));
 		}
 		
 		$this->loadModel('Forum.Report');
@@ -192,7 +192,7 @@ class UsersController extends ForumAppController {
 		$profile = $this->Profile->get($id);
 		
 		if (empty($profile)) {
-			return $this->cakeError('error404');
+			throw new NotFoundException(__d('forum', 'Profile does not exist.'));
 		}
 		
 		if (!empty($this->request->data)) {
