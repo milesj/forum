@@ -87,6 +87,7 @@ abstract class DecodaFilter extends DecodaAbstract {
 	public function parse(array $tag, $content) {
 		$setup = $this->tag($tag['tag']);
 		$xhtml = $this->getParser()->config('xhtml');
+		$content = trim($content);
 		
 		if (empty($setup)) {
 			return;
@@ -100,7 +101,7 @@ abstract class DecodaFilter extends DecodaAbstract {
 				return $content;
 			}
 		}
-		
+
 		// Add linebreaks
 		switch ($setup['lineBreaks']) {
 			case self::NL_REMOVE:
@@ -109,11 +110,6 @@ abstract class DecodaFilter extends DecodaAbstract {
 			case self::NL_CONVERT:
 				$content = Decoda::nl2br($content, $xhtml);
 			break;
-		}
-
-		// Escape entities
-		if ($setup['escapeContent']) {
-			$content = htmlentities($content, ENT_QUOTES, 'UTF-8');
 		}
 
 		// Use a template if it exists
@@ -148,7 +144,7 @@ abstract class DecodaFilter extends DecodaAbstract {
 		}
 		
 		foreach ($attributes as $key => $value) {
-			$attr .= ' '. $key .'="'. $value .'"';
+			$attr .= ' ' . $key . '="' . $value . '"';
 		}
 
 		// Build HTML tag
@@ -158,15 +154,26 @@ abstract class DecodaFilter extends DecodaAbstract {
 			$html = $html[$xhtml];
 		}
 
-		$parsed = '<'. $html . $attr;
+		$parsed = '<' . $html . $attr;
 
 		if ($setup['autoClose']) {
 			$parsed .= $xhtml ? '/>' : '>';
 		} else {
-			$parsed .= '>'. (!empty($tag['content']) ? $tag['content'] : $content) .'</'. $html .'>';
+			$parsed .= '>' . (!empty($tag['content']) ? $tag['content'] : $content) . '</' . $html . '>';
 		}
 
 		return $parsed;
+	}
+
+	/**
+	 * Add any hook dependencies.
+	 *
+	 * @access public
+	 * @param Decoda $decoda
+	 * @return void
+	 */
+	public function setupHooks(Decoda $decoda) {
+		return;
 	}
 
 	/**
@@ -195,7 +202,6 @@ abstract class DecodaFilter extends DecodaAbstract {
 			'lineBreaks' => self::NL_CONVERT,
 			'autoClose' => false,
 			'preserveTags' => false,
-			'escapeContent' => false,
 			'escapeAttributes' => true,
 			'maxChildDepth' => -1,
 			
@@ -231,7 +237,7 @@ abstract class DecodaFilter extends DecodaAbstract {
 	 */
 	protected function _render(array $tag, $content) {
 		$setup = $this->tag($tag['tag']);
-		$path = DECODA_TEMPLATES . $setup['template'] .'.php';
+		$path = DECODA_TEMPLATES . $setup['template'] . '.php';
 
 		if (!file_exists($path)) {
 			throw new Exception(sprintf('Template file %s does not exist.', $setup['template']));

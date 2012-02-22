@@ -34,13 +34,12 @@ class CensorHook extends DecodaHook {
 	 * Load the censored words from the text file.
 	 *
 	 * @access public
-	 * @param array $config 
-	 * @return void
+	 * @param array $config
 	 */
 	public function __construct(array $config = array()) {
 		parent::__construct($config);
 		
-		$path = DECODA_CONFIG .'censored.txt';
+		$path = DECODA_CONFIG . 'censored.txt';
 
 		if (file_exists($path)) {
 			$this->blacklist(file($path));
@@ -54,10 +53,10 @@ class CensorHook extends DecodaHook {
 	 * @param string $content
 	 * @return string
 	 */
-	public function afterParse($content) {
+	public function beforeParse($content) {
 		if (!empty($this->_censored)) {
 			foreach ($this->_censored as $word) {
-				$content = preg_replace_callback('/(^|\s|\n)?'. $this->_prepare($word) .'(\s|\n|$)?/is', array($this, '_callback'), $content);
+				$content = preg_replace_callback('/(^|\s|\n)?' . $this->_prepare($word) . '(\s|\n|$)?/is', array($this, '_callback'), $content);
 			}
 		}
 
@@ -134,7 +133,7 @@ class CensorHook extends DecodaHook {
 			$suffix = implode('|', $suffix);
 		}
 		
-		$regex .= '(?:'. $suffix .')?';
+		$regex .= '(?:' . $suffix .')?';
 		
 		return $regex;
 	}

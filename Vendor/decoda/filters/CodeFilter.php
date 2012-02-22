@@ -25,7 +25,6 @@ class CodeFilter extends DecodaFilter {
 			'allowed' => self::TYPE_BOTH,
 			'lineBreaks' => self::NL_PRESERVE,
 			'preserveTags' => true,
-			'escapeContent' => true,
 			'attributes' => array(
 				'default' => '/[a-zA-Z0-9]+/i',
 				'hl' => '/[0-9,]+/'
@@ -37,5 +36,16 @@ class CodeFilter extends DecodaFilter {
 			'allowed' => self::TYPE_INLINE
 		)
 	);
+
+	/**
+	 * Add any hook dependencies.
+	 *
+	 * @access public
+	 * @param Decoda $decoda
+	 * @return void
+	 */
+	public function setupHooks(Decoda $decoda) {
+		$decoda->addHook(new CodeHook());
+	}
 
 }
