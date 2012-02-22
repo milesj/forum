@@ -106,7 +106,6 @@ class PostsController extends ForumAppController {
 	 */
 	public function delete($id) {
 		$post = $this->Post->get($id);
-		$user_id = $this->Auth->user('id');
 		
 		$this->ForumToolbar->verifyAccess(array(
 			'exists' => $post, 

@@ -213,7 +213,7 @@ class UsersController extends ForumAppController {
 	/**
 	 * Update the status for a user.
 	 * 
-	 * @param int $id
+	 * @param int $user_id
 	 * @param string $status 
 	 */
 	public function admin_status($user_id, $status) {

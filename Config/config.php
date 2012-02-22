@@ -39,6 +39,13 @@ $config['Forum']['routes'] = array(
 	'forgotPass' => array('plugin' => false, 'admin' => false, 'controller' => 'users', 'action' => 'forgot_password')
 );
 
+/**
+ * Load custom configuration if it exists.
+ */
+if (file_exists('custom.php')) {
+	include_once 'custom.php';
+}
+
 /***************************************************
  * DO NOT EDIT BELOW
  ***************************************************/
@@ -46,7 +53,7 @@ $config['Forum']['routes'] = array(
 /**
  * Current version.
  */
-$config['Forum']['version'] = '3.0 ALPHA';
+$config['Forum']['version'] = '3.0';
 
 /**
  * List of all timezones.
