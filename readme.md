@@ -14,6 +14,10 @@ This version is only compatible with CakePHP 2.0.
 * PHP 5.2, 5.3
 * Utils Plugin - https://github.com/CakeDC/utils/tree/2.0
 
+## Contributors ##
+
+* Jose Antonio Sanchez - Spanish Locale
+
 ## Documentation ##
 
 Thorough documentation can be found here: http://milesj.me/code/cakephp/forum

@@ -1,5 +1,5 @@
 <?php
-/** 
+/**
  * Forum - Configuration
  *
  * @author      Miles Johnson - http://milesj.me
@@ -20,7 +20,7 @@ $config['Forum']['userMap'] = array(
 );
 
 /**
- * A map of status values for the users "status" column. 
+ * A map of status values for the users "status" column.
  * This column determines if the user is pending, currently active, or banned.
  */
 $config['Forum']['statusMap'] = array(
@@ -95,9 +95,9 @@ $config['Forum']['timezones'] = array(
  */
 $config['Forum']['locales'] = array(
 	'eng' => 'English',
+	'spa' => 'Spanish',
 	/*'deu' => 'German',
 	'fre' => 'French',
-	'spa' => 'Spanish',
 	'rus' => 'Russian',
 	'ind' => 'Indonesian',
 	'bul' => 'Bulgarian'*/
@@ -105,9 +105,9 @@ $config['Forum']['locales'] = array(
 
 $config['Forum']['decodaLocales'] = array(
 	'eng' => 'en-us',
+	'spa' => 'es-mx',
 	/*'deu' => 'de-de',
 	'fre' => 'fr-fr',
-	'spa' => 'es-mx',
 	'rus' => 'ru-ru',
 	'ind' => 'id-id',
 	'bul' => 'bg-bg'*/

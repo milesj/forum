@@ -1,5 +1,5 @@
 <?php
-/** 
+/**
  * ForumAppController
  *
  * @author      Miles Johnson - http://milesj.me
@@ -7,7 +7,7 @@
  * @license     http://opensource.org/licenses/mit-license.php - Licensed under The MIT License
  * @link        http://milesj.me/code/cakephp/forum
  */
- 
+
 App::uses('ClassRegistry', 'Utility');
 App::uses('Sanitize', 'Utility');
 
@@ -31,7 +31,7 @@ class ForumAppController extends AppController {
 	 * @var array
 	 */
 	public $components = array('Session', 'Security', 'Cookie', 'Auth', 'Forum.ForumToolbar', 'Forum.AutoLogin');
-	
+
 	/**
 	 * Helpers.
 	 *
@@ -49,6 +49,7 @@ class ForumAppController extends AppController {
 	 */
 	public function _autoLogin($user) {
 		ClassRegistry::init('Forum.Profile')->login($user['User']['id']);
+
 		$this->Session->delete('Forum');
 	}
 
@@ -57,7 +58,7 @@ class ForumAppController extends AppController {
 	 */
 	public function beforeFilter() {
 		parent::beforeFilter();
-		
+
 		if (isset($this->params['admin'])) {
 			$this->ForumToolbar->verifyAdmin();
 			$this->layout = 'admin';
@@ -66,12 +67,12 @@ class ForumAppController extends AppController {
 		// Settings
 		$this->config = Configure::read('Forum');
 		$this->settings = Configure::read('Forum.settings');
-		
+
 		// Localization
 		$locale = $this->Auth->user('locale') ? $this->Auth->user('locale') : $this->settings['default_locale'];
 		Configure::write('Config.language', $locale);
 		setlocale(LC_ALL, $locale .'UTF8', $locale .'UTF-8', $locale, 'eng.UTF8', 'eng.UTF-8', 'eng', 'en_US');
-		
+
 		// Authorization
 		$referer = $this->referer();
 		$routes = $this->config['routes'];
@@ -84,7 +85,7 @@ class ForumAppController extends AppController {
 		$this->Auth->loginRedirect = $referer;
 		$this->Auth->logoutRedirect = $referer;
 		$this->Auth->autoRedirect = false;
-		
+
 		// AutoLogin
 		$this->AutoLogin->settings = array(
 			'model' => 'User',
@@ -105,15 +106,14 @@ class ForumAppController extends AppController {
 	 */
 	public function beforeRender() {
 		$user = $this->Auth->user();
-		
+
 		if (!empty($user)) {
 			$user = array('User' => $user);
 		}
-		
+
 		$this->set('user', $user);
 		$this->set('config', $this->config);
 		$this->set('settings', $this->settings);
 	}
 
 }
- 
