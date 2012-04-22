@@ -5,6 +5,7 @@
  * A class that handles the detection and conversion of certain resource formats / content types into other formats.
  * The current formats are supported: XML, JSON, Array, Object, Serialized
  *
+ * @version		1.3
  * @author      Miles Johnson - http://milesj.me
  * @copyright   Copyright 2006-2011, Miles Johnson, Inc.
  * @license     http://opensource.org/licenses/mit-license.php - Licensed under The MIT License
@@ -12,14 +13,6 @@
  */
 
 class TypeConverter {
-
-	/**
-	 * Current version.
-	 *
-	 * @access public
-	 * @var string
-	 */
-	public static $version = '1.2';
 
 	/**
 	 * Disregard XML attributes and only return the value.
@@ -170,19 +163,16 @@ class TypeConverter {
 	public static function toJson($resource) {
 		if (self::isJson($resource)) {
 			return $resource;
-
-		} else {
-			if ($xml = self::isXml($resource)) {
-				$resource = self::xmlToArray($xml);
-
-			} else if ($ser = self::isSerialized($resource)) {
-				$resource = $ser;
-			}
-
-			return json_encode($resource);
 		}
 
-		return $resource;
+		if ($xml = self::isXml($resource)) {
+			$resource = self::xmlToArray($xml);
+
+		} else if ($ser = self::isSerialized($resource)) {
+			$resource = $ser;
+		}
+
+		return json_encode($resource);
 	}
 
 	/**
@@ -387,7 +377,7 @@ class TypeConverter {
 			$xml = @simplexml_load_string($xml);
 		}
 
-		if ($xml->count() <= 0) {
+		if (count($xml->children()) <= 0) {
 			return (string)$xml;
 		}
 
@@ -411,7 +401,7 @@ class TypeConverter {
 							'value' => (string)$node
 						);
 
-						if ($node->count() > 0) {
+						if (count($node->children()) > 0) {
 							$data['value'] = self::xmlToArray($node, $format);
 						}
 
@@ -423,7 +413,7 @@ class TypeConverter {
 					case self::XML_MERGE:
 					case self::XML_OVERWRITE:
 						if ($format == self::XML_MERGE) {
-							if ($node->count() > 0) {
+							if (count($node->children()) > 0) {
 								$data = $data + self::xmlToArray($node, $format);
 							} else {
 								$data['value'] = (string)$node;
@@ -445,6 +435,58 @@ class TypeConverter {
 		}
 
 		return $array;
+	}
+
+	/**
+	 * Encode a resource object for UTF-8.
+	 *
+	 * @access public
+	 * @param mixed $data
+	 * @return array|string
+	 * @static
+	 */
+	public static function utf8Encode($data) {
+		if (is_string($data)) {
+			return utf8_encode($data);
+
+		} else if (is_array($data)) {
+			foreach ($data as $key => $value) {
+				$data[utf8_encode($key)] = self::utf8Encode($value);
+			}
+
+		} else if (is_object($data)) {
+			foreach ($data as $key => $value) {
+				$data->{$key} = self::utf8Encode($value);
+			}
+		}
+
+		return $data;
+	}
+
+	/**
+	 * Decode a resource object for UTF-8.
+	 *
+	 * @access public
+	 * @param mixed $data
+	 * @return array|string
+	 * @static
+	 */
+	public static function utf8Decode($data) {
+		if (is_string($data)) {
+			return utf8_decode($data);
+
+		} else if (is_array($data)) {
+			foreach ($data as $key => $value) {
+				$data[utf8_decode($key)] = self::utf8Decode($value);
+			}
+
+		} else if (is_object($data)) {
+			foreach ($data as $key => $value) {
+				$data->{$key} = self::utf8Decode($value);
+			}
+		}
+
+		return $data;
 	}
 
 }
