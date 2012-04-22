@@ -1,5 +1,5 @@
 <?php
-/** 
+/**
  * Forum - CommonHelper
  *
  * @author      Miles Johnson - http://milesj.me
@@ -27,26 +27,26 @@ class CommonHelper extends AppHelper {
 	 * @param array $forum
 	 * @return string
 	 */
-	public function forumIcon($forum) { 
+	public function forumIcon($forum) {
 		$icon = 'open';
-		
+
 		if (isset($forum['LastPost']['created'])) {
 			$lastPost = $forum['LastPost']['created'];
 		} else if (isset($forum['LastTopic']['created'])) {
 			$lastPost = $forum['LastTopic']['created'];
 		}
-		
+
 		if ($forum['status'] == 0) {
 			$icon = 'closed';
 		} else if (isset($lastPost) && $lastPost > $this->Session->read('Forum.lastVisit')) {
 			$icon = 'new';
 		}
-		
+
 		return $this->Html->image('/forum/img/forum_'. $icon .'.png', array(
 			'alt' => ucfirst($icon)
 		));
 	}
-	
+
 	/**
 	 * Gets the highest access level.
 	 *
@@ -67,7 +67,7 @@ class CommonHelper extends AppHelper {
 		$topics = $this->Session->read('Forum.topics');
 		$pastHour = strtotime('-1 hour');
 		$count = 0;
-		
+
 		if (!empty($topics)) {
 			foreach ($topics as $id => $time) {
 				if ($time >= $pastHour) {
@@ -75,10 +75,10 @@ class CommonHelper extends AppHelper {
 				}
 			}
 		}
-		
+
 		return $count;
 	}
-	
+
 	/**
 	 * Get posts made in the past hour.
 	 *
@@ -89,7 +89,7 @@ class CommonHelper extends AppHelper {
 		$posts = $this->Session->read('Forum.posts');
 		$pastHour = strtotime('-1 hour');
 		$count = 0;
-		
+
 		if (!empty($posts)) {
 			foreach ($posts as $id => $time) {
 				if ($time >= $pastHour) {
@@ -97,7 +97,7 @@ class CommonHelper extends AppHelper {
 				}
 			}
 		}
-		
+
 		return $count;
 	}
 
@@ -107,32 +107,32 @@ class CommonHelper extends AppHelper {
 	 * @access public
 	 * @param int $level
 	 * @param int $forum_id
-	 * @return boolean 
+	 * @return boolean
 	 */
-	public function hasAccess($level = AccessLevel::MEMBER, $forum_id = null) { 
+	public function hasAccess($level = AccessLevel::MEMBER, $forum_id = null) {
 		if ($this->Session->read('Forum.isAdmin')) {
 			return true;
-			
+
 		} else if ($level <= AccessLevel::SUPER && $this->Session->read('Forum.isSuper')) {
 			return true;
-			
+
 		} else if ($level <= AccessLevel::MOD && $forum_id) {
 			return in_array($forum_id, $this->Session->read('Forum.moderates'));
 		}
-		
+
 		return ($this->getAccess() >= $level);
 	}
-	
+
 	/**
 	 * Output the highest access level.
-	 * 
+	 *
 	 * @access public
 	 * @param array $levels
-	 * @return string 
+	 * @return string
 	 */
 	public function highestAccessLevel($levels) {
 		$highest = array();
-		
+
 		foreach ($levels as $level) {
 			if (empty($highest)) {
 				$highest = $level;
@@ -140,10 +140,10 @@ class CommonHelper extends AppHelper {
 				$highest = $level;
 			}
 		}
-		
+
 		return $highest['AccessLevel']['title'];
 	}
-	
+
 	/**
 	 * Prebuilt option lists for form selects.
 	 *
@@ -159,19 +159,19 @@ class CommonHelper extends AppHelper {
 				1 => __d('forum', 'Yes'),
 				0 => __d('forum', 'No')
 			);
-			
+
 		} else if ($type == 'topicStatus') {
 			$options = array(
 				1 => __d('forum', 'Open'),
 				0 => __d('forum', 'Closed')
 			);
-			
+
 		} else if ($type == 'forumStatus') {
 			$options = array(
 				1 => __d('forum', 'Visible'),
 				0 => __d('forum', 'Hidden')
 			);
-			
+
 		} else if ($type == 'access') {
 			$options = array(
 				1 => '1 ('. __d('forum', 'Member') .')',
@@ -185,17 +185,17 @@ class CommonHelper extends AppHelper {
 				9 => '9',
 				10 => '10 ('. __d('forum', 'Administrator') .')'
 			);
-			
+
 			if ($guest) {
 				array_unshift($options, '0 ('. __d('forum', 'Guest') .')');
 			}
-			
+
 		} else if ($type == 'userStatus') {
 			$options = array(
-				0 => __d('forum', 'Active'), 
+				0 => __d('forum', 'Active'),
 				1 => __d('forum', 'Banned')
 			);
-			
+
 		} else if ($type == 'topicTypes') {
 			$options = array(
 				0 => __d('forum', 'Normal'),
@@ -203,29 +203,29 @@ class CommonHelper extends AppHelper {
 				2 => __d('forum', 'Important'),
 				3 => __d('forum', 'Announcement')
 			);
-			
+
 		} else if ($type == 'statusMap') {
 			$statuses = array_flip(Configure::read('Forum.statusMap'));
 			$options = array();
-			
+
 			foreach ($statuses as $key => $status) {
 				$options[$key] = __d('forum', 'status.' . $status);
 			}
 		}
-		
+
 		if (isset($options[$value])) {
 			return $options[$value];
 		} else {
 			return $options;
 		}
 	}
-	
+
 	/**
 	 * Return the report type as a string name.
-	 * 
+	 *
 	 * @access public
 	 * @param int $type
-	 * @return string 
+	 * @return string
 	 */
 	public function reportType($type) {
 		$types = array(
@@ -233,7 +233,7 @@ class CommonHelper extends AppHelper {
 			2 => __d('forum', 'Post'),
 			3 => __d('forum', 'User')
 		);
-		
+
 		return $types[$type];
 	}
 
@@ -261,19 +261,19 @@ class CommonHelper extends AppHelper {
 	public function topicIcon($topic) {
 		$lastVisit = $this->Session->read('Forum.lastVisit');
 		$readTopics = $this->Session->read('Forum.readTopics');
-		
+
 		if (!is_array($readTopics)) {
 			$readTopics = array();
 		}
-		
+
 		$icon = 'open';
-		
+
 		if (isset($topic['LastPost']['created'])) {
 			$lastPost = $topic['LastPost']['created'];
 		} else if (isset($topic['Topic']['created'])) {
 			$lastPost = $topic['Topic']['created'];
 		}
-		
+
 		if (!$topic['Topic']['status']) {
 			$icon = 'closed';
 		} else {
@@ -287,18 +287,18 @@ class CommonHelper extends AppHelper {
 				$icon = 'announcement';
 			}
 		}
-		
+
 		if ($icon == 'open' || $icon == 'new') {
 			if ($topic['Topic']['post_count'] >= Configure::read('Forum.settings.posts_till_hot_topic')) {
 				$icon .= '_hot';
 			}
 		}
-		
+
 		return $this->Html->image('/forum/img/topic_'. $icon .'.png', array(
 			'alt' => ucfirst($icon)
 		));
 	}
-		
+
 	/**
 	 * Get the amount of pages for a topic.
 	 *
@@ -311,20 +311,20 @@ class CommonHelper extends AppHelper {
 			$postsPerPage = Configure::read('Forum.settings.posts_per_page');
 			$topic['page_count'] = ($topic['post_count'] > $postsPerPage) ? ceil($topic['post_count'] / $postsPerPage) : 1;
 		}
-		
+
 		$topicPages = array();
-		
+
 		for ($i = 1; $i <= $topic['page_count']; ++$i) {
 			$topicPages[] = $this->Html->link($i, array('controller' => 'topics', 'action' => 'view', $topic['slug'], 'page' => $i));
 		}
-		
+
 		if ($topic['page_count'] > Configure::read('Forum.settings.topic_pages_till_truncate')) {
 			array_splice($topicPages, 2, $topic['page_count'] - 4, '...');
 		}
-		
+
 		return $topicPages;
 	}
-	
+
 	/**
 	 * Get the type of topic.
 	 *
@@ -332,11 +332,11 @@ class CommonHelper extends AppHelper {
 	 * @param int $type
 	 * @return string
 	 */
-	public function topicType($type = '') {
+	public function topicType($type = null) {
 		if (empty($type)) {
 			return;
 		}
-		
+
 		$types = $this->options('topicTypes');
 
 		return $this->output('<strong>'. $types[$type] .'</strong>');

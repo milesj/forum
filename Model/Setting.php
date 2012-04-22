@@ -1,5 +1,5 @@
 <?php
-/** 
+/**
  * Forum - Setting
  *
  * @author      Miles Johnson - http://milesj.me
@@ -7,7 +7,7 @@
  * @license     http://opensource.org/licenses/mit-license.php - Licensed under The MIT License
  * @link        http://milesj.me/code/cakephp/forum
  */
- 
+
 class Setting extends ForumAppModel {
 
 	/**
@@ -155,31 +155,31 @@ class Setting extends ForumAppModel {
 			'cache' => __FUNCTION__
 		));
 	}
-	
+
 	/**
 	 * Update all the settings.
-	 * 
+	 *
 	 * @access public
 	 * @param array $data
-	 * @return boolean 
+	 * @return boolean
 	 */
 	public function update($data) {
 		$this->set($data);
-		
+
 		if ($this->validates()) {
 			$list = $this->find('list', array(
 				'fields' => array('Setting.key', 'Setting.id')
 			));
-			
+
 			foreach ($data['Setting'] as $key => $value) {
 				$this->id = $list[$key];
 				$this->saveField('value', $value);
 			}
-			
+
 			return true;
 		}
-		
+
 		return false;
 	}
-	
+
 }

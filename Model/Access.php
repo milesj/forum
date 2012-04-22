@@ -1,5 +1,5 @@
 <?php
-/** 
+/**
  * Forum - Access
  *
  * @author      Miles Johnson - http://milesj.me
@@ -7,9 +7,9 @@
  * @license     http://opensource.org/licenses/mit-license.php - Licensed under The MIT License
  * @link        http://milesj.me/code/cakephp/forum
  */
- 
+
 class Access extends ForumAppModel {
-	
+
 	/**
 	 * Access IDs.
 	 */
@@ -31,15 +31,15 @@ class Access extends ForumAppModel {
 	 * Belongs to.
 	 *
 	 * @access public
-	 * @var array 
+	 * @var array
 	 */
 	public $belongsTo = array(
 		'AccessLevel' => array(
 			'className' => 'Forum.AccessLevel'
-		), 
+		),
 		'User'
 	);
-	
+
 	/**
 	 * Validation.
 	 *
@@ -50,10 +50,10 @@ class Access extends ForumAppModel {
 		'user_id' => 'notEmpty',
 		'access_level_id' => 'notEmpty'
 	);
-	
+
 	/**
 	 * Add a user once conditions are validated.
-	 * 
+	 *
 	 * @access public
 	 * @param array $data
 	 * @return mixed
@@ -64,17 +64,17 @@ class Access extends ForumAppModel {
 				return $user;
 			}
 		}
-		
+
 		return false;
 	}
-	
+
 	/**
 	 * Grant access to a user, validating conditions.
-	 * 
+	 *
 	 * @access public
 	 * @param int $user_id
 	 * @param int $level_id
-	 * @return type 
+	 * @return type
 	 */
 	public function grant($user_id, $level_id) {
 		$count = $this->find('count', array(
@@ -83,26 +83,26 @@ class Access extends ForumAppModel {
 				'Access.access_level_id' => $level_id
 			)
 		));
-		
+
 		if ($count) {
 			return $this->invalidate('user_id', 'User already has this access');
 		}
-		
+
 		$this->create();
 		$this->save(array(
 			'user_id' => $user_id,
 			'access_level_id' => $level_id
 		));
-		
+
 		return true;
 	}
 
 	/**
 	 * Return an access level and its user.
-	 * 
+	 *
 	 * @access public
 	 * @param int $id
-	 * @return array 
+	 * @return array
 	 */
 	public function get($id) {
 		return $this->find('first', array(
@@ -110,7 +110,7 @@ class Access extends ForumAppModel {
 			'contain' => array('User', 'AccessLevel')
 		));
 	}
-	
+
 	/**
 	 * Get a list of all staff and their levels.
 	 *
@@ -123,7 +123,7 @@ class Access extends ForumAppModel {
 			'order' => array('Access.access_level_id' => 'ASC')
 		));
 	}
-	
+
 	/**
 	 * Get a list of all levels for a user.
 	 *
@@ -140,7 +140,7 @@ class Access extends ForumAppModel {
 
 	/**
 	 * Move all users to a new level.
-	 * 
+	 *
 	 * @access public
 	 * @param int $start_id
 	 * @param int $moved_id
@@ -152,17 +152,17 @@ class Access extends ForumAppModel {
 			array('Access.access_level_id' => $start_id)
 		);
 	}
-	
+
 	/**
 	 * Validate logical conditions.
-	 * 
+	 *
 	 * @access public
 	 * @param array $data
 	 * @return boolean
 	 */
 	public function validate($data) {
 		$this->set($data);
-		
+
 		if ($this->validates()) {
 			$userCount = $this->User->find('count', array(
 				'conditions' => array('User.id' => $data['user_id'])
@@ -174,8 +174,8 @@ class Access extends ForumAppModel {
 
 			return ClassRegistry::init('Profile')->getUserProfile($data['user_id']);
 		}
-		
+
 		return false;
 	}
-	
+
 }

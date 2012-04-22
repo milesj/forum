@@ -1,5 +1,5 @@
 <?php
-/** 
+/**
  * Forum - Profile
  *
  * @author      Miles Johnson - http://milesj.me
@@ -21,7 +21,7 @@ class Profile extends ForumAppModel {
 	 * @var array
 	 */
 	public $belongsTo = array('User');
-		
+
 	/**
 	 * Validate.
 	 *
@@ -64,10 +64,10 @@ class Profile extends ForumAppModel {
 			'contain' => array('User')
 		));
 	}
-		
+
 	/**
 	 * Get a users profile and all relevant information.
-	 * 
+	 *
 	 * @access public
 	 * @param int $user_id
 	 * @return array
@@ -83,10 +83,10 @@ class Profile extends ForumAppModel {
 			)
 		));
 	}
-	
+
 	/**
 	 * Return the latest user profiles.
-	 * 
+	 *
 	 * @access profile
 	 * @param int $limit
 	 * @return int
@@ -135,7 +135,7 @@ class Profile extends ForumAppModel {
 				'contain' => array('User')
 			));
 		}
-		
+
 		return $profile;
 	}
 
@@ -160,7 +160,7 @@ class Profile extends ForumAppModel {
 	public function increaseTopics($user_id) {
 		return $this->query('UPDATE `'. $this->tablePrefix .'profiles` AS `Profile` SET `Profile`.`totalTopics` = `Profile`.`totalTopics` + 1 WHERE `Profile`.`user_id` = '. (int) $user_id);
 	}
-	
+
 	/**
 	 * Login the user and update records.
 	 *
@@ -171,7 +171,7 @@ class Profile extends ForumAppModel {
 	public function login($user_id) {
 		if ($profile = $this->getUserProfile($user_id)) {
 			$this->id = $profile['Profile']['id'];
-			
+
 			return $this->save(array(
 				'currentLogin' => date('Y-m-d H:i:s'),
 				'lastLogin' => $profile['Profile']['currentLogin']
@@ -200,19 +200,23 @@ class Profile extends ForumAppModel {
 
 	/**
 	 * Parse the HTML version.
+	 *
+	 * @access public
+	 * @param array $options
+	 * @return boolean
 	 */
 	public function beforeSave($options) {
 		if (isset($this->data['Profile']['signature'])) {
 			$censored = array_map('trim', explode(',', $this->settings['censored_words']));
 			$locale = $this->config['decodaLocales'][Configure::read('Config.language')];
-			
+
 			$decoda = new Decoda($this->data['Profile']['signature']);
 			$decoda->defaults()->setXhtml()->setLocale($locale);
 			$decoda->getHook('Censor')->blacklist($censored);
-			
+
 			$this->data['Profile']['signatureHtml'] = $decoda->parse();
 		}
-		
+
 		return true;
 	}
 

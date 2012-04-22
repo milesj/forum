@@ -1,5 +1,5 @@
 <?php
-/** 
+/**
  * Forum - SearchController
  *
  * @author      Miles Johnson - http://milesj.me
@@ -7,7 +7,7 @@
  * @license     http://opensource.org/licenses/mit-license.php - Licensed under The MIT License
  * @link        http://milesj.me/code/cakephp/forum
  */
- 
+
 class SearchController extends ForumAppController {
 
 	/**
@@ -25,20 +25,20 @@ class SearchController extends ForumAppController {
 	 * @var array
 	 */
 	public $components = array('Auth', 'Forum.AutoLogin');
-	
+
 	/**
 	 * Pagination.
 	 *
 	 * @access public
-	 * @var array 
+	 * @var array
 	 */
-	public $paginate = array( 
+	public $paginate = array(
 		'Topic' => array(
 			'order' => array('LastPost.created' => 'DESC'),
 			'contain' => array('Forum', 'User', 'Poll', 'LastPost', 'LastUser')
 		)
-	); 
-	
+	);
+
 	/**
 	 * Search the topics.
 	 *
@@ -53,21 +53,21 @@ class SearchController extends ForumAppController {
 			'Topic.post_count' => __d('forum', 'Total posts'),
 			'Topic.view_count' => __d('forum', 'Total views')
 		);
-		
+
 		if (!empty($this->params['named'])) {
 			foreach ($this->params['named'] as $field => $value) {
 				$this->request->data['Topic'][$field] = urldecode($value);
 			}
 		}
-		
+
 		if ($type == 'new_posts') {
 			$this->request->data['Topic']['orderBy'] = 'LastPost.created';
 			$this->paginate['Topic']['conditions']['LastPost.created >='] = $this->Session->read('Forum.lastVisit');
 		}
-		
+
 		if (!empty($this->request->data)) {
 			$searching = true;
-			
+
 			if (!empty($this->request->data['Topic']['keywords'])) {
 				$this->paginate['Topic']['conditions']['Topic.title LIKE'] = '%'. Sanitize::clean($this->request->data['Topic']['keywords']) .'%';
 			}
@@ -79,7 +79,7 @@ class SearchController extends ForumAppController {
 			if (!empty($this->request->data['Topic']['byUser'])) {
 				$this->paginate['Topic']['conditions']['User.'. $this->config['userMap']['username'] .' LIKE'] = '%'. Sanitize::clean($this->request->data['Topic']['byUser']) .'%';
 			}
-			
+
 			if (empty($this->request->data['Topic']['orderBy']) || !isset($orderBy[$this->request->data['Topic']['orderBy']])) {
 				$this->request->data['Topic']['orderBy'] = 'LastPost.created';
 			}
@@ -87,42 +87,42 @@ class SearchController extends ForumAppController {
 			$this->paginate['Topic']['conditions']['Forum.accessRead <='] = $this->Session->read('Forum.access');
 			$this->paginate['Topic']['order'] = array($this->request->data['Topic']['orderBy'] => 'DESC');
 			$this->paginate['Topic']['limit'] = $this->settings['topics_per_page'];
-			
+
 			$this->set('topics', $this->paginate('Topic'));
 		}
-		
+
 		$this->ForumToolbar->pageTitle(__d('forum', 'Search'));
 		$this->set('menuTab', 'search');
 		$this->set('searching', $searching);
 		$this->set('orderBy', $orderBy);
 		$this->set('forums', $forums);
 	}
-	
+
 	/**
 	 * Proxy action to build named parameters.
 	 */
 	public function proxy() {
 		$named = array();
-		
+
 		if (isset($this->request->data['Search'])) {
 			$this->request->data['Topic'] = $this->request->data['Search'];
 		}
-		
+
 		foreach ($this->request->data['Topic'] as $field => $value) {
 			if ($value != '') {
 				$named[$field] = urlencode($value);
-			}	
+			}
 		}
-		
+
 		$this->redirect(array_merge(array('controller' => 'search', 'action' => 'index'), $named));
 	}
-	
+
 	/**
 	 * Before filter.
 	 */
 	public function beforeFilter() {
 		parent::beforeFilter();
-		
+
 		$this->Auth->allow('*');
 	}
 

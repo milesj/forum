@@ -1,5 +1,5 @@
 <?php
-/** 
+/**
  * Forum - ForumController
  *
  * @author      Miles Johnson - http://milesj.me
@@ -7,19 +7,19 @@
  * @license     http://opensource.org/licenses/mit-license.php - Licensed under The MIT License
  * @link        http://milesj.me/code/cakephp/forum
  */
- 
+
 class ForumController extends ForumAppController {
 
 	/**
 	 * Models.
 	 *
-	 * @access public  
+	 * @access public
 	 * @var array
 	 */
 	public $uses = array('Forum.Topic', 'Forum.Profile');
 
 	/**
-	 * Forum index.  
+	 * Forum index.
 	 */
 	public function index() {
 		$this->ForumToolbar->pageTitle(__d('forum', 'Index'));
@@ -31,7 +31,7 @@ class ForumController extends ForumAppController {
 		$this->set('newestUser', 	$this->Profile->getNewestUser());
 		$this->set('whosOnline', 	$this->Profile->whosOnline());
 	}
-	
+
 	/**
 	 * RSS Feed.
 	 */
@@ -43,7 +43,7 @@ class ForumController extends ForumAppController {
 			$this->redirect('/forum/feed/feed.rss');
 		}
 	}
-	
+
 	/**
 	 * Help.
 	 */
@@ -51,17 +51,17 @@ class ForumController extends ForumAppController {
 		$this->ForumToolbar->pageTitle(__d('forum', 'Help'));
 		$this->set('menuTab', 'help');
 	}
-	
+
 	/**
 	 * Jump to a specific topic and post.
-	 * 
+	 *
 	 * @param int $topic_id
-	 * @param int $post_id 
+	 * @param int $post_id
 	 */
 	public function jump($topic_id, $post_id = null) {
 		$this->ForumToolbar->goToPage($topic_id, $post_id);
 	}
-	
+
 	/**
 	 * Rules.
 	 */
@@ -69,7 +69,7 @@ class ForumController extends ForumAppController {
 		$this->ForumToolbar->pageTitle(__d('forum', 'Rules'));
 		$this->set('menuTab', 'rules');
 	}
-	
+
 	/**
 	 * Administration home, list statistics.
 	 */
@@ -77,7 +77,7 @@ class ForumController extends ForumAppController {
 		$this->loadModel('Forum.Report');
 		$this->loadModel('Forum.Moderator');
 		$this->loadModel('Forum.Profile');
-		
+
 		$this->ForumToolbar->pageTitle(__d('forum', 'Administration'));
 		$this->set('menuTab', 'home');
 		$this->set('totalPosts', 	$this->Topic->Post->getTotal());
@@ -91,34 +91,34 @@ class ForumController extends ForumAppController {
 		$this->set('latestUsers', 	$this->Profile->getLatest());
 		$this->set('latestReports', $this->Report->getLatest());
 	}
-	
+
 	/**
 	 * Edit the settings.
 	 */
 	public function admin_settings() {
 		$this->loadModel('Forum.Setting');
-		
+
 		if (!empty($this->request->data)) {
 			if ($this->Setting->update($this->request->data)) {
 				$this->Session->setFlash(__d('forum', 'Settings have been updated!'));
-				
+
 				Cache::delete('Setting.getSettings', 'forum');
 				Configure::write('Forum.settings', $this->request->data['Setting']);
 			}
 		} else {
 			$this->request->data['Setting'] = $this->settings;
 		}
-		
+
 		$this->ForumToolbar->pageTitle(__d('forum', 'Settings'));
 		$this->set('menuTab', 'settings');
 	}
-	
+
 	/**
 	 * Before filter.
 	 */
 	public function beforeFilter() {
 		parent::beforeFilter();
-		
+
 		$this->Auth->allow('index', 'feed', 'help', 'rules', 'jump');
 	}
 

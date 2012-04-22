@@ -1,5 +1,5 @@
 <?php
-/** 
+/**
  * Forum - Moderator
  *
  * @author      Miles Johnson - http://milesj.me
@@ -7,23 +7,23 @@
  * @license     http://opensource.org/licenses/mit-license.php - Licensed under The MIT License
  * @link        http://milesj.me/code/cakephp/forum
  */
- 
+
 class Moderator extends ForumAppModel {
 
 	/**
 	 * Belongs to.
 	 *
 	 * @access public
-	 * @var array 
+	 * @var array
 	 */
 	public $belongsTo = array(
 		'Forum' => array(
 			'className' => 'Forum.Forum',
 			'fields' => array('Forum.id', 'Forum.title', 'Forum.slug')
-		), 
+		),
 		'User'
 	);
-	
+
 	/**
 	 * Validation.
 	 *
@@ -34,10 +34,10 @@ class Moderator extends ForumAppModel {
 		'user_id' => 'notEmpty',
 		'forum_id' => 'notEmpty'
 	);
-	
+
 	/**
 	 * Add a moderator after validating conditions.
-	 * 
+	 *
 	 * @access public
 	 * @param array $data
 	 * @return boolean
@@ -47,13 +47,13 @@ class Moderator extends ForumAppModel {
 			$this->create();
 			return $this->save($data, false);
 		}
-		
+
 		return false;
 	}
-	
+
 	/**
 	 * Edit a moderator after validating conditions.
-	 * 
+	 *
 	 * @access public
 	 * @param int $id
 	 * @param array $data
@@ -64,16 +64,16 @@ class Moderator extends ForumAppModel {
 			$this->id = $id;
 			return $this->save($data, false, array('forum_id'));
 		}
-		
+
 		return false;
 	}
-		
+
 	/**
 	 * Return an moderator and their forum.
-	 * 
+	 *
 	 * @access public
 	 * @param int $id
-	 * @return array 
+	 * @return array
 	 */
 	public function get($id) {
 		return $this->find('first', array(
@@ -81,7 +81,7 @@ class Moderator extends ForumAppModel {
 			'contain' => array('User', 'Forum')
 		));
 	}
-	
+
 	/**
 	 * Return a list of all moderators and their forums.
 	 *
@@ -94,7 +94,7 @@ class Moderator extends ForumAppModel {
 			'order' => array('Moderator.forum_id' => 'ASC')
 		));
 	}
-	
+
 	/**
 	 * Return a list of all forums a user moderates.
 	 *
@@ -108,10 +108,10 @@ class Moderator extends ForumAppModel {
 			'conditions' => array('Moderator.user_id' => $user_id)
 		));
 	}
-	
+
 	/**
 	 * Get all forums you moderate.
-	 * 
+	 *
 	 * @access public
 	 * @param int $user_id
 	 * @return array
@@ -122,17 +122,17 @@ class Moderator extends ForumAppModel {
 			'fields' => array('Moderator.forum_id')
 		));
 	}
-	
+
 	/**
 	 * Validate logical conditions.
-	 * 
+	 *
 	 * @access public
 	 * @param array $data
 	 * @return boolean
 	 */
 	public function validate($data) {
 		$this->set($data);
-		
+
 		if ($this->validates()) {
 			if (!empty($data['user_id'])) {
 				$userCount = $this->User->find('count', array(
@@ -157,7 +157,7 @@ class Moderator extends ForumAppModel {
 
 			return true;
 		}
-		
+
 		return false;
 	}
 

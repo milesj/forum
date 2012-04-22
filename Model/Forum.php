@@ -1,5 +1,5 @@
 <?php
-/** 
+/**
  * Forum - Forum
  *
  * @author      Miles Johnson - http://milesj.me
@@ -7,7 +7,7 @@
  * @license     http://opensource.org/licenses/mit-license.php - Licensed under The MIT License
  * @link        http://milesj.me/code/cakephp/forum
  */
- 
+
 class Forum extends ForumAppModel {
 
 	/**
@@ -86,7 +86,7 @@ class Forum extends ForumAppModel {
 			'dependent'		=> true
 		)
 	);
-	
+
 	/**
 	 * Validate.
 	 *
@@ -107,26 +107,26 @@ class Forum extends ForumAppModel {
 			)
 		)
 	);
-	
+
 	/**
 	 * Update all forums by going up the parent chain.
-	 * 
+	 *
 	 * @access public
 	 * @param int $id
-	 * @param array $data 
+	 * @param array $data
 	 * @return void
 	 */
 	public function chainUpdate($id, array $data) {
 		$this->id = $id;
 		$this->save($data, false, array_keys($data));
-		
+
 		$forum = $this->getById($id);
-		
+
 		if ($forum['Forum']['forum_id'] != 0) {
 			$this->chainUpdate($forum['Forum']['forum_id'], $data);
 		}
 	}
-	
+
 	/**
 	 * Get a forum.
 	 *
@@ -137,7 +137,7 @@ class Forum extends ForumAppModel {
 	public function get($slug) {
 		$access = $this->access();
 		$accessLevels = $this->accessLevels();
-		
+
 		return $this->find('first', array(
 			'conditions' => array(
 				'Forum.access_level_id' => $accessLevels,
@@ -145,7 +145,7 @@ class Forum extends ForumAppModel {
 				'Forum.slug' => $slug
 			),
 			'contain' => array(
-				'Parent', 
+				'Parent',
 				'SubForum' => array(
 					'conditions' => array(
 						'SubForum.access_level_id' => $accessLevels,
@@ -158,10 +158,10 @@ class Forum extends ForumAppModel {
 			'cache' => __FUNCTION__ .'-'. $slug
 		));
 	}
-	
+
 	/**
 	 * Return a forum based on ID.
-	 * 
+	 *
 	 * @acccess public
 	 * @param int $id
 	 * @return array
@@ -171,7 +171,7 @@ class Forum extends ForumAppModel {
 			'conditions' => array('Forum.id' => $id)
 		));
 	}
-		
+
 	/**
 	 * Get the list of forums for the board index.
 	 *
@@ -185,7 +185,7 @@ class Forum extends ForumAppModel {
 			'contain' => array('Children' => array('SubForum'))
 		));
 	}
-	
+
 	/**
 	 * Get a grouped hierarchy.
 	 *
@@ -196,7 +196,7 @@ class Forum extends ForumAppModel {
 	 */
 	public function getGroupedHierarchy($type = null, $exclude = null) {
 		$conditions = array();
-		
+
 		if ($type) {
 			$conditions = array(
 				'Forum.status' => self::STATUS_OPEN,
@@ -204,11 +204,11 @@ class Forum extends ForumAppModel {
 				'Forum.access_level_id' => $this->accessLevels()
 			);
 		}
-		
+
 		if (is_numeric($exclude)) {
 			$conditions['Forum.id !='] = $exclude;
 		}
-		
+
 		$forums = $this->find('all', array(
 			'fields' => array('Forum.id', 'Forum.title', 'Forum.forum_id', 'Forum.orderNo'),
 			'conditions' => $conditions,
@@ -219,7 +219,7 @@ class Forum extends ForumAppModel {
 		$root = array();
 		$categories = array();
 		$hierarchy = array();
-		
+
 		foreach ($forums as $forum) {
 			if ($forum['Forum']['forum_id'] == 0) {
 				$root[] = $forum['Forum'];
@@ -227,7 +227,7 @@ class Forum extends ForumAppModel {
 				$categories[$forum['Forum']['forum_id']][$forum['Forum']['orderNo']] = $forum['Forum'];
 			}
 		}
-		
+
 		foreach ($root as $forum) {
 			if (isset($categories[$forum['id']])) {
 				$hierarchy[$forum['title']] = $this->_buildOptions($categories, $forum);
@@ -247,14 +247,14 @@ class Forum extends ForumAppModel {
 	 */
 	public function getHierarchy($drill = false, $exclude = null) {
 		$conditions = array();
-		
+
 		if (is_numeric($exclude)) {
 			$conditions = array(
 				'Forum.id !=' => $exclude,
 				'Forum.forum_id !=' => $exclude
 			);
 		}
-		
+
 		$forums = $this->find('all', array(
 			'conditions' => $conditions,
 			'fields' => array('Forum.id', 'Forum.title', 'Forum.forum_id'),
@@ -265,7 +265,7 @@ class Forum extends ForumAppModel {
 		$root = array();
 		$categories = array();
 		$hierarchy = array();
-		
+
 		foreach ($forums as $forum) {
 			if ($forum['Forum']['forum_id'] == 0) {
 				$root[] = $forum['Forum'];
@@ -273,7 +273,7 @@ class Forum extends ForumAppModel {
 				$categories[$forum['Forum']['forum_id']][] = $forum['Forum'];
 			}
 		}
-		
+
 		foreach ($root as $forum) {
 			$hierarchy[$forum['id']] = $forum['title'];
 			$hierarchy += $this->_buildOptions($categories, $forum, $drill, 1);
@@ -291,7 +291,7 @@ class Forum extends ForumAppModel {
 	public function getIndex() {
 		$access = $this->access();
 		$accessLevels = $this->accessLevels();
-		
+
 		return $this->find('all', array(
 			'order' => array('Forum.orderNo' => 'ASC'),
 			'conditions' => array(
@@ -334,10 +334,10 @@ class Forum extends ForumAppModel {
 			array('Forum.forum_id' => $start_id)
 		);
 	}
-	
+
 	/**
 	 * Update the order of the forums.
-	 * 
+	 *
 	 * @access public
 	 * @param array $data
 	 * @return boolean
@@ -346,56 +346,56 @@ class Forum extends ForumAppModel {
 		if (isset($data['_Token'])) {
 			unset($data['_Token']);
 		}
-		
+
 		if (!empty($data)) {
 			foreach ($data as $model => $fields) {
 				foreach ($fields as $id => $field) {
 					$order = $field['orderNo'];
-					
+
 					if (!is_numeric($order)) {
 						$order = 0;
 					}
-					
+
 					$this->id = $field['id'];
 					$this->save(array('orderNo' => $order), false, array('orderNo'));
 				}
 			}
 		}
-		
+
 		return true;
 	}
-	
+
 	/**
 	 * Build the list of select options.
-	 * 
+	 *
 	 * @access protected
 	 * @param array $categories
 	 * @param array $forum
 	 * @param boolean $drill
 	 * @param int $depth
-	 * @return array 
+	 * @return array
 	 */
 	protected function _buildOptions($categories, $forum, $drill = true, $depth = 0) {
 		$options = array();
-		
+
 		if (isset($categories[$forum['id']])) {
 			$children = $categories[$forum['id']];
 			ksort($children);
 
 			foreach ($children as $child) {
 				$options[$child['id']] = str_repeat('&nbsp;', ($depth * 4)) . $child['title'];
-				
+
 				if (isset($categories[$child['id']]) && $drill) {
 					$babies = $this->_buildOptions($categories, $child, $drill, ($depth + 1));
-					
+
 					if (!empty($babies)) {
 						$options = $options + $babies;
 					}
 				}
 			}
 		}
-		
+
 		return $options;
 	}
-	
+
 }

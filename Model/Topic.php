@@ -1,5 +1,5 @@
 <?php
-/** 
+/**
  * Forum - Topic
  *
  * @author      Miles Johnson - http://milesj.me
@@ -7,7 +7,7 @@
  * @license     http://opensource.org/licenses/mit-license.php - Licensed under The MIT License
  * @link        http://milesj.me/code/cakephp/forum
  */
- 
+
 class Topic extends ForumAppModel {
 
 	/**
@@ -56,7 +56,7 @@ class Topic extends ForumAppModel {
 			'foreignKey'	=> 'lastUser_id'
 		)
 	);
-	
+
 	/**
 	 * Has one.
 	 *
@@ -69,7 +69,7 @@ class Topic extends ForumAppModel {
 			'dependent' => true
 		)
 	);
-	
+
 	/**
 	 * Has many.
 	 *
@@ -89,7 +89,7 @@ class Topic extends ForumAppModel {
 			'dependent' => true
 		)
 	);
-	
+
 	/**
 	 * Validation.
 	 *
@@ -116,7 +116,7 @@ class Topic extends ForumAppModel {
 		),
 		'content' => 'notEmpty'
 	);
-	
+
 	/**
 	 * Validate and add a topic.
 	 *
@@ -126,22 +126,22 @@ class Topic extends ForumAppModel {
 	 */
 	public function add($data) {
 		$this->set($data);
-		
+
 		if ($this->validates()) {
 			$isAdmin = $this->Session->read('Forum.isAdmin');
 
 			if (($secondsLeft = $this->checkFlooding($this->settings['topic_flood_interval'])) > 0 && !$isAdmin) {
 				return $this->invalidate('title', 'You must wait %s more second(s) till you can post a topic', $secondsLeft);
-				
+
 			} else if ($this->checkHourly($this->settings['topics_per_hour']) && !$isAdmin) {
 				return $this->invalidate('title', 'You are only allowed to post %s topic(s) per hour', $this->settings['topics_per_hour']);
-				
+
 			} else {
 				$data['title'] = Sanitize::clean($data['title']);
 
 				$this->create();
 				$this->save($data, false, array('forum_id', 'user_id', 'title', 'slug', 'status', 'type'));
-				
+
 				$data['topic_id'] = $this->id;
 				$data['post_id'] = $this->Post->addFirstPost($data);
 
@@ -150,7 +150,7 @@ class Topic extends ForumAppModel {
 					'lastPost_id' => $data['post_id'],
 					'lastUser_id' => $data['user_id'],
 				));
-				
+
 				$this->Forum->chainUpdate($data['forum_id'], array(
 					'lastTopic_id' => $data['topic_id'],
 					'lastPost_id' => $data['post_id'],
@@ -160,19 +160,19 @@ class Topic extends ForumAppModel {
 				if (isset($data['options'])) {
 					$this->Poll->addPoll($data);
 				}
-				
+
 				// Subscribe
 				if ($this->settings['auto_subscribe_self']) {
 					$this->Subscription->subscribeToTopic($data['user_id'], $data['topic_id']);
 				}
-				
+
 				return $data['topic_id'];
 			}
 		}
-		
+
 		return false;
 	}
-	
+
 	/**
 	 * Check the posting flood interval.
 	 *
@@ -182,7 +182,7 @@ class Topic extends ForumAppModel {
 	 */
 	public function checkFlooding($interval) {
 		$topics = $this->Session->read('Forum.topics');
-		
+
 		if (!empty($topics)) {
 			$timeLeft = time() - array_pop($topics);
 
@@ -190,10 +190,10 @@ class Topic extends ForumAppModel {
 				return $interval - $timeLeft;
 			}
 		}
-		
+
 		return false;
 	}
-	
+
 	/**
 	 * Check the hourly posting.
 	 *
@@ -204,24 +204,24 @@ class Topic extends ForumAppModel {
 	public function checkHourly($max) {
 		$topics = $this->Session->read('Forum.topics');
 		$pastHour = strtotime('-1 hour');
-			
+
 		if (!empty($topics)) {
 			$count = 0;
-			
+
 			foreach ($topics as $id => $time) {
 				if ($time >= $pastHour) {
 					++$count;
 				}
 			}
-			
+
 			if ($count >= $max) {
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
-	
+
 	/**
 	 * Check to make sure the poll is valid.
 	 *
@@ -243,10 +243,10 @@ class Topic extends ForumAppModel {
 		}
 
 		$total = count($clean);
-		
+
 		return ($total >= 2 && $total <= 10);
 	}
-	
+
 	/**
 	 * Finds difference in days between dates.
 	 *
@@ -259,14 +259,14 @@ class Topic extends ForumAppModel {
 		if (!is_int($start)) {
 			$start = strtotime($start);
 		}
-		
+
 		if (!is_int($finish)) {
 			$finish = strtotime($finish);
 		}
-		
+
 		$diff = $finish - $start;
 		$days = $diff / 86400;
-		
+
 		return round($days);
 	}
 
@@ -284,22 +284,22 @@ class Topic extends ForumAppModel {
 				if ($model == 'Topic') {
 					$this->id = $id;
 					$this->save($data, false);
-					
+
 				} else if ($model == 'FirstPost') {
 					$this->Post->id = $data['id'];
 					$this->Post->save($data, false, array('content', 'contentHtml'));
-					
+
 				} else if ($model == 'Poll') {
 					$data['expires'] = !empty($data['expires']) ? date('Y-m-d H:i:s', strtotime('+'. $data['expires'] .' days')) : null;
-					
+
 					$this->Poll->id = $data['id'];
 					$this->Poll->save($data, false, array('expires'));
-					
+
 					if (!empty($data['PollOption'])) {
 						foreach ($data['PollOption'] as $option) {
 							if ($option['delete']) {
 								$this->Poll->PollOption->delete($option['id'], true);
-								
+
 							} else if ($option['option'] !== '') {
 								$this->Poll->PollOption->id = $option['id'];
 								$this->Poll->PollOption->save($option, false, array('option', 'vote_count'));
@@ -309,40 +309,39 @@ class Topic extends ForumAppModel {
 				}
 			}
 		}
-		
+
 		return true;
 	}
-	
+
 	/**
 	 * Get all info for reading a topic.
 	 *
 	 * @access public
 	 * @param string $slug
-	 * @param int $user_id
 	 * @return array
 	 */
 	public function get($slug) {
 		$topic = $this->find('first', array(
 			'conditions' => array('Topic.slug' => $slug),
 			'contain' => array(
-				'FirstPost', 
-				'Forum' => array('Parent'), 
+				'FirstPost',
+				'Forum' => array('Parent'),
 				'Poll' => array('PollOption')
 			),
 			'cache' => __FUNCTION__ .'-'. $slug
 		));
-		
+
 		if (!empty($topic['Poll']['id'])) {
 			$topic['Poll'] = $this->Poll->process($topic['Poll']);
 		}
-		
+
 		return $topic;
 	}
-	
+
 	/**
 	 * Return a topic based on ID.
-	 * 
-	 * @acccess public
+	 *
+	 * @access public
 	 * @param int $id
 	 * @return array
 	 */
@@ -351,7 +350,7 @@ class Topic extends ForumAppModel {
 			'conditions' => array('Topic.id' => $id)
 		));
 	}
-	
+
 	/**
 	 * Get the latest topics.
 	 *
@@ -367,7 +366,7 @@ class Topic extends ForumAppModel {
 			'cache' => array(__FUNCTION__ .'-'. $limit, '+5 minutes')
 		));
 	}
-	
+
 	/**
 	 * Get the latest topics by a user.
 	 *
@@ -384,7 +383,7 @@ class Topic extends ForumAppModel {
 			'limit' => $limit,
 		));
 	}
-	
+
 	/**
 	 * Get all high level topics within a forum.
 	 *
@@ -407,7 +406,7 @@ class Topic extends ForumAppModel {
 			'contain' => array('User', 'LastPost', 'LastUser', 'Poll')
 		));
 	}
-		
+
 	/**
 	 * Increase the view count.
 	 *
@@ -418,7 +417,7 @@ class Topic extends ForumAppModel {
 	public function increaseViews($id) {
 		return $this->query('UPDATE `'. $this->tablePrefix .'topics` AS `Topic` SET `Topic`.`view_count` = `Topic`.`view_count` + 1 WHERE `Topic`.`id` = '. (int) $id);
 	}
-	
+
 	/**
 	 * Move all topics to a new forum.
 	 *
@@ -433,10 +432,10 @@ class Topic extends ForumAppModel {
 			array('Topic.forum_id' => $start_id)
 		);
 	}
-	
+
 	/**
 	 * Parse the HTML version.
-	 * 
+	 *
 	 * @access public
 	 * @param array $options
 	 * @return boolean
@@ -445,13 +444,13 @@ class Topic extends ForumAppModel {
 		if (isset($this->data['Topic']['content'])) {
 			return $this->validateDecoda('Topic');
 		}
-		
+
 		return true;
 	}
-	
+
 	/**
 	 * After find.
-	 * 
+	 *
 	 * @access public
 	 * @param array $results
 	 * @param boolean $primary
@@ -461,7 +460,7 @@ class Topic extends ForumAppModel {
 		if (!empty($results)) {
 			$postsPerPage = $this->settings['posts_per_page'];
 			$autoLock = $this->settings['days_till_autolock'];
-			
+
 			if (isset($results[0])) {
 				foreach ($results as &$result) {
 					if (isset($result['Topic'])) {
@@ -486,7 +485,7 @@ class Topic extends ForumAppModel {
 				$results['page_count'] = ($results['post_count'] > $postsPerPage) ? ceil($results['post_count'] / $postsPerPage) : 1;
 			}
 		}
-		
+
 		return $results;
 	}
 

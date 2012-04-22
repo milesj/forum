@@ -1,5 +1,5 @@
 <?php
-/** 
+/**
  * Forum - AccessLevel
  *
  * @author      Miles Johnson - http://milesj.me
@@ -7,7 +7,7 @@
  * @license     http://opensource.org/licenses/mit-license.php - Licensed under The MIT License
  * @link        http://milesj.me/code/cakephp/forum
  */
- 
+
 class AccessLevel extends ForumAppModel {
 
 	/**
@@ -18,7 +18,7 @@ class AccessLevel extends ForumAppModel {
 	const MOD = 4;
 	const SUPER = 7;
 	const ADMIN = 10;
-	
+
 	/**
 	 * Validation.
 	 *
@@ -39,11 +39,11 @@ class AccessLevel extends ForumAppModel {
 	 */
 	public function getHigherLevels($exclude = null) {
 		$conditions = array('AccessLevel.level >' => self::MEMBER);
-		
+
 		if (is_numeric($exclude)) {
 			$conditions['AccessLevel.id !='] = $exclude;
 		}
-		
+
 		return $this->find('list', array(
 			'fields' => array('AccessLevel.id', 'AccessLevel.title'),
 			'conditions' => $conditions
@@ -52,7 +52,7 @@ class AccessLevel extends ForumAppModel {
 
 	/**
 	 * Get a list of levels.
-	 * 
+	 *
 	 * @access public
 	 * @return array
 	 */
@@ -61,5 +61,5 @@ class AccessLevel extends ForumAppModel {
 			'order' => array('AccessLevel.level' => 'ASC')
 		));
 	}
-	
+
 }

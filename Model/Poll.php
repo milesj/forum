@@ -1,5 +1,5 @@
 <?php
-/** 
+/**
  * Forum - Poll
  *
  * @author      Miles Johnson - http://milesj.me
@@ -7,7 +7,7 @@
  * @license     http://opensource.org/licenses/mit-license.php - Licensed under The MIT License
  * @link        http://milesj.me/code/cakephp/forum
  */
- 
+
 class Poll extends ForumAppModel {
 
 	/**
@@ -41,7 +41,7 @@ class Poll extends ForumAppModel {
 			'dependent' => true
 		)
 	);
-	
+
 	/**
 	 * Add a poll attached to a topic.
 	 *
@@ -54,7 +54,7 @@ class Poll extends ForumAppModel {
 			'topic_id' => $data['topic_id'],
 			'expires' => !empty($data['expires']) ? date('Y-m-d H:i:s', strtotime('+'. $data['expires'] .' days')) : null
 		);
-		
+
 		if ($this->save($poll, false, array('topic_id', 'expires'))) {
 			$poll_id = $this->id;
 			$options = explode("\n", strip_tags($data['options']));
@@ -62,22 +62,22 @@ class Poll extends ForumAppModel {
 				'poll_id' => $poll_id,
 				'vote_count' => 0
 			);
-			
+
 			foreach ($options as $id => $opt) {
 				if (!empty($opt)) {
 					$results['option'] = htmlentities($opt, ENT_NOQUOTES, 'UTF-8');
-					
+
 					$this->PollOption->create();
 					$this->PollOption->save($results, false, array_keys($results));
 				}
 			}
-			
+
 			return $poll_id;
 		}
-		
+
 		return false;
 	}
-	
+
 	/**
 	 * Process the totals and percentages.
 	 *
@@ -87,10 +87,10 @@ class Poll extends ForumAppModel {
 	 */
 	public function process($poll) {
 		$user_id = $this->Session->read('Auth.User.id');
-		
+
 		if (!empty($poll)) {
 			$totalVotes = 0;
-			
+
 			foreach ($poll['PollOption'] as $option) {
 				$totalVotes = $totalVotes + $option['vote_count'];
 			}
@@ -98,17 +98,17 @@ class Poll extends ForumAppModel {
 			foreach ($poll['PollOption'] as &$option) {
 				$option['percentage'] = ($totalVotes > 0) ? round(($option['vote_count'] / $totalVotes) * 100) : 0;
 			}
-			
+
 			$poll['hasVoted'] = $this->PollVote->hasVoted($user_id, $poll['id']);
 			$poll['totalVotes'] = $totalVotes;
 		}
-		
+
 		return $poll;
 	}
-	
+
 	/**
 	 * Vote in a poll.
-	 * 
+	 *
 	 * @access public
 	 * @param int $poll_id
 	 * @param int $option_id
@@ -120,7 +120,7 @@ class Poll extends ForumAppModel {
 			'conditions' => array('Poll.id' => $poll_id),
 			'contain' => false
 		));
-		
+
 		if (!empty($poll)) {
 			if (!empty($poll['Poll']['expires']) && $poll['Poll']['expires'] <= date('Y-m-d H:i:s')) {
 				return false;
@@ -131,8 +131,8 @@ class Poll extends ForumAppModel {
 				$this->PollVote->addVoter($poll_id, $option_id, $user_id);
 			}
 		}
-		
+
 		return true;
 	}
-	
+
 }

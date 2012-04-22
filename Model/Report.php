@@ -1,5 +1,5 @@
 <?php
-/** 
+/**
  * Forum - Report
  *
  * @author      Miles Johnson - http://milesj.me
@@ -7,7 +7,7 @@
  * @license     http://opensource.org/licenses/mit-license.php - Licensed under The MIT License
  * @link        http://milesj.me/code/cakephp/forum
  */
- 
+
 class Report extends ForumAppModel {
 
 	/**
@@ -24,7 +24,7 @@ class Report extends ForumAppModel {
 	 * @var string
 	 */
 	public $useTable = 'reported';
-	
+
 	/**
 	 * Belongs to.
 	 *
@@ -48,7 +48,7 @@ class Report extends ForumAppModel {
 			'foreignKey' 	=> 'item_id'
 		)
 	);
-	
+
 	/**
 	 * Validation.
 	 *
@@ -58,12 +58,12 @@ class Report extends ForumAppModel {
 	public $validate = array(
 		'comment' => 'notEmpty'
 	);
-	
+
 	/**
 	 * Get the latest reports.
-	 * 
+	 *
 	 * @access public
-	 * @param $limit
+	 * @param int $limit
 	 * @return array
 	 */
 	public function getLatest($limit = 10) {
@@ -73,5 +73,5 @@ class Report extends ForumAppModel {
 			'contain' => array('Reporter', 'Topic', 'Post', 'User')
 		));
 	}
-	
+
 }

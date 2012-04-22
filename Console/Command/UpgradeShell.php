@@ -1,5 +1,5 @@
 <?php
-/** 
+/**
  * Forum - UpgradeShell
  *
  * @author      Miles Johnson - http://milesj.me
@@ -17,26 +17,26 @@ define('FORUM_PLUGIN', dirname(dirname(dirname(__FILE__))) . '/');
 define('FORUM_SCHEMA', FORUM_PLUGIN . 'Config/Schema/Upgrade/');
 
 class UpgradeShell extends Shell {
-	
+
 	/**
 	 * Plugin configuration.
-	 * 
+	 *
 	 * @access public
 	 * @var array
 	 */
 	public $config = array();
-	
+
 	/**
 	 * Array of completed version upgrades.
-	 * 
+	 *
 	 * @access public
 	 * @var array
 	 */
 	public $complete = array();
-	
+
 	/**
 	 * Upgrade configuration.
-	 * 
+	 *
 	 * @access public
 	 * @var array
 	 */
@@ -44,32 +44,32 @@ class UpgradeShell extends Shell {
 		'prefix' => 'forum_',
 		'database' => 'default'
 	);
-	
+
 	/**
 	 * Available upgrade versions.
-	 * 
+	 *
 	 * @access public
 	 * @var array
 	 */
 	public $versions = array(
 		//'2.2' => 'Subscriptions'
 	);
-	
+
 	/**
 	 * Execute upgrader!
-	 * 
+	 *
 	 * @access public
 	 * @return void
 	 */
 	public function main() {
 		$this->config = Configure::read('Forum');
-		
+
 		// Get values from AppModel
 		$appModel = file_get_contents(FORUM_PLUGIN . 'Model/ForumAppModel.php');
-		
+
 		$prefix = preg_match('/public \$tablePrefix = \'(.*?)\';/', $appModel, $matches);
 		$this->upgrade['prefix'] = $matches[1];
-		
+
 		$dbConfig = preg_match('/public \$useDbConfig = \'(.*?)\';/', $appModel, $matches);
 		$this->upgrade['database'] = $matches[1];
 
@@ -82,19 +82,19 @@ class UpgradeShell extends Shell {
 		$this->out('Shell: Upgrade');
 		$this->out();
 		$this->out('This shell will upgrade versions and manage any database changes.');
-		$this->out('Please do not skip versions, upgrade sequentially!');	
-		
+		$this->out('Please do not skip versions, upgrade sequentially!');
+
 		$this->upgrade();
 	}
-	
+
 	/**
 	 * List out all the available upgrade options.
 	 */
-	public function upgrade() {	
+	public function upgrade() {
 		$this->hr(1);
 		$this->out('Available versions:');
 		$this->out();
-		
+
 		$versions = array();
 
 		if (!empty($this->versions)) {
@@ -105,12 +105,12 @@ class UpgradeShell extends Shell {
 				}
 			}
 		}
-		
+
 		$this->out('[E]xit');
-		
+
 		$versions[] = 'E';
 		$version = strtoupper($this->in('Which version do you want to upgrade to?', $versions));
-		
+
 		if ($version == 'E') {
 			exit(0);
 		} else {
@@ -124,7 +124,7 @@ class UpgradeShell extends Shell {
 			$this->finalize();
 		}
 	}
-	
+
 	/**
 	 * Output complete message and render versions again.
 	 */
@@ -132,31 +132,31 @@ class UpgradeShell extends Shell {
 		$this->out('You can now upgrade to another version or close the shell.');
 		$this->upgrade();
 	}
-	
+
 	/**
 	 * Execute the queries for the specific version SQL.
-	 * 
+	 *
 	 * @access protected
 	 * @param string $version
 	 * @return void
 	 */
 	protected function _querySql($version) {
 		sleep(1);
-				
+
 		$db = ConnectionManager::getDataSource($this->upgrade['database']);
 		$schema = FORUM_SCHEMA . $version . '.sql';
-		
+
 		$sql = file_get_contents($schema);
 		$sql = String::insert($sql, array('prefix' => $this->upgrade['prefix']), array('before' => '{', 'after' => '}'));
 		$sql = preg_replace('!/\*[^*]*\*+([^/][^*]*\*+)*/!', '', $sql);
 
 		foreach (explode(';', $sql) as $query) {
 			$query = trim($query);
-			
+
 			if ($query !== '') {
 				$db->execute($query);
 			}
 		}
 	}
-	
+
 }
