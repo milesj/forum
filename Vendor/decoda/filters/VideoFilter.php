@@ -13,18 +13,24 @@
 class VideoFilter extends DecodaFilter {
 
 	/**
+	 * Regex pattern.
+	 */
+	const VIDEO_PATTERN = '/^[-_a-z0-9]+$/is';
+
+	/**
 	 * Supported tags.
-	 * 
+	 *
 	 * @access protected
 	 * @var array
 	 */
-	protected $_tags = array(  
+	protected $_tags = array(
 		'video' => array(
 			'template' => 'video',
 			'type' => self::TYPE_BLOCK,
 			'allowed' => self::TYPE_NONE,
+			'pattern' => self::VIDEO_PATTERN,
 			'attributes' => array(
-				'default' => '/[a-zA-Z0-9]+/',
+				'default' => '/[a-z0-9]+/i',
 				'size' => '/small|medium|large/i'
 			)
 		)
@@ -32,7 +38,7 @@ class VideoFilter extends DecodaFilter {
 
 	/**
 	 * Video formats.
-	 * 
+	 *
 	 * @access protected
 	 * @var array
 	 */
@@ -97,7 +103,7 @@ class VideoFilter extends DecodaFilter {
 
 	/**
 	 * Custom build the HTML for videos.
-	 * 
+	 *
 	 * @access public
 	 * @param array $tag
 	 * @param string $content
@@ -108,7 +114,7 @@ class VideoFilter extends DecodaFilter {
 		$size = strtolower(isset($tag['attributes']['size']) ? $tag['attributes']['size'] : 'medium');
 
 		if (empty($this->_formats[$provider])) {
-			return $provider . ':' . $content;
+			return sprintf('(Invalid %s video code)', $provider);
 		}
 
 		$video = $this->_formats[$provider];

@@ -19,16 +19,17 @@ class UrlFilter extends DecodaFilter {
 
 	/**
 	 * Supported tags.
-	 * 
+	 *
 	 * @access protected
 	 * @var array
 	 */
-	protected $_tags = array(  
+	protected $_tags = array(
 		'url' => array(
 			'tag' => 'a',
 			'type' => self::TYPE_INLINE,
 			'allowed' => self::TYPE_INLINE,
 			'pattern' => self::URL_PATTERN,
+			'testNoDefault' => true,
 			'attributes' => array(
 				'default' => self::URL_PATTERN
 			),
@@ -41,6 +42,7 @@ class UrlFilter extends DecodaFilter {
 			'type' => self::TYPE_INLINE,
 			'allowed' => self::TYPE_INLINE,
 			'pattern' => self::URL_PATTERN,
+			'testNoDefault' => true,
 			'attributes' => array(
 				'default' => self::URL_PATTERN
 			),
@@ -52,20 +54,20 @@ class UrlFilter extends DecodaFilter {
 
 	/**
 	 * Using shorthand variation if enabled.
-	 * 
+	 *
 	 * @access public
 	 * @param array $tag
 	 * @param string $content
 	 * @return string
 	 */
 	public function parse(array $tag, $content) {
-		if (empty($tag['attributes']['default'])) {
-			$tag['attributes']['default'] = $content;
+		if (empty($tag['attributes']['href']) && empty($tag['attributes']['default'])) {
+			$tag['attributes']['href'] = $content;
 		}
-		
+
 		if ($this->getParser()->config('shorthand')) {
 			$tag['content'] = $this->message('link');
-			
+
 			return '[' . parent::parse($tag, $content) . ']';
 		}
 
