@@ -1,5 +1,5 @@
 <?php
-/** 
+/**
  * Ajax Handler Component
  *
  * A CakePHP Component that will automatically handle and render AJAX calls and apply the appropriate returned format and headers.
@@ -23,7 +23,7 @@ class AjaxHandlerComponent extends Component {
 	 * @var string
 	 */
 	public $version = '2.0.1';
-	
+
 	/**
 	 * Components.
 	 *
@@ -184,7 +184,7 @@ class AjaxHandlerComponent extends Component {
 		$this->_data = $data;
 		$this->_code = $code;
 	}
-	
+
 	/**
 	 * What should happen if the class is called stand alone.
 	 *

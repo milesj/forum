@@ -8,6 +8,8 @@
  * @link        http://milesj.me/code/cakephp/forum
  */
 
+App::uses('ForumAppModel', 'Forum.Model');
+
 class Report extends ForumAppModel {
 
 	/**

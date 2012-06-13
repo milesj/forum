@@ -8,6 +8,7 @@
  * @link        http://milesj.me/code/cakephp/forum
  */
 
+App::uses('ForumAppModel', 'Forum.Model');
 App::import('Vendor', 'Forum.Decoda', array(
 	'file' => 'decoda/Decoda.php'
 ));

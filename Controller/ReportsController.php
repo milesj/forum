@@ -8,6 +8,7 @@
  * @link        http://milesj.me/code/cakephp/forum
  */
 
+App::uses('ForumAppController', 'Forum.Controller');
 // Not sure why Cake isn't inheriting it from $uses
 App::uses('Report', 'Forum.Model');
 

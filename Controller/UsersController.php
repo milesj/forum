@@ -8,6 +8,8 @@
  * @link        http://milesj.me/code/cakephp/forum
  */
 
+App::uses('ForumAppController', 'Forum.Controller');
+
 class UsersController extends ForumAppController {
 
 	/**
@@ -118,6 +120,7 @@ class UsersController extends ForumAppController {
 	 * User profile.
 	 *
 	 * @param int $user_id
+	 * @throws NotFoundException
 	 */
 	public function profile($user_id) {
 		$profile = $this->Profile->getByUser($user_id);
@@ -138,6 +141,7 @@ class UsersController extends ForumAppController {
 	 * Report a user.
 	 *
 	 * @param int $user_id
+	 * @throws NotFoundException
 	 */
 	public function report($user_id) {
 		$profile = $this->Profile->getByUser($user_id);
@@ -187,6 +191,7 @@ class UsersController extends ForumAppController {
 	 * Edit a user.
 	 *
 	 * @param int $id
+	 * @throws NotFoundException
 	 */
 	public function admin_edit($id) {
 		$profile = $this->Profile->get($id);

@@ -8,6 +8,8 @@
  * @link        http://milesj.me/code/cakephp/forum
  */
 
+App::uses('ForumAppController', 'Forum.Controller');
+
 class ForumController extends ForumAppController {
 
 	/**
