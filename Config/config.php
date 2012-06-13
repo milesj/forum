@@ -53,7 +53,7 @@ if (file_exists('custom.php')) {
 /**
  * Current version.
  */
-$config['Forum']['version'] = '3.1';
+$config['Forum']['version'] = '3.1.1';
 
 /**
  * List of all timezones.
