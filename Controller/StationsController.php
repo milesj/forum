@@ -26,7 +26,7 @@ class StationsController extends ForumAppController {
 	 * @access public
 	 * @var array
 	 */
-	public $components = array('Forum.AjaxHandler');
+	public $components = array('Utility.AjaxHandler');
 
 	/**
 	 * Pagination.
