@@ -13,14 +13,12 @@ Configure::write('Cache.disable', true);
 Configure::load('Forum.config');
 
 App::uses('ConnectionManager', 'Model');
-App::uses('User', 'Model');
 App::uses('Security', 'Utility');
 App::uses('Sanitize', 'Utility');
 App::uses('Validation', 'Utility');
 
 define('FORUM_PLUGIN', dirname(dirname(dirname(__FILE__))) . '/');
 define('FORUM_SCHEMA', FORUM_PLUGIN . 'Config/Schema/');
-
 config('database');
 
 class InstallShell extends Shell {
@@ -42,11 +40,20 @@ class InstallShell extends Shell {
 	public $install = array(
 		'prefix' => 'forum_',
 		'database' => 'default',
+		'table' => 'users',
 		'user_id' => '',
 		'username' => '',
 		'password' => '',
 		'email' => ''
 	);
+
+	/**
+	 * DB Instance.
+	 *
+	 * @access public
+	 * @var DataSource
+	 */
+	public $db;
 
 	/**
 	 * Execute installer!
@@ -59,8 +66,8 @@ class InstallShell extends Shell {
 
 		$this->out();
 		$this->out('Plugin: Forum');
-		$this->out('Version: '. $this->config['version']);
-		$this->out('Copyright: Miles Johnson, 2010-'. date('Y'));
+		$this->out('Version: ' . $this->config['version']);
+		$this->out('Copyright: Miles Johnson, 2010-' . date('Y'));
 		$this->out('Help: http://milesj.me/code/cakephp/forum');
 		$this->out('Shell: Installer');
 		$this->out();
@@ -70,37 +77,33 @@ class InstallShell extends Shell {
 		$this->hr(1);
 		$this->out('Installation Steps:');
 		$this->out();
-		$this->steps(0);
-		$this->out('This installer will drop all forum specific database tables (not users) when executed!');
-
-		if (strtoupper($this->in('Continue?', array('Y', 'N'))) == 'N') {
-			return;
-		}
-
 		$this->steps(1);
-		$this->tablePrefix();
-		$this->hr(1);
 
-		$this->steps(2);
-		$this->databaseConfig();
-		$this->hr(1);
+		if ($this->usersTable()) {
+			$this->steps(2);
 
-		$this->steps(3);
-		$this->checkStatus();
-		$this->hr(1);
+			if ($this->tablePrefix()) {
+				$this->steps(3);
 
-		$this->steps(4);
-		$this->createTables();
-		$this->overrideAppModel();
-		$this->hr(1);
+				if ($this->databaseConfig()) {
+					$this->steps(4);
 
-		$this->steps(5);
-		$this->setupAdmin();
-		$this->hr(1);
+					if ($this->checkStatus()) {
+						$this->steps(5);
 
-		$this->steps(6);
-		$this->finalize();
-		$this->hr(1);
+						if ($this->createTables()) {
+							$this->overrideAppModel();
+							$this->steps(6);
+
+							if ($this->setupAdmin()) {
+								$this->steps(7);
+								$this->finalize();
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 
 	/**
@@ -111,57 +114,92 @@ class InstallShell extends Shell {
 	 * @return void
 	 */
 	public function steps($state = 0) {
+		$this->hr(1);
+
 		$steps = array(
+			'Users Table',
 			'Table Prefix',
 			'Database Configuration',
 			'Check Installation Status',
 			'Create Database Tables',
-			'Create Administator',
+			'Create Administrator',
 			'Finalize Installation'
 		);
 
 		foreach ($steps as $i => $step) {
 			$index = ($i + 1);
 
-			$this->out('['. (($index < $state) ? 'x' : $index) .'] '. $step);
+			$this->out('[' . (($index < $state) ? 'x' : $index) . '] ' . $step);
 		}
 
 		$this->out();
 	}
 
 	/**
+	 * Grab the users table.
+	 *
+	 * @access public
+	 * @return boolean
+	 */
+	public function usersTable() {
+		$table = $this->in('What is the name of your users table?');
+
+		if (!$table) {
+			$this->out('Please provide a users table.');
+
+			return $this->usersTable();
+
+		} else {
+			$table = trim($table);
+			$this->out(sprintf('You have chosen the table: %s', $table));
+		}
+
+		$answer = strtoupper($this->in('Is this correct?', array('Y', 'N')));
+
+		if ($answer === 'Y') {
+			$this->install['table'] = $table;
+		} else {
+			return $this->usersTable();
+		}
+
+		return true;
+	}
+
+	/**
 	 * Set the table prefix to use.
 	 *
 	 * @access public
-	 * @return void
+	 * @return boolean
 	 */
 	public function tablePrefix() {
 		$prefix = $this->in('What table prefix would you like to use?');
 
-		if (empty($prefix)) {
+		if (!$prefix) {
 			$this->out('Please provide a table prefix, I recommend "forum".');
-			$this->tablePrefix();
-			return;
+
+			return $this->tablePrefix();
 
 		} else {
-			$prefix = trim($prefix, '_') .'_';
+			$prefix = trim($prefix, '_') . '_';
 			$this->out(sprintf('You have chosen the prefix: %s', $prefix));
 		}
 
 		$answer = strtoupper($this->in('Is this correct?', array('Y', 'N')));
 
-		if ($answer == 'Y') {
+		if ($answer === 'Y') {
 			$this->install['prefix'] = $prefix;
 		} else {
-			$this->tablePrefix();
+			return $this->tablePrefix();
 		}
+
+		return true;
 	}
 
 	/**
 	 * Set the database to use.
 	 *
 	 * @access public
-	 * @return void
+	 * @return boolean
 	 */
 	public function databaseConfig() {
 		$dbs = new DATABASE_CONFIG();
@@ -171,7 +209,7 @@ class InstallShell extends Shell {
 		$this->out('Possible database configurations:');
 
 		foreach ($dbs as $db => $config) {
-			$this->out('['. $counter .'] '. $db);
+			$this->out('[' . $counter . '] ' . $db);
 			$list[$counter] = $db;
 			$counter++;
 		}
@@ -183,40 +221,47 @@ class InstallShell extends Shell {
 		if (isset($list[$answer])) {
 			$this->install['database'] = $list[$answer];
 			$this->db = ConnectionManager::getDataSource($this->install['database']);
+
 		} else {
-			$this->databaseConfig();
+			return $this->databaseConfig();
 		}
+
+		return true;
 	}
 
 	/**
 	 * Check the database status before installation.
 	 *
 	 * @access public
-	 * @return void
+	 * @return boolean
 	 */
 	public function checkStatus() {
 		// Check connection
 		if (!$this->db->isConnected()) {
 			$this->out(sprintf('Error: Database connection for %s failed!', $this->install['database']));
-			return;
+
+			return false;
 		}
 
 		// Check the users tables
 		$tables = $this->db->listSources();
 
-		if (!in_array('users', $tables)) {
-			$this->out(sprintf('Error: No users table was found in %s.', $this->install['database']));
-			return;
+		if (!in_array($this->install['table'], $tables)) {
+			$this->out(sprintf('Error: No %s table was found in %s.', $this->install['table'], $this->install['database']));
+
+			return false;
 		}
 
 		$this->out('Installation status good, proceeding...');
+
+		return true;
 	}
 
 	/**
 	 * Create the database tables based off the schemas.
 	 *
 	 * @access public
-	 * @return void
+	 * @return boolean
 	 */
 	public function createTables() {
 		$schemas = glob(FORUM_SCHEMA . '*.sql');
@@ -238,7 +283,7 @@ class InstallShell extends Shell {
 				if ($query !== '' && $this->db->execute($query)) {
 					$command = trim(substr($query, 0, 6));
 
-					if ($command == 'CREATE' || $command == 'ALTER') {
+					if ($command === 'CREATE' || $command === 'ALTER') {
 						$executed++;
 					}
 				}
@@ -252,27 +297,32 @@ class InstallShell extends Shell {
 			foreach ($tables as $table) {
 				$this->db->execute(sprintf('DROP TABLE `%s`;', $table));
 			}
+
+			return false;
 		} else {
 			$this->out('Tables created successfully...');
 		}
+
+		return true;
 	}
 
 	/**
 	 * Setup the admin user.
 	 *
 	 * @access public
-	 * @return void
+	 * @return boolean
 	 */
 	public function setupAdmin() {
 		$answer = strtoupper($this->in('Would you like to [c]reate a new user, or use an [e]xisting user?', array('C', 'E')));
 
 		// New User
-		if ($answer == 'C') {
+		if ($answer === 'C') {
 			$this->install['username'] = $this->_newUser('username');
 			$this->install['password'] = $this->_newUser('password');
 			$this->install['email'] = $this->_newUser('email');
 
-			$result = $this->db->execute(sprintf("INSERT INTO `users` (`%s`, `%s`, `%s`, `%s`) VALUES (%s, %s, %s, %s);",
+			$result = $this->db->execute(sprintf("INSERT INTO `%s` (`%s`, `%s`, `%s`, `%s`) VALUES (%s, %s, %s, %s);",
+				$this->install['table'],
 				$this->config['userMap']['username'],
 				$this->config['userMap']['password'],
 				$this->config['userMap']['email'],
@@ -287,24 +337,31 @@ class InstallShell extends Shell {
 				$this->install['user_id'] = $this->db->lastInsertId();
 			} else {
 				$this->out('An error has occured while creating the user.');
-				$this->setupAdmin();
+
+				return $this->setupAdmin();
 			}
 
 		// Old User
-		} else if ($answer == 'E') {
+		} else if ($answer === 'E') {
 			$this->install['user_id'] = $this->_oldUser();
 
 		// Redo
 		} else {
-			$this->setupAdmin();
+			return $this->setupAdmin();
 		}
 
-		$result = $this->db->execute(sprintf("INSERT INTO `%saccess` (`access_level_id`, `user_id`, `created`) VALUES (4, %d, NOW());", (string) $this->install['prefix'], (int) $this->install['user_id']));
+		$result = $this->db->execute(sprintf("INSERT INTO `%saccess` (`access_level_id`, `user_id`, `created`) VALUES (4, %d, NOW());",
+			$this->install['prefix'],
+			$this->install['user_id']
+		));
 
 		if (!$result) {
 			$this->out('An error occured while granting administrator access.');
-			$this->setupAdmin();
+
+			return $this->setupAdmin();
 		}
+
+		return true;
 	}
 
 	/**
@@ -315,8 +372,8 @@ class InstallShell extends Shell {
 	 */
 	public function overrideAppModel() {
 		$appModel = file_get_contents(FORUM_PLUGIN . 'Model/ForumAppModel.php');
-		$appModel = preg_replace('/public \$tablePrefix = \'(.*?)\';/', 'public \$tablePrefix = \''. $this->install['prefix'] .'\';', $appModel);
-		$appModel = preg_replace('/public \$useDbConfig = \'(.*?)\';/', 'public \$useDbConfig = \''. $this->install['database'] .'\';', $appModel);
+		$appModel = preg_replace('/public \$tablePrefix = \'(.*?)\';/', 'public \$tablePrefix = \'' . $this->install['prefix'] . '\';', $appModel);
+		$appModel = preg_replace('/public \$useDbConfig = \'(.*?)\';/', 'public \$useDbConfig = \'' . $this->install['database'] . '\';', $appModel);
 
 		file_put_contents(FORUM_PLUGIN . 'Model/ForumAppModel.php', $appModel);
 	}
@@ -335,6 +392,7 @@ class InstallShell extends Shell {
 		$this->out(sprintf('Email: %s', $this->install['email']));
 		$this->out();
 		$this->out('Please read the documentation for further configuration instructions.');
+		$this->hr(1);
 	}
 
 	/**
@@ -349,10 +407,14 @@ class InstallShell extends Shell {
 			case 'username':
 				$username = trim($this->in('Username:'));
 
-				if (empty($username)) {
+				if (!$username) {
 					$username = $this->_newUser($mode);
 				} else {
-					$result = $this->db->fetchRow(sprintf("SELECT COUNT(*) AS `count` FROM `users` AS `User` WHERE `%s` = %s", $this->config['userMap']['username'], $this->db->value($username)));
+					$result = $this->db->fetchRow(sprintf("SELECT COUNT(*) AS `count` FROM `%s` AS `User` WHERE `%s` = %s",
+						$this->install['table'],
+						$this->config['userMap']['username'],
+						$this->db->value($username)
+					));
 
 					if ($this->db->hasResult() && $result[0]['count']) {
 						$this->out('Username already exists, please try again.');
@@ -366,7 +428,7 @@ class InstallShell extends Shell {
 			case 'password':
 				$password = trim($this->in('Password:'));
 
-				if (empty($password)) {
+				if (!$password) {
 					$password = $this->_newUser($mode);
 				}
 
@@ -376,7 +438,7 @@ class InstallShell extends Shell {
 			case 'email':
 				$email = trim($this->in('Email:'));
 
-				if (empty($email)) {
+				if (!$email) {
 					$email = $this->_newUser($mode);
 
 				} else if (!Validation::email($email)) {
@@ -384,7 +446,11 @@ class InstallShell extends Shell {
 					$email = $this->_newUser($mode);
 
 				} else {
-					$result = $this->db->fetchRow(sprintf("SELECT COUNT(*) AS `count` FROM `users` AS `User` WHERE `%s` = %s", $this->config['userMap']['email'], $this->db->value($email)));
+					$result = $this->db->fetchRow(sprintf("SELECT COUNT(*) AS `count` FROM `%s` AS `User` WHERE `%s` = %s",
+						$this->install['table'],
+						$this->config['userMap']['email'],
+						$this->db->value($email)
+					));
 
 					if ($this->db->hasResult() && $result[0]['count']) {
 						$this->out('Email already exists, please try again.');
@@ -406,13 +472,16 @@ class InstallShell extends Shell {
 	protected function _oldUser() {
 		$user_id = trim($this->in('User ID:'));
 
-		if (empty($user_id) || !is_numeric($user_id)) {
+		if (!$user_id || !is_numeric($user_id)) {
 			$user_id = $this->_oldUser();
 
 		} else {
-			$result = $this->db->fetchRow(sprintf("SELECT * FROM `users` AS `User` WHERE `id` = %d LIMIT 1", (int) $user_id));
+			$result = $this->db->fetchRow(sprintf("SELECT * FROM `%s` AS `User` WHERE `id` = %d LIMIT 1",
+				$this->install['table'],
+				$user_id
+			));
 
-			if (empty($result)) {
+			if (!$result) {
 				$this->out('User ID does not exist, please try again.');
 				$user_id = $this->_oldUser();
 
