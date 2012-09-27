@@ -34,7 +34,7 @@ class PostsController extends ForumAppController {
 	 * @param int $quote_id
 	 */
 	public function add($slug, $quote_id = null) {
-		$topic = $this->Post->Topic->get($slug);
+		$topic = $this->Post->Topic->getBySlug($slug);
 		$user_id = $this->Auth->user('id');
 
 		$this->ForumToolbar->verifyAccess(array(
@@ -76,7 +76,7 @@ class PostsController extends ForumAppController {
 	 * @param int $id
 	 */
 	public function edit($id) {
-		$post = $this->Post->get($id);
+		$post = $this->Post->getById($id);
 		$user_id = $this->Auth->user('id');
 
 		$this->ForumToolbar->verifyAccess(array(
@@ -105,7 +105,7 @@ class PostsController extends ForumAppController {
 	 * @param int $id
 	 */
 	public function delete($id) {
-		$post = $this->Post->get($id);
+		$post = $this->Post->getById($id);
 
 		$this->ForumToolbar->verifyAccess(array(
 			'exists' => $post,
@@ -125,7 +125,7 @@ class PostsController extends ForumAppController {
 	public function report($id) {
 		$this->loadModel('Forum.Report');
 
-		$post = $this->Post->get($id);
+		$post = $this->Post->getById($id);
 		$user_id = $this->Auth->user('id');
 
 		$this->ForumToolbar->verifyAccess(array(

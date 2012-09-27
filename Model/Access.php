@@ -78,7 +78,7 @@ class Access extends ForumAppModel {
 	 * @access public
 	 * @param int $user_id
 	 * @param int $level_id
-	 * @return type
+	 * @return boolean
 	 */
 	public function grant($user_id, $level_id) {
 		$count = $this->find('count', array(
@@ -93,12 +93,11 @@ class Access extends ForumAppModel {
 		}
 
 		$this->create();
-		$this->save(array(
+
+		return $this->save(array(
 			'user_id' => $user_id,
 			'access_level_id' => $level_id
 		));
-
-		return true;
 	}
 
 	/**
@@ -108,10 +107,11 @@ class Access extends ForumAppModel {
 	 * @param int $id
 	 * @return array
 	 */
-	public function get($id) {
+	public function getById($id) {
 		return $this->find('first', array(
 			'conditions' => array('Access.id' => $id),
-			'contain' => array('User', 'AccessLevel')
+			'contain' => array('User', 'AccessLevel'),
+			'cache' => array(__METHOD__, $id)
 		));
 	}
 
@@ -124,7 +124,8 @@ class Access extends ForumAppModel {
 	public function getList() {
 		return $this->find('all', array(
 			'contain' => array('User' => array('Profile'), 'AccessLevel'),
-			'order' => array('Access.access_level_id' => 'ASC')
+			'order' => array('Access.access_level_id' => 'ASC'),
+			'cache' => __METHOD__
 		));
 	}
 

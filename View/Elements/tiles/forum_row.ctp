@@ -1,9 +1,8 @@
-
 <?php
 $forum = isset($forum['Forum']) ? $forum['Forum'] : $forum;
 $subForums = array();
 
-if (!empty($forum['SubForum'])) {
+if ($forum['SubForum']) {
 	foreach ($forum['SubForum'] as $sub) {
 		$subForums[] = $this->Html->link($sub['title'], array('controller' => 'stations', 'action' => 'view', $sub['slug']));
 	}
@@ -17,7 +16,7 @@ if (!empty($forum['SubForum'])) {
 		<strong><?php echo $this->Html->link($forum['title'], array('controller' => 'stations', 'action' => 'view', $forum['slug'])); ?></strong><br />
 		<?php echo $forum['description']; ?>
 
-		<?php if (!empty($subForums)) { ?>
+		<?php if ($subForums) { ?>
 			<div class="subForums">
 				<span class="gray"><?php echo __d('forum', 'Sub-Forums'); ?>:</span> <?php echo implode(', ', $subForums); ?>
 			</div>

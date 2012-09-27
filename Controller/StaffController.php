@@ -53,7 +53,7 @@ class StaffController extends ForumAppController {
 	 * @param int $id
 	 */
 	public function admin_edit_access($id) {
-		$access = $this->Access->get($id);
+		$access = $this->Access->getById($id);
 
 		$this->ForumToolbar->verifyAccess(array('exists' => $access));
 
@@ -80,7 +80,7 @@ class StaffController extends ForumAppController {
 	 * @param int $id
 	 */
 	public function admin_delete_access($id) {
-		$access = $this->Access->get($id);
+		$access = $this->Access->getById($id);
 
 		$this->ForumToolbar->verifyAccess(array('exists' => $access));
 
@@ -114,7 +114,7 @@ class StaffController extends ForumAppController {
 	 * @param $id
 	 */
 	public function admin_edit_access_level($id) {
-		$access = $this->Access->AccessLevel->get($id);
+		$access = $this->Access->AccessLevel->getById($id);
 
 		$this->ForumToolbar->verifyAccess(array('exists' => $access));
 
@@ -140,7 +140,7 @@ class StaffController extends ForumAppController {
 	 * @param $id
 	 */
 	public function admin_delete_access_level($id) {
-		$access = $this->Access->AccessLevel->get($id);
+		$access = $this->Access->AccessLevel->getById($id);
 
 		$this->ForumToolbar->verifyAccess(array('exists' => $access));
 
@@ -180,7 +180,7 @@ class StaffController extends ForumAppController {
 	 * @param $id
 	 */
 	public function admin_edit_moderator($id) {
-		$mod = $this->Moderator->get($id);
+		$mod = $this->Moderator->getById($id);
 
 		$this->ForumToolbar->verifyAccess(array('exists' => $mod));
 
@@ -205,7 +205,7 @@ class StaffController extends ForumAppController {
 	 * @param $id
 	 */
 	public function admin_delete_moderator($id) {
-		$mod = $this->Moderator->get($id);
+		$mod = $this->Moderator->getById($id);
 
 		$this->ForumToolbar->verifyAccess(array('exists' => $mod));
 

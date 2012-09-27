@@ -49,6 +49,7 @@ class Moderator extends ForumAppModel {
 	public function add($data) {
 		if ($this->validate($data)) {
 			$this->create();
+
 			return $this->save($data, false);
 		}
 
@@ -66,6 +67,7 @@ class Moderator extends ForumAppModel {
 	public function edit($id, $data) {
 		if ($this->validate($data)) {
 			$this->id = $id;
+
 			return $this->save($data, false, array('forum_id'));
 		}
 
@@ -79,10 +81,11 @@ class Moderator extends ForumAppModel {
 	 * @param int $id
 	 * @return array
 	 */
-	public function get($id) {
+	public function getById($id) {
 		return $this->find('first', array(
 			'conditions' => array('Moderator.id' => $id),
-			'contain' => array('User', 'Forum')
+			'contain' => array('User', 'Forum'),
+			'cache' => array(__METHOD__, $id)
 		));
 	}
 
@@ -95,7 +98,8 @@ class Moderator extends ForumAppModel {
 	public function getList() {
 		return $this->find('all', array(
 			'contain' => array('Forum', 'User' => array('Profile')),
-			'order' => array('Moderator.forum_id' => 'ASC')
+			'order' => array('Moderator.forum_id' => 'ASC'),
+			'cache' => __METHOD__
 		));
 	}
 

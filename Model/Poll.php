@@ -65,7 +65,7 @@ class Poll extends ForumAppModel {
 				'vote_count' => 0
 			);
 
-			foreach ($options as $id => $opt) {
+			foreach ($options as $opt) {
 				if ($opt) {
 					$results['option'] = htmlentities($opt, ENT_NOQUOTES, 'UTF-8');
 

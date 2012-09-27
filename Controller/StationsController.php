@@ -58,7 +58,7 @@ class StationsController extends ForumAppController {
 	 * @param string $slug
 	 */
 	public function view($slug) {
-		$forum = $this->Forum->get($slug);
+		$forum = $this->Forum->getBySlug($slug);
 		$user_id = $this->Auth->user('id');
 
 		$this->ForumToolbar->verifyAccess(array(
@@ -86,7 +86,7 @@ class StationsController extends ForumAppController {
 	 * @param string $slug
 	 */
 	public function moderate($slug) {
-		$forum = $this->Forum->get($slug);
+		$forum = $this->Forum->getBySlug($slug);
 
 		$this->ForumToolbar->verifyAccess(array(
 			'exists' => $forum,
@@ -143,7 +143,7 @@ class StationsController extends ForumAppController {
 	 */
 	public function feed($slug) {
 		if ($this->request->is('rss')) {
-			$forum = $this->Forum->get($slug);
+			$forum = $this->Forum->getBySlug($slug);
 
 			$this->ForumToolbar->verifyAccess(array(
 				'exists' => $forum

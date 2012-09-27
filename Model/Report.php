@@ -63,6 +63,20 @@ class Report extends ForumAppModel {
 	);
 
 	/**
+	 * Enum.
+	 *
+	 * @access public
+	 * @var array
+	 */
+	public $enum = array(
+		'itemType' => array(
+			self::TOPIC => 'TOPIC',
+			self::POST => 'POST',
+			self::USER => 'USER'
+		)
+	);
+
+	/**
 	 * Get the latest reports.
 	 *
 	 * @access public

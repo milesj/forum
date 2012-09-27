@@ -33,6 +33,23 @@ class AccessLevel extends ForumAppModel {
 	);
 
 	/**
+	 * Enum.
+	 *
+	 * @access public
+	 * @var array
+	 */
+	public $enum = array(
+		'isSuper' => array(
+			self::BOOL_NO => 'NO',
+			self::BOOL_YES => 'YES'
+		),
+		'isAdmin' => array(
+			self::BOOL_NO => 'NO',
+			self::BOOL_YES => 'YES'
+		)
+	);
+
+	/**
 	 * Get a list of levels.
 	 *
 	 * @access public
@@ -60,7 +77,8 @@ class AccessLevel extends ForumAppModel {
 	 */
 	public function getList() {
 		return $this->find('all', array(
-			'order' => array('AccessLevel.level' => 'ASC')
+			'order' => array('AccessLevel.level' => 'ASC'),
+			'cache' => __METHOD__
 		));
 	}
 

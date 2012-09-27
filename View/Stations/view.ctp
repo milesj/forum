@@ -11,12 +11,12 @@ $this->Html->addCrumb($forum['Forum']['title'], array('controller' => 'stations'
 <div class="title">
 	<h2><?php echo $forum['Forum']['title']; ?></h2>
 
-	<?php if (!empty($forum['Forum']['description'])) { ?>
+	<?php if ($forum['Forum']['description']) { ?>
 		<p><?php echo $forum['Forum']['description']; ?></p>
 	<?php } ?>
 </div>
 
-<?php if (!empty($forum['SubForum'])) { ?>
+<?php debug($forum); if ($forum['SubForum']) { ?>
 
 	<div class="container">
 		<div class="containerHeader">
@@ -71,7 +71,7 @@ if ($forum['Forum']['forum_id'] > 0) {
 				</thead>
 				<tbody>
 
-				<?php if (!empty($stickies)) { ?>
+				<?php if ($stickies) { ?>
 
 					<tr class="headRow">
 						<td colspan="7" class="dark"><?php echo __d('forum', 'Important Topics'); ?></td>
@@ -90,7 +90,7 @@ if ($forum['Forum']['forum_id'] > 0) {
 
 				<?php }
 
-				if (!empty($topics)) {
+				if ($topics) {
 					foreach ($topics as $counter => $topic) {
 						echo $this->element('tiles/topic_row', array(
 							'counter' => $counter,
@@ -119,7 +119,7 @@ if ($forum['Forum']['forum_id'] > 0) {
 	<div class="statistics">
 		<?php $moderators = array();
 
-		if (!empty($forum['Moderator'])) {
+		if ($forum['Moderator']) {
 			foreach ($forum['Moderator'] as $mod) {
 				$moderators[] = $this->Html->link($mod['User'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'profile', $mod['User']['id']));
 			}
@@ -153,7 +153,7 @@ if ($forum['Forum']['forum_id'] > 0) {
 					<td class="align-right"><?php echo __d('forum', 'Can Create Polls'); ?>: </td>
 					<td><strong><?php echo $this->Common->hasAccess($forum['Forum']['accessPoll']) ? __d('forum', 'Yes') : __d('forum', 'No'); ?></strong></td>
 				</tr>
-				<?php if (!empty($moderators)) { ?>
+				<?php if ($moderators) { ?>
 					<tr>
 						<td class="align-right"><?php echo __d('forum', 'Moderators'); ?>: </td>
 						<td colspan="7"><?php echo implode(', ', $moderators); ?></td>

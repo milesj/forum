@@ -62,30 +62,30 @@ class Forum extends ForumAppModel {
 	 */
 	public $hasMany = array(
 		'Topic' => array(
-			'className'		=> 'Forum.Topic',
-			'dependent'		=> false
+			'className' => 'Forum.Topic',
+			'dependent' => false
 		),
 		'Children' => array(
-			'className' 	=> 'Forum.Forum',
-			'foreignKey' 	=> 'forum_id',
-			'order' 		=> array('Children.orderNo' => 'ASC'),
-			'dependent'		=> false
+			'className' => 'Forum.Forum',
+			'foreignKey' => 'forum_id',
+			'order' => array('Children.orderNo' => 'ASC'),
+			'dependent' => false
 		),
 		'SubForum' => array(
-			'className' 	=> 'Forum.Forum',
-			'foreignKey' 	=> 'forum_id',
-			'order' 		=> array('SubForum.orderNo' => 'ASC'),
-			'dependent'		=> false
+			'className' => 'Forum.Forum',
+			'foreignKey' => 'forum_id',
+			'order' => array('SubForum.orderNo' => 'ASC'),
+			'dependent' => false
 		),
 		'Moderator' => array(
-			'className'		=> 'Forum.Moderator',
-			'dependent'		=> true,
-			'exclusive'		=> true
+			'className' => 'Forum.Moderator',
+			'dependent' => true,
+			'exclusive' => true
 		),
 		'Subscription' => array(
-			'className'		=> 'Forum.Subscription',
-			'exclusive'		=> true,
-			'dependent'		=> true
+			'className' => 'Forum.Subscription',
+			'exclusive' => true,
+			'dependent' => true
 		)
 	);
 
@@ -107,6 +107,23 @@ class Forum extends ForumAppModel {
 				'rule' => 'notEmpty',
 				'message' => 'This setting is required'
 			)
+		)
+	);
+
+	/**
+	 * Enum.
+	 *
+	 * @access public
+	 * @var array
+	 */
+	public $enum = array(
+		'settingPostCount' => array(
+			self::BOOL_NO => 'NO',
+			self::BOOL_YES => 'YES'
+		),
+		'settingAutoLock' => array(
+			self::BOOL_NO => 'NO',
+			self::BOOL_YES => 'YES'
 		)
 	);
 
@@ -136,7 +153,7 @@ class Forum extends ForumAppModel {
 	 * @param string $slug
 	 * @return array
 	 */
-	public function get($slug) {
+	public function getBySlug($slug) {
 		$access = $this->access();
 		$accessLevels = $this->accessLevels();
 
@@ -157,20 +174,7 @@ class Forum extends ForumAppModel {
 				),
 				'Moderator' => array('User')
 			),
-			'cache' => __FUNCTION__ . '-' . $slug
-		));
-	}
-
-	/**
-	 * Return a forum based on ID.
-	 *
-	 * @acccess public
-	 * @param int $id
-	 * @return array
-	 */
-	public function getById($id) {
-		return $this->find('first', array(
-			'conditions' => array('Forum.id' => $id)
+			'cache' => array(__METHOD__, $slug)
 		));
 	}
 
@@ -318,7 +322,7 @@ class Forum extends ForumAppModel {
 					'LastTopic', 'LastPost', 'LastUser'
 				)
 			),
-			'cache' => __FUNCTION__
+			'cache' => __METHOD__
 		));
 	}
 
@@ -351,7 +355,7 @@ class Forum extends ForumAppModel {
 
 		if ($data) {
 			foreach ($data as $model => $fields) {
-				foreach ($fields as $id => $field) {
+				foreach ($fields as $field) {
 					$order = $field['orderNo'];
 
 					if (!is_numeric($order)) {

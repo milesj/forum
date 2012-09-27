@@ -1,4 +1,3 @@
-
 <tr id="category_<?php echo $forum['id']; ?>">
 	<?php if (isset($child)) { ?>
 		<td>&nbsp;</td>

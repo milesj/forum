@@ -68,7 +68,7 @@ class TopicsController extends ForumAppController {
 	 * @param string $type
 	 */
 	public function add($slug, $type = '') {
-		$forum = $this->Topic->Forum->get($slug);
+		$forum = $this->Topic->Forum->getBySlug($slug);
 		$user_id = $this->Auth->user('id');
 
 		if ($type === 'poll') {
@@ -116,7 +116,7 @@ class TopicsController extends ForumAppController {
 	 * @param string $slug
 	 */
 	public function edit($slug) {
-		$topic = $this->Topic->get($slug);
+		$topic = $this->Topic->getBySlug($slug);
 		$user_id = $this->Auth->user('id');
 
 		$this->ForumToolbar->verifyAccess(array(
@@ -149,7 +149,7 @@ class TopicsController extends ForumAppController {
 	 */
 	public function feed($slug) {
 		if ($this->request->is('rss')) {
-			$topic = $this->Topic->get($slug);
+			$topic = $this->Topic->getBySlug($slug);
 
 			$this->ForumToolbar->verifyAccess(array(
 				'exists' => $topic
@@ -174,7 +174,7 @@ class TopicsController extends ForumAppController {
 	 * @param string $slug
 	 */
 	public function delete($slug) {
-		$topic = $this->Topic->get($slug);
+		$topic = $this->Topic->getBySlug($slug);
 
 		$this->ForumToolbar->verifyAccess(array(
 			'exists' => $topic,
@@ -196,7 +196,7 @@ class TopicsController extends ForumAppController {
 	public function report($slug) {
 		$this->loadModel('Forum.Report');
 
-		$topic = $this->Topic->get($slug);
+		$topic = $this->Topic->getBySlug($slug);
 		$user_id = $this->Auth->user('id');
 
 		$this->ForumToolbar->verifyAccess(array(
@@ -224,7 +224,7 @@ class TopicsController extends ForumAppController {
 	 * @param string $slug
 	 */
 	public function view($slug) {
-		$topic = $this->Topic->get($slug);
+		$topic = $this->Topic->getBySlug($slug);
 		$user_id = $this->Auth->user('id');
 
 		$this->ForumToolbar->verifyAccess(array(
@@ -296,7 +296,7 @@ class TopicsController extends ForumAppController {
 	 * @param string $slug
 	 */
 	public function moderate($slug) {
-		$topic = $this->Topic->get($slug);
+		$topic = $this->Topic->getBySlug($slug);
 		$user_id = $this->Auth->user('id');
 
 		$this->ForumToolbar->verifyAccess(array(

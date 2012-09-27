@@ -194,7 +194,7 @@ class UsersController extends ForumAppController {
 	 * @throws NotFoundException
 	 */
 	public function admin_edit($id) {
-		$profile = $this->Profile->get($id);
+		$profile = $this->Profile->getById($id);
 
 		if (!$profile) {
 			throw new NotFoundException(__d('forum', 'Profile does not exist.'));

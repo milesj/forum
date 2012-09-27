@@ -97,6 +97,7 @@ class Post extends ForumAppModel {
 	 */
 	public function addFirstPost($data) {
 		$this->create();
+
 		$this->save(array(
 			'topic_id' => $data['topic_id'],
 			'forum_id' => $data['forum_id'],
@@ -161,13 +162,14 @@ class Post extends ForumAppModel {
 	 * @param int $id
 	 * @return array
 	 */
-	public function get($id) {
+	public function getById($id) {
 		return $this->find('first', array(
 			'conditions' => array('Post.id' => $id),
 			'contain' => array(
 				'Topic', 'User',
 				'Forum' => array('Parent')
-			)
+			),
+			'cache' => array(__METHOD__, $id)
 		));
 	}
 
@@ -221,7 +223,8 @@ class Post extends ForumAppModel {
 			'contain' => array(
 				'Topic' => array('LastUser', 'LastPost', 'User')
 			),
-			'cache' => array(__FUNCTION__ . '-' . $user_id . '-' . $limit, '+5 minutes')
+			'cache' => array(__METHOD__, $user_id, $limit),
+			'cacheExpires' => '+5 minutes'
 		));
 	}
 

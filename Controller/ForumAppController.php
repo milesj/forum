@@ -41,6 +41,22 @@ class ForumAppController extends AppController {
 	public $helpers = array('Html', 'Session', 'Form', 'Time', 'Text', 'Forum.Common');
 
 	/**
+	 * Plugin configuration.
+	 *
+	 * @access public
+	 * @var array
+	 */
+	public $config = array();
+
+	/**
+	 * Database forum settings.
+	 *
+	 * @access public
+	 * @var array
+	 */
+	public $settings = array();
+
+	/**
 	 * Run auto login logic.
 	 *
 	 * @access public
@@ -59,6 +75,7 @@ class ForumAppController extends AppController {
 	public function beforeFilter() {
 		parent::beforeFilter();
 
+		// Admin
 		if (isset($this->params['admin'])) {
 			$this->ForumToolbar->verifyAdmin();
 			$this->layout = 'admin';
@@ -69,21 +86,21 @@ class ForumAppController extends AppController {
 		$this->settings = Configure::read('Forum.settings');
 
 		// Localization
-		$locale = $this->Auth->user('locale') ? $this->Auth->user('locale') : $this->settings['default_locale'];
+		$locale = $this->Auth->user('locale') ?: $this->settings['default_locale'];
 		Configure::write('Config.language', $locale);
 		setlocale(LC_ALL, $locale . 'UTF8', $locale . 'UTF-8', $locale, 'eng.UTF8', 'eng.UTF-8', 'eng', 'en_US');
 
 		// Authorization
-		$referer = $this->referer();
+		$referrer = $this->referer();
 		$routes = $this->config['routes'];
 
-		if (!$referer || $referer === '/forum/users/login' || $referer === '/admin/forum/users/login') {
-			$referer = array('plugin' => 'forum', 'controller' => 'forum', 'action' => 'index');
+		if (!$referrer || $referrer === '/forum/users/login' || $referrer === '/admin/forum/users/login') {
+			$referrer = array('plugin' => 'forum', 'controller' => 'forum', 'action' => 'index');
 		}
 
 		$this->Auth->loginAction = $routes['login'];
-		$this->Auth->loginRedirect = $referer;
-		$this->Auth->logoutRedirect = $referer;
+		$this->Auth->loginRedirect = $referrer;
+		$this->Auth->logoutRedirect = $referrer;
 		$this->Auth->autoRedirect = false;
 
 		// AutoLogin

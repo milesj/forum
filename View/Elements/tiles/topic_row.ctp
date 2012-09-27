@@ -1,4 +1,3 @@
-
 <?php
 $pages = $this->Common->topicPages($topic['Topic']);
 $columns = isset($columns) ? $columns : array(); ?>
