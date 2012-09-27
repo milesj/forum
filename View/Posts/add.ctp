@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 $this->Html->addCrumb($settings['site_name'], array('controller' => 'forum', 'action' => 'index'));
 
@@ -19,18 +19,18 @@ $this->Html->addCrumb($topic['Topic']['title'], array('controller' => 'topics', 
 
 <div class="container">
 	<div class="containerContent">
-		<?php 
+		<?php
 		echo $this->Form->input('content', array(
-			'type' => 'textarea', 
-			'rows' => 15, 
+			'type' => 'textarea',
+			'rows' => 15,
 			'after' => '<span class="inputText">[b], [u], [i], [img], [url], [email], [code], [align], [list], [li], [color], [size], [quote]</span>',
 			'label' => __d('forum', 'Content')));
-		
+
 		echo $this->element('markitup', array('textarea' => 'PostContent')); ?>
 	</div>
 </div>
 
-<?php 
+<?php
 echo $this->Form->submit(__d('forum', 'Post Reply'), array('class' => 'button'));
 echo $this->Form->end();
 
@@ -64,7 +64,7 @@ if (!empty($review)) { ?>
 			<?php } ?>
 
 			</table>
-		</div>      
-	</div>  
+		</div>
+	</div>
 
 <?php } ?>

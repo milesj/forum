@@ -33,24 +33,24 @@ class Forum extends ForumAppModel {
 	 */
 	public $belongsTo = array(
 		'Parent' => array(
-			'className'		=> 'Forum.Forum',
-			'foreignKey'	=> 'forum_id',
-			'fields'		=> array('Parent.id', 'Parent.title', 'Parent.slug', 'Parent.forum_id')
+			'className' => 'Forum.Forum',
+			'foreignKey' => 'forum_id',
+			'fields' => array('Parent.id', 'Parent.title', 'Parent.slug', 'Parent.forum_id')
 		),
 		'LastTopic' => array(
-			'className' 	=> 'Forum.Topic',
-			'foreignKey'	=> 'lastTopic_id'
+			'className' => 'Forum.Topic',
+			'foreignKey' => 'lastTopic_id'
 		),
 		'LastPost' => array(
-			'className' 	=> 'Forum.Post',
-			'foreignKey'	=> 'lastPost_id'
+			'className' => 'Forum.Post',
+			'foreignKey' => 'lastPost_id'
 		),
 		'LastUser' => array(
-			'className'		=> 'User',
-			'foreignKey'	=> 'lastUser_id'
+			'className' => FORUM_USER,
+			'foreignKey' => 'lastUser_id'
 		),
 		'AccessLevel' => array(
-			'className' 	=> 'Forum.AccessLevel'
+			'className' => 'Forum.AccessLevel'
 		)
 	);
 

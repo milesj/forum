@@ -19,14 +19,16 @@ class Subscription extends ForumAppModel {
 	 * @var array
 	 */
 	public $belongsTo = array(
-		'User',
+		'User' => array(
+			'className' => FORUM_USER
+		),
 		'Forum' => array(
-			'className'		=> 'Forum.Forum',
-			'foreignKey'	=> 'forum_id'
+			'className' => 'Forum.Forum',
+			'foreignKey' => 'forum_id'
 		),
 		'Topic' => array(
-			'className' 	=> 'Forum.Topic',
-			'foreignKey'	=> 'topic_id'
+			'className' => 'Forum.Topic',
+			'foreignKey' => 'topic_id'
 		)
 	);
 

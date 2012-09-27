@@ -35,19 +35,20 @@ class Report extends ForumAppModel {
 	 */
 	public $belongsTo = array(
 		'Reporter' => array(
-			'className'		=> 'User',
-			'foreignKey'	=> 'user_id'
+			'className' => FORUM_USER,
+			'foreignKey' => 'user_id'
 		),
 		'Topic' => array(
-			'className' 	=> 'Forum.Topic',
-			'foreignKey' 	=> 'item_id'
+			'className' => 'Forum.Topic',
+			'foreignKey' => 'item_id'
 		),
 		'Post' => array(
-			'className' 	=> 'Forum.Post',
-			'foreignKey' 	=> 'item_id'
+			'className' => 'Forum.Post',
+			'foreignKey' => 'item_id'
 		),
 		'User' => array(
-			'foreignKey' 	=> 'item_id'
+			'className' => FORUM_USER,
+			'foreignKey' => 'item_id'
 		)
 	);
 

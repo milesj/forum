@@ -39,7 +39,9 @@ class Access extends ForumAppModel {
 		'AccessLevel' => array(
 			'className' => 'Forum.AccessLevel'
 		),
-		'User'
+		'User' => array(
+			'className' => FORUM_USER
+		)
 	);
 
 	/**

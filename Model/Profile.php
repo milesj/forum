@@ -21,7 +21,11 @@ class Profile extends ForumAppModel {
 	 * @access public
 	 * @var array
 	 */
-	public $belongsTo = array('User');
+	public $belongsTo = array(
+		'User' => array(
+			'className' => FORUM_USER
+		)
+	);
 
 	/**
 	 * Validate.

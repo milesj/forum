@@ -40,22 +40,24 @@ class Topic extends ForumAppModel {
 	 * @var array
 	 */
 	public $belongsTo = array(
-		'User',
+		'User' => array(
+			'className' => FORUM_USER
+		),
 		'Forum' => array(
-			'className' 	=> 'Forum.Forum',
-			'counterCache' 	=> true
+			'className' => 'Forum.Forum',
+			'counterCache' => true
 		),
 		'FirstPost' => array(
-			'className' 	=> 'Forum.Post',
-			'foreignKey'	=> 'firstPost_id'
+			'className' => 'Forum.Post',
+			'foreignKey' => 'firstPost_id'
 		),
 		'LastPost' => array(
-			'className' 	=> 'Forum.Post',
-			'foreignKey'	=> 'lastPost_id'
+			'className' => 'Forum.Post',
+			'foreignKey' => 'lastPost_id'
 		),
 		'LastUser' => array(
-			'className'		=> 'User',
-			'foreignKey'	=> 'lastUser_id'
+			'className' => FORUM_USER,
+			'foreignKey' => 'lastUser_id'
 		)
 	);
 

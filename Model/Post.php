@@ -23,14 +23,16 @@ class Post extends ForumAppModel {
 	 */
 	public $belongsTo = array(
 		'Forum' => array(
-			'className' 	=> 'Forum.Forum',
-			'counterCache' 	=> true
+			'className' => 'Forum.Forum',
+			'counterCache' => true
 		),
 		'Topic' => array(
-			'className'		=> 'Forum.Topic',
-			'counterCache'	=> true
+			'className' => 'Forum.Topic',
+			'counterCache' => true
 		),
-		'User'
+		'User' => array(
+			'className' => FORUM_USER
+		)
 	);
 
 	/**

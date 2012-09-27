@@ -42,8 +42,14 @@ $config['Forum']['routes'] = array(
 /**
  * Load custom configuration if it exists.
  */
-if (file_exists('custom.php')) {
-	include_once 'custom.php';
+$customConfig = dirname(__FILE__) . '/custom.php';
+
+if (file_exists($customConfig)) {
+	include_once $customConfig;
+}
+
+if (!defined('FORUM_USER')) {
+	define('FORUM_USER', 'User');
 }
 
 /***************************************************

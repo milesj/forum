@@ -32,10 +32,10 @@ class Poll extends ForumAppModel {
 	 */
 	public $hasMany = array(
 		'PollOption' => array(
-			'className'	=> 'Forum.PollOption',
+			'className' => 'Forum.PollOption',
 			'exclusive' => true,
 			'dependent' => true,
-			'order' 	=> array('PollOption.id' => 'ASC'),
+			'order' => array('PollOption.id' => 'ASC'),
 		),
 		'PollVote' => array(
 			'className' => 'Forum.PollVote',
