@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 $this->Html->addCrumb($settings['site_name'], array('controller' => 'forum', 'action' => 'index'));
 $this->Html->addCrumb(__d('forum', 'Search'), array('controller' => 'search', 'action' => 'index')); ?>
@@ -14,16 +14,16 @@ $this->Html->addCrumb(__d('forum', 'Search'), array('controller' => 'search', 'a
 		<table style="width: 100%">
 			<tbody>
 				<tr>
-					<td class="align-right"><?php echo $this->Form->label('keywords', __d('forum', 'Keywords') .':'); ?></td>
+					<td class="align-right"><?php echo $this->Form->label('keywords', __d('forum', 'Keywords') . ':'); ?></td>
 					<td><?php echo $this->Form->input('keywords', array('div' => false, 'label' => false, 'style' => 'width: 300px')); ?></td>
 
-					<td class="align-right"><?php echo $this->Form->label('forum_id', __d('forum', 'Within Forum Category') .':'); ?></td>
+					<td class="align-right"><?php echo $this->Form->label('forum_id', __d('forum', 'Within Forum Category') . ':'); ?></td>
 					<td><?php echo $this->Form->input('forum_id', array('div' => false, 'label' => false, 'options' => $forums, 'escape' => false, 'empty' => true)); ?></td>
 
-					<td class="align-right"><?php echo $this->Form->label('orderBy', __d('forum', 'Order By') .':'); ?></td>
+					<td class="align-right"><?php echo $this->Form->label('orderBy', __d('forum', 'Order By') . ':'); ?></td>
 					<td><?php echo $this->Form->input('orderBy', array('div' => false, 'label' => false, 'options' => $orderBy)); ?></td>
 
-					<td class="align-right"><?php echo $this->Form->label('byUser', __d('forum', 'By User (Username)') .':'); ?></td>
+					<td class="align-right"><?php echo $this->Form->label('byUser', __d('forum', 'By User (Username)') . ':'); ?></td>
 					<td><?php echo $this->Form->input('byUser', array('div' => false, 'label' => false, 'style' => 'width: 150px')); ?></td>
 				</tr>
 			</tbody>
@@ -31,9 +31,9 @@ $this->Html->addCrumb(__d('forum', 'Search'), array('controller' => 'search', 'a
 	</div>
 </div>
 
-<?php 
+<?php
 echo $this->Form->submit(__d('forum', 'Search Topics'), array('class' => 'button'));
-echo $this->Form->end(); 
+echo $this->Form->end();
 
 if ($searching) { ?>
 
@@ -68,7 +68,7 @@ if ($searching) { ?>
 						'counter' => $counter,
 						'columns' => array('forum')
 					));
-				} 
+				}
 			} ?>
 
 			</tbody>

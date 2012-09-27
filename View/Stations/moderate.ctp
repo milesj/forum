@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 $this->Html->addCrumb($settings['site_name'], array('controller' => 'forum', 'action' => 'index'));
 
@@ -63,7 +63,7 @@ $this->Html->addCrumb($forum['Forum']['title'], array('controller' => 'stations'
 </div>
 
 <div class="moderate">
-	<?php 
+	<?php
 	echo $this->Form->input('action', array(
 		'options' => array(
 			'open' => __d('forum', 'Open Topic(s)'),
@@ -71,11 +71,11 @@ $this->Html->addCrumb($forum['Forum']['title'], array('controller' => 'stations'
 			'move' => __d('forum', 'Move Topic(s)'),
 			'delete' => __d('forum', 'Delete Topic(s)')
 		),
-		'div' => false, 
-		'label' => __d('forum', 'Perform Action') .': '
+		'div' => false,
+		'label' => __d('forum', 'Perform Action') . ': '
 	));
-	
-	echo $this->Form->input('move_id', array('options' => $forums, 'div' => false, 'label' => __d('forum', 'Move To') .': ', 'escape' => false));
+
+	echo $this->Form->input('move_id', array('options' => $forums, 'div' => false, 'label' => __d('forum', 'Move To') . ': ', 'escape' => false));
 	echo $this->Form->submit(__d('forum', 'Process'), array('div' => false, 'class' => 'buttonSmall')); ?>
 </div>
 

@@ -42,7 +42,7 @@ class CommonHelper extends AppHelper {
 			$icon = 'new';
 		}
 
-		return $this->Html->image('/forum/img/forum_'. $icon .'.png', array(
+		return $this->Html->image('/forum/img/forum_' . $icon . '.png', array(
 			'alt' => ucfirst($icon)
 		));
 	}
@@ -154,49 +154,49 @@ class CommonHelper extends AppHelper {
 	 * @return array|string
 	 */
 	public function options($type = 'status', $value = '', $guest = false) {
-		if ($type == 'status') {
+		if ($type === 'status') {
 			$options = array(
 				1 => __d('forum', 'Yes'),
 				0 => __d('forum', 'No')
 			);
 
-		} else if ($type == 'topicStatus') {
+		} else if ($type === 'topicStatus') {
 			$options = array(
 				1 => __d('forum', 'Open'),
 				0 => __d('forum', 'Closed')
 			);
 
-		} else if ($type == 'forumStatus') {
+		} else if ($type === 'forumStatus') {
 			$options = array(
 				1 => __d('forum', 'Visible'),
 				0 => __d('forum', 'Hidden')
 			);
 
-		} else if ($type == 'access') {
+		} else if ($type === 'access') {
 			$options = array(
-				1 => '1 ('. __d('forum', 'Member') .')',
+				1 => '1 (' . __d('forum', 'Member') . ')',
 				2 => '2',
 				3 => '3',
-				4 => '4 ('. __d('forum', 'Moderator') .')',
+				4 => '4 (' . __d('forum', 'Moderator') . ')',
 				5 => '5',
 				6 => '6',
-				7 => '7 ('. __d('forum', 'Super Moderator') .')',
+				7 => '7 (' . __d('forum', 'Super Moderator') . ')',
 				8 => '8',
 				9 => '9',
-				10 => '10 ('. __d('forum', 'Administrator') .')'
+				10 => '10 (' . __d('forum', 'Administrator') . ')'
 			);
 
 			if ($guest) {
-				array_unshift($options, '0 ('. __d('forum', 'Guest') .')');
+				array_unshift($options, '0 (' . __d('forum', 'Guest') . ')');
 			}
 
-		} else if ($type == 'userStatus') {
+		} else if ($type === 'userStatus') {
 			$options = array(
 				0 => __d('forum', 'Active'),
 				1 => __d('forum', 'Banned')
 			);
 
-		} else if ($type == 'topicTypes') {
+		} else if ($type === 'topicTypes') {
 			$options = array(
 				0 => __d('forum', 'Normal'),
 				1 => __d('forum', 'Sticky'),
@@ -204,7 +204,7 @@ class CommonHelper extends AppHelper {
 				3 => __d('forum', 'Announcement')
 			);
 
-		} else if ($type == 'statusMap') {
+		} else if ($type === 'statusMap') {
 			$statuses = array_flip(Configure::read('Forum.statusMap'));
 			$options = array();
 
@@ -288,13 +288,13 @@ class CommonHelper extends AppHelper {
 			}
 		}
 
-		if ($icon == 'open' || $icon == 'new') {
+		if ($icon === 'open' || $icon === 'new') {
 			if ($topic['Topic']['post_count'] >= Configure::read('Forum.settings.posts_till_hot_topic')) {
 				$icon .= '_hot';
 			}
 		}
 
-		return $this->Html->image('/forum/img/topic_'. $icon .'.png', array(
+		return $this->Html->image('/forum/img/topic_' . $icon . '.png', array(
 			'alt' => ucfirst($icon)
 		));
 	}
@@ -339,7 +339,7 @@ class CommonHelper extends AppHelper {
 
 		$types = $this->options('topicTypes');
 
-		return $this->output('<strong>'. $types[$type] .'</strong>');
+		return $this->output('<strong>' . $types[$type] . '</strong>');
 	}
 
 }

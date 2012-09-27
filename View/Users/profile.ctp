@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 $this->Html->addCrumb($settings['site_name'], array('controller' => 'forum', 'action' => 'index'));
 $this->Html->addCrumb(__d('forum', 'Users'), array('controller' => 'users', 'action' => 'index'));
@@ -28,17 +28,17 @@ $this->Html->addCrumb($profile['User'][$config['userMap']['username']], $this->h
 
 				<td><strong><?php echo __d('forum', 'Total Topics'); ?>:</strong></td>
 				<td><?php echo number_format($profile['Profile']['totalTopics']); ?></td>
-				
+
 				<td><strong><?php echo __d('forum', 'Roles'); ?>:</strong></td>
 				<td>
-					<?php if (!empty($profile['User']['Access'])) { 
+					<?php if (!empty($profile['User']['Access'])) {
 						$roles = array();
 						foreach ($profile['User']['Access'] as $access) {
 							$roles[] = $access['AccessLevel']['title'];
 						}
 						echo implode(', ', $roles);
 					} else {
-						echo '<em>'. __d('forum', 'N/A') .'</em>';
+						echo '<em>' . __d('forum', 'N/A') . '</em>';
 					} ?>
 				</td>
 			</tr>
@@ -48,7 +48,7 @@ $this->Html->addCrumb($profile['User'][$config['userMap']['username']], $this->h
 					<?php if (!empty($profile['Profile']['lastLogin'])) {
 						echo $this->Time->timeAgoInWords($profile['Profile']['lastLogin'], array('userOffset' => $this->Common->timezone()));
 					} else {
-						echo '<em>'. __d('forum', 'Never') .'</em>';
+						echo '<em>' . __d('forum', 'Never') . '</em>';
 					} ?>
 				</td>
 
@@ -57,28 +57,28 @@ $this->Html->addCrumb($profile['User'][$config['userMap']['username']], $this->h
 
 				<td><strong><?php echo __d('forum', 'Moderates'); ?>:</strong></td>
 				<td>
-					<?php if (!empty($profile['User']['Moderator'])) { 
+					<?php if (!empty($profile['User']['Moderator'])) {
 						$mods = array();
 						foreach ($profile['User']['Moderator'] as $mod) {
 							$mods[] = $this->Html->link($mod['Forum']['title'], array('controller' => 'stations', 'action' => 'view', $mod['Forum']['slug']));
 						}
 						echo implode(', ', $mods);
 					} else {
-						echo '<em>'. __d('forum', 'N/A') .'</em>';
+						echo '<em>' . __d('forum', 'N/A') . '</em>';
 					} ?>
 				</td>
 			</tr>
 		</tbody>
 	</table>
 </div>
-	
+
 <?php if (!empty($topics)) { ?>
-	
+
 <div class="container">
 	<div class="containerHeader">
 		<h3><?php echo __d('forum', 'Latest Topics'); ?></h3>
 	</div>
-	
+
 	<div class="containerContent">
 		<table class="table">
 			<thead>
@@ -107,17 +107,17 @@ $this->Html->addCrumb($profile['User'][$config['userMap']['username']], $this->h
 			</tbody>
 		</table>
 	</div>
-</div>   
-	
+</div>
+
 <?php }
 
 if (!empty($posts)) { ?>
-	
+
 <div class="container">
 	<div class="containerHeader">
 		<h3><?php echo __d('forum', 'Latest Posts'); ?></h3>
 	</div>
-	
+
 	<div class="containerContent">
 		<table class="table">
 			<thead>
@@ -128,7 +128,7 @@ if (!empty($posts)) { ?>
 				</tr>
 			</thead>
 			<tbody>
-				
+
 			<?php foreach($posts as $post) { ?>
 
 				<tr class="altRow">
@@ -144,7 +144,7 @@ if (!empty($posts)) { ?>
 
 			</tbody>
 		</table>
-	</div>    
+	</div>
 </div>
-	
+
 <?php } ?>

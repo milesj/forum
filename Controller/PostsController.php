@@ -43,7 +43,7 @@ class PostsController extends ForumAppController {
 			'permission' => $topic['Forum']['accessReply']
 		));
 
-		if (!empty($this->request->data)) {
+		if ($this->request->data) {
 			$this->request->data['Post']['forum_id'] = $topic['Topic']['forum_id'];
 			$this->request->data['Post']['topic_id'] = $topic['Topic']['id'];
 			$this->request->data['Post']['user_id'] = $user_id;
@@ -59,10 +59,8 @@ class PostsController extends ForumAppController {
 			}
 		} else {
 			if ($quote_id) {
-				$quote = $this->Post->getQuote($quote_id);
-
-				if (!empty($quote)) {
-					$this->request->data['Post']['content'] = '[quote="'. $quote['User'][$this->config['userMap']['username']] .'" date="'. $quote['Post']['created'] .'"]'. $quote['Post']['content'] .'[/quote]';
+				if ($quote = $this->Post->getQuote($quote_id)) {
+					$this->request->data['Post']['content'] = '[quote="' . $quote['User'][$this->config['userMap']['username']] . '" date="' . $quote['Post']['created'] . '"]' . $quote['Post']['content'] . '[/quote]';
 				}
 			}
 		}
@@ -87,7 +85,7 @@ class PostsController extends ForumAppController {
 			'ownership' => $post['Post']['user_id']
 		));
 
-		if (!empty($this->request->data)) {
+		if ($this->request->data) {
 			$this->Post->id = $id;
 
 			if ($this->Post->save($this->request->data, true, array('content', 'contentHtml'))) {
@@ -134,7 +132,7 @@ class PostsController extends ForumAppController {
 			'exists' => $post
 		));
 
-		if (!empty($this->request->data)) {
+		if ($this->request->data) {
 			$this->request->data['Report']['user_id'] = $user_id;
 			$this->request->data['Report']['item_id'] = $id;
 			$this->request->data['Report']['itemType'] = Report::POST;

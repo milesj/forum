@@ -236,7 +236,7 @@ class TypeConverter {
 		$array = self::toArray($resource);
 
 		if (!empty($array)) {
-			$xml = simplexml_load_string('<?xml version="1.0" encoding="utf-8"?><'. $root .'></'. $root .'>');
+			$xml = simplexml_load_string('<?xml version="1.0" encoding="utf-8"?><' . $root . '></' . $root . '>');
 			$response = self::buildXml($xml, $array);
 
 			return $response->asXML();

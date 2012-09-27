@@ -54,7 +54,7 @@ class ForumToolbarComponent extends Component {
 				$access = ClassRegistry::init('Forum.Access')->getListByUser($user_id);
 				$highestAccess = 1;
 
-				if (!empty($access)) {
+				if ($access) {
 					foreach ($access as $level) {
 						$accessLevels[$level['AccessLevel']['id']] = $level['AccessLevel']['level'];
 
@@ -115,13 +115,13 @@ class ForumToolbarComponent extends Component {
 			}
 
 			if ($totalPages <= 1) {
-				$url = array('plugin' => 'forum', 'controller' => 'topics', 'action' => 'view', $slug, '#' => 'post-'. $post_id);
+				$url = array('plugin' => 'forum', 'controller' => 'topics', 'action' => 'view', $slug, '#' => 'post-' . $post_id);
 			} else {
 				$posts = array_values($posts);
 				$flips = array_flip($posts);
 				$position = $flips[$post_id] + 1;
 				$goTo = ceil($position / $perPage);
-				$url = array('plugin' => 'forum', 'controller' => 'topics', 'action' => 'view', $slug, 'page' => $goTo, '#' => 'post-'. $post_id);
+				$url = array('plugin' => 'forum', 'controller' => 'topics', 'action' => 'view', $slug, 'page' => $goTo, '#' => 'post-' . $post_id);
 			}
 
 		// First post
@@ -132,7 +132,7 @@ class ForumToolbarComponent extends Component {
 		} else {
 			$url = $this->Controller->referer();
 
-			if (empty($url) || (strpos($url, 'delete') !== false)) {
+			if (!$url || (strpos($url, 'delete') !== false)) {
 				$url = array('plugin' => 'forum', 'controller' => 'forum', 'action' => 'index');
 			}
 		}
@@ -154,7 +154,7 @@ class ForumToolbarComponent extends Component {
 	public function markAsRead($topic_id) {
 		$readTopics = $this->Session->read('Forum.readTopics');
 
-		if (is_array($readTopics) && !empty($readTopics)) {
+		if ($readTopics && is_array($readTopics)) {
 			$readTopics[] = $topic_id;
 			$readTopics = array_unique($readTopics);
 			$this->Session->write('Forum.readTopics', $readTopics);
@@ -188,7 +188,7 @@ class ForumToolbarComponent extends Component {
 	public function updateTopics($topic_id) {
 		$topics = $this->Session->read('Forum.topics');
 
-		if (!empty($topic_id)) {
+		if ($topic_id) {
 			if (is_array($topics)) {
 				$topics[$topic_id] = time();
 			} else {
@@ -209,7 +209,7 @@ class ForumToolbarComponent extends Component {
 	public function updatePosts($post_id) {
 		$posts = $this->Session->read('Forum.posts');
 
-		if (!empty($post_id)) {
+		if ($post_id) {
 			if (is_array($posts)) {
 				$posts[$post_id] = time();
 			} else {

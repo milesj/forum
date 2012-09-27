@@ -71,7 +71,7 @@ class TopicsController extends ForumAppController {
 		$forum = $this->Topic->Forum->get($slug);
 		$user_id = $this->Auth->user('id');
 
-		if ($type == 'poll') {
+		if ($type === 'poll') {
 			$pageTitle = __d('forum', 'Create Poll');
 			$access = 'accessPoll';
 		} else {
@@ -85,7 +85,7 @@ class TopicsController extends ForumAppController {
 			'permission' => $forum['Forum'][$access]
 		));
 
-		if (!empty($this->request->data)) {
+		if ($this->request->data) {
 			$this->request->data['Topic']['status'] = 1;
 			$this->request->data['Topic']['user_id'] = $user_id;
 			$this->request->data['Topic']['userIP'] = $this->request->clientIp();
@@ -125,10 +125,10 @@ class TopicsController extends ForumAppController {
 			'ownership' => $topic['Topic']['user_id']
 		));
 
-		if (!empty($this->request->data)) {
+		if ($this->request->data) {
 			if ($this->Topic->saveAll($this->request->data, array('validate' => 'only'))) {
 				if ($this->Topic->edit($topic['Topic']['id'], $this->request->data)) {
-					Cache::delete('Topic.get-'. $slug, 'forum');
+					Cache::delete('Topic.get-' . $slug, 'forum');
 					$this->ForumToolbar->goToPage($topic['Topic']['id']);
 				}
 			}
@@ -164,7 +164,7 @@ class TopicsController extends ForumAppController {
 			$this->set('topic', $topic);
 			$this->set('document', array('xmlns:dc' => 'http://purl.org/dc/elements/1.1/'));
 		} else {
-			$this->redirect('/forum/topics/feed/'. $slug .'.rss');
+			$this->redirect('/forum/topics/feed/' . $slug . '.rss');
 		}
 	}
 
@@ -181,7 +181,7 @@ class TopicsController extends ForumAppController {
 			'moderate' => $topic['Topic']['forum_id']
 		));
 
-		Cache::delete('Topic.get-'. $slug, 'forum');
+		Cache::delete('Topic.get-' . $slug, 'forum');
 
 		$this->Topic->delete($topic['Topic']['id'], true);
 
@@ -203,7 +203,7 @@ class TopicsController extends ForumAppController {
 			'exists' => $topic
 		));
 
-		if (!empty($this->request->data)) {
+		if ($this->request->data) {
 			$this->request->data['Report']['user_id'] = $user_id;
 			$this->request->data['Report']['item_id'] = $topic['Topic']['id'];
 			$this->request->data['Report']['itemType'] = Report::TOPIC;
@@ -311,7 +311,7 @@ class TopicsController extends ForumAppController {
 
 			foreach ($items as $post_id) {
 				if (is_numeric($post_id)) {
-					if ($action == 'delete') {
+					if ($action === 'delete') {
 						$this->Topic->Post->delete($post_id, true);
 						$message = __d('forum', 'A total of %d post(s) have been permanently deleted');
 					}

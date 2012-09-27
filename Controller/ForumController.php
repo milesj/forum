@@ -100,7 +100,7 @@ class ForumController extends ForumAppController {
 	public function admin_settings() {
 		$this->loadModel('Forum.Setting');
 
-		if (!empty($this->request->data)) {
+		if ($this->request->data) {
 			if ($this->Setting->update($this->request->data)) {
 				$this->Session->setFlash(__d('forum', 'Settings have been updated!'));
 

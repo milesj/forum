@@ -71,13 +71,13 @@ class ForumAppController extends AppController {
 		// Localization
 		$locale = $this->Auth->user('locale') ? $this->Auth->user('locale') : $this->settings['default_locale'];
 		Configure::write('Config.language', $locale);
-		setlocale(LC_ALL, $locale .'UTF8', $locale .'UTF-8', $locale, 'eng.UTF8', 'eng.UTF-8', 'eng', 'en_US');
+		setlocale(LC_ALL, $locale . 'UTF8', $locale . 'UTF-8', $locale, 'eng.UTF8', 'eng.UTF-8', 'eng', 'en_US');
 
 		// Authorization
 		$referer = $this->referer();
 		$routes = $this->config['routes'];
 
-		if (empty($referer) || $referer == '/forum/users/login' || $referer == '/admin/forum/users/login') {
+		if (!$referer || $referer === '/forum/users/login' || $referer === '/admin/forum/users/login') {
 			$referer = array('plugin' => 'forum', 'controller' => 'forum', 'action' => 'index');
 		}
 
@@ -107,7 +107,7 @@ class ForumAppController extends AppController {
 	public function beforeRender() {
 		$user = $this->Auth->user();
 
-		if (!empty($user)) {
+		if ($user) {
 			$user = array('User' => $user);
 		}
 

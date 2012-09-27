@@ -1,6 +1,6 @@
 <?php
 
-if ($method == 'add') {
+if ($method === 'add') {
 	$action = 'add_moderator';
 	$button = __d('forum', 'Save');
 	$title = __d('forum', 'Add Moderator');
@@ -27,15 +27,15 @@ $this->Html->addCrumb($title, $this->here); ?>
 <div class="container">
 	<div class="containerContent">
 		<?php
-		if ($method == 'add') {
+		if ($method === 'add') {
 			echo $this->Form->input('user_id', array('type' => 'text', 'class' => 'numeric', 'label' => __d('forum', 'User ID')));
 		} else {
-			echo $this->Form->input('User.'. $config['userMap']['username'], array('type' => 'text',  'label' => __d('forum', 'User'), 'readonly' => true));
+			echo $this->Form->input('User.' . $config['userMap']['username'], array('type' => 'text',  'label' => __d('forum', 'User'), 'readonly' => true));
 		}
 		echo $this->Form->input('forum_id', array('label' => __d('forum', 'Forum'), 'empty' => true, 'escape' => false)); ?>
 	</div>
 </div>
 
-<?php 
+<?php
 echo $this->Form->submit($button, array('class' => 'button'));
 echo $this->Form->end(); ?>

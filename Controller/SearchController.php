@@ -54,16 +54,16 @@ class SearchController extends ForumAppController {
 			}
 		}
 
-		if ($type == 'new_posts') {
+		if ($type === 'new_posts') {
 			$this->request->data['Topic']['orderBy'] = 'LastPost.created';
 			$this->paginate['Topic']['conditions']['LastPost.created >='] = $this->Session->read('Forum.lastVisit');
 		}
 
-		if (!empty($this->request->data)) {
+		if ($this->request->data) {
 			$searching = true;
 
 			if (!empty($this->request->data['Topic']['keywords'])) {
-				$this->paginate['Topic']['conditions']['Topic.title LIKE'] = '%'. Sanitize::clean($this->request->data['Topic']['keywords']) .'%';
+				$this->paginate['Topic']['conditions']['Topic.title LIKE'] = '%' . Sanitize::clean($this->request->data['Topic']['keywords']) . '%';
 			}
 
 			if (!empty($this->request->data['Topic']['forum_id'])) {
@@ -71,7 +71,7 @@ class SearchController extends ForumAppController {
 			}
 
 			if (!empty($this->request->data['Topic']['byUser'])) {
-				$this->paginate['Topic']['conditions']['User.'. $this->config['userMap']['username'] .' LIKE'] = '%'. Sanitize::clean($this->request->data['Topic']['byUser']) .'%';
+				$this->paginate['Topic']['conditions']['User.' . $this->config['userMap']['username'] . ' LIKE'] = '%' . Sanitize::clean($this->request->data['Topic']['byUser']) . '%';
 			}
 
 			if (empty($this->request->data['Topic']['orderBy']) || !isset($orderBy[$this->request->data['Topic']['orderBy']])) {
@@ -103,7 +103,7 @@ class SearchController extends ForumAppController {
 		}
 
 		foreach ($this->request->data['Topic'] as $field => $value) {
-			if ($value != '') {
+			if ($value !== '') {
 				$named[$field] = urlencode($value);
 			}
 		}

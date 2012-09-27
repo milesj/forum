@@ -115,7 +115,7 @@ class Subscription extends ForumAppModel {
 	public function subscribeToForum($user_id, $forum_id) {
 		$forum = $this->Forum->getById($forum_id);
 
-		if (empty($forum) || $this->isSubscribedToForum($user_id, $forum_id)) {
+		if (!$forum || $this->isSubscribedToForum($user_id, $forum_id)) {
 			return false;
 		}
 
@@ -138,7 +138,7 @@ class Subscription extends ForumAppModel {
 	public function subscribeToTopic($user_id, $topic_id) {
 		$topic = $this->Topic->getById($topic_id);
 
-		if (empty($topic) || $this->isSubscribedToTopic($user_id, $topic_id)) {
+		if (!$topic || $this->isSubscribedToTopic($user_id, $topic_id)) {
 			return false;
 		}
 

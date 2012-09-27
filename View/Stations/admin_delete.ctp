@@ -13,8 +13,8 @@ $this->Html->addCrumb(__d('forum', 'Delete Forum'), $this->here); ?>
 <p><?php echo __d('forum', 'You may not delete this forum, you must have at least one forum active.'); ?></p>
 
 <?php } else { ?>
-	
-<p><?php printf(__d('forum', 'Before you delete the %s forum, please select which forum all topics and sub-forums should be moved to.'), '<strong>'. $forum['Forum']['title'] .'</strong>'); ?></p>
+
+<p><?php printf(__d('forum', 'Before you delete the %s forum, please select which forum all topics and sub-forums should be moved to.'), '<strong>' . $forum['Forum']['title'] . '</strong>'); ?></p>
 
 <?php echo $this->Form->create('Forum', array(
 	'url' => array('controller' => 'stations', $forum['Forum']['id'])

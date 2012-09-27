@@ -127,7 +127,7 @@ class Profile extends ForumAppModel {
 			'contain' => array('User')
 		));
 
-		if (empty($profile) && $user_id) {
+		if (!$profile && $user_id) {
 			$this->create();
 			$this->save(array('user_id' => $user_id), false);
 
@@ -148,7 +148,7 @@ class Profile extends ForumAppModel {
 	 * @return boolean
 	 */
 	public function increasePosts($user_id) {
-		return $this->query('UPDATE `'. $this->tablePrefix .'profiles` AS `Profile` SET `Profile`.`totalPosts` = `Profile`.`totalPosts` + 1 WHERE `Profile`.`user_id` = '. (int) $user_id);
+		return $this->query('UPDATE `' . $this->tablePrefix . 'profiles` AS `Profile` SET `Profile`.`totalPosts` = `Profile`.`totalPosts` + 1 WHERE `Profile`.`user_id` = ' . (int) $user_id);
 	}
 
 	/**
@@ -159,7 +159,7 @@ class Profile extends ForumAppModel {
 	 * @return boolean
 	 */
 	public function increaseTopics($user_id) {
-		return $this->query('UPDATE `'. $this->tablePrefix .'profiles` AS `Profile` SET `Profile`.`totalTopics` = `Profile`.`totalTopics` + 1 WHERE `Profile`.`user_id` = '. (int) $user_id);
+		return $this->query('UPDATE `' . $this->tablePrefix . 'profiles` AS `Profile` SET `Profile`.`totalTopics` = `Profile`.`totalTopics` + 1 WHERE `Profile`.`user_id` = ' . (int) $user_id);
 	}
 
 	/**
@@ -193,9 +193,9 @@ class Profile extends ForumAppModel {
 		}
 
 		return $this->find('all', array(
-			'conditions' => array('Profile.currentLogin >' => date('Y-m-d H:i:s', strtotime('-'. $minutes .' minutes'))),
+			'conditions' => array('Profile.currentLogin >' => date('Y-m-d H:i:s', strtotime('-' . $minutes . ' minutes'))),
 			'contain' => array('User'),
-			'cache' => array(__FUNCTION__ .'-'. $minutes, '+15 minutes')
+			'cache' => array(__FUNCTION__ . '-' . $minutes, '+15 minutes')
 		));
 	}
 

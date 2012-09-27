@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 $this->Html->addCrumb(__d('forum', 'Administration'), array('controller' => 'forum', 'action' => 'index')); ?>
 
@@ -31,7 +31,7 @@ $this->Html->addCrumb(__d('forum', 'Administration'), array('controller' => 'for
 			</tbody>
 		</table>
 	</div>
-</div>	
+</div>
 
 <?php if (!empty($latestReports)) { ?>
 
@@ -39,7 +39,7 @@ $this->Html->addCrumb(__d('forum', 'Administration'), array('controller' => 'for
 	<div class="containerHeader">
 		<h3><?php echo __d('forum', 'Latest Reports'); ?></h3>
 	</div>
-	
+
 	<div class="containerContent">
 		<table class="table">
 			<thead>
@@ -51,13 +51,13 @@ $this->Html->addCrumb(__d('forum', 'Administration'), array('controller' => 'for
 					<th><?php echo __d('forum', 'Reported On'); ?></th>
 				</tr>
 			</thead>
-			
+
 			<tbody>
 				<?php foreach ($latestReports as $counter => $report) { ?>
 
 				<tr<?php if ($counter % 2) echo ' class="altRow"'; ?>>
 					<td><?php echo $this->Html->link($this->Common->reportType($report['Report']['itemType']), array('controller' => 'reports', $report['Report']['itemType'])); ?></td>
-					<td>	
+					<td>
 						<?php if ($report['Report']['itemType'] == Report::TOPIC && !empty($report['Topic']['id'])) {
 							echo $this->Html->link($report['Topic']['title'], array('controller' => 'topics', 'action' => 'view', $report['Topic']['slug'], 'admin' => false));
 
@@ -66,9 +66,9 @@ $this->Html->addCrumb(__d('forum', 'Administration'), array('controller' => 'for
 
 						} else if ($report['Report']['itemType'] == Report::POST && !empty($report['Post']['id'])) {
 							echo $report['Post']['content'];
-						
+
 						} else {
-							echo '<em class="gray">('. __d('forum', 'Deleted') .')</em>';
+							echo '<em class="gray">(' . __d('forum', 'Deleted') . ')</em>';
 						} ?>
 					</td>
 					<td><?php echo $this->Html->link($report['Reporter'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'edit', $report['Reporter']['id'], 'admin' => true)); ?></td>
@@ -79,7 +79,7 @@ $this->Html->addCrumb(__d('forum', 'Administration'), array('controller' => 'for
 				<?php } ?>
 			</tbody>
 		</table>
-	</div>	
+	</div>
 </div>
 
 <?php }
@@ -90,7 +90,7 @@ if (!empty($latestUsers)) { ?>
 	<div class="containerHeader">
 		<h3><?php echo __d('forum', 'Latest Users'); ?></h3>
 	</div>
-	
+
 	<div class="containerContent">
 		<table class="table">
 			<thead>
@@ -103,7 +103,7 @@ if (!empty($latestUsers)) { ?>
 					<th><?php echo __d('forum', 'Options'); ?></th>
 				</tr>
 			</thead>
-			
+
 			<tbody>
 				<?php foreach ($latestUsers as $counter => $latest) { ?>
 
@@ -121,7 +121,7 @@ if (!empty($latestUsers)) { ?>
 				<?php } ?>
 			</tbody>
 		</table>
-	</div>	
+	</div>
 </div>
 
 <?php } ?>

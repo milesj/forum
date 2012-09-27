@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 $this->Html->addCrumb($settings['site_name'], array('controller' => 'forum', 'action' => 'index'));
 
@@ -10,7 +10,7 @@ $this->Html->addCrumb($topic['Forum']['title'], array('controller' => 'stations'
 $this->Html->addCrumb($topic['Topic']['title'], array('controller' => 'topics', 'action' => 'view', $topic['Topic']['slug'])); ?>
 
 <div class="controls float-right">
-	<?php 
+	<?php
 	echo $this->Html->link(__d('forum', 'Delete Topic'), array('controller' => 'topics', 'action' => 'delete', $topic['Topic']['slug']), array('class' => 'button', 'confirm' => __d('forum', 'Are you sure you want to delete?')));
 	echo $this->Html->link(__d('forum', 'Return to Topic'), array('controller' => 'topics', 'action' => 'view', $topic['Topic']['slug']), array('class' => 'button')); ?>
 </div>
@@ -69,8 +69,8 @@ $this->Html->addCrumb($topic['Topic']['title'], array('controller' => 'topics', 
 </div>
 
 <div class="moderate">
-	<?php 
-	echo $this->Form->input('action', array('options' => array('delete' => __d('forum', 'Delete Post(s)')), 'div' => false, 'label' => __d('forum', 'Perform Action') .': '));
+	<?php
+	echo $this->Form->input('action', array('options' => array('delete' => __d('forum', 'Delete Post(s)')), 'div' => false, 'label' => __d('forum', 'Perform Action') . ': '));
 	echo $this->Form->submit(__d('forum', 'Process'), array('div' => false, 'class' => 'buttonSmall')); ?>
 </div>
 

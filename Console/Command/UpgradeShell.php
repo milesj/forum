@@ -77,7 +77,7 @@ class UpgradeShell extends Shell {
 		$this->out();
 		$this->out('Plugin: Forum');
 		$this->out('Version: ' . $this->config['version']);
-		$this->out('Copyright: Miles Johnson, 2010-'. date('Y'));
+		$this->out('Copyright: Miles Johnson, 2010-' . date('Y'));
 		$this->out('Help: http://milesj.me/code/cakephp/forum');
 		$this->out('Shell: Upgrade');
 		$this->out();
@@ -97,7 +97,7 @@ class UpgradeShell extends Shell {
 
 		$versions = array();
 
-		if (!empty($this->versions)) {
+		if ($this->versions) {
 			foreach ($this->versions as $version => $title) {
 				if (!in_array($version, $this->complete)) {
 					$this->out(sprintf('[%s] %s', $version, $title));
@@ -111,7 +111,7 @@ class UpgradeShell extends Shell {
 		$versions[] = 'E';
 		$version = strtoupper($this->in('Which version do you want to upgrade to?', $versions));
 
-		if ($version == 'E') {
+		if ($version === 'E') {
 			exit(0);
 		} else {
 			$this->hr(1);

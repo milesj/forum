@@ -84,7 +84,7 @@ class ForumAppModel extends AppModel {
 				'engine' 	=> 'File',
 				'serialize' => true,
 				'prefix'	=> '',
-				'path' 		=> CACHE .'forum'. DS,
+				'path' 		=> CACHE . 'forum' . DS,
 				'duration'	=> '+1 day'
 			));
 		}
@@ -110,7 +110,7 @@ class ForumAppModel extends AppModel {
 	public function accessLevels($field = 'id') {
 		$levels = array(0) + (array) $this->Session->read('Forum.accessLevels');
 
-		if ($field == 'id') {
+		if ($field === 'id') {
 			$levels = array_keys($levels);
 		}
 
@@ -139,7 +139,7 @@ class ForumAppModel extends AppModel {
 
 			Cache::config('forum', array('duration' => $expires));
 
-			$key = $this->name .'.'. $key;
+			$key = $this->name . '.' . $key;
 			$results = Cache::read($key, 'forum');
 
 			if (!is_array($results)) {
@@ -228,7 +228,7 @@ class ForumAppModel extends AppModel {
 		$parsed = $decoda->parse();
 		$errors = $decoda->getErrors();
 
-		if (empty($errors)) {
+		if (!$errors) {
 			$this->data[$model]['contentHtml'] = $parsed;
 
 			return true;
@@ -246,15 +246,15 @@ class ForumAppModel extends AppModel {
 			}
 		}
 
-		if (!empty($nesting)) {
+		if ($nesting) {
 			return $this->invalidate('content', 'The following tags have been nested in the wrong order: %s', implode(', ', $nesting));
 		}
 
-		if (!empty($closing)) {
+		if ($closing) {
 			return $this->invalidate('content', 'The following tags have no closing tag: %s', implode(', ', $closing));
 		}
 
-		if (!empty($scope)) {
+		if ($scope) {
 			return $this->invalidate('content', 'The following tags can not be placed within a specific tag: %s', implode(', ', $scope));
 		}
 

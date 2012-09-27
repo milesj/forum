@@ -157,7 +157,7 @@ class Forum extends ForumAppModel {
 				),
 				'Moderator' => array('User')
 			),
-			'cache' => __FUNCTION__ .'-'. $slug
+			'cache' => __FUNCTION__ . '-' . $slug
 		));
 	}
 
@@ -202,7 +202,7 @@ class Forum extends ForumAppModel {
 		if ($type) {
 			$conditions = array(
 				'Forum.status' => self::STATUS_OPEN,
-				'Forum.'. $type .' <=' => $this->access(),
+				'Forum.' . $type . ' <=' => $this->access(),
 				'Forum.access_level_id' => $this->accessLevels()
 			);
 		}
@@ -349,7 +349,7 @@ class Forum extends ForumAppModel {
 			unset($data['_Token']);
 		}
 
-		if (!empty($data)) {
+		if ($data) {
 			foreach ($data as $model => $fields) {
 				foreach ($fields as $id => $field) {
 					$order = $field['orderNo'];
@@ -390,7 +390,7 @@ class Forum extends ForumAppModel {
 				if (isset($categories[$child['id']]) && $drill) {
 					$babies = $this->_buildOptions($categories, $child, $drill, ($depth + 1));
 
-					if (!empty($babies)) {
+					if ($babies) {
 						$options = $options + $babies;
 					}
 				}

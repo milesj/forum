@@ -35,7 +35,7 @@ class SubscriptionShell extends Shell {
 		$this->out();
 		$this->out('Plugin: Forum');
 		$this->out('Version: ' . $this->config['version']);
-		$this->out('Copyright: Miles Johnson, 2010-'. date('Y'));
+		$this->out('Copyright: Miles Johnson, 2010-' . date('Y'));
 		$this->out('Help: http://milesj.me/code/cakephp/forum');
 		$this->out('Shell: Subscription');
 		$this->out();
@@ -52,7 +52,7 @@ class SubscriptionShell extends Shell {
 			'contain' => array('User')
 		));
 
-		if (empty($results)) {
+		if (!$results) {
 			$this->out('No subscriptions to send...');
 			return;
 		}
@@ -82,7 +82,7 @@ class SubscriptionShell extends Shell {
 		// Query for the latest topics
 		$topics = $this->getTopics($forumIds, $topicIds);
 
-		if (empty($topics)) {
+		if (!$topics) {
 			$this->out('No new activity...');
 			return;
 		}
@@ -131,7 +131,7 @@ class SubscriptionShell extends Shell {
 			'contain' => array('Forum')
 		));
 
-		if (!empty($results)) {
+		if ($results) {
 			foreach ($results as &$result) {
 				$clean[$result['Topic']['id']] = $result;
 			}
@@ -146,7 +146,7 @@ class SubscriptionShell extends Shell {
 			'contain' => array('Forum')
 		));
 
-		if (!empty($results)) {
+		if ($results) {
 			foreach ($results as &$result) {
 				$result['Topic']['post_count_new'] = $this->Subscription->Topic->Post->find('count', array(
 					'conditions' => array(

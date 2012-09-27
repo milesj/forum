@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 $this->Html->addCrumb($settings['site_name'], array('controller' => 'forum', 'action' => 'index'));
 
@@ -11,11 +11,11 @@ $this->Html->addCrumb($topic['Forum']['title'], array('controller' => 'stations'
 <div class="title">
 	<h2>
 		<?php if ($topic['Topic']['type'] > 0) {
-			echo '<span>'. $this->Common->options('topicTypes', $topic['Topic']['type']) .':</span> ';
+			echo '<span>' . $this->Common->options('topicTypes', $topic['Topic']['type']) . ':</span> ';
 		} else if ($topic['Topic']['status'] == 0) {
-			echo '<span>'. __d('forum', 'Closed') .':</span> ';
+			echo '<span>' . __d('forum', 'Closed') . ':</span> ';
 		}
-		
+
 		echo $topic['Topic']['title']; ?>
 	</h2>
 </div>
@@ -54,9 +54,9 @@ if (!empty($topic['Poll']['id'])) { ?>
 					<tr class="headRow">
 						<td colspan="3" class="align-center">
 							<?php if ($user) {
-								if (!empty($topic['Poll']['expires']) && $topic['Poll']['expires'] <= date('Y-m-d H:i:s')) { 
+								if (!empty($topic['Poll']['expires']) && $topic['Poll']['expires'] <= date('Y-m-d H:i:s')) {
 									__d('forum', 'Voting on this poll has been closed');
-								} else { 
+								} else {
 									echo $this->Form->submit(__d('forum', 'Vote'), array('div' => false, 'class' => 'button'));
 								}
 							} else {
@@ -76,10 +76,10 @@ if (!empty($topic['Poll']['id'])) { ?>
 							<div class="pollBar" style="width: <?php echo $option['percentage']; ?>%"></div>
 						</td>
 						<td>
-							<?php echo sprintf(__d('forum', '%d votes'), number_format($option['vote_count'])); ?> (<?php echo $option['percentage']; ?>%) 
+							<?php echo sprintf(__d('forum', '%d votes'), number_format($option['vote_count'])); ?> (<?php echo $option['percentage']; ?>%)
 
 							<?php if ($topic['Poll']['hasVoted'] == $option['id']) {
-								echo '<em>('. __d('forum', 'Your Vote') .')</em>';
+								echo '<em>(' . __d('forum', 'Your Vote') . ')</em>';
 							} ?>
 						</td>
 					</tr>
@@ -126,7 +126,7 @@ if (!empty($topic['Poll']['id'])) { ?>
 									$links[] = $this->Html->link(__d('forum', 'Edit Post'), array('controller' => 'posts', 'action' => 'edit', $post['Post']['id']));
 									$links[] = $this->Html->link(__d('forum', 'Delete Post'), array('controller' => 'posts', 'action' => 'delete', $post['Post']['id']), array('confirm' => __d('forum', 'Are you sure you want to delete?')));
 								}
-								
+
 								$links[] = $this->Html->link(__d('forum', 'Report Post'), array('controller' => 'posts', 'action' => 'report', $post['Post']['id']));
 							}
 
@@ -191,12 +191,12 @@ if ($user && $settings['enable_quick_reply'] && $this->Common->hasAccess($topic[
 
 		<div class="containerContent">
 			<?php echo $this->Form->create('Post', array('url' => array('controller' => 'posts', 'action' => 'add', $topic['Topic']['slug']))); ?>
-			
+
 			<table class="table">
 				<tbody>
 					<tr>
 						<td style="width: 25%">
-							<strong><?php echo $this->Form->label('content', __d('forum', 'Message') .':'); ?></strong><br /><br />
+							<strong><?php echo $this->Form->label('content', __d('forum', 'Message') . ':'); ?></strong><br /><br />
 
 							<?php echo $this->Html->link(__d('forum', 'Advanced Reply'), array('controller' => 'posts', 'action' => 'add', $topic['Topic']['slug'])); ?><br />
 							<?php echo __d('forum', 'BBCode Enabled'); ?>
@@ -210,10 +210,10 @@ if ($user && $settings['enable_quick_reply'] && $this->Common->hasAccess($topic[
 						<td colspan="2" class="align-center">
 							<?php echo $this->Form->submit(__d('forum', 'Post Reply'), array('class' => 'button', 'div' => false)); ?>
 						</td>
-					</tr> 
+					</tr>
 				</tbody>
 			</table>
-			
+
 			<?php echo $this->Form->end(); ?>
 		</div>
 	</div>

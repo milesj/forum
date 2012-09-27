@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 $this->Html->addCrumb($settings['site_name'], array('controller' => 'forum', 'action' => 'index'));
 
@@ -13,7 +13,7 @@ $this->Html->addCrumb($post['Topic']['title'], array('controller' => 'topics', '
 	<h2><?php echo __d('forum', 'Report Post'); ?></h2>
 </div>
 
-<p><?php printf(__d('forum', 'Are you sure you want to report the post (below) in the topic %s? If so, please add a comment as to why you are reporting it, 255 max characters.'), '<strong>'. $this->Html->link($post['Topic']['title'], array('controller' => 'forum', 'action' => 'jump', $post['Topic']['id'], $post['Post']['id'])) .'</strong>'); ?></p>
+<p><?php printf(__d('forum', 'Are you sure you want to report the post (below) in the topic %s? If so, please add a comment as to why you are reporting it, 255 max characters.'), '<strong>' . $this->Html->link($post['Topic']['title'], array('controller' => 'forum', 'action' => 'jump', $post['Topic']['id'], $post['Post']['id'])) . '</strong>'); ?></p>
 
 <?php echo $this->Form->create('Report', array(
 	'url' => array($post['Post']['id'])
@@ -26,7 +26,7 @@ $this->Html->addCrumb($post['Topic']['title'], array('controller' => 'topics', '
 		echo $this->Form->input('comment', array('type' => 'textarea', 'label' => __d('forum', 'Comment'))); ?>
 	</div>
 </div>
-	
+
 <?php
 echo $this->Form->submit(__d('forum', 'Report'), array('class' => 'button'));
 echo $this->Form->end(); ?>

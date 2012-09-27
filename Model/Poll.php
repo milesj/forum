@@ -54,7 +54,7 @@ class Poll extends ForumAppModel {
 	public function addPoll($data) {
 		$poll = array(
 			'topic_id' => $data['topic_id'],
-			'expires' => !empty($data['expires']) ? date('Y-m-d H:i:s', strtotime('+'. $data['expires'] .' days')) : null
+			'expires' => !empty($data['expires']) ? date('Y-m-d H:i:s', strtotime('+' . $data['expires'] . ' days')) : null
 		);
 
 		if ($this->save($poll, false, array('topic_id', 'expires'))) {
@@ -66,7 +66,7 @@ class Poll extends ForumAppModel {
 			);
 
 			foreach ($options as $id => $opt) {
-				if (!empty($opt)) {
+				if ($opt) {
 					$results['option'] = htmlentities($opt, ENT_NOQUOTES, 'UTF-8');
 
 					$this->PollOption->create();
@@ -90,7 +90,7 @@ class Poll extends ForumAppModel {
 	public function process($poll) {
 		$user_id = $this->Session->read('Auth.User.id');
 
-		if (!empty($poll)) {
+		if ($poll) {
 			$totalVotes = 0;
 
 			foreach ($poll['PollOption'] as $option) {
@@ -123,7 +123,7 @@ class Poll extends ForumAppModel {
 			'contain' => false
 		));
 
-		if (!empty($poll)) {
+		if ($poll) {
 			if (!empty($poll['Poll']['expires']) && $poll['Poll']['expires'] <= date('Y-m-d H:i:s')) {
 				return false;
 			}

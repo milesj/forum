@@ -1,10 +1,10 @@
-<?php 
+<?php
 
 $this->Html->addCrumb(__d('forum', 'Administration'), array('controller' => 'forum', 'action' => 'index'));
 $this->Html->addCrumb(__d('forum', 'Reported'), array('controller' => 'reports', 'action' => 'index')); ?>
 
 <div class="controls float-right">
-	<?php 
+	<?php
 	echo $this->Html->link(__d('forum', 'Topics'), array('controller' => 'reports', 'action' => 'topics'), array('class' => 'button'));
 	echo $this->Html->link(__d('forum', 'Posts'), array('controller' => 'reports', 'action' => 'posts'), array('class' => 'button'));
 	echo $this->Html->link(__d('forum', 'Users'), array('controller' => 'reports', 'action' => 'users'), array('class' => 'button')); ?>
@@ -37,7 +37,7 @@ $this->Html->addCrumb(__d('forum', 'Reported'), array('controller' => 'reports',
 
 					<tr<?php if ($counter % 2) echo ' class="altRow"'; ?>>
 						<td><?php echo $this->Html->link($this->Common->reportType($report['Report']['itemType']), array($report['Report']['itemType'])); ?></td>
-						<td>	
+						<td>
 							<?php if ($report['Report']['itemType'] == Report::TOPIC && !empty($report['Topic']['id'])) {
 								echo $this->Html->link($report['Topic']['title'], array('controller' => 'topics', 'action' => 'view', $report['Topic']['slug'], 'admin' => false));
 
@@ -48,7 +48,7 @@ $this->Html->addCrumb(__d('forum', 'Reported'), array('controller' => 'reports',
 								echo $report['Post']['content'];
 
 							} else {
-								echo '<em class="gray">('. __d('forum', 'Deleted') .')</em>';
+								echo '<em class="gray">(' . __d('forum', 'Deleted') . ')</em>';
 							} ?>
 						</td>
 						<td><?php echo $this->Html->link($report['Reporter'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'edit', $report['Reporter']['Profile']['id'], 'admin' => true)); ?></td>
@@ -61,7 +61,7 @@ $this->Html->addCrumb(__d('forum', 'Reported'), array('controller' => 'reports',
 					<tr>
 						<td colspan="5" class="empty"><?php echo __d('forum', 'There are no reported items to display.'); ?></td>
 					</tr>
-					
+
 				<?php } ?>
 
 			</tbody>
@@ -69,6 +69,6 @@ $this->Html->addCrumb(__d('forum', 'Reported'), array('controller' => 'reports',
 
 		<?php echo $this->element('pagination'); ?>
 	</div>
-</div>	
+</div>
 
 <?php echo $this->Form->end(); ?>

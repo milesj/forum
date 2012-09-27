@@ -114,9 +114,7 @@ class Post extends ForumAppModel {
 	 * @return boolean
 	 */
 	public function checkFlooding($interval) {
-		$posts = $this->Session->read('Forum.posts');
-
-		if (!empty($posts)) {
+		if ($posts = $this->Session->read('Forum.posts')) {
 			$timeLeft = time() - array_pop($posts);
 
 			if ($timeLeft <= $interval) {
@@ -135,13 +133,12 @@ class Post extends ForumAppModel {
 	 * @return boolean
 	 */
 	public function checkHourly($max) {
-		$posts = $this->Session->read('Forum.posts');
 		$pastHour = strtotime('-1 hour');
 
-		if (!empty($posts)) {
+		if ($posts = $this->Session->read('Forum.posts')) {
 			$count = 0;
 
-			foreach ($posts as $id => $time) {
+			foreach ($posts as $time) {
 				if ($time >= $pastHour) {
 					++$count;
 				}
