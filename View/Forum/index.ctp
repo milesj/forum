@@ -2,7 +2,7 @@
 
 $this->Html->addCrumb($settings['site_name'], array('controller' => 'forum', 'action' => 'index'));
 
-if (!empty($forums)) {
+if ($forums) {
 	foreach ($forums as $forum) { ?>
 
 <div class="container" id="forum-<?php echo $forum['Forum']['id']; ?>">
@@ -23,7 +23,7 @@ if (!empty($forums)) {
 			</thead>
 			<tbody>
 
-			<?php if (!empty($forum['Children'])) {
+			<?php if ($forum['Children']) {
 				foreach ($forum['Children'] as $counter => $child) {
 					echo $this->element('tiles/forum_row', array(
 						'forum' => $child,
@@ -50,13 +50,13 @@ if (!empty($forums)) {
 		<strong><?php echo __d('forum', 'Statistics'); ?>:</strong> <?php printf(__d('forum', '%d topics, %d posts, and %d users'), $totalTopics, $totalPosts, $totalUsers); ?>
 	</div>
 
-    <?php if (!empty($newestUser)) { ?>
+    <?php if ($newestUser) { ?>
 		<div class="newestUser">
 			<strong><?php echo __d('forum', 'Newest User'); ?>:</strong> <?php echo $this->Html->link($newestUser['User'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'profile', $newestUser['User']['id'])); ?>
 		</div>
    	<?php }
 
-	if (!empty($whosOnline)) {
+	if ($whosOnline) {
 		$onlineUsers = array();
 
 		foreach ($whosOnline as $online) {

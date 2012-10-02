@@ -29,7 +29,7 @@ $this->Html->addCrumb(__d('forum', 'Users'), array('controller' => 'users', 'act
 			<th><?php echo $this->Paginator->sort('Profile.totalPosts', __d('forum', 'Posts')); ?></th>
 		</tr>
 
-		<?php if (!empty($users)) {
+		<?php if ($users) {
 			foreach ($users as $counter => $profile) { ?>
 
 			<tr<?php if ($counter % 2) echo ' class="altRow"'; ?>>

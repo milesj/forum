@@ -16,7 +16,7 @@ $this->Html->addCrumb($forum['Forum']['title'], array('controller' => 'stations'
 	<?php } ?>
 </div>
 
-<?php debug($forum); if ($forum['SubForum']) { ?>
+<?php if ($forum['SubForum']) { ?>
 
 	<div class="container">
 		<div class="containerHeader">

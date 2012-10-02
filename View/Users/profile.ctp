@@ -72,7 +72,7 @@ $this->Html->addCrumb($profile['User'][$config['userMap']['username']], $this->h
 	</table>
 </div>
 
-<?php if (!empty($topics)) { ?>
+<?php if ($topics) { ?>
 
 <div class="container">
 	<div class="containerHeader">
@@ -111,7 +111,7 @@ $this->Html->addCrumb($profile['User'][$config['userMap']['username']], $this->h
 
 <?php }
 
-if (!empty($posts)) { ?>
+if ($posts) { ?>
 
 <div class="container">
 	<div class="containerHeader">

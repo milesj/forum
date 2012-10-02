@@ -6,11 +6,11 @@
 	'language' => 'en-us'
 ));
 
-if (!empty($items)) {
+if ($items) {
 	foreach ($items as $item) {
 		$link = array('plugin' => 'forum', 'controller' => 'topics', 'action' => 'view', $topic['Topic']['slug'], '#' => 'post-' . $item['Post']['id']);
 
-		echo $rss->item(array(), array(
+		echo $this->Rss->item(array(), array(
 			'title' => 'Post #' . $item['Post']['id'] . ' - ' . $item['User'][$config['userMap']['username']],
 			'link' => $link,
 			'guid' => array('url' => $link, 'isPermaLink' => 'true'),

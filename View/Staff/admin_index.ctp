@@ -109,7 +109,7 @@ $this->Html->addCrumb(__d('forum', 'Staff'), array('controller' => 'staff', 'act
 			</thead>
 			<tbody>
 
-			<?php if (!empty($mods)) {
+			<?php if ($mods) {
 				foreach ($mods as $user) { ?>
 
 				<tr >

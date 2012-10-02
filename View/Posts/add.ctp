@@ -13,9 +13,7 @@ $this->Html->addCrumb($topic['Topic']['title'], array('controller' => 'topics', 
 	<h2><?php echo __d('forum', 'Post Reply'); ?></h2>
 </div>
 
-<?php echo $this->Form->create('Post', array(
-	'url' => array($topic['Topic']['slug'])
-)); ?>
+<?php echo $this->Form->create('Post'); ?>
 
 <div class="container">
 	<div class="containerContent">
@@ -34,7 +32,7 @@ $this->Html->addCrumb($topic['Topic']['title'], array('controller' => 'topics', 
 echo $this->Form->submit(__d('forum', 'Post Reply'), array('class' => 'button'));
 echo $this->Form->end();
 
-if (!empty($review)) { ?>
+if ($review) { ?>
 
 	<div class="container">
 		<div class="containerHeader">

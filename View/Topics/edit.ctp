@@ -13,9 +13,7 @@ $this->Html->addCrumb($topic['Topic']['title'], array('controller' => 'topics', 
 	<h2><?php echo __d('forum', 'Edit Topic'); ?></h2>
 </div>
 
-<?php echo $this->Form->create('Topic', array(
-	'url' => array($topic['Topic']['slug'])
-)); ?>
+<?php echo $this->Form->create('Topic'); ?>
 
 <div class="container">
 	<div class="containerContent">

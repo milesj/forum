@@ -12,9 +12,7 @@ $this->Html->addCrumb($forum['Forum']['title'], array('controller' => 'stations'
 	<h2><?php echo $pageTitle; ?></h2>
 </div>
 
-<?php echo $this->Form->create('Topic', array(
-	'url' => array($forum['Forum']['slug'], $type)
-)); ?>
+<?php echo $this->Form->create('Topic'); ?>
 
 <div class="container">
 	<div class="containerContent">

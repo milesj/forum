@@ -10,9 +10,7 @@ $this->Html->addCrumb(__d('forum', 'Delete Access Level'), $this->here); ?>
 
 <p><?php printf(__d('forum', 'Before you delete the access level %s, please select which level a user should receive, if they have the level that will be deleted.'), '<strong>' . $access['AccessLevel']['title'] . '</strong>'); ?></p>
 
-<?php echo $this->Form->create('AccessLevel', array(
-	'url' => array('controller' => 'staff', $access['AccessLevel']['id'])
-)); ?>
+<?php echo $this->Form->create('AccessLevel'); ?>
 
 <div class="container">
 	<div class="containerContent">

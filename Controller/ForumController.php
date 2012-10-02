@@ -21,6 +21,14 @@ class ForumController extends ForumAppController {
 	public $uses = array('Forum.Topic', 'Forum.Profile');
 
 	/**
+	 * Helpers.
+	 *
+	 * @access public
+	 * @var array
+	 */
+	public $helpers = array('Rss');
+
+	/**
 	 * Forum index.
 	 */
 	public function index() {
@@ -42,7 +50,7 @@ class ForumController extends ForumAppController {
 			$this->set('items', $this->Topic->getLatest());
 			$this->set('document', array('xmlns:dc' => 'http://purl.org/dc/elements/1.1/'));
 		} else {
-			$this->redirect('/forum/feed/feed.rss');
+			$this->redirect('/forum/feed.rss');
 		}
 	}
 

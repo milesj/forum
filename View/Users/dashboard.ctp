@@ -9,7 +9,7 @@ $this->Html->addCrumb(__d('forum', 'Dashboard'), $this->here); ?>
 	<h2><?php echo __d('forum', 'Dashboard'); ?></h2>
 </div>
 
-<?php if (!empty($subscriptions)) { ?>
+<?php if ($subscriptions) { ?>
 
 <div class="container">
 	<div class="containerHeader">
@@ -58,7 +58,7 @@ $this->Html->addCrumb(__d('forum', 'Dashboard'), $this->here); ?>
 
 <?php }
 
-if (!empty($activity)) { ?>
+if ($activity) { ?>
 
 <div class="container">
 	<div class="containerHeader">
@@ -107,7 +107,7 @@ if (!empty($activity)) { ?>
 
 <?php }
 
-if (!empty($topics)) { ?>
+if ($topics) { ?>
 
 <div class="container">
 	<div class="containerHeader">

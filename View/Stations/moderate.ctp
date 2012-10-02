@@ -16,9 +16,7 @@ $this->Html->addCrumb($forum['Forum']['title'], array('controller' => 'stations'
 	<h2><?php echo __d('forum', 'Moderate'); ?>: <?php echo $forum['Forum']['title']; ?></h2>
 </div>
 
-<?php echo $this->Form->create('Topic', array(
-	'url' => array('controller' => 'stations', $forum['Forum']['slug'])
-)); ?>
+<?php echo $this->Form->create('Topic'); ?>
 
 <div class="container" id="topics">
 	<div class="containerContent">
@@ -39,7 +37,7 @@ $this->Html->addCrumb($forum['Forum']['title'], array('controller' => 'stations'
 			</thead>
 			<tbody>
 
-			<?php if (!empty($topics)) {
+			<?php if ($topics) {
 				foreach ($topics as $counter => $topic) {
 					echo $this->element('tiles/topic_row', array(
 						'topic' => $topic,

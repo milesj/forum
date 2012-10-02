@@ -59,10 +59,10 @@ class ForumAppModel extends AppModel {
 		'Utility.Cacheable' => array(
 			'cacheConfig' => 'forum',
 			'appendKey' => false,
-			'expires' => '+1 minute'
-		),
-		'Utility.Enumerable' => array(
-			'format' => false
+			'expires' => '+1 minute',
+			'events' => array(
+				'onCreate' => false
+			)
 		)
 	);
 

@@ -33,7 +33,7 @@ $this->Html->addCrumb(__d('forum', 'Administration'), array('controller' => 'for
 	</div>
 </div>
 
-<?php if (!empty($latestReports)) { ?>
+<?php if ($latestReports) { ?>
 
 <div class="container">
 	<div class="containerHeader">
@@ -84,7 +84,7 @@ $this->Html->addCrumb(__d('forum', 'Administration'), array('controller' => 'for
 
 <?php }
 
-if (!empty($latestUsers)) { ?>
+if ($latestUsers) { ?>
 
 <div class="container">
 	<div class="containerHeader">

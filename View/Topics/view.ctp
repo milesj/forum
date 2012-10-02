@@ -32,7 +32,7 @@ if (!empty($topic['Poll']['id'])) { ?>
 		</div>
 
 		<div class="containerContent">
-			<?php echo $this->Form->create('Poll', array('url' => array('controller' => 'topics', 'action' => 'view', $topic['Topic']['slug']))); ?>
+			<?php echo $this->Form->create('Poll'); ?>
 
 			<table class="table">
 				<tbody>
@@ -190,7 +190,7 @@ if ($user && $settings['enable_quick_reply'] && $this->Common->hasAccess($topic[
 		</div>
 
 		<div class="containerContent">
-			<?php echo $this->Form->create('Post', array('url' => array('controller' => 'posts', 'action' => 'add', $topic['Topic']['slug']))); ?>
+			<?php echo $this->Form->create('Post'); ?>
 
 			<table class="table">
 				<tbody>

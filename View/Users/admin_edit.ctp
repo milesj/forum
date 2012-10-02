@@ -16,9 +16,7 @@ $this->Html->addCrumb($profile['User'][$config['userMap']['username']], $this->h
 	<h2><?php echo __d('forum', 'Edit User'); ?></h2>
 </div>
 
-<?php echo $this->Form->create('Profile', array(
-	'url' => array('controller' => 'users')
-)); ?>
+<?php echo $this->Form->create('Profile'); ?>
 
 <div class="container">
 	<div class="containerContent">

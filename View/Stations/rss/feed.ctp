@@ -6,11 +6,11 @@
 	'language' => 'en-us'
 ));
 
-if (!empty($topics)) {
+if ($topics) {
 	foreach ($topics as $topic) {
 		$link = array('plugin' => 'forum', 'controller' => 'topics', 'action' => 'view', $topic['Topic']['slug']);
 
-		echo $rss->item(array(), array(
+		echo $this->Rss->item(array(), array(
 			'title' => $topic['Topic']['title'],
 			'link' => $link,
 			'guid' => array('url' => $link, 'isPermaLink' => 'true'),

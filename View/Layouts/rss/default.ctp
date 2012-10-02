@@ -1,6 +1,7 @@
 <?php
 
-echo $rss->header();
+debug('wtf');      /*
+echo $this->Rss->header();
 
 if (!isset($document)) {
     $document = array();
@@ -12,6 +13,6 @@ if (!isset($channel)) {
 
 if (!isset($channel['title'])) {
     $channel['title'] = $title_for_layout;
-} 
+}
 
-echo $rss->document($document, $rss->channel(array(), $channel, $content_for_layout));
+echo $this->Rss->document($document, $this->Rss->channel(array(), $channel, $content_for_layout));*/

@@ -64,12 +64,11 @@ class CommonHelper extends AppHelper {
 	 * @return int
 	 */
 	public function getTopicsMade() {
-		$topics = $this->Session->read('Forum.topics');
 		$pastHour = strtotime('-1 hour');
 		$count = 0;
 
-		if (!empty($topics)) {
-			foreach ($topics as $id => $time) {
+		if ($topics = $this->Session->read('Forum.topics')) {
+			foreach ($topics as $time) {
 				if ($time >= $pastHour) {
 					++$count;
 				}
@@ -86,12 +85,11 @@ class CommonHelper extends AppHelper {
 	 * @return int
 	 */
 	public function getPostsMade() {
-		$posts = $this->Session->read('Forum.posts');
 		$pastHour = strtotime('-1 hour');
 		$count = 0;
 
-		if (!empty($posts)) {
-			foreach ($posts as $id => $time) {
+		if ($posts = $this->Session->read('Forum.posts')) {
+			foreach ($posts as $time) {
 				if ($time >= $pastHour) {
 					++$count;
 				}
@@ -134,7 +132,7 @@ class CommonHelper extends AppHelper {
 		$highest = array();
 
 		foreach ($levels as $level) {
-			if (empty($highest)) {
+			if (!$highest) {
 				$highest = $level;
 			} else if ($level['AccessLevel']['level'] > $highest['AccessLevel']['level']) {
 				$highest = $level;
@@ -333,8 +331,8 @@ class CommonHelper extends AppHelper {
 	 * @return string
 	 */
 	public function topicType($type = null) {
-		if (empty($type)) {
-			return;
+		if (!$type) {
+			return '';
 		}
 
 		$types = $this->options('topicTypes');

@@ -16,9 +16,7 @@ $this->Html->addCrumb(__d('forum', 'Delete Forum'), $this->here); ?>
 
 <p><?php printf(__d('forum', 'Before you delete the %s forum, please select which forum all topics and sub-forums should be moved to.'), '<strong>' . $forum['Forum']['title'] . '</strong>'); ?></p>
 
-<?php echo $this->Form->create('Forum', array(
-	'url' => array('controller' => 'stations', $forum['Forum']['id'])
-)); ?>
+<?php echo $this->Form->create('Forum'); ?>
 
 <div class="container">
 	<div class="containerContent">

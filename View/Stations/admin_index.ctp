@@ -11,11 +11,9 @@ $this->Html->addCrumb(__d('forum', 'Forums'), array('controller' => 'stations', 
 	<h2><?php echo __d('forum', 'Manage Forums'); ?></h2>
 </div>
 
-<?php echo $this->Form->create('Forum', array(
-	'url' => array('controller' => 'stations')
-));
+<?php echo $this->Form->create('Forum');
 
-if (!empty($forums)) {
+if ($forums) {
 	foreach ($forums as $forum) { ?>
 
 <div class="container">
@@ -53,7 +51,7 @@ if (!empty($forums)) {
 			</thead>
 			<tbody>
 
-			<?php if (!empty($forum['Children'])) {
+			<?php if ($forum['Children']) {
 				foreach ($forum['Children'] as $child) {
 					echo $this->element('admin/forum_row', array(
 						'forum' => $child

@@ -86,7 +86,7 @@ class TopicsController extends ForumAppController {
 		));
 
 		if ($this->request->data) {
-			$this->request->data['Topic']['status'] = 1;
+			$this->request->data['Topic']['status'] = Topic::STATUS_OPEN;
 			$this->request->data['Topic']['user_id'] = $user_id;
 			$this->request->data['Topic']['userIP'] = $this->request->clientIp();
 

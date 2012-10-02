@@ -33,7 +33,7 @@ $this->Html->addCrumb(__d('forum', 'Users'), array('controller' => 'reports', 'a
 			</thead>
 			<tbody>
 
-			<?php if (!empty($reports)) {
+			<?php if ($reports) {
 				foreach ($reports as $counter => $report) { ?>
 
 				<tr<?php if ($counter % 2) echo ' class="altRow"'; ?>>

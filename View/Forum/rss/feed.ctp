@@ -7,7 +7,7 @@ $this->set('channel', array(
 	'language' => 'en-us'
 ));
 
-if (!empty($items)) {
+if ($items) {
 	foreach ($items as $item) {
 		$link = array('plugin' => 'forum', 'controller' => 'topics', 'action' => 'view', $item['Topic']['slug']);
 
