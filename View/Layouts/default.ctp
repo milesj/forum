@@ -9,10 +9,10 @@ echo $this->Html->css('/forum/css/style.css');
 echo $this->Html->script('/forum/js/jquery-1.8.2.min.js');
 echo $this->Html->script('/forum/js/forum.js');
 
-if ($this->params['controller'] === 'home') {
-	echo $this->Html->meta(__d('forum', 'RSS Feed - Latest Topics'), array('action' => 'feed', 'ext' => 'rss'), array('type' => 'rss'));
-} else if (isset($rss) && in_array($this->params['controller'], array('stations', 'topics'))) {
-	echo $this->Html->meta(__d('forum', 'RSS Feed - Content Review'), array('action' => 'feed', $rss, 'ext' => 'rss'), array('type' => 'rss'));
+if ($this->params['controller'] === 'forum') {
+	echo $this->Html->meta(__d('forum', 'RSS Feed - Latest Topics'), array('action' => 'index', 'ext' => 'rss'), array('type' => 'rss'));
+} else if (isset($rss)) {
+	echo $this->Html->meta(__d('forum', 'RSS Feed - Content Review'), array($rss, 'ext' => 'rss'), array('type' => 'rss'));
 }
 
 echo $scripts_for_layout; ?>

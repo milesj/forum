@@ -26,7 +26,7 @@ class StationsController extends ForumAppController {
 	 * @access public
 	 * @var array
 	 */
-	public $components = array('Utility.AjaxHandler');
+	public $components = array('Utility.AjaxHandler', 'RequestHandler');
 
 	/**
 	 * Pagination.
@@ -44,6 +44,14 @@ class StationsController extends ForumAppController {
 			)
 		)
 	);
+
+	/**
+	 * Helpers.
+	 *
+	 * @access public
+	 * @var array
+	 */
+	public $helpers = array('Rss');
 
 	/**
 	 * Redirect.
@@ -71,6 +79,15 @@ class StationsController extends ForumAppController {
 			'Topic.forum_id' => $forum['Forum']['id'],
 			'Topic.type' => Topic::NORMAL
 		);
+
+		if ($this->RequestHandler->isRss()) {
+			$this->paginate['Topic']['contain'] = array('User', 'FirstPost', 'LastPost.created');
+
+			$this->set('topics', $this->paginate('Topic'));
+			$this->set('forum', $forum);
+
+			return;
+		}
 
 		$this->ForumToolbar->pageTitle($forum['Forum']['title']);
 		$this->set('forum', $forum);
@@ -135,31 +152,6 @@ class StationsController extends ForumAppController {
 		$this->set('forum', $forum);
 		$this->set('topics', $this->paginate('Topic'));
 		$this->set('forums', $this->Forum->getGroupedHierarchy('accessRead'));
-	}
-
-	/**
-	 * RSS Feed.
-	 *
-	 * @param string $slug
-	 */
-	public function feed($slug) {
-		if ($this->request->is('rss')) {
-			$forum = $this->Forum->getBySlug($slug);
-
-			$this->ForumToolbar->verifyAccess(array(
-				'exists' => $forum
-			));
-
-			$this->paginate['Topic']['limit'] = $this->settings['topics_per_page'];
-			$this->paginate['Topic']['conditions'] = array('Topic.forum_id' => $forum['Forum']['id']);
-			$this->paginate['Topic']['contain'] = array('User', 'LastPost', 'FirstPost');
-
-			$this->set('topics', $this->paginate('Topic'));
-			$this->set('forum', $forum);
-			$this->set('document', array('xmlns:dc' => 'http://purl.org/dc/elements/1.1/'));
-		} else {
-			$this->redirect('/forum/stations/feed/' . $slug . '.rss');
-		}
 	}
 
 	/**

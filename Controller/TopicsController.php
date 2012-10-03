@@ -26,7 +26,7 @@ class TopicsController extends ForumAppController {
 	 * @access public
 	 * @var array
 	 */
-	public $components = array('Utility.AjaxHandler');
+	public $components = array('Utility.AjaxHandler', 'RequestHandler');
 
 	/**
 	 * Pagination.
@@ -52,7 +52,7 @@ class TopicsController extends ForumAppController {
 	 * @access public
 	 * @var array
 	 */
-	public $helpers = array('Utils.Gravatar');
+	public $helpers = array('Utils.Gravatar', 'Rss');
 
 	/**
 	 * Redirect.
@@ -143,32 +143,6 @@ class TopicsController extends ForumAppController {
 	}
 
 	/**
-	 * RSS Feed.
-	 *
-	 * @param string $slug
-	 */
-	public function feed($slug) {
-		if ($this->request->is('rss')) {
-			$topic = $this->Topic->getBySlug($slug);
-
-			$this->ForumToolbar->verifyAccess(array(
-				'exists' => $topic
-			));
-
-			$this->paginate['Post']['limit'] = $this->settings['posts_per_page'];
-			$this->paginate['Post']['conditions'] = array('Post.topic_id' => $topic['Topic']['id']);
-			$this->paginate['Post']['contain'] = array('User');
-			$this->paginate['Post']['order'] = array('Post.created' => 'DESC');
-
-			$this->set('items', $this->paginate('Post'));
-			$this->set('topic', $topic);
-			$this->set('document', array('xmlns:dc' => 'http://purl.org/dc/elements/1.1/'));
-		} else {
-			$this->redirect('/forum/topics/feed/' . $slug . '.rss');
-		}
-	}
-
-	/**
 	 * Delete a topic.
 	 *
 	 * @param string $slug
@@ -230,6 +204,16 @@ class TopicsController extends ForumAppController {
 			'permission' => $topic['Forum']['accessRead']
 		));
 
+		$this->paginate['Post']['limit'] = $this->settings['posts_per_page'];
+		$this->paginate['Post']['conditions'] = array('Post.topic_id' => $topic['Topic']['id']);
+
+		if ($this->RequestHandler->isRss()) {
+			$this->set('posts', $this->paginate('Post'));
+			$this->set('topic', $topic);
+
+			return;
+		}
+
 		if (!empty($this->request->data['Poll']['option'])) {
 			$this->Topic->Poll->vote($topic['Poll']['id'], $this->request->data['Poll']['option'], $user_id);
 			$this->Topic->deleteCache(array('Topic::getBySlug', $slug));
@@ -239,9 +223,6 @@ class TopicsController extends ForumAppController {
 
 		$this->ForumToolbar->markAsRead($topic['Topic']['id']);
 		$this->Topic->increaseViews($topic['Topic']['id']);
-
-		$this->paginate['Post']['limit'] = $this->settings['posts_per_page'];
-		$this->paginate['Post']['conditions'] = array('Post.topic_id' => $topic['Topic']['id']);
 
 		$this->ForumToolbar->pageTitle($topic['Forum']['title'], $topic['Topic']['title']);
 		$this->set('topic', $topic);

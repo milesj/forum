@@ -21,6 +21,7 @@ Router::parseExtensions('rss');
 /**
  * Custom Forum routes.
  */
+Router::connect('/forum.rss', array('plugin' => 'forum', 'controller' => 'forum', 'action' => 'index', 'ext' => 'rss'));
 Router::connect('/forum/help/*', array('plugin' => 'forum', 'controller' => 'forum', 'action' => 'help'));
 Router::connect('/forum/rules/*', array('plugin' => 'forum', 'controller' => 'forum', 'action' => 'rules'));
 Router::connect('/forum/user/:id/*', array('plugin' => 'forum', 'controller' => 'users', 'action' => 'profile'), array('pass' => array('id'), 'id' => '[0-9]+'));

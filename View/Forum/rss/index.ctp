@@ -16,7 +16,7 @@ if ($items) {
 			'link' => $link,
 			'guid' => array('url' => $link, 'isPermaLink' => 'true'),
 			'description' => $item['FirstPost']['contentHtml'],
-			'dc:creator' => $item['User'][$config['userMap']['username']],
+			'author' => $item['User'][$config['userMap']['username']],
 			'pubDate' => $item['Topic']['created']
 		));
 	}
