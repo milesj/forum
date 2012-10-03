@@ -1830,3 +1830,14 @@ msgstr "Postades den"
 msgid "Are you sure you want to report the user %s? If so, please add a comment as to why you are reporting this user, and please be descriptive. Are they spamming, trolling, flaming, etc. 255 max characters."
 msgstr "Är du säker på att du vill anmälda användare %s? Lägg i såna fall till en kommentar om varför du anmäler användare och beskriv sakligt varför. Max 255 tecken."
 
+#: View/Errors/error400.ctp:7
+msgid "Not Found"
+msgstr "Sidan kunde inte hittas"
+
+#: View/Errors/error400.ctp:7
+msgid "Forbidden"
+msgstr "Förbjudna"
+
+#: View/Errors/error400.ctp:7
+msgid "Unauthorized"
+msgstr "Obehörig"

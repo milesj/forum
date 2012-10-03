@@ -1895,6 +1895,14 @@ msgstr "Banned"
 msgid "Profile does not exist."
 msgstr ""
 
-#: View/Errors/error404.ctp:2
-msgid "Page Not Found"
+#: View/Errors/error400.ctp:7
+msgid "Not Found"
+msgstr ""
+
+#: View/Errors/error400.ctp:7
+msgid "Forbidden"
+msgstr ""
+
+#: View/Errors/error400.ctp:7
+msgid "Unauthorized"
 msgstr ""
