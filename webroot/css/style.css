@@ -327,6 +327,11 @@ select {
 .searchForm table td { padding-left: 10px; }
 .searchForm label { color: #323232; }
 
+.errorPage { text-align: center; margin: 50px 0; }
+.errorPage h2 { font-size: 36px; }
+.errorPage h3 { font-size: 30px; color: #823382; }
+.errorPage p { margin: 10px 0 0 0; }
+
 /*------------------------------------------------------
 	Table
 ------------------------------------------------------*/

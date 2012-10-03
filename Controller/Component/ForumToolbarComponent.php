@@ -249,18 +249,16 @@ class ForumToolbarComponent extends Component {
 	 * @access public
 	 * @param array $validators
 	 * @return boolean
+	 * @throws NotFoundException
+	 * @throws UnauthorizedException
+	 * @throws ForbiddenException
 	 */
 	public function verifyAccess($validators = array()) {
-		$user_id = $this->Controller->Auth->user('id');
-
-		if (!$user_id) {
-			return false;
-		}
 
 		// Does the data exist?
 		if (isset($validators['exists'])) {
 			if (empty($validators['exists'])) {
-				$this->goToPage();
+				throw new NotFoundException();
 			}
 		}
 
@@ -274,14 +272,14 @@ class ForumToolbarComponent extends Component {
 		// Do we have permission to do this action?
 		if (isset($validators['permission'])) {
 			if ($this->Session->read('Forum.access') < $validators['permission']) {
-				$this->goToPage();
+				throw new UnauthorizedException();
 			}
 		}
 
 		// Is the item locked/unavailable?
 		if (isset($validators['status'])) {
 			if (!$validators['status']) {
-				$this->goToPage();
+				throw new ForbiddenException();
 			}
 		}
 
@@ -289,8 +287,9 @@ class ForumToolbarComponent extends Component {
 		if (isset($validators['ownership'])) {
 			if ($this->Session->read('Forum.isSuper') || $this->Session->read('Forum.isAdmin')) {
 				return true;
-			} else if ($user_id != $validators['ownership']) {
-				$this->goToPage();
+
+			} else if ($this->Controller->Auth->user('id') != $validators['ownership']) {
+				throw new UnauthorizedException();
 			}
 		}
 

@@ -75,6 +75,8 @@ class ForumAppController extends AppController {
 	public function beforeFilter() {
 		parent::beforeFilter();
 
+		$this->set('menuTab', '');
+
 		// Admin
 		if (isset($this->request->params['admin'])) {
 			$this->ForumToolbar->verifyAdmin();

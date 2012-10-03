@@ -114,3 +114,8 @@ Configure::write('Forum.decodaLocales', array(
 	'ind' => 'id-id',
 	'bul' => 'bg-bg'*/
 ));
+
+/**
+ * Handle exceptions and errors.
+ */
+Configure::write('Exception.renderer', 'Forum.ForumExceptionRenderer');
