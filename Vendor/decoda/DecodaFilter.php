@@ -22,6 +22,7 @@
  * @attributes			- (array) Custom attributes to parse out of the Decoda markup
  * @map					- (array) Map parsed attributes to different names
  * @html				- (array) Custom HTML attributes to append to the parsed tag
+ * @alias				- (array) Map attribute names to another attribute name
  * @lineBreaks			- (boolean) Convert linebreaks within the content body
  * @autoClose			- (boolean) HTML tag is self closing
  * @preserveTags		- (boolean) Will not convert nested Decoda markup within this tag
@@ -140,7 +141,16 @@ abstract class DecodaFilter extends DecodaAbstract {
 		if (!empty($setup['template'])) {
 			$tag['attributes'] = $attributes;
 
-			return $this->_render($tag, $content);
+			$templateEngine = $this->getParser()->getTemplateEngine();
+			$templateEngine->setFilter($this);
+
+			$parsed = $templateEngine->render($tag, $content);
+
+			if ($setup['lineBreaks'] !== self::NL_PRESERVE) {
+				$parsed = str_replace(array("\n", "\r"), "", $parsed);
+			}
+
+			return $parsed;
 		}
 
 		foreach ($attributes as $key => $value) {
@@ -198,6 +208,7 @@ abstract class DecodaFilter extends DecodaAbstract {
 			'attributes' => array(),
 			'map' => array(),
 			'html' => array(),
+			'alias' => array(),
 
 			// Processes
 			'lineBreaks' => self::NL_CONVERT,
@@ -226,45 +237,6 @@ abstract class DecodaFilter extends DecodaAbstract {
 	 */
 	public function tags() {
 		return $this->_tags;
-	}
-
-	/**
-	 * Render the tag using a template.
-	 *
-	 * @access public
-	 * @param array $tag
-	 * @param string $content
-	 * @return string
-	 * @throws Exception
-	 */
-	protected function _render(array $tag, $content) {
-		$setup = $this->tag($tag['tag']);
-		$path = DECODA_TEMPLATES . $setup['template'] . '.php';
-
-		if (!file_exists($path)) {
-			throw new Exception(sprintf('Template file %s does not exist.', $setup['template']));
-		}
-
-		$vars = array();
-
-		foreach ($tag['attributes'] as $key => $value) {
-			if (isset($setup['map'][$key])) {
-				$key = $setup['map'][$key];
-			}
-
-			$vars[$key] = $value;
-		}
-
-		extract($vars, EXTR_SKIP);
-		ob_start();
-
-		include $path;
-
-		if ($setup['lineBreaks'] !== self::NL_PRESERVE) {
-			return str_replace(array("\n", "\r"), "", ob_get_clean());
-		}
-
-		return ob_get_clean();
 	}
 
 }

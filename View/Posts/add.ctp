@@ -21,7 +21,7 @@ $this->Html->addCrumb($topic['Topic']['title'], array('controller' => 'topics', 
 		echo $this->Form->input('content', array(
 			'type' => 'textarea',
 			'rows' => 15,
-			'after' => '<span class="inputText">[b], [u], [i], [img], [url], [email], [code], [align], [list], [li], [color], [size], [quote]</span>',
+			'after' => '<span class="inputText">[b], [u], [i], [s], [img], [url], [email], [color], [size], [left], [center], [right], [justify], [list], [olist], [li], [quote], [code]</span>',
 			'label' => __d('forum', 'Content')));
 
 		echo $this->element('markitup', array('textarea' => 'PostContent')); ?>

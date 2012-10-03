@@ -62,7 +62,7 @@ $this->Html->addCrumb($topic['Topic']['title'], array('controller' => 'topics', 
 		echo $this->Form->input('FirstPost.id', array('type' => 'hidden'));
 
 		echo $this->Form->input('FirstPost.content', array(
-			'after' => '<span class="inputText">[b], [u], [i], [img], [url], [email], [code], [align], [list], [li], [color], [size], [quote]</span>',
+			'after' => '<span class="inputText">[b], [u], [i], [s], [img], [url], [email], [color], [size], [left], [center], [right], [justify], [list], [olist], [li], [quote], [code]</span>',
 			'label' => __d('forum', 'Content'),
 			'type' => 'textarea',
 			'rows' => 15

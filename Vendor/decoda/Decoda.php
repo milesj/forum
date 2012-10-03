@@ -5,7 +5,7 @@
  * A lightweight lexical string parser for simple markup syntax.
  * Provides a very powerful filter and hook system to extend the parsing cycle.
  *
- * @version     3.3.3
+ * @version     3.5
  * @author      Miles Johnson - http://milesj.me
  * @copyright   Copyright 2006-2011, Miles Johnson, Inc.
  * @license     http://opensource.org/licenses/mit-license.php - Licensed under The MIT License
@@ -29,10 +29,6 @@ if (!defined('DECODA_FILTERS')) {
 	define('DECODA_FILTERS', DECODA . 'filters/');
 }
 
-if (!defined('DECODA_TEMPLATES')) {
-	define('DECODA_TEMPLATES', DECODA . 'templates/');
-}
-
 if (!defined('DECODA_EMOTICONS')) {
 	define('DECODA_EMOTICONS', DECODA . 'emoticons/');
 }
@@ -41,6 +37,7 @@ if (!defined('DECODA_EMOTICONS')) {
 include_once DECODA . 'DecodaAbstract.php';
 include_once DECODA . 'DecodaHook.php';
 include_once DECODA . 'DecodaFilter.php';
+include_once DECODA . 'DecodaTemplateEngineInterface.php';
 
 class Decoda {
 
@@ -80,6 +77,7 @@ class Decoda {
 		'shorthand' => false,
 		'xhtml' => false,
 		'escape' => true,
+		'strict' => true,
 		'locale' => 'en-us'
 	);
 
@@ -154,6 +152,14 @@ class Decoda {
 	 * @var array
 	 */
 	protected $_tags = array();
+
+	/**
+	 * The used template engine
+	 *
+	 * @access protected
+	 * @var TemplateEngineInterface
+	 */
+	protected $_templateEngine = null;
 
 	/**
 	 * Whitelist of tags to parse.
@@ -390,6 +396,23 @@ class Decoda {
 	}
 
 	/**
+	 * Returns the current used template engine.
+	 * In case no engine is set the default php engine gonna be used.
+	 *
+	 * @access public
+	 * @return DecodaTemplateEngineInterface
+	 */
+	public function getTemplateEngine() {
+		if ($this->_templateEngine === null) {
+			// Include just necessary in case the default php engine gonna be used.
+			include_once DECODA . 'DecodaPhpEngine.php';
+			$this->_templateEngine = new DecodaPhpEngine();
+		}
+
+		return $this->_templateEngine;
+	}
+
+	/**
 	 * Autoload filters and hooks.
 	 *
 	 * @access public
@@ -451,11 +474,16 @@ class Decoda {
 	 * Parse the node list by looping through each one, validating, applying filters, building and finally concatenating the string.
 	 *
 	 * @access public
+	 * @param boolean $echo
 	 * @return string
 	 */
-	public function parse() {
+	public function parse($echo = false) {
 		if (!empty($this->_parsed)) {
-			return $this->_parsed;
+			if ($echo) {
+				echo $this->_parsed;
+			} else {
+				return $this->_parsed;
+			}
 		}
 
 		ksort($this->_hooks);
@@ -475,7 +503,11 @@ class Decoda {
 
 		$this->_parsed = $this->_trigger('afterParse', $this->_parsed);
 
-		return $this->_parsed;
+		if ($echo) {
+			echo $this->_parsed;
+		} else {
+			return $this->_parsed;
+		}
 	}
 
 	/**
@@ -559,6 +591,7 @@ class Decoda {
 	 * @param string $open
 	 * @param string $close
 	 * @return Decoda
+	 * @throws Exception
 	 * @chainable
 	 */
 	public function setBrackets($open, $close) {
@@ -592,6 +625,7 @@ class Decoda {
 	 * @access public
 	 * @param string $locale
 	 * @return Decoda
+	 * @throws Exception
 	 * @chainable
 	 */
 	public function setLocale($locale) {
@@ -614,6 +648,34 @@ class Decoda {
 	 */
 	public function setShorthand($status = true) {
 		$this->_config['shorthand'] = (bool) $status;
+
+		return $this;
+	}
+
+	/**
+	 * Toggle strict parsing.
+	 *
+	 * @access public
+	 * @param boolean $strict
+	 * @return Decoda
+	 * @chainable
+	 */
+	public function setStrict($strict = true) {
+		$this->_config['strict'] = (bool) $strict;
+
+		return $this;
+	}
+
+	/**
+	 * Sets the template engine which gonna be used for all tags with templates.
+	 *
+	 * @access public
+	 * @param DecodaTemplateEngineInterface $templateEngine
+	 * @return Decoda
+	 * @chainable
+	 */
+	public function setTemplateEngine(DecodaTemplateEngineInterface $templateEngine) {
+		$this->_templateEngine = $templateEngine;
 
 		return $this;
 	}
@@ -697,17 +759,42 @@ class Decoda {
 
 			// Find attributes
 			if (!$disabled) {
+				$found = array();
+
 				preg_match_all('/([a-z]+)=\"(.*?)\"/i', $string, $matches, PREG_SET_ORDER);
 
 				if (!empty($matches)) {
+					foreach ($matches as $match) {
+						$found[$match[1]] = $match[2];
+					}
+				}
+
+				// Find attributes that aren't surrounded by quotes
+				if (!$this->config('strict')) {
+					preg_match_all('/([a-z]+)=([^\s\]]+)/i', $string, $matches, PREG_SET_ORDER);
+
+					if (!empty($matches)) {
+						foreach ($matches as $match) {
+							if (!isset($found[$match[1]])) {
+								$found[$match[1]] = $match[2];
+							}
+						}
+					}
+				}
+
+				if (!empty($found)) {
 					$source = $this->_tags[$tag['tag']];
 
-					foreach ($matches as $match) {
-						$key = strtolower($match[1]);
-						$value = trim($match[2]);
+					foreach ($found as $key => $value) {
+						$key = strtolower($key);
+						$value = trim(trim($value), '"');
 
 						if ($key === $tag['tag']) {
 							$key = 'default';
+						}
+
+						if (isset($source['alias'][$key])) {
+							$key = $source['alias'][$key];
 						}
 
 						if (isset($source['attributes'][$key])) {

@@ -16,6 +16,7 @@ var bbcodeSettings = {
 		{name:'Bold', key:'B', openWith:'[b]', closeWith:'[/b]'},
 		{name:'Italic', key:'I', openWith:'[i]', closeWith:'[/i]'},
 		{name:'Underline', key:'U', openWith:'[u]', closeWith:'[/u]'},
+		{name:'Strike-Through', key:'S', openWith:'[s]', closeWith:'[/s]'},
 		{separator:'---------------' },
 		{name:'Image', key:'I', replaceWith:'[img][![Url]!][/img]'},
 		{name:'Link', key:'L', openWith:'[url="[![Url]!]"]', closeWith:'[/url]', placeHolder:'Your text to link here...'},
@@ -34,13 +35,15 @@ var bbcodeSettings = {
 		]},
 		{name:'Size', openWith:'[size="[![Text size]!]"]', closeWith:'[/size]', dropMenu :[
 			{name:'Big', openWith:'[size="29"]', closeWith:'[/size]' },
-			{name:'Normal', openWith:'[size="20"]', closeWith:'[/size]' },
+			{name:'Large', openWith:'[size="20"]', closeWith:'[/size]' },
+			{name:'Normal', openWith:'[size="13"]', closeWith:'[/size]' },
 			{name:'Small', openWith:'[size="10"]', closeWith:'[/size]' }
 		]},
-		{name:'Alignments', openWith:'[align="[![Direction]!]"]', closeWith:'[/align]', dropMenu:[
+		{name:'Alignments', dropMenu:[
 			{name:'Left', className:'left', openWith:'[left]', closeWith:'[/left]' },
 			{name:'Center', className:'center', openWith:'[center]', closeWith:'[/center]' },
-			{name:'Right', className:'right', openWith:'[right]', closeWith:'[/right]' }
+			{name:'Right', className:'right', openWith:'[right]', closeWith:'[/right]' },
+			{name:'Justify', className:'right', openWith:'[justify]', closeWith:'[/justify]' }
 		]},
 		{separator:'---------------' },
 		{name:'Bulleted list', openWith:'[list]\n', closeWith:'\n[/list]'},
@@ -50,7 +53,8 @@ var bbcodeSettings = {
 		{name:'Quotes', key:'Q', openWith:'[quote]', closeWith:'[/quote]'},
 		{name:'Code', openWith:'[code]', closeWith:'[/code]'},
 		{separator:'---------------' },
-		{name:'Clean', className:"clean", replaceWith: function(markitup) { return markitup.selection.replace(/\[(.*?)\]/g, "") } },
-		//{name:'Preview', className:"preview", call:'preview' }
+		{name:'Clean', className:"clean", replaceWith: function(markitup) {
+			return markitup.selection.replace(/\[(.*?)\]/g, "");
+		} }
 	]
-}
+};

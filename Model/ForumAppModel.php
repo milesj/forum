@@ -266,9 +266,27 @@ class ForumAppModel extends AppModel {
 		$locale = $this->config['decodaLocales'][Configure::read('Config.language')];
 
 		$decoda = new Decoda($this->data[$model]['content']);
-		$decoda->defaults()->setXhtml()->setLocale($locale);
-		$decoda->getHook('Censor')->blacklist($censored);
+		$decoda->setXhtml(true)->setLocale($locale);
 
+		// Filters
+		$decoda->addFilter(new BlockFilter());
+		$decoda->addFilter(new CodeFilter());
+		$decoda->addFilter(new DefaultFilter());
+		$decoda->addFilter(new EmailFilter());
+		$decoda->addFilter(new ImageFilter());
+		$decoda->addFilter(new ListFilter());
+		$decoda->addFilter(new QuoteFilter());
+		$decoda->addFilter(new TextFilter());
+		$decoda->addFilter(new UrlFilter());
+
+		// Hooks
+		$censorHook = new CensorHook();
+		$censorHook->blacklist($censored);
+
+		$decoda->addHook($censorHook);
+		$decoda->addHook(new ClickableHook());
+
+		// Parse
 		$parsed = $decoda->parse();
 		$errors = $decoda->getErrors();
 

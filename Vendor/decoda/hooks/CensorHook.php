@@ -124,7 +124,7 @@ class CensorHook extends DecodaHook {
 		$regex = '';
 
 		foreach ($letters as $letter) {
-			$regex .= preg_quote($letter, '/') . '{1,}';
+			$regex .= preg_quote($letter, '/') .'{1,}';
 		}
 
 		$suffix = $this->config('suffix');
@@ -133,7 +133,7 @@ class CensorHook extends DecodaHook {
 			$suffix = implode('|', $suffix);
 		}
 
-		$regex .= '(?:' . $suffix . ')?';
+		$regex .= '(?:' . $suffix .')?';
 
 		return $regex;
 	}

@@ -41,7 +41,7 @@ $this->Html->addCrumb($forum['Forum']['title'], array('controller' => 'stations'
 		}
 
 		echo $this->Form->input('content', array(
-			'after' => '<span class="inputText">[b], [u], [i], [img], [url], [email], [code], [align], [list], [li], [color], [size], [quote]</span>',
+			'after' => '<span class="inputText">[b], [u], [i], [s], [img], [url], [email], [color], [size], [left], [center], [right], [justify], [list], [olist], [li], [quote], [code]</span>',
 			'label' => __d('forum', 'Content'),
 			'type' => 'textarea',
 			'rows' => 15

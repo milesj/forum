@@ -204,7 +204,16 @@ if ($user && $settings['enable_quick_reply'] && $this->Common->hasAccess($topic[
 							<?php echo __d('forum', 'BBCode Enabled'); ?>
 						</td>
 						<td>
-							<?php echo $this->Form->input('content', array('type' => 'textarea', 'rows' => 5, 'style' => 'width: 99%', 'div' => false, 'error' => false, 'label' => false)); ?>
+							<?php echo $this->Form->input('content', array(
+								'after' => '<span class="inputText" style="margin-left: 0; padding: 0;">[b], [u], [i], [s], [img], [url], [email], [color], [size], [left], [center], [right], [justify], [list], [olist], [li], [quote], [code]</span>',
+								'type' => 'textarea',
+								'rows' => 5,
+								'style' => 'width: 99%',
+								'div' => false,
+								'error' => false,
+								'label' => false
+							)); ?>
+
 							<?php echo $this->element('markitup', array('textarea' => 'PostContent')); ?>
 						</td>
 					</tr>

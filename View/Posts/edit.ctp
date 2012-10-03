@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 $this->Html->addCrumb($settings['site_name'], array('controller' => 'forum', 'action' => 'index'));
 
@@ -17,17 +17,17 @@ $this->Html->addCrumb($post['Topic']['title'], array('controller' => 'topics', '
 
 <div class="container">
 	<div class="containerContent">
-		<?php 
+		<?php
 		echo $this->Form->input('content', array(
-			'type' => 'textarea', 
-			'rows' => 15, 
-			'after' => '<span class="inputText">[b], [u], [i], [img], [url], [email], [code], [align], [list], [li], [color], [size], [quote]</span>',
+			'type' => 'textarea',
+			'rows' => 15,
+			'after' => '<span class="inputText">[b], [u], [i], [s], [img], [url], [email], [color], [size], [left], [center], [right], [justify], [list], [olist], [li], [quote], [code]</span>',
 			'label' => __d('forum', 'Content')));
-		
+
 		echo $this->element('markitup', array('textarea' => 'PostContent')); ?>
 	</div>
 </div>
 
-<?php 
+<?php
 echo $this->Form->submit(__d('forum', 'Update Post'), array('class' => 'button'));
 echo $this->Form->end(); ?>
