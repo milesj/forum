@@ -9,7 +9,7 @@
  */
 
 Configure::write('debug', 2);
-Configure::load('Forum.config');
+Configure::write('Cache.disable', true);
 
 App::uses('CakeEmail', 'Network/Email');
 

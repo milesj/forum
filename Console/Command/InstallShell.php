@@ -10,7 +10,6 @@
 
 Configure::write('debug', 2);
 Configure::write('Cache.disable', true);
-Configure::load('Forum.config');
 
 App::uses('ConnectionManager', 'Model');
 App::uses('Security', 'Utility');
@@ -385,6 +384,14 @@ class InstallShell extends Shell {
 	 * @return void
 	 */
 	public function finalize() {
+		$ini = sprintf("; Forum installed on %s", date('Y-m-d H:i:s')) . PHP_EOL;
+
+		foreach (array('prefix', 'database', 'table') as $key) {
+			$ini .= $key . ' = "' . $this->install[$key] . '"' . PHP_EOL;
+		}
+
+		file_put_contents(FORUM_PLUGIN  . 'Config/install.ini', $ini);
+
 		$this->hr(1);
 		$this->out('Forum installation complete! Your admin credentials:');
 		$this->out();

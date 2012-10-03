@@ -8,10 +8,10 @@
  * @link        http://milesj.me/code/cakephp/forum
  */
 
-App::uses('ClassRegistry', 'Utility');
-App::uses('Sanitize', 'Utility');
+if (!defined('FORUM_USER')) {
+	define('FORUM_USER', Configure::read('Forum.userModel'));
+}
 
-Configure::load('Forum.config');
 Configure::write('Forum.settings', ClassRegistry::init('Forum.Setting')->getSettings());
 
 class ForumAppController extends AppController {

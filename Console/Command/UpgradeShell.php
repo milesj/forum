@@ -9,7 +9,7 @@
  */
 
 Configure::write('debug', 2);
-Configure::load('Forum.config');
+Configure::write('Cache.disable', true);
 
 App::uses('ConnectionManager', 'Model');
 
@@ -52,7 +52,7 @@ class UpgradeShell extends Shell {
 	 * @var array
 	 */
 	public $versions = array(
-		//'2.2' => 'Subscriptions'
+		'2.2' => 'Subscriptions'
 	);
 
 	/**
@@ -63,15 +63,7 @@ class UpgradeShell extends Shell {
 	 */
 	public function main() {
 		$this->config = Configure::read('Forum');
-
-		// Get values from AppModel
-		$appModel = file_get_contents(FORUM_PLUGIN . 'Model/ForumAppModel.php');
-
-		$prefix = preg_match('/public \$tablePrefix = \'(.*?)\';/', $appModel, $matches);
-		$this->upgrade['prefix'] = $matches[1];
-
-		$dbConfig = preg_match('/public \$useDbConfig = \'(.*?)\';/', $appModel, $matches);
-		$this->upgrade['database'] = $matches[1];
+		$this->upgrade = parse_ini_file(FORUM_PLUGIN  . 'Config/install.ini', true);
 
 		// Begin
 		$this->out();
@@ -107,9 +99,10 @@ class UpgradeShell extends Shell {
 		}
 
 		$this->out('[E]xit');
+		$this->out();
 
 		$versions[] = 'E';
-		$version = strtoupper($this->in('Which version do you want to upgrade to?', $versions));
+		$version = strtoupper($this->in('Which version do you want to upgrade to?'));
 
 		if ($version === 'E') {
 			exit(0);
