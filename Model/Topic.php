@@ -27,9 +27,8 @@ class Topic extends ForumAppModel {
 	 * @var array
 	 */
 	public $actsAs = array(
-		'Utils.Sluggable' => array(
-			'separator' => '-',
-			'update' => true
+		'Utility.Sluggable' => array(
+			'length' => 100
 		)
 	);
 
