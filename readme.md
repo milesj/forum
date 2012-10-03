@@ -1,4 +1,4 @@
-# Forum v3.1.1 #
+# Forum v3.2.0 BETA #
 
 A fully robust and powerful CakePHP forum plugin. Integrates with an external user system, support for topic and forum subscriptions, and many more features listed below.
 
@@ -12,6 +12,7 @@ This version is only compatible with CakePHP 2.0.
 ## Requirements ##
 
 * PHP 5.2, 5.3
+* Utility Plugin - https://github.com/milesj/cake-utility
 * Utils Plugin - https://github.com/CakeDC/utils/tree/2.0
 
 ## Contributors ##
