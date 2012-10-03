@@ -38,9 +38,9 @@ var bbcodeSettings = {
 			{name:'Small', openWith:'[size="10"]', closeWith:'[/size]' }
 		]},
 		{name:'Alignments', openWith:'[align="[![Direction]!]"]', closeWith:'[/align]', dropMenu:[
-			{name:'Left', className:'left', openWith:'[align="left"]', closeWith:'[/align]' },
-			{name:'Center', className:'center', openWith:'[align="center"]', closeWith:'[/align]' },
-			{name:'Right', className:'right', openWith:'[align="right"]', closeWith:'[/align]' }
+			{name:'Left', className:'left', openWith:'[left]', closeWith:'[/left]' },
+			{name:'Center', className:'center', openWith:'[center]', closeWith:'[/center]' },
+			{name:'Right', className:'right', openWith:'[right]', closeWith:'[/right]' }
 		]},
 		{separator:'---------------' },
 		{name:'Bulleted list', openWith:'[list]\n', closeWith:'\n[/list]'},
@@ -48,7 +48,7 @@ var bbcodeSettings = {
 		{name:'List item', openWith:'[li]', closeWith:'[/li]'},
 		{separator:'---------------' },
 		{name:'Quotes', key:'Q', openWith:'[quote]', closeWith:'[/quote]'},
-		{name:'Code', openWith:'[code]', closeWith:'[/code]'}, 
+		{name:'Code', openWith:'[code]', closeWith:'[/code]'},
 		{separator:'---------------' },
 		{name:'Clean', className:"clean", replaceWith: function(markitup) { return markitup.selection.replace(/\[(.*?)\]/g, "") } },
 		//{name:'Preview', className:"preview", call:'preview' }

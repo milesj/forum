@@ -6,7 +6,7 @@
 <?php
 echo $this->Html->css('/forum/css/base.css');
 echo $this->Html->css('/forum/css/style.css');
-echo $this->Html->script('/forum/js/jquery-1.6.2.min.js');
+echo $this->Html->script('/forum/js/jquery-1.8.2.min.js');
 echo $this->Html->script('/forum/js/forum.js');
 
 if ($this->params['controller'] === 'home') {
