@@ -29,14 +29,6 @@ class UsersController extends ForumAppController {
 	public $components = array('Email');
 
 	/**
-	 * Helpers.
-	 *
-	 * @access public
-	 * @var array
-	 */
-	public $helpers = array('Utils.Gravatar');
-
-	/**
 	 * Pagination.
 	 *
 	 * @access public

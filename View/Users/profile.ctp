@@ -19,7 +19,7 @@ $this->Html->addCrumb($profile['User'][$config['userMap']['username']], $this->h
 			<tr>
 				<?php if ($settings['enable_gravatar']) { ?>
 					<td rowspan="2" style="width: 80px;">
-						<?php echo $this->Gravatar->image($profile['User'][$config['userMap']['email']]); ?>
+						<?php echo $this->Common->gravatar($profile['User'][$config['userMap']['email']]); ?>
 					</td>
 				<?php } ?>
 

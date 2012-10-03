@@ -52,7 +52,7 @@ class TopicsController extends ForumAppController {
 	 * @access public
 	 * @var array
 	 */
-	public $helpers = array('Utils.Gravatar', 'Rss');
+	public $helpers = array('Rss');
 
 	/**
 	 * Redirect.

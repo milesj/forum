@@ -150,7 +150,7 @@ if (!empty($topic['Poll']['id'])) { ?>
 
 						<?php if ($settings['enable_gravatar']) { ?>
 							<div class="avatar">
-								<?php echo $this->Gravatar->image($post['User'][$config['userMap']['email']]); ?>
+								<?php echo $this->Common->gravatar($post['User'][$config['userMap']['email']], array('size' => 100)); ?>
 							</div>
 						<?php } ?>
 
