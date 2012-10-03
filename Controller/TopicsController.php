@@ -128,7 +128,7 @@ class TopicsController extends ForumAppController {
 		if ($this->request->data) {
 			if ($this->Topic->saveAll($this->request->data, array('validate' => 'only'))) {
 				if ($this->Topic->edit($topic['Topic']['id'], $this->request->data)) {
-					Cache::delete('Topic.get-' . $slug, 'forum');
+					$this->Topic->deleteCache(array('Topic::getBySlug', $slug));
 					$this->ForumToolbar->goToPage($topic['Topic']['id']);
 				}
 			}
@@ -181,8 +181,6 @@ class TopicsController extends ForumAppController {
 			'moderate' => $topic['Topic']['forum_id']
 		));
 
-		Cache::delete('Topic.get-' . $slug, 'forum');
-
 		$this->Topic->delete($topic['Topic']['id'], true);
 
 		$this->redirect(array('controller' => 'stations', 'action' => 'view', $topic['Forum']['slug']));
@@ -209,7 +207,7 @@ class TopicsController extends ForumAppController {
 			$this->request->data['Report']['itemType'] = Report::TOPIC;
 
 			if ($this->Report->save($this->request->data, true, array('item_id', 'itemType', 'user_id', 'comment'))) {
-				$this->Session->setFlash(__d('forum', 'You have succesfully reported this topic! A moderator will review this topic and take the necessary action.'));
+				$this->Session->setFlash(__d('forum', 'You have successfully reported this topic! A moderator will review this topic and take the necessary action.'));
 				unset($this->request->data['Report']);
 			}
 		}
@@ -234,6 +232,8 @@ class TopicsController extends ForumAppController {
 
 		if (!empty($this->request->data['Poll']['option'])) {
 			$this->Topic->Poll->vote($topic['Poll']['id'], $this->request->data['Poll']['option'], $user_id);
+			$this->Topic->deleteCache(array('Topic::getBySlug', $slug));
+
 			$this->redirect(array('plugin' => 'forum', 'controller' => 'topics', 'action' => 'view', $slug));
 		}
 
@@ -253,7 +253,7 @@ class TopicsController extends ForumAppController {
 	/**
 	 * Subscribe to a topic.
 	 *
-	 * @param type $id
+	 * @param int $id
 	 */
 	public function subscribe($id) {
 		$success = false;
@@ -273,7 +273,7 @@ class TopicsController extends ForumAppController {
 	/**
 	 * Unsubscribe from a topic.
 	 *
-	 * @param type $id
+	 * @param int $id
 	 */
 	public function unsubscribe($id) {
 		$success = false;
@@ -308,6 +308,7 @@ class TopicsController extends ForumAppController {
 		if (!empty($this->request->data['Post']['items'])) {
 			$items = $this->request->data['Post']['items'];
 			$action = $this->request->data['Post']['action'];
+			$message = null;
 
 			foreach ($items as $post_id) {
 				if (is_numeric($post_id)) {

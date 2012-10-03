@@ -97,6 +97,7 @@ class StationsController extends ForumAppController {
 		if (!empty($this->request->data['Topic']['items'])) {
 			$items = $this->request->data['Topic']['items'];
 			$action = $this->request->data['Topic']['action'];
+			$message = null;
 
 			foreach ($items as $topic_id) {
 				if (is_numeric($topic_id)) {
@@ -164,7 +165,7 @@ class StationsController extends ForumAppController {
 	/**
 	 * Subscribe to a forum.
 	 *
-	 * @param type $id
+	 * @param int $id
 	 */
 	public function subscribe($id) {
 		$success = false;
@@ -184,7 +185,7 @@ class StationsController extends ForumAppController {
 	/**
 	 * Unsubscribe from a forum.
 	 *
-	 * @param type $id
+	 * @param int $id
 	 */
 	public function unsubscribe($id) {
 		$success = false;
@@ -228,7 +229,7 @@ class StationsController extends ForumAppController {
 			}
 
 			if ($this->Forum->save($this->request->data, true)) {
-				Cache::delete('Forum.getIndex', 'forum');
+				$this->Forum->deleteCache('Forum::getIndex');
 
 				$this->Session->setFlash(sprintf(__d('forum', 'The %s forum has been added.'), '<strong>' . $this->request->data['Forum']['title'] . '</strong>'));
 				$this->redirect(array('controller' => 'stations', 'action' => 'index', 'admin' => true));
@@ -266,8 +267,8 @@ class StationsController extends ForumAppController {
 			}
 
 			if ($this->Forum->save($this->request->data, true)) {
-				Cache::delete('Forum.getIndex', 'forum');
-				Cache::delete('Forum.get-' . $forum['Forum']['slug'], 'forum');
+				$this->Forum->deleteCache('Forum::getIndex');
+				$this->Forum->deleteCache(array('Forum::getBySlug', $forum['Forum']['slug']));
 
 				$this->Session->setFlash(sprintf(__d('forum', 'The %s forum has been updated.'), '<strong>' . $forum['Forum']['title'] . '</strong>'));
 				$this->redirect(array('controller' => 'stations', 'action' => 'index', 'admin' => true));
@@ -299,8 +300,7 @@ class StationsController extends ForumAppController {
 			$this->Forum->Topic->moveAll($id, $this->request->data['Forum']['move_topics']);
 			$this->Forum->moveAll($id, $this->request->data['Forum']['move_forums']);
 			$this->Forum->delete($id, true);
-
-			Cache::delete('Forum.getIndex', 'forum');
+			$this->Forum->deleteCache('Forum::getIndex');
 
 			$this->Session->setFlash(sprintf(__d('forum', 'The %s forum has been deleted, and all its sub-forums and topics have been moved!'), '<strong>' . $forum['Forum']['title'] . '</strong>'));
 			$this->redirect(array('controller' => 'stations', 'action' => 'index', 'admin' => true));

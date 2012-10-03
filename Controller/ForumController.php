@@ -112,7 +112,8 @@ class ForumController extends ForumAppController {
 			if ($this->Setting->update($this->request->data)) {
 				$this->Session->setFlash(__d('forum', 'Settings have been updated!'));
 
-				Cache::delete('Setting.getSettings', 'forum');
+				$this->Setting->deleteCache('Setting::getSettings');
+
 				Configure::write('Forum.settings', $this->request->data['Setting']);
 			}
 		} else {

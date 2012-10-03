@@ -164,7 +164,7 @@ msgid "Edit Access"
 msgstr "Editar Acceso"
 
 #: Controller/StaffController.php:87;87
-msgid "The access levels for %s have been succesfully removed."
+msgid "The access levels for %s have been successfully removed."
 msgstr "Los niveles de acceso para %s se ha eliminado correctamente"
 
 #: Controller/StaffController.php:99;99
@@ -211,7 +211,7 @@ msgid "Edit Moderator"
 msgstr "Editar Moderador"
 
 #: Controller/StaffController.php:220;220
-msgid "The moderator %s has been succesfully removed!"
+msgid "The moderator %s has been successfully removed!"
 msgstr "El moderador %s se ha eliminado correctamente!"
 
 #: Controller/StationsController.php:95;95
@@ -295,7 +295,7 @@ msgid "Edit Topic"
 msgstr "Editar tema"
 
 #: Controller/TopicsController.php:201;201
-msgid "You have succesfully reported this topic! A moderator will review this topic and take the necessary action."
+msgid "You have successfully reported this topic! A moderator will review this topic and take the necessary action."
 msgstr "Has resportado correctamente este tema. Un moderador lo revisará y tomará medidas."
 
 #: Controller/TopicsController.php:206;206
@@ -335,7 +335,7 @@ msgid "User Profile"
 msgstr "Perfil de usuario"
 
 #: Controller/UsersController.php:167;167
-msgid "You have succesfully reported this user! A moderator will review this topic and take the necessary action."
+msgid "You have successfully reported this user! A moderator will review this topic and take the necessary action."
 msgstr "Has resportado correctamente este usuario. Un moderador lo revisará y tomará medidas"
 
 #: Controller/UsersController.php:172;172

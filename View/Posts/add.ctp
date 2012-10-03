@@ -52,7 +52,6 @@ if ($review) { ?>
 				<tr>
 					<td valign="top" style="width: 25%">
 						<h4 class="username"><?php echo $this->Html->link($post['User'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'profile', $post['User']['id'])); ?></h4>
-						<strong><?php echo __d('forum', 'Joined'); ?>:</strong> <?php echo $this->Time->niceShort($post['User']['created'], $this->Common->timezone()); ?>
 					</td>
 					<td valign="top">
 						<?php echo $post['Post']['contentHtml']; ?>

@@ -9,7 +9,6 @@
  */
 
 App::uses('ForumAppController', 'Forum.Controller');
-// Not sure why Cake isn't inheriting it from $uses
 App::uses('Report', 'Forum.Model');
 
 class ReportsController extends ForumAppController {

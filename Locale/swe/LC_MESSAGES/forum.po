@@ -208,7 +208,7 @@ msgid "Edit Access"
 msgstr "Redigera åtkomst"
 
 #: Controller\StaffController.php:87
-msgid "The access levels for %s have been succesfully removed."
+msgid "The access levels for %s have been successfully removed."
 msgstr "Åtkomsträttigheterna för %s har tagits bort."
 
 #: Controller\StaffController.php:99
@@ -255,7 +255,7 @@ msgid "Edit Moderator"
 msgstr "Redigera moderator"
 
 #: Controller\StaffController.php:220
-msgid "The moderator %s has been succesfully removed!"
+msgid "The moderator %s has been successfully removed!"
 msgstr "Moderator %s har tagits bort."
 
 #: Controller\StationsController.php:105
@@ -359,7 +359,7 @@ msgid "Edit Topic"
 msgstr "Redigera ämne"
 
 #: Controller\TopicsController.php:210
-msgid "You have succesfully reported this topic! A moderator will review this topic and take the necessary action."
+msgid "You have successfully reported this topic! A moderator will review this topic and take the necessary action."
 msgstr "Du har anmält det här ämnet. En moderator kommer att granska ämnet och vidta nödvändiga åtgärder."
 
 #: Controller\TopicsController.php:215
@@ -402,7 +402,7 @@ msgid "User Profile"
 msgstr "Användarprofil"
 
 #: Controller\UsersController.php:157
-msgid "You have succesfully reported this user! A moderator will review this topic and take the necessary action."
+msgid "You have successfully reported this user! A moderator will review this topic and take the necessary action."
 msgstr "Du har anmält användaren. En moderator kommer att granska din anmälan och vidta nödvändiga åtgärder."
 
 #: Controller\UsersController.php:162

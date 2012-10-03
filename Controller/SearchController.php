@@ -48,8 +48,8 @@ class SearchController extends ForumAppController {
 			'Topic.view_count' => __d('forum', 'Total views')
 		);
 
-		if (!empty($this->params['named'])) {
-			foreach ($this->params['named'] as $field => $value) {
+		if ($this->request->params['named']) {
+			foreach ($this->request->params['named'] as $field => $value) {
 				$this->request->data['Topic'][$field] = urldecode($value);
 			}
 		}

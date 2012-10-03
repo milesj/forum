@@ -190,7 +190,9 @@ if ($user && $settings['enable_quick_reply'] && $this->Common->hasAccess($topic[
 		</div>
 
 		<div class="containerContent">
-			<?php echo $this->Form->create('Post'); ?>
+			<?php echo $this->Form->create('Post', array(
+				'url' => array('controller' => 'posts', 'action' => 'add', $topic['Topic']['slug'])
+			)); ?>
 
 			<table class="table">
 				<tbody>

@@ -19,14 +19,37 @@ class ForumToolbarComponent extends Component {
 	public $components = array('Session');
 
 	/**
+	 * Plugin configuration.
+	 *
+	 * @access public
+	 * @var array
+	 */
+	public $config = array();
+
+	/**
+	 * Database forum settings.
+	 *
+	 * @access public
+	 * @var array
+	 */
+	public $settings = array();
+
+	/**
+	 * Controller instance.
+	 *
+	 * @access public
+	 * @var Controller
+	 */
+	public $Controller;
+
+	/**
 	 * Initialize.
 	 *
 	 * @access public
 	 * @param Controller $Controller
-	 * @param array $settings
 	 * @return void
 	 */
-	public function initialize($Controller, $settings = array()) {
+	public function initialize(Controller $Controller) {
 		$this->Controller = $Controller;
 		$this->config = Configure::read('Forum');
 		$this->settings = Configure::read('Forum.settings');

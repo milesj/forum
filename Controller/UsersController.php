@@ -55,9 +55,9 @@ class UsersController extends ForumAppController {
 	public function index() {
 		$this->paginate['Profile']['conditions']['User.' . $this->config['userMap']['status']] = $this->config['statusMap']['active'];
 
-		if (!empty($this->params['named']['username'])) {
-			$this->request->data['Profile']['username'] = $this->params['named']['username'];
-			$this->paginate['Profile']['conditions']['User.' . $this->config['userMap']['username'] . ' LIKE'] = '%' . Sanitize::clean($this->params['named']['username']) . '%';
+		if (!empty($this->request->params['named']['username'])) {
+			$this->request->data['Profile']['username'] = $this->request->params['named']['username'];
+			$this->paginate['Profile']['conditions']['User.' . $this->config['userMap']['username'] . ' LIKE'] = '%' . Sanitize::clean($this->request->params['named']['username']) . '%';
 		}
 
 		$this->paginate['Profile']['order'] = array('User.' . $this->config['userMap']['username'] => 'ASC');
@@ -158,7 +158,7 @@ class UsersController extends ForumAppController {
 			$this->request->data['Report']['itemType'] = Report::USER;
 
 			if ($this->Report->save($this->request->data, true, array('item_id', 'itemType', 'user_id', 'comment'))) {
-				$this->Session->setFlash(__d('forum', 'You have succesfully reported this user! A moderator will review this topic and take the necessary action.'));
+				$this->Session->setFlash(__d('forum', 'You have successfully reported this user! A moderator will review this topic and take the necessary action.'));
 				unset($this->request->data['Report']);
 			}
 		}
@@ -227,7 +227,7 @@ class UsersController extends ForumAppController {
 
 		if ($status === 'active') {
 			$message = __d('forum', 'User has been activated.');
-		} else if ($status === 'banned') {
+		} else {
 			$message = __d('forum', 'User has been banned.');
 		}
 

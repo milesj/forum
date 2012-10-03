@@ -86,7 +86,7 @@ class StaffController extends ForumAppController {
 
 		if ($access) {
 			$this->Access->delete($id, true);
-			$this->Session->setFlash(sprintf(__d('forum', 'The access levels for %s have been succesfully removed.'), '<strong>' . $access['User'][$this->config['userMap']['username']] . '</strong>'));
+			$this->Session->setFlash(sprintf(__d('forum', 'The access levels for %s have been successfully removed.'), '<strong>' . $access['User'][$this->config['userMap']['username']] . '</strong>'));
 		}
 
 		$this->redirect(array('controller' => 'staff', 'action' => 'index', 'admin' => true));
@@ -216,10 +216,10 @@ class StaffController extends ForumAppController {
 				$this->Access->deleteAll(array(
 					'Access.user_id' => $mod['Moderator']['user_id'],
 					'Access.access_level_id' => Access::MOD
-				));
+				), true, true);
 			}
 
-			$this->Session->setFlash(sprintf(__d('forum', 'The moderator %s has been succesfully removed!'), '<strong>' . $mod['User'][$this->config['userMap']['username']] . '</strong>'));
+			$this->Session->setFlash(sprintf(__d('forum', 'The moderator %s has been successfully removed!'), '<strong>' . $mod['User'][$this->config['userMap']['username']] . '</strong>'));
 		}
 
 		$this->redirect(array('controller' => 'staff', 'action' => 'index', 'admin' => true));

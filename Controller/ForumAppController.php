@@ -76,7 +76,7 @@ class ForumAppController extends AppController {
 		parent::beforeFilter();
 
 		// Admin
-		if (isset($this->params['admin'])) {
+		if (isset($this->request->params['admin'])) {
 			$this->ForumToolbar->verifyAdmin();
 			$this->layout = 'admin';
 		}
