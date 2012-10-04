@@ -574,9 +574,9 @@ select {
 	background: #fbf1fb;
 	overflow-x: auto;
 	border: 1px solid #ab87ab;
-	-moz-border-radius: 10px;
-	-webkit-border-radius: 10px;
-	border-radius: 10px; }
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px; }
 
 .decoda-spoilerButton { padding: 5px 10px; }
 
@@ -586,16 +586,16 @@ select {
 	border: 1px solid #8ec982;
 	padding: 10px;
 	color: #476145;
-	-moz-border-radius: 10px;
-	-webkit-border-radius: 10px;
-	border-radius: 10px; }
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px; }
 
 .decoda-quote {
 	border: 1px solid #c7d3e2;
 	background: #f2f6f9;
-	-moz-border-radius: 10px;
-	-webkit-border-radius: 10px;
-	border-radius: 10px; }
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px; }
 
 	.decoda-quote:hover { background: #f8fbfe; }
 
@@ -604,12 +604,12 @@ select {
 		background: #f8fbfe;
 		color: #225985;
 		border-bottom: 1px solid #c7d3e2;
-		-moz-border-radius-topleft: 10px;
-		-moz-border-radius-topright: 10px;
-		-webkit-border-top-left-radius: 10px;
-		-webkit-border-top-right-radius: 10px;
-		border-top-left-radius: 10px;
-		border-top-right-radius: 10px;  }
+		-moz-border-radius-topleft: 5px;
+		-moz-border-radius-topright: 5px;
+		-webkit-border-top-left-radius: 5px;
+		-webkit-border-top-right-radius: 5px;
+		border-top-left-radius: 5px;
+		border-top-right-radius: 5px;  }
 
 	.decoda-quoteBody { padding: 10px; }
 	.decoda-quoteDate { float: right; }

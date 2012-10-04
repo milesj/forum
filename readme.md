@@ -12,7 +12,8 @@ This version is only compatible with CakePHP 2.0.
 ## Requirements ##
 
 * PHP 5.2, 5.3
-* Utility Plugin - https://github.com/milesj/cake-utility
+* Utility Plugin (3.2.0 and above) - https://github.com/milesj/cake-utility
+* Utils Plugin (3.1.1 and below) - https://github.com/CakeDC/utils
 
 ## Contributors ##
 
