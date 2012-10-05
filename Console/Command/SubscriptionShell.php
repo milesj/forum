@@ -99,6 +99,7 @@ class SubscriptionShell extends Shell {
 			$email->to($user[$this->config['userMap']['email']]);
 
 			if ($message = $this->formatEmail($user, $topics)) {
+				$email->send($message);
 				$this->out(sprintf('... %s', $user[$this->config['userMap']['username']]));
 
 				$count++;
