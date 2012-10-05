@@ -88,6 +88,8 @@ class SubscriptionShell extends Shell {
 		}
 
 		$email = new CakeEmail();
+		//$email->transport('Debug');
+		$email->subject(sprintf(__d('forum', '%s [Subscriptions]'), $this->settings['site_name']));
 		$email->from($this->settings['site_email']);
 		$email->replyTo($this->settings['site_email']);
 		$email->emailFormat('text');
@@ -95,10 +97,8 @@ class SubscriptionShell extends Shell {
 		// Loop over each user and send one email
 		foreach ($users as $user_id => $user) {
 			$email->to($user[$this->config['userMap']['email']]);
-			$email->subject(sprintf(__d('forum', '%s [Subscriptions]'), $this->settings['site_name']));
 
 			if ($message = $this->formatEmail($user, $topics)) {
-				$email->send($message);
 				$this->out(sprintf('... %s', $user[$this->config['userMap']['username']]));
 
 				$count++;
