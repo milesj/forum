@@ -25,6 +25,21 @@ class PollOption extends ForumAppModel {
 	);
 
 	/**
+	 * Behaviors.
+	 *
+	 * @access public
+	 * @var array
+	 */
+	public $actsAs = array(
+		'Utility.Filterable' => array(
+			'option' => array(
+				'html' => true,
+				'strip' => true
+			)
+		)
+	);
+
+	/**
 	 * Add a vote for a poll.
 	 *
 	 * @access public

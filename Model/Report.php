@@ -53,6 +53,18 @@ class Report extends ForumAppModel {
 	);
 
 	/**
+	 * Behaviors.
+	 *
+	 * @access public
+	 * @var array
+	 */
+	public $actsAs = array(
+		'Utility.Filterable' => array(
+			'comment' => array('strip' => true)
+		)
+	);
+
+	/**
 	 * Validation.
 	 *
 	 * @access public

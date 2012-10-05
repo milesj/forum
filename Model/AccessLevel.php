@@ -22,6 +22,18 @@ class AccessLevel extends ForumAppModel {
 	const ADMIN = 10;
 
 	/**
+	 * Behaviors.
+	 *
+	 * @access public
+	 * @var array
+	 */
+	public $actsAs = array(
+		'Utility.Filterable' => array(
+			'title' => array('strip' => true)
+		)
+	);
+
+	/**
 	 * Validation.
 	 *
 	 * @access public

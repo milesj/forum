@@ -45,7 +45,7 @@ if (!empty($topic['Poll']['id'])) { ?>
 							<input type="radio" name="data[Poll][option]" value="<?php echo $option['id']; ?>"<?php if ($counter == 0) echo ' checked="checked"'; ?> />
 						</td>
 						<td colspan="2">
-							<?php echo h($option['option']); ?>
+							<?php echo $option['option']; ?>
 						</td>
 					</tr>
 
