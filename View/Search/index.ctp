@@ -18,7 +18,7 @@ $this->Html->addCrumb(__d('forum', 'Search'), array('controller' => 'search', 'a
 					<td><?php echo $this->Form->input('keywords', array('div' => false, 'label' => false, 'style' => 'width: 300px')); ?></td>
 
 					<td class="align-right"><?php echo $this->Form->label('forum_id', __d('forum', 'Within Forum Category') . ':'); ?></td>
-					<td><?php echo $this->Form->input('forum_id', array('div' => false, 'label' => false, 'options' => $forums, 'escape' => false, 'empty' => true)); ?></td>
+					<td><?php echo $this->Form->input('forum_id', array('div' => false, 'label' => false, 'options' => $forums, 'empty' => true)); ?></td>
 
 					<td class="align-right"><?php echo $this->Form->label('orderBy', __d('forum', 'Order By') . ':'); ?></td>
 					<td><?php echo $this->Form->input('orderBy', array('div' => false, 'label' => false, 'options' => $orderBy)); ?></td>

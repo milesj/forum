@@ -28,7 +28,7 @@ if ($forums) {
 			echo $this->Form->input('Forum.' . $forum['Forum']['id'] . '.orderNo', array('value' => $forum['Forum']['orderNo'], 'div' => false, 'label' => false, 'style' => 'width: 20px', 'maxlength' => 2, 'class' => 'align-center'));
 			echo $this->Form->input('Forum.' . $forum['Forum']['id'] . '.id', array('value' => $forum['Forum']['id'], 'type' => 'hidden')); ?>
 
-			<?php echo $forum['Forum']['title']; ?>
+			<?php echo h($forum['Forum']['title']); ?>
 			(<?php echo $this->Common->options('forumStatus', $forum['Forum']['status']); ?>)
 		</h3>
 	</div>
@@ -57,7 +57,7 @@ if ($forums) {
 						'forum' => $child
 					));
 
-					if (!empty($child['SubForum'])) {
+					if ($child['SubForum']) {
 						foreach ($child['SubForum'] as $subForum) {
 							echo $this->element('admin/forum_row', array(
 								'forum' => $subForum,

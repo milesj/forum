@@ -21,8 +21,8 @@ $this->Html->addCrumb(__d('forum', 'Delete Forum'), $this->here); ?>
 <div class="container">
 	<div class="containerContent">
 		<?php
-		echo $this->Form->input('move_topics', array('options' => $topicForums, 'escape' => false, 'label' => __d('forum', 'Move Topics To')));
-		echo $this->Form->input('move_forums', array('options' => $subForums, 'escape' => false, 'label' => __d('forum', 'Move Sub-forums To'))); ?>
+		echo $this->Form->input('move_topics', array('options' => $topicForums, 'label' => __d('forum', 'Move Topics To')));
+		echo $this->Form->input('move_forums', array('options' => $subForums, 'label' => __d('forum', 'Move Sub-forums To'))); ?>
 	</div>
 </div>
 

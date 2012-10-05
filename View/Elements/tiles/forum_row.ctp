@@ -14,7 +14,7 @@ if ($forum['SubForum']) {
 	</td>
 	<td>
 		<strong><?php echo $this->Html->link($forum['title'], array('controller' => 'stations', 'action' => 'view', $forum['slug'])); ?></strong><br />
-		<?php echo $forum['description']; ?>
+		<?php echo h($forum['description']); ?>
 
 		<?php if ($subForums) { ?>
 			<div class="subForums">

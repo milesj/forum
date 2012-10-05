@@ -9,10 +9,10 @@ if (!empty($forum['Parent']['slug'])) {
 $this->Html->addCrumb($forum['Forum']['title'], array('controller' => 'stations', 'action' => 'view', $forum['Forum']['slug'])); ?>
 
 <div class="title">
-	<h2><?php echo $forum['Forum']['title']; ?></h2>
+	<h2><?php echo h($forum['Forum']['title']); ?></h2>
 
 	<?php if ($forum['Forum']['description']) { ?>
-		<p><?php echo $forum['Forum']['description']; ?></p>
+		<p><?php echo h($forum['Forum']['description']); ?></p>
 	<?php } ?>
 </div>
 

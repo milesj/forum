@@ -29,7 +29,7 @@ $this->Html->addCrumb($title, $this->here); ?>
 
 		<?php
 		echo $this->Form->input('description', array('type' => 'textarea', 'label' => __d('forum', 'Description')));
-		echo $this->Form->input('forum_id', array('options' => $forums, 'label' => __d('forum', 'Forum'), 'escape' => false, 'empty' => '-- ' . __d('forum', 'None') . ' --'));
+		echo $this->Form->input('forum_id', array('options' => $forums, 'label' => __d('forum', 'Forum'), 'empty' => '-- ' . __d('forum', 'None') . ' --'));
 		echo $this->Form->input('access_level_id', array('options' => $levels, 'label' => __d('forum', 'Restrict Access To'), 'empty' => '-- ' . __d('forum', 'None') . ' --'));
 		echo $this->Form->input('accessRead', array('options' => $this->Common->options('access', null, true), 'label' => __d('forum', 'Read Access')));
 		echo $this->Form->input('accessPost', array('options' => $this->Common->options('access'), 'label' => __d('forum', 'Post Access')));

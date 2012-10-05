@@ -30,7 +30,7 @@ $this->Html->addCrumb($title, $this->here); ?>
 		} else {
 			echo $this->Form->input('User.' . $config['userMap']['username'], array('type' => 'text',  'label' => __d('forum', 'User'), 'readonly' => true));
 		}
-		echo $this->Form->input('forum_id', array('label' => __d('forum', 'Forum'), 'empty' => true, 'escape' => false)); ?>
+		echo $this->Form->input('forum_id', array('label' => __d('forum', 'Forum'), 'empty' => true)); ?>
 	</div>
 </div>
 

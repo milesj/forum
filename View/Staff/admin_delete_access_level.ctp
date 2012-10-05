@@ -14,7 +14,7 @@ $this->Html->addCrumb(__d('forum', 'Delete Access Level'), $this->here); ?>
 
 <div class="container">
 	<div class="containerContent">
-		<?php echo $this->Form->input('access_level_id', array('options' => $levels, 'escape' => false, 'label' => __d('forum', 'Move Users To')));	?>
+		<?php echo $this->Form->input('access_level_id', array('options' => $levels, 'label' => __d('forum', 'Move Users To')));	?>
 	</div>
 </div>
 

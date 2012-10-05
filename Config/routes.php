@@ -9,11 +9,6 @@
  */
 
 /**
- * Enable admin routes.
- */
-Configure::write('Routing.prefixes', array('admin'));
-
-/**
  * Enable RSS feeds.
  */
 Router::parseExtensions('rss');

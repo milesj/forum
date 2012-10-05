@@ -13,7 +13,7 @@ $this->Html->addCrumb($forum['Forum']['title'], array('controller' => 'stations'
 </div>
 
 <div class="title">
-	<h2><?php echo __d('forum', 'Moderate'); ?>: <?php echo $forum['Forum']['title']; ?></h2>
+	<h2><?php echo __d('forum', 'Moderate'); ?>: <?php echo h($forum['Forum']['title']); ?></h2>
 </div>
 
 <?php echo $this->Form->create('Topic'); ?>
@@ -73,7 +73,7 @@ $this->Html->addCrumb($forum['Forum']['title'], array('controller' => 'stations'
 		'label' => __d('forum', 'Perform Action') . ': '
 	));
 
-	echo $this->Form->input('move_id', array('options' => $forums, 'div' => false, 'label' => __d('forum', 'Move To') . ': ', 'escape' => false));
+	echo $this->Form->input('move_id', array('options' => $forums, 'div' => false, 'label' => __d('forum', 'Move To') . ': '));
 	echo $this->Form->submit(__d('forum', 'Process'), array('div' => false, 'class' => 'buttonSmall')); ?>
 </div>
 

@@ -35,12 +35,12 @@ $this->Html->addCrumb(__d('forum', 'Staff'), array('controller' => 'staff', 'act
 			<?php foreach ($levels as $level) { ?>
 
 				<tr>
-					<td class="align-center"><?php echo $level['AccessLevel']['title']; ?></td>
+					<td class="align-center"><?php echo h($level['AccessLevel']['title']); ?></td>
 					<td class="align-center"><?php echo $level['AccessLevel']['level']; ?></td>
 					<td class="align-center"><?php echo $level['AccessLevel']['isAdmin'] ? __d('forum', 'Yes') : __d('forum', 'No'); ?></td>
 					<td class="align-center"><?php echo $level['AccessLevel']['isSuper'] ? __d('forum', 'Yes') : __d('forum', 'No'); ?></td>
 					<td class="align-center gray">
-						<?php if ($level['AccessLevel']['id'] <= 4) { ?>
+						<?php if ($level['AccessLevel']['id'] <= Access::ADMIN) { ?>
 							<em><?php echo __d('forum', 'Restricted'); ?></em>
 						<?php } else { ?>
 							<?php echo $this->Html->link(__d('forum', 'Edit'), array('action' => 'edit_access_level', $level['AccessLevel']['id'])); ?> -
@@ -77,7 +77,7 @@ $this->Html->addCrumb(__d('forum', 'Staff'), array('controller' => 'staff', 'act
 
 				<tr>
 					<td><strong><?php echo $this->Html->link($user['User'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'edit', $user['User']['Profile']['id'], 'admin' => true)); ?></strong></td>
-					<td class="align-center"><?php echo $user['AccessLevel']['title']; ?></td>
+					<td class="align-center"><?php echo h($user['AccessLevel']['title']); ?></td>
 					<td class="align-center"><?php echo $this->Time->nice($user['Access']['created'], $this->Common->timezone()); ?></td>
 					<td class="align-center gray">
 						<?php echo $this->Html->link(__d('forum', 'Edit'), array('action' => 'edit_access', $user['Access']['id'])); ?> -

@@ -6,7 +6,7 @@ $this->Html->addCrumb($profile['User'][$config['userMap']['username']], $this->h
 
 <div class="title">
 	<?php echo $this->Html->link(__d('forum', 'Report User'), array('action' => 'report', $profile['User']['id']), array('class' => 'button float-right')); ?>
-	<h2><?php echo $profile['User'][$config['userMap']['username']]; ?></h2>
+	<h2><?php echo h($profile['User'][$config['userMap']['username']]); ?></h2>
 </div>
 
 <?php if (!empty($profile['Profile']['signatureHtml'])) { ?>
@@ -31,7 +31,7 @@ $this->Html->addCrumb($profile['User'][$config['userMap']['username']], $this->h
 
 				<td><strong><?php echo __d('forum', 'Roles'); ?>:</strong></td>
 				<td>
-					<?php if (!empty($profile['User']['Access'])) {
+					<?php if ($profile['User']['Access']) {
 						$roles = array();
 						foreach ($profile['User']['Access'] as $access) {
 							$roles[] = $access['AccessLevel']['title'];
@@ -45,7 +45,7 @@ $this->Html->addCrumb($profile['User'][$config['userMap']['username']], $this->h
 			<tr>
 				<td><strong><?php echo __d('forum', 'Last Login'); ?>:</strong></td>
 				<td>
-					<?php if (!empty($profile['Profile']['lastLogin'])) {
+					<?php if ($profile['Profile']['lastLogin']) {
 						echo $this->Time->timeAgoInWords($profile['Profile']['lastLogin'], array('userOffset' => $this->Common->timezone()));
 					} else {
 						echo '<em>' . __d('forum', 'Never') . '</em>';
@@ -57,7 +57,7 @@ $this->Html->addCrumb($profile['User'][$config['userMap']['username']], $this->h
 
 				<td><strong><?php echo __d('forum', 'Moderates'); ?>:</strong></td>
 				<td>
-					<?php if (!empty($profile['User']['Moderator'])) {
+					<?php if ($profile['User']['Moderator']) {
 						$mods = array();
 						foreach ($profile['User']['Moderator'] as $mod) {
 							$mods[] = $this->Html->link($mod['Forum']['title'], array('controller' => 'stations', 'action' => 'view', $mod['Forum']['slug']));

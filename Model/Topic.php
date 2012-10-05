@@ -155,8 +155,6 @@ class Topic extends ForumAppModel {
 				return $this->invalidate('title', 'You are only allowed to post %s topic(s) per hour', $this->settings['topics_per_hour']);
 
 			} else {
-				$data['title'] = Sanitize::clean($data['title']);
-
 				$this->create();
 				$this->save($data, false, array('forum_id', 'user_id', 'title', 'slug', 'status', 'type'));
 

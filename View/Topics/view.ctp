@@ -10,13 +10,13 @@ $this->Html->addCrumb($topic['Forum']['title'], array('controller' => 'stations'
 
 <div class="title">
 	<h2>
-		<?php if ($topic['Topic']['type'] > 0) {
+		<?php if ($topic['Topic']['type'] > Topic::NORMAL) {
 			echo '<span>' . $this->Common->options('topicTypes', $topic['Topic']['type']) . ':</span> ';
-		} else if ($topic['Topic']['status'] == 0) {
+		} else if ($topic['Topic']['status'] == Topic::STATUS_CLOSED) {
 			echo '<span>' . __d('forum', 'Closed') . ':</span> ';
 		}
 
-		echo $topic['Topic']['title']; ?>
+		echo h($topic['Topic']['title']); ?>
 	</h2>
 </div>
 
@@ -45,7 +45,7 @@ if (!empty($topic['Poll']['id'])) { ?>
 							<input type="radio" name="data[Poll][option]" value="<?php echo $option['id']; ?>"<?php if ($counter == 0) echo ' checked="checked"'; ?> />
 						</td>
 						<td colspan="2">
-							<?php echo $option['option']; ?>
+							<?php echo h($option['option']); ?>
 						</td>
 					</tr>
 
@@ -134,7 +134,7 @@ if (!empty($topic['Poll']['id'])) { ?>
 								$links[] = $this->Html->link(__d('forum', 'Quote'), array('controller' => 'posts', 'action' => 'add', $topic['Topic']['slug'], $post['Post']['id']));
 							}
 
-							if (!empty($links)) {
+							if ($links) {
 								echo implode(' - ', $links);
 							}
 						} ?>
