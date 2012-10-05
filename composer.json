@@ -13,6 +13,7 @@
 	],
 	"require": {
 		"php": ">=5.2",
+		"mjohnson/utility": "1.0.0-rc2",
 		"composer/installers": "*"
 	},
 	"support": {
