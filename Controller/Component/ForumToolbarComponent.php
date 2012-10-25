@@ -72,8 +72,9 @@ class ForumToolbarComponent extends Component {
 			$profile = array();
 			$moderates = array();
 			$lastVisit = date('Y-m-d H:i:s');
+			$banned = ($this->Controller->Auth->user($this->config['userMap']['status']) == $this->config['statusMap']['banned']);
 
-			if ($user_id && $this->Controller->Auth->user($this->config['userMap']['status']) != $this->config['statusMap']['banned']) {
+			if ($user_id && !$banned) {
 				$access = ClassRegistry::init('Forum.Access')->getListByUser($user_id);
 				$highestAccess = 1;
 
