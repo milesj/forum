@@ -18,6 +18,11 @@ class ForumExceptionRenderer extends ExceptionRenderer {
 			$request = new CakeRequest();
 		}
 
+		// If outside of plugin, use default handling
+		if ($request->params['plugin'] !== 'forum') {
+			return parent::_getController($exception);
+		}
+
 		$response = new CakeResponse(array('charset' => Configure::read('App.encoding')));
 
 		$controller = new ForumAppController($request, $response);
