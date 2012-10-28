@@ -18,7 +18,6 @@ App::uses('Validation', 'Utility');
 
 define('FORUM_PLUGIN', dirname(dirname(dirname(__FILE__))) . '/');
 define('FORUM_SCHEMA', FORUM_PLUGIN . 'Config/Schema/');
-config('database');
 
 class InstallShell extends Shell {
 
