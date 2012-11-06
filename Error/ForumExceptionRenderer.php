@@ -1,6 +1,7 @@
 <?php
 
 App::uses('ExceptionRenderer', 'Error');
+App::uses('ForumAppController', 'Forum.Controller');
 
 class ForumExceptionRenderer extends ExceptionRenderer {
 
