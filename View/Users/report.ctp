@@ -1,8 +1,8 @@
 <?php
 
-$this->Html->addCrumb($settings['site_name'], array('controller' => 'forum', 'action' => 'index'));
-$this->Html->addCrumb(__d('forum', 'Users'), array('controller' => 'users', 'action' => 'index'));
-$this->Html->addCrumb(__d('forum', 'Report User'), $this->here); ?>
+$this->Breadcrumb->add(__d('forum', 'Users'), array('controller' => 'users', 'action' => 'index'));
+$this->Breadcrumb->add($profile['User'][$config['userMap']['username']], array('action' => 'profile', $profile['User']['id']));
+$this->Breadcrumb->add(__d('forum', 'Report User'), array('action' => 'report', $profile['User']['id'])); ?>
 
 <div class="title">
 	<h2><?php echo __d('forum', 'Report User'); ?></h2>

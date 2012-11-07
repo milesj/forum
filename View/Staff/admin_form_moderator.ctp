@@ -10,9 +10,9 @@ if ($method === 'add') {
 	$title = __d('forum', 'Edit Moderator');
 }
 
-$this->Html->addCrumb(__d('forum', 'Administration'), array('controller' => 'forum', 'action' => 'index'));
-$this->Html->addCrumb(__d('forum', 'Staff'), array('controller' => 'staff', 'action' => 'index'));
-$this->Html->addCrumb($title, $this->here); ?>
+$this->Breadcrumb->add(__d('forum', 'Administration'), array('controller' => 'forum', 'action' => 'index'));
+$this->Breadcrumb->add(__d('forum', 'Staff'), array('controller' => 'staff', 'action' => 'index'));
+$this->Breadcrumb->add($title, $this->here); ?>
 
 <div class="title">
 	<h2><?php echo $title; ?></h2>

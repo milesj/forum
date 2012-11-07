@@ -1,8 +1,7 @@
 <?php
 
-$this->Html->addCrumb($settings['site_name'], array('controller' => 'forum', 'action' => 'index'));
-$this->Html->addCrumb(__d('forum', 'Users'), array('controller' => 'users', 'action' => 'index'));
-$this->Html->addCrumb(__d('forum', 'Dashboard'), $this->here); ?>
+$this->Breadcrumb->add(__d('forum', 'Users'), array('controller' => 'users', 'action' => 'index'));
+$this->Breadcrumb->add(__d('forum', 'Dashboard'), array('action' => 'dashboard')); ?>
 
 <div class="title">
 	<?php echo $this->Html->link(__d('forum', 'Edit Profile'), array('controller' => 'users', 'action' => 'edit', 'admin' => false), array('class' => 'button float-right')); ?>

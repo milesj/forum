@@ -1,8 +1,8 @@
 <?php
 
-$this->Html->addCrumb(__d('forum', 'Administration'), array('controller' => 'forum', 'action' => 'index'));
-$this->Html->addCrumb(__d('forum', 'Staff'), array('controller' => 'staff', 'action' => 'index'));
-$this->Html->addCrumb(__d('forum', 'Delete Access Level'), $this->here); ?>
+$this->Breadcrumb->add(__d('forum', 'Administration'), array('controller' => 'forum', 'action' => 'index'));
+$this->Breadcrumb->add(__d('forum', 'Staff'), array('controller' => 'staff', 'action' => 'index'));
+$this->Breadcrumb->add(__d('forum', 'Delete Access Level'), $this->here); ?>
 
 <div class="title">
 	<h2><?php echo __d('forum', 'Delete Access Level'); ?></h2>

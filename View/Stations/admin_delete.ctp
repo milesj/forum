@@ -1,8 +1,8 @@
 <?php
 
-$this->Html->addCrumb(__d('forum', 'Administration'), array('controller' => 'forum', 'action' => 'index'));
-$this->Html->addCrumb(__d('forum', 'Forums'), array('controller' => 'stations', 'action' => 'index'));
-$this->Html->addCrumb(__d('forum', 'Delete Forum'), $this->here); ?>
+$this->Breadcrumb->add(__d('forum', 'Administration'), array('controller' => 'forum', 'action' => 'index'));
+$this->Breadcrumb->add(__d('forum', 'Forums'), array('controller' => 'stations', 'action' => 'index'));
+$this->Breadcrumb->add(__d('forum', 'Delete Forum'), $this->here); ?>
 
 <div class="title">
 	<h2><?php echo __d('forum', 'Delete Forum'); ?></h2>

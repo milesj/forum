@@ -9,7 +9,7 @@ if (!isset($channel)) {
 }
 
 if (!isset($channel['title'])) {
-    $channel['title'] = $title_for_layout;
+    $channel['title'] = $this->Breadcrumb->pageTitle($settings['site_name'], array('separator' => $settings['title_separator']));
 }
 
-echo $this->Rss->document($document, $this->Rss->channel(array(), $channel, $content_for_layout));
+echo $this->Rss->document($document, $this->Rss->channel(array(), $channel, $this->fetch('content')));

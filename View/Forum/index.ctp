@@ -1,6 +1,6 @@
 <?php
 
-$this->Html->addCrumb($settings['site_name'], array('controller' => 'forum', 'action' => 'index'));
+$this->Breadcrumb->add(__d('forum', 'Forums'), array('action' => 'index'));
 
 if ($forums) {
 	foreach ($forums as $forum) { ?>

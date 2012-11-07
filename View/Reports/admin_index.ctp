@@ -1,7 +1,7 @@
 <?php
 
-$this->Html->addCrumb(__d('forum', 'Administration'), array('controller' => 'forum', 'action' => 'index'));
-$this->Html->addCrumb(__d('forum', 'Reported'), array('controller' => 'reports', 'action' => 'index')); ?>
+$this->Breadcrumb->add(__d('forum', 'Administration'), array('controller' => 'forum', 'action' => 'index'));
+$this->Breadcrumb->add(__d('forum', 'Reported'), array('controller' => 'reports', 'action' => 'index')); ?>
 
 <div class="controls float-right">
 	<?php

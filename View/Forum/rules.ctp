@@ -1,7 +1,6 @@
-<?php 
+<?php
 
-$this->Html->addCrumb($settings['site_name'], array('controller' => 'forum', 'action' => 'index'));
-$this->Html->addCrumb(__d('forum', 'Rules and Regulations'), array('controller' => 'forum', 'action' => 'rules'));?>
+$this->Breadcrumb->add(__d('forum', 'Rules and Regulations'), array('controller' => 'forum', 'action' => 'rules'));?>
 
 <div class="title">
 	<h2><?php echo __d('forum', 'Rules and Regulations'); ?></h2>

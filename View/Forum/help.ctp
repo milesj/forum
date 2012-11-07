@@ -1,7 +1,6 @@
-<?php 
+<?php
 
-$this->Html->addCrumb($settings['site_name'], array('controller' => 'forum', 'action' => 'index'));
-$this->Html->addCrumb(__d('forum', 'Help Desk'), array('controller' => 'forum', 'action' => 'help')); ?>
+$this->Breadcrumb->add(__d('forum', 'Help Desk'), array('controller' => 'forum', 'action' => 'help')); ?>
 
 <div class="title">
 	<h2><?php echo __d('forum', 'Help Desk'); ?></h2>
@@ -9,7 +8,7 @@ $this->Html->addCrumb(__d('forum', 'Help Desk'), array('controller' => 'forum', 
 
 <p><strong><?php echo __d('forum', 'Why do I need to sign up?'); ?></strong><br />
 <?php echo __d('forum', 'You may read all public forums as a guest, but to be able to post or reply to a topic, you must have a user account.'); ?></p>
-                
+
 <p><strong><?php echo __d('forum', 'Why can\'t I post a topic, poll or reply?'); ?></strong><br />
 <?php echo __d('forum', 'To begin you must have a user account and must be logged in. If you have done this, the topic might be locked or you do not have the proper acces to post in that topic or forum.'); ?></p>
 
