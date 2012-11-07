@@ -165,7 +165,7 @@ class Setting extends ForumAppModel {
 	 * @param array $data
 	 * @return boolean
 	 */
-	public function update($data) {
+	public function updateSettings($data) {
 		$this->set($data);
 
 		if ($this->validates()) {

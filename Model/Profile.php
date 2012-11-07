@@ -216,7 +216,7 @@ class Profile extends ForumAppModel {
 	 * @param array $options
 	 * @return boolean
 	 */
-	public function beforeSave($options) {
+	public function beforeSave($options = array()) {
 		if (isset($this->data['Profile']['signature'])) {
 			$censored = array_map('trim', explode(',', $this->settings['censored_words']));
 			$locale = $this->config['decodaLocales'][Configure::read('Config.language')];

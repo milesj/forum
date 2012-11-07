@@ -442,7 +442,7 @@ class Topic extends ForumAppModel {
 	 * @param array $options
 	 * @return boolean
 	 */
-	public function beforeSave($options) {
+	public function beforeSave($options = array()) {
 		if (isset($this->data['Topic']['content'])) {
 			return $this->validateDecoda('Topic');
 		}
