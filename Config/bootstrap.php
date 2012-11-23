@@ -14,7 +14,7 @@ App::uses('Sanitize', 'Utility');
 /**
  * Current version.
  */
-Configure::write('Forum.version', '3.2.0-rc4');
+Configure::write('Forum.version', '3.2.0');
 
 /**
  * Name of the User model.
