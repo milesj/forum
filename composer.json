@@ -17,6 +17,6 @@
 		"composer/installers": "*"
 	},
 	"support": {
-		"source": "https://github.com/milesj/cake-forum"
+		"source": "https://github.com/milesj/Forum"
 	}
 }
