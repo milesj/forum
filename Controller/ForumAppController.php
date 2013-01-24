@@ -99,7 +99,6 @@ class ForumAppController extends AppController {
 		$this->Auth->loginAction = $routes['login'];
 		$this->Auth->loginRedirect = $referrer;
 		$this->Auth->logoutRedirect = $referrer;
-		$this->Auth->autoRedirect = false;
 
 		// AutoLogin
 		$this->AutoLogin->settings = array(

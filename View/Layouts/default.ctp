@@ -1,5 +1,5 @@
 <?php
-echo $this->Html->docType('xhtml-strict');
+echo $this->Html->docType();
 echo $this->OpenGraph->html(array('xmlns' => 'http://www.w3.org/1999/xhtml')); ?>
 <head>
 	<?php echo $this->Html->charset(); ?>
@@ -55,7 +55,6 @@ echo $this->OpenGraph->html(array('xmlns' => 'http://www.w3.org/1999/xhtml')); ?
 			<?php echo $this->element('breadcrumbs'); ?>
 
 			<?php echo $this->Session->flash(); ?>
-
 			<?php echo $this->fetch('content'); ?>
 
 			<?php echo $this->element('breadcrumbs'); ?>

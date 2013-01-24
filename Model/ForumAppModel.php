@@ -49,6 +49,14 @@ class ForumAppModel extends AppModel {
 	public $cacheQueries = true;
 
 	/**
+	 * No recursion.
+	 *
+	 * @access public
+	 * @var int
+	 */
+	public $recursive = -1;
+
+	/**
 	 * Behaviors.
 	 *
 	 * @access public
@@ -56,23 +64,15 @@ class ForumAppModel extends AppModel {
 	 */
 	public $actsAs = array(
 		'Containable',
+		'Utility.Enumerable' => array(
+			'persist' => false,
+			'format' => false
+		),
 		'Utility.Cacheable' => array(
 			'cacheConfig' => 'forum',
-			'appendKey' => false,
-			'expires' => '+1 minute',
-			'events' => array(
-				'onCreate' => false
-			)
+			'appendKey' => false
 		)
 	);
-
-	/**
-	 * No recursion.
-	 *
-	 * @access public
-	 * @var int
-	 */
-	public $recursive = -1;
 
 	/**
 	 * Global enum.
