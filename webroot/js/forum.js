@@ -4,17 +4,18 @@ var Forum = {
 	/**
 	 * Open or close child forums.
 	 *
-	 * @param {object} self
+	 * @param {Element} self
 	 * @param {int} id
 	 */
 	toggleForums: function(self, id) {
 		var node = new Element(self),
 			target = $('forums-'+ id);
 
-		if (target.is(':hidden')) {
+		if (target.style.display === 'none') {
 			node.set('html', '-');
 			node.getParent().removeClass('closed');
 			target.show();
+
 		} else {
 			node.set('html', '+');
 			node.getParent().addClass('closed');
@@ -27,7 +28,7 @@ var Forum = {
 	/**
 	 * Toggle all checkboxes.
 	 *
-	 * @param {object} self
+	 * @param {Element} self
 	 */
 	toggleCheckboxes: function(self) {
 		var node = new Element(self),
@@ -39,7 +40,7 @@ var Forum = {
 	/**
 	 * AJAX call to subscribe to a topic. Use the button's href attribute as the AJAX URL.
 	 *
-	 * @param {object} self
+	 * @param {Element} self
 	 */
 	subscribe: function(self) {
 		var node = new Element(self);
@@ -50,9 +51,9 @@ var Forum = {
 
 		new Request.JSON({
 			method: 'POST',
-			url: node.attr('href'),
+			url: node.get('href'),
 			onSuccess: function(response) {
-				$$('.subscription').text(response.data).addClass('disabled');
+				$$('.subscription').set('text', response.data).addClass('disabled');
 			}
 		}).send();
 
@@ -62,10 +63,10 @@ var Forum = {
 	/**
 	 * Unsubscribe from a topic.
 	 *
-	 * @param {object} node
+	 * @param {Element} self
 	 */
-	unsubscribe: function(node) {
-		return Forum.subscribe(node);
+	unsubscribe: function(self) {
+		return Forum.subscribe(self);
 	}
 
 };
