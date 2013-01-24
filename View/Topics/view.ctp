@@ -224,7 +224,7 @@ if ($user && $topic['Topic']['status'] && $settings['enable_quick_reply'] && $th
 								'label' => false
 							)); ?>
 
-							<?php echo $this->element('markitup', array('textarea' => 'PostContent')); ?>
+							<?php echo $this->element('decoda', array('id' => 'PostContent')); ?>
 						</td>
 					</tr>
 					<tr class="headRow">

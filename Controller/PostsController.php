@@ -149,12 +149,21 @@ class PostsController extends ForumAppController {
 	}
 
 	/**
+	 * Preview the Decoda markup.
+	 */
+	public function preview() {
+		$input = isset($this->request->data['input']) ? $this->request->data['input'] : '';
+
+		$this->set('input', $input);
+	}
+
+	/**
 	 * Before filter.
 	 */
 	public function beforeFilter() {
 		parent::beforeFilter();
 
-		$this->Auth->allow('index');
+		$this->Auth->allow('index', 'preview');
 
 		$this->set('menuTab', 'forums');
 	}

@@ -46,7 +46,7 @@ $this->Breadcrumb->add($pageTitle, array('controller' => 'topics', 'action' => '
 			'rows' => 15
 		));
 
-		echo $this->element('markitup', array('textarea' => 'TopicContent')); ?>
+		echo $this->element('decoda', array('id' => 'TopicContent')); ?>
 	</div>
 </div>
 

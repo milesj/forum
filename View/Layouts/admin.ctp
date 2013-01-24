@@ -7,7 +7,8 @@ echo $this->OpenGraph->html(array('xmlns' => 'http://www.w3.org/1999/xhtml')); ?
 	<?php
 	echo $this->Html->css('/forum/css/base.css');
 	echo $this->Html->css('/forum/css/style.css');
-	echo $this->Html->script('/forum/js/jquery-1.8.2.min.js');
+	echo $this->Html->script('/forum/js/mootools-core-1.4.5.js');
+	echo $this->Html->script('/forum/js/mootools-more-1.4.0.1.js');
 	echo $this->Html->script('/forum/js/forum.js'); ?>
 </head>
 

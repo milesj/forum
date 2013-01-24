@@ -8,17 +8,17 @@ var Forum = {
 	 * @param {int} id
 	 */
 	toggleForums: function(self, id) {
-		var node = $(self),
-			target = $('#forums-'+ id);
+		var node = new Element(self),
+			target = $('forums-'+ id);
 
 		if (target.is(':hidden')) {
-			node.html('-');
-			node.parent().removeClass('closed');
-			target.slideDown();
+			node.set('html', '-');
+			node.getParent().removeClass('closed');
+			target.show();
 		} else {
-			node.html('+');
-			node.parent().addClass('closed');
-			target.slideUp();
+			node.set('html', '+');
+			node.getParent().addClass('closed');
+			target.hide();
 		}
 
 		return false;
@@ -30,31 +30,31 @@ var Forum = {
 	 * @param {object} self
 	 */
 	toggleCheckboxes: function(self) {
-		var node = $(self),
-			form = node.parents('form');
+		var node = new Element(self),
+			form = node.getParent('form');
 
-		form.find(':checkbox').attr('checked', self.checked);
+		form.getElements('input[type="checkbox"]').set('checked', self.checked);
 	},
 
 	/**
 	 * AJAX call to subscribe to a topic. Use the button's href attribute as the AJAX URL.
 	 *
-	 * @param {object} node
+	 * @param {object} self
 	 */
-	subscribe: function(node) {
-		node = $(node);
+	subscribe: function(self) {
+		var node = new Element(self);
 
 		if (node.hasClass('disabled')) {
 			return false;
 		}
 
-		$.ajax({
+		new Request.JSON({
+			method: 'POST',
 			url: node.attr('href'),
-			type: 'post',
-			success: function(response) {
-				$('.subscription').text(response.data).addClass('disabled');
+			onSuccess: function(response) {
+				$$('.subscription').text(response.data).addClass('disabled');
 			}
-		});
+		}).send();
 
 		return false;
 	},
@@ -68,4 +68,4 @@ var Forum = {
 		return Forum.subscribe(node);
 	}
 
-}
+};

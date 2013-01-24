@@ -67,7 +67,7 @@ $this->Breadcrumb->add(__d('forum', 'Edit Topic'), array('controller' => 'topics
 			'rows' => 15
 		));
 
-		echo $this->element('markitup', array('textarea' => 'FirstPostContent')); ?>
+		echo $this->element('decoda', array('id' => 'FirstPostContent')); ?>
 	</div>
 </div>
 

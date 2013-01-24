@@ -15,7 +15,7 @@ $this->Breadcrumb->add(__d('forum', 'Edit Profile'), array('controller' => 'user
 		echo $this->Form->input('locale', array('options' => $config['locales'], 'label' => __d('forum', 'Language')));
 		echo $this->Form->input('timezone', array('options' => $config['timezones'], 'label' => __d('forum', 'Timezone')));
 		echo $this->Form->input('signature', array('type' => 'textarea', 'rows' => 5, 'label' => __d('forum', 'Signature')));
-		echo $this->element('markitup', array('textarea' => 'ProfileSignature')); ?>
+		echo $this->element('decoda', array('id' => 'ProfileSignature')); ?>
 	</div>
 </div>
 

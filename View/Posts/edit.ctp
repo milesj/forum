@@ -23,7 +23,7 @@ $this->Breadcrumb->add(__d('forum', 'Edit Post'), array('action' => 'edit', $pos
 			'after' => '<span class="inputText">[b], [u], [i], [s], [img], [url], [email], [color], [size], [left], [center], [right], [justify], [list], [olist], [li], [quote], [code]</span>',
 			'label' => __d('forum', 'Content')));
 
-		echo $this->element('markitup', array('textarea' => 'PostContent')); ?>
+		echo $this->element('decoda', array('id' => 'PostContent')); ?>
 	</div>
 </div>
 
