@@ -22,7 +22,6 @@ class Report extends ForumAppModel {
 	/**
 	 * DB Table.
 	 *
-	 * @access public
 	 * @var string
 	 */
 	public $useTable = 'reported';
@@ -30,7 +29,6 @@ class Report extends ForumAppModel {
 	/**
 	 * Belongs to.
 	 *
-	 * @access public
 	 * @var array
 	 */
 	public $belongsTo = array(
@@ -55,7 +53,6 @@ class Report extends ForumAppModel {
 	/**
 	 * Behaviors.
 	 *
-	 * @access public
 	 * @var array
 	 */
 	public $actsAs = array(
@@ -67,7 +64,6 @@ class Report extends ForumAppModel {
 	/**
 	 * Validation.
 	 *
-	 * @access public
 	 * @var array
 	 */
 	public $validate = array(
@@ -77,7 +73,6 @@ class Report extends ForumAppModel {
 	/**
 	 * Enum.
 	 *
-	 * @access public
 	 * @var array
 	 */
 	public $enum = array(
@@ -91,7 +86,6 @@ class Report extends ForumAppModel {
 	/**
 	 * Get the latest reports.
 	 *
-	 * @access public
 	 * @param int $limit
 	 * @return array
 	 */

@@ -18,7 +18,6 @@ class Profile extends ForumAppModel {
 	/**
 	 * Belongs to.
 	 *
-	 * @access public
 	 * @var array
 	 */
 	public $belongsTo = array(
@@ -30,7 +29,6 @@ class Profile extends ForumAppModel {
 	/**
 	 * Validate.
 	 *
-	 * @access public
 	 * @var array
 	 */
 	public $validate = array(
@@ -59,7 +57,6 @@ class Profile extends ForumAppModel {
 	/**
 	 * Grab a profile based on ID.
 	 *
-	 * @access public
 	 * @param int $id
 	 * @return array
 	 */
@@ -74,7 +71,6 @@ class Profile extends ForumAppModel {
 	/**
 	 * Get a users profile and all relevant information.
 	 *
-	 * @access public
 	 * @param int $user_id
 	 * @return array
 	 */
@@ -109,7 +105,6 @@ class Profile extends ForumAppModel {
 	/**
 	 * Get the newest signup.
 	 *
-	 * @access public
 	 * @return array
 	 */
 	public function getNewestUser() {
@@ -124,7 +119,6 @@ class Profile extends ForumAppModel {
 	/**
 	 * Grab the users profile. If it doesn't exist, create it!
 	 *
-	 * @access public
 	 * @param int $user_id
 	 * @return array
 	 */
@@ -150,7 +144,6 @@ class Profile extends ForumAppModel {
 	/**
 	 * Increase the post count.
 	 *
-	 * @access public
 	 * @param int $user_id
 	 * @return boolean
 	 */
@@ -161,7 +154,6 @@ class Profile extends ForumAppModel {
 	/**
 	 * Increase the topic count.
 	 *
-	 * @access public
 	 * @param int $user_id
 	 * @return boolean
 	 */
@@ -172,7 +164,6 @@ class Profile extends ForumAppModel {
 	/**
 	 * Login the user and update records.
 	 *
-	 * @access public
 	 * @param int $user_id
 	 * @return boolean
 	 */
@@ -192,7 +183,6 @@ class Profile extends ForumAppModel {
 	/**
 	 * Get whos online within the past x minutes.
 	 *
-	 * @access public
 	 * @param int $minutes
 	 * @return array
 	 */
@@ -212,7 +202,6 @@ class Profile extends ForumAppModel {
 	/**
 	 * Parse the HTML version.
 	 *
-	 * @access public
 	 * @param array $options
 	 * @return boolean
 	 */

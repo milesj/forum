@@ -15,7 +15,6 @@ class ForumController extends ForumAppController {
 	/**
 	 * Models.
 	 *
-	 * @access public
 	 * @var array
 	 */
 	public $uses = array('Forum.Topic', 'Forum.Profile');
@@ -23,7 +22,6 @@ class ForumController extends ForumAppController {
 	/**
 	 * Components.
 	 *
-	 * @access public
 	 * @var array
 	 */
 	public $components = array('RequestHandler');
@@ -31,7 +29,6 @@ class ForumController extends ForumAppController {
 	/**
 	 * Helpers.
 	 *
-	 * @access public
 	 * @var array
 	 */
 	public $helpers = array('Rss');

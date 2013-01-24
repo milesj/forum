@@ -15,7 +15,6 @@ class StaffController extends ForumAppController {
 	/**
 	 * Models.
 	 *
-	 * @access public
 	 * @var array
 	 */
 	public $uses = array('Forum.Access', 'Forum.Moderator', 'Forum.Forum');

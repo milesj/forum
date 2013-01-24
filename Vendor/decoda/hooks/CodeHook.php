@@ -15,7 +15,6 @@ class CodeHook extends DecodaHook {
 	/**
 	 * Encode code blocks before parsing.
 	 *
-	 * @access public
 	 * @param string $string
 	 * @return mixed
 	 */
@@ -26,7 +25,6 @@ class CodeHook extends DecodaHook {
 	/**
 	 * Decode code blocks after parsing.
 	 *
-	 * @access public
 	 * @param string $string
 	 * @return mixed
 	 */
@@ -37,7 +35,6 @@ class CodeHook extends DecodaHook {
 	/**
 	 * Encode content using base64.
 	 *
-	 * @access protected
 	 * @param array $matches
 	 * @return string
 	 */
@@ -48,7 +45,6 @@ class CodeHook extends DecodaHook {
 	/**
 	 * Decode content using base64.
 	 *
-	 * @access protected
 	 * @param array $matches
 	 * @return string
 	 */

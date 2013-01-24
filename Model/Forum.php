@@ -15,7 +15,6 @@ class Forum extends ForumAppModel {
 	/**
 	 * Behaviors.
 	 *
-	 * @access public
 	 * @var array
 	 */
 	public $actsAs = array(
@@ -27,7 +26,6 @@ class Forum extends ForumAppModel {
 	/**
 	 * Belongs to.
 	 *
-	 * @access public
 	 * @var array
 	 */
 	public $belongsTo = array(
@@ -56,7 +54,6 @@ class Forum extends ForumAppModel {
 	/**
 	 * Has many.
 	 *
-	 * @access public
 	 * @var array
 	 */
 	public $hasMany = array(
@@ -91,7 +88,6 @@ class Forum extends ForumAppModel {
 	/**
 	 * Validate.
 	 *
-	 * @access public
 	 * @var array
 	 */
 	public $validate = array(
@@ -112,7 +108,6 @@ class Forum extends ForumAppModel {
 	/**
 	 * Enum.
 	 *
-	 * @access public
 	 * @var array
 	 */
 	public $enum = array(
@@ -129,7 +124,6 @@ class Forum extends ForumAppModel {
 	/**
 	 * Update all forums by going up the parent chain.
 	 *
-	 * @access public
 	 * @param int $id
 	 * @param array $data
 	 * @return void
@@ -148,7 +142,6 @@ class Forum extends ForumAppModel {
 	/**
 	 * Get a forum.
 	 *
-	 * @access public
 	 * @param string $slug
 	 * @return array
 	 */
@@ -180,7 +173,6 @@ class Forum extends ForumAppModel {
 	/**
 	 * Get the list of forums for the board index.
 	 *
-	 * @access public
 	 * @return array
 	 */
 	public function getAdminIndex() {
@@ -194,7 +186,6 @@ class Forum extends ForumAppModel {
 	/**
 	 * Get a grouped hierarchy.
 	 *
-	 * @access public
 	 * @param string $type
 	 * @param int $exclude
 	 * @return array
@@ -245,7 +236,6 @@ class Forum extends ForumAppModel {
 	/**
 	 * Get the hierarchy.
 	 *
-	 * @access public
 	 * @param boolean $drill
 	 * @param int $exclude
 	 * @return array
@@ -290,7 +280,6 @@ class Forum extends ForumAppModel {
 	/**
 	 * Get the list of forums for the board index.
 	 *
-	 * @access public
 	 * @return array
 	 */
 	public function getIndex() {
@@ -328,7 +317,6 @@ class Forum extends ForumAppModel {
 	/**
 	 * Move all categories to a new forum.
 	 *
-	 * @access public
 	 * @param int $start_id
 	 * @param int $moved_id
 	 * @return boolean
@@ -343,7 +331,6 @@ class Forum extends ForumAppModel {
 	/**
 	 * Update the order of the forums.
 	 *
-	 * @access public
 	 * @param array $data
 	 * @return boolean
 	 */
@@ -373,7 +360,6 @@ class Forum extends ForumAppModel {
 	/**
 	 * Build the list of select options.
 	 *
-	 * @access protected
 	 * @param array $categories
 	 * @param array $forum
 	 * @param boolean $drill

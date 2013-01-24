@@ -25,7 +25,6 @@ class InstallShell extends Shell {
 	/**
 	 * Plugin configuration.
 	 *
-	 * @access public
 	 * @var array
 	 */
 	public $config = array();
@@ -33,7 +32,6 @@ class InstallShell extends Shell {
 	/**
 	 * Installer configuration.
 	 *
-	 * @access public
 	 * @var array
 	 */
 	public $install = array(
@@ -49,7 +47,6 @@ class InstallShell extends Shell {
 	/**
 	 * DB Instance.
 	 *
-	 * @access public
 	 * @var DataSource
 	 */
 	public $db;
@@ -57,7 +54,6 @@ class InstallShell extends Shell {
 	/**
 	 * Execute installer!
 	 *
-	 * @access public
 	 * @return void
 	 */
 	public function main() {
@@ -108,7 +104,6 @@ class InstallShell extends Shell {
 	/**
 	 * Table of contents.
 	 *
-	 * @access public
 	 * @param int $state
 	 * @return void
 	 */
@@ -137,7 +132,6 @@ class InstallShell extends Shell {
 	/**
 	 * Grab the users table.
 	 *
-	 * @access public
 	 * @return boolean
 	 */
 	public function usersTable() {
@@ -167,7 +161,6 @@ class InstallShell extends Shell {
 	/**
 	 * Set the table prefix to use.
 	 *
-	 * @access public
 	 * @return boolean
 	 */
 	public function tablePrefix() {
@@ -197,7 +190,6 @@ class InstallShell extends Shell {
 	/**
 	 * Set the database to use.
 	 *
-	 * @access public
 	 * @return boolean
 	 */
 	public function databaseConfig() {
@@ -231,7 +223,6 @@ class InstallShell extends Shell {
 	/**
 	 * Check the database status before installation.
 	 *
-	 * @access public
 	 * @return boolean
 	 */
 	public function checkStatus() {
@@ -259,7 +250,6 @@ class InstallShell extends Shell {
 	/**
 	 * Create the database tables based off the schemas.
 	 *
-	 * @access public
 	 * @return boolean
 	 */
 	public function createTables() {
@@ -308,7 +298,6 @@ class InstallShell extends Shell {
 	/**
 	 * Setup the admin user.
 	 *
-	 * @access public
 	 * @return boolean
 	 */
 	public function setupAdmin() {
@@ -366,7 +355,6 @@ class InstallShell extends Shell {
 	/**
 	 * Rewrite specific AppModel variables.
 	 *
-	 * @access public
 	 * @return void
 	 */
 	public function overrideAppModel() {
@@ -380,7 +368,6 @@ class InstallShell extends Shell {
 	/**
 	 * Finalize the installation, woop woop.
 	 *
-	 * @access public
 	 * @return void
 	 */
 	public function finalize() {
@@ -405,7 +392,6 @@ class InstallShell extends Shell {
 	/**
 	 * Gather all the data for creating a new user.
 	 *
-	 * @access protected
 	 * @param string $mode
 	 * @return string
 	 */
@@ -473,7 +459,6 @@ class InstallShell extends Shell {
 	/**
 	 * Use an old user as an admin.
 	 *
-	 * @access protected
 	 * @return string
 	 */
 	protected function _oldUser() {

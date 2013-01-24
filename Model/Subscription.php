@@ -15,7 +15,6 @@ class Subscription extends ForumAppModel {
 	/**
 	 * Belongs to.
 	 *
-	 * @access public
 	 * @var array
 	 */
 	public $belongsTo = array(
@@ -35,7 +34,6 @@ class Subscription extends ForumAppModel {
 	/**
 	 * Get all subscribed forums from a user.
 	 *
-	 * @access public
 	 * @param int $user_id
 	 * @param int $limit
 	 * @return array
@@ -54,7 +52,6 @@ class Subscription extends ForumAppModel {
 	/**
 	 * Get all subscribed topics from a user.
 	 *
-	 * @access public
 	 * @param int $user_id
 	 * @param int $limit
 	 * @return array
@@ -75,7 +72,6 @@ class Subscription extends ForumAppModel {
 	/**
 	 * Determine if the user is already subscribed to a forum.
 	 *
-	 * @access public
 	 * @param int $user_id
 	 * @param int $forum_id
 	 * @return int
@@ -92,7 +88,6 @@ class Subscription extends ForumAppModel {
 	/**
 	 * Determine if the user is already subscribed to a topic.
 	 *
-	 * @access public
 	 * @param int $user_id
 	 * @param int $topic_id
 	 * @return int
@@ -109,7 +104,6 @@ class Subscription extends ForumAppModel {
 	/**
 	 * Subscribe a user to a forum.
 	 *
-	 * @access public
 	 * @param int $user_id
 	 * @param int $forum_id
 	 * @return boolean
@@ -132,7 +126,6 @@ class Subscription extends ForumAppModel {
 	/**
 	 * Subscribe a user to a topic.
 	 *
-	 * @access public
 	 * @param int $user_id
 	 * @param int $topic_id
 	 * @return boolean
@@ -155,7 +148,6 @@ class Subscription extends ForumAppModel {
 	/**
 	 * Unsubscribe a user subscription.
 	 *
-	 * @access public
 	 * @param int $id
 	 * @return boolean
 	 */

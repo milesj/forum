@@ -20,7 +20,6 @@ class EmailFilter extends DecodaFilter {
 	/**
 	 * Configuration.
 	 *
-	 * @access protected
 	 * @var array
 	 */
 	protected $_config = array(
@@ -30,7 +29,6 @@ class EmailFilter extends DecodaFilter {
 	/**
 	 * Supported tags.
 	 *
-	 * @access protected
 	 * @var array
 	 */
 	protected $_tags = array(
@@ -61,7 +59,6 @@ class EmailFilter extends DecodaFilter {
 	/**
 	 * Encrypt the email before parsing it within tags.
 	 *
-	 * @access public
 	 * @param array $tag
 	 * @param string $content
 	 * @return string

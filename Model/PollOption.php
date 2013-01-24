@@ -15,7 +15,6 @@ class PollOption extends ForumAppModel {
 	/**
 	 * Belongs to.
 	 *
-	 * @access public
 	 * @var array
 	 */
 	public $belongsTo = array(
@@ -27,7 +26,6 @@ class PollOption extends ForumAppModel {
 	/**
 	 * Behaviors.
 	 *
-	 * @access public
 	 * @var array
 	 */
 	public $actsAs = array(
@@ -42,7 +40,6 @@ class PollOption extends ForumAppModel {
 	/**
 	 * Add a vote for a poll.
 	 *
-	 * @access public
 	 * @param int $id
 	 * @return boolean
 	 */

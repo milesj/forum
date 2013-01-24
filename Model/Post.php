@@ -18,7 +18,6 @@ class Post extends ForumAppModel {
 	/**
 	 * Belongs to.
 	 *
-	 * @access public
 	 * @var array
 	 */
 	public $belongsTo = array(
@@ -38,7 +37,6 @@ class Post extends ForumAppModel {
 	/**
 	 * Validation.
 	 *
-	 * @access public
 	 * @var array
 	 */
 	public $validate = array(
@@ -48,7 +46,6 @@ class Post extends ForumAppModel {
 	/**
 	 * Validate and add a post.
 	 *
-	 * @access public
 	 * @param array $data
 	 * @return boolean|int
 	 */
@@ -91,7 +88,6 @@ class Post extends ForumAppModel {
 	/**
 	 * Save the first post with a topic.
 	 *
-	 * @access public
 	 * @param array $data
 	 * @return int
 	 */
@@ -112,7 +108,6 @@ class Post extends ForumAppModel {
 	/**
 	 * Check the posting flood interval.
 	 *
-	 * @access public
 	 * @param int $interval
 	 * @return boolean
 	 */
@@ -131,7 +126,6 @@ class Post extends ForumAppModel {
 	/**
 	 * Check the hourly posting.
 	 *
-	 * @access public
 	 * @param int $max
 	 * @return boolean
 	 */
@@ -158,7 +152,6 @@ class Post extends ForumAppModel {
 	/**
 	 * Return a post based on ID.
 	 *
-	 * @access public
 	 * @param int $id
 	 * @return array
 	 */
@@ -176,7 +169,6 @@ class Post extends ForumAppModel {
 	/**
 	 * Return a list of IDs within a topic.
 	 *
-	 * @access public
 	 * @param int $topic_id
 	 * @return array
 	 */
@@ -190,7 +182,6 @@ class Post extends ForumAppModel {
 	/**
 	 * Return the latest posts by a user.
 	 *
-	 * @access public
 	 * @param int $user_id
 	 * @param int $limit
 	 * @return array
@@ -209,7 +200,6 @@ class Post extends ForumAppModel {
 	/**
 	 * Return the latest posts by a user, grouped by the topic ID.
 	 *
-	 * @access public
 	 * @param int $user_id
 	 * @param int $limit
 	 * @return array
@@ -231,7 +221,6 @@ class Post extends ForumAppModel {
 	/**
 	 * Return a post for quoting.
 	 *
-	 * @access public
 	 * @param int $id
 	 * @return array
 	 */
@@ -245,7 +234,6 @@ class Post extends ForumAppModel {
 	/**
 	 * Return the latest posts in a topic.
 	 *
-	 * @access public
 	 * @param int $topic_id
 	 * @param int $limit
 	 * @return array
@@ -262,7 +250,6 @@ class Post extends ForumAppModel {
 	/**
 	 * Parse the HTML version.
 	 *
-	 * @access public
 	 * @param array $options
 	 * @return boolean
 	 */

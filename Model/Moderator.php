@@ -15,7 +15,6 @@ class Moderator extends ForumAppModel {
 	/**
 	 * Belongs to.
 	 *
-	 * @access public
 	 * @var array
 	 */
 	public $belongsTo = array(
@@ -31,7 +30,6 @@ class Moderator extends ForumAppModel {
 	/**
 	 * Validation.
 	 *
-	 * @access public
 	 * @var array
 	 */
 	public $validate = array(
@@ -42,7 +40,6 @@ class Moderator extends ForumAppModel {
 	/**
 	 * Add a moderator after validating conditions.
 	 *
-	 * @access public
 	 * @param array $data
 	 * @return boolean
 	 */
@@ -59,7 +56,6 @@ class Moderator extends ForumAppModel {
 	/**
 	 * Edit a moderator after validating conditions.
 	 *
-	 * @access public
 	 * @param int $id
 	 * @param array $data
 	 * @return boolean
@@ -77,7 +73,6 @@ class Moderator extends ForumAppModel {
 	/**
 	 * Return an moderator and their forum.
 	 *
-	 * @access public
 	 * @param int $id
 	 * @return array
 	 */
@@ -92,7 +87,6 @@ class Moderator extends ForumAppModel {
 	/**
 	 * Return a list of all moderators and their forums.
 	 *
-	 * @access public
 	 * @return array
 	 */
 	public function getList() {
@@ -106,7 +100,6 @@ class Moderator extends ForumAppModel {
 	/**
 	 * Return a list of all forums a user moderates.
 	 *
-	 * @access public
 	 * @param int $user_id
 	 * @return array
 	 */
@@ -120,7 +113,6 @@ class Moderator extends ForumAppModel {
 	/**
 	 * Get all forums you moderate.
 	 *
-	 * @access public
 	 * @param int $user_id
 	 * @return array
 	 */
@@ -134,7 +126,6 @@ class Moderator extends ForumAppModel {
 	/**
 	 * Validate logical conditions.
 	 *
-	 * @access public
 	 * @param array $data
 	 * @return boolean
 	 */

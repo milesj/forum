@@ -20,7 +20,6 @@ class UrlFilter extends DecodaFilter {
 	/**
 	 * Supported tags.
 	 *
-	 * @access protected
 	 * @var array
 	 */
 	protected $_tags = array(
@@ -55,7 +54,6 @@ class UrlFilter extends DecodaFilter {
 	/**
 	 * Using shorthand variation if enabled.
 	 *
-	 * @access public
 	 * @param array $tag
 	 * @param string $content
 	 * @return string

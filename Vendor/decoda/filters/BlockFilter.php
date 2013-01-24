@@ -15,7 +15,6 @@ class BlockFilter extends DecodaFilter {
 	/**
 	 * Supported tags.
 	 *
-	 * @access protected
 	 * @var array
 	 */
 	protected $_tags = array(

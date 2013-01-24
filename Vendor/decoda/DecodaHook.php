@@ -15,7 +15,6 @@ abstract class DecodaHook extends DecodaAbstract {
 	/**
 	 * Process the content after the parsing has finished.
 	 *
-	 * @access public
 	 * @param string $content
 	 * @return string
 	 */
@@ -26,7 +25,6 @@ abstract class DecodaHook extends DecodaAbstract {
 	/**
 	 * Process the content before the parsing begins.
 	 *
-	 * @access public
 	 * @param string $content
 	 * @return string
 	 */
@@ -37,7 +35,6 @@ abstract class DecodaHook extends DecodaAbstract {
 	/**
 	 * Add any filter dependencies.
 	 *
-	 * @access public
 	 * @param Decoda $decoda
 	 * @return void
 	 */

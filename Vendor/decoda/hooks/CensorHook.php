@@ -15,7 +15,6 @@ class CensorHook extends DecodaHook {
 	/**
 	 * List of words to censor.
 	 *
-	 * @access protected
 	 * @var array
 	 */
 	protected $_censored = array();
@@ -23,7 +22,6 @@ class CensorHook extends DecodaHook {
 	/**
 	 * Configuration.
 	 *
-	 * @access protected
 	 * @var array
 	 */
 	protected $_config = array(
@@ -33,7 +31,6 @@ class CensorHook extends DecodaHook {
 	/**
 	 * Load the censored words from the text file.
 	 *
-	 * @access public
 	 * @param array $config
 	 */
 	public function __construct(array $config = array()) {
@@ -49,7 +46,6 @@ class CensorHook extends DecodaHook {
 	/**
 	 * Parse the content by censoring blacklisted words.
 	 *
-	 * @access public
 	 * @param string $content
 	 * @return string
 	 */
@@ -66,7 +62,6 @@ class CensorHook extends DecodaHook {
 	/**
 	 * Add words to the blacklist.
 	 *
-	 * @access public
 	 * @param array $words
 	 * @return DecodaHook
 	 * @chainable
@@ -81,7 +76,6 @@ class CensorHook extends DecodaHook {
 	/**
 	 * Censor a word if its only by itself.
 	 *
-	 * @access protected
 	 * @param array $matches
 	 * @return string
 	 */
@@ -115,7 +109,6 @@ class CensorHook extends DecodaHook {
 	/**
 	 * Prepare the regex pattern for each word.
 	 *
-	 * @access protected
 	 * @param string $word
 	 * @return string
 	 */

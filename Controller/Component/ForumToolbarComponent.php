@@ -13,7 +13,6 @@ class ForumToolbarComponent extends Component {
 	/**
 	 * Components.
 	 *
-	 * @access public
 	 * @var array
 	 */
 	public $components = array('Session');
@@ -21,7 +20,6 @@ class ForumToolbarComponent extends Component {
 	/**
 	 * Plugin configuration.
 	 *
-	 * @access public
 	 * @var array
 	 */
 	public $config = array();
@@ -29,7 +27,6 @@ class ForumToolbarComponent extends Component {
 	/**
 	 * Database forum settings.
 	 *
-	 * @access public
 	 * @var array
 	 */
 	public $settings = array();
@@ -37,7 +34,6 @@ class ForumToolbarComponent extends Component {
 	/**
 	 * Controller instance.
 	 *
-	 * @access public
 	 * @var Controller
 	 */
 	public $Controller;
@@ -45,7 +41,6 @@ class ForumToolbarComponent extends Component {
 	/**
 	 * Initialize.
 	 *
-	 * @access public
 	 * @param Controller $Controller
 	 * @return void
 	 */
@@ -58,7 +53,6 @@ class ForumToolbarComponent extends Component {
 	/**
 	 * Initialize the session and all data.
 	 *
-	 * @access public
 	 * @return void
 	 */
 	public function initForum() {
@@ -116,7 +110,6 @@ class ForumToolbarComponent extends Component {
 	/**
 	 * Calculates the page to redirect to.
 	 *
-	 * @access public
 	 * @param int $topic_id
 	 * @param int $post_id
 	 * @param boolean $return
@@ -171,7 +164,6 @@ class ForumToolbarComponent extends Component {
 	/**
 	 * Simply marks a topic as read.
 	 *
-	 * @access public
 	 * @param int $topic_id
 	 * @return void
 	 */
@@ -191,7 +183,6 @@ class ForumToolbarComponent extends Component {
 	/**
 	 * Builds the page title.
 	 *
-	 * @access public
 	 * @return string
 	 */
 	public function pageTitle() {
@@ -205,7 +196,6 @@ class ForumToolbarComponent extends Component {
 	/**
 	 * Updates the session topics array.
 	 *
-	 * @access public
 	 * @param int $topic_id
 	 * @return void
 	 */
@@ -226,7 +216,6 @@ class ForumToolbarComponent extends Component {
 	/**
 	 * Updates the session posts array.
 	 *
-	 * @access public
 	 * @param int $post_id
 	 * @return void
 	 */
@@ -247,7 +236,6 @@ class ForumToolbarComponent extends Component {
 	/**
 	 * Do we have access to commit this action.
 	 *
-	 * @access public
 	 * @param array $validators
 	 * @return boolean
 	 * @throws NotFoundException
@@ -300,7 +288,6 @@ class ForumToolbarComponent extends Component {
 	/**
 	 * Double check access levels in session and db and permit.
 	 *
-	 * @access public
 	 * @return boolean
 	 */
 	public function verifyAdmin() {

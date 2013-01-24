@@ -15,7 +15,6 @@ class CommonHelper extends AppHelper {
 	/**
 	 * Helpers.
 	 *
-	 * @access public
 	 * @var array
 	 */
 	public $helpers = array('Html', 'Session');
@@ -23,7 +22,6 @@ class CommonHelper extends AppHelper {
 	/**
 	 * Determine the forum icon state.
 	 *
-	 * @access public
 	 * @param array $forum
 	 * @return string
 	 */
@@ -50,7 +48,6 @@ class CommonHelper extends AppHelper {
 	/**
 	 * Gets the highest access level.
 	 *
-	 * @access public
 	 * @return int
 	 */
 	public function getAccess() {
@@ -60,7 +57,6 @@ class CommonHelper extends AppHelper {
 	/**
 	 * Get topics made in the past hour.
 	 *
-	 * @access public
 	 * @return int
 	 */
 	public function getTopicsMade() {
@@ -81,7 +77,6 @@ class CommonHelper extends AppHelper {
 	/**
 	 * Get posts made in the past hour.
 	 *
-	 * @access public
 	 * @return int
 	 */
 	public function getPostsMade() {
@@ -102,7 +97,6 @@ class CommonHelper extends AppHelper {
 	/**
 	 * Render out a gravatar thumbnail based on an email.
 	 *
-	 * @access public
 	 * @param string $email
 	 * @param array $options
 	 * @param array $attributes
@@ -138,7 +132,6 @@ class CommonHelper extends AppHelper {
 	/**
 	 * Checks to see if the user has mod status.
 	 *
-	 * @access public
 	 * @param int $level
 	 * @param int $forum_id
 	 * @return boolean
@@ -160,7 +153,6 @@ class CommonHelper extends AppHelper {
 	/**
 	 * Output the highest access level.
 	 *
-	 * @access public
 	 * @param array $levels
 	 * @return string
 	 */
@@ -181,7 +173,6 @@ class CommonHelper extends AppHelper {
 	/**
 	 * Prebuilt option lists for form selects.
 	 *
-	 * @access public
 	 * @param string $type
 	 * @param string $value
 	 * @param boolean $guest
@@ -257,7 +248,6 @@ class CommonHelper extends AppHelper {
 	/**
 	 * Return the report type as a string name.
 	 *
-	 * @access public
 	 * @param int $type
 	 * @return string
 	 */
@@ -274,7 +264,6 @@ class CommonHelper extends AppHelper {
 	/**
 	 * Get the users timezone.
 	 *
-	 * @access public
 	 * @return string
 	 */
 	public function timezone() {
@@ -288,7 +277,6 @@ class CommonHelper extends AppHelper {
 	/**
 	 * Determine the topic icon state.
 	 *
-	 * @access public
 	 * @param array $topic
 	 * @return string
 	 */
@@ -336,7 +324,6 @@ class CommonHelper extends AppHelper {
 	/**
 	 * Get the amount of pages for a topic.
 	 *
-	 * @access public
 	 * @param array $topic
 	 * @return array
 	 */
@@ -362,7 +349,6 @@ class CommonHelper extends AppHelper {
 	/**
 	 * Get the type of topic.
 	 *
-	 * @access public
 	 * @param int $type
 	 * @return string
 	 */

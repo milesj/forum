@@ -60,7 +60,6 @@ abstract class DecodaFilter extends DecodaAbstract {
 	/**
 	 * Supported tags.
 	 *
-	 * @access protected
 	 * @var array
 	 */
 	protected $_tags = array();
@@ -68,7 +67,6 @@ abstract class DecodaFilter extends DecodaAbstract {
 	/**
 	 * Return a message string from the parser.
 	 *
-	 * @access public
 	 * @param string $key
 	 * @param array $vars
 	 * @return string
@@ -80,7 +78,6 @@ abstract class DecodaFilter extends DecodaAbstract {
 	/**
 	 * Parse the node and its content into an HTML tag.
 	 *
-	 * @access public
 	 * @param array $tag
 	 * @param string $content
 	 * @return string
@@ -178,7 +175,6 @@ abstract class DecodaFilter extends DecodaAbstract {
 	/**
 	 * Add any hook dependencies.
 	 *
-	 * @access public
 	 * @param Decoda $decoda
 	 * @return void
 	 */
@@ -189,7 +185,6 @@ abstract class DecodaFilter extends DecodaAbstract {
 	/**
 	 * Return a tag if it exists, and merge with defaults.
 	 *
-	 * @access public
 	 * @param string $tag
 	 * @return array
 	 */
@@ -232,7 +227,6 @@ abstract class DecodaFilter extends DecodaAbstract {
 	/**
 	 * Return all tags.
 	 *
-	 * @access public
 	 * @return array
 	 */
 	public function tags() {

@@ -15,7 +15,6 @@ class Setting extends ForumAppModel {
 	/**
 	 * Validate.
 	 *
-	 * @access public
 	 * @var array
 	 */
 	public $validate = array(
@@ -148,7 +147,6 @@ class Setting extends ForumAppModel {
 	/**
 	 * Return a list of all settings.
 	 *
-	 * @access public
 	 * @return array
 	 */
 	public function getSettings() {
@@ -161,7 +159,6 @@ class Setting extends ForumAppModel {
 	/**
 	 * Update all the settings.
 	 *
-	 * @access public
 	 * @param array $data
 	 * @return boolean
 	 */

@@ -16,7 +16,6 @@ class ReportsController extends ForumAppController {
 	/**
 	 * Models.
 	 *
-	 * @access public
 	 * @var array
 	 */
 	public $uses = array('Forum.Report');
@@ -24,7 +23,6 @@ class ReportsController extends ForumAppController {
 	/**
 	 * Pagination.
 	 *
-	 * @access public
 	 * @var array
 	 */
 	public $paginate = array(

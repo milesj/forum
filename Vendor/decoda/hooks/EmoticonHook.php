@@ -15,7 +15,6 @@ class EmoticonHook extends DecodaHook {
 	/**
 	 * Configuration.
 	 *
-	 * @access protected
 	 * @var array
 	 */
 	protected $_config = array(
@@ -25,7 +24,6 @@ class EmoticonHook extends DecodaHook {
 	/**
 	 * Mapping of emoticons and smilies.
 	 *
-	 * @access protected
 	 * @var array
 	 */
 	protected $_emoticons = array();
@@ -33,7 +31,6 @@ class EmoticonHook extends DecodaHook {
 	/**
 	 * Map of smilies to emoticons.
 	 *
-	 * @access protected
 	 * @var array
 	 */
 	protected $_map = array();
@@ -41,7 +38,6 @@ class EmoticonHook extends DecodaHook {
 	/**
 	 * Load the emoticons from the JSON file.
 	 *
-	 * @access public
 	 * @param array $config
 	 */
 	public function __construct(array $config = array()) {
@@ -67,7 +63,6 @@ class EmoticonHook extends DecodaHook {
 	/**
 	 * Parse out the emoticons and replace with images.
 	 *
-	 * @access public
 	 * @param string $content
 	 * @return string
 	 */
@@ -86,7 +81,6 @@ class EmoticonHook extends DecodaHook {
 	/**
 	 * Callback for smiley processing.
 	 *
-	 * @access protected
 	 * @param array $matches
 	 * @return string
 	 */

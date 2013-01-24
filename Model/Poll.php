@@ -15,7 +15,6 @@ class Poll extends ForumAppModel {
 	/**
 	 * Belongs to.
 	 *
-	 * @access public
 	 * @var array
 	 */
 	public $belongsTo = array(
@@ -27,7 +26,6 @@ class Poll extends ForumAppModel {
 	/**
 	 * Has many.
 	 *
-	 * @access public
 	 * @var array
 	 */
 	public $hasMany = array(
@@ -47,7 +45,6 @@ class Poll extends ForumAppModel {
 	/**
 	 * Add a poll attached to a topic.
 	 *
-	 * @access public
 	 * @param array $data
 	 * @return boolean
 	 */
@@ -83,7 +80,6 @@ class Poll extends ForumAppModel {
 	/**
 	 * Process the totals and percentages.
 	 *
-	 * @access public
 	 * @param array $poll
 	 * @return array
 	 */
@@ -111,7 +107,6 @@ class Poll extends ForumAppModel {
 	/**
 	 * Vote in a poll.
 	 *
-	 * @access public
 	 * @param int $poll_id
 	 * @param int $option_id
 	 * @param int $user_id

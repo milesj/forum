@@ -15,7 +15,6 @@ class UsersController extends ForumAppController {
 	/**
 	 * Models.
 	 *
-	 * @access public
 	 * @var array
 	 */
 	public $uses = array('User', 'Forum.Profile');
@@ -23,7 +22,6 @@ class UsersController extends ForumAppController {
 	/**
 	 * Components.
 	 *
-	 * @access public
 	 * @var array
 	 */
 	public $components = array('Email');
@@ -31,7 +29,6 @@ class UsersController extends ForumAppController {
 	/**
 	 * Pagination.
 	 *
-	 * @access public
 	 * @var array
 	 */
 	public $paginate = array(

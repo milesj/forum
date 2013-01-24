@@ -15,7 +15,6 @@ class StationsController extends ForumAppController {
 	/**
 	 * Models.
 	 *
-	 * @access public
 	 * @var array
 	 */
 	public $uses = array('Forum.Forum', 'Forum.Subscription');
@@ -23,7 +22,6 @@ class StationsController extends ForumAppController {
 	/**
 	 * Components.
 	 *
-	 * @access public
 	 * @var array
 	 */
 	public $components = array('Utility.AjaxHandler', 'RequestHandler');
@@ -31,7 +29,6 @@ class StationsController extends ForumAppController {
 	/**
 	 * Pagination.
 	 *
-	 * @access public
 	 * @var array
 	 */
 	public $paginate = array(
@@ -48,7 +45,6 @@ class StationsController extends ForumAppController {
 	/**
 	 * Helpers.
 	 *
-	 * @access public
 	 * @var array
 	 */
 	public $helpers = array('Rss');

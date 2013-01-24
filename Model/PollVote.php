@@ -15,7 +15,6 @@ class PollVote extends ForumAppModel {
 	/**
 	 * Belongs to.
 	 *
-	 * @access public
 	 * @var array
 	 */
 	public $belongsTo = array(
@@ -33,7 +32,6 @@ class PollVote extends ForumAppModel {
 	/**
 	 * Add a voter for a poll.
 	 *
-	 * @access public
 	 * @param int $poll_id
 	 * @param int $option_id
 	 * @param int $user_id
@@ -54,7 +52,6 @@ class PollVote extends ForumAppModel {
 	/**
 	 * Check to see if a person voted.
 	 *
-	 * @access public
 	 * @param int $user_id
 	 * @param int $poll_id
 	 * @return mixed

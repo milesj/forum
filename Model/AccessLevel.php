@@ -24,7 +24,6 @@ class AccessLevel extends ForumAppModel {
 	/**
 	 * Behaviors.
 	 *
-	 * @access public
 	 * @var array
 	 */
 	public $actsAs = array(
@@ -36,7 +35,6 @@ class AccessLevel extends ForumAppModel {
 	/**
 	 * Validation.
 	 *
-	 * @access public
 	 * @var array
 	 */
 	public $validate = array(
@@ -47,7 +45,6 @@ class AccessLevel extends ForumAppModel {
 	/**
 	 * Enum.
 	 *
-	 * @access public
 	 * @var array
 	 */
 	public $enum = array(
@@ -64,7 +61,6 @@ class AccessLevel extends ForumAppModel {
 	/**
 	 * Get a list of levels.
 	 *
-	 * @access public
 	 * @param int $exclude
 	 * @return array
 	 */
@@ -84,7 +80,6 @@ class AccessLevel extends ForumAppModel {
 	/**
 	 * Get a list of levels.
 	 *
-	 * @access public
 	 * @return array
 	 */
 	public function getList() {

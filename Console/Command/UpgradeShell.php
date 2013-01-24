@@ -21,7 +21,6 @@ class UpgradeShell extends Shell {
 	/**
 	 * Plugin configuration.
 	 *
-	 * @access public
 	 * @var array
 	 */
 	public $config = array();
@@ -29,7 +28,6 @@ class UpgradeShell extends Shell {
 	/**
 	 * Array of completed version upgrades.
 	 *
-	 * @access public
 	 * @var array
 	 */
 	public $complete = array();
@@ -37,7 +35,6 @@ class UpgradeShell extends Shell {
 	/**
 	 * Upgrade configuration.
 	 *
-	 * @access public
 	 * @var array
 	 */
 	public $upgrade = array(
@@ -48,7 +45,6 @@ class UpgradeShell extends Shell {
 	/**
 	 * Available upgrade versions.
 	 *
-	 * @access public
 	 * @var array
 	 */
 	public $versions = array(
@@ -58,7 +54,6 @@ class UpgradeShell extends Shell {
 	/**
 	 * Execute upgrader!
 	 *
-	 * @access public
 	 * @return void
 	 */
 	public function main() {
@@ -129,7 +124,6 @@ class UpgradeShell extends Shell {
 	/**
 	 * Execute the queries for the specific version SQL.
 	 *
-	 * @access protected
 	 * @param string $version
 	 * @return void
 	 */

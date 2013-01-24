@@ -16,7 +16,6 @@ class DecodaPhpEngine implements DecodaTemplateEngineInterface {
 	/**
 	 * Current path.
 	 *
-	 * @access protected
 	 * @var string
 	 */
 	protected $_path;
@@ -24,7 +23,6 @@ class DecodaPhpEngine implements DecodaTemplateEngineInterface {
 	/**
 	 * Current filter.
 	 *
-	 * @access protected
 	 * @var DecodaFilter
 	 */
 	protected $_filter;
@@ -32,7 +30,6 @@ class DecodaPhpEngine implements DecodaTemplateEngineInterface {
 	/**
 	 * Return the current filter.
 	 *
-	 * @access public
 	 * @return DecodaFilter
 	 */
 	public function getFilter() {
@@ -42,7 +39,6 @@ class DecodaPhpEngine implements DecodaTemplateEngineInterface {
 	/**
 	 * Return the template path. If no path has been set, set it.
 	 *
-	 * @access public
 	 * @return string
 	 */
 	public function getPath() {
@@ -56,7 +52,6 @@ class DecodaPhpEngine implements DecodaTemplateEngineInterface {
 	/**
 	 * Renders the tag by using php templates.
 	 *
-	 * @access public
 	 * @param array $tag
 	 * @param string $content
 	 * @return string
@@ -91,7 +86,6 @@ class DecodaPhpEngine implements DecodaTemplateEngineInterface {
 	/**
 	 * Sets the current filter.
 	 *
-	 * @access public
 	 * @param DecodaFilter $filter
 	 * @return DecodaTemplateEngineInterface
 	 */
@@ -104,7 +98,6 @@ class DecodaPhpEngine implements DecodaTemplateEngineInterface {
 	/**
 	 * Sets the path to the tag templates.
 	 *
-	 * @access public
 	 * @param string $path
 	 * @return DecodaTemplateEngineInterface
 	 */

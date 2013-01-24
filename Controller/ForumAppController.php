@@ -15,7 +15,6 @@ class ForumAppController extends AppController {
 	/**
 	 * Remove parent models.
 	 *
-	 * @access public
 	 * @var array
 	 */
 	public $uses = array();
@@ -23,7 +22,6 @@ class ForumAppController extends AppController {
 	/**
 	 * Components.
 	 *
-	 * @access public
 	 * @var array
 	 */
 	public $components = array('Session', 'Security', 'Cookie', 'Auth', 'Forum.ForumToolbar', 'Utility.AutoLogin');
@@ -31,7 +29,6 @@ class ForumAppController extends AppController {
 	/**
 	 * Helpers.
 	 *
-	 * @access public
 	 * @var array
 	 */
 	public $helpers = array('Html', 'Session', 'Form', 'Time', 'Text', 'Forum.Common', 'Utility.Breadcrumb', 'Utility.OpenGraph');
@@ -39,7 +36,6 @@ class ForumAppController extends AppController {
 	/**
 	 * Plugin configuration.
 	 *
-	 * @access public
 	 * @var array
 	 */
 	public $config = array();
@@ -47,7 +43,6 @@ class ForumAppController extends AppController {
 	/**
 	 * Database forum settings.
 	 *
-	 * @access public
 	 * @var array
 	 */
 	public $settings = array();
@@ -55,7 +50,6 @@ class ForumAppController extends AppController {
 	/**
 	 * Run auto login logic.
 	 *
-	 * @access public
 	 * @param array $user
 	 * @return void
 	 */

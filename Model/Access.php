@@ -24,7 +24,6 @@ class Access extends ForumAppModel {
 	/**
 	 * DB Table.
 	 *
-	 * @access public
 	 * @var string
 	 */
 	public $useTable = 'access';
@@ -32,7 +31,6 @@ class Access extends ForumAppModel {
 	/**
 	 * Belongs to.
 	 *
-	 * @access public
 	 * @var array
 	 */
 	public $belongsTo = array(
@@ -47,7 +45,6 @@ class Access extends ForumAppModel {
 	/**
 	 * Validation.
 	 *
-	 * @access public
 	 * @var array
 	 */
 	public $validate = array(
@@ -58,7 +55,6 @@ class Access extends ForumAppModel {
 	/**
 	 * Add a user once conditions are validated.
 	 *
-	 * @access public
 	 * @param array $data
 	 * @return mixed
 	 */
@@ -75,7 +71,6 @@ class Access extends ForumAppModel {
 	/**
 	 * Grant access to a user, validating conditions.
 	 *
-	 * @access public
 	 * @param int $user_id
 	 * @param int $level_id
 	 * @return boolean
@@ -103,7 +98,6 @@ class Access extends ForumAppModel {
 	/**
 	 * Return an access level and its user.
 	 *
-	 * @access public
 	 * @param int $id
 	 * @return array
 	 */
@@ -118,7 +112,6 @@ class Access extends ForumAppModel {
 	/**
 	 * Get a list of all staff and their levels.
 	 *
-	 * @access public
 	 * @return array
 	 */
 	public function getList() {
@@ -132,7 +125,6 @@ class Access extends ForumAppModel {
 	/**
 	 * Get a list of all levels for a user.
 	 *
-	 * @access public
 	 * @param int $user_id
 	 * @return array
 	 */
@@ -146,7 +138,6 @@ class Access extends ForumAppModel {
 	/**
 	 * Move all users to a new level.
 	 *
-	 * @access public
 	 * @param int $start_id
 	 * @param int $moved_id
 	 * @return boolean
@@ -161,7 +152,6 @@ class Access extends ForumAppModel {
 	/**
 	 * Validate logical conditions.
 	 *
-	 * @access public
 	 * @param array $data
 	 * @return boolean
 	 */

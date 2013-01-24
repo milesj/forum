@@ -15,7 +15,6 @@ class SearchController extends ForumAppController {
 	/**
 	 * Models.
 	 *
-	 * @access public
 	 * @var array
 	 */
 	public $uses = array('Forum.Topic');
@@ -23,7 +22,6 @@ class SearchController extends ForumAppController {
 	/**
 	 * Pagination.
 	 *
-	 * @access public
 	 * @var array
 	 */
 	public $paginate = array(

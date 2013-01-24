@@ -23,7 +23,6 @@ class Topic extends ForumAppModel {
 	/**
 	 * Behaviors
 	 *
-	 * @access public
 	 * @var array
 	 */
 	public $actsAs = array(
@@ -35,7 +34,6 @@ class Topic extends ForumAppModel {
 	/**
 	 * Belongs to.
 	 *
-	 * @access public
 	 * @var array
 	 */
 	public $belongsTo = array(
@@ -63,7 +61,6 @@ class Topic extends ForumAppModel {
 	/**
 	 * Has one.
 	 *
-	 * @access public
 	 * @var array
 	 */
 	public $hasOne = array(
@@ -76,7 +73,6 @@ class Topic extends ForumAppModel {
 	/**
 	 * Has many.
 	 *
-	 * @access public
 	 * @var array
 	 */
 	public $hasMany = array(
@@ -96,7 +92,6 @@ class Topic extends ForumAppModel {
 	/**
 	 * Validation.
 	 *
-	 * @access public
 	 * @var array
 	 */
 	public $validate = array(
@@ -123,7 +118,6 @@ class Topic extends ForumAppModel {
 	/**
 	 * Enum.
 	 *
-	 * @access public
 	 * @var array
 	 */
 	public $enum = array(
@@ -138,7 +132,6 @@ class Topic extends ForumAppModel {
 	/**
 	 * Validate and add a topic.
 	 *
-	 * @access public
 	 * @param array $data
 	 * @return boolean|int
 	 */
@@ -192,7 +185,6 @@ class Topic extends ForumAppModel {
 	/**
 	 * Check the posting flood interval.
 	 *
-	 * @access public
 	 * @param int $interval
 	 * @return boolean|int
 	 */
@@ -211,7 +203,6 @@ class Topic extends ForumAppModel {
 	/**
 	 * Check the hourly posting.
 	 *
-	 * @access public
 	 * @param int $max
 	 * @return boolean
 	 */
@@ -238,7 +229,6 @@ class Topic extends ForumAppModel {
 	/**
 	 * Check to make sure the poll is valid.
 	 *
-	 * @access public
 	 * @param array $data
 	 * @return boolean
 	 */
@@ -263,7 +253,6 @@ class Topic extends ForumAppModel {
 	/**
 	 * Finds difference in days between dates.
 	 *
-	 * @access public
 	 * @param int $start
 	 * @param int $finish
 	 * @return int
@@ -286,7 +275,6 @@ class Topic extends ForumAppModel {
 	/**
 	 * Robust method for saving all topic data.
 	 *
-	 * @access public
 	 * @param int $id
 	 * @param array $topic
 	 * @return boolean
@@ -329,7 +317,6 @@ class Topic extends ForumAppModel {
 	/**
 	 * Get all info for reading a topic.
 	 *
-	 * @access public
 	 * @param string $slug
 	 * @return array
 	 */
@@ -354,7 +341,6 @@ class Topic extends ForumAppModel {
 	/**
 	 * Get the latest topics.
 	 *
-	 * @access public
 	 * @param int $limit
 	 * @return array
 	 */
@@ -371,7 +357,6 @@ class Topic extends ForumAppModel {
 	/**
 	 * Get the latest topics by a user.
 	 *
-	 * @access public
 	 * @param int $user_id
 	 * @param int $limit
 	 * @return array
@@ -388,7 +373,6 @@ class Topic extends ForumAppModel {
 	/**
 	 * Get all high level topics within a forum.
 	 *
-	 * @access public
 	 * @param int $forum_id
 	 * @return array
 	 */
@@ -412,7 +396,6 @@ class Topic extends ForumAppModel {
 	/**
 	 * Increase the view count.
 	 *
-	 * @access public
 	 * @param int $id
 	 * @return boolean
 	 */
@@ -423,7 +406,6 @@ class Topic extends ForumAppModel {
 	/**
 	 * Move all topics to a new forum.
 	 *
-	 * @access public
 	 * @param int $start_id
 	 * @param int $moved_id
 	 * @return boolean
@@ -438,7 +420,6 @@ class Topic extends ForumAppModel {
 	/**
 	 * Parse the HTML version.
 	 *
-	 * @access public
 	 * @param array $options
 	 * @return boolean
 	 */
@@ -453,7 +434,6 @@ class Topic extends ForumAppModel {
 	/**
 	 * After find.
 	 *
-	 * @access public
 	 * @param array $results
 	 * @param boolean $primary
 	 * @return array

@@ -18,7 +18,6 @@ class SubscriptionShell extends Shell {
 	/**
 	 * Models.
 	 *
-	 * @access public
 	 * @var array
 	 */
 	public $uses = array('Forum.Subscription');
@@ -114,7 +113,6 @@ class SubscriptionShell extends Shell {
 	 * Return all topics with new activity found within specific forums or by a specific ID.
 	 * Organize the topics array by ID before returning.
 	 *
-	 * @access public
 	 * @param array $forumIds
 	 * @param array $topicIds
 	 * @return array
@@ -166,7 +164,6 @@ class SubscriptionShell extends Shell {
 	/**
 	 * Format the email by looping over all topics.
 	 *
-	 * @access public
 	 * @param array $user
 	 * @param array $topics
 	 * @return string

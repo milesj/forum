@@ -15,7 +15,6 @@ class PostsController extends ForumAppController {
 	/**
 	 * Models.
 	 *
-	 * @access public
 	 * @var array
 	 */
 	public $uses = array('Forum.Post', 'Forum.Profile');

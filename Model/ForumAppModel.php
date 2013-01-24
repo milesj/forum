@@ -27,7 +27,6 @@ class ForumAppModel extends AppModel {
 	/**
 	 * Table prefix.
 	 *
-	 * @access public
 	 * @var string
 	 */
 	public $tablePrefix = 'forum_';
@@ -35,7 +34,6 @@ class ForumAppModel extends AppModel {
 	/**
 	 * Database config.
 	 *
-	 * @access public
 	 * @var string
 	 */
 	public $useDbConfig = 'default';
@@ -43,7 +41,6 @@ class ForumAppModel extends AppModel {
 	/**
 	 * Cache queries.
 	 *
-	 * @access public
 	 * @var boolean
 	 */
 	public $cacheQueries = true;
@@ -51,7 +48,6 @@ class ForumAppModel extends AppModel {
 	/**
 	 * No recursion.
 	 *
-	 * @access public
 	 * @var int
 	 */
 	public $recursive = -1;
@@ -59,7 +55,6 @@ class ForumAppModel extends AppModel {
 	/**
 	 * Behaviors.
 	 *
-	 * @access public
 	 * @var array
 	 */
 	public $actsAs = array(
@@ -77,7 +72,6 @@ class ForumAppModel extends AppModel {
 	/**
 	 * Global enum.
 	 *
-	 * @access public
 	 * @var array
 	 */
 	public $enum = array(
@@ -90,7 +84,6 @@ class ForumAppModel extends AppModel {
 	/**
 	 * Plugin configuration.
 	 *
-	 * @access public
 	 * @var array
 	 */
 	public $config = array();
@@ -98,7 +91,6 @@ class ForumAppModel extends AppModel {
 	/**
 	 * Database forum settings.
 	 *
-	 * @access public
 	 * @var array
 	 */
 	public $settings = array();
@@ -106,7 +98,6 @@ class ForumAppModel extends AppModel {
 	/**
 	 * Session instance.
 	 *
-	 * @access public
 	 * @var CakeSession
 	 */
 	public $Session;
@@ -114,7 +105,6 @@ class ForumAppModel extends AppModel {
 	/**
 	 * Allow the model to interact with the session.
 	 *
-	 * @access public
 	 * @param int $id
 	 * @param string $table
 	 * @param string $ds
@@ -130,7 +120,6 @@ class ForumAppModel extends AppModel {
 	/**
 	 * Get the users highest access level.
 	 *
-	 * @access public
 	 * @return int
 	 */
 	public function access() {
@@ -140,7 +129,6 @@ class ForumAppModel extends AppModel {
 	/**
 	 * Return an array of access levels or IDs.
 	 *
-	 * @access public
 	 * @param string $field
 	 * @return array
 	 */
@@ -157,7 +145,6 @@ class ForumAppModel extends AppModel {
 	/**
 	 * Return all records.
 	 *
-	 * @access public
 	 * @return array
 	 */
 	public function getAll() {
@@ -170,7 +157,6 @@ class ForumAppModel extends AppModel {
 	/**
 	 * Return all records as a list.
 	 *
-	 * @access public
 	 * @return array
 	 */
 	public function getList() {
@@ -183,7 +169,6 @@ class ForumAppModel extends AppModel {
 	/**
 	 * Return a record based on ID.
 	 *
-	 * @access public
 	 * @param int $id
 	 * @return array
 	 */
@@ -198,7 +183,6 @@ class ForumAppModel extends AppModel {
 	/**
 	 * Return a record based on slug.
 	 *
-	 * @access public
 	 * @param string $slug
 	 * @return array
 	 */
@@ -213,7 +197,6 @@ class ForumAppModel extends AppModel {
 	/**
 	 * Get a count of all rows.
 	 *
-	 * @access public
 	 * @return int
 	 */
 	public function getTotal() {
@@ -228,7 +211,6 @@ class ForumAppModel extends AppModel {
 	/**
 	 * Adds locale functions to errors.
 	 *
-	 * @access public
 	 * @param string $field
 	 * @param mixed $value
 	 * @param mixed $param
@@ -243,7 +225,6 @@ class ForumAppModel extends AppModel {
 	/**
 	 * Update a row with certain fields.
 	 *
-	 * @access public
 	 * @param int $id
 	 * @param array $data
 	 * @return boolean
@@ -257,7 +238,6 @@ class ForumAppModel extends AppModel {
 	/**
 	 * Validate the Decoda markup.
 	 *
-	 * @access public
 	 * @param string $model
 	 * @return boolean
 	 */
