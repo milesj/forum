@@ -113,7 +113,6 @@ class TopicsController extends ForumAppController {
 	 */
 	public function edit($slug) {
 		$topic = $this->Topic->getBySlug($slug);
-		$user_id = $this->Auth->user('id');
 
 		$this->ForumToolbar->verifyAccess(array(
 			'exists' => $topic,
@@ -274,7 +273,6 @@ class TopicsController extends ForumAppController {
 	 */
 	public function moderate($slug) {
 		$topic = $this->Topic->getBySlug($slug);
-		$user_id = $this->Auth->user('id');
 
 		$this->ForumToolbar->verifyAccess(array(
 			'exists' => $topic,

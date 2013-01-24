@@ -27,7 +27,7 @@ $this->Breadcrumb->add(__d('forum', 'Moderate'), array('controller' => 'topics',
 		<table class="table topics">
 			<thead>
 				<tr>
-					<th><input type="checkbox" onclick="Forum.toggleCheckboxes(this, 'Post', 'items');" /></th>
+					<th><input type="checkbox" onclick="Forum.toggleCheckboxes(this, 'Post', 'items');"></th>
 					<th><?php echo __d('forum', 'User'); ?></th>
 					<th><?php echo __d('forum', 'Post'); ?></th>
 					<th><?php echo __d('forum', 'Date'); ?></th>
@@ -42,7 +42,7 @@ $this->Breadcrumb->add(__d('forum', 'Moderate'), array('controller' => 'topics',
 						<?php if ($post['Post']['id'] == $topic['Topic']['firstPost_id']) { ?>
 							<em class="gray">X</em>
 						<?php } else { ?>
-							<input type="checkbox" name="data[Post][items][]" value="<?php echo $post['Post']['id']; ?>" />
+							<input type="checkbox" name="data[Post][items][]" value="<?php echo $post['Post']['id']; ?>">
 						<?php } ?>
 					</td>
 					<td>

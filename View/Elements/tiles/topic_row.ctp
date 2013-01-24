@@ -4,7 +4,7 @@ $columns = isset($columns) ? $columns : array(); ?>
 
 <tr<?php if ($counter % 2) echo ' class="altRow"'; ?>>
 	<?php if (in_array('status', $columns)) { ?>
-		<td class="icon"><input type="checkbox" name="data[Topic][items][]" value="<?php echo $topic['Topic']['id']; ?>" /></td>
+		<td class="icon"><input type="checkbox" name="data[Topic][items][]" value="<?php echo $topic['Topic']['id']; ?>"></td>
 	<?php } else { ?>
 		<td class="icon"><?php echo $this->Common->topicIcon($topic); ?></td>
 	<?php } ?>

@@ -24,7 +24,7 @@ $this->Breadcrumb->add(__d('forum', 'Moderate'), array('action' => 'moderate', $
 		<table class="table topics">
 			<thead>
 				<tr>
-					<th><input type="checkbox" onclick="Forum.toggleCheckboxes(this);" /></th>
+					<th><input type="checkbox" onclick="Forum.toggleCheckboxes(this);"></th>
 					<th><?php echo $this->Paginator->sort('Topic.title', __d('forum', 'Topic')); ?></th>
 					<th><?php echo $this->Paginator->sort('Topic.status', __d('forum', 'Status')); ?></th>
 					<th><?php echo $this->Paginator->sort('User.' . $config['userMap']['username'], __d('forum', 'Author')); ?></th>

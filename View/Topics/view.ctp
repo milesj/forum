@@ -43,7 +43,7 @@ if (!empty($topic['Poll']['id'])) { ?>
 
 					<tr<?php if ($counter % 2) echo ' class="altRow"'; ?>>
 						<td class="icon">
-							<input type="radio" name="data[Poll][option]" value="<?php echo $option['id']; ?>"<?php if ($counter == 0) echo ' checked="checked"'; ?> />
+							<input type="radio" name="data[Poll][option]" value="<?php echo $option['id']; ?>"<?php if ($counter == 0) echo ' checked="checked"'; ?>>
 						</td>
 						<td colspan="2">
 							<?php echo $option['option']; ?>

@@ -454,6 +454,8 @@ class InstallShell extends Shell {
 				return $email;
 			break;
 		}
+
+		return null;
 	}
 
 	/**

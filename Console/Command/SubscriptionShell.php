@@ -23,6 +23,27 @@ class SubscriptionShell extends Shell {
 	public $uses = array('Forum.Subscription');
 
 	/**
+	 * Plugin configuration.
+	 *
+	 * @var array
+	 */
+	public $config = array();
+
+	/**
+	 * Database forum settings.
+	 *
+	 * @var array
+	 */
+	public $settings = array();
+
+	/**
+	 * The past timeframe threshold to look for topics.
+	 *
+	 * @var string
+	 */
+	public $timeframe;
+
+	/**
 	 * Execute!
 	 */
 	public function main() {

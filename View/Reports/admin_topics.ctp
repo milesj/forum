@@ -37,7 +37,7 @@ $this->Breadcrumb->add(__d('forum', 'Topics'), array('controller' => 'reports', 
 				foreach ($reports as $counter => $report) { ?>
 
 				<tr<?php if ($counter % 2) echo ' class="altRow"'; ?>>
-					<td class="icon"><input type="checkbox" name="data[Report][items][]" value="<?php echo $report['Report']['id']; ?>:<?php echo $report['Topic']['id']; ?>" /></td>
+					<td class="icon"><input type="checkbox" name="data[Report][items][]" value="<?php echo $report['Report']['id']; ?>:<?php echo $report['Topic']['id']; ?>"></td>
 					<td>
 						<?php if (!empty($report['Topic']['id'])) {
 							echo $this->Html->link($report['Topic']['title'], array('controller' => 'topics', 'action' => 'view', $report['Topic']['slug'], 'admin' => false));

@@ -76,7 +76,6 @@ class PostsController extends ForumAppController {
 	 */
 	public function edit($id) {
 		$post = $this->Post->getById($id);
-		$user_id = $this->Auth->user('id');
 
 		$this->ForumToolbar->verifyAccess(array(
 			'exists' => $post,
