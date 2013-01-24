@@ -45,6 +45,8 @@ if ($forums) {
 
 <?php } } ?>
 
+<?php echo $this->element('login'); ?>
+
 <div class="statistics">
 	<div class="totalStats">
 		<strong><?php echo __d('forum', 'Statistics'); ?>:</strong> <?php printf(__d('forum', '%d topics, %d posts, and %d users'), $totalTopics, $totalPosts, $totalUsers); ?>

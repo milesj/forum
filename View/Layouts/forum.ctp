@@ -55,7 +55,7 @@ echo $this->OpenGraph->html(array('xmlns' => 'http://www.w3.org/1999/xhtml')); ?
 		</div>
 
 		<div class="content">
-			<?php echo $this->element('login'); ?>
+			<?php echo $this->element('search'); ?>
 			<?php echo $this->element('breadcrumbs'); ?>
 
 			<?php echo $this->Session->flash(); ?>
