@@ -2,18 +2,17 @@
 
 A fully robust and powerful CakePHP forum plugin. Integrates with an external user system, support for topic and forum subscriptions, and many more features listed below.
 
-This version is only compatible with CakePHP 2.0.
-
 ## Compatibility ##
 
 * v2.x - CakePHP 1.3
-* v3.x - CakePHP 2
+* v3.x - CakePHP 2.x
+* v3.3.x - CakePHP 2.3, Composer
 
 ## Requirements ##
 
-* PHP 5.2, 5.3
-* Utility Plugin (3.2.0 and above) - https://github.com/milesj/cake-utility
-* Utils Plugin (3.1.1 and below) - https://github.com/CakeDC/utils
+* PHP 5.3.0
+* Composer
+* Utility Plugin - https://github.com/milesj/Utility
 
 ## Contributors ##
 
