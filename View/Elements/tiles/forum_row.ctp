@@ -13,7 +13,7 @@ if (isset($forum['SubForum'])) {
 		<?php echo $this->Common->forumIcon($forum); ?>
 	</td>
 	<td>
-		<strong><?php echo $this->Html->link($forum['title'], array('controller' => 'stations', 'action' => 'view', $forum['slug'])); ?></strong><br />
+		<strong><?php echo $this->Html->link($forum['title'], array('controller' => 'stations', 'action' => 'view', $forum['slug'])); ?></strong><br>
 		<?php echo h($forum['description']); ?>
 
 		<?php if ($subForums) { ?>
@@ -29,7 +29,7 @@ if (isset($forum['SubForum'])) {
 			$lastTime = isset($forum['LastPost']['created']) ? $forum['LastPost']['created'] : $forum['LastTopic']['modified'];
 
 			echo $this->Html->link($forum['LastTopic']['title'], array('controller' => 'topics', 'action' => 'view', $forum['LastTopic']['slug'])) . ' ';
-			echo $this->Html->image('/forum/img/goto.png', array('alt' => '', 'url' => array('controller' => 'topics', 'action' => 'view', $forum['LastTopic']['slug'], 'page' => $forum['LastTopic']['page_count'], '#' => 'post-' . $forum['lastPost_id']))); ?><br />
+			echo $this->Html->image('/forum/img/goto.png', array('alt' => '', 'url' => array('controller' => 'topics', 'action' => 'view', $forum['LastTopic']['slug'], 'page' => $forum['LastTopic']['page_count'], '#' => 'post-' . $forum['lastPost_id']))); ?><br>
 
 			<em><?php echo $this->Time->timeAgoInWords($lastTime, array('userOffset' => $this->Common->timezone())); ?></em>
 

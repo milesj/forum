@@ -146,7 +146,7 @@ if (!empty($topic['Poll']['id'])) { ?>
 						<h4 class="username"><?php echo $this->Html->link($post['User'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'profile', $post['User']['id'])); ?></h4>
 
 						<?php if (!empty($post['User']['Access'])) { ?>
-							<strong><?php echo $this->Common->highestAccessLevel($post['User']['Access']); ?></strong><br />
+							<strong><?php echo $this->Common->highestAccessLevel($post['User']['Access']); ?></strong><br>
 						<?php } ?>
 
 						<?php
@@ -164,7 +164,7 @@ if (!empty($topic['Poll']['id'])) { ?>
 							</div>
 						<?php } ?>
 
-						<strong><?php echo __d('forum', 'Total Topics'); ?>:</strong> <?php echo number_format($post['User']['Profile']['totalTopics']); ?><br />
+						<strong><?php echo __d('forum', 'Total Topics'); ?>:</strong> <?php echo number_format($post['User']['Profile']['totalTopics']); ?><br>
 						<strong><?php echo __d('forum', 'Total Posts'); ?>:</strong> <?php echo number_format($post['User']['Profile']['totalPosts']); ?>
 					</td>
 					<td valign="top">
@@ -208,9 +208,9 @@ if ($user && $topic['Topic']['status'] && $settings['enable_quick_reply'] && $th
 				<tbody>
 					<tr>
 						<td style="width: 25%">
-							<strong><?php echo $this->Form->label('content', __d('forum', 'Message') . ':'); ?></strong><br /><br />
+							<strong><?php echo $this->Form->label('content', __d('forum', 'Message') . ':'); ?></strong><br><br>
 
-							<?php echo $this->Html->link(__d('forum', 'Advanced Reply'), array('controller' => 'posts', 'action' => 'add', $topic['Topic']['slug'])); ?><br />
+							<?php echo $this->Html->link(__d('forum', 'Advanced Reply'), array('controller' => 'posts', 'action' => 'add', $topic['Topic']['slug'])); ?><br>
 							<?php echo __d('forum', 'BBCode Enabled'); ?>
 						</td>
 						<td>

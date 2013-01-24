@@ -16,7 +16,7 @@ $columns = isset($columns) ? $columns : array(); ?>
 		<strong><?php echo $this->Html->link($topic['Topic']['title'], array('controller' => 'topics', 'action' => 'view', $topic['Topic']['slug'])); ?></strong>
 
 		<?php if (count($pages) > 1) { ?>
-		<br /><span class="gray"><?php echo __d('forum', 'Pages'); ?>: [ <?php echo implode(', ', $pages); ?> ]</span>
+		<br><span class="gray"><?php echo __d('forum', 'Pages'); ?>: [ <?php echo implode(', ', $pages); ?> ]</span>
 		<?php } ?>
 	</td>
 	<?php if (in_array('forum', $columns)) { ?>
