@@ -17,12 +17,7 @@ $this->Breadcrumb->add(__d('forum', 'Post Reply'), array('action' => 'add', $top
 <div class="container">
 	<div class="containerContent">
 		<?php
-		echo $this->Form->input('content', array(
-			'type' => 'textarea',
-			'rows' => 15,
-			'after' => '<span class="inputText">[b], [u], [i], [s], [img], [url], [email], [color], [size], [left], [center], [right], [justify], [list], [olist], [li], [quote], [code]</span>',
-			'label' => __d('forum', 'Content')));
-
+		echo $this->Form->input('content', array('type' => 'textarea', 'rows' => 15, 'label' => __d('forum', 'Content')));
 		echo $this->element('decoda', array('id' => 'PostContent')); ?>
 	</div>
 </div>

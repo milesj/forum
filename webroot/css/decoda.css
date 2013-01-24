@@ -1,0 +1,7 @@
+
+.decoda-editor { display: inline-block; }
+.decoda-editor .decoda-textarea textarea { width: 100%; box-sizing: border-box; }
+
+.decoda-toolbars .decoda-menu { box-shadow: none; border: 1px solid #DBE4EF; }
+.decoda-toolbars .decoda-menu a:hover,
+.decoda-help table th { background-color: #F4F7FB; }

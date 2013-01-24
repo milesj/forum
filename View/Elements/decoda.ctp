@@ -1,6 +1,7 @@
 <?php
-$this->Html->css('/utility/css/decoda-1.1.0.min.css');
-$this->Html->script('/utility/js/decoda-1.1.0.min.js'); ?>
+$this->Html->css('Utility.decoda-1.1.0.min', 'stylesheet', array('inline' => false));
+$this->Html->css('Forum.decoda', 'stylesheet', array('inline' => false));
+$this->Html->script('Utility.decoda-1.1.0.min', array('inline' => false)); ?>
 
 <script type="text/javascript">
 	window.addEvent('domready', function() {
@@ -11,6 +12,9 @@ $this->Html->script('/utility/js/decoda-1.1.0.min.js'); ?>
 			},
 			onSubmit: function() {
 				return this.clean();
+			},
+			onRenderHelp: function(table) {
+				table.getParent('div').addClass('table');
 			}
 		}).defaults();
 	});

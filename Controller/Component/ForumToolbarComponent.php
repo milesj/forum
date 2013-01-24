@@ -56,55 +56,56 @@ class ForumToolbarComponent extends Component {
 	 * @return void
 	 */
 	public function initForum() {
+		if ($this->Session->check('Forum.isBrowsing')) {
+			return;
+		}
+
 		$user_id = $this->Controller->Auth->user('id');
+		$isSuper = false;
+		$isAdmin = false;
+		$highestAccess = 0;
+		$accessLevels = array();
+		$profile = array();
+		$moderates = array();
+		$lastVisit = date('Y-m-d H:i:s');
+		$banned = ($this->Controller->Auth->user($this->config['userMap']['status']) == $this->config['statusMap']['banned']);
 
-		if (!$this->Session->check('Forum.isBrowsing')) {
-			$isSuper = false;
-			$isAdmin = false;
-			$highestAccess = 0;
-			$accessLevels = array();
-			$profile = array();
-			$moderates = array();
-			$lastVisit = date('Y-m-d H:i:s');
-			$banned = ($this->Controller->Auth->user($this->config['userMap']['status']) == $this->config['statusMap']['banned']);
+		if ($user_id && !$banned) {
+			$access = ClassRegistry::init('Forum.Access')->getListByUser($user_id);
+			$highestAccess = 1;
 
-			if ($user_id && !$banned) {
-				$access = ClassRegistry::init('Forum.Access')->getListByUser($user_id);
-				$highestAccess = 1;
+			if ($access) {
+				foreach ($access as $level) {
+					$accessLevels[$level['AccessLevel']['id']] = $level['AccessLevel']['level'];
 
-				if ($access) {
-					foreach ($access as $level) {
-						$accessLevels[$level['AccessLevel']['id']] = $level['AccessLevel']['level'];
+					if ($level['AccessLevel']['level'] > $highestAccess) {
+						$highestAccess = $level['AccessLevel']['level'];
+					}
 
-						if ($level['AccessLevel']['level'] > $highestAccess) {
-							$highestAccess = $level['AccessLevel']['level'];
-						}
+					if ($level['AccessLevel']['isSuper'] && !$isSuper) {
+						$isSuper = true;
+					}
 
-						if ($level['AccessLevel']['isSuper'] && !$isSuper) {
-							$isSuper = true;
-						}
-
-						if ($level['AccessLevel']['isAdmin'] && !$isAdmin) {
-							$isAdmin = true;
-						}
+					if ($level['AccessLevel']['isAdmin'] && !$isAdmin) {
+						$isAdmin = true;
 					}
 				}
-
-				$moderates = ClassRegistry::init('Forum.Moderator')->getModerations($user_id);
-				$profile = ClassRegistry::init('Forum.Profile')->getUserProfile($user_id);
-				$profile = $profile['Profile'];
-				$lastVisit = $profile['lastLogin'];
 			}
 
-			$this->Session->write('Forum.profile', $profile);
-			$this->Session->write('Forum.access', $highestAccess);
-			$this->Session->write('Forum.accessLevels', $accessLevels);
-			$this->Session->write('Forum.isSuper', $isSuper);
-			$this->Session->write('Forum.isAdmin', $isAdmin);
-			$this->Session->write('Forum.moderates', $moderates);
-			$this->Session->write('Forum.lastVisit', $lastVisit);
-			$this->Session->write('Forum.isBrowsing', true);
+			$moderates = ClassRegistry::init('Forum.Moderator')->getModerations($user_id);
+			$profile = ClassRegistry::init('Forum.Profile')->getUserProfile($user_id);
+			$profile = $profile['Profile'];
+			$lastVisit = $profile['lastLogin'];
 		}
+
+		$this->Session->write('Forum.profile', $profile);
+		$this->Session->write('Forum.access', $highestAccess);
+		$this->Session->write('Forum.accessLevels', $accessLevels);
+		$this->Session->write('Forum.isSuper', $isSuper);
+		$this->Session->write('Forum.isAdmin', $isAdmin);
+		$this->Session->write('Forum.moderates', $moderates);
+		$this->Session->write('Forum.lastVisit', $lastVisit);
+		$this->Session->write('Forum.isBrowsing', true);
 	}
 
 	/**
@@ -157,7 +158,7 @@ class ForumToolbarComponent extends Component {
 		if ($return) {
 			return $url;
 		} else {
-			$this->Controller->redirect($url);
+			return $this->Controller->redirect($url);
 		}
 	}
 

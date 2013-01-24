@@ -5,11 +5,11 @@ echo $this->OpenGraph->html(array('xmlns' => 'http://www.w3.org/1999/xhtml')); ?
 	<?php echo $this->Html->charset(); ?>
 	<title><?php echo $this->Breadcrumb->pageTitle($settings['site_name'], array('separator' => $settings['title_separator'])); ?></title>
 	<?php
-	echo $this->Html->css('/forum/css/base.css');
-	echo $this->Html->css('/forum/css/style.css');
-	echo $this->Html->script('/forum/js/mootools-core-1.4.5.js');
-	echo $this->Html->script('/forum/js/mootools-more-1.4.0.1.js');
-	echo $this->Html->script('/forum/js/forum.js');
+	echo $this->Html->css('Forum.base');
+	echo $this->Html->css('Forum.style');
+	echo $this->Html->script('Forum.mootools-core-1.4.5');
+	echo $this->Html->script('Forum.mootools-more-1.4.0.1');
+	echo $this->Html->script('Forum.forum');
 
 	if ($this->params['controller'] === 'forum') {
 		echo $this->Html->meta(__d('forum', 'RSS Feed - Latest Topics'), array('action' => 'index', 'ext' => 'rss'), array('type' => 'rss'));
@@ -21,7 +21,10 @@ echo $this->OpenGraph->html(array('xmlns' => 'http://www.w3.org/1999/xhtml')); ?
 
 	$this->OpenGraph->name($settings['site_name']);
 	$this->OpenGraph->locale(array($locales[Configure::read('Config.language')], $locales[$settings['default_locale']]));
-	echo $this->OpenGraph->fetch(); ?>
+
+	echo $this->OpenGraph->fetch();
+	echo $this->fetch('css');
+	echo $this->fetch('script'); ?>
 </head>
 
 <body>
