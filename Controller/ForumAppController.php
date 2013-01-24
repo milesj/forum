@@ -70,15 +70,17 @@ class ForumAppController extends AppController {
 
 		$this->set('menuTab', '');
 
+		// Settings
+		$this->config = Configure::read('Forum');
+		$this->settings = Configure::read('Forum.settings');
+
 		// Admin
 		if (isset($this->request->params['admin'])) {
 			$this->ForumToolbar->verifyAdmin();
 			$this->layout = 'admin';
+		} else {
+			$this->layout = $this->config['viewLayout'];
 		}
-
-		// Settings
-		$this->config = Configure::read('Forum');
-		$this->settings = Configure::read('Forum.settings');
 
 		// Localization
 		$locale = $this->Auth->user('locale') ?: $this->settings['default_locale'];
@@ -89,7 +91,7 @@ class ForumAppController extends AppController {
 		$referrer = $this->referer();
 		$routes = $this->config['routes'];
 
-		if (!$referrer || $referrer === '/forum/users/login' || $referrer === '/admin/forum/users/login') {
+		if (!$referrer || strpos($referrer, 'users/login') !== false) {
 			$referrer = array('plugin' => 'forum', 'controller' => 'forum', 'action' => 'index');
 		}
 

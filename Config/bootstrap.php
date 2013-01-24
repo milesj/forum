@@ -56,6 +56,11 @@ Configure::write('Forum.routes', array(
 ));
 
 /**
+ * The layout to wrap the forum in.
+ */
+Configure::write('Forum.viewLayout', 'forum');
+
+/**
  * List of all timezones.
  */
 Configure::write('Forum.timezones', array(

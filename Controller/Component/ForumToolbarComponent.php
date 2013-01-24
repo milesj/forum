@@ -150,7 +150,7 @@ class ForumToolbarComponent extends Component {
 		} else {
 			$url = $this->Controller->referer();
 
-			if (!$url || (strpos($url, 'delete') !== false)) {
+			if (!$url || strpos($url, 'delete') !== false) {
 				$url = array('plugin' => 'forum', 'controller' => 'forum', 'action' => 'index');
 			}
 		}
