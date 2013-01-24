@@ -16,9 +16,9 @@ $this->Breadcrumb->add($profile['User'][$config['userMap']['username']], array('
 	<table class="table">
 		<tbody>
 			<tr>
-				<?php if ($settings['enable_gravatar']) { ?>
+				<?php if ($avatar = $this->Common->avatar($profile)) { ?>
 					<td rowspan="2" style="width: 80px;">
-						<?php echo $this->Common->gravatar($profile['User'][$config['userMap']['email']]); ?>
+						<?php echo $avatar; ?>
 					</td>
 				<?php } ?>
 

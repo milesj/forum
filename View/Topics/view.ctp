@@ -149,20 +149,7 @@ if (!empty($topic['Poll']['id'])) { ?>
 							<strong><?php echo $this->Common->highestAccessLevel($post['User']['Access']); ?></strong><br>
 						<?php } ?>
 
-						<?php
-						$userMap = $config['userMap'];
-
-						if ($userMap['avatar'] && !empty($post['User'][$userMap['avatar']])) { ?>
-							<div class="avatar">
-								<?php echo $this->Html->image($post['User'][$userMap['avatar']], array('width' => 100, 'height' => 100)); ?>
-							</div>
-
-						<?php } else if ($settings['enable_gravatar']) { ?>
-
-							<div class="avatar">
-								<?php echo $this->Common->gravatar($post['User'][$userMap['email']], array('size' => 100)); ?>
-							</div>
-						<?php } ?>
+						<?php echo $this->Common->avatar($post) ?>
 
 						<strong><?php echo __d('forum', 'Total Topics'); ?>:</strong> <?php echo number_format($post['User']['Profile']['totalTopics']); ?><br>
 						<strong><?php echo __d('forum', 'Total Posts'); ?>:</strong> <?php echo number_format($post['User']['Profile']['totalPosts']); ?>

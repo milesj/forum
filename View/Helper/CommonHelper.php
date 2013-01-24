@@ -20,6 +20,31 @@ class CommonHelper extends AppHelper {
 	public $helpers = array('Html', 'Session');
 
 	/**
+	 * Output a users avatar.
+	 *
+	 * @param array $user
+	 * @param int $size
+	 * @return string
+	 */
+	public function avatar($user, $size = 100) {
+		$userMap = Configure::read('Forum.userMap');
+		$avatar = null;
+
+		if ($userMap['avatar'] && !empty($user['User'][$userMap['avatar']])) {
+			$avatar = $this->Html->image($user['User'][$userMap['avatar']], array('width' => $size, 'height' => $size));
+
+		} else if (Configure::read('Forum.settings.enable_gravatar')) {
+			$avatar = $this->gravatar($user['User'][$userMap['email']], array('size' => $size));
+		}
+
+		if ($avatar) {
+			return $this->Html->div('avatar', $avatar);
+		}
+
+		return $avatar;
+	}
+
+	/**
 	 * Determine the forum icon state.
 	 *
 	 * @param array $forum
