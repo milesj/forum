@@ -1,5 +1,5 @@
 
-.decoda-editor { display: inline-block; max-width: 830px; }
+.decoda-editor { display: inline-block; width: 50%; }
 .decoda-editor .decoda-textarea textarea { width: 100% !important; }
 
 .decoda-toolbars button { background: none; border: 0; padding: 4px; }
@@ -12,3 +12,5 @@
 .decoda-help table th { background: none; border: none; }
 .decoda-help table td { border: 1px solid #DBE4EF; }
 .decoda-help span { color: #A4A4A4; }
+
+#quickReply .decoda-editor { width: 75%; }

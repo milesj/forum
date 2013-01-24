@@ -32,8 +32,9 @@ class ForumAppController extends AppController {
 	 * @var array
 	 */
 	public $helpers = array(
-		'Html', 'Session', 'Form', 'Time', 'Text', 'Forum.Forum',
-		'Utility.Breadcrumb', 'Utility.OpenGraph', 'Utility.Decoda'
+		'Html', 'Session', 'Form', 'Time', 'Text',
+		'Utility.Breadcrumb', 'Utility.OpenGraph', 'Utility.Decoda',
+		'Forum.Forum'
 	);
 
 	/**
@@ -109,9 +110,6 @@ class ForumAppController extends AppController {
 			'loginAction' => $routes['login']['action'],
 			'logoutAction' => $routes['logout']['action']
 		);
-
-		// Initialize
-		$this->ForumToolbar->initForum();
 	}
 
 	/**

@@ -53,9 +53,12 @@ class ForumToolbarComponent extends Component {
 	/**
 	 * Initialize the session and all data.
 	 *
+	 * @param Controller $Controller
 	 * @return void
 	 */
-	public function initForum() {
+	public function startup(Controller $Controller) {
+		$this->Controller = $Controller;
+
 		if ($this->Session->check('Forum.isBrowsing')) {
 			return;
 		}

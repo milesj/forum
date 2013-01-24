@@ -32,8 +32,6 @@ echo $this->OpenGraph->html(array('xmlns' => 'http://www.w3.org/1999/xhtml')); ?
 		<?php echo $this->element('navigation'); ?>
 
 		<div class="header">
-			<?php echo $this->element('search'); ?>
-
 			<h1 class="logo">
 				<?php echo $this->Html->link($settings['site_name'], $settings['site_main_url']); ?>
 			</h1>
@@ -57,6 +55,8 @@ echo $this->OpenGraph->html(array('xmlns' => 'http://www.w3.org/1999/xhtml')); ?
 		<div class="content">
 			<?php echo $this->element('search'); ?>
 			<?php echo $this->element('breadcrumbs'); ?>
+
+			<span class="clear"></span>
 
 			<?php echo $this->Session->flash(); ?>
 			<?php echo $this->fetch('content'); ?>

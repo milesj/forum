@@ -21,8 +21,6 @@ echo $this->OpenGraph->html(array('xmlns' => 'http://www.w3.org/1999/xhtml')); ?
 		<?php echo $this->element('navigation'); ?>
 
 		<div class="header">
-			<?php echo $this->element('search'); ?>
-
 			<h1 class="logo">
 				<?php echo $this->Html->link(__d('forum', 'Forum Administration'), $settings['site_main_url']); ?>
 			</h1>

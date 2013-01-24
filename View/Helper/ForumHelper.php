@@ -17,7 +17,22 @@ class ForumHelper extends AppHelper {
 	 *
 	 * @var array
 	 */
-	public $helpers = array('Html', 'Session');
+	public $helpers = array('Html', 'Session', 'Utility.Decoda');
+
+	/**
+	 * Modify Decoda before rendering the view.
+	 *
+	 * @param string $viewFile
+	 */
+	public function beforeRender($viewFile) {
+		$censored = array_map('trim', explode(',', Configure::read('Forum.settings.censored_words')));
+
+		$decoda = $this->Decoda->getDecoda();
+		$decoda->getHook('Censor')->blacklist($censored);
+		$decoda->addFilter(new \Decoda\Filter\BlockFilter(array(
+			'spoilerToggle' => "$('spoiler-content-{id}').toggle();"
+		)));
+	}
 
 	/**
 	 * Output a users avatar.
