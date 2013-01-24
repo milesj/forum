@@ -5,7 +5,7 @@ echo $this->OpenGraph->html(array('xmlns' => 'http://www.w3.org/1999/xhtml')); ?
 	<?php echo $this->Html->charset(); ?>
 	<title><?php echo $this->Breadcrumb->pageTitle($settings['site_name'], array('separator' => $settings['title_separator'])); ?></title>
 	<?php
-	echo $this->Html->css('Forum.base');
+	echo $this->Html->css('Forum.normalize');
 	echo $this->Html->css('Forum.style');
 	echo $this->Html->script('Forum.mootools-core-1.4.5');
 	echo $this->Html->script('Forum.mootools-more-1.4.0.1');
