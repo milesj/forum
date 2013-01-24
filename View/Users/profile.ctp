@@ -8,9 +8,9 @@ $this->Breadcrumb->add($profile['User'][$config['userMap']['username']], array('
 	<h2><?php echo h($profile['User'][$config['userMap']['username']]); ?></h2>
 </div>
 
-<?php if (!empty($profile['Profile']['signatureHtml'])) { ?>
-	<p><?php echo $profile['Profile']['signatureHtml']; ?></p>
-<?php } ?>
+<?php if (!empty($profile['Profile']['signature'])) {
+	echo $this->Decoda->parse($profile['Profile']['signature']);
+} ?>
 
 <div class="container">
 	<table class="table">
@@ -136,7 +136,7 @@ if ($posts) { ?>
 					<td class="ar"><?php echo $this->Time->timeAgoInWords($post['Post']['created'], array('userOffset' => $this->Common->timezone())); ?></td>
 				</tr>
 				<tr>
-					<td colspan="3"><?php echo $post['Post']['contentHtml']; ?></td>
+					<td colspan="3"><?php echo $this->Decoda->parse($post['Post']['content']); ?></td>
 				</tr>
 
 			<?php } ?>

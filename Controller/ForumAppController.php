@@ -31,7 +31,10 @@ class ForumAppController extends AppController {
 	 *
 	 * @var array
 	 */
-	public $helpers = array('Html', 'Session', 'Form', 'Time', 'Text', 'Forum.Common', 'Utility.Breadcrumb', 'Utility.OpenGraph');
+	public $helpers = array(
+		'Html', 'Session', 'Form', 'Time', 'Text', 'Forum.Common',
+		'Utility.Breadcrumb', 'Utility.OpenGraph', 'Utility.Decoda'
+	);
 
 	/**
 	 * Plugin configuration.

@@ -9,9 +9,6 @@
  */
 
 App::uses('ForumAppModel', 'Forum.Model');
-App::import('Vendor', 'Forum.Decoda', array(
-	'file' => 'decoda/Decoda.php'
-));
 
 class Post extends ForumAppModel {
 
@@ -254,11 +251,7 @@ class Post extends ForumAppModel {
 	 * @return boolean
 	 */
 	public function beforeSave($options = array()) {
-		if (isset($this->data['Post']['content'])) {
-			return $this->validateDecoda('Post');
-		}
-
-		return true;
+		return $this->validateDecoda('Post');
 	}
 
 }

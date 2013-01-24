@@ -53,7 +53,7 @@ if ($review) { ?>
 						<h4 class="username"><?php echo $this->Html->link($post['User'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'profile', $post['User']['id'])); ?></h4>
 					</td>
 					<td valign="top">
-						<?php echo $post['Post']['contentHtml']; ?>
+						<?php echo $this->Decoda->parse($post['Post']['content']); ?>
 					</td>
 				</tr>
 

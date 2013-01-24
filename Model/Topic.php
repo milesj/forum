@@ -424,11 +424,7 @@ class Topic extends ForumAppModel {
 	 * @return boolean
 	 */
 	public function beforeSave($options = array()) {
-		if (isset($this->data['Topic']['content'])) {
-			return $this->validateDecoda('Topic');
-		}
-
-		return true;
+		return $this->validateDecoda('Topic');
 	}
 
 	/**

@@ -1,6 +1,6 @@
 <?php
 
-$this->OpenGraph->description($this->Text->truncate(strip_tags($topic['FirstPost']['contentHtml']), 150));
+$this->OpenGraph->description($this->Text->truncate($this->Decoda->strip($topic['FirstPost']['content']), 150));
 
 if (!empty($topic['Forum']['Parent']['slug'])) {
 	$this->Breadcrumb->add($topic['Forum']['Parent']['title'], array('controller' => 'stations', 'action' => 'view', $topic['Forum']['Parent']['slug']));
@@ -169,12 +169,12 @@ if (!empty($topic['Poll']['id'])) { ?>
 					</td>
 					<td valign="top">
 						<div class="post">
-							<?php echo $post['Post']['contentHtml']; ?>
+							<?php echo $this->Decoda->parse($post['Post']['content']); ?>
 						</div>
 
-						<?php if (!empty($post['User']['Profile']['signatureHtml'])) { ?>
+						<?php if (!empty($post['User']['Profile']['signature'])) { ?>
 							<div class="signature">
-								<?php echo $post['User']['Profile']['signatureHtml']; ?>
+								<?php echo $this->Decoda->parse($post['User']['Profile']['signature']); ?>
 							</div>
 						<?php } ?>
 					</td>

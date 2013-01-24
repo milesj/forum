@@ -10,6 +10,8 @@
 
 App::uses('CakeSession', 'Model/Datasource');
 
+use Decoda\Decoda;
+
 class ForumAppModel extends AppModel {
 
 	/**
@@ -239,40 +241,19 @@ class ForumAppModel extends AppModel {
 	 * Validate the Decoda markup.
 	 *
 	 * @param string $model
+	 * @param string $field
 	 * @return boolean
 	 */
-	public function validateDecoda($model) {
-		$censored = array_map('trim', explode(',', $this->settings['censored_words']));
-		$locale = $this->config['decodaLocales'][Configure::read('Config.language')];
+	public function validateDecoda($model, $field = 'content') {
+		if (!isset($this->data[$model][$field])) {
+			return true;
+		}
 
-		$decoda = new Decoda($this->data[$model]['content']);
-		$decoda->setXhtml(true)->setLocale($locale);
-
-		// Filters
-		$decoda->addFilter(new BlockFilter());
-		$decoda->addFilter(new CodeFilter());
-		$decoda->addFilter(new DefaultFilter());
-		$decoda->addFilter(new EmailFilter());
-		$decoda->addFilter(new ImageFilter());
-		$decoda->addFilter(new ListFilter());
-		$decoda->addFilter(new QuoteFilter());
-		$decoda->addFilter(new TextFilter());
-		$decoda->addFilter(new UrlFilter());
-
-		// Hooks
-		$censorHook = new CensorHook();
-		$censorHook->blacklist($censored);
-
-		$decoda->addHook($censorHook);
-		$decoda->addHook(new ClickableHook());
-
-		// Parse
-		$parsed = $decoda->parse();
+		$decoda = new Decoda($this->data[$model][$field]);
+		$decoda->defaults()->parse();
 		$errors = $decoda->getErrors();
 
 		if (!$errors) {
-			$this->data[$model]['contentHtml'] = $parsed;
-
 			return true;
 		}
 
