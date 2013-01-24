@@ -6,7 +6,7 @@ $this->Html->script('Utility.decoda-1.1.0.min', array('inline' => false)); ?>
 <script type="text/javascript">
 	window.addEvent('domready', function() {
 		var decoda = new Decoda('<?php echo $id; ?>', {
-			previewUrl: '/forum/post/preview',
+			previewUrl: '/forum/posts/preview',
 			onInitialize: function() {
 				this.editor.getParent('div').addClass('input-decoda');
 			},
@@ -14,7 +14,7 @@ $this->Html->script('Utility.decoda-1.1.0.min', array('inline' => false)); ?>
 				return this.clean();
 			},
 			onRenderHelp: function(table) {
-				table.getParent('div').addClass('table');
+				table.addClass('table');
 			}
 		}).defaults();
 	});

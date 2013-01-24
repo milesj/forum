@@ -155,6 +155,7 @@ class PostsController extends ForumAppController {
 		$input = isset($this->request->data['input']) ? $this->request->data['input'] : '';
 
 		$this->set('input', $input);
+		$this->layout = false;
 	}
 
 	/**
@@ -162,6 +163,11 @@ class PostsController extends ForumAppController {
 	 */
 	public function beforeFilter() {
 		parent::beforeFilter();
+
+		if ($this->request->is('ajax')) {
+			$this->Security->validatePost = false;
+			$this->Security->csrfCheck = false;
+		}
 
 		$this->Auth->allow('index', 'preview');
 
