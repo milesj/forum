@@ -1,4 +1,4 @@
-# Forum v3.2.0 #
+# Forum v3.3.0-rc1 #
 
 A fully robust and powerful CakePHP forum plugin. Integrates with an external user system, support for topic and forum subscriptions, and many more features listed below.
 
@@ -26,7 +26,6 @@ Thorough documentation can be found here: http://milesj.me/code/cakephp/forum
 ## Features ##
 
 Forums
-
 * Parent and children forums
 * Activity and latest post tracking
 * Auto-lock old topics
@@ -38,7 +37,6 @@ Forums
 * Topic and forum subscription with email notifications
 
 Moderation
-
 * Moderators, Super Moderators and Admin levels
 * Restrict moderators to specific forums
 * Inline moderation and management
@@ -46,7 +44,6 @@ Moderation
 * Ability to edit and manage users content
 
 Administration
-
 * Full admin panel using CakePHP admin routes
 * Requires the administration access level
 * Can add, edit, order, delete forums
@@ -56,7 +53,6 @@ Administration
 * Manage all aspects and content
 
 Security
-
 * Utilizes CakePHPs Auth and Security Components
 * Advanced flood protection (Posts and Topics)
 * Hourly post limitations
@@ -64,7 +60,6 @@ Security
 * Form protection against bots and hackers
 
 Miscellaneous
-
 * BBCode support using Decoda
 * Utilizes remember me features using AutoLogin
 * Mark topics as read (Session)
