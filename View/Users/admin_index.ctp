@@ -44,12 +44,12 @@ $this->Breadcrumb->add(__d('forum', 'Users'), array('controller' => 'users', 'ac
 				<tr<?php if ($counter % 2) echo ' class="altRow"'; ?>>
 					<td class="icon"><?php echo $user['Profile']['id']; ?></td>
 					<td><?php echo $this->Html->link($user['User'][$config['userMap']['username']], array('action' => 'edit', $user['Profile']['id'], 'admin' => true)); ?></td>
-					<td><?php echo $this->Common->options('statusMap', $user['User'][$config['userMap']['status']]); ?></td>
+					<td><?php echo $this->Forum->options('statusMap', $user['User'][$config['userMap']['status']]); ?></td>
 					<td><?php echo $user['User'][$config['userMap']['email']]; ?></td>
-					<td><?php echo $this->Time->nice($user['Profile']['created'], $this->Common->timezone()); ?></td>
+					<td><?php echo $this->Time->nice($user['Profile']['created'], $this->Forum->timezone()); ?></td>
 					<td>
 						<?php if (!empty($user['Profile']['lastLogin'])) {
-							echo $this->Time->timeAgoInWords($user['Profile']['lastLogin'], array('userOffset' => $this->Common->timezone()));
+							echo $this->Time->timeAgoInWords($user['Profile']['lastLogin'], array('userOffset' => $this->Forum->timezone()));
 						} else {
 							echo '<em class="gray">' . __d('forum', 'Never') . '</em>';
 						} ?>

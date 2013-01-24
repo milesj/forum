@@ -52,7 +52,7 @@ $this->Breadcrumb->add(__d('forum', 'Moderate'), array('controller' => 'topics',
 						<?php echo str_replace("\n", '', $this->Text->truncate($post['Post']['content'], 100)); ?>
 					</td>
 					<td class="created">
-						<?php echo $this->Time->niceShort($post['Post']['created'], $this->Common->timezone()); ?>
+						<?php echo $this->Time->niceShort($post['Post']['created'], $this->Forum->timezone()); ?>
 					</td>
 				</tr>
 

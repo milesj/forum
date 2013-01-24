@@ -56,7 +56,7 @@ $this->Breadcrumb->add(__d('forum', 'Administration'), array('controller' => 'fo
 				<?php foreach ($latestReports as $counter => $report) { ?>
 
 				<tr<?php if ($counter % 2) echo ' class="altRow"'; ?>>
-					<td><?php echo $this->Html->link($this->Common->reportType($report['Report']['itemType']), array('controller' => 'reports', $report['Report']['itemType'])); ?></td>
+					<td><?php echo $this->Html->link($this->Forum->reportType($report['Report']['itemType']), array('controller' => 'reports', $report['Report']['itemType'])); ?></td>
 					<td>
 						<?php if ($report['Report']['itemType'] == Report::TOPIC && !empty($report['Topic']['id'])) {
 							echo $this->Html->link($report['Topic']['title'], array('controller' => 'topics', 'action' => 'view', $report['Topic']['slug'], 'admin' => false));
@@ -73,7 +73,7 @@ $this->Breadcrumb->add(__d('forum', 'Administration'), array('controller' => 'fo
 					</td>
 					<td><?php echo $this->Html->link($report['Reporter'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'edit', $report['Reporter']['id'], 'admin' => true)); ?></td>
 					<td><?php echo h($report['Report']['comment']); ?></td>
-					<td><?php echo $this->Time->nice($report['Report']['created'], $this->Common->timezone()); ?></td>
+					<td><?php echo $this->Time->nice($report['Report']['created'], $this->Forum->timezone()); ?></td>
 				</tr>
 
 				<?php } ?>
@@ -110,7 +110,7 @@ if ($latestUsers) { ?>
 				<tr<?php if ($counter % 2) echo ' class="altRow"'; ?>>
 					<td><?php echo $this->Html->link($latest['User'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'edit', $latest['Profile']['id'], 'admin' => true)); ?></td>
 					<td><?php echo $latest['User'][$config['userMap']['email']]; ?></td>
-					<td class="created"><?php echo $this->Time->nice($latest['Profile']['created'], $this->Common->timezone()); ?></td>
+					<td class="created"><?php echo $this->Time->nice($latest['Profile']['created'], $this->Forum->timezone()); ?></td>
 					<td class="stat"><?php echo number_format($latest['Profile']['totalTopics']); ?></td>
 					<td class="stat"><?php echo number_format($latest['Profile']['totalPosts']); ?></td>
 					<td class="align-center">

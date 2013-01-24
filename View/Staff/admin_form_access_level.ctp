@@ -29,9 +29,9 @@ $this->Breadcrumb->add($title, $this->here); ?>
 	<div class="containerContent">
 		<?php
 		echo $this->Form->input('title', array('label' => __d('forum', 'Title')));
-		echo $this->Form->input('level', array('options' => $this->Common->options('access'), 'label' => __d('forum', 'Access Level'), 'empty' => false));
-		echo $this->Form->input('isSuper', array('options' => $this->Common->options('status'), 'label' => __d('forum', 'Is Super Moderator?'), 'empty' => false));
-		echo $this->Form->input('isAdmin', array('options' => $this->Common->options('status'), 'label' => __d('forum', 'Is Administrator?'), 'empty' => false)); ?>
+		echo $this->Form->input('level', array('options' => $this->Forum->options('access'), 'label' => __d('forum', 'Access Level'), 'empty' => false));
+		echo $this->Form->input('isSuper', array('options' => $this->Forum->options('status'), 'label' => __d('forum', 'Is Super Moderator?'), 'empty' => false));
+		echo $this->Form->input('isAdmin', array('options' => $this->Forum->options('status'), 'label' => __d('forum', 'Is Administrator?'), 'empty' => false)); ?>
 	</div>
 </div>
 

@@ -36,7 +36,7 @@ $this->Breadcrumb->add(__d('forum', 'Reported'), array('controller' => 'reports'
 					foreach ($reports as $counter => $report) { ?>
 
 					<tr<?php if ($counter % 2) echo ' class="altRow"'; ?>>
-						<td><?php echo $this->Html->link($this->Common->reportType($report['Report']['itemType']), array($report['Report']['itemType'])); ?></td>
+						<td><?php echo $this->Html->link($this->Forum->reportType($report['Report']['itemType']), array($report['Report']['itemType'])); ?></td>
 						<td>
 							<?php if ($report['Report']['itemType'] == Report::TOPIC && !empty($report['Topic']['id'])) {
 								echo $this->Html->link($report['Topic']['title'], array('controller' => 'topics', 'action' => 'view', $report['Topic']['slug'], 'admin' => false));
@@ -53,7 +53,7 @@ $this->Breadcrumb->add(__d('forum', 'Reported'), array('controller' => 'reports'
 						</td>
 						<td><?php echo $this->Html->link($report['Reporter'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'edit', $report['Reporter']['Profile']['id'], 'admin' => true)); ?></td>
 						<td><?php echo h($report['Report']['comment']); ?></td>
-						<td><?php echo $this->Time->nice($report['Report']['created'], $this->Common->timezone()); ?></td>
+						<td><?php echo $this->Time->nice($report['Report']['created'], $this->Forum->timezone()); ?></td>
 					</tr>
 					<?php }
 				} else { ?>

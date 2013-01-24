@@ -1,12 +1,12 @@
 <?php
-$pages = $this->Common->topicPages($topic['Topic']);
+$pages = $this->Forum->topicPages($topic['Topic']);
 $columns = isset($columns) ? $columns : array(); ?>
 
 <tr<?php if ($counter % 2) echo ' class="altRow"'; ?>>
 	<?php if (in_array('status', $columns)) { ?>
 		<td class="icon"><input type="checkbox" name="data[Topic][items][]" value="<?php echo $topic['Topic']['id']; ?>"></td>
 	<?php } else { ?>
-		<td class="icon"><?php echo $this->Common->topicIcon($topic); ?></td>
+		<td class="icon"><?php echo $this->Forum->topicIcon($topic); ?></td>
 	<?php } ?>
 	<td>
 		<?php if (!empty($topic['Poll']['id'])) {
@@ -23,13 +23,13 @@ $columns = isset($columns) ? $columns : array(); ?>
 		<td class="parent"><?php echo $this->Html->link($topic['Forum']['title'], array('controller' => 'stations', 'action' => 'view', $topic['Forum']['slug'])); ?></td>
 	<?php } ?>
 	<?php if (in_array('status', $columns)) { ?>
-		<td class="status"><?php echo $this->Common->options('topicStatus', $topic['Topic']['status']); ?></td>
+		<td class="status"><?php echo $this->Forum->options('topicStatus', $topic['Topic']['status']); ?></td>
 	<?php } ?>
 	<td class="author">
 		<?php echo $this->Html->link($topic['User'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'profile', $topic['User']['id'])); ?>
 	</td>
 	<td class="created">
-		<?php echo $this->Time->niceShort($topic['Topic']['created'], $this->Common->timezone()); ?>
+		<?php echo $this->Time->niceShort($topic['Topic']['created'], $this->Forum->timezone()); ?>
 	</td>
 	<td class="stat">
 		<?php echo number_format($topic['Topic']['post_count']); ?>
@@ -39,7 +39,7 @@ $columns = isset($columns) ? $columns : array(); ?>
 	</td>
 	<td class="activity">
 		<?php if (!empty($topic['LastPost']['id'])) {
-			echo $this->Time->timeAgoInWords($topic['LastPost']['created'], array('userOffset' => $this->Common->timezone())); ?>
+			echo $this->Time->timeAgoInWords($topic['LastPost']['created'], array('userOffset' => $this->Forum->timezone())); ?>
 
 			<?php if (!empty($topic['LastUser']['id'])) { ?>
 				<span class="gray"><?php echo __d('forum', 'by'); ?> <?php echo $this->Html->link($topic['LastUser'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'profile', $topic['Topic']['lastUser_id'])); ?></span>

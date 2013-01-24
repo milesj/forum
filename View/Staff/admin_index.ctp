@@ -78,7 +78,7 @@ $this->Breadcrumb->add(__d('forum', 'Staff'), array('controller' => 'staff', 'ac
 				<tr>
 					<td><strong><?php echo $this->Html->link($user['User'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'edit', $user['User']['Profile']['id'], 'admin' => true)); ?></strong></td>
 					<td class="align-center"><?php echo h($user['AccessLevel']['title']); ?></td>
-					<td class="align-center"><?php echo $this->Time->nice($user['Access']['created'], $this->Common->timezone()); ?></td>
+					<td class="align-center"><?php echo $this->Time->nice($user['Access']['created'], $this->Forum->timezone()); ?></td>
 					<td class="align-center gray">
 						<?php echo $this->Html->link(__d('forum', 'Edit'), array('action' => 'edit_access', $user['Access']['id'])); ?> -
 						<?php echo $this->Html->link(__d('forum', 'Delete'), array('action' => 'delete_access', $user['Access']['id']), array('confirm' => __d('forum', 'Are you sure you want to delete?'))); ?>
@@ -115,7 +115,7 @@ $this->Breadcrumb->add(__d('forum', 'Staff'), array('controller' => 'staff', 'ac
 				<tr >
 					<td><strong><?php echo $this->Html->link($user['User'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'edit', $user['User']['Profile']['id'], 'admin' => true)); ?></strong></td>
 					<td class="align-center"><?php echo $this->Html->link($user['Forum']['title'], array('controller' => 'stations', 'action' => 'edit', $user['Forum']['id'], 'admin' => true)); ?></td>
-					<td class="align-center"><?php echo $this->Time->nice($user['Moderator']['created'], $this->Common->timezone()); ?></td>
+					<td class="align-center"><?php echo $this->Time->nice($user['Moderator']['created'], $this->Forum->timezone()); ?></td>
 					<td class="align-center gray">
 						<?php echo $this->Html->link(__d('forum', 'Edit'), array('action' => 'edit_moderator', $user['Moderator']['id'])); ?> -
 						<?php echo $this->Html->link(__d('forum', 'Delete'), array('action' => 'delete_moderator', $user['Moderator']['id']), array('confirm' => __d('forum', 'Are you sure you want to delete?'))); ?>

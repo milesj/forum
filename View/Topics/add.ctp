@@ -19,9 +19,9 @@ $this->Breadcrumb->add($pageTitle, array('controller' => 'topics', 'action' => '
 		echo $this->Form->input('title', array('label' => __d('forum', 'Title')));
 		echo $this->Form->input('forum_id', array('options' => $forums, 'empty' => '-- ' . __d('forum', 'Select a Forum') . ' --', 'label' => __d('forum', 'Forum')));
 
-		if ($this->Common->hasAccess(AccessLevel::SUPER, $forum['Forum']['id'])) {
-			echo $this->Form->input('status', array('options' => $this->Common->options('topicStatus'), 'label' => __d('forum', 'Status')));
-			echo $this->Form->input('type', array('options' => $this->Common->options('topicTypes'), 'label' => __d('forum', 'Type')));
+		if ($this->Forum->hasAccess(AccessLevel::SUPER, $forum['Forum']['id'])) {
+			echo $this->Form->input('status', array('options' => $this->Forum->options('topicStatus'), 'label' => __d('forum', 'Status')));
+			echo $this->Form->input('type', array('options' => $this->Forum->options('topicTypes'), 'label' => __d('forum', 'Type')));
 		}
 
 		if ($type === 'poll') {

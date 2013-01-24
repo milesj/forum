@@ -8,19 +8,19 @@
 			}
 		}
 
-		if ($this->Common->hasAccess(AccessLevel::MOD, $topic['Forum']['id'])) {
+		if ($this->Forum->hasAccess(AccessLevel::MOD, $topic['Forum']['id'])) {
 			echo $this->Html->link(__d('forum', 'Moderate'), array('controller' => 'topics', 'action' => 'moderate', $topic['Topic']['slug']), array('class' => 'button'));
 		}
 
-		if ($this->Common->hasAccess($topic['Forum']['accessPost'])) {
+		if ($this->Forum->hasAccess($topic['Forum']['accessPost'])) {
 			echo $this->Html->link(__d('forum', 'Create Topic'), array('controller' => 'topics', 'action' => 'add', $topic['Forum']['slug']), array('class' => 'button'));
 		}
 
-		if ($this->Common->hasAccess($topic['Forum']['accessPoll'])) {
+		if ($this->Forum->hasAccess($topic['Forum']['accessPoll'])) {
 			echo $this->Html->link(__d('forum', 'Create Poll'), array('controller' => 'topics', 'action' => 'add', $topic['Forum']['slug'], 'poll'), array('class' => 'button'));
 		}
 
-		if ($this->Common->hasAccess($topic['Forum']['accessReply'])) {
+		if ($this->Forum->hasAccess($topic['Forum']['accessReply'])) {
 			if ($topic['Topic']['status']) {
 				echo $this->Html->link(__d('forum', 'Post Reply'), array('controller' => 'posts', 'action' => 'add', $topic['Topic']['slug']), array('class' => 'button'));
 			} else {

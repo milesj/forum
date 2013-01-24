@@ -16,14 +16,14 @@ $this->Breadcrumb->add($profile['User'][$config['userMap']['username']], array('
 	<table class="table">
 		<tbody>
 			<tr>
-				<?php if ($avatar = $this->Common->avatar($profile)) { ?>
+				<?php if ($avatar = $this->Forum->avatar($profile)) { ?>
 					<td rowspan="2" style="width: 80px;">
 						<?php echo $avatar; ?>
 					</td>
 				<?php } ?>
 
 				<td><strong><?php echo __d('forum', 'Joined'); ?>:</strong></td>
-				<td><?php echo $this->Time->nice($profile['Profile']['created'], $this->Common->timezone()); ?></td>
+				<td><?php echo $this->Time->nice($profile['Profile']['created'], $this->Forum->timezone()); ?></td>
 
 				<td><strong><?php echo __d('forum', 'Total Topics'); ?>:</strong></td>
 				<td><?php echo number_format($profile['Profile']['totalTopics']); ?></td>
@@ -45,7 +45,7 @@ $this->Breadcrumb->add($profile['User'][$config['userMap']['username']], array('
 				<td><strong><?php echo __d('forum', 'Last Login'); ?>:</strong></td>
 				<td>
 					<?php if ($profile['Profile']['lastLogin']) {
-						echo $this->Time->timeAgoInWords($profile['Profile']['lastLogin'], array('userOffset' => $this->Common->timezone()));
+						echo $this->Time->timeAgoInWords($profile['Profile']['lastLogin'], array('userOffset' => $this->Forum->timezone()));
 					} else {
 						echo '<em>' . __d('forum', 'Never') . '</em>';
 					} ?>
@@ -95,10 +95,10 @@ $this->Breadcrumb->add($profile['User'][$config['userMap']['username']], array('
 
 				<tr<?php if ($counter % 2) echo ' class="altRow"'; ?>>
 					<td><?php echo $this->Html->link($topic['Topic']['title'], array('controller' => 'topics', 'action' => 'view', $topic['Topic']['slug'])); ?></td>
-					<td class="created"><?php echo $this->Time->niceShort($topic['Topic']['created'], $this->Common->timezone()); ?></td>
+					<td class="created"><?php echo $this->Time->niceShort($topic['Topic']['created'], $this->Forum->timezone()); ?></td>
 					<td class="stat"><?php echo number_format($topic['Topic']['post_count']); ?></td>
 					<td class="stat"><?php echo number_format($topic['Topic']['view_count']); ?></td>
-					<td class="activity"><?php echo $this->Time->timeAgoInWords($topic['LastPost']['created'], array('userOffset' => $this->Common->timezone())); ?></td>
+					<td class="activity"><?php echo $this->Time->timeAgoInWords($topic['LastPost']['created'], array('userOffset' => $this->Forum->timezone())); ?></td>
 				</tr>
 
 			<?php } ?>
@@ -133,7 +133,7 @@ if ($posts) { ?>
 				<tr class="altRow">
 					<td><strong><?php echo $this->Html->link($post['Topic']['title'], array('controller' => 'topics', 'action' => 'view', $post['Topic']['slug'])); ?></strong></td>
 					<td><?php echo $this->Html->link($post['Topic']['User'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'profile', $post['Topic']['User']['id'])); ?></td>
-					<td class="ar"><?php echo $this->Time->timeAgoInWords($post['Post']['created'], array('userOffset' => $this->Common->timezone())); ?></td>
+					<td class="ar"><?php echo $this->Time->timeAgoInWords($post['Post']['created'], array('userOffset' => $this->Forum->timezone())); ?></td>
 				</tr>
 				<tr>
 					<td colspan="3"><?php echo $this->Decoda->parse($post['Post']['content']); ?></td>

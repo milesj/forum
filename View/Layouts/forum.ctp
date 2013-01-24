@@ -46,7 +46,7 @@ echo $this->OpenGraph->html(array('xmlns' => 'http://www.w3.org/1999/xhtml')); ?
 				<li<?php if ($menuTab === 'help') echo ' class="active"'; ?>><?php echo $this->Html->link(__d('forum', 'Help'), array('controller' => 'forum', 'action' => 'help')); ?></li>
 				<li<?php if ($menuTab === 'users') echo ' class="active"'; ?>><?php echo $this->Html->link(__d('forum', 'Users'), array('controller' => 'users', 'action' => 'index')); ?></li>
 
-				<?php if ($user && $this->Common->hasAccess(AccessLevel::ADMIN)) { ?>
+				<?php if ($user && $this->Forum->hasAccess(AccessLevel::ADMIN)) { ?>
 					<li><?php echo $this->Html->link(__d('forum', 'Admin'), array('controller' => 'forum', 'action' => 'index', 'admin' => true)); ?></li>
 				<?php } ?>
 			</ul>

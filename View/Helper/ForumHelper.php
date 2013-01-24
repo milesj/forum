@@ -1,6 +1,6 @@
 <?php
-/**
- * Forum - CommonHelper
+/*
+ * ForumHelper
  *
  * @author      Miles Johnson - http://milesj.me
  * @copyright   Copyright 2006-2011, Miles Johnson, Inc.
@@ -10,7 +10,7 @@
 
 App::uses('AccessLevel', 'Forum.Model');
 
-class CommonHelper extends AppHelper {
+class ForumHelper extends AppHelper {
 
 	/**
 	 * Helpers.
@@ -30,7 +30,7 @@ class CommonHelper extends AppHelper {
 		$userMap = Configure::read('Forum.userMap');
 		$avatar = null;
 
-		if ($userMap['avatar'] && !empty($user['User'][$userMap['avatar']])) {
+		if (!empty($userMap['avatar']) && !empty($user['User'][$userMap['avatar']])) {
 			$avatar = $this->Html->image($user['User'][$userMap['avatar']], array('width' => $size, 'height' => $size));
 
 		} else if (Configure::read('Forum.settings.enable_gravatar')) {

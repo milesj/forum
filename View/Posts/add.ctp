@@ -40,7 +40,7 @@ if ($review) { ?>
 
 				<tr class="altRow">
 					<td colspan="2" class="align-right dark">
-						<?php echo $this->Time->niceShort($post['Post']['created'], $this->Common->timezone()); ?>
+						<?php echo $this->Time->niceShort($post['Post']['created'], $this->Forum->timezone()); ?>
 					</td>
 				</tr>
 				<tr>

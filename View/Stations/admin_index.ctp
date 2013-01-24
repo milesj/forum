@@ -29,7 +29,7 @@ if ($forums) {
 			echo $this->Form->input('Forum.' . $forum['Forum']['id'] . '.id', array('value' => $forum['Forum']['id'], 'type' => 'hidden')); ?>
 
 			<?php echo h($forum['Forum']['title']); ?>
-			(<?php echo $this->Common->options('forumStatus', $forum['Forum']['status']); ?>)
+			(<?php echo $this->Forum->options('forumStatus', $forum['Forum']['status']); ?>)
 		</h3>
 	</div>
 

@@ -39,9 +39,9 @@ $this->Breadcrumb->add(__d('forum', 'Settings'), array('controller' => 'forum', 
 		<div class="inputDivider"><?php echo __d('forum', 'Subscription Settings'); ?></div>
 
 		<?php // Subscriptions
-		echo $this->Form->input('enable_topic_subscriptions', array('options' => $this->Common->options(), 'label' => __d('forum', 'Enable Forum Subscriptions')));
-		echo $this->Form->input('enable_forum_subscriptions', array('options' => $this->Common->options(), 'label' => __d('forum', 'Enable Topic Subscriptions')));
-		echo $this->Form->input('auto_subscribe_self', array('options' => $this->Common->options(), 'label' => __d('forum', 'Auto-subscribe Author To Topic'))); ?>
+		echo $this->Form->input('enable_topic_subscriptions', array('options' => $this->Forum->options(), 'label' => __d('forum', 'Enable Forum Subscriptions')));
+		echo $this->Form->input('enable_forum_subscriptions', array('options' => $this->Forum->options(), 'label' => __d('forum', 'Enable Topic Subscriptions')));
+		echo $this->Form->input('auto_subscribe_self', array('options' => $this->Forum->options(), 'label' => __d('forum', 'Auto-subscribe Author To Topic'))); ?>
 
 		<div class="inputDivider"><?php echo __d('forum', 'Misc Settings'); ?></div>
 
@@ -50,8 +50,8 @@ $this->Breadcrumb->add(__d('forum', 'Settings'), array('controller' => 'forum', 
 		echo $this->Form->input('default_timezone', array('options' => $config['timezones'], 'label' => __d('forum', 'Timezone')));
 		echo $this->Form->input('days_till_autolock', array('class' => 'numeric', 'after' => ' (' . __d('forum', 'Days') . ')', 'label' => __d('forum', 'Inactive Days Till Topic Auto-Lock')));
 		echo $this->Form->input('whos_online_interval', array('class' => 'numeric', 'label' => __d('forum', 'Whos Online Interval'), 'after' => ' (' . __d('forum', 'Past Minutes') . ')'));
-		echo $this->Form->input('enable_quick_reply', array('options' => $this->Common->options(), 'label' => __d('forum', 'Enable Quick Reply')));
-		echo $this->Form->input('enable_gravatar', array('options' => $this->Common->options(), 'label' => __d('forum', 'Enable Gravatar')));
+		echo $this->Form->input('enable_quick_reply', array('options' => $this->Forum->options(), 'label' => __d('forum', 'Enable Quick Reply')));
+		echo $this->Form->input('enable_gravatar', array('options' => $this->Forum->options(), 'label' => __d('forum', 'Enable Gravatar')));
 		echo $this->Form->input('censored_words', array('type' => 'textarea', 'label' => __d('forum', 'Censored Words'), 'after' => ' (' . __d('forum', 'Separate with commas') . ')')); ?>
 
 	</div>

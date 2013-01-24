@@ -1,7 +1,7 @@
 
 <div class="navigation">
 	<div>
-		<?php echo $this->Time->nice(time(), $this->Common->timezone()); ?>
+		<?php echo $this->Time->nice(time(), $this->Forum->timezone()); ?>
 	</div>
 
 	<?php $links = array();

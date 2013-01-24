@@ -8,16 +8,16 @@
 			}
 		}
 
-		if ($this->Common->hasAccess(AccessLevel::MOD, $forum['Forum']['id'])) {
+		if ($this->Forum->hasAccess(AccessLevel::MOD, $forum['Forum']['id'])) {
 			echo $this->Html->link(__d('forum', 'Moderate'), array('controller' => 'stations', 'action' => 'moderate', $forum['Forum']['slug']), array('class' => 'button'));
 		}
 
 		if ($forum['Forum']['status']) {
-			if ($this->Common->hasAccess($forum['Forum']['accessPost'])) {
+			if ($this->Forum->hasAccess($forum['Forum']['accessPost'])) {
 				echo $this->Html->link(__d('forum', 'Create Topic'), array('controller' => 'topics', 'action' => 'add', $forum['Forum']['slug']), array('class' => 'button'));
 			}
 
-			if ($this->Common->hasAccess($forum['Forum']['accessPoll'])) {
+			if ($this->Forum->hasAccess($forum['Forum']['accessPoll'])) {
 				echo $this->Html->link(__d('forum', 'Create Poll'), array('controller' => 'topics', 'action' => 'add', $forum['Forum']['slug'], 'poll'), array('class' => 'button'));
 			}
 		} else {

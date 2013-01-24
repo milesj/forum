@@ -32,7 +32,7 @@ class ForumAppController extends AppController {
 	 * @var array
 	 */
 	public $helpers = array(
-		'Html', 'Session', 'Form', 'Time', 'Text', 'Forum.Common',
+		'Html', 'Session', 'Form', 'Time', 'Text', 'Forum.Forum',
 		'Utility.Breadcrumb', 'Utility.OpenGraph', 'Utility.Decoda'
 	);
 

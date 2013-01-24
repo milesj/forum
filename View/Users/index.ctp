@@ -33,10 +33,10 @@ $this->Breadcrumb->add(__d('forum', 'Users'), array('controller' => 'users', 'ac
 
 			<tr<?php if ($counter % 2) echo ' class="altRow"'; ?>>
 				<td><?php echo $this->Html->link($profile['User'][$config['userMap']['username']], array('action' => 'profile', $profile['User']['id'])); ?></td>
-				<td class="created"><?php echo $this->Time->nice($profile['Profile']['created'], $this->Common->timezone()); ?></td>
+				<td class="created"><?php echo $this->Time->nice($profile['Profile']['created'], $this->Forum->timezone()); ?></td>
 				<td class="created">
 					<?php if (!empty($profile['Profile']['lastLogin'])) {
-						echo $this->Time->timeAgoInWords($profile['Profile']['lastLogin'], array('userOffset' => $this->Common->timezone()));
+						echo $this->Time->timeAgoInWords($profile['Profile']['lastLogin'], array('userOffset' => $this->Forum->timezone()));
 					} else {
 						echo '<em class="gray">' . __d('forum', 'Never') . '</em>';
 					} ?>
