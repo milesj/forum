@@ -31,7 +31,8 @@ Configure::write('Forum.userMap', array(
 	'username'	=> 'username',
 	'password'	=> 'password',
 	'email'		=> 'email',
-	'status'	=> 'status'
+	'status'	=> 'status',
+	'avatar'	=> 'avatar'
 ));
 
 /**
