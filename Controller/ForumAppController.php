@@ -8,10 +8,6 @@
  * @link        http://milesj.me/code/cakephp/forum
  */
 
-if (!defined('FORUM_USER')) {
-	define('FORUM_USER', Configure::read('Forum.userModel'));
-}
-
 Configure::write('Forum.settings', ClassRegistry::init('Forum.Setting')->getSettings());
 
 class ForumAppController extends AppController {

@@ -12,14 +12,16 @@ App::uses('ClassRegistry', 'Utility');
 App::uses('Sanitize', 'Utility');
 
 /**
+ * Name of the User model.
+ */
+if (!defined('FORUM_USER')) {
+	define('FORUM_USER', 'User');
+}
+
+/**
  * Current version.
  */
 Configure::write('Forum.version', '3.2.0');
-
-/**
- * Name of the User model.
- */
-Configure::write('Forum.userModel', 'User');
 
 /**
  * A map of user fields that are used within this plugin. If your users table has a different naming scheme
