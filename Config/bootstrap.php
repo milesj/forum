@@ -93,7 +93,7 @@ Configure::write('Forum.settings', array(
 	'autoSubscribeSelf' => true,
 
 	// Misc
-	'whosOnlineInterval' => 15,
+	'whosOnlineInterval' => '-15 minutes',
 	'enableQuickReply' => true,
 	'enableGravatar' => true,
 	'censoredWords' => array(),

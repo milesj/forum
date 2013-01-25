@@ -50,13 +50,14 @@ class Post extends ForumAppModel {
 		$this->set($data);
 
 		if ($this->validates()) {
+			$settings = Configure::read('Forum.settings');
 			$isAdmin = $this->Session->read('Forum.isAdmin');
 
-			if (($secondsLeft = $this->checkFlooding($this->settings['postFloodInterval'])) > 0 && !$isAdmin) {
+			if (($secondsLeft = $this->checkFlooding($settings['postFloodInterval'])) > 0 && !$isAdmin) {
 				return $this->invalidate('content', 'You must wait %s more second(s) till you can post a reply', $secondsLeft);
 
-			} else if ($this->checkHourly($this->settings['postsPerHour']) && !$isAdmin) {
-				return $this->invalidate('content', 'You are only allowed to post %s time(s) per hour', $this->settings['postsPerHour']);
+			} else if ($this->checkHourly($settings['postsPerHour']) && !$isAdmin) {
+				return $this->invalidate('content', 'You are only allowed to post %s time(s) per hour', $settings['postsPerHour']);
 
 			} else {
 				$this->create();

@@ -185,11 +185,11 @@ class Profile extends ForumAppModel {
 	 */
 	public function whosOnline($minutes = null) {
 		if (!$minutes) {
-			$minutes = $this->settings['whosOnlineInterval'];
+			$minutes = Configure::read('Forum.settings.whosOnlineInterval');
 		}
 
 		return $this->find('all', array(
-			'conditions' => array('Profile.currentLogin >' => date('Y-m-d H:i:s', strtotime('-' . $minutes . ' minutes'))),
+			'conditions' => array('Profile.currentLogin >' => date('Y-m-d H:i:s', strtotime($minutes))),
 			'contain' => array('User'),
 			'cache' => array(__METHOD__, $minutes),
 			'cacheExpires' => '+15 minutes'

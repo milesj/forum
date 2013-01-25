@@ -18,37 +18,11 @@ class ForumToolbarComponent extends Component {
 	public $components = array('Session');
 
 	/**
-	 * Plugin configuration.
-	 *
-	 * @var array
-	 */
-	public $config = array();
-
-	/**
-	 * Database forum settings.
-	 *
-	 * @var array
-	 */
-	public $settings = array();
-
-	/**
 	 * Controller instance.
 	 *
 	 * @var Controller
 	 */
 	public $Controller;
-
-	/**
-	 * Initialize.
-	 *
-	 * @param Controller $Controller
-	 * @return void
-	 */
-	public function initialize(Controller $Controller) {
-		$this->Controller = $Controller;
-		$this->config = Configure::read('Forum');
-		$this->settings = Configure::read('Forum.settings');
-	}
 
 	/**
 	 * Initialize the session and all data.
@@ -71,7 +45,7 @@ class ForumToolbarComponent extends Component {
 		$profile = array();
 		$moderates = array();
 		$lastVisit = date('Y-m-d H:i:s');
-		$banned = ($this->Controller->Auth->user($this->config['userMap']['status']) == $this->config['statusMap']['banned']);
+		$banned = ($this->Controller->Auth->user(Configure::read('Forum.userMap.status')) == Configure::read('Forum.statusMap.banned'));
 
 		if ($user_id && !$banned) {
 			$access = ClassRegistry::init('Forum.Access')->getListByUser($user_id);
@@ -126,8 +100,8 @@ class ForumToolbarComponent extends Component {
 		// Certain page
 		if ($topic_id && $post_id) {
 			$posts = ClassRegistry::init('Forum.Post')->getIdsForTopic($topic_id);
+			$perPage = Configure::read('Forum.settings.postsPerPage');
 			$totalPosts = count($posts);
-			$perPage = $this->settings['postsPerPage'];
 
 			if ($totalPosts > $perPage) {
 				$totalPages = ceil($totalPosts / $perPage);
@@ -172,29 +146,10 @@ class ForumToolbarComponent extends Component {
 	 * @return void
 	 */
 	public function markAsRead($topic_id) {
-		$readTopics = $this->Session->read('Forum.readTopics');
+		$readTopics = (array) $this->Session->read('Forum.readTopics');
+		$readTopics[] = $topic_id;
 
-		if ($readTopics && is_array($readTopics)) {
-			$readTopics[] = $topic_id;
-			$readTopics = array_unique($readTopics);
-			$this->Session->write('Forum.readTopics', $readTopics);
-
-		} else {
-			$this->Session->write('Forum.readTopics', array($topic_id));
-		}
-	}
-
-	/**
-	 * Builds the page title.
-	 *
-	 * @return string
-	 */
-	public function pageTitle() {
-		$args = func_get_args();
-		array_unshift($args, __d('forum', 'Forum'));
-		array_unshift($args, $this->settings['name']);
-
-		$this->Controller->set('title_for_layout', implode($this->settings['titleSeparator'], $args));
+		$this->Session->write('Forum.readTopics', array_unique($readTopics));
 	}
 
 	/**
@@ -304,7 +259,7 @@ class ForumToolbarComponent extends Component {
 				$this->goToPage();
 			}
 		} else {
-			$this->Controller->redirect($this->config['routes']['login']);
+			$this->Controller->redirect(Configure::read('Forum.routes.login'));
 		}
 
 		return false;

@@ -23,13 +23,6 @@ config('database');
 class InstallShell extends Shell {
 
 	/**
-	 * Plugin configuration.
-	 *
-	 * @var array
-	 */
-	public $config = array();
-
-	/**
 	 * Installer configuration.
 	 *
 	 * @var array
@@ -57,11 +50,9 @@ class InstallShell extends Shell {
 	 * @return void
 	 */
 	public function main() {
-		$this->config = Configure::read('Forum');
-
 		$this->out();
 		$this->out('Plugin: Forum');
-		$this->out('Version: ' . $this->config['version']);
+		$this->out('Version: ' . Configure::read('Forum.version'));
 		$this->out('Copyright: Miles Johnson, 2010-' . date('Y'));
 		$this->out('Help: http://milesj.me/code/cakephp/forum');
 		$this->out('Shell: Installer');
@@ -302,6 +293,8 @@ class InstallShell extends Shell {
 	 */
 	public function setupAdmin() {
 		$answer = strtoupper($this->in('Would you like to [c]reate a new user, or use an [e]xisting user?', array('C', 'E')));
+		$userMap = Configure::read('Forum.userMap');
+		$statusMap = Configure::read('Forum.statusMap');
 
 		// New User
 		if ($answer === 'C') {
@@ -311,14 +304,14 @@ class InstallShell extends Shell {
 
 			$result = $this->db->execute(sprintf("INSERT INTO `%s` (`%s`, `%s`, `%s`, `%s`) VALUES (%s, %s, %s, %s);",
 				$this->install['table'],
-				$this->config['userMap']['username'],
-				$this->config['userMap']['password'],
-				$this->config['userMap']['email'],
-				$this->config['userMap']['status'],
+				$userMap['username'],
+				$userMap['password'],
+				$userMap['email'],
+				$userMap['status'],
 				$this->db->value(Sanitize::clean($this->install['username'])),
 				$this->db->value(Security::hash($this->install['password'], null, true)),
 				$this->db->value($this->install['email']),
-				$this->db->value($this->config['statusMap']['active'])
+				$this->db->value($statusMap['active'])
 			));
 
 			if ($result) {
@@ -396,6 +389,8 @@ class InstallShell extends Shell {
 	 * @return string
 	 */
 	protected function _newUser($mode) {
+		$userMap = Configure::read('Forum.userMap');
+
 		switch ($mode) {
 			case 'username':
 				$username = trim($this->in('Username:'));
@@ -405,7 +400,7 @@ class InstallShell extends Shell {
 				} else {
 					$result = $this->db->fetchRow(sprintf("SELECT COUNT(*) AS `count` FROM `%s` AS `User` WHERE `%s` = %s",
 						$this->install['table'],
-						$this->config['userMap']['username'],
+						$userMap['username'],
 						$this->db->value($username)
 					));
 
@@ -441,7 +436,7 @@ class InstallShell extends Shell {
 				} else {
 					$result = $this->db->fetchRow(sprintf("SELECT COUNT(*) AS `count` FROM `%s` AS `User` WHERE `%s` = %s",
 						$this->install['table'],
-						$this->config['userMap']['email'],
+						$userMap['email'],
 						$this->db->value($email)
 					));
 
@@ -465,6 +460,7 @@ class InstallShell extends Shell {
 	 */
 	protected function _oldUser() {
 		$user_id = trim($this->in('User ID:'));
+		$userMap = Configure::read('Forum.userMap');
 
 		if (!$user_id || !is_numeric($user_id)) {
 			$user_id = $this->_oldUser();
@@ -480,9 +476,9 @@ class InstallShell extends Shell {
 				$user_id = $this->_oldUser();
 
 			} else {
-				$this->install['username'] = $result['User'][$this->config['userMap']['username']];
-				$this->install['password'] = $result['User'][$this->config['userMap']['password']];
-				$this->install['email'] = $result['User'][$this->config['userMap']['email']];
+				$this->install['username'] = $result['User'][$userMap['username']];
+				$this->install['password'] = $result['User'][$userMap['password']];
+				$this->install['email'] = $result['User'][$userMap['email']];
 			}
 		}
 

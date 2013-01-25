@@ -140,12 +140,13 @@ class Topic extends ForumAppModel {
 
 		if ($this->validates()) {
 			$isAdmin = $this->Session->read('Forum.isAdmin');
+			$settings = Configure::read('Forum.settings');
 
-			if (($secondsLeft = $this->checkFlooding($this->settings['topicFloodInterval'])) > 0 && !$isAdmin) {
+			if (($secondsLeft = $this->checkFlooding($settings['topicFloodInterval'])) > 0 && !$isAdmin) {
 				return $this->invalidate('title', 'You must wait %s more second(s) till you can post a topic', $secondsLeft);
 
-			} else if ($this->checkHourly($this->settings['topicsPerHour']) && !$isAdmin) {
-				return $this->invalidate('title', 'You are only allowed to post %s topic(s) per hour', $this->settings['topicsPerHour']);
+			} else if ($this->checkHourly($settings['topicsPerHour']) && !$isAdmin) {
+				return $this->invalidate('title', 'You are only allowed to post %s topic(s) per hour', $settings['topicsPerHour']);
 
 			} else {
 				$this->create();
@@ -171,7 +172,7 @@ class Topic extends ForumAppModel {
 				}
 
 				// Subscribe
-				if ($this->settings['autoSubscribeSelf']) {
+				if ($settings['autoSubscribeSelf']) {
 					$this->Subscription->subscribeToTopic($data['user_id'], $data['topic_id']);
 				}
 
@@ -436,8 +437,9 @@ class Topic extends ForumAppModel {
 	 */
 	public function afterFind($results, $primary = false) {
 		if ($results) {
-			$postsPerPage = $this->settings['postsPerPage'];
-			$autoLock = $this->settings['topicDaysTillAutolock'];
+			$settings = Configure::read('Forum.settings');
+			$postsPerPage = $settings['postsPerPage'];
+			$autoLock = $settings['topicDaysTillAutolock'];
 
 			if (isset($results[0])) {
 				foreach ($results as &$result) {

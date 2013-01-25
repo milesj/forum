@@ -107,18 +107,6 @@ class ForumController extends ForumAppController {
 	public function admin_settings() {
 		$this->loadModel('Forum.Setting');
 
-		if ($this->request->data) {
-			if ($this->Setting->updateSettings($this->request->data)) {
-				$this->Session->setFlash(__d('forum', 'Settings have been updated!'));
-
-				$this->Setting->deleteCache('Setting::getSettings');
-
-				Configure::write('Forum.settings', $this->request->data['Setting']);
-			}
-		} else {
-			$this->request->data['Setting'] = $this->settings;
-		}
-
 		$this->ForumToolbar->pageTitle(__d('forum', 'Settings'));
 		$this->set('menuTab', 'settings');
 	}

@@ -84,20 +84,6 @@ class ForumAppModel extends AppModel {
 	);
 
 	/**
-	 * Plugin configuration.
-	 *
-	 * @var array
-	 */
-	public $config = array();
-
-	/**
-	 * Database forum settings.
-	 *
-	 * @var array
-	 */
-	public $settings = array();
-
-	/**
 	 * Session instance.
 	 *
 	 * @var CakeSession
@@ -115,8 +101,6 @@ class ForumAppModel extends AppModel {
 		parent::__construct($id, $table, $ds);
 
 		$this->Session = new CakeSession();
-		$this->config = Configure::read('Forum');
-		$this->settings = Configure::read('Forum.settings');
 	}
 
 	/**

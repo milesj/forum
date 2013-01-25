@@ -25,13 +25,20 @@ class ForumHelper extends AppHelper {
 	 * @param string $viewFile
 	 */
 	public function beforeRender($viewFile) {
-		$censored = array_map('trim', explode(',', Configure::read('Forum.settings.censoredWords')));
+		$censored = Configure::read('Forum.settings.censoredWords');
+
+		if (is_string($censored)) {
+			$censored = array_map('trim', explode(',', $censored));
+		}
 
 		$decoda = $this->Decoda->getDecoda();
-		$decoda->getHook('Censor')->blacklist($censored);
 		$decoda->addFilter(new \Decoda\Filter\BlockFilter(array(
 			'spoilerToggle' => "$('spoiler-content-{id}').toggle();"
 		)));
+
+		if ($censored) {
+			$decoda->getHook('Censor')->blacklist($censored);
+		}
 	}
 
 	/**
