@@ -2,17 +2,18 @@
 
 A fully robust and powerful CakePHP forum plugin. Integrates with an external user system, support for topic and forum subscriptions, and many more features listed below.
 
-## Compatibility ##
-
-* v2.x - CakePHP 1.3
-* v3.x - CakePHP 2.x
-* v3.3.x - CakePHP 2.3, Composer
-
 ## Requirements ##
 
 * PHP 5.3.0
+* CakePHP 2
 * Composer
 * Utility Plugin - https://github.com/milesj/Utility
+
+## Compatibility ##
+
+* v3.3 - CakePHP 2.x, PHP 5.3, Composer
+* v3.x - CakePHP 2.x, PHP 5.2
+* v2.x - CakePHP 1.3, PHP 5.2
 
 ## Contributors ##
 
@@ -49,7 +50,6 @@ Administration
 * Can add, edit, order, delete forums
 * Manage all reported content
 * Promote, demote, create access levels, staff and moderators
-* Edit forum settings through the panel
 * Manage all aspects and content
 
 Security
