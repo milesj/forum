@@ -16,8 +16,6 @@ App::uses('Security', 'Utility');
 App::uses('Sanitize', 'Utility');
 App::uses('Validation', 'Utility');
 
-define('FORUM_PLUGIN', dirname(dirname(dirname(__FILE__))) . '/');
-define('FORUM_SCHEMA', FORUM_PLUGIN . 'Config/Schema/');
 config('database');
 
 class InstallShell extends Shell {
@@ -28,8 +26,6 @@ class InstallShell extends Shell {
 	 * @var array
 	 */
 	public $install = array(
-		'prefix' => 'forum_',
-		'database' => 'default',
 		'table' => 'users',
 		'user_id' => '',
 		'username' => '',
@@ -68,24 +64,15 @@ class InstallShell extends Shell {
 		if ($this->usersTable()) {
 			$this->steps(2);
 
-			if ($this->tablePrefix()) {
+			if ($this->checkStatus()) {
 				$this->steps(3);
 
-				if ($this->databaseConfig()) {
+				if ($this->createTables()) {
 					$this->steps(4);
 
-					if ($this->checkStatus()) {
+					if ($this->setupAdmin()) {
 						$this->steps(5);
-
-						if ($this->createTables()) {
-							$this->overrideAppModel();
-							$this->steps(6);
-
-							if ($this->setupAdmin()) {
-								$this->steps(7);
-								$this->finalize();
-							}
-						}
+						$this->finalize();
 					}
 				}
 			}
@@ -103,8 +90,6 @@ class InstallShell extends Shell {
 
 		$steps = array(
 			'Users Table',
-			'Table Prefix',
-			'Database Configuration',
 			'Check Installation Status',
 			'Create Database Tables',
 			'Create Administrator',
@@ -150,76 +135,16 @@ class InstallShell extends Shell {
 	}
 
 	/**
-	 * Set the table prefix to use.
-	 *
-	 * @return boolean
-	 */
-	public function tablePrefix() {
-		$prefix = $this->in('What table prefix would you like to use?');
-
-		if (!$prefix) {
-			$this->out('Please provide a table prefix, I recommend "forum".');
-
-			return $this->tablePrefix();
-
-		} else {
-			$prefix = trim($prefix, '_') . '_';
-			$this->out(sprintf('You have chosen the prefix: %s', $prefix));
-		}
-
-		$answer = strtoupper($this->in('Is this correct?', array('Y', 'N')));
-
-		if ($answer === 'Y') {
-			$this->install['prefix'] = $prefix;
-		} else {
-			return $this->tablePrefix();
-		}
-
-		return true;
-	}
-
-	/**
-	 * Set the database to use.
-	 *
-	 * @return boolean
-	 */
-	public function databaseConfig() {
-		$dbs = new DATABASE_CONFIG();
-		$list = array();
-		$counter = 1;
-
-		$this->out('Possible database configurations:');
-
-		foreach ($dbs as $db => $config) {
-			$this->out('[' . $counter . '] ' . $db);
-			$list[$counter] = $db;
-			$counter++;
-		}
-
-		$this->out();
-
-		$answer = strtoupper($this->in('Which database should the tables be created in?', array_keys($list)));
-
-		if (isset($list[$answer])) {
-			$this->install['database'] = $list[$answer];
-			$this->db = ConnectionManager::getDataSource($this->install['database']);
-
-		} else {
-			return $this->databaseConfig();
-		}
-
-		return true;
-	}
-
-	/**
 	 * Check the database status before installation.
 	 *
 	 * @return boolean
 	 */
 	public function checkStatus() {
+		$this->db = ConnectionManager::getDataSource(FORUM_DATABASE);
+
 		// Check connection
 		if (!$this->db->isConnected()) {
-			$this->out(sprintf('Error: Database connection for %s failed!', $this->install['database']));
+			$this->out(sprintf('Error: Database connection for %s failed!', FORUM_DATABASE));
 
 			return false;
 		}
@@ -228,7 +153,7 @@ class InstallShell extends Shell {
 		$tables = $this->db->listSources();
 
 		if (!in_array($this->install['table'], $tables)) {
-			$this->out(sprintf('Error: No %s table was found in %s.', $this->install['table'], $this->install['database']));
+			$this->out(sprintf('Error: No %s table was found in %s.', $this->install['table'], FORUM_DATABASE));
 
 			return false;
 		}
@@ -244,18 +169,18 @@ class InstallShell extends Shell {
 	 * @return boolean
 	 */
 	public function createTables() {
-		$schemas = glob(FORUM_SCHEMA . '*.sql');
+		$schemas = glob(FORUM_PLUGIN . 'Config/Schema/*.sql');
 		$executed = 0;
 		$total = count($schemas);
 		$tables = array();
 
 		foreach ($schemas as $schema) {
 			$contents = file_get_contents($schema);
-			$contents = String::insert($contents, array('prefix' => $this->install['prefix']), array('before' => '{', 'after' => '}'));
+			$contents = String::insert($contents, array('prefix' => FORUM_PREFIX), array('before' => '{', 'after' => '}'));
 			$contents = preg_replace('!/\*[^*]*\*+([^/][^*]*\*+)*/!', '', $contents);
 
 			$queries = explode(';', $contents);
-			$tables[] = $this->install['prefix'] . str_replace('.sql', '', basename($schema));
+			$tables[] = FORUM_PREFIX . str_replace('.sql', '', basename($schema));
 
 			foreach ($queries as $query) {
 				$query = trim($query);
@@ -332,7 +257,7 @@ class InstallShell extends Shell {
 		}
 
 		$result = $this->db->execute(sprintf("INSERT INTO `%saccess` (`access_level_id`, `user_id`, `created`) VALUES (4, %d, NOW());",
-			$this->install['prefix'],
+			FORUM_PREFIX,
 			$this->install['user_id']
 		));
 
@@ -343,19 +268,6 @@ class InstallShell extends Shell {
 		}
 
 		return true;
-	}
-
-	/**
-	 * Rewrite specific AppModel variables.
-	 *
-	 * @return void
-	 */
-	public function overrideAppModel() {
-		$appModel = file_get_contents(FORUM_PLUGIN . 'Model/ForumAppModel.php');
-		$appModel = preg_replace('/public \$tablePrefix = \'(.*?)\';/', 'public \$tablePrefix = \'' . $this->install['prefix'] . '\';', $appModel);
-		$appModel = preg_replace('/public \$useDbConfig = \'(.*?)\';/', 'public \$useDbConfig = \'' . $this->install['database'] . '\';', $appModel);
-
-		file_put_contents(FORUM_PLUGIN . 'Model/ForumAppModel.php', $appModel);
 	}
 
 	/**

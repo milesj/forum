@@ -31,14 +31,14 @@ class ForumAppModel extends AppModel {
 	 *
 	 * @var string
 	 */
-	public $tablePrefix = 'forum_';
+	public $tablePrefix = FORUM_PREFIX;
 
 	/**
 	 * Database config.
 	 *
 	 * @var string
 	 */
-	public $useDbConfig = 'default';
+	public $useDbConfig = FORUM_DATABASE;
 
 	/**
 	 * Cache queries.

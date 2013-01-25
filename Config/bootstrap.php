@@ -12,10 +12,23 @@ App::uses('ClassRegistry', 'Utility');
 App::uses('Sanitize', 'Utility');
 
 /**
- * Name of the User model.
+ * Forum critical constants.
  */
+define('FORUM_PLUGIN', dirname(__DIR__) . '/');
+
+// User Model
 if (!defined('FORUM_USER')) {
 	define('FORUM_USER', 'User');
+}
+
+// Table Prefix
+if (!defined('FORUM_PREFIX')) {
+	define('FORUM_PREFIX', 'forum_');
+}
+
+// Database config
+if (!defined('FORUM_DATABASE')) {
+	define('FORUM_DATABASE', 'default');
 }
 
 /**
