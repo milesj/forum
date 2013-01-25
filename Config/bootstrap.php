@@ -21,7 +21,7 @@ if (!defined('FORUM_USER')) {
 /**
  * Current version.
  */
-Configure::write('Forum.version', '3.2.0');
+Configure::write('Forum.version', file_get_contents(dirname(__DIR__) . '/version.md'));
 
 /**
  * A map of user fields that are used within this plugin. If your users table has a different naming scheme
@@ -56,9 +56,50 @@ Configure::write('Forum.routes', array(
 ));
 
 /**
- * The layout to wrap the forum in.
+ * Customizable view settings. This allows for layout and template overrides.
  */
-Configure::write('Forum.viewLayout', 'forum');
+Configure::write('Forum.view', array(
+	'layout' => 'forum',
+	'path' => null
+));
+
+/**
+ * List of settings that alter the forum systems.
+ */
+Configure::write('Forum.settings', array(
+	'site_name' => __d('forum', 'Forum Plugin'),
+	'site_email' => '',
+	'site_main_url' => '',
+	'security_question' => __d('forum', 'What framework does this plugin run on?'),
+	'security_answer' => 'cakephp',
+	'title_separator' => ' - ',
+
+	// Topics
+	'topics_per_page' => 20,
+	'topics_per_hour' => 3,
+	'topic_flood_interval' => 300,
+	'topic_pages_till_truncate' => 10,
+	'days_till_autolock' => 21,
+
+	// Posts
+	'posts_per_page' => 15,
+	'posts_per_hour' => 15,
+	'posts_till_hot_topic' => 35,
+	'post_flood_interval' => 60,
+
+	// Subscriptions
+	'enable_topic_subscriptions' => true,
+	'enable_forum_subscriptions' => true,
+	'auto_subscribe_self' => true,
+
+	// Misc
+	'whos_online_interval' => 15,
+	'enable_quick_reply' => true,
+	'enable_gravatar' => true,
+	'censored_words' => array(),
+	'default_locale' => 'eng',
+	'default_timezone' => '-8',
+));
 
 /**
  * List of all timezones.

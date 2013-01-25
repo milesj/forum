@@ -8,7 +8,7 @@
  * @link        http://milesj.me/code/cakephp/forum
  */
 
-Configure::write('Forum.settings', ClassRegistry::init('Forum.Setting')->getSettings());
+ClassRegistry::init('Forum.Setting')->configureSettings();
 
 class ForumAppController extends AppController {
 
@@ -74,13 +74,13 @@ class ForumAppController extends AppController {
 		// Settings
 		$this->config = Configure::read('Forum');
 		$this->settings = Configure::read('Forum.settings');
+		$this->layout = $this->config['view']['layout'];
+		$this->viewPath = $this->config['view']['path'];
 
 		// Admin
 		if (isset($this->request->params['admin'])) {
 			$this->ForumToolbar->verifyAdmin();
 			$this->layout = 'admin';
-		} else {
-			$this->layout = $this->config['viewLayout'];
 		}
 
 		// Localization

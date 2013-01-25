@@ -157,6 +157,15 @@ class Setting extends ForumAppModel {
 	}
 
 	/**
+	 * Configure the plugin with the database settings.
+	 */
+	public function configureSettings() {
+		if ($settings = $this->getSettings()) {
+			Configure::write('Forum.settings', Hash::merge(Configure::read('Forum.settings'), $settings));
+		}
+	}
+
+	/**
 	 * Update all the settings.
 	 *
 	 * @param array $data
