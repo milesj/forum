@@ -1,11 +1,8 @@
 <?php
 /**
- * ForumAppModel
- *
- * @author      Miles Johnson - http://milesj.me
- * @copyright   Copyright 2006-2011, Miles Johnson, Inc.
- * @license     http://opensource.org/licenses/mit-license.php - Licensed under The MIT License
- * @link        http://milesj.me/code/cakephp/forum
+ * @copyright	Copyright 2006-2013, Miles Johnson - http://milesj.me
+ * @license		http://opensource.org/licenses/mit-license.php - Licensed under the MIT License
+ * @link		http://milesj.me/code/cakephp/forum
  */
 
 App::uses('CakeSession', 'Model/Datasource');
@@ -43,7 +40,7 @@ class ForumAppModel extends AppModel {
 	/**
 	 * Cache queries.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	public $cacheQueries = true;
 
@@ -200,7 +197,7 @@ class ForumAppModel extends AppModel {
 	 * @param string $field
 	 * @param mixed $value
 	 * @param mixed $param
-	 * @return boolean
+	 * @return bool
 	 */
 	public function invalidate($field, $value = true, $param = '') {
 		parent::invalidate($field, sprintf(__d('forum', $value), $param));
@@ -213,7 +210,7 @@ class ForumAppModel extends AppModel {
 	 *
 	 * @param int $id
 	 * @param array $data
-	 * @return boolean
+	 * @return bool
 	 */
 	public function update($id, $data) {
 		$this->id = $id;
@@ -226,7 +223,7 @@ class ForumAppModel extends AppModel {
 	 *
 	 * @param string $model
 	 * @param string $field
-	 * @return boolean
+	 * @return bool
 	 */
 	public function validateDecoda($model, $field = 'content') {
 		if (!isset($this->data[$model][$field])) {

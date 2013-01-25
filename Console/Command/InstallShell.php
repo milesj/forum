@@ -1,11 +1,8 @@
 <?php
 /**
- * Forum - InstallShell
- *
- * @author      Miles Johnson - http://milesj.me
- * @copyright   Copyright 2006-2011, Miles Johnson, Inc.
- * @license     http://opensource.org/licenses/mit-license.php - Licensed under The MIT License
- * @link        http://milesj.me/code/cakephp/forum
+ * @copyright	Copyright 2006-2013, Miles Johnson - http://milesj.me
+ * @license		http://opensource.org/licenses/mit-license.php - Licensed under the MIT License
+ * @link		http://milesj.me/code/cakephp/forum
  */
 
 Configure::write('debug', 2);
@@ -108,7 +105,7 @@ class InstallShell extends Shell {
 	/**
 	 * Grab the users table.
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function usersTable() {
 		$table = $this->in('What is the name of your users table?');
@@ -137,7 +134,7 @@ class InstallShell extends Shell {
 	/**
 	 * Check the database status before installation.
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function checkStatus() {
 		$this->db = ConnectionManager::getDataSource(FORUM_DATABASE);
@@ -166,7 +163,7 @@ class InstallShell extends Shell {
 	/**
 	 * Create the database tables based off the schemas.
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function createTables() {
 		$schemas = glob(FORUM_PLUGIN . 'Config/Schema/*.sql');
@@ -214,7 +211,7 @@ class InstallShell extends Shell {
 	/**
 	 * Setup the admin user.
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function setupAdmin() {
 		$answer = strtoupper($this->in('Would you like to [c]reate a new user, or use an [e]xisting user?', array('C', 'E')));

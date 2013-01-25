@@ -1,11 +1,8 @@
 <?php
-/*
- * ForumHelper
- *
- * @author      Miles Johnson - http://milesj.me
- * @copyright   Copyright 2006-2011, Miles Johnson, Inc.
- * @license     http://opensource.org/licenses/mit-license.php - Licensed under The MIT License
- * @link        http://milesj.me/code/cakephp/forum
+/**
+ * @copyright	Copyright 2006-2013, Miles Johnson - http://milesj.me
+ * @license		http://opensource.org/licenses/mit-license.php - Licensed under the MIT License
+ * @link		http://milesj.me/code/cakephp/forum
  */
 
 App::uses('AccessLevel', 'Forum.Model');
@@ -181,7 +178,7 @@ class ForumHelper extends AppHelper {
 	 *
 	 * @param int $level
 	 * @param int $forum_id
-	 * @return boolean
+	 * @return bool
 	 */
 	public function hasAccess($level = AccessLevel::MEMBER, $forum_id = null) {
 		if ($this->Session->read('Forum.isAdmin')) {
@@ -222,7 +219,7 @@ class ForumHelper extends AppHelper {
 	 *
 	 * @param string $type
 	 * @param string $value
-	 * @param boolean $guest
+	 * @param bool $guest
 	 * @return array|string
 	 */
 	public function options($type = 'status', $value = '', $guest = false) {

@@ -1,11 +1,8 @@
 <?php
 /**
- * Forum - PollOption
- *
- * @author      Miles Johnson - http://milesj.me
- * @copyright   Copyright 2006-2011, Miles Johnson, Inc.
- * @license     http://opensource.org/licenses/mit-license.php - Licensed under The MIT License
- * @link        http://milesj.me/code/cakephp/forum
+ * @copyright	Copyright 2006-2013, Miles Johnson - http://milesj.me
+ * @license		http://opensource.org/licenses/mit-license.php - Licensed under the MIT License
+ * @link		http://milesj.me/code/cakephp/forum
  */
 
 App::uses('ForumAppModel', 'Forum.Model');
@@ -41,7 +38,7 @@ class PollOption extends ForumAppModel {
 	 * Add a vote for a poll.
 	 *
 	 * @param int $id
-	 * @return boolean
+	 * @return bool
 	 */
 	public function addVote($id) {
 		return $this->query('UPDATE `' . $this->tablePrefix . 'poll_options` AS `PollOption` SET `PollOption`.`vote_count` = `PollOption`.`vote_count` + 1 WHERE `PollOption`.`id` = ' . (int) $id);

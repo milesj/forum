@@ -1,11 +1,8 @@
 <?php
 /**
- * Forum - Moderator
- *
- * @author      Miles Johnson - http://milesj.me
- * @copyright   Copyright 2006-2011, Miles Johnson, Inc.
- * @license     http://opensource.org/licenses/mit-license.php - Licensed under The MIT License
- * @link        http://milesj.me/code/cakephp/forum
+ * @copyright	Copyright 2006-2013, Miles Johnson - http://milesj.me
+ * @license		http://opensource.org/licenses/mit-license.php - Licensed under the MIT License
+ * @link		http://milesj.me/code/cakephp/forum
  */
 
 App::uses('ForumAppModel', 'Forum.Model');
@@ -41,7 +38,7 @@ class Moderator extends ForumAppModel {
 	 * Add a moderator after validating conditions.
 	 *
 	 * @param array $data
-	 * @return boolean
+	 * @return bool
 	 */
 	public function add($data) {
 		if ($this->validate($data)) {
@@ -58,7 +55,7 @@ class Moderator extends ForumAppModel {
 	 *
 	 * @param int $id
 	 * @param array $data
-	 * @return boolean
+	 * @return bool
 	 */
 	public function edit($id, $data) {
 		if ($this->validate($data)) {
@@ -127,7 +124,7 @@ class Moderator extends ForumAppModel {
 	 * Validate logical conditions.
 	 *
 	 * @param array $data
-	 * @return boolean
+	 * @return bool
 	 */
 	public function validate($data) {
 		$this->set($data);

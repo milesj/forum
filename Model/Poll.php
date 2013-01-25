@@ -1,11 +1,8 @@
 <?php
 /**
- * Forum - Poll
- *
- * @author      Miles Johnson - http://milesj.me
- * @copyright   Copyright 2006-2011, Miles Johnson, Inc.
- * @license     http://opensource.org/licenses/mit-license.php - Licensed under The MIT License
- * @link        http://milesj.me/code/cakephp/forum
+ * @copyright	Copyright 2006-2013, Miles Johnson - http://milesj.me
+ * @license		http://opensource.org/licenses/mit-license.php - Licensed under the MIT License
+ * @link		http://milesj.me/code/cakephp/forum
  */
 
 App::uses('ForumAppModel', 'Forum.Model');
@@ -46,7 +43,7 @@ class Poll extends ForumAppModel {
 	 * Add a poll attached to a topic.
 	 *
 	 * @param array $data
-	 * @return boolean
+	 * @return bool
 	 */
 	public function addPoll($data) {
 		$poll = array(
@@ -110,7 +107,7 @@ class Poll extends ForumAppModel {
 	 * @param int $poll_id
 	 * @param int $option_id
 	 * @param int $user_id
-	 * @return boolean
+	 * @return bool
 	 */
 	public function vote($poll_id, $option_id, $user_id) {
 		$poll = $this->find('first', array(

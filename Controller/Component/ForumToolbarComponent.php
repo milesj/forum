@@ -1,11 +1,8 @@
 <?php
 /**
- * Forum - ToolbarComponent
- *
- * @author      Miles Johnson - http://milesj.me
- * @copyright   Copyright 2006-2011, Miles Johnson, Inc.
- * @license     http://opensource.org/licenses/mit-license.php - Licensed under The MIT License
- * @link        http://milesj.me/code/cakephp/forum
+ * @copyright	Copyright 2006-2013, Miles Johnson - http://milesj.me
+ * @license		http://opensource.org/licenses/mit-license.php - Licensed under the MIT License
+ * @link		http://milesj.me/code/cakephp/forum
  */
 
 class ForumToolbarComponent extends Component {
@@ -100,7 +97,7 @@ class ForumToolbarComponent extends Component {
 	 *
 	 * @param int $topic_id
 	 * @param int $post_id
-	 * @param boolean $return
+	 * @param bool $return
 	 * @return mixed
 	 */
 	public function goToPage($topic_id = null, $post_id = null, $return = false) {
@@ -206,7 +203,7 @@ class ForumToolbarComponent extends Component {
 	 * Do we have access to commit this action.
 	 *
 	 * @param array $validators
-	 * @return boolean
+	 * @return bool
 	 * @throws NotFoundException
 	 * @throws UnauthorizedException
 	 * @throws ForbiddenException
@@ -257,7 +254,7 @@ class ForumToolbarComponent extends Component {
 	/**
 	 * Double check access levels in session and db and permit.
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function verifyAdmin() {
 		$user_id = $this->Controller->Auth->user('id');

@@ -1,11 +1,8 @@
 <?php
 /**
- * Forum - Profile
- *
- * @author      Miles Johnson - http://milesj.me
- * @copyright   Copyright 2006-2011, Miles Johnson, Inc.
- * @license     http://opensource.org/licenses/mit-license.php - Licensed under The MIT License
- * @link        http://milesj.me/code/cakephp/forum
+ * @copyright	Copyright 2006-2013, Miles Johnson - http://milesj.me
+ * @license		http://opensource.org/licenses/mit-license.php - Licensed under the MIT License
+ * @link		http://milesj.me/code/cakephp/forum
  */
 
 App::uses('ForumAppModel', 'Forum.Model');
@@ -142,7 +139,7 @@ class Profile extends ForumAppModel {
 	 * Increase the post count.
 	 *
 	 * @param int $user_id
-	 * @return boolean
+	 * @return bool
 	 */
 	public function increasePosts($user_id) {
 		return $this->query('UPDATE `' . $this->tablePrefix . 'profiles` AS `Profile` SET `Profile`.`totalPosts` = `Profile`.`totalPosts` + 1 WHERE `Profile`.`user_id` = ' . (int) $user_id);
@@ -152,7 +149,7 @@ class Profile extends ForumAppModel {
 	 * Increase the topic count.
 	 *
 	 * @param int $user_id
-	 * @return boolean
+	 * @return bool
 	 */
 	public function increaseTopics($user_id) {
 		return $this->query('UPDATE `' . $this->tablePrefix . 'profiles` AS `Profile` SET `Profile`.`totalTopics` = `Profile`.`totalTopics` + 1 WHERE `Profile`.`user_id` = ' . (int) $user_id);
@@ -162,7 +159,7 @@ class Profile extends ForumAppModel {
 	 * Login the user and update records.
 	 *
 	 * @param int $user_id
-	 * @return boolean
+	 * @return bool
 	 */
 	public function login($user_id) {
 		if ($profile = $this->getUserProfile($user_id)) {
@@ -200,7 +197,7 @@ class Profile extends ForumAppModel {
 	 * Parse the HTML version.
 	 *
 	 * @param array $options
-	 * @return boolean
+	 * @return bool
 	 */
 	public function beforeSave($options = array()) {
 		return $this->validateDecoda('Profile', 'signature');

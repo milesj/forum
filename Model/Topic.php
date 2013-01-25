@@ -1,11 +1,8 @@
 <?php
 /**
- * Forum - Topic
- *
- * @author      Miles Johnson - http://milesj.me
- * @copyright   Copyright 2006-2011, Miles Johnson, Inc.
- * @license     http://opensource.org/licenses/mit-license.php - Licensed under The MIT License
- * @link        http://milesj.me/code/cakephp/forum
+ * @copyright	Copyright 2006-2013, Miles Johnson - http://milesj.me
+ * @license		http://opensource.org/licenses/mit-license.php - Licensed under the MIT License
+ * @link		http://milesj.me/code/cakephp/forum
  */
 
 App::uses('ForumAppModel', 'Forum.Model');
@@ -133,7 +130,7 @@ class Topic extends ForumAppModel {
 	 * Validate and add a topic.
 	 *
 	 * @param array $data
-	 * @return boolean|int
+	 * @return bool|int
 	 */
 	public function add($data) {
 		$this->set($data);
@@ -187,7 +184,7 @@ class Topic extends ForumAppModel {
 	 * Check the posting flood interval.
 	 *
 	 * @param int $interval
-	 * @return boolean|int
+	 * @return bool|int
 	 */
 	public function checkFlooding($interval) {
 		if ($topics = $this->Session->read('Forum.topics')) {
@@ -205,7 +202,7 @@ class Topic extends ForumAppModel {
 	 * Check the hourly posting.
 	 *
 	 * @param int $max
-	 * @return boolean
+	 * @return bool
 	 */
 	public function checkHourly($max) {
 		$pastHour = strtotime('-1 hour');
@@ -231,7 +228,7 @@ class Topic extends ForumAppModel {
 	 * Check to make sure the poll is valid.
 	 *
 	 * @param array $data
-	 * @return boolean
+	 * @return bool
 	 */
 	public function checkOptions($data) {
 		$data = array_values($data);
@@ -278,7 +275,7 @@ class Topic extends ForumAppModel {
 	 *
 	 * @param int $id
 	 * @param array $topic
-	 * @return boolean
+	 * @return bool
 	 */
 	public function edit($id, $topic) {
 		if ($topic) {
@@ -398,7 +395,7 @@ class Topic extends ForumAppModel {
 	 * Increase the view count.
 	 *
 	 * @param int $id
-	 * @return boolean
+	 * @return bool
 	 */
 	public function increaseViews($id) {
 		return $this->query('UPDATE `' . $this->tablePrefix . 'topics` AS `Topic` SET `Topic`.`view_count` = `Topic`.`view_count` + 1 WHERE `Topic`.`id` = ' . (int) $id);
@@ -409,7 +406,7 @@ class Topic extends ForumAppModel {
 	 *
 	 * @param int $start_id
 	 * @param int $moved_id
-	 * @return boolean
+	 * @return bool
 	 */
 	public function moveAll($start_id, $moved_id) {
 		return $this->updateAll(
@@ -422,7 +419,7 @@ class Topic extends ForumAppModel {
 	 * Parse the HTML version.
 	 *
 	 * @param array $options
-	 * @return boolean
+	 * @return bool
 	 */
 	public function beforeSave($options = array()) {
 		return $this->validateDecoda('Topic');
@@ -432,7 +429,7 @@ class Topic extends ForumAppModel {
 	 * After find.
 	 *
 	 * @param array $results
-	 * @param boolean $primary
+	 * @param bool $primary
 	 * @return array
 	 */
 	public function afterFind($results, $primary = false) {

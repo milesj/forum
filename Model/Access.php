@@ -1,11 +1,8 @@
 <?php
 /**
- * Forum - Access
- *
- * @author      Miles Johnson - http://milesj.me
- * @copyright   Copyright 2006-2011, Miles Johnson, Inc.
- * @license     http://opensource.org/licenses/mit-license.php - Licensed under The MIT License
- * @link        http://milesj.me/code/cakephp/forum
+ * @copyright	Copyright 2006-2013, Miles Johnson - http://milesj.me
+ * @license		http://opensource.org/licenses/mit-license.php - Licensed under the MIT License
+ * @link		http://milesj.me/code/cakephp/forum
  */
 
 App::uses('ForumAppModel', 'Forum.Model');
@@ -73,7 +70,7 @@ class Access extends ForumAppModel {
 	 *
 	 * @param int $user_id
 	 * @param int $level_id
-	 * @return boolean
+	 * @return bool
 	 */
 	public function grant($user_id, $level_id) {
 		$count = $this->find('count', array(
@@ -140,7 +137,7 @@ class Access extends ForumAppModel {
 	 *
 	 * @param int $start_id
 	 * @param int $moved_id
-	 * @return boolean
+	 * @return bool
 	 */
 	public function moveAll($start_id, $moved_id) {
 		return $this->updateAll(
@@ -153,7 +150,7 @@ class Access extends ForumAppModel {
 	 * Validate logical conditions.
 	 *
 	 * @param array $data
-	 * @return boolean
+	 * @return bool
 	 */
 	public function validate($data) {
 		$this->set($data);

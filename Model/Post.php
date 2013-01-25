@@ -1,11 +1,8 @@
 <?php
 /**
- * Forum - Post
- *
- * @author      Miles Johnson - http://milesj.me
- * @copyright   Copyright 2006-2011, Miles Johnson, Inc.
- * @license     http://opensource.org/licenses/mit-license.php - Licensed under The MIT License
- * @link        http://milesj.me/code/cakephp/forum
+ * @copyright	Copyright 2006-2013, Miles Johnson - http://milesj.me
+ * @license		http://opensource.org/licenses/mit-license.php - Licensed under the MIT License
+ * @link		http://milesj.me/code/cakephp/forum
  */
 
 App::uses('ForumAppModel', 'Forum.Model');
@@ -44,7 +41,7 @@ class Post extends ForumAppModel {
 	 * Validate and add a post.
 	 *
 	 * @param array $data
-	 * @return boolean|int
+	 * @return bool|int
 	 */
 	public function add($data) {
 		$this->set($data);
@@ -107,7 +104,7 @@ class Post extends ForumAppModel {
 	 * Check the posting flood interval.
 	 *
 	 * @param int $interval
-	 * @return boolean
+	 * @return bool
 	 */
 	public function checkFlooding($interval) {
 		if ($posts = $this->Session->read('Forum.posts')) {
@@ -125,7 +122,7 @@ class Post extends ForumAppModel {
 	 * Check the hourly posting.
 	 *
 	 * @param int $max
-	 * @return boolean
+	 * @return bool
 	 */
 	public function checkHourly($max) {
 		$pastHour = strtotime('-1 hour');
@@ -249,7 +246,7 @@ class Post extends ForumAppModel {
 	 * Parse the HTML version.
 	 *
 	 * @param array $options
-	 * @return boolean
+	 * @return bool
 	 */
 	public function beforeSave($options = array()) {
 		return $this->validateDecoda('Post');

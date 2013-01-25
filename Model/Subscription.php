@@ -1,11 +1,8 @@
 <?php
 /**
- * Forum - Subscription
- *
- * @author      Miles Johnson - http://milesj.me
- * @copyright   Copyright 2006-2011, Miles Johnson, Inc.
- * @license     http://opensource.org/licenses/mit-license.php - Licensed under The MIT License
- * @link        http://milesj.me/code/cakephp/forum
+ * @copyright	Copyright 2006-2013, Miles Johnson - http://milesj.me
+ * @license		http://opensource.org/licenses/mit-license.php - Licensed under the MIT License
+ * @link		http://milesj.me/code/cakephp/forum
  */
 
 App::uses('ForumAppModel', 'Forum.Model');
@@ -106,7 +103,7 @@ class Subscription extends ForumAppModel {
 	 *
 	 * @param int $user_id
 	 * @param int $forum_id
-	 * @return boolean
+	 * @return bool
 	 */
 	public function subscribeToForum($user_id, $forum_id) {
 		$forum = $this->Forum->getById($forum_id);
@@ -128,7 +125,7 @@ class Subscription extends ForumAppModel {
 	 *
 	 * @param int $user_id
 	 * @param int $topic_id
-	 * @return boolean
+	 * @return bool
 	 */
 	public function subscribeToTopic($user_id, $topic_id) {
 		$topic = $this->Topic->getById($topic_id);
@@ -149,7 +146,7 @@ class Subscription extends ForumAppModel {
 	 * Unsubscribe a user subscription.
 	 *
 	 * @param int $id
-	 * @return boolean
+	 * @return bool
 	 */
 	public function unsubscribe($id) {
 		return $this->delete($id, true);

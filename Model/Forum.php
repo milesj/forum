@@ -1,11 +1,8 @@
 <?php
 /**
- * Forum - Forum
- *
- * @author      Miles Johnson - http://milesj.me
- * @copyright   Copyright 2006-2011, Miles Johnson, Inc.
- * @license     http://opensource.org/licenses/mit-license.php - Licensed under The MIT License
- * @link        http://milesj.me/code/cakephp/forum
+ * @copyright	Copyright 2006-2013, Miles Johnson - http://milesj.me
+ * @license		http://opensource.org/licenses/mit-license.php - Licensed under the MIT License
+ * @link		http://milesj.me/code/cakephp/forum
  */
 
 App::uses('ForumAppModel', 'Forum.Model');
@@ -236,7 +233,7 @@ class Forum extends ForumAppModel {
 	/**
 	 * Get the hierarchy.
 	 *
-	 * @param boolean $drill
+	 * @param bool $drill
 	 * @param int $exclude
 	 * @return array
 	 */
@@ -319,7 +316,7 @@ class Forum extends ForumAppModel {
 	 *
 	 * @param int $start_id
 	 * @param int $moved_id
-	 * @return boolean
+	 * @return bool
 	 */
 	public function moveAll($start_id, $moved_id) {
 		return $this->updateAll(
@@ -332,7 +329,7 @@ class Forum extends ForumAppModel {
 	 * Update the order of the forums.
 	 *
 	 * @param array $data
-	 * @return boolean
+	 * @return bool
 	 */
 	public function updateOrder($data) {
 		if (isset($data['_Token'])) {
@@ -362,7 +359,7 @@ class Forum extends ForumAppModel {
 	 *
 	 * @param array $categories
 	 * @param array $forum
-	 * @param boolean $drill
+	 * @param bool $drill
 	 * @param int $depth
 	 * @return array
 	 */
