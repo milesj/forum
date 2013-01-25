@@ -23,20 +23,6 @@ class SubscriptionShell extends Shell {
 	public $uses = array('Forum.Subscription');
 
 	/**
-	 * Plugin configuration.
-	 *
-	 * @var array
-	 */
-	public $config = array();
-
-	/**
-	 * Database forum settings.
-	 *
-	 * @var array
-	 */
-	public $settings = array();
-
-	/**
 	 * The past timeframe threshold to look for topics.
 	 *
 	 * @var string
@@ -47,14 +33,12 @@ class SubscriptionShell extends Shell {
 	 * Execute!
 	 */
 	public function main() {
-		$this->config = Configure::read('Forum');
-		$this->settings = ClassRegistry::init('Forum.Setting')->getSettings();
 		$this->timeframe = '-' . (isset($this->params['timeframe']) ? $this->params['timeframe'] : '24 hours');
 
 		// Begin
 		$this->out();
 		$this->out('Plugin: Forum');
-		$this->out('Version: ' . $this->config['version']);
+		$this->out('Version: ' . Configure::read('Forum.version'));
 		$this->out('Copyright: Miles Johnson, 2010-' . date('Y'));
 		$this->out('Help: http://milesj.me/code/cakephp/forum');
 		$this->out('Shell: Subscription');
@@ -107,20 +91,23 @@ class SubscriptionShell extends Shell {
 			return;
 		}
 
+		$settings = Configure::read('Forum.settings');
+		$userMap = Configure::read('Forum.userMap');
+
 		$email = new CakeEmail();
 		//$email->transport('Debug');
-		$email->subject(sprintf(__d('forum', '%s [Subscriptions]'), $this->settings['name']));
-		$email->from($this->settings['email']);
-		$email->replyTo($this->settings['email']);
+		$email->subject(sprintf(__d('forum', '%s [Subscriptions]'), $settings['name']));
+		$email->from($settings['email']);
+		$email->replyTo($settings['email']);
 		$email->emailFormat('text');
 
 		// Loop over each user and send one email
-		foreach ($users as $user_id => $user) {
-			$email->to($user[$this->config['userMap']['email']]);
+		foreach ($users as $user) {
+			$email->to($user[$userMap['email']]);
 
 			if ($message = $this->formatEmail($user, $topics)) {
 				$email->send($message);
-				$this->out(sprintf('... %s', $user[$this->config['userMap']['username']]));
+				$this->out(sprintf('... %s', $user[$userMap['username']]));
 
 				$count++;
 			}
@@ -190,12 +177,13 @@ class SubscriptionShell extends Shell {
 	 * @return string
 	 */
 	public function formatEmail(array $user, array $topics) {
+		$settings = Configure::read('Forum.settings');
 		$divider = "\n\n------------------------------\n\n";
 		$count = 0;
-		$url = trim($this->settings['url'], '/');
+		$url = trim($settings['url'], '/');
 
-		$message  = sprintf(__d('forum', 'Hello %s,'), $user[$this->config['userMap']['username']]) . "\n\n";
-		$message .= sprintf(__d('forum', 'You have asked to be notified for any new activity within %s. Below you will find an update on all your forum subscriptions. The last subscription update was sent on %s.'), $this->settings['name'], date('m/d/Y h:ia', strtotime($this->timeframe))) . "\n\n";
+		$message  = sprintf(__d('forum', 'Hello %s,'), $user[Configure::read('Forum.userMap.username')]) . "\n\n";
+		$message .= sprintf(__d('forum', 'You have asked to be notified for any new activity within %s. Below you will find an update on all your forum subscriptions. The last subscription update was sent on %s.'), $settings['name'], date('m/d/Y h:ia', strtotime($this->timeframe))) . "\n\n";
 		$message .= __d('forum', 'You may unsubscribe from a forum or topic by clicking the "Unsubscribe" button found within the respective forum or topic.');
 
 		// Show forum topics first
@@ -250,7 +238,7 @@ class SubscriptionShell extends Shell {
 		}
 
 		$message .= $divider;
-		$message .= $this->settings['name'] . "\n";
+		$message .= $settings['name'] . "\n";
 		$message .= $url;
 
 		return $message;

@@ -13,17 +13,7 @@ Configure::write('Cache.disable', true);
 
 App::uses('ConnectionManager', 'Model');
 
-define('FORUM_PLUGIN', dirname(dirname(dirname(__FILE__))) . '/');
-define('FORUM_SCHEMA', FORUM_PLUGIN . 'Config/Schema/Upgrade/');
-
 class UpgradeShell extends Shell {
-
-	/**
-	 * Plugin configuration.
-	 *
-	 * @var array
-	 */
-	public $config = array();
 
 	/**
 	 * Array of completed version upgrades.
@@ -31,16 +21,6 @@ class UpgradeShell extends Shell {
 	 * @var array
 	 */
 	public $complete = array();
-
-	/**
-	 * Upgrade configuration.
-	 *
-	 * @var array
-	 */
-	public $upgrade = array(
-		'prefix' => 'forum_',
-		'database' => 'default'
-	);
 
 	/**
 	 * Available upgrade versions.
@@ -57,13 +37,9 @@ class UpgradeShell extends Shell {
 	 * @return void
 	 */
 	public function main() {
-		$this->config = Configure::read('Forum');
-		$this->upgrade = parse_ini_file(FORUM_PLUGIN  . 'Config/install.ini', true);
-
-		// Begin
 		$this->out();
 		$this->out('Plugin: Forum');
-		$this->out('Version: ' . $this->config['version']);
+		$this->out('Version: ' . Configure::read('Forum.version'));
 		$this->out('Copyright: Miles Johnson, 2010-' . date('Y'));
 		$this->out('Help: http://milesj.me/code/cakephp/forum');
 		$this->out('Shell: Upgrade');
@@ -130,11 +106,15 @@ class UpgradeShell extends Shell {
 	protected function _querySql($version) {
 		sleep(1);
 
-		$db = ConnectionManager::getDataSource($this->upgrade['database']);
-		$schema = FORUM_SCHEMA . $version . '.sql';
+		$db = ConnectionManager::getDataSource(FORUM_DATABASE);
+		$schema = FORUM_PLUGIN . 'Config/Schema/Upgrade/' . $version . '.sql';
+
+		if (!file_exists($schema)) {
+			$this->err(sprintf('Upgrade schema %s does not exist', $version));
+		}
 
 		$sql = file_get_contents($schema);
-		$sql = String::insert($sql, array('prefix' => $this->upgrade['prefix']), array('before' => '{', 'after' => '}'));
+		$sql = String::insert($sql, array('prefix' => FORUM_PREFIX), array('before' => '{', 'after' => '}'));
 		$sql = preg_replace('!/\*[^*]*\*+([^/][^*]*\*+)*/!', '', $sql);
 
 		foreach (explode(';', $sql) as $query) {
