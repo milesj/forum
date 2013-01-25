@@ -7,6 +7,9 @@
 
 ClassRegistry::init('Forum.Setting')->configureSettings();
 
+/**
+ * @property ForumToolbarComponent $ForumToolbar
+ */
 class ForumAppController extends AppController {
 
 	/**

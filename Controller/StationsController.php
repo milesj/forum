@@ -7,6 +7,11 @@
 
 App::uses('ForumAppController', 'Forum.Controller');
 
+/**
+ * @property Forum $Forum
+ * @property Subscription $Subscription
+ * @property AjaxHandlerComponent $AjaxHandler
+ */
 class StationsController extends ForumAppController {
 
 	/**

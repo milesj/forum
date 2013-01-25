@@ -7,6 +7,13 @@
 
 App::uses('ForumAppController', 'Forum.Controller');
 
+/**
+ * @property User $User
+ * @property Profile $Profile
+ * @property Topic $Topic
+ * @property Subscription $Subscription
+ * @property Report $Report
+ */
 class UsersController extends ForumAppController {
 
 	/**

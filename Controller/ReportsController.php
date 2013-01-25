@@ -8,6 +8,12 @@
 App::uses('ForumAppController', 'Forum.Controller');
 App::uses('Report', 'Forum.Model');
 
+/**
+ * @property Post $Post
+ * @property User $User
+ * @property Topic $Topic
+ * @property Report $Report
+ */
 class ReportsController extends ForumAppController {
 
 	/**

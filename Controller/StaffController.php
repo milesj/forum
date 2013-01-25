@@ -7,6 +7,11 @@
 
 App::uses('ForumAppController', 'Forum.Controller');
 
+/**
+ * @property Access $Access
+ * @property Moderator $Moderator
+ * @property Forum $Forum
+ */
 class StaffController extends ForumAppController {
 
 	/**

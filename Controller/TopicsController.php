@@ -7,6 +7,12 @@
 
 App::uses('ForumAppController', 'Forum.Controller');
 
+/**
+ * @property Topic $Topic
+ * @property Profile $Profile
+ * @property Subscription $Subscription
+ * @property AjaxHandlerComponent $AjaxHandler
+ */
 class TopicsController extends ForumAppController {
 
 	/**

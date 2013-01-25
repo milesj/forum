@@ -7,6 +7,12 @@
 
 App::uses('ForumAppController', 'Forum.Controller');
 
+/**
+ * @property Topic $Topic
+ * @property Profile $Profile
+ * @property Report $Report
+ * @property Moderator $Moderator
+ */
 class ForumController extends ForumAppController {
 
 	/**

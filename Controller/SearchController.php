@@ -7,6 +7,9 @@
 
 App::uses('ForumAppController', 'Forum.Controller');
 
+/**
+ * @property Topic $Topic
+ */
 class SearchController extends ForumAppController {
 
 	/**

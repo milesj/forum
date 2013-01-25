@@ -33,7 +33,7 @@ class InstallShell extends Shell {
 	/**
 	 * DB Instance.
 	 *
-	 * @var DataSource
+	 * @var DboSource
 	 */
 	public $db;
 
@@ -57,6 +57,8 @@ class InstallShell extends Shell {
 		$this->out('Installation Steps:');
 		$this->out();
 		$this->steps(1);
+
+		$this->db = ConnectionManager::getDataSource(FORUM_DATABASE);
 
 		if ($this->usersTable()) {
 			$this->steps(2);
@@ -137,9 +139,6 @@ class InstallShell extends Shell {
 	 * @return bool
 	 */
 	public function checkStatus() {
-		$this->db = ConnectionManager::getDataSource(FORUM_DATABASE);
-
-		// Check connection
 		if (!$this->db->isConnected()) {
 			$this->out(sprintf('Error: Database connection for %s failed!', FORUM_DATABASE));
 
