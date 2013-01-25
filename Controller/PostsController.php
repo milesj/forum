@@ -85,7 +85,7 @@ class PostsController extends ForumAppController {
 		if ($this->request->data) {
 			$this->Post->id = $id;
 
-			if ($this->Post->save($this->request->data, true, array('content', 'contentHtml'))) {
+			if ($this->Post->save($this->request->data, true, array('content'))) {
 				$this->ForumToolbar->goToPage($post['Post']['topic_id'], $id);
 			}
 		} else {

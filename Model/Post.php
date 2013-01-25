@@ -61,7 +61,7 @@ class Post extends ForumAppModel {
 
 			} else {
 				$this->create();
-				$this->save($data, false, array('topic_id', 'forum_id', 'user_id', 'userIP', 'content', 'contentHtml'));
+				$this->save($data, false, array('topic_id', 'forum_id', 'user_id', 'userIP', 'content'));
 
 				$data['post_id'] = $this->id;
 

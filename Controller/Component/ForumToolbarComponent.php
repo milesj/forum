@@ -25,6 +25,16 @@ class ForumToolbarComponent extends Component {
 	public $Controller;
 
 	/**
+	 * Store the Controller.
+	 *
+	 * @param Controller $Controller
+	 * @return void
+	 */
+	public function initialize(Controller $Controller) {
+		$this->Controller = $Controller;
+	}
+
+	/**
 	 * Initialize the session and all data.
 	 *
 	 * @param Controller $Controller

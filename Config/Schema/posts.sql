@@ -8,7 +8,6 @@ CREATE TABLE `{prefix}posts` (
 	`user_id` INT(11) DEFAULT NULL,
 	`userIP` VARCHAR(100) NOT NULL,
 	`content` text NOT NULL,
-	`contentHtml` text NOT NULL,
 	`created` DATETIME DEFAULT NULL,
 	`modified` DATETIME DEFAULT NULL,
 	PRIMARY KEY (`id`),

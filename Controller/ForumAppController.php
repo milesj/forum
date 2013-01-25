@@ -75,7 +75,7 @@ class ForumAppController extends AppController {
 		$this->config = Configure::read('Forum');
 		$this->settings = Configure::read('Forum.settings');
 		$this->layout = $this->config['view']['layout'];
-		$this->viewPath = $this->config['view']['path'];
+		//$this->viewPath = $this->config['view']['path'];
 
 		// Admin
 		if (isset($this->request->params['admin'])) {
