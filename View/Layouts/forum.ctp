@@ -3,7 +3,7 @@ echo $this->Html->docType();
 echo $this->OpenGraph->html(array('xmlns' => 'http://www.w3.org/1999/xhtml')); ?>
 <head>
 	<?php echo $this->Html->charset(); ?>
-	<title><?php echo $this->Breadcrumb->pageTitle($settings['site_name'], array('separator' => $settings['title_separator'])); ?></title>
+	<title><?php echo $this->Breadcrumb->pageTitle($settings['name'], array('separator' => $settings['titleSeparator'])); ?></title>
 	<?php
 	echo $this->Html->css('Forum.normalize');
 	echo $this->Html->css('Forum.style');
@@ -19,8 +19,8 @@ echo $this->OpenGraph->html(array('xmlns' => 'http://www.w3.org/1999/xhtml')); ?
 
 	$locales = $config['decodaLocales'];
 
-	$this->OpenGraph->name($settings['site_name']);
-	$this->OpenGraph->locale(array($locales[Configure::read('Config.language')], $locales[$settings['default_locale']]));
+	$this->OpenGraph->name($settings['name']);
+	$this->OpenGraph->locale(array($locales[Configure::read('Config.language')], $locales[$settings['defaultLocale']]));
 
 	echo $this->OpenGraph->fetch();
 	echo $this->fetch('css');
@@ -33,11 +33,11 @@ echo $this->OpenGraph->html(array('xmlns' => 'http://www.w3.org/1999/xhtml')); ?
 
 		<div class="header">
 			<h1 class="logo">
-				<?php echo $this->Html->link($settings['site_name'], $settings['site_main_url']); ?>
+				<?php echo $this->Html->link($settings['name'], $settings['url']); ?>
 			</h1>
 
 			<ul class="menu">
-				<li<?php if ($menuTab === 'home') echo ' class="active"'; ?>><?php echo $this->Html->link(__d('forum', 'Home'), $settings['site_main_url']); ?></li>
+				<li<?php if ($menuTab === 'home') echo ' class="active"'; ?>><?php echo $this->Html->link(__d('forum', 'Home'), $settings['url']); ?></li>
 				<li<?php if ($menuTab === 'forums') echo ' class="active"'; ?>><?php echo $this->Html->link(__d('forum', 'Forums'), array('controller' => 'forum', 'action' => 'index')); ?></li>
 				<li<?php if ($menuTab === 'search') echo ' class="active"'; ?>><?php echo $this->Html->link(__d('forum', 'Search'), array('controller' => 'search', 'action' => 'index')); ?></li>
 				<li<?php if ($menuTab === 'rules') echo ' class="active"'; ?>><?php echo $this->Html->link(__d('forum', 'Rules'), array('controller' => 'forum', 'action' => 'rules')); ?></li>

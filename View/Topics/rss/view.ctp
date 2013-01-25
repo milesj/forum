@@ -1,7 +1,7 @@
 <?php
 
 $this->set('channel', array(
-	'title' => $settings['site_name'] . ' - ' . __d('forum', 'Topic') . ': ' . $topic['Topic']['title'],
+	'title' => $settings['name'] . ' - ' . __d('forum', 'Topic') . ': ' . $topic['Topic']['title'],
 	'link' => array('plugin' => 'forum', 'controller' => 'topics', 'action' => 'view', $topic['Topic']['slug']),
 	'description' => $this->Text->truncate($this->Decoda->strip($topic['FirstPost']['content'])),
 	'language' => 'en-us'

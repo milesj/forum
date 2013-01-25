@@ -13,138 +13,6 @@ App::uses('ForumAppModel', 'Forum.Model');
 class Setting extends ForumAppModel {
 
 	/**
-	 * Validate.
-	 *
-	 * @var array
-	 */
-	public $validate = array(
-		'site_name' => 'notEmpty',
-		'site_email' => array(
-			'email' => array(
-				'rule' => array('email', true),
-				'message' => 'Please supply a valid email address'
-			),
-			'notEmpty' => array(
-				'rule' => 'notEmpty',
-				'message' => 'This setting is required'
-			)
-		),
-		'site_main_url' => array(
-			'url' => array(
-				'rule' => array('url', true),
-				'message' => 'Please supply a valid URL'
-			),
-			'notEmpty' => array(
-				'rule' => 'notEmpty',
-				'message' => 'This setting is required'
-			)
-		),
-		'security_question' => 'notEmpty',
-		'security_answer' => 'notEmpty',
-		'topics_per_page' => array(
-			'numeric' => array(
-				'rule' => 'numeric',
-				'message' => 'Please supply a number'
-			),
-			'notEmpty' => array(
-				'rule' => 'notEmpty',
-				'message' => 'This setting is required'
-			)
-		),
-		'topics_per_hour' => array(
-			'numeric' => array(
-				'rule' => 'numeric',
-				'message' => 'Please supply a number'
-			),
-			'notEmpty' => array(
-				'rule' => 'notEmpty',
-				'message' => 'This setting is required'
-			)
-		),
-		'topic_flood_interval' => array(
-			'numeric' => array(
-				'rule' => 'numeric',
-				'message' => 'Please supply a number'
-			),
-			'notEmpty' => array(
-				'rule' => 'notEmpty',
-				'message' => 'This setting is required'
-			)
-		),
-		'topic_pages_till_truncate' => array(
-			'numeric' => array(
-				'rule' => 'numeric',
-				'message' => 'Please supply a number'
-			),
-			'notEmpty' => array(
-				'rule' => 'notEmpty',
-				'message' => 'This setting is required'
-			)
-		),
-		'posts_per_page' => array(
-			'numeric' => array(
-				'rule' => 'numeric',
-				'message' => 'Please supply a number'
-			),
-			'notEmpty' => array(
-				'rule' => 'notEmpty',
-				'message' => 'This setting is required'
-			)
-		),
-		'posts_per_hour' => array(
-			'numeric' => array(
-				'rule' => 'numeric',
-				'message' => 'Please supply a number'
-			),
-			'notEmpty' => array(
-				'rule' => 'notEmpty',
-				'message' => 'This setting is required'
-			)
-		),
-		'posts_till_hot_topic' => array(
-			'numeric' => array(
-				'rule' => 'numeric',
-				'message' => 'Please supply a number'
-			),
-			'notEmpty' => array(
-				'rule' => 'notEmpty',
-				'message' => 'This setting is required'
-			)
-		),
-		'post_flood_interval' => array(
-			'numeric' => array(
-				'rule' => 'numeric',
-				'message' => 'Please supply a number'
-			),
-			'notEmpty' => array(
-				'rule' => 'notEmpty',
-				'message' => 'This setting is required'
-			)
-		),
-		'days_till_autolock' => array(
-			'numeric' => array(
-				'rule' => 'numeric',
-				'message' => 'Please supply a number'
-			),
-			'notEmpty' => array(
-				'rule' => 'notEmpty',
-				'message' => 'This setting is required'
-			)
-		),
-		'whos_online_interval' => array(
-			'numeric' => array(
-				'rule' => 'numeric',
-				'message' => 'Please supply a number'
-			),
-			'notEmpty' => array(
-				'rule' => 'notEmpty',
-				'message' => 'This setting is required'
-			)
-		),
-		'supported_locales' => 'notEmpty',
-	);
-
-	/**
 	 * Return a list of all settings.
 	 *
 	 * @return array
@@ -161,7 +29,13 @@ class Setting extends ForumAppModel {
 	 */
 	public function configureSettings() {
 		if ($settings = $this->getSettings()) {
-			Configure::write('Forum.settings', Hash::merge(Configure::read('Forum.settings'), $settings));
+			$clean = array();
+
+			foreach ($settings as $key => $value) {
+				$clean[Inflector::camelize($key)] = $value;
+			}
+
+			Configure::write('Forum.settings', Hash::merge(Configure::read('Forum.settings'), $clean));
 		}
 	}
 

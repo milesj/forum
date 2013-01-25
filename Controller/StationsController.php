@@ -70,7 +70,7 @@ class StationsController extends ForumAppController {
 			'permission' => $forum['Forum']['accessRead']
 		));
 
-		$this->paginate['Topic']['limit'] = $this->settings['topics_per_page'];
+		$this->paginate['Topic']['limit'] = $this->settings['topicsPerPage'];
 		$this->paginate['Topic']['conditions'] = array(
 			'Topic.forum_id' => $forum['Forum']['id'],
 			'Topic.type' => Topic::NORMAL
@@ -138,7 +138,7 @@ class StationsController extends ForumAppController {
 			$this->Session->setFlash(sprintf($message, count($items)));
 		}
 
-		$this->paginate['Topic']['limit'] = $this->settings['topics_per_page'];
+		$this->paginate['Topic']['limit'] = $this->settings['topicsPerPage'];
 		$this->paginate['Topic']['conditions'] = array(
 			'Topic.forum_id' => $forum['Forum']['id'],
 			'Topic.type' => Topic::NORMAL
@@ -159,7 +159,7 @@ class StationsController extends ForumAppController {
 		$success = false;
 		$data = __d('forum', 'Failed To Subscribe');
 
-		if ($this->settings['enable_forum_subscriptions'] && $this->Subscription->subscribeToForum($this->Auth->user('id'), $id)) {
+		if ($this->settings['enableForumSubscriptions'] && $this->Subscription->subscribeToForum($this->Auth->user('id'), $id)) {
 			$success = true;
 			$data = __d('forum', 'Subscribed');
 		}
@@ -179,7 +179,7 @@ class StationsController extends ForumAppController {
 		$success = false;
 		$data = __d('forum', 'Failed To Unsubscribe');
 
-		if ($this->settings['enable_forum_subscriptions'] && $this->Subscription->unsubscribe($id)) {
+		if ($this->settings['enableForumSubscriptions'] && $this->Subscription->unsubscribe($id)) {
 			$success = true;
 			$data = __d('forum', 'Unsubscribed');
 		}

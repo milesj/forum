@@ -84,7 +84,7 @@ class ForumAppController extends AppController {
 		}
 
 		// Localization
-		$locale = $this->Auth->user('locale') ?: $this->settings['default_locale'];
+		$locale = $this->Auth->user('locale') ?: $this->settings['defaultLocale'];
 		Configure::write('Config.language', $locale);
 		setlocale(LC_ALL, $locale . 'UTF8', $locale . 'UTF-8', $locale, 'eng.UTF8', 'eng.UTF-8', 'eng', 'en_US');
 

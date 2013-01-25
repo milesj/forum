@@ -1,6 +1,6 @@
 
 <div class="breadcrumbs">
-	<?php echo $this->Html->link($settings['site_name'], array('controller' => 'forum', 'action' => 'index'));
+	<?php echo $this->Html->link($settings['name'], array('controller' => 'forum', 'action' => 'index'));
 
 	if ($crumbs = $this->Breadcrumb->get()) {
 		echo ' &raquo; ';

@@ -1,6 +1,6 @@
 <?php
 
-$this->Breadcrumb->add($settings['site_name'], array('controller' => 'forum', 'action' => 'index')); ?>
+$this->Breadcrumb->add($settings['name'], array('controller' => 'forum', 'action' => 'index')); ?>
 
 <div class="errorPage">
 	<h2><?php echo $error->getCode(); ?></h2>

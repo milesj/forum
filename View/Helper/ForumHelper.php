@@ -25,7 +25,7 @@ class ForumHelper extends AppHelper {
 	 * @param string $viewFile
 	 */
 	public function beforeRender($viewFile) {
-		$censored = array_map('trim', explode(',', Configure::read('Forum.settings.censored_words')));
+		$censored = array_map('trim', explode(',', Configure::read('Forum.settings.censoredWords')));
 
 		$decoda = $this->Decoda->getDecoda();
 		$decoda->getHook('Censor')->blacklist($censored);
@@ -48,7 +48,7 @@ class ForumHelper extends AppHelper {
 		if (!empty($userMap['avatar']) && !empty($user['User'][$userMap['avatar']])) {
 			$avatar = $this->Html->image($user['User'][$userMap['avatar']], array('width' => $size, 'height' => $size));
 
-		} else if (Configure::read('Forum.settings.enable_gravatar')) {
+		} else if (Configure::read('Forum.settings.enableGravatar')) {
 			$avatar = $this->gravatar($user['User'][$userMap['email']], array('size' => $size));
 		}
 
@@ -310,7 +310,7 @@ class ForumHelper extends AppHelper {
 		if ($this->Session->check('Forum.Profile.timezone')) {
 			return $this->Session->read('Forum.Profile.timezone');
 		} else {
-			return Configure::read('Forum.settings.default_timezone');
+			return Configure::read('Forum.settings.defaultTimezone');
 		}
 	}
 
@@ -351,7 +351,7 @@ class ForumHelper extends AppHelper {
 		}
 
 		if ($icon === 'open' || $icon === 'new') {
-			if ($topic['Topic']['post_count'] >= Configure::read('Forum.settings.posts_till_hot_topic')) {
+			if ($topic['Topic']['post_count'] >= Configure::read('Forum.settings.postsTillHotTopic')) {
 				$icon .= '_hot';
 			}
 		}
@@ -369,7 +369,7 @@ class ForumHelper extends AppHelper {
 	 */
 	public function topicPages($topic) {
 		if (empty($topic['page_count'])) {
-			$postsPerPage = Configure::read('Forum.settings.posts_per_page');
+			$postsPerPage = Configure::read('Forum.settings.postsPerPage');
 			$topic['page_count'] = ($topic['post_count'] > $postsPerPage) ? ceil($topic['post_count'] / $postsPerPage) : 1;
 		}
 
@@ -379,7 +379,7 @@ class ForumHelper extends AppHelper {
 			$topicPages[] = $this->Html->link($i, array('controller' => 'topics', 'action' => 'view', $topic['slug'], 'page' => $i));
 		}
 
-		if ($topic['page_count'] > Configure::read('Forum.settings.topic_pages_till_truncate')) {
+		if ($topic['page_count'] > Configure::read('Forum.settings.topicPagesTillTruncate')) {
 			array_splice($topicPages, 2, $topic['page_count'] - 4, '...');
 		}
 

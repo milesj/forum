@@ -78,7 +78,7 @@ class SearchController extends ForumAppController {
 
 			$this->paginate['Topic']['conditions']['Forum.accessRead <='] = $this->Session->read('Forum.access');
 			$this->paginate['Topic']['order'] = array($this->request->data['Topic']['orderBy'] => 'DESC');
-			$this->paginate['Topic']['limit'] = $this->settings['topics_per_page'];
+			$this->paginate['Topic']['limit'] = $this->settings['topicsPerPage'];
 
 			$this->set('topics', $this->paginate('Topic'));
 		}

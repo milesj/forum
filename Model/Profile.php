@@ -185,7 +185,7 @@ class Profile extends ForumAppModel {
 	 */
 	public function whosOnline($minutes = null) {
 		if (!$minutes) {
-			$minutes = $this->settings['whos_online_interval'];
+			$minutes = $this->settings['whosOnlineInterval'];
 		}
 
 		return $this->find('all', array(

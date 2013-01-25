@@ -109,9 +109,9 @@ class SubscriptionShell extends Shell {
 
 		$email = new CakeEmail();
 		//$email->transport('Debug');
-		$email->subject(sprintf(__d('forum', '%s [Subscriptions]'), $this->settings['site_name']));
-		$email->from($this->settings['site_email']);
-		$email->replyTo($this->settings['site_email']);
+		$email->subject(sprintf(__d('forum', '%s [Subscriptions]'), $this->settings['name']));
+		$email->from($this->settings['email']);
+		$email->replyTo($this->settings['email']);
 		$email->emailFormat('text');
 
 		// Loop over each user and send one email
@@ -192,10 +192,10 @@ class SubscriptionShell extends Shell {
 	public function formatEmail(array $user, array $topics) {
 		$divider = "\n\n------------------------------\n\n";
 		$count = 0;
-		$url = trim($this->settings['site_main_url'], '/');
+		$url = trim($this->settings['url'], '/');
 
 		$message  = sprintf(__d('forum', 'Hello %s,'), $user[$this->config['userMap']['username']]) . "\n\n";
-		$message .= sprintf(__d('forum', 'You have asked to be notified for any new activity within %s. Below you will find an update on all your forum subscriptions. The last subscription update was sent on %s.'), $this->settings['site_name'], date('m/d/Y h:ia', strtotime($this->timeframe))) . "\n\n";
+		$message .= sprintf(__d('forum', 'You have asked to be notified for any new activity within %s. Below you will find an update on all your forum subscriptions. The last subscription update was sent on %s.'), $this->settings['name'], date('m/d/Y h:ia', strtotime($this->timeframe))) . "\n\n";
 		$message .= __d('forum', 'You may unsubscribe from a forum or topic by clicking the "Unsubscribe" button found within the respective forum or topic.');
 
 		// Show forum topics first
@@ -250,7 +250,7 @@ class SubscriptionShell extends Shell {
 		}
 
 		$message .= $divider;
-		$message .= $this->settings['site_name'] . "\n";
+		$message .= $this->settings['name'] . "\n";
 		$message .= $url;
 
 		return $message;

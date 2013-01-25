@@ -199,7 +199,7 @@ class TopicsController extends ForumAppController {
 			'permission' => $topic['Forum']['accessRead']
 		));
 
-		$this->paginate['Post']['limit'] = $this->settings['posts_per_page'];
+		$this->paginate['Post']['limit'] = $this->settings['postsPerPage'];
 		$this->paginate['Post']['conditions'] = array('Post.topic_id' => $topic['Topic']['id']);
 
 		if ($this->RequestHandler->isRss()) {
@@ -235,7 +235,7 @@ class TopicsController extends ForumAppController {
 		$success = false;
 		$data = __d('forum', 'Failed To Subscribe');
 
-		if ($this->settings['enable_topic_subscriptions'] && $this->Subscription->subscribeToTopic($this->Auth->user('id'), $id)) {
+		if ($this->settings['enableTopicSubscriptions'] && $this->Subscription->subscribeToTopic($this->Auth->user('id'), $id)) {
 			$success = true;
 			$data = __d('forum', 'Subscribed');
 		}
@@ -255,7 +255,7 @@ class TopicsController extends ForumAppController {
 		$success = false;
 		$data = __d('forum', 'Failed To Unsubscribe');
 
-		if ($this->settings['enable_topic_subscriptions'] && $this->Subscription->unsubscribe($id)) {
+		if ($this->settings['enableTopicSubscriptions'] && $this->Subscription->unsubscribe($id)) {
 			$success = true;
 			$data = __d('forum', 'Unsubscribed');
 		}
@@ -297,7 +297,7 @@ class TopicsController extends ForumAppController {
 			$this->Session->setFlash(sprintf($message, count($items)));
 		}
 
-		$this->paginate['Post']['limit'] = $this->settings['posts_per_page'];
+		$this->paginate['Post']['limit'] = $this->settings['postsPerPage'];
 		$this->paginate['Post']['conditions'] = array('Post.topic_id' => $topic['Topic']['id']);
 
 		$this->ForumToolbar->pageTitle(__d('forum', 'Moderate'), $topic['Topic']['title']);

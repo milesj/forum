@@ -179,7 +179,7 @@ if (!empty($topic['Poll']['id'])) { ?>
 	'topic' => $topic
 ));
 
-if ($user && $topic['Topic']['status'] && $settings['enable_quick_reply'] && $this->Forum->hasAccess($topic['Forum']['accessReply'])) { ?>
+if ($user && $topic['Topic']['status'] && $settings['enableQuickReply'] && $this->Forum->hasAccess($topic['Forum']['accessReply'])) { ?>
 
 	<div id="quickReply" class="container">
 		<div class="containerHeader">

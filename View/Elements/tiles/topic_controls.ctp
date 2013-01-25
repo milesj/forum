@@ -1,6 +1,6 @@
 <?php if ($user) { ?>
 	<div class="controls">
-		<?php if ($settings['enable_topic_subscriptions']) {
+		<?php if ($settings['enableTopicSubscriptions']) {
 			if (empty($subscription)) {
 				echo $this->Html->link(__d('forum', 'Subscribe'), array('controller' => 'topics', 'action' => 'subscribe', $topic['Topic']['id']), array('class' => 'button subscription', 'onclick' => 'return Forum.subscribe(this);'));
 			} else {

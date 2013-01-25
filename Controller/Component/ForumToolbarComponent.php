@@ -127,7 +127,7 @@ class ForumToolbarComponent extends Component {
 		if ($topic_id && $post_id) {
 			$posts = ClassRegistry::init('Forum.Post')->getIdsForTopic($topic_id);
 			$totalPosts = count($posts);
-			$perPage = $this->settings['posts_per_page'];
+			$perPage = $this->settings['postsPerPage'];
 
 			if ($totalPosts > $perPage) {
 				$totalPages = ceil($totalPosts / $perPage);
@@ -192,9 +192,9 @@ class ForumToolbarComponent extends Component {
 	public function pageTitle() {
 		$args = func_get_args();
 		array_unshift($args, __d('forum', 'Forum'));
-		array_unshift($args, $this->settings['site_name']);
+		array_unshift($args, $this->settings['name']);
 
-		$this->Controller->set('title_for_layout', implode($this->settings['title_separator'], $args));
+		$this->Controller->set('title_for_layout', implode($this->settings['titleSeparator'], $args));
 	}
 
 	/**

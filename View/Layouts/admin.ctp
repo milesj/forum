@@ -3,7 +3,7 @@ echo $this->Html->docType();
 echo $this->OpenGraph->html(array('xmlns' => 'http://www.w3.org/1999/xhtml')); ?>
 <head>
 	<?php echo $this->Html->charset(); ?>
-	<title><?php echo $this->Breadcrumb->pageTitle($settings['site_name'], array('separator' => $settings['title_separator'])); ?></title>
+	<title><?php echo $this->Breadcrumb->pageTitle($settings['name'], array('separator' => $settings['titleSeparator'])); ?></title>
 	<?php
 	echo $this->Html->css('Forum.normalize');
 	echo $this->Html->css('Forum.style');
@@ -22,7 +22,7 @@ echo $this->OpenGraph->html(array('xmlns' => 'http://www.w3.org/1999/xhtml')); ?
 
 		<div class="header">
 			<h1 class="logo">
-				<?php echo $this->Html->link(__d('forum', 'Forum Administration'), $settings['site_main_url']); ?>
+				<?php echo $this->Html->link(__d('forum', 'Forum Administration'), $settings['url']); ?>
 			</h1>
 
 			<ul class="menu">
