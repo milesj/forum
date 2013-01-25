@@ -55,7 +55,7 @@ class ForumToolbarComponent extends Component {
 		$banned = ($this->Controller->Auth->user(Configure::read('Forum.userMap.status')) == Configure::read('Forum.statusMap.banned'));
 
 		if ($user_id && !$banned) {
-			$access = ClassRegistry::init('Forum.Access')->getListByUser($user_id);
+			/*$access = ClassRegistry::init('Forum.Access')->getListByUser($user_id);
 			$highestAccess = 1;
 
 			if ($access) {
@@ -74,7 +74,7 @@ class ForumToolbarComponent extends Component {
 						$isAdmin = true;
 					}
 				}
-			}
+			}*/
 
 			$moderates = ClassRegistry::init('Forum.Moderator')->getModerations($user_id);
 			$profile = ClassRegistry::init('Forum.Profile')->getUserProfile($user_id);

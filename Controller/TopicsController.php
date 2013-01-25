@@ -40,7 +40,7 @@ class TopicsController extends ForumAppController {
 			'contain' => array(
 				'User' => array(
 					'Profile',
-					'Access' => array('AccessLevel')
+					//'Access' => array('AccessLevel')
 				)
 			)
 		)

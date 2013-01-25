@@ -68,10 +68,7 @@ Configure::write('Forum.routes', array(
 /**
  * Customizable view settings. This allows for layout and template overrides.
  */
-Configure::write('Forum.view', array(
-	'layout' => 'forum',
-	'path' => null
-));
+Configure::write('Forum.viewLayout', 'forum');
 
 /**
  * List of settings that alter the forum systems.

@@ -74,7 +74,7 @@ class Profile extends ForumAppModel {
 			'contain' => array(
 				'User' => array(
 					'Moderator' => array('Forum.id', 'Forum.slug', 'Forum.title'),
-					'Access' => array('AccessLevel')
+					//'Access' => array('AccessLevel')
 				)
 			)
 		));

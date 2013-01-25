@@ -24,7 +24,12 @@ class ForumAppController extends AppController {
 	 *
 	 * @var array
 	 */
-	public $components = array('Session', 'Security', 'Cookie', 'Auth', 'Forum.ForumToolbar', 'Utility.AutoLogin');
+	public $components = array(
+		'Session', 'Security', 'Cookie', 'Acl',
+		'Auth' => array('Controller'),
+		'Utility.AutoLogin',
+		'Forum.ForumToolbar'
+	);
 
 	/**
 	 * Helpers.
@@ -64,6 +69,52 @@ class ForumAppController extends AppController {
 	}
 
 	/**
+	 * Validate the user has the correct ACL permissions.
+	 *
+	 * @param array $user
+	 * @return bool
+	 */
+	public function isAuthorized($user) {
+		if (isset($this->request->params['admin'])) {
+			return $this->Acl->check($user, 'forum.admin');
+		}
+
+		$controller = strtolower($this->name);
+		$action = $this->request->params['action'];
+
+		// Allow for controllers that don't have ACL
+		if (!in_array($controller, array('stations', 'topics', 'posts', 'polls'))) {
+			return true;
+		}
+
+		// Validate based on action
+		switch ($action) {
+
+			// Allow if the user belongs to admin or super
+			case 'moderate':
+				return true;
+			break;
+
+			// Check individual permissions
+			case 'add':
+			case 'view':
+			case 'edit':
+			case 'delete':
+				$crud = array(
+					'add' => 'create',
+					'view' => 'read',
+					'edit' => 'update',
+					'delete' => 'delete'
+				);
+
+				return $this->Acl->check($user, 'forum.' . $controller, $crud[$action]);
+			break;
+		}
+
+		return true;
+	}
+
+	/**
 	 * Before filter.
 	 */
 	public function beforeFilter() {
@@ -74,12 +125,10 @@ class ForumAppController extends AppController {
 		// Settings
 		$this->config = Configure::read('Forum');
 		$this->settings = Configure::read('Forum.settings');
-		$this->layout = $this->config['view']['layout'];
-		//$this->viewPath = $this->config['view']['path'];
+		$this->layout = $this->config['viewLayout'];
 
 		// Admin
 		if (isset($this->request->params['admin'])) {
-			$this->ForumToolbar->verifyAdmin();
 			$this->layout = 'admin';
 		}
 

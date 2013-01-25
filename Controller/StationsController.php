@@ -224,7 +224,7 @@ class StationsController extends ForumAppController {
 		}
 
 		$this->set('method', 'add');
-		$this->set('levels', $this->Forum->AccessLevel->getHigherLevels());
+		//$this->set('levels', $this->Forum->AccessLevel->getHigherLevels());
 		$this->set('forums', $this->Forum->getHierarchy());
 		$this->render('admin_form');
 	}
@@ -264,7 +264,7 @@ class StationsController extends ForumAppController {
 		}
 
 		$this->set('method', 'edit');
-		$this->set('levels', $this->Forum->AccessLevel->getHigherLevels());
+		//$this->set('levels', $this->Forum->AccessLevel->getHigherLevels());
 		$this->set('forums', $this->Forum->getHierarchy());
 		$this->render('admin_form');
 	}
@@ -292,7 +292,7 @@ class StationsController extends ForumAppController {
 		}
 
 		$this->set('forum', $forum);
-		$this->set('levels', $this->Forum->AccessLevel->getHigherLevels());
+		//$this->set('levels', $this->Forum->AccessLevel->getHigherLevels());
 		$this->set('topicForums', $this->Forum->getGroupedHierarchy());
 		$this->set('subForums', $this->Forum->getGroupedHierarchy());
 	}

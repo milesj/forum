@@ -43,9 +43,9 @@ class Forum extends ForumAppModel {
 			'className' => FORUM_USER,
 			'foreignKey' => 'lastUser_id'
 		),
-		'AccessLevel' => array(
+		/*'AccessLevel' => array(
 			'className' => 'Forum.AccessLevel'
-		)
+		)*/
 	);
 
 	/**
