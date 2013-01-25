@@ -64,7 +64,6 @@ class PostsController extends ForumAppController {
 			}
 		}
 
-		$this->ForumToolbar->pageTitle(__d('forum', 'Post Reply'), $topic['Topic']['title']);
 		$this->set('topic', $topic);
 		$this->set('review', $this->Post->getTopicReview($topic['Topic']['id']));
 	}
@@ -93,7 +92,6 @@ class PostsController extends ForumAppController {
 			$this->request->data = $post;
 		}
 
-		$this->ForumToolbar->pageTitle(__d('forum', 'Edit Post'));
 		$this->set('post', $post);
 	}
 
@@ -143,7 +141,6 @@ class PostsController extends ForumAppController {
 			$this->request->data['Report']['post'] = $post['Post']['content'];
 		}
 
-		$this->ForumToolbar->pageTitle(__d('forum', 'Report Post'));
 		$this->set('post', $post);
 	}
 

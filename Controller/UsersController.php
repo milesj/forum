@@ -51,7 +51,6 @@ class UsersController extends ForumAppController {
 
 		$this->paginate['Profile']['order'] = array('User.' . $this->config['userMap']['username'] => 'ASC');
 
-		$this->ForumToolbar->pageTitle(__d('forum', 'User List'));
 		$this->set('users', $this->paginate('Profile'));
 	}
 
@@ -79,7 +78,6 @@ class UsersController extends ForumAppController {
 
 		$user_id = $this->Auth->user('id');
 
-		$this->ForumToolbar->pageTitle(__d('forum', 'Dashboard'));
 		$this->set('topics', $this->Topic->getLatestByUser($user_id));
 		$this->set('activity', $this->Topic->Post->getGroupedLatestByUser($user_id));
 		$this->set('subscriptions', $this->Subscription->getTopicSubscriptionsByUser($user_id));
@@ -101,8 +99,6 @@ class UsersController extends ForumAppController {
 		} else {
 			$this->request->data = $profile;
 		}
-
-		$this->ForumToolbar->pageTitle(__d('forum', 'Edit Profile'));
 	}
 
 	/**
@@ -120,7 +116,6 @@ class UsersController extends ForumAppController {
 
 		$this->loadModel('Forum.Topic');
 
-		$this->ForumToolbar->pageTitle(__d('forum', 'User Profile'), $profile['User'][$this->config['userMap']['username']]);
 		$this->set('profile', $profile);
 		$this->set('topics', $this->Topic->getLatestByUser($user_id));
 		$this->set('posts', $this->Topic->Post->getLatestByUser($user_id));
@@ -152,7 +147,6 @@ class UsersController extends ForumAppController {
 			}
 		}
 
-		$this->ForumToolbar->pageTitle(__d('forum', 'Report User'), $profile['User'][$this->config['userMap']['username']]);
 		$this->set('profile', $profile);
 	}
 
@@ -172,7 +166,6 @@ class UsersController extends ForumAppController {
 
 		$this->paginate['Profile']['order'] = array('User.' . $this->config['userMap']['username'] => 'ASC');
 
-		$this->ForumToolbar->pageTitle(__d('forum', 'Manage Users'));
 		$this->set('users', $this->paginate('Profile'));
 	}
 
@@ -200,7 +193,6 @@ class UsersController extends ForumAppController {
 			$this->request->data = $profile;
 		}
 
-		$this->ForumToolbar->pageTitle(__d('forum', 'Edit User'));
 		$this->set('profile', $profile);
 	}
 

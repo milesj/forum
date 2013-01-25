@@ -43,7 +43,6 @@ class ForumController extends ForumAppController {
 			return;
 		}
 
-		$this->ForumToolbar->pageTitle(__d('forum', 'Index'));
 		$this->set('menuTab', 'forums');
 		$this->set('forums', 		$this->Topic->Forum->getIndex());
 		$this->set('totalPosts', 	$this->Topic->Post->getTotal());
@@ -57,7 +56,6 @@ class ForumController extends ForumAppController {
 	 * Help.
 	 */
 	public function help() {
-		$this->ForumToolbar->pageTitle(__d('forum', 'Help'));
 		$this->set('menuTab', 'help');
 	}
 
@@ -75,7 +73,6 @@ class ForumController extends ForumAppController {
 	 * Rules.
 	 */
 	public function rules() {
-		$this->ForumToolbar->pageTitle(__d('forum', 'Rules'));
 		$this->set('menuTab', 'rules');
 	}
 
@@ -87,7 +84,6 @@ class ForumController extends ForumAppController {
 		$this->loadModel('Forum.Moderator');
 		$this->loadModel('Forum.Profile');
 
-		$this->ForumToolbar->pageTitle(__d('forum', 'Administration'));
 		$this->set('menuTab', 'home');
 		$this->set('totalPosts', 	$this->Topic->Post->getTotal());
 		$this->set('totalTopics', 	$this->Topic->getTotal());
@@ -107,7 +103,6 @@ class ForumController extends ForumAppController {
 	public function admin_settings() {
 		$this->loadModel('Forum.Setting');
 
-		$this->ForumToolbar->pageTitle(__d('forum', 'Settings'));
 		$this->set('menuTab', 'settings');
 	}
 

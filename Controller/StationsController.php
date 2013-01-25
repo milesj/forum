@@ -85,7 +85,6 @@ class StationsController extends ForumAppController {
 			return;
 		}
 
-		$this->ForumToolbar->pageTitle($forum['Forum']['title']);
 		$this->set('forum', $forum);
 		$this->set('topics', $this->paginate('Topic'));
 		$this->set('stickies', $this->Forum->Topic->getStickiesInForum($forum['Forum']['id']));
@@ -144,7 +143,6 @@ class StationsController extends ForumAppController {
 			'Topic.type' => Topic::NORMAL
 		);
 
-		$this->ForumToolbar->pageTitle(__d('forum', 'Moderate'), $forum['Forum']['title']);
 		$this->set('forum', $forum);
 		$this->set('topics', $this->paginate('Topic'));
 		$this->set('forums', $this->Forum->getGroupedHierarchy('accessRead'));
@@ -199,7 +197,6 @@ class StationsController extends ForumAppController {
 			$this->Session->setFlash(__d('forum', 'The order of the forums have been updated!'));
 		}
 
-		$this->ForumToolbar->pageTitle(__d('forum', 'Manage Forums'));
 		$this->set('forums', $this->Forum->getAdminIndex());
 	}
 
@@ -224,7 +221,6 @@ class StationsController extends ForumAppController {
 			}
 		}
 
-		$this->ForumToolbar->pageTitle(__d('forum', 'Add Forum'));
 		$this->set('method', 'add');
 		$this->set('levels', $this->Forum->AccessLevel->getHigherLevels());
 		$this->set('forums', $this->Forum->getHierarchy());
@@ -265,7 +261,6 @@ class StationsController extends ForumAppController {
 			$this->request->data = $forum;
 		}
 
-		$this->ForumToolbar->pageTitle(__d('forum', 'Edit Forum'), $forum['Forum']['title']);
 		$this->set('method', 'edit');
 		$this->set('levels', $this->Forum->AccessLevel->getHigherLevels());
 		$this->set('forums', $this->Forum->getHierarchy());
@@ -294,7 +289,6 @@ class StationsController extends ForumAppController {
 			$this->redirect(array('controller' => 'stations', 'action' => 'index', 'admin' => true));
 		}
 
-		$this->ForumToolbar->pageTitle(__d('forum', 'Delete Forum'), $forum['Forum']['title']);
 		$this->set('forum', $forum);
 		$this->set('levels', $this->Forum->AccessLevel->getHigherLevels());
 		$this->set('topicForums', $this->Forum->getGroupedHierarchy());

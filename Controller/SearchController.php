@@ -83,7 +83,6 @@ class SearchController extends ForumAppController {
 			$this->set('topics', $this->paginate('Topic'));
 		}
 
-		$this->ForumToolbar->pageTitle(__d('forum', 'Search'));
 		$this->set('menuTab', 'search');
 		$this->set('searching', $searching);
 		$this->set('orderBy', $orderBy);

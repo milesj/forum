@@ -23,7 +23,6 @@ class StaffController extends ForumAppController {
 	 * List all staff.
 	 */
 	public function admin_index() {
-		$this->ForumToolbar->pageTitle(__d('forum', 'Staff'));
 		$this->set('levels', $this->Access->AccessLevel->getList());
 		$this->set('staff', $this->Access->getList());
 		$this->set('mods', $this->Moderator->getList());
@@ -40,7 +39,6 @@ class StaffController extends ForumAppController {
 			}
 		}
 
-		$this->ForumToolbar->pageTitle(__d('forum', 'Add Access'));
 		$this->set('method', 'add');
 		$this->set('levels', $this->Access->AccessLevel->getHigherLevels());
 		$this->render('admin_form_access');
@@ -67,7 +65,6 @@ class StaffController extends ForumAppController {
 			$this->request->data = $access;
 		}
 
-		$this->ForumToolbar->pageTitle(__d('forum', 'Edit Access'));
 		$this->set('method', 'edit');
 		$this->set('levels', $this->Access->AccessLevel->getHigherLevels());
 		$this->render('admin_form_access');
@@ -102,7 +99,6 @@ class StaffController extends ForumAppController {
 			}
 		}
 
-		$this->ForumToolbar->pageTitle(__d('forum', 'Add Access Level'));
 		$this->set('method', 'add');
 		$this->render('admin_form_access_level');
 	}
@@ -128,7 +124,6 @@ class StaffController extends ForumAppController {
 			$this->request->data = $access;
 		}
 
-		$this->ForumToolbar->pageTitle(__d('forum', 'Edit Access Level'));
 		$this->set('method', 'edit');
 		$this->render('admin_form_access_level');
 	}
@@ -151,7 +146,6 @@ class StaffController extends ForumAppController {
 			$this->redirect(array('controller' => 'staff', 'action' => 'index', 'admin' => true));
 		}
 
-		$this->ForumToolbar->pageTitle(__d('forum', 'Delete Access Level'));
 		$this->set('access', $access);
 		$this->set('levels', $this->Access->AccessLevel->getHigherLevels($id));
 	}
@@ -167,7 +161,6 @@ class StaffController extends ForumAppController {
 			}
 		}
 
-		$this->ForumToolbar->pageTitle(__d('forum', 'Add Moderator'));
 		$this->set('method', 'add');
 		$this->set('forums', $this->Forum->getGroupedHierarchy('accessRead'));
 		$this->render('admin_form_moderator');
@@ -192,7 +185,6 @@ class StaffController extends ForumAppController {
 			$this->request->data = $mod;
 		}
 
-		$this->ForumToolbar->pageTitle(__d('forum', 'Edit Moderator'));
 		$this->set('method', 'edit');
 		$this->set('forums', $this->Forum->getGroupedHierarchy('accessRead'));
 		$this->render('admin_form_moderator');

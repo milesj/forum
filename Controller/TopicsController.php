@@ -99,7 +99,6 @@ class TopicsController extends ForumAppController {
 			$this->request->data['Topic']['forum_id'] = $forum['Forum']['id'];
 		}
 
-		$this->ForumToolbar->pageTitle($pageTitle);
 		$this->set('pageTitle', $pageTitle);
 		$this->set('type', $type);
 		$this->set('forum', $forum);
@@ -132,7 +131,6 @@ class TopicsController extends ForumAppController {
 			$this->request->data = $topic;
 		}
 
-		$this->ForumToolbar->pageTitle(__d('forum', 'Edit Topic'));
 		$this->set('topic', $topic);
 		$this->set('forums', $this->Topic->Forum->getGroupedHierarchy('accessPost'));
 	}
@@ -181,7 +179,6 @@ class TopicsController extends ForumAppController {
 			}
 		}
 
-		$this->ForumToolbar->pageTitle(__d('forum', 'Report Topic'));
 		$this->set('topic', $topic);
 	}
 
@@ -219,7 +216,6 @@ class TopicsController extends ForumAppController {
 		$this->ForumToolbar->markAsRead($topic['Topic']['id']);
 		$this->Topic->increaseViews($topic['Topic']['id']);
 
-		$this->ForumToolbar->pageTitle($topic['Forum']['title'], $topic['Topic']['title']);
 		$this->set('topic', $topic);
 		$this->set('posts', $this->paginate('Post'));
 		$this->set('subscription', $this->Subscription->isSubscribedToTopic($user_id, $topic['Topic']['id']));
@@ -300,7 +296,6 @@ class TopicsController extends ForumAppController {
 		$this->paginate['Post']['limit'] = $this->settings['postsPerPage'];
 		$this->paginate['Post']['conditions'] = array('Post.topic_id' => $topic['Topic']['id']);
 
-		$this->ForumToolbar->pageTitle(__d('forum', 'Moderate'), $topic['Topic']['title']);
 		$this->set('topic', $topic);
 		$this->set('posts', $this->paginate('Post'));
 	}

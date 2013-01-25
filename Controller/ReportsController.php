@@ -51,7 +51,6 @@ class ReportsController extends ForumAppController {
 		} else {
 			$this->paginate['Report']['contain'] = array('Reporter' => array('Profile'), 'Topic', 'Post', 'User' => array('Profile'));
 
-			$this->ForumToolbar->pageTitle(__d('forum', 'Reported Items'));
 			$this->set('reports', $this->paginate('Report'));
 		}
 	}
@@ -87,7 +86,6 @@ class ReportsController extends ForumAppController {
 		$this->paginate['Report']['conditions']['Report.itemType'] = Report::TOPIC;
 		$this->paginate['Report']['contain']= array('Reporter' => array('Profile'), 'Topic');
 
-		$this->ForumToolbar->pageTitle(__d('forum', 'Reported Topics'));
 		$this->set('reports', $this->paginate('Report'));
 	}
 
@@ -118,7 +116,6 @@ class ReportsController extends ForumAppController {
 		$this->paginate['Report']['conditions']['Report.itemType'] = Report::POST;
 		$this->paginate['Report']['contain'] = array('Reporter' => array('Profile'), 'Post' => array('Topic'));
 
-		$this->ForumToolbar->pageTitle(__d('forum', 'Reported Posts'));
 		$this->set('reports', $this->paginate('Report'));
 	}
 
@@ -150,7 +147,6 @@ class ReportsController extends ForumAppController {
 		$this->paginate['Report']['conditions']['Report.itemType'] = Report::USER;
 		$this->paginate['Report']['contain']= array('Reporter' => array('Profile'), 'User' => array('Profile'));
 
-		$this->ForumToolbar->pageTitle(__d('forum', 'Reported Users'));
 		$this->set('reports', $this->paginate('Report'));
 	}
 
