@@ -15,7 +15,7 @@ if ($items) {
 			'title' => $item['Topic']['title'],
 			'link' => $link,
 			'guid' => array('url' => $link, 'isPermaLink' => 'true'),
-			'description' => $this->Decoda->parse($item['FirstPost']['content']),
+			'description' => $this->Decoda->parse($item['FirstPost']['content'], array(), false),
 			'author' => $item['User'][$config['userMap']['username']],
 			'pubDate' => $item['Topic']['created']
 		));
