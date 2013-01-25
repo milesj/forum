@@ -80,9 +80,9 @@ Configure::write('Forum.view', array(
  * List of settings that alter the forum systems.
  */
 Configure::write('Forum.settings', array(
-	'name' => __d('forum', 'Forum Plugin'),
-	'email' => '',
-	'url' => '',
+	'name' => __d('forum', 'Forum'),
+	'email' => 'forum@cakephp.org',
+	'url' => 'http://milesj.me/code/cakephp/forum',
 	'securityQuestion' => __d('forum', 'What framework does this plugin run on?'),
 	'securityAnswer' => 'cakephp',
 	'titleSeparator' => ' - ',

@@ -81,11 +81,12 @@ class UpgradeShell extends Shell {
 			$this->hr(1);
 			$this->out(sprintf('Upgrading to %s...', $version));
 
-			$this->_querySql($version);
-			$this->complete[] = $version;
+			if ($this->_querySql($version)) {
+				$this->complete[] = $version;
 
-			$this->out('Complete...');
-			$this->finalize();
+				$this->out('Complete...');
+				$this->finalize();
+			}
 		}
 	}
 
@@ -101,7 +102,7 @@ class UpgradeShell extends Shell {
 	 * Execute the queries for the specific version SQL.
 	 *
 	 * @param string $version
-	 * @return void
+	 * @return bool
 	 */
 	protected function _querySql($version) {
 		sleep(1);
@@ -110,7 +111,9 @@ class UpgradeShell extends Shell {
 		$schema = FORUM_PLUGIN . 'Config/Schema/Upgrade/' . $version . '.sql';
 
 		if (!file_exists($schema)) {
-			$this->err(sprintf('Upgrade schema %s does not exist', $version));
+			$this->out(sprintf('Upgrade schema %s does not exist', $version));
+
+			return false;
 		}
 
 		$sql = file_get_contents($schema);
@@ -124,6 +127,8 @@ class UpgradeShell extends Shell {
 				$db->execute($query);
 			}
 		}
+
+		return true;
 	}
 
 }
