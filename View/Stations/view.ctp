@@ -135,10 +135,10 @@ if ($forum['Forum']['forum_id'] > 0) {
 					<td><strong><?php echo $forum['Forum']['settingPostCount'] ? __d('forum', 'Yes') : __d('forum', 'No'); ?></strong></td>
 
 					<td class="align-right"><?php echo __d('forum', 'Can Read Topics'); ?>: </td>
-					<td><strong><?php echo $this->Forum->hasAccess('topics.read') ? __d('forum', 'Yes') : __d('forum', 'No'); ?></strong></td>
+					<td><strong><?php echo ($this->Forum->hasAccess('topics.read') && $forum['Forum']['accessRead']) ? __d('forum', 'Yes') : __d('forum', 'No'); ?></strong></td>
 
 					<td class="align-right"><?php echo __d('forum', 'Can Create Topics'); ?>: </td>
-					<td><strong><?php echo $this->Forum->hasAccess('topics.create') ? __d('forum', 'Yes') : __d('forum', 'No'); ?></strong></td>
+					<td><strong><?php echo ($this->Forum->hasAccess('topics.create') && $forum['Forum']['accessPost']) ? __d('forum', 'Yes') : __d('forum', 'No'); ?></strong></td>
 				</tr>
 				<tr>
 					<td class="align-right"><?php echo __d('forum', 'Total Posts'); ?>: </td>
@@ -148,10 +148,10 @@ if ($forum['Forum']['forum_id'] > 0) {
 					<td><strong><?php echo $forum['Forum']['settingAutoLock'] ? __d('forum', 'Yes') : __d('forum', 'No'); ?></strong></td>
 
 					<td class="align-right"><?php echo __d('forum', 'Can Reply'); ?>: </td>
-					<td><strong><?php echo $this->Forum->hasAccess('posts.create') ? __d('forum', 'Yes') : __d('forum', 'No'); ?></strong></td>
+					<td><strong><?php echo ($this->Forum->hasAccess('posts.create') && $forum['Forum']['accessReply']) ? __d('forum', 'Yes') : __d('forum', 'No'); ?></strong></td>
 
 					<td class="align-right"><?php echo __d('forum', 'Can Create Polls'); ?>: </td>
-					<td><strong><?php echo $this->Forum->hasAccess('polls.create') ? __d('forum', 'Yes') : __d('forum', 'No'); ?></strong></td>
+					<td><strong><?php echo ($this->Forum->hasAccess('polls.create') && $forum['Forum']['accessPoll']) ? __d('forum', 'Yes') : __d('forum', 'No'); ?></strong></td>
 				</tr>
 				<?php if ($moderators) { ?>
 					<tr>

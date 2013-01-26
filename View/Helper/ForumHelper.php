@@ -148,7 +148,12 @@ class ForumHelper extends AppHelper {
 	 * @return bool
 	 */
 	public function hasAccess($action, $forum_id = null) {
-		if ($this->isAdmin()) {
+		$user = $this->Session->read('Auth.User');
+
+		if (empty($user)) {
+			return false;
+
+		} else if ($this->isAdmin()) {
 			return true;
 
 		} else if ($forum_id) {

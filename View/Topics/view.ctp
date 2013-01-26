@@ -7,7 +7,9 @@ if (!empty($topic['Forum']['Parent']['slug'])) {
 }
 
 $this->Breadcrumb->add($topic['Forum']['title'], array('controller' => 'stations', 'action' => 'view', $topic['Forum']['slug']));
-$this->Breadcrumb->add($topic['Topic']['title'], array('controller' => 'topics', 'action' => 'view', $topic['Topic']['slug'])); ?>
+$this->Breadcrumb->add($topic['Topic']['title'], array('controller' => 'topics', 'action' => 'view', $topic['Topic']['slug']));
+
+$canReply = ($user && $topic['Topic']['status'] && $topic['Forum']['accessReply'] && $this->Forum->hasAccess('posts.create')); ?>
 
 <div class="title">
 	<h2>
@@ -131,7 +133,7 @@ if (!empty($topic['Poll']['id'])) { ?>
 								$links[] = $this->Html->link(__d('forum', 'Report Post'), array('controller' => 'posts', 'action' => 'report', $post['Post']['id']));
 							}
 
-							if ($topic['Topic']['status'] && $this->Forum->hasAccess('posts.create')) {
+							if ($canReply) {
 								$links[] = $this->Html->link(__d('forum', 'Quote'), array('controller' => 'posts', 'action' => 'add', $topic['Topic']['slug'], $post['Post']['id']));
 							}
 
@@ -179,7 +181,7 @@ if (!empty($topic['Poll']['id'])) { ?>
 	'topic' => $topic
 ));
 
-if ($user && $topic['Topic']['status'] && $settings['enableQuickReply'] && $this->Forum->hasAccess('posts.create')) { ?>
+if ($settings['enableQuickReply'] && $canReply) { ?>
 
 	<div id="quickReply" class="container">
 		<div class="containerHeader">

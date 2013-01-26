@@ -42,10 +42,7 @@ class Forum extends ForumAppModel {
 		'LastUser' => array(
 			'className' => FORUM_USER,
 			'foreignKey' => 'lastUser_id'
-		),
-		/*'AccessLevel' => array(
-			'className' => 'Forum.AccessLevel'
-		)*/
+		)
 	);
 
 	/**
@@ -107,16 +104,7 @@ class Forum extends ForumAppModel {
 	 *
 	 * @var array
 	 */
-	public $enum = array(
-		'settingPostCount' => array(
-			self::BOOL_NO => 'NO',
-			self::BOOL_YES => 'YES'
-		),
-		'settingAutoLock' => array(
-			self::BOOL_NO => 'NO',
-			self::BOOL_YES => 'YES'
-		)
-	);
+	public $enum = array();
 
 	/**
 	 * Update all forums by going up the parent chain.
@@ -143,13 +131,12 @@ class Forum extends ForumAppModel {
 	 * @return array
 	 */
 	public function getBySlug($slug) {
-		//$access = $this->access();
 		//$accessLevels = $this->accessLevels();
 
 		return $this->find('first', array(
 			'conditions' => array(
 				//'Forum.access_level_id' => $accessLevels,
-				//'Forum.accessRead <=' => $access,
+				'Forum.accessRead' => self::BOOL_YES,
 				'Forum.slug' => $slug
 			),
 			'contain' => array(
@@ -157,7 +144,7 @@ class Forum extends ForumAppModel {
 				'SubForum' => array(
 					'conditions' => array(
 						//'SubForum.access_level_id' => $accessLevels,
-						//'SubForum.accessRead <=' => $access
+						'SubForum.accessRead' => self::BOOL_YES
 					),
 					'LastTopic', 'LastPost', 'LastUser'
 				),
@@ -193,8 +180,7 @@ class Forum extends ForumAppModel {
 		if ($type) {
 			$conditions = array(
 				'Forum.status' => self::STATUS_OPEN,
-				//'Forum.' . $type . ' <=' => $this->access(),
-				//'Forum.access_level_id' => $this->accessLevels()
+				'Forum.' . $type => self::BOOL_YES
 			);
 		}
 
@@ -280,7 +266,6 @@ class Forum extends ForumAppModel {
 	 * @return array
 	 */
 	public function getIndex() {
-		//$access = $this->access();
 		//$accessLevels = $this->accessLevels();
 
 		return $this->find('all', array(
@@ -288,19 +273,19 @@ class Forum extends ForumAppModel {
 			'conditions' => array(
 				'Forum.forum_id' => 0,
 				'Forum.status' => self::STATUS_OPEN,
-				//'Forum.accessRead <=' => $access,
+				'Forum.accessRead' => self::BOOL_YES,
 				//'Forum.access_level_id' => $accessLevels
 			),
 			'contain' => array(
 				'Children' => array(
 					'conditions' => array(
-						//'Children.accessRead <=' => $access,
+						'Children.accessRead' => self::BOOL_YES,
 						//'Children.access_level_id' => $accessLevels
 					),
 					'SubForum' => array(
 						'fields' => array('SubForum.id', 'SubForum.title', 'SubForum.slug'),
 						'conditions' => array(
-							//'SubForum.accessRead <=' => $access,
+							'SubForum.accessRead' => self::BOOL_YES,
 							//'SubForum.access_level_id' => $accessLevels
 						)
 					),
