@@ -218,24 +218,6 @@ class ForumHelper extends AppHelper {
 				0 => __d('forum', 'Hidden')
 			);
 
-		} else if ($type === 'access') {
-			$options = array(
-				1 => '1 (' . __d('forum', 'Member') . ')',
-				2 => '2',
-				3 => '3',
-				4 => '4 (' . __d('forum', 'Moderator') . ')',
-				5 => '5',
-				6 => '6',
-				7 => '7 (' . __d('forum', 'Super Moderator') . ')',
-				8 => '8',
-				9 => '9',
-				10 => '10 (' . __d('forum', 'Administrator') . ')'
-			);
-
-			if ($guest) {
-				array_unshift($options, '0 (' . __d('forum', 'Guest') . ')');
-			}
-
 		} else if ($type === 'userStatus') {
 			$options = array(
 				0 => __d('forum', 'Active'),
