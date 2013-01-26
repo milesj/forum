@@ -14,14 +14,14 @@ class ForumAppModel extends AppModel {
 	/**
 	 * Toggleable constants.
 	 */
-	const BOOL_YES = 1;
-	const BOOL_NO = 0;
+	const YES = 1;
+	const NO = 0;
 
 	/**
 	 * Status constants.
 	 */
-	const STATUS_OPEN = 1;
-	const STATUS_CLOSED = 0;
+	const OPEN = 1;
+	const CLOSED = 0;
 
 	/**
 	 * Table prefix.
@@ -75,8 +75,8 @@ class ForumAppModel extends AppModel {
 	 */
 	public $enum = array(
 		'status' => array(
-			self::STATUS_CLOSED => 'CLOSED',
-			self::STATUS_OPEN => 'OPEN'
+			self::CLOSED => 'CLOSED',
+			self::OPEN => 'OPEN'
 		)
 	);
 

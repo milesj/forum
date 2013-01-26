@@ -15,7 +15,7 @@ $canReply = ($user && $topic['Topic']['status'] && $topic['Forum']['accessReply'
 	<h2>
 		<?php if ($topic['Topic']['type'] > Topic::NORMAL) {
 			echo '<span>' . $this->Forum->options('topicTypes', $topic['Topic']['type']) . ':</span> ';
-		} else if ($topic['Topic']['status'] == Topic::STATUS_CLOSED) {
+		} else if ($topic['Topic']['status'] == Topic::CLOSED) {
 			echo '<span>' . __d('forum', 'Closed') . ':</span> ';
 		}
 

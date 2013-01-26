@@ -75,7 +75,7 @@ class ReportsController extends ForumAppController {
 						break;
 						case 'close':
 							$this->Topic->id = $item_id;
-							$this->Topic->saveField('status', Topic::STATUS_CLOSED);
+							$this->Topic->saveField('status', Topic::CLOSED);
 						break;
 					}
 

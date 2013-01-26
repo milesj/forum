@@ -120,11 +120,11 @@ class StationsController extends ForumAppController {
 						$message = __d('forum', 'A total of %d topic(s) have been permanently deleted');
 
 					} else if ($action === 'close') {
-						$this->Forum->Topic->saveField('status', Topic::STATUS_CLOSED);
+						$this->Forum->Topic->saveField('status', Topic::CLOSED);
 						$message = __d('forum', 'A total of %d topic(s) have been locked to the public');
 
 					} else if ($action === 'open') {
-						$this->Forum->Topic->saveField('status', Topic::STATUS_OPEN);
+						$this->Forum->Topic->saveField('status', Topic::OPEN);
 						$message = __d('forum', 'A total of %d topic(s) have been re-opened');
 
 					} else if ($action === 'move') {

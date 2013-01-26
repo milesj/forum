@@ -46,12 +46,12 @@ class AccessLevel extends ForumAppModel {
 	 */
 	public $enum = array(
 		'isSuper' => array(
-			self::BOOL_NO => 'NO',
-			self::BOOL_YES => 'YES'
+			self::NO => 'NO',
+			self::YES => 'YES'
 		),
 		'isAdmin' => array(
-			self::BOOL_NO => 'NO',
-			self::BOOL_YES => 'YES'
+			self::NO => 'NO',
+			self::YES => 'YES'
 		)
 	);
 
