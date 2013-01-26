@@ -12,12 +12,12 @@ CREATE TABLE `{prefix}forums` (
 	`orderNo` SMALLINT(6) NOT NULL DEFAULT '0',
 	`topic_count` INT(11) NOT NULL DEFAULT '0',
 	`post_count` INT(11) NOT NULL DEFAULT '0',
-	`accessRead` SMALLINT(6) NOT NULL DEFAULT '0',
-	`accessPost` SMALLINT(6) NOT NULL DEFAULT '1',
-	`accessPoll` SMALLINT(6) NOT NULL DEFAULT '1',
-	`accessReply` SMALLINT(6) NOT NULL DEFAULT '1',
-	`settingPostCount` SMALLINT(6) NOT NULL DEFAULT '1',
-	`settingAutoLock` SMALLINT(6) NOT NULL DEFAULT '1',
+	`accessRead` TINYINT(4) NOT NULL DEFAULT '1',
+	`accessPost` TINYINT(4) NOT NULL DEFAULT '1',
+	`accessPoll` TINYINT(4) NOT NULL DEFAULT '1',
+	`accessReply` TINYINT(4) NOT NULL DEFAULT '1',
+	`settingPostCount` TINYINT(4) NOT NULL DEFAULT '1',
+	`settingAutoLock` TINYINT(4) NOT NULL DEFAULT '1',
 	`lastTopic_id` INT(11) DEFAULT NULL,
 	`lastPost_id` INT(11) DEFAULT NULL,
 	`lastUser_id` INT(11) DEFAULT NULL,
@@ -32,5 +32,5 @@ CREATE TABLE `{prefix}forums` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Forum categories to post topics to' AUTO_INCREMENT=1;
 
 INSERT INTO `{prefix}forums` (`id`, `forum_id`, `access_level_id`, `title`, `slug`, `description`, `status`, `orderNo`, `topic_count`, `post_count`, `accessRead`, `accessPost`, `accessReply`, `accessPoll`, `settingPostCount`, `settingAutoLock`, `lastTopic_id`, `lastPost_id`, `lastUser_id`, `created`, `modified`) VALUES
-	(1, 0, 0, 'Forums', 'forums', 'This is a primary forum and it contains child forums. Primary forums (no parents) can not be posted in.', 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, NOW(), NOW()),
-	(2, 1, 0, 'General Discussion', 'general-discussion', 'This is a child forum. You can add, edit or delete these forums by visiting the administration panel, but first you would need to give a user admin rights.', 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, NOW(), NOW());
+	(1, 0, 0, 'Forums', 'forums', 'This is a primary forum and it contains child forums. Primary forums (no parents) can not be posted in.', 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, NOW(), NOW()),
+	(2, 1, 0, 'General Discussion', 'general-discussion', 'This is a child forum. You can add, edit or delete these forums by visiting the administration panel, but first you would need to give a user admin rights.', 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, NOW(), NOW());

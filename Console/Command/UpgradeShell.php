@@ -25,7 +25,7 @@ class UpgradeShell extends Shell {
 	 * @var array
 	 */
 	public $versions = array(
-		'2.2' => 'Subscriptions'
+		'4.0' => 'ACL Restructure'
 	);
 
 	/**
