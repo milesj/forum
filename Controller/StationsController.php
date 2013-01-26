@@ -279,13 +279,21 @@ class StationsController extends ForumAppController {
 		));
 
 		if ($this->request->data) {
-			$this->Forum->Topic->moveAll($id, $this->request->data['Forum']['move_topics']);
-			$this->Forum->moveAll($id, $this->request->data['Forum']['move_forums']);
-			$this->Forum->delete($id, true);
-			$this->Forum->deleteCache('Forum::getIndex');
+			if ($this->request->data['Forum']['move_topics'] == $id) {
+				$this->Forum->invalidate('move_topics', __d('forum', 'Target destination cannot be itself'));
 
-			$this->Session->setFlash(sprintf(__d('forum', 'The %s forum has been deleted, and all its sub-forums and topics have been moved!'), '<strong>' . $forum['Forum']['title'] . '</strong>'));
-			$this->redirect(array('controller' => 'stations', 'action' => 'index', 'admin' => true));
+			} else if ($this->request->data['Forum']['move_forums'] == $id) {
+				$this->Forum->invalidate('move_forums', __d('forum', 'Target destination cannot be itself'));
+
+			} else {
+				$this->Forum->Topic->moveAll($id, $this->request->data['Forum']['move_topics']);
+				$this->Forum->moveAll($id, $this->request->data['Forum']['move_forums']);
+				$this->Forum->delete($id, true);
+				$this->Forum->deleteCache('Forum::getIndex');
+
+				$this->Session->setFlash(sprintf(__d('forum', 'The %s forum has been deleted, and all its sub-forums and topics have been moved!'), '<strong>' . $forum['Forum']['title'] . '</strong>'));
+				$this->redirect(array('controller' => 'stations', 'action' => 'index', 'admin' => true));
+			}
 		}
 
 		$this->set('forum', $forum);
@@ -301,7 +309,7 @@ class StationsController extends ForumAppController {
 
 		$this->Auth->allow('index', 'view', 'feed');
 		$this->AjaxHandler->handle('subscribe', 'unsubscribe');
-		$this->Security->disabledFields = array('items');
+		$this->Security->unlockedFields = array('items');
 
 		$this->set('menuTab', 'forums');
 	}

@@ -101,7 +101,7 @@ class TopicsController extends ForumAppController {
 		$this->set('pageTitle', $pageTitle);
 		$this->set('type', $type);
 		$this->set('forum', $forum);
-		$this->set('forums', $this->Topic->Forum->getGroupedHierarchy($access)); // @TODO
+		$this->set('forums', $this->Topic->Forum->getGroupedHierarchy($access));
 	}
 
 	/**
@@ -127,7 +127,10 @@ class TopicsController extends ForumAppController {
 				}
 			}
 		} else {
-			$topic['Poll']['expires'] = $this->Topic->daysBetween($topic['Poll']['created'], $topic['Poll']['expires']);
+			if ($topic['Poll']['expires']) {
+				$topic['Poll']['expires'] = $this->Topic->daysBetween($topic['Poll']['created'], $topic['Poll']['expires']);
+			}
+
 			$this->request->data = $topic;
 		}
 
@@ -306,7 +309,7 @@ class TopicsController extends ForumAppController {
 
 		$this->Auth->allow('index', 'view', 'feed');
 		$this->AjaxHandler->handle('subscribe', 'unsubscribe');
-		$this->Security->disabledFields = array('option', 'items');
+		$this->Security->unlockedFields = array('option', 'items');
 
 		$this->set('menuTab', 'forums');
 	}

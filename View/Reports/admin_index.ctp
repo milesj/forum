@@ -45,7 +45,7 @@ $this->Breadcrumb->add(__d('forum', 'Reported'), array('controller' => 'reports'
 								echo $this->Html->link($report['User'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'edit', $report['User']['Profile']['id'], 'admin' => true));
 
 							} else if ($report['Report']['itemType'] == Report::POST && !empty($report['Post']['id'])) {
-								echo h($report['Post']['content']);
+								echo $this->Text->truncate($this->Decoda->strip($report['Post']['content']), 100);
 
 							} else {
 								echo '<em class="gray">(' . __d('forum', 'Deleted') . ')</em>';

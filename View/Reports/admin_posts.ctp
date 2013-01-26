@@ -48,7 +48,7 @@ $this->Breadcrumb->add(__d('forum', 'Posts'), array('controller' => 'reports', '
 					</td>
 					<td>
 						<?php if (!empty($report['Post']['id'])) {
-							echo $report['Post']['content'];
+							echo $this->Decoda->parse($report['Post']['content']);
 						} else {
 							echo '<em class="gray">(' . __d('forum', 'Deleted') . ')</em>';
 						} ?>

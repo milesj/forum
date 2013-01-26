@@ -45,7 +45,6 @@ class ForumToolbarComponent extends Component {
 		}
 
 		$user_id = $this->Controller->Auth->user('id');
-		$profile = array();
 		$moderates = array();
 		$lastVisit = date('Y-m-d H:i:s');
 		$banned = ($this->Controller->Auth->user(Configure::read('Forum.userMap.status')) == Configure::read('Forum.statusMap.banned'));
@@ -55,11 +54,9 @@ class ForumToolbarComponent extends Component {
 
 			$moderates = ClassRegistry::init('Forum.Moderator')->getModerations($user_id);
 			$profile = ClassRegistry::init('Forum.Profile')->getUserProfile($user_id);
-			$profile = $profile['Profile'];
-			$lastVisit = $profile['lastLogin'];
+			$lastVisit = $profile['Profile']['lastLogin'];
 		}
 
-		$this->Session->write('Forum.profile', $profile);
 		$this->Session->write('Forum.moderates', $moderates);
 		$this->Session->write('Forum.lastVisit', $lastVisit);
 		$this->Session->write('Forum.isBrowsing', true);

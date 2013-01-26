@@ -1906,3 +1906,7 @@ msgstr ""
 #: View/Errors/error400.ctp:7
 msgid "Unauthorized"
 msgstr ""
+
+#: Controller/StationsController.php:283,286
+msgid "Target destination cannot be itself"
+msgstr ""

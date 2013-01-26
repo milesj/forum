@@ -116,7 +116,7 @@ if (!empty($topic['Poll']['id'])) { ?>
 
 							if ($topic['Topic']['firstPost_id'] == $post['Post']['id']) {
 								if ($this->Forum->isMod($topic['Forum']['id']) || ($topic['Topic']['status'] && $user['User']['id'] == $post['Post']['user_id'])) {
-									$links[] = $this->Html->link(__d('forum', 'Edit Topic'), array('controller' => 'topics', 'action' => 'edit', $topic['Topic']['slug']));
+									$links[] = $this->Html->link(__d('forum', 'Edit Topic'), array('controller' => 'topics', 'action' => 'edit', $topic['Topic']['slug'], (!empty($topic['Poll']['id']) ? 'poll' : '')));
 								}
 
 								if ($this->Forum->isMod($topic['Forum']['id'])) {
@@ -146,10 +146,6 @@ if (!empty($topic['Poll']['id'])) { ?>
 				<tr>
 					<td valign="top" style="width: 25%">
 						<h4 class="username"><?php echo $this->Html->link($post['User'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'profile', $post['User']['id'])); ?></h4>
-
-						<?php /*if (!empty($post['User']['Access'])) { ?>
-							<strong><?php echo $this->Forum->highestAccessLevel($post['User']['Access']); ?></strong><br>
-						<?php }*/ // @TODO ?>
 
 						<?php echo $this->Forum->avatar($post) ?>
 

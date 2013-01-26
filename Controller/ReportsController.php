@@ -159,7 +159,7 @@ class ReportsController extends ForumAppController {
 	public function beforeFilter() {
 		parent::beforeFilter();
 
-		$this->Security->disabledFields = array('items');
+		$this->Security->unlockedFields = array('items');
 
 		$this->set('menuTab', 'reports');
 	}
