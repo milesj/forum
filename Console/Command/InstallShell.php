@@ -113,7 +113,7 @@ class InstallShell extends Shell {
 		$table = $this->in('What is the name of your users table?');
 
 		if (!$table) {
-			$this->out('Please provide a users table.');
+			$this->out('Please provide a users table');
 
 			return $this->usersTable();
 
@@ -149,7 +149,7 @@ class InstallShell extends Shell {
 		$tables = $this->db->listSources();
 
 		if (!in_array($this->install['table'], $tables)) {
-			$this->out(sprintf('Error: No %s table was found in %s.', $this->install['table'], FORUM_DATABASE));
+			$this->out(sprintf('Error: No %s table was found in %s', $this->install['table'], FORUM_DATABASE));
 
 			return false;
 		}
@@ -193,7 +193,7 @@ class InstallShell extends Shell {
 
 		if ($executed != $total) {
 			$this->out('Error: Failed to create database tables!');
-			$this->out('Rolling back and dropping any created tables.');
+			$this->out('Rolling back and dropping any created tables');
 
 			foreach ($tables as $table) {
 				$this->db->execute(sprintf('DROP TABLE `%s`;', $table));
@@ -238,7 +238,7 @@ class InstallShell extends Shell {
 			if ($result) {
 				$this->install['user_id'] = $this->db->lastInsertId();
 			} else {
-				$this->out('An error has occured while creating the user.');
+				$this->out('An error has occurred while creating the user');
 
 				return $this->setupAdmin();
 			}
@@ -258,7 +258,7 @@ class InstallShell extends Shell {
 		));
 
 		if (!$result) {
-			$this->out('An error occured while granting administrator access.');
+			$this->out('An error occurred while granting administrator access');
 
 			return $this->setupAdmin();
 		}
@@ -278,7 +278,7 @@ class InstallShell extends Shell {
 		$this->out(sprintf('Username: %s', $this->install['username']));
 		$this->out(sprintf('Email: %s', $this->install['email']));
 		$this->out();
-		$this->out('Please read the documentation for further configuration instructions.');
+		$this->out('Please read the documentation for further configuration instructions');
 		$this->hr(1);
 	}
 
@@ -305,7 +305,7 @@ class InstallShell extends Shell {
 					));
 
 					if ($this->db->hasResult() && $result[0]['count']) {
-						$this->out('Username already exists, please try again.');
+						$this->out('Username already exists, please try again');
 						$username = $this->_newUser($mode);
 					}
 				}
@@ -330,7 +330,7 @@ class InstallShell extends Shell {
 					$email = $this->_newUser($mode);
 
 				} else if (!Validation::email($email)) {
-					$this->out('Invalid email address, please try again.');
+					$this->out('Invalid email address, please try again');
 					$email = $this->_newUser($mode);
 
 				} else {
@@ -341,7 +341,7 @@ class InstallShell extends Shell {
 					));
 
 					if ($this->db->hasResult() && $result[0]['count']) {
-						$this->out('Email already exists, please try again.');
+						$this->out('Email already exists, please try again');
 						$email = $this->_newUser($mode);
 					}
 				}
@@ -372,7 +372,7 @@ class InstallShell extends Shell {
 			));
 
 			if (!$result) {
-				$this->out('User ID does not exist, please try again.');
+				$this->out('User ID does not exist, please try again');
 				$user_id = $this->_oldUser();
 
 			} else {

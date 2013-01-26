@@ -78,7 +78,15 @@ class UpgradeShell extends Shell {
 			$this->hr(1);
 			$this->out(sprintf('Upgrading to %s...', $version));
 
-			if ($this->_querySql($version)) {
+			$method = 'to_' . str_replace('.', '', $version);
+
+			if (method_exists($this, $method)) {
+				$response = $this->{$method}();
+			} else {
+				$response = $this->_querySql($version);
+			}
+
+			if ($response) {
 				$this->complete[] = $version;
 
 				$this->out('Complete...');
@@ -93,6 +101,13 @@ class UpgradeShell extends Shell {
 	public function finalize() {
 		$this->out('You can now upgrade to another version or close the shell.');
 		$this->upgrade();
+	}
+
+	/**
+	 * Upgrade to 4.0.0.
+	 */
+	public function to_40() {
+
 	}
 
 	/**
