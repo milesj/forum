@@ -5,8 +5,6 @@
  * @link		http://milesj.me/code/cakephp/forum
  */
 
-App::uses('AccessLevel', 'Forum.Model');
-
 class ForumHelper extends AppHelper {
 
 	/**
@@ -15,28 +13,6 @@ class ForumHelper extends AppHelper {
 	 * @var array
 	 */
 	public $helpers = array('Html', 'Session', 'Utility.Decoda');
-
-	/**
-	 * Modify Decoda before rendering the view.
-	 *
-	 * @param string $viewFile
-	 */
-	public function beforeRender($viewFile) {
-		$censored = Configure::read('Forum.settings.censoredWords');
-
-		if (is_string($censored)) {
-			$censored = array_map('trim', explode(',', $censored));
-		}
-
-		$decoda = $this->Decoda->getDecoda();
-		$decoda->addFilter(new \Decoda\Filter\BlockFilter(array(
-			'spoilerToggle' => "$('spoiler-content-{id}').toggle();"
-		)));
-
-		if ($censored) {
-			$decoda->getHook('Censor')->blacklist($censored);
-		}
-	}
 
 	/**
 	 * Output a users avatar.
@@ -87,15 +63,6 @@ class ForumHelper extends AppHelper {
 		return $this->Html->image('/forum/img/forum_' . $icon . '.png', array(
 			'alt' => ucfirst($icon)
 		));
-	}
-
-	/**
-	 * Gets the highest access level.
-	 *
-	 * @return int
-	 */
-	public function getAccess() {
-		return $this->Session->read('Forum.access');
 	}
 
 	/**
@@ -176,42 +143,47 @@ class ForumHelper extends AppHelper {
 	/**
 	 * Checks to see if the user has mod status.
 	 *
-	 * @param int $level
+	 * @param string $action
 	 * @param int $forum_id
 	 * @return bool
 	 */
-	public function hasAccess($level = AccessLevel::MEMBER, $forum_id = null) {
-		if ($this->Session->read('Forum.isAdmin')) {
+	public function hasAccess($action, $forum_id = null) {
+		if ($this->isAdmin()) {
 			return true;
 
-		} else if ($level <= AccessLevel::SUPER && $this->Session->read('Forum.isSuper')) {
-			return true;
-
-		} else if ($level <= AccessLevel::MOD && $forum_id) {
-			return in_array($forum_id, $this->Session->read('Forum.moderates'));
+		} else if ($forum_id) {
+			return $this->isMod($forum_id);
 		}
 
-		return ($this->getAccess() >= $level);
+		return (bool) $this->Session->read('Forum.permissions.' . $action);
 	}
 
 	/**
-	 * Output the highest access level.
+	 * Return true if the user is an admin.
 	 *
-	 * @param array $levels
-	 * @return string
+	 * @return bool
 	 */
-	public function highestAccessLevel($levels) {
-		$highest = array();
+	public function isAdmin() {
+		return (bool) $this->Session->read('Forum.isAdmin');
+	}
 
-		foreach ($levels as $level) {
-			if (!$highest) {
-				$highest = $level;
-			} else if ($level['AccessLevel']['level'] > $highest['AccessLevel']['level']) {
-				$highest = $level;
-			}
-		}
+	/**
+	 * Return true if the user is a super mod.
+	 *
+	 * @return bool
+	 */
+	public function isSuper() {
+		return ($this->isAdmin() || $this->Session->read('Forum.isSuper'));
+	}
 
-		return $highest['AccessLevel']['title'];
+	/**
+	 * Return true if the user is a forum mod.
+	 *
+	 * @param int $forum_id
+	 * @return bool
+	 */
+	public function isMod($forum_id) {
+		return ($this->isSuper() || in_array($forum_id, $this->Session->read('Forum.moderates')));
 	}
 
 	/**
@@ -404,6 +376,28 @@ class ForumHelper extends AppHelper {
 		$types = $this->options('topicTypes');
 
 		return $this->output('<strong>' . $types[$type] . '</strong>');
+	}
+
+	/**
+	 * Modify Decoda before rendering the view.
+	 *
+	 * @param string $viewFile
+	 */
+	public function beforeRender($viewFile) {
+		$censored = Configure::read('Forum.settings.censoredWords');
+
+		if (is_string($censored)) {
+			$censored = array_map('trim', explode(',', $censored));
+		}
+
+		$decoda = $this->Decoda->getDecoda();
+		$decoda->addFilter(new \Decoda\Filter\BlockFilter(array(
+			'spoilerToggle' => "$('spoiler-content-{id}').toggle();"
+		)));
+
+		if ($censored) {
+			$decoda->getHook('Censor')->blacklist($censored);
+		}
 	}
 
 }

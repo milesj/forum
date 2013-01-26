@@ -83,7 +83,6 @@ class Profile extends ForumAppModel {
 	/**
 	 * Return the latest user profiles.
 	 *
-	 * @access profile
 	 * @param int $limit
 	 * @return int
 	 */

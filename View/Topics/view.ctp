@@ -113,11 +113,11 @@ if (!empty($topic['Poll']['id'])) { ?>
 							$links = array();
 
 							if ($topic['Topic']['firstPost_id'] == $post['Post']['id']) {
-								if ($this->Forum->hasAccess(AccessLevel::SUPER, $topic['Forum']['id']) || ($topic['Topic']['status'] && $user['User']['id'] == $post['Post']['user_id'])) {
+								if ($this->Forum->isMod($topic['Forum']['id']) || ($topic['Topic']['status'] && $user['User']['id'] == $post['Post']['user_id'])) {
 									$links[] = $this->Html->link(__d('forum', 'Edit Topic'), array('controller' => 'topics', 'action' => 'edit', $topic['Topic']['slug']));
 								}
 
-								if ($this->Forum->hasAccess(AccessLevel::SUPER, $topic['Forum']['id'])) {
+								if ($this->Forum->isMod($topic['Forum']['id'])) {
 									$links[] = $this->Html->link(__d('forum', 'Delete Topic'), array('controller' => 'topics', 'action' => 'delete', $topic['Topic']['slug']), array('confirm' => __d('forum', 'Are you sure you want to delete?')));
 								}
 
@@ -131,7 +131,7 @@ if (!empty($topic['Poll']['id'])) { ?>
 								$links[] = $this->Html->link(__d('forum', 'Report Post'), array('controller' => 'posts', 'action' => 'report', $post['Post']['id']));
 							}
 
-							if ($topic['Topic']['status'] && $this->Forum->hasAccess($topic['Forum']['accessReply'])) {
+							if ($topic['Topic']['status'] && $this->Forum->hasAccess('posts.create')) {
 								$links[] = $this->Html->link(__d('forum', 'Quote'), array('controller' => 'posts', 'action' => 'add', $topic['Topic']['slug'], $post['Post']['id']));
 							}
 
@@ -145,9 +145,9 @@ if (!empty($topic['Poll']['id'])) { ?>
 					<td valign="top" style="width: 25%">
 						<h4 class="username"><?php echo $this->Html->link($post['User'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'profile', $post['User']['id'])); ?></h4>
 
-						<?php if (!empty($post['User']['Access'])) { ?>
+						<?php /*if (!empty($post['User']['Access'])) { ?>
 							<strong><?php echo $this->Forum->highestAccessLevel($post['User']['Access']); ?></strong><br>
-						<?php } ?>
+						<?php }*/ // @TODO ?>
 
 						<?php echo $this->Forum->avatar($post) ?>
 
@@ -179,7 +179,7 @@ if (!empty($topic['Poll']['id'])) { ?>
 	'topic' => $topic
 ));
 
-if ($user && $topic['Topic']['status'] && $settings['enableQuickReply'] && $this->Forum->hasAccess($topic['Forum']['accessReply'])) { ?>
+if ($user && $topic['Topic']['status'] && $settings['enableQuickReply'] && $this->Forum->hasAccess('posts.create')) { ?>
 
 	<div id="quickReply" class="container">
 		<div class="containerHeader">

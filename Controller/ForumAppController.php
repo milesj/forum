@@ -26,7 +26,9 @@ class ForumAppController extends AppController {
 	 */
 	public $components = array(
 		'Session', 'Security', 'Cookie', 'Acl',
-		'Auth' => array('Controller'),
+		'Auth' => array(
+			'authorize' => array('Controller')
+		),
 		'Utility.AutoLogin',
 		'Forum.ForumToolbar'
 	);
@@ -76,11 +78,21 @@ class ForumAppController extends AppController {
 	 */
 	public function isAuthorized($user) {
 		if (isset($this->request->params['admin'])) {
-			return $this->Acl->check($user, 'forum.admin');
+			return $this->Session->read('Forum.isAdmin');
+		}
+
+		// Admins can do everything
+		if ($this->Session->read('Forum.isAdmin')) {
+			return true;
 		}
 
 		$controller = strtolower($this->name);
 		$action = $this->request->params['action'];
+
+		// Change to polls when applicable
+		if (isset($this->request->params['pass'][1]) && $this->request->params['pass'][1] === 'poll') {
+			$controller = 'polls';
+		}
 
 		// Allow for controllers that don't have ACL
 		if (!in_array($controller, array('stations', 'topics', 'posts', 'polls'))) {
@@ -92,7 +104,7 @@ class ForumAppController extends AppController {
 
 			// Allow if the user belongs to admin or super
 			case 'moderate':
-				return true;
+				return $this->Session->read('Forum.isSuper');
 			break;
 
 			// Check individual permissions
@@ -107,7 +119,7 @@ class ForumAppController extends AppController {
 					'delete' => 'delete'
 				);
 
-				return $this->Acl->check($user, 'forum.' . $controller, $crud[$action]);
+				return $this->Acl->check(array('User' => $user), 'forum.' . $controller, $crud[$action]);
 			break;
 		}
 

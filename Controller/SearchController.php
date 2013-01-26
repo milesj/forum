@@ -38,7 +38,7 @@ class SearchController extends ForumAppController {
 	 */
 	public function index($type = '') {
 		$searching = false;
-		$forums = $this->Topic->Forum->getGroupedHierarchy('accessRead');
+		$forums = $this->Topic->Forum->getGroupedHierarchy('accessRead'); // @TODO
 		$orderBy = array(
 			'LastPost.created' => __d('forum', 'Last post time'),
 			'Topic.created' => __d('forum', 'Topic created time'),
@@ -76,7 +76,7 @@ class SearchController extends ForumAppController {
 				$this->request->data['Topic']['orderBy'] = 'LastPost.created';
 			}
 
-			$this->paginate['Topic']['conditions']['Forum.accessRead <='] = $this->Session->read('Forum.access');
+			//$this->paginate['Topic']['conditions']['Forum.accessRead <='] = $this->Session->read('Forum.access');
 			$this->paginate['Topic']['order'] = array($this->request->data['Topic']['orderBy'] => 'DESC');
 			$this->paginate['Topic']['limit'] = $this->settings['topicsPerPage'];
 

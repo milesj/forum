@@ -45,36 +45,13 @@ class ForumToolbarComponent extends Component {
 		}
 
 		$user_id = $this->Controller->Auth->user('id');
-		$isSuper = false;
-		$isAdmin = false;
-		$highestAccess = 0;
-		$accessLevels = array();
 		$profile = array();
 		$moderates = array();
 		$lastVisit = date('Y-m-d H:i:s');
 		$banned = ($this->Controller->Auth->user(Configure::read('Forum.userMap.status')) == Configure::read('Forum.statusMap.banned'));
 
 		if ($user_id && !$banned) {
-			/*$access = ClassRegistry::init('Forum.Access')->getListByUser($user_id);
-			$highestAccess = 1;
-
-			if ($access) {
-				foreach ($access as $level) {
-					$accessLevels[$level['AccessLevel']['id']] = $level['AccessLevel']['level'];
-
-					if ($level['AccessLevel']['level'] > $highestAccess) {
-						$highestAccess = $level['AccessLevel']['level'];
-					}
-
-					if ($level['AccessLevel']['isSuper'] && !$isSuper) {
-						$isSuper = true;
-					}
-
-					if ($level['AccessLevel']['isAdmin'] && !$isAdmin) {
-						$isAdmin = true;
-					}
-				}
-			}*/
+			$this->getPermissions();
 
 			$moderates = ClassRegistry::init('Forum.Moderator')->getModerations($user_id);
 			$profile = ClassRegistry::init('Forum.Profile')->getUserProfile($user_id);
@@ -83,13 +60,77 @@ class ForumToolbarComponent extends Component {
 		}
 
 		$this->Session->write('Forum.profile', $profile);
-		$this->Session->write('Forum.access', $highestAccess);
-		$this->Session->write('Forum.accessLevels', $accessLevels);
-		$this->Session->write('Forum.isSuper', $isSuper);
-		$this->Session->write('Forum.isAdmin', $isAdmin);
 		$this->Session->write('Forum.moderates', $moderates);
 		$this->Session->write('Forum.lastVisit', $lastVisit);
 		$this->Session->write('Forum.isBrowsing', true);
+	}
+
+	/**
+	 * Get ACL permissions.
+	 */
+	public function getPermissions() {
+		$user = $this->Controller->Auth->user();
+		$isAdmin = false;
+		$isSuper = false;
+		$defaults = array(
+			'topics' => array(
+				'create' => true,
+				'read' => true,
+				'update' => true,
+				'delete' => true
+			),
+			'posts' => array(
+				'create' => true,
+				'read' => true,
+				'update' => true,
+				'delete' => true
+			),
+			'polls' => array(
+				'create' => true,
+				'read' => true,
+				'update' => true,
+				'delete' => true
+			)
+		);
+
+		if ($user) {
+			$aros = ClassRegistry::init('Permission')->Aro->node(array('User' => $user));
+			$permissions = ClassRegistry::init('Permission')->find('all', array(
+				'conditions' => array('Permission.aro_id' => Hash::extract($aros, '{n}.Aro.id')),
+				'order' => array('Aco.lft' => 'desc'),
+				'recursive' => 0
+			));
+
+			if ($permissions) {
+				foreach ($permissions as $perm) {
+					$type = str_replace('forum.', '', $perm['Aco']['alias']);
+
+					if ($type === 'admin') {
+						continue;
+					}
+
+					if ($perm['Aro']['alias'] === 'forum.admin' && !$isAdmin) {
+						$isAdmin = true;
+						$isSuper = true;
+
+					} else if ($perm['Aro']['alias'] === 'forum.superMod' && !$isSuper) {
+						$isSuper = true;
+					}
+
+					foreach ($perm['Permission'] as $action => $can) {
+						if (substr($action, 0, 1) !== '_') {
+							continue;
+						}
+
+						$defaults[$type][str_replace('_', '', $action)] = (bool) $can;
+					}
+				}
+			}
+		}
+
+		$this->Session->write('Forum.isAdmin', $isAdmin);
+		$this->Session->write('Forum.isSuper', $isSuper);
+		$this->Session->write('Forum.permissions', $defaults);
 	}
 
 	/**
@@ -224,13 +265,6 @@ class ForumToolbarComponent extends Component {
 			}
 		}
 
-		// Do we have permission to do this action?
-		if (isset($validators['permission'])) {
-			if ($this->Session->read('Forum.access') < $validators['permission']) {
-				throw new UnauthorizedException();
-			}
-		}
-
 		// Is the item locked/unavailable?
 		if (isset($validators['status'])) {
 			if (!$validators['status']) {
@@ -249,27 +283,6 @@ class ForumToolbarComponent extends Component {
 		}
 
 		return true;
-	}
-
-	/**
-	 * Double check access levels in session and db and permit.
-	 *
-	 * @return bool
-	 */
-	public function verifyAdmin() {
-		$user_id = $this->Controller->Auth->user('id');
-
-		if ($user_id) {
-			if ($this->Session->read('Forum.isAdmin')) {
-				return true;
-			} else {
-				$this->goToPage();
-			}
-		} else {
-			$this->Controller->redirect(Configure::read('Forum.routes.login'));
-		}
-
-		return false;
 	}
 
 }

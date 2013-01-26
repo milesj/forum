@@ -38,10 +38,7 @@ class TopicsController extends ForumAppController {
 		'Post' => array(
 			'order' => array('Post.created' => 'ASC'),
 			'contain' => array(
-				'User' => array(
-					'Profile',
-					//'Access' => array('AccessLevel')
-				)
+				'User' => array('Profile')
 			)
 		)
 	);
@@ -80,8 +77,7 @@ class TopicsController extends ForumAppController {
 
 		$this->ForumToolbar->verifyAccess(array(
 			'exists' => $forum,
-			'status' => $forum['Forum']['status'],
-			'permission' => $forum['Forum'][$access]
+			'status' => $forum['Forum']['status']
 		));
 
 		if ($this->request->data) {
@@ -105,15 +101,16 @@ class TopicsController extends ForumAppController {
 		$this->set('pageTitle', $pageTitle);
 		$this->set('type', $type);
 		$this->set('forum', $forum);
-		$this->set('forums', $this->Topic->Forum->getGroupedHierarchy($access));
+		$this->set('forums', $this->Topic->Forum->getGroupedHierarchy($access)); // @TODO
 	}
 
 	/**
 	 * Edit a topic.
 	 *
 	 * @param string $slug
+	 * @param string $type
 	 */
-	public function edit($slug) {
+	public function edit($slug, $type = '') {
 		$topic = $this->Topic->getBySlug($slug);
 
 		$this->ForumToolbar->verifyAccess(array(
@@ -195,8 +192,7 @@ class TopicsController extends ForumAppController {
 		$user_id = $this->Auth->user('id');
 
 		$this->ForumToolbar->verifyAccess(array(
-			'exists' => $topic,
-			'permission' => $topic['Forum']['accessRead']
+			'exists' => $topic
 		));
 
 		$this->paginate['Post']['limit'] = $this->settings['postsPerPage'];
@@ -275,7 +271,6 @@ class TopicsController extends ForumAppController {
 
 		$this->ForumToolbar->verifyAccess(array(
 			'exists' => $topic,
-			'permission' => $topic['Forum']['accessRead'],
 			'moderate' => $topic['Topic']['forum_id']
 		));
 

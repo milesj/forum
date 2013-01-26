@@ -101,31 +101,6 @@ class ForumAppModel extends AppModel {
 	}
 
 	/**
-	 * Get the users highest access level.
-	 *
-	 * @return int
-	 */
-	public function access() {
-		return $this->Session->read('Forum.access');
-	}
-
-	/**
-	 * Return an array of access levels or IDs.
-	 *
-	 * @param string $field
-	 * @return array
-	 */
-	public function accessLevels($field = 'id') {
-		$levels = array(0) + (array) $this->Session->read('Forum.accessLevels');
-
-		if ($field === 'id') {
-			$levels = array_keys($levels);
-		}
-
-		return $levels;
-	}
-
-	/**
 	 * Return all records.
 	 *
 	 * @return array

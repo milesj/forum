@@ -18,7 +18,7 @@ $this->Breadcrumb->add(__d('forum', 'Edit Topic'), array('controller' => 'topics
 	<div class="containerContent">
 		<?php echo $this->Form->input('title', array('label' => __d('forum', 'Title')));
 
-		if ($this->Forum->hasAccess(AccessLevel::SUPER, $topic['Forum']['id'])) {
+		if ($this->Forum->isMod($topic['Forum']['id'])) {
 			echo $this->Form->input('forum_id', array('label' => __d('forum', 'Forum'), 'options' => $forums, 'empty' => '-- ' . __d('forum', 'Select a Forum') . ' --'));
 			echo $this->Form->input('status', array('label' => __d('forum', 'Status'), 'options' => $this->Forum->options('topicStatus')));
 			echo $this->Form->input('type', array('options' => $this->Forum->options('topicTypes'), 'label' => __d('forum', 'Type')));

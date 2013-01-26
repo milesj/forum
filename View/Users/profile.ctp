@@ -30,7 +30,7 @@ $this->Breadcrumb->add($profile['User'][$config['userMap']['username']], array('
 
 				<td><strong><?php echo __d('forum', 'Roles'); ?>:</strong></td>
 				<td>
-					<?php if ($profile['User']['Access']) {
+					<?php /*if ($profile['User']['Access']) {
 						$roles = array();
 						foreach ($profile['User']['Access'] as $access) {
 							$roles[] = $access['AccessLevel']['title'];
@@ -38,7 +38,7 @@ $this->Breadcrumb->add($profile['User'][$config['userMap']['username']], array('
 						echo implode(', ', $roles);
 					} else {
 						echo '<em>' . __d('forum', 'N/A') . '</em>';
-					} ?>
+					}*/ // @TODO ?>
 				</td>
 			</tr>
 			<tr>

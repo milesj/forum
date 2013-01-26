@@ -46,6 +46,8 @@ class ForumController extends ForumAppController {
 			return;
 		}
 
+		debug($_SESSION);
+
 		$this->set('menuTab', 'forums');
 		$this->set('forums', 		$this->Topic->Forum->getIndex());
 		$this->set('totalPosts', 	$this->Topic->Post->getTotal());

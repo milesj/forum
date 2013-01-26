@@ -68,8 +68,7 @@ class StationsController extends ForumAppController {
 		$user_id = $this->Auth->user('id');
 
 		$this->ForumToolbar->verifyAccess(array(
-			'exists' => $forum,
-			'permission' => $forum['Forum']['accessRead']
+			'exists' => $forum
 		));
 
 		$this->paginate['Topic']['limit'] = $this->settings['topicsPerPage'];
@@ -104,7 +103,6 @@ class StationsController extends ForumAppController {
 
 		$this->ForumToolbar->verifyAccess(array(
 			'exists' => $forum,
-			'permission' => $forum['Forum']['accessRead'],
 			'moderate' => $forum['Forum']['id']
 		));
 
@@ -147,7 +145,7 @@ class StationsController extends ForumAppController {
 
 		$this->set('forum', $forum);
 		$this->set('topics', $this->paginate('Topic'));
-		$this->set('forums', $this->Forum->getGroupedHierarchy('accessRead'));
+		$this->set('forums', $this->Forum->getGroupedHierarchy('accessRead')); // @TODO
 	}
 
 	/**
@@ -207,6 +205,7 @@ class StationsController extends ForumAppController {
 	 */
 	public function admin_add() {
 		if ($this->request->data) {
+			// @TODO
 			if (empty($this->request->data['Forum']['forum_id'])) {
 				$this->request->data['Forum']['forum_id'] = 0;
 			}
@@ -224,7 +223,6 @@ class StationsController extends ForumAppController {
 		}
 
 		$this->set('method', 'add');
-		//$this->set('levels', $this->Forum->AccessLevel->getHigherLevels());
 		$this->set('forums', $this->Forum->getHierarchy());
 		$this->render('admin_form');
 	}
@@ -264,7 +262,6 @@ class StationsController extends ForumAppController {
 		}
 
 		$this->set('method', 'edit');
-		//$this->set('levels', $this->Forum->AccessLevel->getHigherLevels());
 		$this->set('forums', $this->Forum->getHierarchy());
 		$this->render('admin_form');
 	}
@@ -292,7 +289,6 @@ class StationsController extends ForumAppController {
 		}
 
 		$this->set('forum', $forum);
-		//$this->set('levels', $this->Forum->AccessLevel->getHigherLevels());
 		$this->set('topicForums', $this->Forum->getGroupedHierarchy());
 		$this->set('subForums', $this->Forum->getGroupedHierarchy());
 	}
