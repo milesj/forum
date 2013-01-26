@@ -46,8 +46,6 @@ class ForumController extends ForumAppController {
 			return;
 		}
 
-		debug($_SESSION);
-
 		$this->set('menuTab', 'forums');
 		$this->set('forums', 		$this->Topic->Forum->getIndex());
 		$this->set('totalPosts', 	$this->Topic->Post->getTotal());
@@ -100,15 +98,6 @@ class ForumController extends ForumAppController {
 		$this->set('newestUser', 	$this->Profile->getNewestUser());
 		$this->set('latestUsers', 	$this->Profile->getLatest());
 		$this->set('latestReports', $this->Report->getLatest());
-	}
-
-	/**
-	 * Edit the settings.
-	 */
-	public function admin_settings() {
-		$this->loadModel('Forum.Setting');
-
-		$this->set('menuTab', 'settings');
 	}
 
 	/**

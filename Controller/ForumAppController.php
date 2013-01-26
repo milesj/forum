@@ -5,8 +5,6 @@
  * @link		http://milesj.me/code/cakephp/forum
  */
 
-ClassRegistry::init('Forum.Setting')->configureSettings();
-
 /**
  * @property ForumToolbarComponent $ForumToolbar
  */

@@ -27,7 +27,6 @@ echo $this->OpenGraph->html(array('xmlns' => 'http://www.w3.org/1999/xhtml')); ?
 
 			<ul class="menu">
 				<li<?php if ($menuTab === 'home') echo ' class="active"'; ?>><?php echo $this->Html->link(__d('forum', 'Home'), array('controller' => 'forum', 'action' => 'index', 'admin' => true)); ?></li>
-				<li<?php if ($menuTab === 'settings') echo ' class="active"'; ?>><?php echo $this->Html->link(__d('forum', 'Settings'), array('controller' => 'forum', 'action' => 'settings', 'admin' => true)); ?></li>
 				<li<?php if ($menuTab === 'forums') echo ' class="active"'; ?>><?php echo $this->Html->link(__d('forum', 'Forums'), array('controller' => 'stations', 'action' => 'index', 'admin' => true)); ?></li>
 				<li<?php if ($menuTab === 'staff') echo ' class="active"'; ?>><?php echo $this->Html->link(__d('forum', 'Staff'), array('controller' => 'staff', 'action' => 'index', 'admin' => true)); ?></li>
 				<li<?php if ($menuTab === 'reports') echo ' class="active"'; ?>><?php echo $this->Html->link(__d('forum', 'Reported'), array('controller' => 'reports', 'action' => 'index', 'admin' => true)); ?></li>
