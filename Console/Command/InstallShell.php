@@ -27,7 +27,8 @@ class InstallShell extends Shell {
 		'user_id' => '',
 		'username' => '',
 		'password' => '',
-		'email' => ''
+		'email' => '',
+		'acl_admin' => 0
 	);
 
 	/**
@@ -44,21 +45,19 @@ class InstallShell extends Shell {
 	 */
 	public function main() {
 		$this->out();
-		$this->out('Plugin: Forum');
-		$this->out('Version: ' . Configure::read('Forum.version'));
+		$this->out('Plugin: Forum v'. Configure::read('Forum.version'));
 		$this->out('Copyright: Miles Johnson, 2010-' . date('Y'));
 		$this->out('Help: http://milesj.me/code/cakephp/forum');
-		$this->out('Shell: Installer');
 		$this->out();
 		$this->out('This shell installs the forum plugin by creating the required database tables,');
 		$this->out('setting up the admin user, applying necessary table prefixes, and more.');
 
 		$this->hr(1);
 		$this->out('Installation Steps:');
-		$this->out();
-		$this->steps(1);
 
+		// Begin installation
 		$this->db = ConnectionManager::getDataSource(FORUM_DATABASE);
+		$this->steps(1);
 
 		if ($this->usersTable()) {
 			$this->steps(2);
@@ -66,12 +65,16 @@ class InstallShell extends Shell {
 			if ($this->checkStatus()) {
 				$this->steps(3);
 
-				if ($this->createTables()) {
+				if ($this->setupAcl()) {
 					$this->steps(4);
 
-					if ($this->setupAdmin()) {
+					if ($this->createTables()) {
 						$this->steps(5);
-						$this->finalize();
+
+						if ($this->setupAdmin()) {
+							$this->steps(6);
+							$this->finalize();
+						}
 					}
 				}
 			}
@@ -90,6 +93,7 @@ class InstallShell extends Shell {
 		$steps = array(
 			'Users Table',
 			'Check Installation Status',
+			'Setup ACL',
 			'Create Database Tables',
 			'Create Administrator',
 			'Finalize Installation'
@@ -98,7 +102,11 @@ class InstallShell extends Shell {
 		foreach ($steps as $i => $step) {
 			$index = ($i + 1);
 
-			$this->out('[' . (($index < $state) ? 'x' : $index) . '] ' . $step);
+			if ($index < $state) {
+				$this->out('[x] ' . $step);
+			} else {
+				$this->out('[' . $index . '] <comment>' . $step . '</comment>');
+			}
 		}
 
 		$this->out();
@@ -110,10 +118,10 @@ class InstallShell extends Shell {
 	 * @return bool
 	 */
 	public function usersTable() {
-		$table = $this->in('What is the name of your users table?');
+		$table = $this->in('<question>What is the name of your users table?</question>');
 
 		if (!$table) {
-			$this->out('Please provide a users table');
+			$this->out('<error>Please provide a users table</error>');
 
 			return $this->usersTable();
 
@@ -122,7 +130,7 @@ class InstallShell extends Shell {
 			$this->out(sprintf('You have chosen the table: %s', $table));
 		}
 
-		$answer = strtoupper($this->in('Is this correct?', array('Y', 'N')));
+		$answer = strtoupper($this->in('<question>Is this correct?</question>', array('Y', 'N')));
 
 		if ($answer === 'Y') {
 			$this->install['table'] = $table;
@@ -140,21 +148,65 @@ class InstallShell extends Shell {
 	 */
 	public function checkStatus() {
 		if (!$this->db->isConnected()) {
-			$this->out(sprintf('Error: Database connection for %s failed!', FORUM_DATABASE));
+			$this->out(sprintf('<error>Database connection for %s failed!</error>', FORUM_DATABASE));
 
 			return false;
 		}
 
-		// Check the users tables
+		// Check the required tables
 		$tables = $this->db->listSources();
+		$checkFor = array($this->install['table'], 'aros', 'acos', 'aros_acos');
 
-		if (!in_array($this->install['table'], $tables)) {
-			$this->out(sprintf('Error: No %s table was found in %s', $this->install['table'], FORUM_DATABASE));
+		$this->out(sprintf('The following tables are required: %s', implode(', ', $checkFor)));
+		$this->out('<info>Checking tables...</info>');
 
-			return false;
+		foreach ($checkFor as $table) {
+			if (!in_array($table, $tables)) {
+				$this->out(sprintf('<error>No %s table was found in %s</error>', $table, FORUM_DATABASE));
+
+				return false;
+			}
 		}
 
-		$this->out('Installation status good, proceeding...');
+		$this->out('<info>Installation status good, proceeding...</info>');
+
+		return true;
+	}
+
+	/**
+	 * Create all the ACL records.
+	 */
+	public function setupAcl() {
+		$this->out('<info>Creating ACL records...</info>');
+
+		$Permission = ClassRegistry::init('Permission');
+		$aros = array('forum.admin', 'forum.superMod');
+		$acos = array('forum.admin', 'forum.stations', 'forum.topics', 'forum.posts', 'forum.polls');
+
+		// AROs
+		foreach ($aros as $alias) {
+			$Permission->Aro->create();
+			$Permission->Aro->save(array('alias' => $alias));
+
+			if ($alias === 'forum.admin') {
+				$this->install['acl_admin'] = $Permission->Aro->id;
+			}
+		}
+
+		// ACOs
+		foreach ($acos as $alias) {
+			$Permission->Aco->create();
+			$Permission->Aco->save(array('alias' => $alias));
+		}
+
+		// Allow
+		foreach ($aros as $aro) {
+			foreach ($acos as $aco) {
+				$Permission->allow($aro, $aco);
+			}
+		}
+
+		$this->out('<info>ACL setup successfully...</info>');
 
 		return true;
 	}
@@ -165,6 +217,12 @@ class InstallShell extends Shell {
 	 * @return bool
 	 */
 	public function createTables() {
+		$answer = strtoupper($this->in('<question>Existing tables will be deleted, continue?</question>', array('Y', 'N')));
+
+		if ($answer === 'N') {
+			exit();
+		}
+
 		$schemas = glob(FORUM_PLUGIN . 'Config/Schema/*.sql');
 		$executed = 0;
 		$total = count($schemas);
@@ -192,7 +250,7 @@ class InstallShell extends Shell {
 		}
 
 		if ($executed != $total) {
-			$this->out('Error: Failed to create database tables!');
+			$this->out('<error>Failed to create database tables!</error>');
 			$this->out('Rolling back and dropping any created tables');
 
 			foreach ($tables as $table) {
@@ -201,7 +259,7 @@ class InstallShell extends Shell {
 
 			return false;
 		} else {
-			$this->out('Tables created successfully...');
+			$this->out('<info>Tables created successfully...</info>');
 		}
 
 		return true;
@@ -213,7 +271,7 @@ class InstallShell extends Shell {
 	 * @return bool
 	 */
 	public function setupAdmin() {
-		$answer = strtoupper($this->in('Would you like to [c]reate a new user, or use an [e]xisting user?', array('C', 'E')));
+		$answer = strtoupper($this->in('<question>Would you like to [c]reate a new user, or use an [e]xisting user?</question>', array('C', 'E')));
 		$userMap = Configure::read('Forum.userMap');
 		$statusMap = Configure::read('Forum.statusMap');
 
@@ -238,7 +296,7 @@ class InstallShell extends Shell {
 			if ($result) {
 				$this->install['user_id'] = $this->db->lastInsertId();
 			} else {
-				$this->out('An error has occurred while creating the user');
+				$this->out('<error>An error has occurred while creating the user</error>');
 
 				return $this->setupAdmin();
 			}
@@ -252,13 +310,19 @@ class InstallShell extends Shell {
 			return $this->setupAdmin();
 		}
 
-		$result = $this->db->execute(sprintf("INSERT INTO `%saccess` (`access_level_id`, `user_id`, `created`) VALUES (4, %d, NOW());",
-			FORUM_PREFIX,
-			$this->install['user_id']
+		// Give ACL
+		$Aro = ClassRegistry::init('Aro');
+		$Aro->create();
+
+		$result = $Aro->save(array(
+			'alias' => $this->install['username'],
+			'parent_id' => $this->install['acl_admin'],
+			'model' => FORUM_USER,
+			'foreign_key' => $this->install['user_id']
 		));
 
 		if (!$result) {
-			$this->out('An error occurred while granting administrator access');
+			$this->out('<error>An error occurred while granting administrator access</error>');
 
 			return $this->setupAdmin();
 		}
@@ -275,10 +339,11 @@ class InstallShell extends Shell {
 		$this->hr(1);
 		$this->out('Forum installation complete! Your admin credentials:');
 		$this->out();
-		$this->out(sprintf('Username: %s', $this->install['username']));
-		$this->out(sprintf('Email: %s', $this->install['email']));
+		$this->out(sprintf('<comment>Username:</comment> %s', $this->install['username']));
+		$this->out(sprintf('<comment>Email:</comment> %s', $this->install['email']));
 		$this->out();
-		$this->out('Please read the documentation for further configuration instructions');
+		$this->out('Please read the documentation for further instructions:');
+		$this->out('http://milesj.me/code/cakephp/forum');
 		$this->hr(1);
 	}
 
@@ -293,7 +358,7 @@ class InstallShell extends Shell {
 
 		switch ($mode) {
 			case 'username':
-				$username = trim($this->in('Username:'));
+				$username = trim($this->in('<question>Username:</question>'));
 
 				if (!$username) {
 					$username = $this->_newUser($mode);
@@ -305,7 +370,7 @@ class InstallShell extends Shell {
 					));
 
 					if ($this->db->hasResult() && $result[0]['count']) {
-						$this->out('Username already exists, please try again');
+						$this->out('<error>Username already exists, please try again</error>');
 						$username = $this->_newUser($mode);
 					}
 				}
@@ -314,7 +379,7 @@ class InstallShell extends Shell {
 			break;
 
 			case 'password':
-				$password = trim($this->in('Password:'));
+				$password = trim($this->in('<question>Password:</question>'));
 
 				if (!$password) {
 					$password = $this->_newUser($mode);
@@ -324,13 +389,13 @@ class InstallShell extends Shell {
 			break;
 
 			case 'email':
-				$email = trim($this->in('Email:'));
+				$email = trim($this->in('<question>Email:</question>'));
 
 				if (!$email) {
 					$email = $this->_newUser($mode);
 
 				} else if (!Validation::email($email)) {
-					$this->out('Invalid email address, please try again');
+					$this->out('<error>Invalid email address, please try again</error>');
 					$email = $this->_newUser($mode);
 
 				} else {
@@ -341,7 +406,7 @@ class InstallShell extends Shell {
 					));
 
 					if ($this->db->hasResult() && $result[0]['count']) {
-						$this->out('Email already exists, please try again');
+						$this->out('<error>Email already exists, please try again</error>');
 						$email = $this->_newUser($mode);
 					}
 				}
@@ -359,7 +424,7 @@ class InstallShell extends Shell {
 	 * @return string
 	 */
 	protected function _oldUser() {
-		$user_id = trim($this->in('User ID:'));
+		$user_id = trim($this->in('<question>User ID:</question>'));
 		$userMap = Configure::read('Forum.userMap');
 
 		if (!$user_id || !is_numeric($user_id)) {
@@ -372,7 +437,7 @@ class InstallShell extends Shell {
 			));
 
 			if (!$result) {
-				$this->out('User ID does not exist, please try again');
+				$this->out('<error>User ID does not exist, please try again</error>');
 				$user_id = $this->_oldUser();
 
 			} else {
