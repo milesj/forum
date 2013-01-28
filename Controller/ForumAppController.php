@@ -102,7 +102,7 @@ class ForumAppController extends AppController {
 
 			// Allow if the user belongs to admin or super
 			case 'moderate':
-				return $this->Session->read('Forum.isSuper');
+				return ($this->Session->read('Forum.isSuper') || $this->Session->read('Forum.moderates'));
 			break;
 
 			// Check individual permissions
