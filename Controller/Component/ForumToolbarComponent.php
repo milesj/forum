@@ -45,19 +45,16 @@ class ForumToolbarComponent extends Component {
 		}
 
 		$user_id = $this->Controller->Auth->user('id');
-		$moderates = array();
 		$lastVisit = date('Y-m-d H:i:s');
 		$banned = ($this->Controller->Auth->user(Configure::read('Forum.userMap.status')) == Configure::read('Forum.statusMap.banned'));
 
 		if ($user_id && !$banned) {
-			$this->getPermissions();
+			$this->getAccess();
 
-			$moderates = ClassRegistry::init('Forum.Moderator')->getModerations($user_id);
 			$profile = ClassRegistry::init('Forum.Profile')->getUserProfile($user_id);
 			$lastVisit = $profile['Profile']['lastLogin'];
 		}
 
-		$this->Session->write('Forum.moderates', $moderates);
 		$this->Session->write('Forum.lastVisit', $lastVisit);
 		$this->Session->write('Forum.isBrowsing', true);
 	}
@@ -65,12 +62,13 @@ class ForumToolbarComponent extends Component {
 	/**
 	 * Get ACL permissions.
 	 */
-	public function getPermissions() {
+	public function getAccess() {
 		$user = $this->Controller->Auth->user();
 		$isAdmin = false;
 		$isSuper = false;
+		$moderates = array();
 		$groups = array(0); // 0 is everything else
-		$defaults = array(
+		$permissions = array(
 			'topics' => array(
 				'create' => true,
 				'read' => true,
@@ -92,21 +90,15 @@ class ForumToolbarComponent extends Component {
 		);
 
 		if ($user) {
-			$aros = ClassRegistry::init('Permission')->Aro->node(array('User' => $user));
-			$permissions = ClassRegistry::init('Permission')->find('all', array(
-				'conditions' => array('Permission.aro_id' => Hash::extract($aros, '{n}.Aro.id')),
-				'order' => array('Aco.lft' => 'desc'),
-				'recursive' => 0
-			));
-
-			if ($permissions) {
-				foreach ($permissions as $perm) {
+			if ($access = ClassRegistry::init('Forum.Access')->getPermissions($user['id'])) {
+				foreach ($access as $perm) {
 					$type = str_replace('forum.', '', $perm['Aco']['alias']);
 
 					if ($type === 'admin') {
 						continue;
 					}
 
+					// Save groups directly
 					if ($perm['Aro']['alias'] === 'forum.admin' && !$isAdmin) {
 						$isAdmin = true;
 						$isSuper = true;
@@ -115,21 +107,34 @@ class ForumToolbarComponent extends Component {
 						$isSuper = true;
 					}
 
+					// Save group IDs
+					$groups[] = $perm['Aro']['id'];
+
+					// Save permissions
 					foreach ($perm['Permission'] as $action => $can) {
 						if (substr($action, 0, 1) !== '_') {
 							continue;
 						}
 
-						$defaults[$type][str_replace('_', '', $action)] = (bool) $can;
+						$permissions[$type][str_replace('_', '', $action)] = (bool) $can;
 					}
 				}
 			}
+
+			// Save more data if they are admin
+			if ($isAdmin) {
+				$groups = array_merge($groups, array_keys(ClassRegistry::init('Forum.Access')->getList()));
+			}
+
+			// Get moderated forum IDs
+			$moderates = ClassRegistry::init('Forum.Moderator')->getModerations($user['id']);
 		}
 
 		$this->Session->write('Forum.isAdmin', $isAdmin);
 		$this->Session->write('Forum.isSuper', $isSuper);
-		$this->Session->write('Forum.permissions', $defaults);
-		$this->Session->write('Forum.groups', $groups);
+		$this->Session->write('Forum.permissions', $permissions);
+		$this->Session->write('Forum.groups', array_unique($groups));
+		$this->Session->write('Forum.moderates', $moderates);
 	}
 
 	/**
@@ -259,8 +264,8 @@ class ForumToolbarComponent extends Component {
 
 		// Are we a moderator? Grant access
 		if (isset($validators['moderate'])) {
-			if (!in_array($validators['moderate'], $this->Session->read('Forum.moderates'))) {
-				throw new UnauthorizedException();
+			if (in_array($validators['moderate'], $this->Session->read('Forum.moderates'))) {
+				return true;
 			}
 		}
 

@@ -158,4 +158,20 @@ class Access extends Aro {
 		return $this->getStaffBySlug('superMod');
 	}
 
+	/**
+	 * Return a list of users permissions. Include parent groups permissions also.
+	 *
+	 * @param int $user_id
+	 * @return array
+	 */
+	public function getPermissions($user_id) {
+		$aros = $this->node(array('User' => array('id' => $user_id)));
+
+		return ClassRegistry::init('Permission')->find('all', array(
+			'conditions' => array('Permission.aro_id' => Hash::extract($aros, '{n}.Access.id')),
+			'order' => array('Aco.lft' => 'desc'),
+			'recursive' => 0
+		));
+	}
+
 }
