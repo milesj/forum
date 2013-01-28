@@ -210,8 +210,8 @@ class StationsController extends ForumAppController {
 				$this->request->data['Forum']['forum_id'] = 0;
 			}
 
-			if (empty($this->request->data['Forum']['access_level_id'])) {
-				$this->request->data['Forum']['access_level_id'] = 0;
+			if (empty($this->request->data['Forum']['aro_id'])) {
+				$this->request->data['Forum']['aro_id'] = 0;
 			}
 
 			if ($this->Forum->save($this->request->data, true)) {
@@ -246,8 +246,8 @@ class StationsController extends ForumAppController {
 				$this->request->data['Forum']['forum_id'] = 0;
 			}
 
-			if (empty($this->request->data['Forum']['access_level_id'])) {
-				$this->request->data['Forum']['access_level_id'] = 0;
+			if (empty($this->request->data['Forum']['aro_id'])) {
+				$this->request->data['Forum']['aro_id'] = 0;
 			}
 
 			if ($this->Forum->save($this->request->data, true)) {

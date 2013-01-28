@@ -131,11 +131,8 @@ class Forum extends ForumAppModel {
 	 * @return array
 	 */
 	public function getBySlug($slug) {
-		//$accessLevels = $this->accessLevels();
-
 		return $this->find('first', array(
 			'conditions' => array(
-				//'Forum.access_level_id' => $accessLevels,
 				'Forum.accessRead' => self::YES,
 				'Forum.slug' => $slug
 			),
@@ -143,7 +140,6 @@ class Forum extends ForumAppModel {
 				'Parent',
 				'SubForum' => array(
 					'conditions' => array(
-						//'SubForum.access_level_id' => $accessLevels,
 						'SubForum.accessRead' => self::YES
 					),
 					'LastTopic', 'LastPost', 'LastUser'
@@ -274,19 +270,19 @@ class Forum extends ForumAppModel {
 				'Forum.forum_id' => 0,
 				'Forum.status' => self::OPEN,
 				'Forum.accessRead' => self::YES,
-				//'Forum.access_level_id' => $accessLevels
+				//'Forum.aro_id' => $accessLevels
 			),
 			'contain' => array(
 				'Children' => array(
 					'conditions' => array(
 						'Children.accessRead' => self::YES,
-						//'Children.access_level_id' => $accessLevels
+						//'Children.aro_id' => $accessLevels
 					),
 					'SubForum' => array(
 						'fields' => array('SubForum.id', 'SubForum.title', 'SubForum.slug'),
 						'conditions' => array(
 							'SubForum.accessRead' => self::YES,
-							//'SubForum.access_level_id' => $accessLevels
+							//'SubForum.aro_id' => $accessLevels
 						)
 					),
 					'LastTopic', 'LastPost', 'LastUser'
