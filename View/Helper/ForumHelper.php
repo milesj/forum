@@ -233,11 +233,26 @@ class ForumHelper extends AppHelper {
 			);
 
 		} else if ($type === 'statusMap') {
-			$statuses = array_flip(Configure::read('Forum.statusMap'));
+			$statusMap = array_flip(Configure::read('Forum.statusMap'));
 			$options = array();
 
-			foreach ($statuses as $key => $status) {
-				$options[$key] = __d('forum', 'status.' . $status);
+			foreach ($statusMap as $id => $status) {
+				$options[$id] = __d('forum', 'status.' . $status);
+			}
+
+		} else if ($type === 'accessGroups') {
+			$groups = ClassRegistry::init('Forum.Access')->getList();
+			$accessMap = Configure::read('Forum.accessMap');
+			$options = array();
+
+			foreach ($groups as $id => $group) {
+				if (isset($accessMap[$group])) {
+					$group = $accessMap[$group];
+				} else {
+					$group = __d('forum', $group);
+				}
+
+				$options[$id] = $group;
 			}
 		}
 

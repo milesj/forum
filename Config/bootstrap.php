@@ -56,6 +56,14 @@ Configure::write('Forum.statusMap', array(
 ));
 
 /**
+ * A map of ACL groups to localized versions.
+ */
+Configure::write('Forum.accessMap', array(
+	'admin' 	=> __d('forum', 'forum.admin'),
+	'superMod'	=> __d('forum', 'forum.superMod')
+));
+
+/**
  * A map of external user management URLs.
  */
 Configure::write('Forum.routes', array(

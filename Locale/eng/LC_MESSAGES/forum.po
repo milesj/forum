@@ -440,7 +440,7 @@ msgstr ""
 
 #: View/Elements/tiles/forum_controls.ctp:17;17
 #: View/Elements/tiles/topic_controls.ctp:19;19
-#: View/Helper/CommonHelper.php:164;164
+#: View/Helper/ForumHelper.php:164;164
 #: View/topics/view.ctp:16;16
 msgid "Closed"
 msgstr ""
@@ -996,71 +996,71 @@ msgstr ""
 msgid "The latest 10 topics out of all forums"
 msgstr ""
 
-#: View/Helper/CommonHelper.php:157;157
+#: View/Helper/ForumHelper.php:157;157
 msgid "Yes"
 msgstr ""
 
-#: View/Helper/CommonHelper.php:158;158
+#: View/Helper/ForumHelper.php:158;158
 msgid "No"
 msgstr ""
 
-#: View/Helper/CommonHelper.php:163;163
+#: View/Helper/ForumHelper.php:163;163
 msgid "Open"
 msgstr ""
 
-#: View/Helper/CommonHelper.php:169;169
+#: View/Helper/ForumHelper.php:169;169
 msgid "Visible"
 msgstr ""
 
-#: View/Helper/CommonHelper.php:170;170
+#: View/Helper/ForumHelper.php:170;170
 msgid "Hidden"
 msgstr ""
 
-#: View/Helper/CommonHelper.php:175;175
+#: View/Helper/ForumHelper.php:175;175
 msgid "Member"
 msgstr ""
 
-#: View/Helper/CommonHelper.php:178;178
+#: View/Helper/ForumHelper.php:178;178
 msgid "Moderator"
 msgstr ""
 
-#: View/Helper/CommonHelper.php:181;181
+#: View/Helper/ForumHelper.php:181;181
 msgid "Super Moderator"
 msgstr ""
 
-#: View/Helper/CommonHelper.php:184;184
+#: View/Helper/ForumHelper.php:184;184
 msgid "Administrator"
 msgstr ""
 
-#: View/Helper/CommonHelper.php:188;188
+#: View/Helper/ForumHelper.php:188;188
 msgid "Guest"
 msgstr ""
 
-#: View/Helper/CommonHelper.php:193;193
+#: View/Helper/ForumHelper.php:193;193
 msgid "Active"
 msgstr ""
 
-#: View/Helper/CommonHelper.php:194;194
+#: View/Helper/ForumHelper.php:194;194
 msgid "Banned"
 msgstr ""
 
-#: View/Helper/CommonHelper.php:199;199
+#: View/Helper/ForumHelper.php:199;199
 msgid "Normal"
 msgstr ""
 
-#: View/Helper/CommonHelper.php:200;200
+#: View/Helper/ForumHelper.php:200;200
 msgid "Sticky"
 msgstr ""
 
-#: View/Helper/CommonHelper.php:201;201
+#: View/Helper/ForumHelper.php:201;201
 msgid "Important"
 msgstr ""
 
-#: View/Helper/CommonHelper.php:202;202
+#: View/Helper/ForumHelper.php:202;202
 msgid "Announcement"
 msgstr ""
 
-#: View/Helper/CommonHelper.php:222;222
+#: View/Helper/ForumHelper.php:222;222
 #: View/Reports/admin_posts.ctp:28;28
 #: View/Reports/admin_topics.ctp:28;28
 #: View/Search/index.ctp:47;47
@@ -1071,7 +1071,7 @@ msgstr ""
 msgid "Topic"
 msgstr ""
 
-#: View/Helper/CommonHelper.php:223;223
+#: View/Helper/ForumHelper.php:223;223
 #: View/posts/report.ctp:23;23
 #: View/Reports/admin_posts.ctp:29;29
 #: View/Stations/admin_index.ctp:46;46
@@ -1079,7 +1079,7 @@ msgstr ""
 msgid "Post"
 msgstr ""
 
-#: View/Helper/CommonHelper.php:224;224
+#: View/Helper/ForumHelper.php:224;224
 #: View/Reports/admin_users.ctp:28;28
 #: View/Staff/admin_form_access.ctp:33;33
 #: View/Staff/admin_form_moderator.ctp:31;31
@@ -1879,15 +1879,15 @@ msgstr ""
 msgid "User has been banned."
 msgstr ""
 
-#: View/Helper/CommonHelper.php:210
+#: View/Helper/ForumHelper.php:210
 msgid "status.pending"
 msgstr "Pending"
 
-#: View/Helper/CommonHelper.php:210
+#: View/Helper/ForumHelper.php:210
 msgid "status.active"
 msgstr "Active"
 
-#: View/Helper/CommonHelper.php:210
+#: View/Helper/ForumHelper.php:210
 msgid "status.banned"
 msgstr "Banned"
 
@@ -1910,3 +1910,11 @@ msgstr ""
 #: Controller/StationsController.php:283,286
 msgid "Target destination cannot be itself"
 msgstr ""
+
+#: View/Helper/ForumHelper.php:248
+msgid "forum.admin"
+msgstr "Administrator"
+
+#: View/Helper/ForumHelper.php:248
+msgid "forum.superMod"
+msgstr "Super Moderator"

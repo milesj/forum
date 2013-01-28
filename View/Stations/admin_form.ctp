@@ -30,7 +30,7 @@ $this->Breadcrumb->add($title, $this->here); ?>
 
 		<?php
 		echo $this->Form->input('description', array('type' => 'textarea', 'label' => __d('forum', 'Description')));
-		echo $this->Form->input('aro_id', array('options' => $levels, 'label' => __d('forum', 'Restrict Access To'), 'empty' => '-- ' . __d('forum', 'None') . ' --'));
+		echo $this->Form->input('aro_id', array('options' => $this->Forum->options('accessGroups'), 'label' => __d('forum', 'Restrict Access To'), 'empty' => '-- ' . __d('forum', 'None') . ' --'));
 		echo $this->Form->input('accessRead', array('options' => $this->Forum->options('status'), 'label' => __d('forum', 'Read Access')));
 		echo $this->Form->input('accessPost', array('options' => $this->Forum->options('status'), 'label' => __d('forum', 'Post Access')));
 		echo $this->Form->input('accessReply', array('options' => $this->Forum->options('status'), 'label' => __d('forum', 'Reply Access')));

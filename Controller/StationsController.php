@@ -205,7 +205,6 @@ class StationsController extends ForumAppController {
 	 */
 	public function admin_add() {
 		if ($this->request->data) {
-			// @TODO
 			if (empty($this->request->data['Forum']['forum_id'])) {
 				$this->request->data['Forum']['forum_id'] = 0;
 			}

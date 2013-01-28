@@ -262,7 +262,7 @@ class Forum extends ForumAppModel {
 	 * @return array
 	 */
 	public function getIndex() {
-		//$accessLevels = $this->accessLevels();
+		$groups = (array) $this->Session->read('Forum.groups');
 
 		return $this->find('all', array(
 			'order' => array('Forum.orderNo' => 'ASC'),
@@ -270,19 +270,19 @@ class Forum extends ForumAppModel {
 				'Forum.forum_id' => 0,
 				'Forum.status' => self::OPEN,
 				'Forum.accessRead' => self::YES,
-				//'Forum.aro_id' => $accessLevels
+				'Forum.aro_id' => $groups
 			),
 			'contain' => array(
 				'Children' => array(
 					'conditions' => array(
 						'Children.accessRead' => self::YES,
-						//'Children.aro_id' => $accessLevels
+						'Children.aro_id' => $groups
 					),
 					'SubForum' => array(
 						'fields' => array('SubForum.id', 'SubForum.title', 'SubForum.slug'),
 						'conditions' => array(
 							'SubForum.accessRead' => self::YES,
-							//'SubForum.aro_id' => $accessLevels
+							'SubForum.aro_id' => $groups
 						)
 					),
 					'LastTopic', 'LastPost', 'LastUser'

@@ -69,6 +69,7 @@ class ForumToolbarComponent extends Component {
 		$user = $this->Controller->Auth->user();
 		$isAdmin = false;
 		$isSuper = false;
+		$groups = array(0); // 0 is everything else
 		$defaults = array(
 			'topics' => array(
 				'create' => true,
@@ -128,6 +129,7 @@ class ForumToolbarComponent extends Component {
 		$this->Session->write('Forum.isAdmin', $isAdmin);
 		$this->Session->write('Forum.isSuper', $isSuper);
 		$this->Session->write('Forum.permissions', $defaults);
+		$this->Session->write('Forum.groups', $groups);
 	}
 
 	/**
