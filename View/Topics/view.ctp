@@ -149,17 +149,17 @@ if (!empty($topic['Poll']['id'])) { ?>
 
 						<?php echo $this->Forum->avatar($post) ?>
 
-						<strong><?php echo __d('forum', 'Total Topics'); ?>:</strong> <?php echo number_format($post['User']['Profile']['totalTopics']); ?><br>
-						<strong><?php echo __d('forum', 'Total Posts'); ?>:</strong> <?php echo number_format($post['User']['Profile']['totalPosts']); ?>
+						<strong><?php echo __d('forum', 'Total Topics'); ?>:</strong> <?php echo number_format($post['User']['ForumProfile']['totalTopics']); ?><br>
+						<strong><?php echo __d('forum', 'Total Posts'); ?>:</strong> <?php echo number_format($post['User']['ForumProfile']['totalPosts']); ?>
 					</td>
 					<td valign="top">
 						<div class="post">
 							<?php echo $this->Decoda->parse($post['Post']['content']); ?>
 						</div>
 
-						<?php if (!empty($post['User']['Profile']['signature'])) { ?>
+						<?php if (!empty($post['User']['ForumProfile']['signature'])) { ?>
 							<div class="signature">
-								<?php echo $this->Decoda->parse($post['User']['Profile']['signature']); ?>
+								<?php echo $this->Decoda->parse($post['User']['ForumProfile']['signature']); ?>
 							</div>
 						<?php } ?>
 					</td>

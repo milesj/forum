@@ -38,7 +38,7 @@ class TopicsController extends ForumAppController {
 		'Post' => array(
 			'order' => array('Post.created' => 'ASC'),
 			'contain' => array(
-				'User' => array('Profile')
+				'User' => array('ForumProfile')
 			)
 		)
 	);

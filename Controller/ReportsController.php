@@ -52,7 +52,11 @@ class ReportsController extends ForumAppController {
 			$this->setAction('admin_users');
 
 		} else {
-			$this->paginate['Report']['contain'] = array('Reporter' => array('Profile'), 'Topic', 'Post', 'User' => array('Profile'));
+			$this->paginate['Report']['contain'] = array(
+				'Reporter' => array('Profile'),
+				'Topic', 'Post',
+				'User' => array('ForumProfile')
+			);
 
 			$this->set('reports', $this->paginate('Report'));
 		}
@@ -148,7 +152,10 @@ class ReportsController extends ForumAppController {
 		}
 
 		$this->paginate['Report']['conditions']['Report.itemType'] = Report::USER;
-		$this->paginate['Report']['contain']= array('Reporter' => array('Profile'), 'User' => array('Profile'));
+		$this->paginate['Report']['contain']= array(
+			'Reporter' => array('Profile'),
+			'User' => array('ForumProfile')
+		);
 
 		$this->set('reports', $this->paginate('Report'));
 	}

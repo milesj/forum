@@ -73,7 +73,7 @@ class Profile extends ForumAppModel {
 			'conditions' => array('Profile.user_id' => $user_id),
 			'contain' => array(
 				'User' => array(
-					'Moderator' => array('Forum.id', 'Forum.slug', 'Forum.title')
+					'ForumModerator' => array('Forum.id', 'Forum.slug', 'Forum.title')
 				)
 			)
 		));

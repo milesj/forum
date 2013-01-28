@@ -88,7 +88,7 @@ class Moderator extends ForumAppModel {
 	 */
 	public function getList() {
 		return $this->find('all', array(
-			'contain' => array('Forum', 'User' => array('Profile')),
+			'contain' => array('Forum', 'User' => array('ForumProfile')),
 			'order' => array('Moderator.forum_id' => 'ASC'),
 			'cache' => __METHOD__
 		));
