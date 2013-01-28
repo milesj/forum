@@ -123,6 +123,7 @@ class UpgradeShell extends Shell {
 		$AccessLevel->alias = 'AccessLevel';
 		$AccessLevel->tablePrefix = FORUM_PREFIX;
 
+		$Forum = ClassRegistry::init('Forum.Forum');
 		$Permission = ClassRegistry::init('Permission');
 		$Aco = ClassRegistry::init('Aco');
 		$Aro = ClassRegistry::init('Aro');
@@ -235,6 +236,22 @@ class UpgradeShell extends Shell {
 					'model' => FORUM_USER,
 					'foreign_key' => $user_id
 				));
+			}
+		}
+
+		// Migrate access levels
+		$this->out('Migrating access relations...');
+
+		$forums = $Forum->find('all', array(
+			'conditions' => array('Forum.access_level_id !=' => 0)
+		));
+
+		if ($forums) {
+			foreach ($forums as $forum) {
+				$Forum->id = $forum['Forum']['id'];
+				$Forum->save(array(
+					'access_level_id' => $aroMap[$forum['Forum']['access_level_id']]
+				), false);
 			}
 		}
 
