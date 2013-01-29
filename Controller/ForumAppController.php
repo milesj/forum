@@ -117,7 +117,7 @@ class ForumAppController extends AppController {
 					'delete' => 'delete'
 				);
 
-				return $this->Acl->check(array('User' => $user), 'forum.' . $controller, $crud[$action]);
+				return $this->Session->read(sprintf('Forum.permissions.%s.%s', $controller, $crud[$action]));
 			break;
 		}
 

@@ -233,7 +233,11 @@ class Access extends Aro {
 	 * @return array
 	 */
 	public function getPermissions($user_id) {
-		$aros = $this->node(array('User' => array('id' => $user_id)));
+		try {
+			$aros = $this->node(array('User' => array('id' => $user_id)));
+		} catch (Exception $e) {
+			return null;
+		}
 
 		return ClassRegistry::init('Permission')->find('all', array(
 			'conditions' => array('Permission.aro_id' => Hash::extract($aros, '{n}.Access.id')),
