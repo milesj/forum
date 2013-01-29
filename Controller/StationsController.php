@@ -145,7 +145,7 @@ class StationsController extends ForumAppController {
 
 		$this->set('forum', $forum);
 		$this->set('topics', $this->paginate('Topic'));
-		$this->set('forums', $this->Forum->getGroupedHierarchy('accessRead')); // @TODO
+		$this->set('forums', $this->Forum->getGroupedHierarchy());
 	}
 
 	/**

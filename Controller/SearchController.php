@@ -38,7 +38,7 @@ class SearchController extends ForumAppController {
 	 */
 	public function index($type = '') {
 		$searching = false;
-		$forums = $this->Topic->Forum->getGroupedHierarchy('accessRead');
+		$forums = $this->Topic->Forum->getGroupedHierarchy();
 		$orderBy = array(
 			'LastPost.created' => __d('forum', 'Last post time'),
 			'Topic.created' => __d('forum', 'Topic created time'),

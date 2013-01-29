@@ -102,7 +102,7 @@ class StaffController extends ForumAppController {
 		}
 
 		$this->set('method', 'add');
-		$this->set('forums', $this->Forum->getGroupedHierarchy('accessRead'));
+		$this->set('forums', $this->Forum->getGroupedHierarchy());
 		$this->render('admin_form_moderator');
 	}
 
@@ -128,7 +128,7 @@ class StaffController extends ForumAppController {
 		}
 
 		$this->set('method', 'edit');
-		$this->set('forums', $this->Forum->getGroupedHierarchy('accessRead'));
+		$this->set('forums', $this->Forum->getGroupedHierarchy());
 		$this->render('admin_form_moderator');
 	}
 

@@ -156,7 +156,7 @@ class ForumHelper extends AppHelper {
 		} else if ($this->isSuper()) {
 			return true;
 
-		} else if ($status) {
+		} else if ($status !== null) {
 			foreach ((array) $status as $bool) {
 				if (!$bool) {
 					return false;

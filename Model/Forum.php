@@ -140,7 +140,8 @@ class Forum extends ForumAppModel {
 				'Parent',
 				'SubForum' => array(
 					'conditions' => array(
-						'SubForum.accessRead' => self::YES
+						'SubForum.accessRead' => self::YES,
+						'SubForum.aro_id' => $this->Session->read('Forum.groups')
 					),
 					'LastTopic', 'LastPost', 'LastUser'
 				),
@@ -166,19 +167,14 @@ class Forum extends ForumAppModel {
 	/**
 	 * Get a grouped hierarchy.
 	 *
-	 * @param string $type
 	 * @param int $exclude
 	 * @return array
 	 */
-	public function getGroupedHierarchy($type = null, $exclude = null) {
-		$conditions = array();
-
-		if ($type) {
-			$conditions = array(
-				'Forum.status' => self::OPEN,
-				'Forum.' . $type => self::YES
-			);
-		}
+	public function getGroupedHierarchy($exclude = null) {
+		$conditions = array(
+			'Forum.status' => self::OPEN,
+			'Forum.accessRead' => self::YES
+		);
 
 		if (is_numeric($exclude)) {
 			$conditions['Forum.id !='] = $exclude;
@@ -352,7 +348,7 @@ class Forum extends ForumAppModel {
 			ksort($children);
 
 			foreach ($children as $child) {
-				$options[$child['id']] = str_repeat('&nbsp;', ($depth * 4)) . $child['title'];
+				$options[$child['id']] = str_repeat(" - ", ($depth * 4)) . $child['title'];
 
 				if (isset($categories[$child['id']]) && $drill) {
 					$babies = $this->_buildOptions($categories, $child, $drill, ($depth + 1));

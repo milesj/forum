@@ -101,7 +101,7 @@ class TopicsController extends ForumAppController {
 		$this->set('pageTitle', $pageTitle);
 		$this->set('type', $type);
 		$this->set('forum', $forum);
-		$this->set('forums', $this->Topic->Forum->getGroupedHierarchy($access));
+		$this->set('forums', $this->Topic->Forum->getGroupedHierarchy());
 	}
 
 	/**
@@ -135,7 +135,7 @@ class TopicsController extends ForumAppController {
 		}
 
 		$this->set('topic', $topic);
-		$this->set('forums', $this->Topic->Forum->getGroupedHierarchy('accessPost'));
+		$this->set('forums', $this->Topic->Forum->getGroupedHierarchy());
 	}
 
 	/**
