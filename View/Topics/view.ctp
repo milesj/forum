@@ -9,7 +9,7 @@ if (!empty($topic['Forum']['Parent']['slug'])) {
 $this->Breadcrumb->add($topic['Forum']['title'], array('controller' => 'stations', 'action' => 'view', $topic['Forum']['slug']));
 $this->Breadcrumb->add($topic['Topic']['title'], array('controller' => 'topics', 'action' => 'view', $topic['Topic']['slug']));
 
-$canReply = ($user && $topic['Topic']['status'] && $topic['Forum']['accessReply'] && $this->Forum->hasAccess('posts.create')); ?>
+$canReply = ($user && $this->Forum->hasAccess('posts.create', array($topic['Topic']['status'], $topic['Forum']['accessReply']))); ?>
 
 <div class="title">
 	<h2>

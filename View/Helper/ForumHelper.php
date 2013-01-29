@@ -144,20 +144,24 @@ class ForumHelper extends AppHelper {
 	 * Checks to see if the user has mod status.
 	 *
 	 * @param string $action
-	 * @param int $forum_id
+	 * @param array|int $status
 	 * @return bool
 	 */
-	public function hasAccess($action, $forum_id = null) {
+	public function hasAccess($action, $status = null) {
 		$user = $this->Session->read('Auth.User');
 
 		if (empty($user)) {
 			return false;
 
-		} else if ($this->isAdmin()) {
+		} else if ($this->isSuper()) {
 			return true;
 
-		} else if ($forum_id) {
-			return $this->isMod($forum_id);
+		} else if ($status) {
+			foreach ((array) $status as $bool) {
+				if (!$bool) {
+					return false;
+				}
+			}
 		}
 
 		return (bool) $this->Session->read('Forum.permissions.' . $action);
@@ -258,9 +262,9 @@ class ForumHelper extends AppHelper {
 
 		if (isset($options[$value])) {
 			return $options[$value];
-		} else {
-			return $options;
 		}
+
+		return $options;
 	}
 
 	/**
