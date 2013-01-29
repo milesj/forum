@@ -49,6 +49,7 @@ class Access extends Aro {
 	 */
 	public $actsAs = array(
 		'Containable',
+		'Tree' => array('type' => 'nested'),
 		'Utility.Cacheable' => array(
 			'cacheConfig' => 'forum',
 			'appendKey' => false
