@@ -74,8 +74,7 @@ class ForumAppController extends AppController {
 		// Settings
 		$this->config = Configure::read('Forum');
 		$this->settings = Configure::read('Forum.settings');
-		$this->layout = $this->config['view']['layout'];
-		//$this->viewPath = $this->config['view']['path'];
+		$this->layout = $this->config['viewLayout'];
 
 		// Admin
 		if (isset($this->request->params['admin'])) {
@@ -84,7 +83,7 @@ class ForumAppController extends AppController {
 		}
 
 		// Localization
-		$locale = $this->Auth->user('locale') ?: $this->settings['defaultLocale'];
+		$locale = $this->Auth->user('Profile.locale') ?: $this->settings['defaultLocale'];
 		Configure::write('Config.language', $locale);
 		setlocale(LC_ALL, $locale . 'UTF8', $locale . 'UTF-8', $locale, 'eng.UTF8', 'eng.UTF-8', 'eng', 'en_US');
 
