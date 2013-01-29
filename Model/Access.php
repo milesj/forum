@@ -56,6 +56,58 @@ class Access extends Aro {
 	);
 
 	/**
+	 * Validation.
+	 *
+	 * @var array
+	 */
+	public $validate = array(
+		'foreign_key' => 'notEmpty',
+		'parent_id' => 'notEmpty'
+	);
+
+	/**
+	 * Add a user once conditions are validated.
+	 *
+	 * @param array $data
+	 * @return mixed
+	 */
+	public function add($data) {
+		$this->set($data);
+
+		if ($this->validates()) {
+			$exists = $this->User->find('count', array(
+				'conditions' => array('User.id' => $data['foreign_key'])
+			));
+
+			if ($exists <= 0) {
+				$this->invalidate('foreign_key', __d('forum', 'No user exists with this ID'));
+				return false;
+			}
+
+			$aro = $this->getByUserId($data['foreign_key']);
+
+			if (!empty($aro) && $aro['Access']['parent_id'] == $data['parent_id']) {
+				$this->invalidate('foreign_key', __d('forum', 'User already has this access'));
+				return false;
+			}
+
+			$user = ClassRegistry::init('Forum.Profile')->getUserProfile($data['foreign_key']);
+
+			$this->create();
+			$this->save(array(
+				'alias' => $user['User'][Configure::read('Forum.userMap.username')],
+				'parent_id' => $data['parent_id'],
+				'model' => 'User',
+				'foreign_key' => $data['foreign_key']
+			));
+
+			return $user;
+		}
+
+		return false;
+	}
+
+	/**
 	 * Return all records.
 	 *
 	 * @return array
@@ -95,6 +147,23 @@ class Access extends Aro {
 	}
 
 	/**
+	 * Return a record based on user ID.
+	 *
+	 * @param int $user_id
+	 * @return array
+	 */
+	public function getByUserId($user_id) {
+		return $this->find('first', array(
+			'conditions' => array(
+				'Access.foreign_key' => $user_id,
+				'Access.model' => 'User'
+			),
+			'contain' => array('Group', 'User'),
+			'cache' => array(__METHOD__, $user_id)
+		));
+	}
+
+	/**
 	 * Return a record based on slug.
 	 *
 	 * @param string $slug
@@ -119,8 +188,7 @@ class Access extends Aro {
 	public function getStaff() {
 		return $this->find('all', array(
 			'conditions' => array('Access.parent_id' => array_keys($this->getList())),
-			'contain' => array('User'),
-			'cache' => __METHOD__
+			'contain' => array('User' => array('ForumProfile'), 'Group')
 		));
 	}
 
