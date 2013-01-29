@@ -1,7 +1,7 @@
 <?php
 
 $this->Breadcrumb->add(__d('forum', 'Users'), array('controller' => 'users', 'action' => 'index'));
-$this->Breadcrumb->add($profile['User'][$config['userMap']['username']], array('action' => 'profile', $profile['User']['id'])); ?>
+$this->Breadcrumb->add($profile['User'][$config['userMap']['username']], $this->Forum->profileUrl($profile['User'])); ?>
 
 <div class="title">
 	<?php echo $this->Html->link(__d('forum', 'Report User'), array('action' => 'report', $profile['User']['id']), array('class' => 'button float-right')); ?>
@@ -122,7 +122,7 @@ if ($posts) { ?>
 
 				<tr class="altRow">
 					<td><strong><?php echo $this->Html->link($post['Topic']['title'], array('controller' => 'topics', 'action' => 'view', $post['Topic']['slug'])); ?></strong></td>
-					<td><?php echo $this->Html->link($post['Topic']['User'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'profile', $post['Topic']['User']['id'])); ?></td>
+					<td><?php echo $this->Html->link($post['Topic']['User'][$config['userMap']['username']], $this->Forum->profileUrl($post['Topic']['User'])); ?></td>
 					<td class="ar"><?php echo $this->Time->timeAgoInWords($post['Post']['created'], array('userOffset' => $this->Forum->timezone())); ?></td>
 				</tr>
 				<tr>

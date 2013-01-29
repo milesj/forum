@@ -268,6 +268,24 @@ class ForumHelper extends AppHelper {
 	}
 
 	/**
+	 * Return a user profile URL.
+	 *
+	 * @param array $user
+	 * @return string
+	 */
+	public function profileUrl($user) {
+		$url = $this->url(Configure::read('Forum.routes.profile'));
+		$url = str_replace('{id}', $user['id'], $url);
+		$url = str_replace('{username}', $user[Configure::read('Forum.userMap.username')], $url);
+
+		if (isset($user['slug'])) {
+			$url = str_replace('{slug}', $user['slug'], $url);
+		}
+
+		return $url;
+	}
+
+	/**
 	 * Return the report type as a string name.
 	 *
 	 * @param int $type

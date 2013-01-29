@@ -32,7 +32,7 @@ $this->Breadcrumb->add(__d('forum', 'Users'), array('controller' => 'users', 'ac
 			foreach ($users as $counter => $profile) { ?>
 
 			<tr<?php if ($counter % 2) echo ' class="altRow"'; ?>>
-				<td><?php echo $this->Html->link($profile['User'][$config['userMap']['username']], array('action' => 'profile', $profile['User']['id'])); ?></td>
+				<td><?php echo $this->Html->link($profile['User'][$config['userMap']['username']], $this->Forum->profileUrl($profile['User'])); ?></td>
 				<td class="created"><?php echo $this->Time->nice($profile['Profile']['created'], $this->Forum->timezone()); ?></td>
 				<td class="created">
 					<?php if (!empty($profile['Profile']['lastLogin'])) {

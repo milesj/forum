@@ -121,7 +121,7 @@ if ($forum['Forum']['forum_id'] > 0) {
 
 		if ($forum['Moderator']) {
 			foreach ($forum['Moderator'] as $mod) {
-				$moderators[] = $this->Html->link($mod['User'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'profile', $mod['User']['id']));
+				$moderators[] = $this->Html->link($mod['User'][$config['userMap']['username']], $this->Forum->profileUrl($mod['User']));
 			}
 		} ?>
 

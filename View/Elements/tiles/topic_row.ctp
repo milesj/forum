@@ -26,7 +26,7 @@ $columns = isset($columns) ? $columns : array(); ?>
 		<td class="status"><?php echo $this->Forum->options('topicStatus', $topic['Topic']['status']); ?></td>
 	<?php } ?>
 	<td class="author">
-		<?php echo $this->Html->link($topic['User'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'profile', $topic['User']['id'])); ?>
+		<?php echo $this->Html->link($topic['User'][$config['userMap']['username']], $this->Forum->profileUrl($topic['User'])); ?>
 	</td>
 	<td class="created">
 		<?php echo $this->Time->niceShort($topic['Topic']['created'], $this->Forum->timezone()); ?>
@@ -42,7 +42,7 @@ $columns = isset($columns) ? $columns : array(); ?>
 			echo $this->Time->timeAgoInWords($topic['LastPost']['created'], array('userOffset' => $this->Forum->timezone())); ?>
 
 			<?php if (!empty($topic['LastUser']['id'])) { ?>
-				<span class="gray"><?php echo __d('forum', 'by'); ?> <?php echo $this->Html->link($topic['LastUser'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'profile', $topic['Topic']['lastUser_id'])); ?></span>
+				<span class="gray"><?php echo __d('forum', 'by'); ?> <?php echo $this->Html->link($topic['LastUser'][$config['userMap']['username']], $this->Forum->profileUrl($topic['LastUser'])); ?></span>
 			<?php } ?>
 
 			<?php echo $this->Html->image('/forum/img/goto.png', array('alt' => '', 'url' => array('controller' => 'topics', 'action' => 'view', $topic['Topic']['slug'], 'page' => $topic['Topic']['page_count'], '#' => 'post-' . $topic['Topic']['lastPost_id']))); ?>

@@ -34,7 +34,7 @@ $this->Breadcrumb->add(__d('forum', 'Dashboard'), array('action' => 'dashboard')
 				<tr<?php if ($counter % 2) echo ' class="altRow"'; ?>>
 					<td><?php echo $this->Html->link($topic['Topic']['title'], array('controller' => 'topics', 'action' => 'view', $topic['Topic']['slug'])); ?></td>
 					<td class="author">
-						<?php echo $this->Html->link($topic['Topic']['User'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'profile', $topic['Topic']['User']['id'])); ?>
+						<?php echo $this->Html->link($topic['Topic']['User'][$config['userMap']['username']], $this->Forum->profileUrl($topic['Topic']['User'])); ?>
 					</td>
 					<td class="stat"><?php echo number_format($topic['Topic']['post_count']); ?></td>
 					<td class="stat"><?php echo number_format($topic['Topic']['view_count']); ?></td>
@@ -43,7 +43,7 @@ $this->Breadcrumb->add(__d('forum', 'Dashboard'), array('action' => 'dashboard')
 						<?php echo $this->Time->timeAgoInWords($topic['Topic']['LastPost']['created'], array('userOffset' => $this->Forum->timezone()));
 
 						if (!empty($topic['Topic']['LastUser'])) { ?>
-							<span class="gray"><?php echo __d('forum', 'by'); ?> <?php echo $this->Html->link($topic['Topic']['LastUser'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'profile', $topic['Topic']['lastUser_id'])); ?></span>
+							<span class="gray"><?php echo __d('forum', 'by'); ?> <?php echo $this->Html->link($topic['Topic']['LastUser'][$config['userMap']['username']], $this->Forum->profileUrl($topic['Topic']['LastUser'])); ?></span>
 						<?php } ?>
 					</td>
 				</tr>
@@ -83,7 +83,7 @@ if ($activity) { ?>
 				<tr<?php if ($counter % 2) echo ' class="altRow"'; ?>>
 					<td><?php echo $this->Html->link($topic['Topic']['title'], array('controller' => 'topics', 'action' => 'view', $topic['Topic']['slug'])); ?></td>
 					<td class="author">
-						<?php echo $this->Html->link($topic['Topic']['User'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'profile', $topic['Topic']['User']['id'])); ?>
+						<?php echo $this->Html->link($topic['Topic']['User'][$config['userMap']['username']], $this->Forum->profileUrl($topic['Topic']['User'])); ?>
 					</td>
 					<td class="stat"><?php echo number_format($topic['Topic']['post_count']); ?></td>
 					<td class="stat"><?php echo number_format($topic['Topic']['view_count']); ?></td>
@@ -92,7 +92,7 @@ if ($activity) { ?>
 						<?php echo $this->Time->timeAgoInWords($topic['Topic']['LastPost']['created'], array('userOffset' => $this->Forum->timezone()));
 
 						if (!empty($topic['Topic']['LastUser'])) { ?>
-							<span class="gray"><?php echo __d('forum', 'by'); ?> <?php echo $this->Html->link($topic['Topic']['LastUser'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'profile', $topic['Topic']['lastUser_id'])); ?></span>
+							<span class="gray"><?php echo __d('forum', 'by'); ?> <?php echo $this->Html->link($topic['Topic']['LastUser'][$config['userMap']['username']], $this->Forum->profileUrl($topic['Topic']['LastUser'])); ?></span>
 						<?php } ?>
 					</td>
 				</tr>
@@ -137,7 +137,7 @@ if ($topics) { ?>
 						<?php echo $this->Time->timeAgoInWords($topic['LastPost']['created'], array('userOffset' => $this->Forum->timezone()));
 
 						if (!empty($topic['LastUser'])) { ?>
-							<span class="gray"><?php echo __d('forum', 'by'); ?> <?php echo $this->Html->link($topic['LastUser'][$config['userMap']['username']], array('controller' => 'users', 'action' => 'profile', $topic['Topic']['lastUser_id'])); ?></span>
+							<span class="gray"><?php echo __d('forum', 'by'); ?> <?php echo $this->Html->link($topic['LastUser'][$config['userMap']['username']], $this->Forum->profileUrl($topic['Topic']['LastUser'])); ?></span>
 						<?php } ?>
 					</td>
 				</tr>
