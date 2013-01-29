@@ -11,6 +11,6 @@ $this->Breadcrumb->add(__d('forum', 'Settings'), array('controller' => 'forum', 
 	<div class="containerContent  align-center">
 		Settings are no longer managed within the administration panel.<br>
 		You can modify the settings with Configure::write('Forum.settings') in your application's bootstrap.<br>
-		The database settings will continue to work until version <b>3.4.0</b>, where it will be completely removed.
+		The database settings will continue to work until version <b>4.0.0</b>, where it will be completely removed.
 	</div>
 </div>
