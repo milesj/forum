@@ -5,6 +5,10 @@
  * @link		http://milesj.me/code/cakephp/forum
  */
 
+App::uses('Forum', 'Forum.Model');
+App::uses('Topic', 'Forum.Model');
+App::uses('Report', 'Forum.Model');
+
 class ForumHelper extends AppHelper {
 
 	/**
@@ -206,34 +210,28 @@ class ForumHelper extends AppHelper {
 	public function options($type = 'status', $value = '', $guest = false) {
 		if ($type === 'status') {
 			$options = array(
-				1 => __d('forum', 'Yes'),
-				0 => __d('forum', 'No')
+				Forum::YES => __d('forum', 'Yes'),
+				Forum::NO => __d('forum', 'No')
 			);
 
 		} else if ($type === 'topicStatus') {
 			$options = array(
-				1 => __d('forum', 'Open'),
-				0 => __d('forum', 'Closed')
+				Topic::OPEN => __d('forum', 'Open'),
+				Topic::CLOSED => __d('forum', 'Closed')
 			);
 
 		} else if ($type === 'forumStatus') {
 			$options = array(
-				1 => __d('forum', 'Visible'),
-				0 => __d('forum', 'Hidden')
-			);
-
-		} else if ($type === 'userStatus') {
-			$options = array(
-				0 => __d('forum', 'Active'),
-				1 => __d('forum', 'Banned')
+				Forum::OPEN => __d('forum', 'Visible'),
+				Forum::CLOSED => __d('forum', 'Hidden')
 			);
 
 		} else if ($type === 'topicTypes') {
 			$options = array(
-				0 => __d('forum', 'Normal'),
-				1 => __d('forum', 'Sticky'),
-				2 => __d('forum', 'Important'),
-				3 => __d('forum', 'Announcement')
+				Topic::NORMAL => __d('forum', 'Normal'),
+				Topic::STICKY => __d('forum', 'Sticky'),
+				Topic::IMPORTANT => __d('forum', 'Important'),
+				Topic::ANNOUNCEMENT => __d('forum', 'Announcement')
 			);
 
 		} else if ($type === 'statusMap') {
@@ -241,22 +239,29 @@ class ForumHelper extends AppHelper {
 			$options = array();
 
 			foreach ($statusMap as $id => $status) {
-				$options[$id] = __d('forum', 'status.' . $status);
+				$name = __($status);
+
+				// If no localized version
+				if ($name === $status) {
+					$name = __d('forum', 'status.' . $status);
+				}
+
+				$options[$id] = $name;
 			}
 
 		} else if ($type === 'accessGroups') {
 			$groups = ClassRegistry::init('Forum.Access')->getList();
-			$accessMap = Configure::read('Forum.accessMap');
 			$options = array();
 
 			foreach ($groups as $id => $group) {
-				if (isset($accessMap[$group])) {
-					$group = $accessMap[$group];
-				} else {
-					$group = __d('forum', $group);
+				$name = __($group);
+
+				// If no localized version
+				if ($name === $group) {
+					$name = __d('forum', 'aro.' . $group);
 				}
 
-				$options[$id] = $group;
+				$options[$id] = $name;
 			}
 		}
 
@@ -293,9 +298,9 @@ class ForumHelper extends AppHelper {
 	 */
 	public function reportType($type) {
 		$types = array(
-			1 => __d('forum', 'Topic'),
-			2 => __d('forum', 'Post'),
-			3 => __d('forum', 'User')
+			Report::TOPIC => __d('forum', 'Topic'),
+			Report::POST => __d('forum', 'Post'),
+			Report::USER => __d('forum', 'User')
 		);
 
 		return $types[$type];
@@ -309,9 +314,9 @@ class ForumHelper extends AppHelper {
 	public function timezone() {
 		if ($this->Session->check('Forum.Profile.timezone')) {
 			return $this->Session->read('Forum.Profile.timezone');
-		} else {
-			return Configure::read('Forum.settings.defaultTimezone');
 		}
+
+		return Configure::read('Forum.settings.defaultTimezone');
 	}
 
 	/**

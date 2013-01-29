@@ -1912,9 +1912,9 @@ msgid "Target destination cannot be itself"
 msgstr ""
 
 #: View/Helper/ForumHelper.php:248
-msgid "forum.admin"
+msgid "aro.administrator"
 msgstr "Administrator"
 
 #: View/Helper/ForumHelper.php:248
-msgid "forum.superMod"
+msgid "aro.superModerator"
 msgstr "Super Moderator"

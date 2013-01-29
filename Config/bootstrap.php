@@ -56,11 +56,11 @@ Configure::write('Forum.statusMap', array(
 ));
 
 /**
- * A map of ACL groups to localized versions.
+ * A map of keys to ACL requester aliases.
  */
-Configure::write('Forum.accessMap', array(
-	'admin' 	=> __d('forum', 'forum.admin'),
-	'superMod'	=> __d('forum', 'forum.superMod')
+Configure::write('Forum.aroMap', array(
+	'admin' 	=> 'administrator',
+	'superMod'	=> 'superModerator'
 ));
 
 /**
