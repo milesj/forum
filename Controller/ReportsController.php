@@ -53,7 +53,7 @@ class ReportsController extends ForumAppController {
 
 		} else {
 			$this->paginate['Report']['contain'] = array(
-				'Reporter' => array('Profile'),
+				'Reporter' => array('ForumProfile'),
 				'Topic', 'Post',
 				'User' => array('ForumProfile')
 			);
@@ -91,7 +91,10 @@ class ReportsController extends ForumAppController {
 		}
 
 		$this->paginate['Report']['conditions']['Report.itemType'] = Report::TOPIC;
-		$this->paginate['Report']['contain']= array('Reporter' => array('Profile'), 'Topic');
+		$this->paginate['Report']['contain'] = array(
+			'Reporter' => array('ForumProfile'),
+			'Topic'
+		);
 
 		$this->set('reports', $this->paginate('Report'));
 	}
@@ -121,7 +124,10 @@ class ReportsController extends ForumAppController {
 		}
 
 		$this->paginate['Report']['conditions']['Report.itemType'] = Report::POST;
-		$this->paginate['Report']['contain'] = array('Reporter' => array('Profile'), 'Post' => array('Topic'));
+		$this->paginate['Report']['contain'] = array(
+			'Reporter' => array('ForumProfile'),
+			'Post' => array('Topic')
+		);
 
 		$this->set('reports', $this->paginate('Report'));
 	}
@@ -152,8 +158,8 @@ class ReportsController extends ForumAppController {
 		}
 
 		$this->paginate['Report']['conditions']['Report.itemType'] = Report::USER;
-		$this->paginate['Report']['contain']= array(
-			'Reporter' => array('Profile'),
+		$this->paginate['Report']['contain'] = array(
+			'Reporter' => array('ForumProfile'),
 			'User' => array('ForumProfile')
 		);
 
