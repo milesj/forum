@@ -113,19 +113,20 @@ if (!empty($topic['Poll']['id'])) { ?>
 					<td class="align-right dark">
 						<?php if ($user) {
 							$links = array();
+							$isMod = $this->Forum->isMod($topic['Forum']['id']);
 
 							if ($topic['Topic']['firstPost_id'] == $post['Post']['id']) {
-								if ($this->Forum->isMod($topic['Forum']['id']) || ($topic['Topic']['status'] && $user['User']['id'] == $post['Post']['user_id'])) {
+								if ($isMod || ($topic['Topic']['status'] && $user['User']['id'] == $post['Post']['user_id'])) {
 									$links[] = $this->Html->link(__d('forum', 'Edit Topic'), array('controller' => 'topics', 'action' => 'edit', $topic['Topic']['slug'], (!empty($topic['Poll']['id']) ? 'poll' : '')));
 								}
 
-								if ($this->Forum->isMod($topic['Forum']['id'])) {
+								if ($isMod) {
 									$links[] = $this->Html->link(__d('forum', 'Delete Topic'), array('controller' => 'topics', 'action' => 'delete', $topic['Topic']['slug']), array('confirm' => __d('forum', 'Are you sure you want to delete?')));
 								}
 
 								$links[] = $this->Html->link(__d('forum', 'Report Topic'), array('controller' => 'topics', 'action' => 'report', $topic['Topic']['slug']));
 							} else {
-								if ($user['User']['id'] == $post['Post']['user_id']) {
+								if ($isMod || ($topic['Topic']['status'] && $user['User']['id'] == $post['Post']['user_id'])) {
 									$links[] = $this->Html->link(__d('forum', 'Edit Post'), array('controller' => 'posts', 'action' => 'edit', $post['Post']['id']));
 									$links[] = $this->Html->link(__d('forum', 'Delete Post'), array('controller' => 'posts', 'action' => 'delete', $post['Post']['id']), array('confirm' => __d('forum', 'Are you sure you want to delete?')));
 								}
