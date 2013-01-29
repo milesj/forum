@@ -68,7 +68,8 @@ class StationsController extends ForumAppController {
 		$user_id = $this->Auth->user('id');
 
 		$this->ForumToolbar->verifyAccess(array(
-			'exists' => $forum
+			'exists' => $forum,
+			'status' => $forum['Forum']['status']
 		));
 
 		$this->paginate['Topic']['limit'] = $this->settings['topicsPerPage'];

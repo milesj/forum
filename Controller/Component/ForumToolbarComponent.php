@@ -113,6 +113,10 @@ class ForumToolbarComponent extends Component {
 
 			// Get moderated forum IDs
 			$moderates = ClassRegistry::init('Forum.Moderator')->getModerations($user_id);
+
+		// If not logged in or banned
+		} else {
+			$permissions = false;
 		}
 
 		$this->Session->write('Forum.isAdmin', $isAdmin);
@@ -173,9 +177,9 @@ class ForumToolbarComponent extends Component {
 
 		if ($return) {
 			return $url;
-		} else {
-			return $this->Controller->redirect($url);
 		}
+
+		return $this->Controller->redirect($url);
 	}
 
 	/**
@@ -250,7 +254,7 @@ class ForumToolbarComponent extends Component {
 		}
 
 		// Admins have full control
-		if ($this->Session->read('Forum.isAdmin')) {
+		if ($this->Session->read('Forum.isAdmin') || $this->Session->read('Forum.isSuper')) {
 			return true;
 		}
 
@@ -272,10 +276,7 @@ class ForumToolbarComponent extends Component {
 
 		// Does the user own this item?
 		if (isset($validators['ownership'])) {
-			if ($this->Session->read('Forum.isSuper')) {
-				return true;
-
-			} else if ($this->Controller->Auth->user('id') != $validators['ownership']) {
+			if ($this->Controller->Auth->user('id') != $validators['ownership']) {
 				throw new UnauthorizedException();
 			}
 		}

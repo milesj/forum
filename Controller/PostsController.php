@@ -57,11 +57,14 @@ class PostsController extends ForumAppController {
 				$this->ForumToolbar->updatePosts($post_id);
 				$this->ForumToolbar->goToPage($topic['Topic']['id'], $post_id);
 			}
-		} else {
-			if ($quote_id) {
-				if ($quote = $this->Post->getQuote($quote_id)) {
-					$this->request->data['Post']['content'] = '[quote="' . $quote['User'][$this->config['userMap']['username']] . '" date="' . $quote['Post']['created'] . '"]' . $quote['Post']['content'] . '[/quote]';
-				}
+
+		} else if ($quote_id) {
+			if ($quote = $this->Post->getQuote($quote_id)) {
+				$this->request->data['Post']['content'] = sprintf('[quote="%s" date="%s"]%s[/quote]',
+					$quote['User'][$this->config['userMap']['username']],
+					$quote['Post']['created'],
+					$quote['Post']['content']
+				) . PHP_EOL;
 			}
 		}
 

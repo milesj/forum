@@ -58,7 +58,7 @@ class ForumHelper extends AppHelper {
 			$lastPost = $forum['LastTopic']['created'];
 		}
 
-		if ($forum['status'] == 0) {
+		if ($forum['status'] == Forum::CLOSED) {
 			$icon = 'closed';
 		} else if (isset($lastPost) && $lastPost > $this->Session->read('Forum.lastVisit')) {
 			$icon = 'new';
@@ -204,10 +204,9 @@ class ForumHelper extends AppHelper {
 	 *
 	 * @param string $type
 	 * @param string $value
-	 * @param bool $guest
 	 * @return array|string
 	 */
-	public function options($type = 'status', $value = '', $guest = false) {
+	public function options($type = 'status', $value = '') {
 		if ($type === 'status') {
 			$options = array(
 				Forum::YES => __d('forum', 'Yes'),
@@ -346,11 +345,11 @@ class ForumHelper extends AppHelper {
 		} else {
 			if (isset($lastPost) && $lastPost > $lastVisit &&  !in_array($topic['Topic']['id'], $readTopics)) {
 				$icon = 'new';
-			} else if ($topic['Topic']['type'] == 1) {
+			} else if ($topic['Topic']['type'] == Topic::STICKY) {
 				$icon = 'sticky';
-			} else if ($topic['Topic']['type'] == 2) {
+			} else if ($topic['Topic']['type'] == Topic::IMPORTANT) {
 				$icon = 'important';
-			} else if ($topic['Topic']['type'] == 3) {
+			} else if ($topic['Topic']['type'] == Topic::ANNOUNCEMENT) {
 				$icon = 'announcement';
 			}
 		}
@@ -404,7 +403,7 @@ class ForumHelper extends AppHelper {
 
 		$types = $this->options('topicTypes');
 
-		return $this->output('<strong>' . $types[$type] . '</strong>');
+		return '<strong>' . $types[$type] . '</strong>';
 	}
 
 	/**
