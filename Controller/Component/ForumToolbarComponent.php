@@ -249,6 +249,11 @@ class ForumToolbarComponent extends Component {
 			}
 		}
 
+		// Admins have full control
+		if ($this->Session->read('Forum.isAdmin')) {
+			return true;
+		}
+
 		// Are we a moderator? Grant access
 		if (isset($validators['moderate'])) {
 			if (in_array($validators['moderate'], $this->Session->read('Forum.moderates'))) {
@@ -258,14 +263,16 @@ class ForumToolbarComponent extends Component {
 
 		// Is the item locked/unavailable?
 		if (isset($validators['status'])) {
-			if (!$validators['status']) {
-				throw new ForbiddenException();
+			foreach ($validators['status'] as $status) {
+				if (!$status) {
+					throw new ForbiddenException();
+				}
 			}
 		}
 
 		// Does the user own this item?
 		if (isset($validators['ownership'])) {
-			if ($this->Session->read('Forum.isSuper') || $this->Session->read('Forum.isAdmin')) {
+			if ($this->Session->read('Forum.isSuper')) {
 				return true;
 
 			} else if ($this->Controller->Auth->user('id') != $validators['ownership']) {

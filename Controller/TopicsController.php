@@ -77,7 +77,7 @@ class TopicsController extends ForumAppController {
 
 		$this->ForumToolbar->verifyAccess(array(
 			'exists' => $forum,
-			'status' => $forum['Forum']['status']
+			'status' => array($forum['Forum']['status'], $forum['Forum'][$access]),
 		));
 
 		if ($this->request->data) {
@@ -195,7 +195,8 @@ class TopicsController extends ForumAppController {
 		$user_id = $this->Auth->user('id');
 
 		$this->ForumToolbar->verifyAccess(array(
-			'exists' => $topic
+			'exists' => $topic,
+			'status' => $topic['Forum']['accessRead']
 		));
 
 		$this->paginate['Post']['limit'] = $this->settings['postsPerPage'];
