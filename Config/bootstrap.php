@@ -71,7 +71,7 @@ Configure::write('Forum.routes', array(
 	'logout' => array('plugin' => false, 'admin' => false, 'controller' => 'users', 'action' => 'logout'),
 	'signup' => array('plugin' => false, 'admin' => false, 'controller' => 'users', 'action' => 'signup'),
 	'forgotPass' => array('plugin' => false, 'admin' => false, 'controller' => 'users', 'action' => 'forgot_password'),
-	'profile' => array('plugin' => 'forum', 'admin' => false, 'controller' => 'users', 'action' => 'profile', '{id}')
+	'profile' => array('plugin' => 'forum', 'admin' => false, 'controller' => 'users', 'action' => 'profile', 'id' => '{id}')
 ));
 
 /**
