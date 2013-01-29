@@ -118,125 +118,48 @@ class UpgradeShell extends Shell {
 		$Access = new AppModel(null, 'access', FORUM_DATABASE);
 		$Access->alias = 'Access';
 		$Access->tablePrefix = FORUM_PREFIX;
+		$Access->bindModel(array('belongsTo' => array(
+			'User' => array('className' => FORUM_USER)
+		)));
 
 		$AccessLevel = new AppModel(null, 'access_levels', FORUM_DATABASE);
 		$AccessLevel->alias = 'AccessLevel';
 		$AccessLevel->tablePrefix = FORUM_PREFIX;
 
 		$Forum = ClassRegistry::init('Forum.Forum');
-		$Permission = ClassRegistry::init('Permission');
-		$Aco = ClassRegistry::init('Aco');
-		$Aro = ClassRegistry::init('Aro');
+		$Acl = ClassRegistry::init('Forum.Access');
 
 		// Create ACL request objects
-		$this->out('Creating AROs...');
-		$aroMap = array();
-		$aroAliases = array();
+		$this->out('Installing ACL...');
+
+		$aclMap = $Acl->installAcl();
+		$levelMap = array();
 
 		foreach ($AccessLevel->find('all') as $level) {
 			$id = $level['AccessLevel']['id'];
-			$alias = 'forum.';
 
-			if ($id <= 2) {
+			if (!in_array($id, array(3, 4))) {
 				continue;
 			}
 
-			switch ($id) {
-				case 3:
-					$alias .= 'superMod';
-				break;
-				case 4:
-					$alias .= 'admin';
-				break;
-				default:
-					$alias .= lcfirst(Inflector::camelize($level['AccessLevel']['title']));
-				break;
-			}
-
-			// Check to see if the ARO already exists
-			$result = $Aro->find('first', array(
-				'conditions' => array('alias' => $alias),
-				'recursive' => -1
-			));
-
-			if ($result) {
-				$aroMap[$id] = $result['Aro']['id'];
-
-			// Else create a new record
+			if ($id == 3) {
+				$alias = Configure::read('Forum.aroMap.superMod');
 			} else {
-				$Aro->create();
-				$Aro->save(array('alias' => $alias));
-
-				$aroMap[$id] = $Aro->id;
+				$alias = Configure::read('Forum.aroMap.admin');
 			}
 
-			$aroAliases[] = $alias;
-		}
-
-		// Create ACL control objects
-		$this->out('Creating ACOs...');
-		$acoMap = array();
-		$acoAliases = array();
-
-		foreach (array('admin', 'stations', 'topics', 'posts', 'polls') as $type) {
-			$alias = 'forum.'. $type;
-
-			// Check to see if the ACO already exists
-			$result = $Aco->find('first', array(
-				'conditions' => array('alias' => $alias),
-				'recursive' => -1
-			));
-
-			if ($result) {
-				$acoMap[] = $result['Aco']['id'];
-
-			// Else create a new record
-			} else {
-				$Aco->create();
-				$Aco->save(array('alias' => $alias));
-
-				$acoMap[] = $Aco->id;
-			}
-
-			$acoAliases[] = $alias;
-		}
-
-		// Allow ACOs to AROs
-		$this->out('Creating permissions...');
-		foreach ($aroAliases as $ro) {
-			foreach ($acoAliases as $co) {
-				$Permission->allow($ro, $co);
-			}
+			$record = $Acl->getBySlug($alias);
+			$levelMap[$id] = $record['Access']['id'];
 		}
 
 		// Create users
 		$this->out('Migrating users...');
 
-		$Access->bindModel(array('belongsTo' => array(FORUM_USER)));
-		$users = $Access->find('all', array(
-			'recursive' => 0
-		));
-
-		foreach ($users as $user) {
-			$parent_id = $aroMap[$user['Access']['access_level_id']];
-			$user_id = $user['User']['id'];
-
-			$count = $Aro->find('count', array(
-				'conditions' => array(
-					'parent_id' => $parent_id,
-					'foreign_key' => $user_id
-				)
+		foreach ($Access->find('all') as $user) {
+			$Acl->add(array(
+				'foreign_key' => $user['User']['id'],
+				'parent_id' => $levelMap[$user['Access']['access_level_id']]
 			));
-
-			if (!$count) {
-				$Aro->create();
-				$Aro->save(array(
-					'alias' => $user['User'][Configure::read('Forum.userMap.username')],
-					'parent_id' => $parent_id,
-					'model' => FORUM_USER,
-					'foreign_key' => $user_id
-				));
-			}
 		}
 
 		// Migrate access levels
@@ -250,7 +173,7 @@ class UpgradeShell extends Shell {
 			foreach ($forums as $forum) {
 				$Forum->id = $forum['Forum']['id'];
 				$Forum->save(array(
-					'access_level_id' => $aroMap[$forum['Forum']['access_level_id']]
+					'access_level_id' => $levelMap[$forum['Forum']['access_level_id']]
 				), false);
 			}
 		}

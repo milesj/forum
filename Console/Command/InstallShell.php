@@ -179,30 +179,12 @@ class InstallShell extends Shell {
 	public function setupAcl() {
 		$this->out('<info>Creating ACL records...</info>');
 
-		$Permission = ClassRegistry::init('Permission');
-		$aros = array('forum.admin', 'forum.superMod');
-		$acos = array('forum.admin', 'forum.stations', 'forum.topics', 'forum.posts', 'forum.polls');
+		$admin = Configure::read('Forum.aroMap.admin');
+		$acl = ClassRegistry::init('Forum.Access')->installAcl();
 
-		// AROs
-		foreach ($aros as $alias) {
-			$Permission->Aro->create();
-			$Permission->Aro->save(array('alias' => $alias));
-
-			if ($alias === 'forum.admin') {
-				$this->install['acl_admin'] = $Permission->Aro->id;
-			}
-		}
-
-		// ACOs
-		foreach ($acos as $alias) {
-			$Permission->Aco->create();
-			$Permission->Aco->save(array('alias' => $alias));
-		}
-
-		// Allow
-		foreach ($aros as $aro) {
-			foreach ($acos as $aco) {
-				$Permission->allow($aro, $aco);
+		foreach ($acl['aro'] as $id => $alias) {
+			if ($alias === $admin) {
+				$this->install['acl_admin'] = $id;
 			}
 		}
 
@@ -311,13 +293,8 @@ class InstallShell extends Shell {
 		}
 
 		// Give ACL
-		$Aro = ClassRegistry::init('Aro');
-		$Aro->create();
-
-		$result = $Aro->save(array(
-			'alias' => $this->install['username'],
+		$result = ClassRegistry::init('Forum.Access')->add(array(
 			'parent_id' => $this->install['acl_admin'],
-			'model' => FORUM_USER,
 			'foreign_key' => $this->install['user_id']
 		));
 

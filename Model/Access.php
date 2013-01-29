@@ -251,4 +251,79 @@ class Access extends Aro {
 		));
 	}
 
+	/**
+	 * Install all the required ACL requester and control objects for the forum.
+	 * Check for existence of specific aliases before hand.
+	 *
+	 * @return array
+	 */
+	public function installAcl() {
+		$Permission = ClassRegistry::init('Permission');
+		$Aco = ClassRegistry::init('Aco');
+		$Aro = ClassRegistry::init('Aro');
+
+		// Create ACL request objects
+		$aroMap = array();
+
+		foreach (Configure::read('Forum.aroMap') as $alias) {
+
+			// Check to see if the ARO already exists
+			$result = $Aro->find('first', array(
+				'conditions' => array('alias' => $alias),
+				'recursive' => -1
+			));
+
+			if ($result) {
+				$id = $result['Aro']['id'];
+
+			// Else create a new record
+			} else {
+				$Aro->create();
+				$Aro->save(array('alias' => $alias));
+
+				$id = $Aro->id;
+			}
+
+			$aroMap[$id] = $alias;
+		}
+
+		// Create ACL control objects
+		$acoMap = array();
+
+		foreach (array('admin', 'stations', 'topics', 'posts', 'polls') as $alias) {
+			$alias = 'forum.' . $alias;
+
+			// Check to see if the ACO already exists
+			$result = $Aco->find('first', array(
+				'conditions' => array('alias' => $alias),
+				'recursive' => -1
+			));
+
+			if ($result) {
+				$id = $result['Aco']['id'];
+
+			// Else create a new record
+			} else {
+				$Aco->create();
+				$Aco->save(array('alias' => $alias));
+
+				$id = $Aco->id;
+			}
+
+			$acoMap[$id] = $alias;
+		}
+
+		// Allow ACOs to AROs
+		foreach ($aroMap as $ro) {
+			foreach ($acoMap as $co) {
+				$Permission->allow($ro, $co);
+			}
+		}
+
+		return array(
+			'aro' => $aroMap,
+			'aco' =>  $acoMap
+		);
+	}
+
 }
