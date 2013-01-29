@@ -38,7 +38,7 @@ class SearchController extends ForumAppController {
 	 */
 	public function index($type = '') {
 		$searching = false;
-		$forums = $this->Topic->Forum->getGroupedHierarchy('accessRead'); // @TODO
+		$forums = $this->Topic->Forum->getGroupedHierarchy('accessRead');
 		$orderBy = array(
 			'LastPost.created' => __d('forum', 'Last post time'),
 			'Topic.created' => __d('forum', 'Topic created time'),
@@ -114,7 +114,7 @@ class SearchController extends ForumAppController {
 	public function beforeFilter() {
 		parent::beforeFilter();
 
-		$this->Auth->allow('*');
+		$this->Auth->allow();
 	}
 
 }
