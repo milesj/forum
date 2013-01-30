@@ -238,7 +238,7 @@ class InstallShell extends Shell {
 			if ($result) {
 				$this->install['user_id'] = $this->db->lastInsertId();
 			} else {
-				$this->out('An error has occured while creating the user.');
+				$this->out('An error has occurred while creating the user.');
 
 				return $this->setupAdmin();
 			}
@@ -258,7 +258,7 @@ class InstallShell extends Shell {
 		));
 
 		if (!$result) {
-			$this->out('An error occured while granting administrator access.');
+			$this->out('An error occurred while granting administrator access.');
 
 			return $this->setupAdmin();
 		}
