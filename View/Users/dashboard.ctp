@@ -55,9 +55,7 @@ $this->Breadcrumb->add(__d('forum', 'Dashboard'), array('action' => 'dashboard')
 	</div>
 </div>
 
-<?php }
-
-if ($activity) { ?>
+<?php } ?>
 
 <div class="container">
 	<div class="containerHeader">
@@ -78,7 +76,8 @@ if ($activity) { ?>
 			</thead>
 			<tbody>
 
-			<?php foreach ($activity as $counter => $topic) { ?>
+			<?php if ($activity) {
+				foreach ($activity as $counter => $topic) { ?>
 
 				<tr<?php if ($counter % 2) echo ' class="altRow"'; ?>>
 					<td><?php echo $this->Html->link($topic['Topic']['title'], array('controller' => 'topics', 'action' => 'view', $topic['Topic']['slug'])); ?></td>
@@ -97,6 +96,15 @@ if ($activity) { ?>
 					</td>
 				</tr>
 
+			<?php }
+			} else { ?>
+
+				<tr>
+					<td colspan="6" class="empty">
+						<?php echo __d('forum', 'No latest activity to display'); ?>
+					</td>
+				</tr>
+
 			<?php } ?>
 
 			</tbody>
@@ -104,9 +112,7 @@ if ($activity) { ?>
 	</div>
 </div>
 
-<?php }
-
-if ($topics) { ?>
+<?php if ($topics) { ?>
 
 <div class="container">
 	<div class="containerHeader">

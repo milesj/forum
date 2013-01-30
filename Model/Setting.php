@@ -29,7 +29,19 @@ class Setting extends ForumAppModel {
 			$clean = array();
 
 			foreach ($settings as $key => $value) {
-				$clean[Inflector::camelize($key)] = $value;
+				if ($key === 'site_name') {
+					$key = 'name';
+				} else if ($key === 'site_email') {
+					$key = 'email';
+				} else if ($key === 'site_main_url') {
+					$key = 'url';
+				} else if ($key === 'days_till_autolock') {
+					$key = 'topicDaysTillAutolock';
+				} else {
+					$key = lcfirst(Inflector::camelize($key));
+				}
+
+				$clean[$key] = $value;
 			}
 
 			Configure::write('Forum.settings', Hash::merge(Configure::read('Forum.settings'), $clean));

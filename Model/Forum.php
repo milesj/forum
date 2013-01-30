@@ -371,7 +371,7 @@ class Forum extends ForumAppModel {
 			ksort($children);
 
 			foreach ($children as $child) {
-				$options[$child['id']] = str_repeat('&nbsp;', ($depth * 4)) . $child['title'];
+				$options[$child['id']] = str_repeat(' - ', ($depth * 4)) . $child['title'];
 
 				if (isset($categories[$child['id']]) && $drill) {
 					$babies = $this->_buildOptions($categories, $child, $drill, ($depth + 1));

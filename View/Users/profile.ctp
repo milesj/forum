@@ -30,7 +30,7 @@ $this->Breadcrumb->add($profile['User'][$config['userMap']['username']], array('
 
 				<td><strong><?php echo __d('forum', 'Roles'); ?>:</strong></td>
 				<td>
-					<?php if ($profile['User']['Access']) {
+					<?php if (!empty($profile['User']['Access'])) {
 						$roles = array();
 						foreach ($profile['User']['Access'] as $access) {
 							$roles[] = $access['AccessLevel']['title'];
@@ -56,7 +56,7 @@ $this->Breadcrumb->add($profile['User'][$config['userMap']['username']], array('
 
 				<td><strong><?php echo __d('forum', 'Moderates'); ?>:</strong></td>
 				<td>
-					<?php if ($profile['User']['Moderator']) {
+					<?php if (!empty($profile['User']['Moderator'])) {
 						$mods = array();
 						foreach ($profile['User']['Moderator'] as $mod) {
 							$mods[] = $this->Html->link($mod['Forum']['title'], array('controller' => 'stations', 'action' => 'view', $mod['Forum']['slug']));

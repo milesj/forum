@@ -69,15 +69,12 @@ class Profile extends ForumAppModel {
 	 * @return array
 	 */
 	public function getByUser($user_id) {
-		return $this->find('first', array(
-			'conditions' => array('Profile.user_id' => $user_id),
-			'contain' => array(
-				'User' => array(
-					'Moderator' => array('Forum.id', 'Forum.slug', 'Forum.title'),
-					'Access' => array('AccessLevel')
-				)
-			)
-		));
+		return $this->getUserProfile($user_id, array(
+			'User' => array(
+				'Moderator' => array('Forum.id', 'Forum.slug', 'Forum.title'),
+				'Access' => array('AccessLevel')
+			))
+		);
 	}
 
 	/**
@@ -114,12 +111,13 @@ class Profile extends ForumAppModel {
 	 * Grab the users profile. If it doesn't exist, create it!
 	 *
 	 * @param int $user_id
+	 * @param array $contain
 	 * @return array
 	 */
-	public function getUserProfile($user_id) {
+	public function getUserProfile($user_id, array $contain = array('User')) {
 		$profile = $this->find('first', array(
 			'conditions' => array('Profile.user_id' => $user_id),
-			'contain' => array('User')
+			'contain' => $contain
 		));
 
 		if (!$profile && $user_id) {
@@ -128,7 +126,7 @@ class Profile extends ForumAppModel {
 
 			return $this->find('first', array(
 				'conditions' => array('Profile.id' => $this->id),
-				'contain' => array('User')
+				'contain' => $contain
 			));
 		}
 
