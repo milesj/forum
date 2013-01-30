@@ -101,7 +101,7 @@ class UsersController extends ForumAppController {
 				$this->Session->setFlash(__d('forum', 'Your profile information has been updated!'));
 
 				foreach ($this->request->data['Profile'] as $key => $value) {
-					$this->Session->write(AuthComponent::$sessionKey . '.Profile.' . $key, $value);
+					$this->Session->write(AuthComponent::$sessionKey . '.ForumProfile.' . $key, $value);
 				}
 			}
 		} else {

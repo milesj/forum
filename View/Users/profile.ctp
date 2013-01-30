@@ -46,7 +46,7 @@ $this->Breadcrumb->add($profile['User'][$config['userMap']['username']], $this->
 
 				<td><strong><?php echo __d('forum', 'Moderates'); ?>:</strong></td>
 				<td>
-					<?php if ($profile['User']['ForumModerator']) {
+					<?php if (!empty($profile['User']['ForumModerator'])) {
 						$mods = array();
 						foreach ($profile['User']['ForumModerator'] as $mod) {
 							$mods[] = $this->Html->link($mod['Forum']['title'], array('controller' => 'stations', 'action' => 'view', $mod['Forum']['slug']));
