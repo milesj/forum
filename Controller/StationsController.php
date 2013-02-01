@@ -280,10 +280,10 @@ class StationsController extends ForumAppController {
 
 		if ($this->request->data) {
 			if ($this->request->data['Forum']['move_topics'] == $id) {
-				$this->Forum->invalidate('move_topics', __d('forum', 'Target destination cannot be itself'));
+				$this->Forum->invalidate('move_topics', 'Target destination cannot be itself');
 
 			} else if ($this->request->data['Forum']['move_forums'] == $id) {
-				$this->Forum->invalidate('move_forums', __d('forum', 'Target destination cannot be itself'));
+				$this->Forum->invalidate('move_forums', 'Target destination cannot be itself');
 
 			} else {
 				$this->Forum->Topic->moveAll($id, $this->request->data['Forum']['move_topics']);

@@ -24,3 +24,48 @@ msgstr ""
 
 msgid "Unauthorized"
 msgstr ""
+
+msgid "The following tags have been nested in the wrong order: %s"
+msgstr ""
+
+msgid "The following tags have no closing tag: %s"
+msgstr ""
+
+msgid "The following tags can not be placed within a specific tag: %s"
+msgstr ""
+
+msgid "No user exists with this ID"
+msgstr ""
+
+msgid "This user is already a moderator for this forum"
+msgstr ""
+
+msgid "You must wait %s more second(s) till you can post a reply"
+msgstr ""
+
+msgid "You are only allowed to post %s time(s) per hour"
+msgstr ""
+
+msgid "You must wait %s more second(s) till you can post a topic"
+msgstr ""
+
+msgid "You are only allowed to post %s topic(s) per hour"
+msgstr ""
+
+msgid "Please supply a number"
+msgstr ""
+
+msgid "This setting is required"
+msgstr ""
+
+msgid "This field is required"
+msgstr ""
+
+msgid "Expiration must be a numerical value for days"
+msgstr ""
+
+msgid "You must supply a minimum of 2 options and a max of 10"
+msgstr ""
+
+msgid "Please supply some answer options for your poll"
+msgstr ""
