@@ -96,9 +96,9 @@ class Access extends Aro {
 
 			$this->create();
 			$this->save(array(
+				'model' => 'User',
 				'alias' => $user['User'][Configure::read('Forum.userMap.username')],
 				'parent_id' => $data['parent_id'],
-				'model' => 'User',
 				'foreign_key' => $data['foreign_key']
 			));
 
@@ -290,7 +290,7 @@ class Access extends Aro {
 		// Create ACL control objects
 		$acoMap = array();
 
-		foreach (array('admin', 'stations', 'topics', 'posts', 'polls') as $alias) {
+		foreach (array('stations', 'topics', 'posts', 'polls') as $alias) {
 			$alias = 'forum.' . $alias;
 
 			// Check to see if the ACO already exists
@@ -322,7 +322,7 @@ class Access extends Aro {
 
 		return array(
 			'aro' => $aroMap,
-			'aco' =>  $acoMap
+			'aco' => $acoMap
 		);
 	}
 

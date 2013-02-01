@@ -138,14 +138,12 @@ class UpgradeShell extends Shell {
 		foreach ($AccessLevel->find('all') as $level) {
 			$id = $level['AccessLevel']['id'];
 
-			if (!in_array($id, array(3, 4))) {
-				continue;
-			}
-
 			if ($id == 3) {
 				$alias = Configure::read('Forum.aroMap.superMod');
-			} else {
+			} else if ($id == 4) {
 				$alias = Configure::read('Forum.aroMap.admin');
+			} else {
+				continue;
 			}
 
 			$record = $Acl->getBySlug($alias);

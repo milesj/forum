@@ -78,17 +78,14 @@ class ForumToolbarComponent extends Component {
 
 			// Generate permissions list
 			if ($access = ClassRegistry::init('Forum.Access')->getPermissions($user_id)) {
-				foreach ($access as $perm) {
-					if ($perm['Aco']['alias'] === 'forum.admin') {
-						continue;
-					}
+				$aroMap = Configure::read('Forum.aroMap');
 
-					// Save groups directly
-					if ($perm['Aro']['alias'] === 'forum.admin' && !$isAdmin) {
+				foreach ($access as $perm) {
+					if ($perm['Aro']['alias'] === $aroMap['admin'] && !$isAdmin) {
 						$isAdmin = true;
 					}
 
-					if ($perm['Aro']['alias'] === 'forum.superMod' && !$isSuper) {
+					if ($perm['Aro']['alias'] === $aroMap['superMod'] && !$isSuper) {
 						$isSuper = true;
 					}
 
@@ -121,7 +118,7 @@ class ForumToolbarComponent extends Component {
 
 		$this->Session->write('Forum.isAdmin', $isAdmin);
 		$this->Session->write('Forum.isSuper', $isSuper);
-		$this->Session->write('Forum.groups', array_unique($groups));
+		$this->Session->write('Forum.groups', array_values(array_unique($groups)));
 		$this->Session->write('Forum.permissions', $permissions);
 		$this->Session->write('Forum.moderates', $moderates);
 		$this->Session->write('Forum.lastVisit', $lastVisit);
@@ -267,7 +264,7 @@ class ForumToolbarComponent extends Component {
 
 		// Is the item locked/unavailable?
 		if (isset($validators['status'])) {
-			foreach ($validators['status'] as $status) {
+			foreach ((array) $validators['status'] as $status) {
 				if (!$status) {
 					throw new ForbiddenException();
 				}
