@@ -13,6 +13,7 @@ App::uses('ForumAppController', 'Forum.Controller');
  * @property Topic $Topic
  * @property Subscription $Subscription
  * @property Report $Report
+ * @property Access $Access
  */
 class UsersController extends ForumAppController {
 
@@ -123,10 +124,12 @@ class UsersController extends ForumAppController {
 		}
 
 		$this->loadModel('Forum.Topic');
+		$this->loadModel('Forum.Access');
 
 		$this->set('profile', $profile);
 		$this->set('topics', $this->Topic->getLatestByUser($user_id));
 		$this->set('posts', $this->Topic->Post->getLatestByUser($user_id));
+		$this->set('roles', $this->Access->getRoles($user_id));
 	}
 
 	/**

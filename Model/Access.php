@@ -252,6 +252,29 @@ class Access extends Aro {
 	}
 
 	/**
+	 * Return a list of users roles defined in the ACL.
+	 *
+	 * @param int $user_id
+	 * @return array
+	 */
+	public function getRoles($user_id) {
+		$results = $this->find('all', array(
+			'conditions' => array(
+				'Access.foreign_key' => $user_id,
+				'Access.model' => 'User'
+			)
+		));
+
+		if ($results) {
+			$results = $this->find('all', array(
+				'conditions' => array('Access.id' => Hash::extract($results, '{n}.Access.parent_id'))
+			));
+		}
+
+		return $results;
+	}
+
+	/**
 	 * Install all the required ACL requester and control objects for the forum.
 	 * Check for existence of specific aliases before hand.
 	 *

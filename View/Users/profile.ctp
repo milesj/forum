@@ -29,7 +29,17 @@ $this->Breadcrumb->add($profile['User'][$config['userMap']['username']], $this->
 				<td><?php echo number_format($profile['Profile']['totalTopics']); ?></td>
 
 				<td><strong><?php echo __d('forum', 'Roles'); ?>:</strong></td>
-				<td><?php // @TODO ?></td>
+				<td>
+					<?php if (!empty($roles)) {
+						$rls = array();
+						foreach ($roles as $role) {
+							$rls[] = $this->Forum->options('accessGroups', $role['Access']['id']);
+						}
+						echo implode(', ', $rls);
+					} else {
+						echo '<em>' . __d('forum', 'N/A') . '</em>';
+					} ?>
+				</td>
 			</tr>
 			<tr>
 				<td><strong><?php echo __d('forum', 'Last Login'); ?>:</strong></td>
