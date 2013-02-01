@@ -70,7 +70,7 @@ if ($forums) {
 
 				<tr>
 					<td colspan="11" class="empty">
-						<?php echo __d('forum', 'There are no forums to display.'); ?>
+						<?php echo __d('forum', 'There are no forums to display'); ?><br>
 						<?php echo $this->Html->link(__d('forum', 'Add Forum'), array('action' => 'add')); ?>.
 					</td>
 				</tr>

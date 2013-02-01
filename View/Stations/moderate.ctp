@@ -47,7 +47,7 @@ $this->Breadcrumb->add(__d('forum', 'Moderate'), array('action' => 'moderate', $
 			} else { ?>
 
 				<tr>
-					<td colspan="8" class="empty"><?php echo __d('forum', 'There are no topics within this forum.'); ?></td>
+					<td colspan="8" class="empty"><?php echo __d('forum', 'There are no topics within this forum'); ?></td>
 				</tr>
 
 			<?php } ?>

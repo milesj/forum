@@ -98,7 +98,7 @@ class UsersController extends ForumAppController {
 			$this->Profile->id = $profile['Profile']['id'];
 
 			if ($this->Profile->save($this->request->data, true)) {
-				$this->Session->setFlash(__d('forum', 'Your profile information has been updated!'));
+				$this->Session->setFlash(__d('forum', 'Your profile information has been updated'));
 
 				foreach ($this->request->data['Profile'] as $key => $value) {
 					$this->Session->write(AuthComponent::$sessionKey . '.ForumProfile.' . $key, $value);
@@ -119,7 +119,7 @@ class UsersController extends ForumAppController {
 		$profile = $this->Profile->getByUser($user_id);
 
 		if (!$profile) {
-			throw new NotFoundException(__d('forum', 'Profile does not exist.'));
+			throw new NotFoundException(__d('forum', 'Profile does not exist'));
 		}
 
 		$this->loadModel('Forum.Topic');
@@ -139,7 +139,7 @@ class UsersController extends ForumAppController {
 		$profile = $this->Profile->getByUser($user_id);
 
 		if (!$profile) {
-			throw new NotFoundException(__d('forum', 'Profile does not exist.'));
+			throw new NotFoundException(__d('forum', 'Profile does not exist'));
 		}
 
 		$this->loadModel('Forum.Report');
@@ -187,14 +187,14 @@ class UsersController extends ForumAppController {
 		$profile = $this->Profile->getById($id);
 
 		if (!$profile) {
-			throw new NotFoundException(__d('forum', 'Profile does not exist.'));
+			throw new NotFoundException(__d('forum', 'Profile does not exist'));
 		}
 
 		if ($this->request->data) {
 			$this->Profile->id = $id;
 
 			if ($this->Profile->save($this->request->data, true)) {
-				$this->Session->setFlash(sprintf(__d('forum', 'Profile for %s has been updated.'), '<strong>' . $profile['User'][$this->config['userMap']['username']] . '</strong>'));
+				$this->Session->setFlash(sprintf(__d('forum', 'Profile for %s has been updated'), '<strong>' . $profile['User'][$this->config['userMap']['username']] . '</strong>'));
 				$this->redirect(array('controller' => 'users', 'action' => 'index', 'admin' => true));
 			}
 		} else {

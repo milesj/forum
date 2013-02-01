@@ -12,7 +12,10 @@ $this->Breadcrumb->add(__d('forum', 'Report Post'), array('action' => 'report', 
 	<h2><?php echo __d('forum', 'Report Post'); ?></h2>
 </div>
 
-<p><?php printf(__d('forum', 'Are you sure you want to report the post (below) in the topic %s? If so, please add a comment as to why you are reporting it, 255 max characters.'), '<strong>' . $this->Html->link($post['Topic']['title'], array('controller' => 'forum', 'action' => 'jump', $post['Topic']['id'], $post['Post']['id'])) . '</strong>'); ?></p>
+<p>
+	<?php printf(__d('forum', 'Are you sure you want to report the post (below) in the topic %s? If so, please add a comment as to why you are reporting it, 255 max characters.'),
+		'<strong>' . $this->Html->link($post['Topic']['title'], array('controller' => 'forum', 'action' => 'jump', $post['Topic']['id'], $post['Post']['id'])) . '</strong>'); ?>
+</p>
 
 <?php echo $this->Form->create('Report'); ?>
 

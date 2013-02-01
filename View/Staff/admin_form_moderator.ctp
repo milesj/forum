@@ -18,7 +18,7 @@ $this->Breadcrumb->add($title, $this->here); ?>
 	<h2><?php echo $title; ?></h2>
 </div>
 
-<p><?php printf(__d('forum', 'To find the users ID, you can search for them on the %s.'), $this->Html->link(__d('forum', 'Users listing'), array('controller' => 'users', 'action' => 'index', 'admin' => true))); ?></p>
+<p><?php printf(__d('forum', 'To find the users ID, you can search for them on the %s.'), $this->Html->link(__d('forum', 'users listing'), array('controller' => 'users', 'action' => 'index', 'admin' => true))); ?></p>
 
 <?php echo $this->Form->create('Moderator'); ?>
 

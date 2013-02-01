@@ -49,7 +49,7 @@ $this->Breadcrumb->add(__d('forum', 'Users'), array('controller' => 'users', 'ac
 		} else { ?>
 
 			<tr>
-				<td colspan="5" class="empty"><?php echo __d('forum', 'There are no users to display.'); ?></td>
+				<td colspan="5" class="empty"><?php echo __d('forum', 'There are no users to display'); ?></td>
 			</tr>
 
 		<?php } ?>

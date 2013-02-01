@@ -23,7 +23,7 @@ $this->Breadcrumb->add(__d('forum', 'Staff'), array('controller' => 'staff', 'ac
 			<thead>
 				<tr>
 					<th style="width: 25%"><?php echo __d('forum', 'User'); ?></th>
-					<th style="width: 25%"><?php echo __d('forum', 'Access Level'); ?></th>
+					<th style="width: 25%"><?php echo __d('forum', 'Role'); ?></th>
 					<th style="width: 25%"><?php echo __d('forum', 'Options'); ?></th>
 				</tr>
 			</thead>
@@ -89,7 +89,7 @@ $this->Breadcrumb->add(__d('forum', 'Staff'), array('controller' => 'staff', 'ac
 			} else { ?>
 
 				<tr>
-					<td colspan="4" class="empty"><?php echo __d('forum', 'There are no assigned moderators.'); ?> <?php echo $this->Html->link(__d('forum', 'Add Moderator'), array('action' => 'add_moderator')); ?>.</td>
+					<td colspan="4" class="empty"><?php echo __d('forum', 'There are no assigned moderators'); ?> <?php echo $this->Html->link(__d('forum', 'Add Moderator'), array('action' => 'add_moderator')); ?>.</td>
 				</tr>
 
 			<?php } ?>

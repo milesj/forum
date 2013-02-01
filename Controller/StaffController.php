@@ -35,7 +35,7 @@ class StaffController extends ForumAppController {
 	public function admin_add_access() {
 		if ($this->request->data) {
 			if ($user = $this->Access->add($this->request->data['Access'])) {
-				$this->Session->setFlash(sprintf(__d('forum', 'Access has been granted to %s.'), '<strong>' . $user['User'][$this->config['userMap']['username']] . '</strong>'));
+				$this->Session->setFlash(sprintf(__d('forum', 'Access has been granted to %s'), '<strong>' . $user['User'][$this->config['userMap']['username']] . '</strong>'));
 				$this->redirect(array('controller' => 'staff', 'action' => 'index', 'admin' => true));
 			}
 		}
@@ -60,7 +60,7 @@ class StaffController extends ForumAppController {
 			$this->Access->id = $id;
 
 			if ($this->Access->save($this->request->data, true, array('parent_id'))) {
-				$this->Session->setFlash(sprintf(__d('forum', 'Access for %s has been updated.'), '<strong>' . $access['User'][$this->config['userMap']['username']] . '</strong>'));
+				$this->Session->setFlash(sprintf(__d('forum', 'Access for %s has been updated'), '<strong>' . $access['User'][$this->config['userMap']['username']] . '</strong>'));
 				$this->redirect(array('controller' => 'staff', 'action' => 'index', 'admin' => true));
 			}
 		} else {
@@ -85,7 +85,7 @@ class StaffController extends ForumAppController {
 
 		if ($access) {
 			$this->Access->delete($id, true);
-			$this->Session->setFlash(sprintf(__d('forum', 'The access levels for %s have been successfully removed.'), '<strong>' . $access['User'][$this->config['userMap']['username']] . '</strong>'));
+			$this->Session->setFlash(sprintf(__d('forum', 'Access for %s have been successfully removed'), '<strong>' . $access['User'][$this->config['userMap']['username']] . '</strong>'));
 		}
 
 		$this->redirect(array('controller' => 'staff', 'action' => 'index', 'admin' => true));
@@ -96,7 +96,8 @@ class StaffController extends ForumAppController {
 	 */
 	public function admin_add_moderator() {
 		if ($this->request->data) {
-			if ($this->Moderator->add($this->request->data['Moderator'])) {
+			if ($user = $this->Moderator->add($this->request->data['Moderator'])) {
+				$this->Session->setFlash(sprintf(__d('forum', 'Moderator control has been granted to %s'), '<strong>' . $user['User'][$this->config['userMap']['username']] . '</strong>'));
 				$this->redirect(array('controller' => 'staff', 'action' => 'index', 'admin' => true));
 			}
 		}
@@ -120,7 +121,7 @@ class StaffController extends ForumAppController {
 
 		if ($this->request->data) {
 			if ($this->Moderator->edit($id, $this->request->data['Moderator'])) {
-				$this->Session->setFlash(sprintf(__d('forum', 'Moderator %s has been updated.'), '<strong>' . $mod['User'][$this->config['userMap']['username']] . '</strong>'));
+				$this->Session->setFlash(sprintf(__d('forum', 'Moderator %s has been updated'), '<strong>' . $mod['User'][$this->config['userMap']['username']] . '</strong>'));
 				$this->redirect(array('controller' => 'staff', 'action' => 'index', 'admin' => true));
 			}
 		} else {
@@ -146,7 +147,7 @@ class StaffController extends ForumAppController {
 
 		if ($mod) {
 			$this->Moderator->delete($id, true);
-			$this->Session->setFlash(sprintf(__d('forum', 'The moderator %s has been successfully removed!'), '<strong>' . $mod['User'][$this->config['userMap']['username']] . '</strong>'));
+			$this->Session->setFlash(sprintf(__d('forum', 'Moderator %s has been successfully removed'), '<strong>' . $mod['User'][$this->config['userMap']['username']] . '</strong>'));
 		}
 
 		$this->redirect(array('controller' => 'staff', 'action' => 'index', 'admin' => true));

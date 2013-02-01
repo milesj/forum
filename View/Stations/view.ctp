@@ -100,7 +100,7 @@ if ($forum['Forum']['forum_id'] > 0) {
 				} else { ?>
 
 					<tr>
-						<td colspan="7" class="empty"><?php echo __d('forum', 'There are no topics within this forum.'); ?></td>
+						<td colspan="7" class="empty"><?php echo __d('forum', 'There are no topics within this forum'); ?></td>
 					</tr>
 
 				<?php } ?>

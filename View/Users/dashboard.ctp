@@ -143,7 +143,7 @@ $this->Breadcrumb->add(__d('forum', 'Dashboard'), array('action' => 'dashboard')
 						<?php echo $this->Time->timeAgoInWords($topic['LastPost']['created'], array('userOffset' => $this->Forum->timezone()));
 
 						if (!empty($topic['LastUser'])) { ?>
-							<span class="gray"><?php echo __d('forum', 'by'); ?> <?php echo $this->Html->link($topic['LastUser'][$config['userMap']['username']], $this->Forum->profileUrl($topic['Topic']['LastUser'])); ?></span>
+							<span class="gray"><?php echo __d('forum', 'by'); ?> <?php echo $this->Html->link($topic['LastUser'][$config['userMap']['username']], $this->Forum->profileUrl($topic['LastUser'])); ?></span>
 						<?php } ?>
 					</td>
 				</tr>

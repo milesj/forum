@@ -217,7 +217,7 @@ class StationsController extends ForumAppController {
 			if ($this->Forum->save($this->request->data, true)) {
 				$this->Forum->deleteCache('Forum::getIndex');
 
-				$this->Session->setFlash(sprintf(__d('forum', 'The %s forum has been added.'), '<strong>' . $this->request->data['Forum']['title'] . '</strong>'));
+				$this->Session->setFlash(sprintf(__d('forum', 'The %s forum has been added'), '<strong>' . $this->request->data['Forum']['title'] . '</strong>'));
 				$this->redirect(array('controller' => 'stations', 'action' => 'index', 'admin' => true));
 			}
 		}
@@ -254,7 +254,7 @@ class StationsController extends ForumAppController {
 				$this->Forum->deleteCache('Forum::getIndex');
 				$this->Forum->deleteCache(array('Forum::getBySlug', $forum['Forum']['slug']));
 
-				$this->Session->setFlash(sprintf(__d('forum', 'The %s forum has been updated.'), '<strong>' . $forum['Forum']['title'] . '</strong>'));
+				$this->Session->setFlash(sprintf(__d('forum', 'The %s forum has been updated'), '<strong>' . $forum['Forum']['title'] . '</strong>'));
 				$this->redirect(array('controller' => 'stations', 'action' => 'index', 'admin' => true));
 			}
 		} else {
@@ -291,7 +291,7 @@ class StationsController extends ForumAppController {
 				$this->Forum->delete($id, true);
 				$this->Forum->deleteCache('Forum::getIndex');
 
-				$this->Session->setFlash(sprintf(__d('forum', 'The %s forum has been deleted, and all its sub-forums and topics have been moved!'), '<strong>' . $forum['Forum']['title'] . '</strong>'));
+				$this->Session->setFlash(sprintf(__d('forum', 'The %s forum has been deleted, and all its sub-forums and topics have been moved'), '<strong>' . $forum['Forum']['title'] . '</strong>'));
 				$this->redirect(array('controller' => 'stations', 'action' => 'index', 'admin' => true));
 			}
 		}

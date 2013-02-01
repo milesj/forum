@@ -8,7 +8,10 @@ $this->Breadcrumb->add(__d('forum', 'Report User'), array('action' => 'report', 
 	<h2><?php echo __d('forum', 'Report User'); ?></h2>
 </div>
 
-<p><?php printf(__d('forum', 'Are you sure you want to report the user %s? If so, please add a comment as to why you are reporting this user, and please be descriptive. Are they spamming, trolling, flaming, etc. 255 max characters.'), '<strong>' . $this->Html->link($profile['User'][$config['userMap']['username']], $this->Forum->profileUrl($profile['User'])) . '</strong>'); ?></p>
+<p>
+	<?php printf(__d('forum', 'Are you sure you want to report the user %s? If so, please add a comment as to why you are reporting this user, and please be descriptive. Are they spamming, trolling, flaming, etc. 255 max characters.'),
+		'<strong>' . $this->Html->link($profile['User'][$config['userMap']['username']], $this->Forum->profileUrl($profile['User'])) . '</strong>'); ?>
+</p>
 
 <?php echo $this->Form->create('Report'); ?>
 

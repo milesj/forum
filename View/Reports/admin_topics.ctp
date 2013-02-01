@@ -54,7 +54,7 @@ $this->Breadcrumb->add(__d('forum', 'Topics'), array('controller' => 'reports', 
 			} else { ?>
 
 				<tr>
-					<td colspan="5" class="empty"><?php echo __d('forum', 'There are no reported topics.'); ?></td>
+					<td colspan="5" class="empty"><?php echo __d('forum', 'There are no reported topics'); ?></td>
 				</tr>
 
 			<?php } ?>

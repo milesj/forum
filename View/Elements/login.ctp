@@ -1,4 +1,3 @@
-
 <?php if (!$user) { ?>
 
 	<div class="login">

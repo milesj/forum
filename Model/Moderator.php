@@ -41,10 +41,11 @@ class Moderator extends ForumAppModel {
 	 * @return bool
 	 */
 	public function add($data) {
-		if ($this->validate($data)) {
+		if ($user = $this->validate($data)) {
 			$this->create();
+			$this->save($data, false);
 
-			return $this->save($data, false);
+			return $user;
 		}
 
 		return false;
@@ -130,14 +131,12 @@ class Moderator extends ForumAppModel {
 		$this->set($data);
 
 		if ($this->validates()) {
-			if (!empty($data['user_id'])) {
-				$userCount = $this->User->find('count', array(
-					'conditions' => array('User.id' => $data['user_id'])
-				));
+			$user = $this->User->find('first', array(
+				'conditions' => array('User.id' => $data['user_id'])
+			));
 
-				if ($userCount <= 0) {
-					return $this->invalidate('user_id', 'No user exists with this ID');
-				}
+			if (!$user) {
+				return $this->invalidate('user_id', 'No user exists with this ID');
 			}
 
 			$forumCount = $this->find('count', array(
@@ -151,7 +150,7 @@ class Moderator extends ForumAppModel {
 				return $this->invalidate('user_id', 'This user is already a moderator for this forum');
 			}
 
-			return true;
+			return $user;
 		}
 
 		return false;

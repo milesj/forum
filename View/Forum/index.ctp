@@ -33,7 +33,7 @@ if ($forums) {
 			} else { ?>
 
 				<tr>
-					<td colspan="5" class="empty"><?php echo __d('forum', 'There are no categories within this forum.'); ?></td>
+					<td colspan="5" class="empty"><?php echo __d('forum', 'There are no categories within this forum'); ?></td>
 				</tr>
 
 			<?php } ?>

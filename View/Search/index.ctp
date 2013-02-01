@@ -57,7 +57,7 @@ if ($searching) { ?>
 			<?php if (!$topics) { ?>
 
 				<tr>
-					<td colspan="8" class="empty"><?php echo __d('forum', 'No results were found, please refine your search criteria.'); ?></td>
+					<td colspan="8" class="empty"><?php echo __d('forum', 'No results were found, please refine your search criteria'); ?></td>
 				</tr>
 
 			<?php } else {

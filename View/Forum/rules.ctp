@@ -9,7 +9,7 @@ $this->Breadcrumb->add(__d('forum', 'Rules and Regulations'), array('controller'
 <p><strong><?php echo __d('forum', 'No Offensive Material'); ?></strong><br>
 <?php echo __d('forum', 'No posting any harmful, threatening, abusive, harassing, defamatory, vulgar, obscene, hateful, or racially, ethnically or otherwise objectionable content. This means no porn, gore, offensive, violent or disturbing images, websites and or other adult content. This will result in an immediate ban from the community.'); ?></p>
 
-<p><strong><?php echo __d('forum', 'No Prejudice or Discrimation'); ?></strong><br>
+<p><strong><?php echo __d('forum', 'No Prejudice or Discrimination'); ?></strong><br>
 <?php echo __d('forum', 'There is to be absolutely no discriminating or hatred against somebody else due to race, religion, gender, cultural background or sexual preference. This will result in an immediate ban from the community.'); ?></p>
 
 <p><strong><?php echo __d('forum', 'No Flaming'); ?></strong><br>

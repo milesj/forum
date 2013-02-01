@@ -42,7 +42,6 @@ class ForumController extends ForumAppController {
 	public function index() {
 		if ($this->RequestHandler->isRss()) {
 			$this->set('items', $this->Topic->getLatest());
-
 			return;
 		}
 
