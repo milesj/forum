@@ -119,7 +119,7 @@ class UpgradeShell extends Shell {
 		$Access->alias = 'Access';
 		$Access->tablePrefix = FORUM_PREFIX;
 		$Access->bindModel(array('belongsTo' => array(
-			'User' => array('className' => FORUM_USER)
+			'User' => array('className' => USER_MODEL)
 		)));
 
 		$AccessLevel = new AppModel(null, 'access_levels', FORUM_DATABASE);
@@ -139,9 +139,9 @@ class UpgradeShell extends Shell {
 			$id = $level['AccessLevel']['id'];
 
 			if ($id == 3) {
-				$alias = Configure::read('Forum.aroMap.superMod');
+				$alias = Configure::read('Admin.aliases.superModerator');
 			} else if ($id == 4) {
-				$alias = Configure::read('Forum.aroMap.admin');
+				$alias = Configure::read('Admin.aliases.administrator');
 			} else {
 				continue;
 			}

@@ -26,7 +26,7 @@ class ForumHelper extends AppHelper {
 	 * @return string
 	 */
 	public function avatar($user, $size = 100) {
-		$userMap = Configure::read('Forum.userMap');
+		$userMap = Configure::read('User.fieldMap');
 		$avatar = null;
 
 		if (!empty($userMap['avatar']) && !empty($user['User'][$userMap['avatar']])) {
@@ -234,7 +234,7 @@ class ForumHelper extends AppHelper {
 			);
 
 		} else if ($type === 'statusMap') {
-			$statusMap = array_flip(Configure::read('Forum.statusMap'));
+			$statusMap = array_flip(Configure::read('User.statusMap'));
 			$options = array();
 
 			foreach ($statusMap as $id => $status) {
@@ -278,9 +278,9 @@ class ForumHelper extends AppHelper {
 	 * @return string
 	 */
 	public function profileUrl($user) {
-		$url = $this->url(Configure::read('Forum.routes.profile'));
+		$url = $this->url(Configure::read('User.routes.profile'));
 		$url = str_replace('{id}', $user['id'], $url);
-		$url = str_replace('{username}', $user[Configure::read('Forum.userMap.username')], $url);
+		$url = str_replace('{username}', $user[Configure::read('User.fieldMap.username')], $url);
 
 		if (isset($user['slug'])) {
 			$url = str_replace('{slug}', $user['slug'], $url);

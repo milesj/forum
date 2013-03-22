@@ -40,7 +40,7 @@ class Forum extends ForumAppModel {
 			'foreignKey' => 'lastPost_id'
 		),
 		'LastUser' => array(
-			'className' => FORUM_USER,
+			'className' => USER_MODEL,
 			'foreignKey' => 'lastUser_id'
 		)
 	);

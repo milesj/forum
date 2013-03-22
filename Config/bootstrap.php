@@ -14,8 +14,8 @@ App::uses('Sanitize', 'Utility');
 define('FORUM_PLUGIN', dirname(__DIR__) . '/');
 
 // User Model
-if (!defined('FORUM_USER')) {
-	define('FORUM_USER', 'User');
+if (!defined('USER_MODEL')) {
+	define('USER_MODEL', 'User');
 }
 
 // Table Prefix
@@ -32,47 +32,6 @@ if (!defined('FORUM_DATABASE')) {
  * Current version.
  */
 Configure::write('Forum.version', file_get_contents(dirname(__DIR__) . '/version.md'));
-
-/**
- * A map of user fields that are used within this plugin. If your users table has a different naming scheme
- * for the username, email, status, etc fields, you can define their replacement here.
- */
-Configure::write('Forum.userMap', array(
-	'username'	=> 'username',
-	'password'	=> 'password',
-	'email'		=> 'email',
-	'status'	=> 'status',
-	'avatar'	=> 'avatar'
-));
-
-/**
- * A map of status values for the users "status" column.
- * This column determines if the user is pending, currently active, or banned.
- */
-Configure::write('Forum.statusMap', array(
-	'pending'	=> 0,
-	'active'	=> 1,
-	'banned'	=> 2
-));
-
-/**
- * A map of keys to ACL requester aliases.
- */
-Configure::write('Forum.aroMap', array(
-	'admin' 	=> 'administrator',
-	'superMod'	=> 'superModerator'
-));
-
-/**
- * A map of external user management URLs.
- */
-Configure::write('Forum.routes', array(
-	'login' => array('plugin' => false, 'admin' => false, 'controller' => 'users', 'action' => 'login'),
-	'logout' => array('plugin' => false, 'admin' => false, 'controller' => 'users', 'action' => 'logout'),
-	'signup' => array('plugin' => false, 'admin' => false, 'controller' => 'users', 'action' => 'signup'),
-	'forgotPass' => array('plugin' => false, 'admin' => false, 'controller' => 'users', 'action' => 'forgot_password'),
-	'profile' => array('plugin' => 'forum', 'admin' => false, 'controller' => 'users', 'action' => 'profile', 'id' => '{id}')
-));
 
 /**
  * Customizable view settings. This allows for layout and template overrides.
@@ -179,8 +138,3 @@ Configure::write('Forum.decodaLocales', array(
 	'ind' => 'id-id',
 	'bul' => 'bg-bg'*/
 ));
-
-/**
- * Handle exceptions and errors.
- */
-Configure::write('Exception.renderer', 'Forum.ForumExceptionRenderer');

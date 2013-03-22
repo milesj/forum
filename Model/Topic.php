@@ -35,7 +35,7 @@ class Topic extends ForumAppModel {
 	 */
 	public $belongsTo = array(
 		'User' => array(
-			'className' => FORUM_USER
+			'className' => USER_MODEL
 		),
 		'Forum' => array(
 			'className' => 'Forum.Forum',
@@ -50,7 +50,7 @@ class Topic extends ForumAppModel {
 			'foreignKey' => 'lastPost_id'
 		),
 		'LastUser' => array(
-			'className' => FORUM_USER,
+			'className' => USER_MODEL,
 			'foreignKey' => 'lastUser_id'
 		)
 	);

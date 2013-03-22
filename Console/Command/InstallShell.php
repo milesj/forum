@@ -179,7 +179,7 @@ class InstallShell extends Shell {
 	public function setupAcl() {
 		$this->out('<info>Creating ACL records...</info>');
 
-		$admin = Configure::read('Forum.aroMap.admin');
+		$admin = Configure::read('Admin.aliases.administrator');
 		$acl = ClassRegistry::init('Forum.Access')->installAcl();
 
 		foreach ($acl['aro'] as $id => $alias) {
@@ -254,8 +254,8 @@ class InstallShell extends Shell {
 	 */
 	public function setupAdmin() {
 		$answer = strtoupper($this->in('<question>Would you like to [c]reate a new user, or use an [e]xisting user?</question>', array('C', 'E')));
-		$userMap = Configure::read('Forum.userMap');
-		$statusMap = Configure::read('Forum.statusMap');
+		$userMap = Configure::read('User.fieldMap');
+		$statusMap = Configure::read('User.statusMap');
 
 		// New User
 		if ($answer === 'C') {
@@ -331,7 +331,7 @@ class InstallShell extends Shell {
 	 * @return string
 	 */
 	protected function _newUser($mode) {
-		$userMap = Configure::read('Forum.userMap');
+		$userMap = Configure::read('User.fieldMap');
 
 		switch ($mode) {
 			case 'username':
@@ -402,7 +402,7 @@ class InstallShell extends Shell {
 	 */
 	protected function _oldUser() {
 		$user_id = trim($this->in('<question>User ID:</question>'));
-		$userMap = Configure::read('Forum.userMap');
+		$userMap = Configure::read('User.fieldMap');
 
 		if (!$user_id || !is_numeric($user_id)) {
 			$user_id = $this->_oldUser();

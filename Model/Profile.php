@@ -16,7 +16,7 @@ class Profile extends ForumAppModel {
 	 */
 	public $belongsTo = array(
 		'User' => array(
-			'className' => FORUM_USER
+			'className' => USER_MODEL
 		)
 	);
 

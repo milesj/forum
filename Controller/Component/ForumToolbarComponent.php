@@ -45,7 +45,7 @@ class ForumToolbarComponent extends Component {
 		}
 
 		$user_id = $this->Controller->Auth->user('id');
-		$banned = ($this->Controller->Auth->user(Configure::read('Forum.userMap.status')) == Configure::read('Forum.statusMap.banned'));
+		$banned = ($this->Controller->Auth->user(Configure::read('User.fieldMap.status')) == Configure::read('User.statusMap.banned'));
 		$lastVisit = date('Y-m-d H:i:s');
 		$isAdmin = false;
 		$isSuper = false;

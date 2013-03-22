@@ -89,7 +89,7 @@ class SubscriptionShell extends Shell {
 		}
 
 		$settings = Configure::read('Forum.settings');
-		$userMap = Configure::read('Forum.userMap');
+		$userMap = Configure::read('User.fieldMap');
 
 		$email = new CakeEmail();
 		//$email->transport('Debug');
@@ -179,7 +179,7 @@ class SubscriptionShell extends Shell {
 		$count = 0;
 		$url = trim($settings['url'], '/');
 
-		$message  = sprintf(__d('forum', 'Hello %s,'), $user[Configure::read('Forum.userMap.username')]) . "\n\n";
+		$message  = sprintf(__d('forum', 'Hello %s,'), $user[Configure::read('User.fieldMap.username')]) . "\n\n";
 		$message .= sprintf(__d('forum', 'You have asked to be notified for any new activity within %s. Below you will find an update on all your forum subscriptions. The last subscription update was sent on %s.'), $settings['name'], date('m/d/Y h:ia', strtotime($this->timeframe))) . "\n\n";
 		$message .= __d('forum', 'You may unsubscribe from a forum or topic by clicking the "Unsubscribe" button found within the respective forum or topic.');
 

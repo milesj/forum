@@ -161,7 +161,7 @@ class ForumAppController extends AppController {
 
 		// AutoLogin
 		$this->AutoLogin->settings = array(
-			'model' => FORUM_USER,
+			'model' => USER_MODEL,
 			'username' => $this->config['userMap']['username'],
 			'password' => $this->config['userMap']['password'],
 			'plugin' => $routes['login']['plugin'],
