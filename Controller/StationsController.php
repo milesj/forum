@@ -49,7 +49,7 @@ class StationsController extends ForumAppController {
 	 *
 	 * @var array
 	 */
-	public $helpers = array('Rss');
+	public $helpers = array('Rss', 'Admin.Admin');
 
 	/**
 	 * Redirect.
@@ -187,6 +187,46 @@ class StationsController extends ForumAppController {
 			'success' => $success,
 			'data' => $data
 		));
+	}
+
+	/**
+	 * Admin override for Forum model delete action.
+	 * Provides support for moving topics and forums to a new forum.
+	 *
+	 * @param int $id
+	 * @throws NotFoundException
+	 */
+	public function admin_delete($id) {
+		$this->Model = Admin::introspectModel('Forum.Forum');
+		$this->Model->id = $id;
+
+		$result = $this->AdminToolbar->getRecordById($this->Model, $id);
+
+		if (!$result) {
+			throw new NotFoundException(__d('admin', '%s Not Found', $this->Model->singularName));
+		}
+
+		if ($this->request->is('post')) {
+			if ($this->Model->delete($id, true)) {
+				$this->Forum->Topic->moveAll($id, $this->request->data['Forum']['move_topics']);
+				$this->Forum->moveAll($id, $this->request->data['Forum']['move_forums']);
+
+				$this->AdminToolbar->logAction(ActionLog::DELETE, $this->Model, $id);
+
+				$this->AdminToolbar->setFlashMessage(__d('admin', 'Successfully deleted %s with ID %s', array(mb_strtolower($this->Model->singularName), $id)));
+				$this->AdminToolbar->redirectAfter($this->Model);
+
+			} else {
+				$this->AdminToolbar->setFlashMessage(__d('admin', 'Failed to delete %s with ID %s', array(mb_strtolower($this->Model->singularName), $id)), 'error');
+			}
+		}
+
+		// Get tree excluding this record
+		$forums = $this->Model->generateTreeList(array('Forum.id !=' => $id), null, null, ' -- ');
+
+		$this->set('result', $result);
+		$this->set('moveTopics', $forums);
+		$this->set('moveForums', $forums);
 	}
 
 	/**

@@ -174,10 +174,11 @@ class Forum extends ForumAppModel {
 	 * Get the tree and reorganize into a hierarchy.
 	 * Code borrowed from TreeBehavior::generateTreeList().
 	 *
+	 * @param bool $group
 	 * @return array
 	 */
-	public function getHierarchy() {
-		return $this->cache(array(__METHOD__, $this->Session->read('Forum.roles')), function($self) {
+	public function getHierarchy($group = true) {
+		return $this->cache(array(__METHOD__, $this->Session->read('Forum.roles'), $group), function($self) use ($group) {
 			$keyPath = '{n}.Forum.id';
 			$valuePath = array('%s%s', '{n}.tree_prefix', '{n}.Forum.title');
 			$results = $self->filterByRole($self->find('all', array(
@@ -212,8 +213,13 @@ class Forum extends ForumAppModel {
 				return array();
 			}
 
-			// Reorganize the tree so top level forums are an optgroup
 			$tree = Hash::combine($results, $keyPath, $valuePath);
+
+			if (!$group) {
+				return $tree;
+			}
+
+			// Reorganize the tree so top level forums are an optgroup
 			$hierarchy = array();
 			$parent = null;
 

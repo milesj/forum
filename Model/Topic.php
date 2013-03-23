@@ -161,7 +161,7 @@ class Topic extends ForumAppModel {
 	 * @param array $data
 	 * @return bool|int
 	 */
-	public function addPost($data) {
+	public function addTopic($data) {
 		$this->set($data);
 
 		if ($this->validates()) {
@@ -342,7 +342,7 @@ class Topic extends ForumAppModel {
 
 							} else if ($option['option'] !== '') {
 								$this->Poll->PollOption->id = $option['id'];
-								$this->Poll->PollOption->save($option, false, array('option', 'vote_count'));
+								$this->Poll->PollOption->save($option, false, array('option', 'poll_vote_count'));
 							}
 						}
 					}

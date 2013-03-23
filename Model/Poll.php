@@ -79,7 +79,7 @@ class Poll extends ForumAppModel {
 			$options = explode("\n", $data['options']);
 			$results = array(
 				'poll_id' => $poll_id,
-				'vote_count' => 0
+				'poll_vote_count' => 0
 			);
 
 			foreach ($options as $opt) {
@@ -110,11 +110,11 @@ class Poll extends ForumAppModel {
 			$totalVotes = 0;
 
 			foreach ($poll['PollOption'] as $option) {
-				$totalVotes = $totalVotes + $option['vote_count'];
+				$totalVotes = $totalVotes + $option['poll_vote_count'];
 			}
 
 			foreach ($poll['PollOption'] as &$option) {
-				$option['percentage'] = ($totalVotes > 0) ? round(($option['vote_count'] / $totalVotes) * 100) : 0;
+				$option['percentage'] = ($totalVotes > 0) ? round(($option['poll_vote_count'] / $totalVotes) * 100) : 0;
 			}
 
 			$poll['hasVoted'] = $this->PollVote->hasVoted($user_id, $poll['id']);

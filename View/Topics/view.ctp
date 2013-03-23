@@ -82,7 +82,7 @@ if (!empty($topic['Poll']['id'])) { ?>
 							<div class="pollBar" style="width: <?php echo $option['percentage']; ?>%"></div>
 						</td>
 						<td>
-							<?php echo sprintf(__d('forum', '%d votes'), number_format($option['vote_count'])); ?> (<?php echo $option['percentage']; ?>%)
+							<?php echo sprintf(__d('forum', '%d votes'), number_format($option['poll_vote_count'])); ?> (<?php echo $option['percentage']; ?>%)
 
 							<?php if ($topic['Poll']['hasVoted'] == $option['id']) {
 								echo '<em>(' . __d('forum', 'Your Vote') . ')</em>';

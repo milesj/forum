@@ -75,7 +75,9 @@ Configure::write('Forum.settings', array(
  * Add forum specific user field mappings.
  */
 Configure::write('User.fieldMap', Configure::read('User.fieldMap') + array(
-	'signature' => 'signature'
+	'totalTopics'	=> 'topic_count',
+	'totalPosts'	=> 'post_count',
+	'signature' 	=> 'signature'
 ));
 
 /**
@@ -91,5 +93,14 @@ Configure::write('Admin.modelCallbacks', Configure::read('Admin.modelCallbacks')
 		'close' => 'Close %s',
 		'sticky' => 'Sticky %s',
 		'unsticky' => 'Unsticky %s'
+	)
+));
+
+/**
+ * Add overrides for admin CRUD actions.
+ */
+Configure::write('Admin.actionOverrides', Configure::read('Admin.actionOverrides') + array(
+	'Forum.Forum' => array(
+		'delete' => array('plugin' => 'forum', 'controller' => 'stations', 'action' => 'admin_delete')
 	)
 ));
