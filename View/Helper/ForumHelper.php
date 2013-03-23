@@ -16,7 +16,7 @@ class ForumHelper extends AppHelper {
 	 *
 	 * @var array
 	 */
-	public $helpers = array('Html', 'Session', 'Utility.Decoda', 'Admin.Admin');
+	public $helpers = array('Html', 'Session', 'Utility.Decoda', 'Utility.Utility', 'Admin.Admin');
 
 	/**
 	 * Output a users avatar.
@@ -61,6 +61,7 @@ class ForumHelper extends AppHelper {
 
 		if ($forum['status'] == Forum::CLOSED) {
 			$icon = 'closed';
+
 		} else if (isset($lastPost) && $lastPost > $this->Session->read('Forum.lastVisit')) {
 			$icon = 'new';
 		}
@@ -209,78 +210,6 @@ class ForumHelper extends AppHelper {
 	}
 
 	/**
-	 * Prebuilt option lists for form selects.
-	 *
-	 * @param string $type
-	 * @param string $value
-	 * @return array|string
-	 */
-	public function options($type = 'status', $value = '') {
-		if ($type === 'status') {
-			$options = array(
-				Forum::YES => __d('forum', 'Yes'),
-				Forum::NO => __d('forum', 'No')
-			);
-
-		} else if ($type === 'Topic.status') {
-			$options = array(
-				Topic::OPEN => __d('forum', 'Open'),
-				Topic::CLOSED => __d('forum', 'Closed')
-			);
-
-		} else if ($type === 'Forum.status') {
-			$options = array(
-				Forum::OPEN => __d('forum', 'Visible'),
-				Forum::CLOSED => __d('forum', 'Hidden')
-			);
-
-		} else if ($type === 'Topic.type') {
-			$options = array(
-				Topic::NORMAL => __d('forum', 'Normal'),
-				Topic::STICKY => __d('forum', 'Sticky'),
-				Topic::IMPORTANT => __d('forum', 'Important'),
-				Topic::ANNOUNCEMENT => __d('forum', 'Announcement')
-			);
-
-		} else if ($type === 'User.status') {
-			$statusMap = array_flip(Configure::read('User.statusMap'));
-			$options = array();
-
-			foreach ($statusMap as $id => $status) {
-				$name = __($status);
-
-				// If no localized version
-				if ($name === $status) {
-					$name = __d('forum', 'status.' . $status);
-				}
-
-				$options[$id] = $name;
-			}
-
-		} else if ($type === 'Aro') {
-			$groups = ClassRegistry::init('Forum.Access')->getList();
-			$options = array();
-
-			foreach ($groups as $id => $group) {
-				$name = __($group);
-
-				// If no localized version
-				if ($name === $group) {
-					$name = __d('forum', 'aro.' . $group);
-				}
-
-				$options[$id] = $name;
-			}
-		}
-
-		if (isset($options[$value])) {
-			return $options[$value];
-		}
-
-		return $options;
-	}
-
-	/**
 	 * Return a user profile URL.
 	 *
 	 * @param array $user
@@ -403,7 +332,7 @@ class ForumHelper extends AppHelper {
 			return null;
 		}
 
-		return '<strong>' . $this->options('Forum.Topic', 'type', $type) . '</strong>';
+		return '<b>' . $this->Utility->enum('Forum.Topic', 'type', $type) . '</b>';
 	}
 
 	/**

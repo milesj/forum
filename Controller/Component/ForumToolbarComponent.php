@@ -6,6 +6,7 @@
  */
 
 /**
+ * @property Controller $Controller
  * @property SessionComponent $Session
  * @property AuthComponent $Auth
  */
@@ -17,13 +18,6 @@ class ForumToolbarComponent extends Component {
 	 * @var array
 	 */
 	public $components = array('Session', 'Auth');
-
-	/**
-	 * Controller instance.
-	 *
-	 * @var Controller
-	 */
-	public $Controller;
 
 	/**
 	 * Store the Controller.
@@ -52,7 +46,7 @@ class ForumToolbarComponent extends Component {
 		$isBanned = ($this->Auth->user(Configure::read('User.fieldMap.status')) == Configure::read('User.statusMap.banned'));
 		$isAdmin = false;
 		$isSuper = false;
-		$groups = null; // list of ARO IDs
+		$roles = array(); // list of ARO IDs
 		$moderates = array(); // list of forum IDs
 		$permissions = array(); // CRUD mapping
 
@@ -66,17 +60,16 @@ class ForumToolbarComponent extends Component {
 			// Get permissions
 			$permissions = $aro->getCrudPermissions($user_id, 'Forum.');
 
+			// Get group roles
+			$roles = Hash::extract($aro->getRoles($user_id), '{n}.RequestObject.id');
+
 			// Get moderated forum IDs
 			$moderates = ClassRegistry::init('Forum.Moderator')->getModerations($user_id);
-
-		// If not logged in or banned
-		} else {
-			$permissions = false;
 		}
 
 		$this->Session->write('Forum.isAdmin', $isAdmin);
 		$this->Session->write('Forum.isSuper', $isSuper);
-		$this->Session->write('Forum.groups', $groups);
+		$this->Session->write('Forum.roles', $roles);
 		$this->Session->write('Forum.permissions', $permissions);
 		$this->Session->write('Forum.moderates', $moderates);
 		$this->Session->write('Forum.lastVisit', date('Y-m-d H:i:s'));

@@ -15,9 +15,7 @@ class Forum extends ForumAppModel {
 	 * @var array
 	 */
 	public $actsAs = array(
-		'Tree' => array(
-			'recursive' => 0
-		),
+		'Tree',
 		'Utility.Sluggable' => array(
 			'length' => 100
 		)
@@ -147,7 +145,7 @@ class Forum extends ForumAppModel {
 	 * @return array
 	 */
 	public function getBySlug($slug) {
-		return $this->find('first', array(
+		return $this->filterByRole($this->find('first', array(
 			'conditions' => array(
 				'Forum.accessRead' => self::YES,
 				'Forum.slug' => $slug
@@ -156,52 +154,78 @@ class Forum extends ForumAppModel {
 				'Parent',
 				'SubForum' => array(
 					'conditions' => array(
-						'SubForum.accessRead' => self::YES,
-						'SubForum.aro_id' => $this->Session->read('Forum.groups')
+						'SubForum.status' => self::OPEN,
+						'SubForum.accessRead' => self::YES
 					),
 					'LastTopic', 'LastPost', 'LastUser'
 				),
 				'Moderator' => array('User')
 			),
 			'cache' => array(__METHOD__, $slug)
-		));
+		)));
 	}
 
 	/**
-	 * Get the hierarchy.
+	 * Get the tree and reorganize into a hierarchy.
+	 * Code borrowed from TreeBehavior::generateTreeList().
 	 *
 	 * @return array
 	 */
 	public function getHierarchy() {
-		$conditions = array(
-			'Forum.aro_id' => $this->Session->read('Forum.groups'),
-			'Forum.status' => self::OPEN,
-			'Forum.accessRead' => self::YES,
-			'OR' => array(
-				'Forum.parent_id' => null,
-				'Parent.status' => self::OPEN
-			)
-		);
+		return $this->cache(array(__METHOD__, $this->Session->read('Forum.roles')), function($self) {
+			$keyPath = '{n}.Forum.id';
+			$valuePath = array('%s%s', '{n}.tree_prefix', '{n}.Forum.title');
+			$results = $self->filterByRole($self->find('all', array(
+				'conditions' => array(
+					'Forum.status' => Forum::OPEN,
+					'Forum.accessRead' => Forum::YES,
+					'OR' => array(
+						'Forum.parent_id' => null,
+						'Parent.status' => Forum::OPEN
+					)
+				),
+				'contain' => array('Parent'),
+				'order' => array('Forum.lft' => 'ASC')
+			)));
 
-		$tree = $this->generateTreeList($conditions, null, null, ' -- ');
-		$hierarchy = array();
-		$parent = null;
+			// Reorganize tree
+			$stack = array();
 
-		// Reorganize the tree so top level forums are an optgroup
-		foreach ($tree as $key => $value) {
-			// Child
-			if (strpos($value, ' -- ') === 0) {
-				$hierarchy[$parent][$key] = substr($value, 4);
+			foreach ($results as $i => $result) {
+				$count = count($stack);
 
-			// Parent
-			} else {
-				$hierarchy[$value] = array();
-				$parent = $value;
+				while ($stack && ($stack[$count - 1] < $result['Forum']['rght'])) {
+					array_pop($stack);
+					$count--;
+				}
+
+				$results[$i]['tree_prefix'] = str_repeat(' -- ', $count);
+				$stack[] = $result['Forum']['rght'];
 			}
-		}
 
+			if (!$results) {
+				return array();
+			}
 
-		return $hierarchy;
+			// Reorganize the tree so top level forums are an optgroup
+			$tree = Hash::combine($results, $keyPath, $valuePath);
+			$hierarchy = array();
+			$parent = null;
+
+			foreach ($tree as $key => $value) {
+				// Child
+				if (strpos($value, ' -- ') === 0) {
+					$hierarchy[$parent][$key] = substr($value, 4);
+
+				// Parent
+				} else {
+					$hierarchy[$value] = array();
+					$parent = $value;
+				}
+			}
+
+			return $hierarchy;
+		});
 	}
 
 	/**
@@ -210,34 +234,77 @@ class Forum extends ForumAppModel {
 	 * @return array
 	 */
 	public function getIndex() {
-		$groups = (array) $this->Session->read('Forum.groups');
-
-		return $this->find('all', array(
+		return $this->filterByRole($this->find('all', array(
 			'order' => array('Forum.orderNo' => 'ASC'),
 			'conditions' => array(
 				'Forum.parent_id' => null,
 				'Forum.status' => self::OPEN,
-				'Forum.accessRead' => self::YES,
-				'Forum.aro_id' => $groups
+				'Forum.accessRead' => self::YES
 			),
 			'contain' => array(
 				'Children' => array(
 					'conditions' => array(
-						'Children.accessRead' => self::YES,
-						'Children.aro_id' => $groups
+						'Children.status' => self::OPEN,
+						'Children.accessRead' => self::YES
 					),
 					'SubForum' => array(
-						'fields' => array('SubForum.id', 'SubForum.title', 'SubForum.slug'),
+						'fields' => array('SubForum.id', 'SubForum.aro_id', 'SubForum.title', 'SubForum.slug'),
 						'conditions' => array(
-							'SubForum.accessRead' => self::YES,
-							'SubForum.aro_id' => $groups
+							'SubForum.status' => self::OPEN,
+							'SubForum.accessRead' => self::YES
 						)
 					),
 					'LastTopic', 'LastPost', 'LastUser'
 				)
 			),
-			'cache' => __METHOD__
-		));
+			'cache' => array(__METHOD__, $this->Session->read('Forum.roles'))
+		)));
+	}
+
+	/**
+	 * Filter down the forums if the user doesn't have the specific ARO (role) access.
+	 *
+	 * @param array $forums
+	 * @return array
+	 */
+	public function filterByRole($forums) {
+		$roles = (array) $this->Session->read('Forum.roles');
+		$isAdmin = $this->Session->read('Forum.isAdmin');
+		$isSuper = $this->Session->read('Forum.isSuper');
+
+		if (!$roles) {
+			return $forums;
+		}
+
+		foreach ($forums as $i => $forum) {
+			$aro_id = null;
+
+			if (isset($forum['Forum']['aro_id'])) {
+				$aro_id = $forum['Forum']['aro_id'];
+			} else if (isset($forum['aro_id'])) {
+				$aro_id = $forum['aro_id'];
+			}
+
+			// Filter down children
+			if (!empty($forum['Children'])) {
+				$forums[$i]['Children'] = $this->filterByRole($forum['Children']);
+
+			} else if (!empty($forum['SubForum'])) {
+				$forums[$i]['SubForum'] = $this->filterByRole($forum['SubForum']);
+			}
+
+			// Admins and super mods get full access
+			if ($isAdmin || $isSuper) {
+				continue;
+			}
+
+			// Remove the forum if not enough role access
+			if ($aro_id && !in_array($aro_id, $roles)) {
+				unset($forums[$i]);
+			}
+		}
+
+		return $forums;
 	}
 
 	/**

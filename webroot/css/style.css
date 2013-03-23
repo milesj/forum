@@ -83,7 +83,7 @@ select {
 
 	.pollOptions table { width: 50%; }
 	.pollOptions table td { padding: 0 5px 5px 0; }
-	.pollOptions input[type="text"] { width: 90%; }
+	.pollOptions input[type="text"] { width: 95%; }
 
 .message {
 	background: #ebffe7;
@@ -341,6 +341,11 @@ select {
 	.table .empty {
 		padding: 50px;
 		text-align: center; }
+
+	.table img {
+		margin-top: -2px;
+		display: inline-block;
+		vertical-align: middle; }
 
 .table .icon {
 	text-align: center;

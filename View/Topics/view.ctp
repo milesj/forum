@@ -45,9 +45,11 @@ if (!empty($topic['Poll']['id'])) { ?>
 					foreach ($topic['Poll']['PollOption'] as $counter => $option) { ?>
 
 					<tr<?php if ($counter % 2) echo ' class="altRow"'; ?>>
-						<td class="icon">
-							<input type="radio" name="data[Poll][option]" value="<?php echo $option['id']; ?>"<?php if ($counter == 0) echo ' checked="checked"'; ?>>
-						</td>
+						<?php if ($user) { ?>
+							<td class="icon">
+								<input type="radio" name="data[Poll][option]" value="<?php echo $option['id']; ?>"<?php if ($counter == 0) echo ' checked="checked"'; ?>>
+							</td>
+						<?php } ?>
 						<td colspan="2">
 							<?php echo $option['option']; ?>
 						</td>
@@ -59,12 +61,12 @@ if (!empty($topic['Poll']['id'])) { ?>
 						<td colspan="3" class="align-center">
 							<?php if ($user) {
 								if (!empty($topic['Poll']['expires']) && $topic['Poll']['expires'] <= date('Y-m-d H:i:s')) {
-									__d('forum', 'Voting on this poll has been closed');
+									echo __d('forum', 'Voting on this poll has been closed');
 								} else {
 									echo $this->Form->submit(__d('forum', 'Vote'), array('div' => false, 'class' => 'button'));
 								}
 							} else {
-								__d('forum', 'Please login to vote!');
+								echo __d('forum', 'Please login to vote!');
 							} ?>
 						</td>
 					</tr>

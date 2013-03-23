@@ -6,6 +6,7 @@
  */
 
 App::uses('ForumAppController', 'Forum.Controller');
+App::uses('Forum', 'Forum.Model');
 
 /**
  * @property Topic $Topic
