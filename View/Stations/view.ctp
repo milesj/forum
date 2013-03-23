@@ -16,7 +16,7 @@ $this->Breadcrumb->add($forum['Forum']['title'], array('controller' => 'stations
 	<?php } ?>
 </div>
 
-<?php if ($forum['SubForum']) { ?>
+<?php if ($forum['Children']) { ?>
 
 	<div class="container">
 		<div class="containerHeader">
@@ -35,7 +35,7 @@ $this->Breadcrumb->add($forum['Forum']['title'], array('controller' => 'stations
 					</tr>
 				</thead>
 				<tbody>
-					<?php foreach ($forum['SubForum'] as $counter => $subForum) {
+					<?php foreach ($forum['Children'] as $counter => $subForum) {
 						echo $this->element('tiles/forum_row', array(
 							'forum' => $subForum,
 							'counter' => $counter

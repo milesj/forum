@@ -75,12 +75,14 @@ class Topic extends ForumAppModel {
 	public $hasMany = array(
 		'Post' => array(
 			'className' => 'Forum.Post',
+			'limit' => 100,
+			'order' => array('Post.created' => 'DESC'),
 			'exclusive' => true,
 			'dependent' => true,
-			'order' => array('Post.created' => 'DESC'),
 		),
 		'Subscription' => array(
 			'className' => 'Forum.Subscription',
+			'limit' => 100,
 			'exclusive' => true,
 			'dependent' => true
 		)
@@ -100,6 +102,12 @@ class Topic extends ForumAppModel {
 				'rule' => 'notEmpty',
 			),
 			'user_id' => array(
+				'rule' => 'notEmpty',
+			),
+			'status' => array(
+				'rule' => 'notEmpty',
+			),
+			'type' => array(
 				'rule' => 'notEmpty',
 			),
 			'expires' => array(
@@ -152,7 +160,7 @@ class Topic extends ForumAppModel {
 	 * @param array $data
 	 * @return bool|int
 	 */
-	public function add($data) {
+	public function addPost($data) {
 		$this->set($data);
 
 		if ($this->validates()) {
@@ -297,7 +305,7 @@ class Topic extends ForumAppModel {
 	 * @param array $topic
 	 * @return bool
 	 */
-	public function edit($id, $topic) {
+	public function editTopic($id, $topic) {
 		if ($topic) {
 			foreach ($topic as $model => $data) {
 				if ($model === 'Topic') {

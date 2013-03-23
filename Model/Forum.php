@@ -58,18 +58,14 @@ class Forum extends ForumAppModel {
 	public $hasMany = array(
 		'Topic' => array(
 			'className' => 'Forum.Topic',
-			'dependent' => false
+			'limit' => 25,
+			'order' => array('Topic.created' => 'DESC'),
+			'dependent' => false,
 		),
 		'Children' => array(
 			'className' => 'Forum.Forum',
 			'foreignKey' => 'parent_id',
 			'order' => array('Children.orderNo' => 'ASC'),
-			'dependent' => false
-		),
-		'SubForum' => array(
-			'className' => 'Forum.Forum',
-			'foreignKey' => 'parent_id',
-			'order' => array('SubForum.orderNo' => 'ASC'),
 			'dependent' => false
 		),
 		'Moderator' => array(
@@ -92,9 +88,6 @@ class Forum extends ForumAppModel {
 	public $validations = array(
 		'default' => array(
 			'title' => array(
-				'rule' => 'notEmpty'
-			),
-			'description' => array(
 				'rule' => 'notEmpty'
 			),
 			'status' =>  array(
@@ -152,10 +145,10 @@ class Forum extends ForumAppModel {
 			),
 			'contain' => array(
 				'Parent',
-				'SubForum' => array(
+				'Children' => array(
 					'conditions' => array(
-						'SubForum.status' => self::OPEN,
-						'SubForum.accessRead' => self::YES
+						'Children.status' => self::OPEN,
+						'Children.accessRead' => self::YES
 					),
 					'LastTopic', 'LastPost', 'LastUser'
 				),
@@ -247,11 +240,11 @@ class Forum extends ForumAppModel {
 						'Children.status' => self::OPEN,
 						'Children.accessRead' => self::YES
 					),
-					'SubForum' => array(
-						'fields' => array('SubForum.id', 'SubForum.aro_id', 'SubForum.title', 'SubForum.slug'),
+					'Children' => array(
+						'fields' => array('Children.id', 'Children.aro_id', 'Children.title', 'Children.slug'),
 						'conditions' => array(
-							'SubForum.status' => self::OPEN,
-							'SubForum.accessRead' => self::YES
+							'Children.status' => self::OPEN,
+							'Children.accessRead' => self::YES
 						)
 					),
 					'LastTopic', 'LastPost', 'LastUser'
@@ -288,9 +281,6 @@ class Forum extends ForumAppModel {
 			// Filter down children
 			if (!empty($forum['Children'])) {
 				$forums[$i]['Children'] = $this->filterByRole($forum['Children']);
-
-			} else if (!empty($forum['SubForum'])) {
-				$forums[$i]['SubForum'] = $this->filterByRole($forum['SubForum']);
 			}
 
 			// Admins and super mods get full access

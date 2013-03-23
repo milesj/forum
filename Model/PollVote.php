@@ -19,7 +19,8 @@ class PollVote extends ForumAppModel {
 			'className' => 'Forum.Poll'
 		),
 		'PollOption' => array(
-			'className' => 'Forum.PollOption'
+			'className' => 'Forum.PollOption',
+			'counterCache' => true
 		),
 		'User' => array(
 			'className' => USER_MODEL
@@ -40,7 +41,13 @@ class PollVote extends ForumAppModel {
 				'rule' => 'notEmpty'
 			),
 			'user_id' => array(
-				'rule' => 'notEmpty'
+				'notEmpty' => array(
+					'rule' => 'notEmpty'
+				),
+				'checkHasVoted' => array(
+					'rule' => 'checkHasVoted',
+					'message' => 'This user has already voted'
+				)
 			)
 		)
 	);
@@ -63,6 +70,10 @@ class PollVote extends ForumAppModel {
 	 * @return bool
 	 */
 	public function addVoter($poll_id, $option_id, $user_id) {
+		if ($this->hasVoted($user_id, $poll_id)) {
+			return true;
+		}
+
 		$data = array(
 			'poll_id' => $poll_id,
 			'poll_option_id' => $option_id,
@@ -72,6 +83,15 @@ class PollVote extends ForumAppModel {
 		$this->create();
 
 		return $this->save($data, false, array_keys($data));
+	}
+
+	/**
+	 * Validate a user hasn't voted.
+	 *
+	 * @return bool
+	 */
+	public function checkHasVoted() {
+		return !$this->hasVoted($this->data[$this->alias]['user_id'], $this->data[$this->alias]['poll_id']);
 	}
 
 	/**

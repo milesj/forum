@@ -34,6 +34,7 @@ class Poll extends ForumAppModel {
 		),
 		'PollVote' => array(
 			'className' => 'Forum.PollVote',
+			'limit' => 100,
 			'exclusive' => true,
 			'dependent' => true
 		)
@@ -82,8 +83,8 @@ class Poll extends ForumAppModel {
 			);
 
 			foreach ($options as $opt) {
-				if ($opt) {
-					$results['option'] = trim($opt);
+				if ($opt = trim($opt)) {
+					$results['option'] = $opt;
 
 					$this->PollOption->create();
 					$this->PollOption->save($results, false, array_keys($results));
@@ -142,10 +143,7 @@ class Poll extends ForumAppModel {
 				return false;
 			}
 
-			if (!$this->PollVote->hasVoted($user_id, $poll_id)) {
-				$this->PollOption->addVote($option_id);
-				$this->PollVote->addVoter($poll_id, $option_id, $user_id);
-			}
+			$this->PollVote->addVoter($poll_id, $option_id, $user_id);
 		}
 
 		return true;

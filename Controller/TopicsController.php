@@ -83,7 +83,7 @@ class TopicsController extends ForumAppController {
 			$this->request->data['Topic']['user_id'] = $user_id;
 			$this->request->data['Topic']['userIP'] = $this->request->clientIp();
 
-			if ($topic_id = $this->Topic->add($this->request->data['Topic'])) {
+			if ($topic_id = $this->Topic->addTopic($this->request->data['Topic'])) {
 				if ($forum['Forum']['settingPostCount']) {
 					$this->ForumUser->increasePosts($user_id);
 				}
@@ -119,8 +119,7 @@ class TopicsController extends ForumAppController {
 
 		if ($this->request->data) {
 			if ($this->Topic->saveAll($this->request->data, array('validate' => 'only'))) {
-				if ($this->Topic->edit($topic['Topic']['id'], $this->request->data)) {
-					$this->Topic->deleteCache(array('Topic::getBySlug', $slug));
+				if ($this->Topic->editTopic($topic['Topic']['id'], $this->request->data)) {
 					$this->ForumToolbar->goToPage($topic['Topic']['id']);
 				}
 			}

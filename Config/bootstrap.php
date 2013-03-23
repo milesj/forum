@@ -129,6 +129,7 @@ Configure::write('Forum.locales', array(
  * Add forum specific user field mappings.
  */
 Configure::write('User.fieldMap', Configure::read('User.fieldMap') + array(
-	'totalPosts'	=> 'totalPosts',
-	'totalTopics'	=> 'totalTopics'
+	'totalPosts'	=> 'post_count',
+	'totalTopics'	=> 'topic_count',
+	'signature'		=> 'signature'
 ));

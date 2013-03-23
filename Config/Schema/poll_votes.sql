@@ -6,6 +6,7 @@ CREATE TABLE `{prefix}poll_votes` (
 	`poll_id` INT(11) DEFAULT NULL,
 	`poll_option_id` INT(11) DEFAULT NULL,
 	`user_id` INT(11) DEFAULT NULL,
+	`created` DATETIME DEFAULT NULL,
 	PRIMARY KEY (`id`),
 	KEY `poll_id` (`poll_id`),
 	KEY `poll_option_id` (`poll_option_id`),

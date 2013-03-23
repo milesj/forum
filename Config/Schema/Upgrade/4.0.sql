@@ -11,3 +11,10 @@ ALTER TABLE `{prefix}forums`
 	CHANGE `access_level_id` `aro_id` INT(11) NOT NULL DEFAULT '0',
 	ADD `lft` INT NULL DEFAULT NULL AFTER `lastUser_id`,
 	ADD `rght` INT NULL DEFAULT NULL AFTER `lft`;
+
+ALTER TABLE `{prefix}poll_options`
+	CHANGE `vote_count` `poll_vote_count` INT( 11 ) NOT NULL DEFAULT '0',
+	ADD `created` DATETIME NULL DEFAULT NULL ,
+	ADD `modified` DATETIME NULL DEFAULT NULL;
+
+ALTER TABLE `{prefix}poll_votes` ADD `created` DATETIME NULL DEFAULT NULL ;

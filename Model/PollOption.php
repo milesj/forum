@@ -28,6 +28,18 @@ class PollOption extends ForumAppModel {
 	);
 
 	/**
+	 * Has many.
+	 *
+	 * @var array
+	 */
+	public $hasMany = array(
+		'PollVote' => array(
+			'className' => 'Forum.PollVote',
+			'limit' => 100
+		)
+	);
+
+	/**
 	 * Behaviors.
 	 *
 	 * @var array
@@ -65,18 +77,5 @@ class PollOption extends ForumAppModel {
 	public $admin = array(
 		'iconClass' => 'icon-list'
 	);
-
-	/**
-	 * Add a vote for a poll.
-	 *
-	 * @param int $id
-	 * @return bool
-	 */
-	public function addVote($id) {
-		return $this->updateAll(
-			array('PollOption.vote_count' => 'PollOption.vote_count + 1'),
-			array('PollOption.id' => $id)
-		);
-	}
 
 }

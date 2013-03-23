@@ -2,8 +2,8 @@
 $forum = isset($forum['Forum']) ? $forum['Forum'] : $forum;
 $subForums = array();
 
-if (isset($forum['SubForum'])) {
-	foreach ($forum['SubForum'] as $sub) {
+if (isset($forum['Children'])) {
+	foreach ($forum['Children'] as $sub) {
 		$subForums[] = $this->Html->link($sub['title'], array('controller' => 'stations', 'action' => 'view', $sub['slug']));
 	}
 } ?>
