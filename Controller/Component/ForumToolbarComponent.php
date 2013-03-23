@@ -52,8 +52,9 @@ class ForumToolbarComponent extends Component {
 		$isBanned = ($this->Auth->user(Configure::read('User.fieldMap.status')) == Configure::read('User.statusMap.banned'));
 		$isAdmin = false;
 		$isSuper = false;
-		$moderates = array();
-		$permissions = array();
+		$groups = null; // list of ARO IDs
+		$moderates = array(); // list of forum IDs
+		$permissions = array(); // CRUD mapping
 
 		if ($user_id && !$isBanned) {
 			$aro = ClassRegistry::init('Admin.RequestObject');
@@ -75,6 +76,7 @@ class ForumToolbarComponent extends Component {
 
 		$this->Session->write('Forum.isAdmin', $isAdmin);
 		$this->Session->write('Forum.isSuper', $isSuper);
+		$this->Session->write('Forum.groups', $groups);
 		$this->Session->write('Forum.permissions', $permissions);
 		$this->Session->write('Forum.moderates', $moderates);
 		$this->Session->write('Forum.lastVisit', date('Y-m-d H:i:s'));

@@ -15,7 +15,9 @@ class Forum extends ForumAppModel {
 	 * @var array
 	 */
 	public $actsAs = array(
-		'Tree',
+		'Tree' => array(
+			'recursive' => 0
+		),
 		'Utility.Sluggable' => array(
 			'length' => 100
 		)
@@ -89,21 +91,24 @@ class Forum extends ForumAppModel {
 	 *
 	 * @var array
 	 */
-	public $validate = array(
-		'title' => array(
-			'rule' => 'notEmpty',
-			'required' => true
-		),
-		'description' => 'notEmpty',
-		'status' => array(
-			'required' => true,
-		),
-		'orderNo' => array(
-			'numeric' => array(
-				'rule' => 'numeric'
-			),
-			'notEmpty' => array(
+	public $validations = array(
+		'default' => array(
+			'title' => array(
 				'rule' => 'notEmpty'
+			),
+			'description' => array(
+				'rule' => 'notEmpty'
+			),
+			'status' =>  array(
+				'rule' => 'notEmpty'
+			),
+			'orderNo' => array(
+				'numeric' => array(
+					'rule' => 'numeric'
+				),
+				'notEmpty' => array(
+					'rule' => 'notEmpty'
+				)
 			)
 		)
 	);
@@ -163,39 +168,40 @@ class Forum extends ForumAppModel {
 	}
 
 	/**
-	 * Get the list of forums for the board index.
-	 *
-	 * @return array
-	 */
-	public function getAdminIndex() {
-		return $this->find('all', array(
-			'order' => array('Forum.orderNo' => 'ASC'),
-			'conditions' => array('Forum.parent_id' => null),
-			'contain' => array('Children' => array('SubForum'))
-		));
-	}
-
-	/**
 	 * Get the hierarchy.
 	 *
-	 * @param int $exclude
 	 * @return array
 	 */
-	public function getHierarchy($public = true, $exclude = null) {
-		$conditions = array();
+	public function getHierarchy() {
+		$conditions = array(
+			'Forum.aro_id' => $this->Session->read('Forum.groups'),
+			'Forum.status' => self::OPEN,
+			'Forum.accessRead' => self::YES,
+			'OR' => array(
+				'Forum.parent_id' => null,
+				'Parent.status' => self::OPEN
+			)
+		);
 
-		if ($public) {
-			$conditions = array(
-				'Forum.status' => self::OPEN,
-				'Forum.accessRead' => self::YES
-			);
+		$tree = $this->generateTreeList($conditions, null, null, ' -- ');
+		$hierarchy = array();
+		$parent = null;
+
+		// Reorganize the tree so top level forums are an optgroup
+		foreach ($tree as $key => $value) {
+			// Child
+			if (strpos($value, ' -- ') === 0) {
+				$hierarchy[$parent][$key] = substr($value, 4);
+
+			// Parent
+			} else {
+				$hierarchy[$value] = array();
+				$parent = $value;
+			}
 		}
 
-		if (is_numeric($exclude)) {
-			$conditions['Forum.id !='] = $exclude;
-		}
 
-		return $this->generateTreeList($conditions, null, null, ' -- ');
+		return $hierarchy;
 	}
 
 	/**

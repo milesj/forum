@@ -129,18 +129,16 @@ class PostsController extends ForumAppController {
 			'exists' => $post
 		));
 
-		if ($this->request->data) {
-			$this->request->data['Report']['user_id'] = $user_id;
-			$this->request->data['Report']['item_id'] = $id;
-			$this->request->data['Report']['itemType'] = Report::POST;
+		if ($this->request->is('post')) {
+			$data = $this->request->data['Report'];
 
-			if ($this->AdminToolbar->reportItem(ItemReport::OFFENSIVE, $this->Post, $id, $this->request->data['Report']['comment'], $user_id)) {
+			if ($this->AdminToolbar->reportItem($data['type'], $this->Post, $id, $data['comment'], $user_id)) {
 				$this->Session->setFlash(__d('forum', 'You have successfully reported this post! A moderator will review this post and take the necessary action.'));
 				unset($this->request->data['Report']);
 			}
-		} else {
-			$this->request->data['Report']['post'] = $post['Post']['content'];
 		}
+
+		$this->request->data['Report']['post'] = $post['Post']['content'];
 
 		$this->set('post', $post);
 	}

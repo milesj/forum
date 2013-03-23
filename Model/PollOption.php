@@ -73,7 +73,10 @@ class PollOption extends ForumAppModel {
 	 * @return bool
 	 */
 	public function addVote($id) {
-		return $this->query('UPDATE `' . $this->tablePrefix . 'poll_options` AS `PollOption` SET `PollOption`.`vote_count` = `PollOption`.`vote_count` + 1 WHERE `PollOption`.`id` = ' . (int) $id);
+		return $this->updateAll(
+			array('PollOption.vote_count' => 'PollOption.vote_count + 1'),
+			array('PollOption.id' => $id)
+		);
 	}
 
 }

@@ -21,7 +21,9 @@ $this->Breadcrumb->add(__d('forum', 'Report Topic'), array('controller' => 'topi
 
 <div class="container">
 	<div class="containerContent">
-		<?php echo $this->Form->input('comment', array('type' => 'textarea', 'label' => __d('forum', 'Comment'))); ?>
+		<?php
+		echo $this->Form->input('type', array('options' => $this->Utility->enum('Admin.ItemReport', 'type')));
+		echo $this->Form->input('comment', array('type' => 'textarea', 'label' => __d('forum', 'Comment'))); ?>
 	</div>
 </div>
 

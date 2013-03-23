@@ -103,7 +103,7 @@ class Poll extends ForumAppModel {
 	 * @return array
 	 */
 	public function process($poll) {
-		$user_id = $this->Session->read('Auth.User.id');
+		$user_id = $this->Session->read(AuthComponent::$sessionKey . '.id');
 
 		if ($poll) {
 			$totalVotes = 0;

@@ -58,13 +58,9 @@ class ForumAppModel extends AppModel {
 	 */
 	public $actsAs = array(
 		'Containable',
-		'Utility.Enumerable' => array(
-			'persist' => false,
-			'format' => false
-		),
+		'Utility.Enumerable',
 		'Utility.Cacheable' => array(
-			'cacheConfig' => 'forum',
-			'appendKey' => false
+			'cacheConfig' => 'forum'
 		)
 	);
 
@@ -132,8 +128,8 @@ class ForumAppModel extends AppModel {
 	 */
 	public function getById($id) {
 		return $this->find('first', array(
-			'conditions' => array('id' => $id),
-			'contain' => false,
+			'conditions' => array($this->alias . '.id' => $id),
+			'contain' => array_keys($this->belongsTo),
 			'cache' => array($this->alias . '::' . __FUNCTION__, $id)
 		));
 	}
@@ -146,8 +142,8 @@ class ForumAppModel extends AppModel {
 	 */
 	public function getBySlug($slug) {
 		return $this->find('first', array(
-			'conditions' => array('slug' => $slug),
-			'contain' => false,
+			'conditions' => array($this->alias . '.slug' => $slug),
+			'contain' => array_keys($this->belongsTo),
 			'cache' => array($this->alias . '::' . __FUNCTION__, $slug)
 		));
 	}

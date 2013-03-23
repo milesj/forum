@@ -44,7 +44,7 @@ echo $this->OpenGraph->html(array('xmlns' => 'http://www.w3.org/1999/xhtml')); ?
 				<li<?php if ($menuTab === 'help') echo ' class="active"'; ?>><?php echo $this->Html->link(__d('forum', 'Help'), array('controller' => 'forum', 'action' => 'help')); ?></li>
 
 				<?php if ($user && $this->Forum->isAdmin()) { ?>
-					<li><?php echo $this->Html->link(__d('forum', 'Admin'), array('controller' => 'forum', 'action' => 'index', 'admin' => true)); ?></li>
+					<li><?php echo $this->Html->link(__d('forum', 'Admin'), array('controller' => 'admin', 'action' => 'index', 'plugin' => 'admin', 'admin' => false)); ?></li>
 				<?php } ?>
 			</ul>
 

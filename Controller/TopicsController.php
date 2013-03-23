@@ -20,7 +20,7 @@ class TopicsController extends ForumAppController {
 	 *
 	 * @var array
 	 */
-	public $uses = array('Forum.Topic', 'Forum.Profile', 'Forum.Subscription', 'Forum.ForumUser');
+	public $uses = array('Forum.Topic', 'Forum.ForumUser', 'Forum.Subscription', 'Forum.ForumUser');
 
 	/**
 	 * Components.
@@ -85,10 +85,10 @@ class TopicsController extends ForumAppController {
 
 			if ($topic_id = $this->Topic->add($this->request->data['Topic'])) {
 				if ($forum['Forum']['settingPostCount']) {
-					$this->Profile->increasePosts($user_id);
+					$this->ForumUser->increasePosts($user_id);
 				}
 
-				$this->Profile->increaseTopics($user_id);
+				$this->ForumUser->increaseTopics($user_id);
 				$this->ForumToolbar->updateTopics($topic_id);
 				$this->ForumToolbar->goToPage($topic_id);
 			}
@@ -160,8 +160,6 @@ class TopicsController extends ForumAppController {
 	 * @param string $slug
 	 */
 	public function report($slug) {
-		$this->loadModel('Forum.Report');
-
 		$topic = $this->Topic->getBySlug($slug);
 		$user_id = $this->Auth->user('id');
 
@@ -169,12 +167,10 @@ class TopicsController extends ForumAppController {
 			'exists' => $topic
 		));
 
-		if ($this->request->data) {
-			$this->request->data['Report']['user_id'] = $user_id;
-			$this->request->data['Report']['item_id'] = $topic['Topic']['id'];
-			$this->request->data['Report']['itemType'] = Report::TOPIC;
+		if ($this->request->is('post')) {
+			$data = $this->request->data['Report'];
 
-			if ($this->Report->save($this->request->data, true, array('item_id', 'itemType', 'user_id', 'comment'))) {
+			if ($this->AdminToolbar->reportItem($data['type'], $this->Topic, $topic['Topic']['id'], $data['comment'], $user_id)) {
 				$this->Session->setFlash(__d('forum', 'You have successfully reported this topic! A moderator will review this topic and take the necessary action.'));
 				unset($this->request->data['Report']);
 			}

@@ -418,7 +418,10 @@ class Topic extends ForumAppModel {
 	 * @return bool
 	 */
 	public function increaseViews($id) {
-		return $this->query('UPDATE `' . $this->tablePrefix . 'topics` AS `Topic` SET `Topic`.`view_count` = `Topic`.`view_count` + 1 WHERE `Topic`.`id` = ' . (int) $id);
+		return $this->updateAll(
+			array('Topic.view_count' => 'Topic.view_count + 1'),
+			array('Topic.id' => $id)
+		);
 	}
 
 	/**
@@ -475,7 +478,7 @@ class Topic extends ForumAppModel {
 						}
 
 						if ($lock && $lastTime && (strtotime($lastTime) < strtotime('-' . $autoLock . ' days'))) {
-							$result['Topic']['status'] = 1;
+							$result['Topic']['status'] = self::OPEN;
 						}
 					}
 				}

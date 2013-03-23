@@ -38,7 +38,6 @@ class SearchController extends ForumAppController {
 	 */
 	public function index($type = '') {
 		$searching = false;
-		$forums = $this->Topic->Forum->getHierarchy();
 		$orderBy = array(
 			'LastPost.created' => __d('forum', 'Last post time'),
 			'Topic.created' => __d('forum', 'Topic created time'),
@@ -86,7 +85,7 @@ class SearchController extends ForumAppController {
 		$this->set('menuTab', 'search');
 		$this->set('searching', $searching);
 		$this->set('orderBy', $orderBy);
-		$this->set('forums', $forums);
+		$this->set('forums', $this->Topic->Forum->getHierarchy());
 	}
 
 	/**

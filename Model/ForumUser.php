@@ -81,7 +81,7 @@ class ForumUser extends ForumAppModel {
 	}
 
 	/**
-	 * Get whos online within the past x minutes.
+	 * Get who's online within the past x minutes.
 	 *
 	 * @return array
 	 */
