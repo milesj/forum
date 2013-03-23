@@ -132,6 +132,18 @@ class Forum extends ForumAppModel {
 	}
 
 	/**
+	 * Close a topic.
+	 *
+	 * @param int $id
+	 * @return bool
+	 */
+	public function close($id) {
+		$this->id = $id;
+
+		return $this->saveField('status', self::CLOSED);
+	}
+
+	/**
 	 * Get a forum.
 	 *
 	 * @param string $slug
@@ -309,6 +321,18 @@ class Forum extends ForumAppModel {
 			array('Forum.parent_id' => $moved_id),
 			array('Forum.parent_id' => $start_id)
 		);
+	}
+
+	/**
+	 * Open a topic.
+	 *
+	 * @param int $id
+	 * @return bool
+	 */
+	public function open($id) {
+		$this->id = $id;
+
+		return $this->saveField('status', self::OPEN);
 	}
 
 }

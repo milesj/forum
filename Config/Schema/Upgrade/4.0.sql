@@ -16,5 +16,3 @@ ALTER TABLE `{prefix}poll_options`
 	CHANGE `vote_count` `poll_vote_count` INT( 11 ) NOT NULL DEFAULT '0',
 	ADD `created` DATETIME NULL DEFAULT NULL ,
 	ADD `modified` DATETIME NULL DEFAULT NULL;
-
-ALTER TABLE `{prefix}poll_votes` ADD `created` DATETIME NULL DEFAULT NULL ;

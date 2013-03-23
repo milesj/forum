@@ -24,7 +24,8 @@ class Post extends ForumAppModel {
 			'counterCache' => true
 		),
 		'User' => array(
-			'className' => USER_MODEL
+			'className' => USER_MODEL,
+			'counterCache' => true
 		)
 	);
 

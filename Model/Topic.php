@@ -35,7 +35,8 @@ class Topic extends ForumAppModel {
 	 */
 	public $belongsTo = array(
 		'User' => array(
-			'className' => USER_MODEL
+			'className' => USER_MODEL,
+			'counterCache' => true
 		),
 		'Forum' => array(
 			'className' => 'Forum.Forum',
@@ -277,6 +278,18 @@ class Topic extends ForumAppModel {
 	}
 
 	/**
+	 * Close a topic.
+	 *
+	 * @param int $id
+	 * @return bool
+	 */
+	public function close($id) {
+		$this->id = $id;
+
+		return $this->saveField('status', self::CLOSED);
+	}
+
+	/**
 	 * Finds difference in days between dates.
 	 *
 	 * @param int $start
@@ -444,6 +457,42 @@ class Topic extends ForumAppModel {
 			array('Topic.forum_id' => $moved_id),
 			array('Topic.forum_id' => $start_id)
 		);
+	}
+
+	/**
+	 * Open a topic.
+	 *
+	 * @param int $id
+	 * @return bool
+	 */
+	public function open($id) {
+		$this->id = $id;
+
+		return $this->saveField('status', self::OPEN);
+	}
+
+	/**
+	 * Sticky a topic.
+	 *
+	 * @param int $id
+	 * @return bool
+	 */
+	public function sticky($id) {
+		$this->id = $id;
+
+		return $this->saveField('type', self::STICKY);
+	}
+
+	/**
+	 * Unsticky a topic.
+	 *
+	 * @param int $id
+	 * @return bool
+	 */
+	public function unsticky($id) {
+		$this->id = $id;
+
+		return $this->saveField('type', self::NORMAL);
 	}
 
 	/**
