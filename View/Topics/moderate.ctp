@@ -46,7 +46,7 @@ $this->Breadcrumb->add(__d('forum', 'Moderate'), array('controller' => 'topics',
 						<?php } ?>
 					</td>
 					<td>
-						<?php echo $this->Html->link($post['User'][$config['userMap']['username']], $this->Forum->profileUrl($post['User'])); ?>
+						<?php echo $this->Html->link($post['User'][$userFields['username']], $this->Forum->profileUrl($post['User'])); ?>
 					</td>
 					<td>
 						<?php echo $this->Text->truncate($this->Decoda->strip($post['Post']['content'], 100)); ?>

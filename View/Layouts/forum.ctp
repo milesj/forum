@@ -17,7 +17,7 @@ echo $this->OpenGraph->html(array('xmlns' => 'http://www.w3.org/1999/xhtml')); ?
 		echo $this->Html->meta(__d('forum', 'RSS Feed - Content Review'), array($rss, 'ext' => 'rss'), array('type' => 'rss'));
 	}
 
-	$locales = $config['decodaLocales'];
+	$locales = $config['Decoda']['locales'];
 
 	$this->OpenGraph->name($settings['name']);
 	$this->OpenGraph->locale(array($locales[Configure::read('Config.language')], $locales[$settings['defaultLocale']]));
@@ -42,7 +42,6 @@ echo $this->OpenGraph->html(array('xmlns' => 'http://www.w3.org/1999/xhtml')); ?
 				<li<?php if ($menuTab === 'search') echo ' class="active"'; ?>><?php echo $this->Html->link(__d('forum', 'Search'), array('controller' => 'search', 'action' => 'index')); ?></li>
 				<li<?php if ($menuTab === 'rules') echo ' class="active"'; ?>><?php echo $this->Html->link(__d('forum', 'Rules'), array('controller' => 'forum', 'action' => 'rules')); ?></li>
 				<li<?php if ($menuTab === 'help') echo ' class="active"'; ?>><?php echo $this->Html->link(__d('forum', 'Help'), array('controller' => 'forum', 'action' => 'help')); ?></li>
-				<li<?php if ($menuTab === 'users') echo ' class="active"'; ?>><?php echo $this->Html->link(__d('forum', 'Users'), array('controller' => 'users', 'action' => 'index')); ?></li>
 
 				<?php if ($user && $this->Forum->isAdmin()) { ?>
 					<li><?php echo $this->Html->link(__d('forum', 'Admin'), array('controller' => 'forum', 'action' => 'index', 'admin' => true)); ?></li>

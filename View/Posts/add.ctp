@@ -45,7 +45,7 @@ if ($review) { ?>
 				</tr>
 				<tr>
 					<td valign="top" style="width: 25%">
-						<h4 class="username"><?php echo $this->Html->link($post['User'][$config['userMap']['username']], $this->Forum->profileUrl($post['User'])); ?></h4>
+						<h4 class="username"><?php echo $this->Html->link($post['User'][$userFields['username']], $this->Forum->profileUrl($post['User'])); ?></h4>
 					</td>
 					<td valign="top">
 						<?php echo $this->Decoda->parse($post['Post']['content']); ?>

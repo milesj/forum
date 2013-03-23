@@ -14,15 +14,15 @@
 			echo $this->Html->link(__d('forum', 'Moderate'), array('controller' => 'topics', 'action' => 'moderate', $topic['Topic']['slug']), array('class' => 'button'));
 		}
 
-		if ($this->Forum->hasAccess('topics.create', $topic['Forum']['accessPost']) || $isMod) {
+		if ($this->Forum->hasAccess('Forum.Topic', 'create', $topic['Forum']['accessPost']) || $isMod) {
 			echo $this->Html->link(__d('forum', 'Create Topic'), array('controller' => 'topics', 'action' => 'add', $topic['Forum']['slug']), array('class' => 'button'));
 		}
 
-		if ($this->Forum->hasAccess('polls.create', $topic['Forum']['accessPoll']) || $isMod) {
+		if ($this->Forum->hasAccess('Forum.Poll', 'create', $topic['Forum']['accessPoll']) || $isMod) {
 			echo $this->Html->link(__d('forum', 'Create Poll'), array('controller' => 'topics', 'action' => 'add', $topic['Forum']['slug'], 'poll'), array('class' => 'button'));
 		}
 
-		if ($this->Forum->hasAccess('posts.create', $topic['Forum']['accessReply']) || $isMod) {
+		if ($this->Forum->hasAccess('Forum.Post', 'create', $topic['Forum']['accessReply']) || $isMod) {
 			if ($topic['Topic']['status']) {
 				echo $this->Html->link(__d('forum', 'Post Reply'), array('controller' => 'posts', 'action' => 'add', $topic['Topic']['slug']), array('class' => 'button'));
 			} else {

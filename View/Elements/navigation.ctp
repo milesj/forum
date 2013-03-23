@@ -7,19 +7,17 @@
 	<?php $links = array();
 
 	if ($user) {
-		$links[] = $this->Html->link(__d('forum', 'Logout'), $config['routes']['logout']);
+		$links[] = $this->Html->link(__d('forum', 'Logout'), $userRoutes['logout']);
 		$links[] = $this->Html->link(__d('forum', 'View New Posts'), array('controller' => 'search', 'action' => 'index', 'new_posts', 'admin' => false));
-		$links[] = $this->Html->link(__d('forum', 'Dashboard'), array('controller' => 'users', 'action' => 'dashboard', 'admin' => false));
-
 	} else {
-		if (!empty($config['routes']['forgotPass'])) {
-			$links[] = $this->Html->link(__d('forum', 'Forgot Password'), $config['routes']['forgotPass']);
+		if (!empty($userRoutes['forgotPass'])) {
+			$links[] = $this->Html->link(__d('forum', 'Forgot Password'), $userRoutes['forgotPass']);
 		}
 
-		$links[] = $this->Html->link(__d('forum', 'Login'), $config['routes']['login']);
+		$links[] = $this->Html->link(__d('forum', 'Login'), $userRoutes['login']);
 
-		if (!empty($config['routes']['signup'])) {
-			$links[] = $this->Html->link(__d('forum', 'Sign Up'), $config['routes']['signup']);
+		if (!empty($userRoutes['signup'])) {
+			$links[] = $this->Html->link(__d('forum', 'Sign Up'), $userRoutes['signup']);
 		}
 	}
 
@@ -34,7 +32,7 @@
 	if ($user) { ?>
 
 		<div>
-			<?php echo sprintf(__d('forum', 'Welcome %s'), $this->Html->link($user['User'][$config['userMap']['username']], $this->Forum->profileUrl($user['User']))); ?>
+			<?php echo sprintf(__d('forum', 'Welcome %s'), $this->Html->link($user[$userFields['username']], $this->Forum->profileUrl($user))); ?>
 		</div>
 
 	<?php } ?>

@@ -16,7 +16,7 @@ $this->Breadcrumb->add(__d('forum', 'Help Desk'), array('controller' => 'forum',
 <?php echo __d('forum', 'The server might be having technical difficulties and your request could not be processed. It may also be that your account has been deleted or banned.'); ?></p>
 
 <p><strong><?php echo __d('forum', 'Oh no, I forgot my password!'); ?></strong><br>
-<?php printf(__d('forum', 'If you have forgotten your password, you can reset it using the %s form.'), $this->Html->link(__d('forum', 'forgotten password'), $config['routes']['forgotPass'])); ?></p>
+<?php printf(__d('forum', 'If you have forgotten your password, you can reset it using the %s form.'), $this->Html->link(__d('forum', 'forgotten password'), $userRoutes['forgotPass'])); ?></p>
 
 <p><strong><?php echo __d('forum', 'What does reporting do?'); ?></strong><br>
 <?php echo __d('forum', 'If you find a piece of content that you find inappropriate or offensive, you can report the content for a moderator to delete or fix.'); ?></p>

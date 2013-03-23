@@ -9,12 +9,13 @@ if (!empty($topic['Forum']['Parent']['slug'])) {
 $this->Breadcrumb->add($topic['Forum']['title'], array('controller' => 'stations', 'action' => 'view', $topic['Forum']['slug']));
 $this->Breadcrumb->add($topic['Topic']['title'], array('controller' => 'topics', 'action' => 'view', $topic['Topic']['slug']));
 
-$canReply = ($user && $this->Forum->hasAccess('posts.create', array($topic['Topic']['status'], $topic['Forum']['accessReply']))); ?>
+$canReply = ($user && $this->Forum->hasAccess('Forum.Post', 'create', array($topic['Topic']['status'], $topic['Forum']['accessReply']))); ?>
 
 <div class="title">
 	<h2>
 		<?php if ($topic['Topic']['type'] > Topic::NORMAL) {
-			echo '<span>' . $this->Forum->options('topicTypes', $topic['Topic']['type']) . ':</span> ';
+			echo '<span>' . $this->Utility->enum('Forum.Topic', 'type', $topic['Topic']['type']) . ':</span> ';
+
 		} else if ($topic['Topic']['status'] == Topic::CLOSED) {
 			echo '<span>' . __d('forum', 'Closed') . ':</span> ';
 		}
@@ -116,7 +117,7 @@ if (!empty($topic['Poll']['id'])) { ?>
 							$isMod = $this->Forum->isMod($topic['Forum']['id']);
 
 							if ($topic['Topic']['firstPost_id'] == $post['Post']['id']) {
-								if ($isMod || ($topic['Topic']['status'] && $user['User']['id'] == $post['Post']['user_id'])) {
+								if ($isMod || ($topic['Topic']['status'] && $user['id'] == $post['Post']['user_id'])) {
 									$links[] = $this->Html->link(__d('forum', 'Edit Topic'), array('controller' => 'topics', 'action' => 'edit', $topic['Topic']['slug'], (!empty($topic['Poll']['id']) ? 'poll' : '')));
 								}
 
@@ -126,7 +127,7 @@ if (!empty($topic['Poll']['id'])) { ?>
 
 								$links[] = $this->Html->link(__d('forum', 'Report Topic'), array('controller' => 'topics', 'action' => 'report', $topic['Topic']['slug']));
 							} else {
-								if ($isMod || ($topic['Topic']['status'] && $user['User']['id'] == $post['Post']['user_id'])) {
+								if ($isMod || ($topic['Topic']['status'] && $user['id'] == $post['Post']['user_id'])) {
 									$links[] = $this->Html->link(__d('forum', 'Edit Post'), array('controller' => 'posts', 'action' => 'edit', $post['Post']['id']));
 									$links[] = $this->Html->link(__d('forum', 'Delete Post'), array('controller' => 'posts', 'action' => 'delete', $post['Post']['id']), array('confirm' => __d('forum', 'Are you sure you want to delete?')));
 								}
@@ -146,21 +147,26 @@ if (!empty($topic['Poll']['id'])) { ?>
 				</tr>
 				<tr>
 					<td valign="top" style="width: 25%">
-						<h4 class="username"><?php echo $this->Html->link($post['User'][$config['userMap']['username']], $this->Forum->profileUrl($post['User'])); ?></h4>
+						<h4 class="username"><?php echo $this->Html->link($post['User'][$userFields['username']], $this->Forum->profileUrl($post['User'])); ?></h4>
 
 						<?php echo $this->Forum->avatar($post) ?>
 
-						<strong><?php echo __d('forum', 'Total Topics'); ?>:</strong> <?php echo number_format($post['User']['ForumProfile']['totalTopics']); ?><br>
-						<strong><?php echo __d('forum', 'Total Posts'); ?>:</strong> <?php echo number_format($post['User']['ForumProfile']['totalPosts']); ?>
+						<?php if (!empty($post['User'][$userFields['totalTopics']])) { ?>
+							<strong><?php echo __d('forum', 'Total Topics'); ?>:</strong> <?php echo number_format($post['User'][$userFields['totalTopics']]); ?><br>
+						<?php } ?>
+
+						<?php if (!empty($post['User'][$userFields['totalPosts']])) { ?>
+							<strong><?php echo __d('forum', 'Total Posts'); ?>:</strong> <?php echo number_format($post['User'][$userFields['totalPosts']]); ?>
+						<?php } ?>
 					</td>
 					<td valign="top">
 						<div class="post">
 							<?php echo $this->Decoda->parse($post['Post']['content']); ?>
 						</div>
 
-						<?php if (!empty($post['User']['ForumProfile']['signature'])) { ?>
+						<?php if (!empty($post['User'][$userFields['signature']])) { ?>
 							<div class="signature">
-								<?php echo $this->Decoda->parse($post['User']['ForumProfile']['signature']); ?>
+								<?php echo $this->Decoda->parse($post['User'][$userFields['signature']]); ?>
 							</div>
 						<?php } ?>
 					</td>

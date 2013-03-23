@@ -9,8 +9,7 @@ App::uses('ForumAppController', 'Forum.Controller');
 
 /**
  * @property Post $Post
- * @property Profile $Profile
- * @property Report $Report
+ * @property ForumUser $ForumUser
  */
 class PostsController extends ForumAppController {
 
@@ -19,7 +18,7 @@ class PostsController extends ForumAppController {
 	 *
 	 * @var array
 	 */
-	public $uses = array('Forum.Post', 'Forum.Profile');
+	public $uses = array('Forum.Post', 'Forum.ForumUser');
 
 	/**
 	 * Redirect.
@@ -51,7 +50,7 @@ class PostsController extends ForumAppController {
 
 			if ($post_id = $this->Post->add($this->request->data['Post'])) {
 				if ($topic['Forum']['settingPostCount']) {
-					$this->Profile->increasePosts($user_id);
+					$this->ForumUser->increasePosts($user_id);
 				}
 
 				$this->ForumToolbar->updatePosts($post_id);
@@ -61,7 +60,7 @@ class PostsController extends ForumAppController {
 		} else if ($quote_id) {
 			if ($quote = $this->Post->getQuote($quote_id)) {
 				$this->request->data['Post']['content'] = sprintf('[quote="%s" date="%s"]%s[/quote]',
-					$quote['User'][$this->config['userMap']['username']],
+					$quote['User'][$this->config['User']['fieldMap']['username']],
 					$quote['Post']['created'],
 					$quote['Post']['content']
 				) . PHP_EOL;
@@ -123,8 +122,6 @@ class PostsController extends ForumAppController {
 	 * @param int $id
 	 */
 	public function report($id) {
-		$this->loadModel('Forum.Report');
-
 		$post = $this->Post->getById($id);
 		$user_id = $this->Auth->user('id');
 
@@ -137,7 +134,7 @@ class PostsController extends ForumAppController {
 			$this->request->data['Report']['item_id'] = $id;
 			$this->request->data['Report']['itemType'] = Report::POST;
 
-			if ($this->Report->save($this->request->data, true, array('item_id', 'itemType', 'user_id', 'comment'))) {
+			if ($this->AdminToolbar->reportItem(ItemReport::OFFENSIVE, $this->Post, $id, $this->request->data['Report']['comment'], $user_id)) {
 				$this->Session->setFlash(__d('forum', 'You have successfully reported this post! A moderator will review this post and take the necessary action.'));
 				unset($this->request->data['Report']);
 			}

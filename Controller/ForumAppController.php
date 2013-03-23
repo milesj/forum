@@ -7,6 +7,7 @@
 
 /**
  * @property ForumToolbarComponent $ForumToolbar
+ * @property AdminToolbarComponent $AdminToolbar
  */
 class ForumAppController extends AppController {
 
@@ -27,8 +28,8 @@ class ForumAppController extends AppController {
 		'Auth' => array(
 			'authorize' => array('Controller')
 		),
-		'Utility.AutoLogin',
-		'Forum.ForumToolbar'
+		'Forum.ForumToolbar',
+		'Admin.AdminToolbar'
 	);
 
 	/**
@@ -38,7 +39,8 @@ class ForumAppController extends AppController {
 	 */
 	public $helpers = array(
 		'Html', 'Session', 'Form', 'Time', 'Text',
-		'Utility.Breadcrumb', 'Utility.OpenGraph', 'Utility.Decoda',
+		'Utility.Breadcrumb', 'Utility.OpenGraph',
+		'Utility.Utility', 'Utility.Decoda',
 		'Forum.Forum'
 	);
 
@@ -57,35 +59,19 @@ class ForumAppController extends AppController {
 	public $settings = array();
 
 	/**
-	 * Run auto login logic.
-	 *
-	 * @param array $user
-	 * @return void
-	 */
-	public function _autoLogin($user) {
-		ClassRegistry::init('Forum.Profile')->login($user['User']['id']);
-
-		$this->Session->delete('Forum');
-	}
-
-	/**
 	 * Validate the user has the correct ACL permissions.
 	 *
 	 * @param array $user
 	 * @return bool
 	 */
 	public function isAuthorized($user) {
-		if (isset($this->request->params['admin'])) {
-			return $this->Session->read('Forum.isAdmin');
-		}
-
-		// Admins can do everything
 		if ($this->Session->read('Forum.isAdmin')) {
 			return true;
 		}
 
 		$controller = strtolower($this->name);
 		$action = $this->request->params['action'];
+		$model = 'Forum.';
 
 		// Change to polls when applicable
 		if (isset($this->request->params['pass'][1]) && $this->request->params['pass'][1] === 'poll') {
@@ -95,6 +81,13 @@ class ForumAppController extends AppController {
 		// Allow for controllers that don't have ACL
 		if (!in_array($controller, array('stations', 'topics', 'posts', 'polls'))) {
 			return true;
+		}
+
+		switch ($controller) {
+			case 'stations':	$model .= 'Forum'; break;
+			case 'topics':		$model .= 'Topic'; break;
+			case 'posts':		$model .= 'Post'; break;
+			case 'polls':		$model .= 'Poll'; break;
 		}
 
 		// Validate based on action
@@ -117,7 +110,7 @@ class ForumAppController extends AppController {
 					'delete' => 'delete'
 				);
 
-				return $this->Session->read(sprintf('Forum.permissions.%s.%s', $controller, $crud[$action]));
+				return $this->AdminToolbar->hasAccess($model, $crud[$action]);
 			break;
 		}
 
@@ -133,55 +126,22 @@ class ForumAppController extends AppController {
 		$this->set('menuTab', '');
 
 		// Settings
-		$this->config = Configure::read('Forum');
+		$this->config = Configure::read();
 		$this->settings = Configure::read('Forum.settings');
-		$this->layout = $this->config['viewLayout'];
-
-		// Admin
-		if (isset($this->request->params['admin'])) {
-			$this->layout = 'admin';
-		}
+		$this->layout = $this->config['Forum']['viewLayout'];
 
 		// Localization
-		$locale = $this->Auth->user('ForumProfile.locale') ?: $this->settings['defaultLocale'];
+		$locale = $this->Auth->user(Configure::read('User.fieldMap.locale')) ?: $this->settings['defaultLocale'];
 		Configure::write('Config.language', $locale);
-		setlocale(LC_ALL, $locale . 'UTF8', $locale . 'UTF-8', $locale, 'eng.UTF8', 'eng.UTF-8', 'eng', 'en_US');
-
-		// Authorization
-		$referrer = $this->referer();
-		$routes = $this->config['routes'];
-
-		if (!$referrer || strpos($referrer, 'users/login') !== false) {
-			$referrer = array('plugin' => 'forum', 'controller' => 'forum', 'action' => 'index');
-		}
-
-		$this->Auth->loginAction = $routes['login'];
-		$this->Auth->loginRedirect = $referrer;
-		$this->Auth->logoutRedirect = $referrer;
-
-		// AutoLogin
-		$this->AutoLogin->settings = array(
-			'model' => USER_MODEL,
-			'username' => $this->config['userMap']['username'],
-			'password' => $this->config['userMap']['password'],
-			'plugin' => $routes['login']['plugin'],
-			'controller' => $routes['login']['controller'],
-			'loginAction' => $routes['login']['action'],
-			'logoutAction' => $routes['logout']['action']
-		);
 	}
 
 	/**
 	 * Before render.
 	 */
 	public function beforeRender() {
-		$user = $this->Auth->user();
-
-		if ($user) {
-			$user = array('User' => $user);
-		}
-
-		$this->set('user', $user);
+		$this->set('user', $this->Auth->user());
+		$this->set('userFields', $this->config['User']['fieldMap']);
+		$this->set('userRoutes', $this->config['User']['routes']);
 		$this->set('config', $this->config);
 		$this->set('settings', $this->settings);
 	}

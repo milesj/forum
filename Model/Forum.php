@@ -15,6 +15,7 @@ class Forum extends ForumAppModel {
 	 * @var array
 	 */
 	public $actsAs = array(
+		'Tree',
 		'Utility.Sluggable' => array(
 			'length' => 100
 		)
@@ -28,8 +29,8 @@ class Forum extends ForumAppModel {
 	public $belongsTo = array(
 		'Parent' => array(
 			'className' => 'Forum.Forum',
-			'foreignKey' => 'forum_id',
-			'fields' => array('Parent.id', 'Parent.title', 'Parent.slug', 'Parent.forum_id')
+			'foreignKey' => 'parent_id',
+			'fields' => array('Parent.id', 'Parent.title', 'Parent.slug', 'Parent.parent_id')
 		),
 		'LastTopic' => array(
 			'className' => 'Forum.Topic',
@@ -42,6 +43,10 @@ class Forum extends ForumAppModel {
 		'LastUser' => array(
 			'className' => USER_MODEL,
 			'foreignKey' => 'lastUser_id'
+		),
+		'RequestObject' => array(
+			'className' => 'Admin.RequestObject',
+			'foreignKey' => 'aro_id'
 		)
 	);
 
@@ -57,13 +62,13 @@ class Forum extends ForumAppModel {
 		),
 		'Children' => array(
 			'className' => 'Forum.Forum',
-			'foreignKey' => 'forum_id',
+			'foreignKey' => 'parent_id',
 			'order' => array('Children.orderNo' => 'ASC'),
 			'dependent' => false
 		),
 		'SubForum' => array(
 			'className' => 'Forum.Forum',
-			'foreignKey' => 'forum_id',
+			'foreignKey' => 'parent_id',
 			'order' => array('SubForum.orderNo' => 'ASC'),
 			'dependent' => false
 		),
@@ -85,26 +90,32 @@ class Forum extends ForumAppModel {
 	 * @var array
 	 */
 	public $validate = array(
-		'title' => 'notEmpty',
+		'title' => array(
+			'rule' => 'notEmpty',
+			'required' => true
+		),
 		'description' => 'notEmpty',
+		'status' => array(
+			'required' => true,
+		),
 		'orderNo' => array(
 			'numeric' => array(
-				'rule' => 'numeric',
-				'message' => 'Please supply a number'
+				'rule' => 'numeric'
 			),
 			'notEmpty' => array(
-				'rule' => 'notEmpty',
-				'message' => 'This setting is required'
+				'rule' => 'notEmpty'
 			)
 		)
 	);
 
 	/**
-	 * Enum.
+	 * Admin settings.
 	 *
 	 * @var array
 	 */
-	public $enum = array();
+	public $admin = array(
+		'iconClass' => 'icon-list-alt'
+	);
 
 	/**
 	 * Update all forums by going up the parent chain.
@@ -119,8 +130,8 @@ class Forum extends ForumAppModel {
 
 		$forum = $this->getById($id);
 
-		if ($forum['Forum']['forum_id'] != 0) {
-			$this->chainUpdate($forum['Forum']['forum_id'], $data);
+		if ($forum['Forum']['parent_id'] != null) {
+			$this->chainUpdate($forum['Forum']['parent_id'], $data);
 		}
 	}
 
@@ -159,97 +170,32 @@ class Forum extends ForumAppModel {
 	public function getAdminIndex() {
 		return $this->find('all', array(
 			'order' => array('Forum.orderNo' => 'ASC'),
-			'conditions' => array('Forum.forum_id' => 0),
+			'conditions' => array('Forum.parent_id' => null),
 			'contain' => array('Children' => array('SubForum'))
 		));
 	}
 
 	/**
-	 * Get a grouped hierarchy.
+	 * Get the hierarchy.
 	 *
 	 * @param int $exclude
 	 * @return array
 	 */
-	public function getGroupedHierarchy($exclude = null) {
-		$conditions = array(
-			'Forum.status' => self::OPEN,
-			'Forum.accessRead' => self::YES
-		);
+	public function getHierarchy($public = true, $exclude = null) {
+		$conditions = array();
+
+		if ($public) {
+			$conditions = array(
+				'Forum.status' => self::OPEN,
+				'Forum.accessRead' => self::YES
+			);
+		}
 
 		if (is_numeric($exclude)) {
 			$conditions['Forum.id !='] = $exclude;
 		}
 
-		$forums = $this->find('all', array(
-			'fields' => array('Forum.id', 'Forum.title', 'Forum.forum_id', 'Forum.orderNo'),
-			'conditions' => $conditions,
-			'order' => array('Forum.orderNo' => 'ASC'),
-			'contain' => false
-		));
-
-		$root = array();
-		$categories = array();
-		$hierarchy = array();
-
-		foreach ($forums as $forum) {
-			if ($forum['Forum']['forum_id'] == 0) {
-				$root[] = $forum['Forum'];
-			} else {
-				$categories[$forum['Forum']['forum_id']][$forum['Forum']['orderNo']] = $forum['Forum'];
-			}
-		}
-
-		foreach ($root as $forum) {
-			if (isset($categories[$forum['id']])) {
-				$hierarchy[$forum['title']] = $this->_buildOptions($categories, $forum);
-			}
-		}
-
-		return $hierarchy;
-	}
-
-	/**
-	 * Get the hierarchy.
-	 *
-	 * @param bool $drill
-	 * @param int $exclude
-	 * @return array
-	 */
-	public function getHierarchy($drill = false, $exclude = null) {
-		$conditions = array();
-
-		if (is_numeric($exclude)) {
-			$conditions = array(
-				'Forum.id !=' => $exclude,
-				'Forum.forum_id !=' => $exclude
-			);
-		}
-
-		$forums = $this->find('all', array(
-			'conditions' => $conditions,
-			'fields' => array('Forum.id', 'Forum.title', 'Forum.forum_id'),
-			'order' => array('Forum.orderNo' => 'ASC'),
-			'contain' => false
-		));
-
-		$root = array();
-		$categories = array();
-		$hierarchy = array();
-
-		foreach ($forums as $forum) {
-			if ($forum['Forum']['forum_id'] == 0) {
-				$root[] = $forum['Forum'];
-			} else {
-				$categories[$forum['Forum']['forum_id']][] = $forum['Forum'];
-			}
-		}
-
-		foreach ($root as $forum) {
-			$hierarchy[$forum['id']] = $forum['title'];
-			$hierarchy += $this->_buildOptions($categories, $forum, $drill, 1);
-		}
-
-		return $hierarchy;
+		return $this->generateTreeList($conditions, null, null, ' -- ');
 	}
 
 	/**
@@ -263,7 +209,7 @@ class Forum extends ForumAppModel {
 		return $this->find('all', array(
 			'order' => array('Forum.orderNo' => 'ASC'),
 			'conditions' => array(
-				'Forum.forum_id' => 0,
+				'Forum.parent_id' => null,
 				'Forum.status' => self::OPEN,
 				'Forum.accessRead' => self::YES,
 				'Forum.aro_id' => $groups
@@ -297,70 +243,9 @@ class Forum extends ForumAppModel {
 	 */
 	public function moveAll($start_id, $moved_id) {
 		return $this->updateAll(
-			array('Forum.forum_id' => $moved_id),
-			array('Forum.forum_id' => $start_id)
+			array('Forum.parent_id' => $moved_id),
+			array('Forum.parent_id' => $start_id)
 		);
-	}
-
-	/**
-	 * Update the order of the forums.
-	 *
-	 * @param array $data
-	 * @return bool
-	 */
-	public function updateOrder($data) {
-		if (isset($data['_Token'])) {
-			unset($data['_Token']);
-		}
-
-		if ($data) {
-			foreach ($data as $model => $fields) {
-				foreach ($fields as $field) {
-					$order = $field['orderNo'];
-
-					if (!is_numeric($order)) {
-						$order = 0;
-					}
-
-					$this->id = $field['id'];
-					$this->save(array('orderNo' => $order), false, array('orderNo'));
-				}
-			}
-		}
-
-		return true;
-	}
-
-	/**
-	 * Build the list of select options.
-	 *
-	 * @param array $categories
-	 * @param array $forum
-	 * @param bool $drill
-	 * @param int $depth
-	 * @return array
-	 */
-	protected function _buildOptions($categories, $forum, $drill = true, $depth = 0) {
-		$options = array();
-
-		if (isset($categories[$forum['id']])) {
-			$children = $categories[$forum['id']];
-			ksort($children);
-
-			foreach ($children as $child) {
-				$options[$child['id']] = str_repeat(' - ', ($depth * 4)) . $child['title'];
-
-				if (isset($categories[$child['id']]) && $drill) {
-					$babies = $this->_buildOptions($categories, $child, $drill, ($depth + 1));
-
-					if ($babies) {
-						$options = $options + $babies;
-					}
-				}
-			}
-		}
-
-		return $options;
 	}
 
 }

@@ -1649,21 +1649,43 @@ msgstr ""
 
 #: Custom Strings
 
-msgid "aro.administrator"
-msgstr "Administrator"
-
-msgid "aro.superModerator"
-msgstr "Super Moderator"
-
-msgid "status.pending"
+# User
+msgid "user.status.0"
 msgstr "Pending"
 
-msgid "status.active"
+msgid "user.status.1"
 msgstr "Active"
 
-msgid "status.banned"
+msgid "user.status.2"
 msgstr "Banned"
 
+# Forum
+msgid "forum.status.0"
+msgstr "Hidden"
+
+msgid "forum.status.1"
+msgstr "Visible"
+
+# Topic
+msgid "topic.status.0"
+msgstr "Closed"
+
+msgid "topic.status.1"
+msgstr "Open"
+
+msgid "topic.type.0"
+msgstr "Normal"
+
+msgid "topic.type.1"
+msgstr "Sticky"
+
+msgid "topic.type.2"
+msgstr "Important"
+
+msgid "topic.type.3"
+msgstr "Announcement"
+
+# Controllers
 msgid "Not Found"
 msgstr ""
 

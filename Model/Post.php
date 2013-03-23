@@ -33,8 +33,30 @@ class Post extends ForumAppModel {
 	 *
 	 * @var array
 	 */
-	public $validate = array(
-		'content' => 'notEmpty'
+	public $validations = array(
+		'default' => array(
+			'forum_id' => array(
+				'rule' => 'notEmpty'
+			),
+			'topic_id' => array(
+				'rule' => 'notEmpty'
+			),
+			'user_id' => array(
+				'rule' => 'notEmpty'
+			),
+			'content' => array(
+				'rule' => 'notEmpty'
+			)
+		)
+	);
+
+	/**
+	 * Admin settings.
+	 *
+	 * @var array
+	 */
+	public $admin = array(
+		'iconClass' => 'icon-comments'
 	);
 
 	/**

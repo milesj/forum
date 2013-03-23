@@ -34,7 +34,7 @@ if (isset($forum['SubForum'])) {
 			<em><?php echo $this->Time->timeAgoInWords($lastTime, array('userOffset' => $this->Forum->timezone())); ?></em>
 
 			<?php if (!empty($forum['LastUser']['id'])) { ?>
-				<span class="gray"><?php echo __d('forum', 'by'); ?> <?php echo $this->Html->link($forum['LastUser'][$config['userMap']['username']], $this->Forum->profileUrl($forum['LastUser'])); ?></span>
+				<span class="gray"><?php echo __d('forum', 'by'); ?> <?php echo $this->Html->link($forum['LastUser'][$userFields['username']], $this->Forum->profileUrl($forum['LastUser'])); ?></span>
 			<?php }
 		} else { ?>
 			<em class="gray"><?php echo __d('forum', 'No latest activity to display'); ?></em>

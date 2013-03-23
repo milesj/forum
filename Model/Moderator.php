@@ -29,9 +29,24 @@ class Moderator extends ForumAppModel {
 	 *
 	 * @var array
 	 */
-	public $validate = array(
-		'user_id' => 'notEmpty',
-		'forum_id' => 'notEmpty'
+	public $validations = array(
+		'default' => array(
+			'user_id' => array(
+				'rule' => 'notEmpty'
+			),
+			'forum_id' => array(
+				'rule' => 'notEmpty'
+			)
+		)
+	);
+
+	/**
+	 * Admin settings.
+	 *
+	 * @var array
+	 */
+	public $admin = array(
+		'iconClass' => 'icon-legal'
 	);
 
 	/**
@@ -89,7 +104,7 @@ class Moderator extends ForumAppModel {
 	 */
 	public function getList() {
 		return $this->find('all', array(
-			'contain' => array('Forum', 'User' => array('ForumProfile')),
+			'contain' => array('Forum', 'User'),
 			'order' => array('Moderator.forum_id' => 'ASC'),
 			'cache' => __METHOD__
 		));

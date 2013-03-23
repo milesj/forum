@@ -54,7 +54,7 @@ if ($forums) {
 
     <?php if ($newestUser) { ?>
 		<div class="newestUser">
-			<strong><?php echo __d('forum', 'Newest User'); ?>:</strong> <?php echo $this->Html->link($newestUser['User'][$config['userMap']['username']], $this->Forum->profileUrl($newestUser['User'])); ?>
+			<strong><?php echo __d('forum', 'Newest User'); ?>:</strong> <?php echo $this->Html->link($newestUser['User'][$userFields['username']], $this->Forum->profileUrl($newestUser['User'])); ?>
 		</div>
    	<?php }
 
@@ -62,7 +62,7 @@ if ($forums) {
 		$onlineUsers = array();
 
 		foreach ($whosOnline as $online) {
-			$onlineUsers[] = $this->Html->link($online['User'][$config['userMap']['username']], $this->Forum->profileUrl($online['User']));
+			$onlineUsers[] = $this->Html->link($online['User'][$userFields['username']], $this->Forum->profileUrl($online['User']));
 		} ?>
 
 		<div class="whosOnline">

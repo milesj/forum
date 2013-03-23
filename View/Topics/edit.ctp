@@ -20,8 +20,8 @@ $this->Breadcrumb->add(__d('forum', 'Edit Topic'), array('controller' => 'topics
 
 		if ($this->Forum->isMod($topic['Forum']['id'])) {
 			echo $this->Form->input('forum_id', array('label' => __d('forum', 'Forum'), 'options' => $forums, 'empty' => '-- ' . __d('forum', 'Select a Forum') . ' --'));
-			echo $this->Form->input('status', array('label' => __d('forum', 'Status'), 'options' => $this->Forum->options('topicStatus')));
-			echo $this->Form->input('type', array('options' => $this->Forum->options('topicTypes'), 'label' => __d('forum', 'Type')));
+			echo $this->Form->input('status', array('label' => __d('forum', 'Status'), 'options' => $this->Utility->enum('Forum.Topic', 'status')));
+			echo $this->Form->input('type', array('options' => $this->Utility->enum('Forum.Topic', 'type'), 'label' => __d('forum', 'Type')));
 		} else {
 			echo $this->Form->input('forum_id', array('type' => 'hidden'));
 		}

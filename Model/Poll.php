@@ -40,6 +40,28 @@ class Poll extends ForumAppModel {
 	);
 
 	/**
+	 * Validation.
+	 *
+	 * @var array
+	 */
+	public $validations = array(
+		'default' => array(
+			'topic_id' => array(
+				'rule' => 'notEmpty'
+			)
+		)
+	);
+
+	/**
+	 * Admin settings.
+	 *
+	 * @var array
+	 */
+	public $admin = array(
+		'iconClass' => 'icon-bar-chart'
+	);
+
+	/**
 	 * Add a poll attached to a topic.
 	 *
 	 * @param array $data

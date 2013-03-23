@@ -9,7 +9,7 @@ App::uses('ForumAppController', 'Forum.Controller');
 
 /**
  * @property Topic $Topic
- * @property Profile $Profile
+ * @property ForumUser $ForumUser
  * @property Subscription $Subscription
  * @property AjaxHandlerComponent $AjaxHandler
  */
@@ -20,7 +20,7 @@ class TopicsController extends ForumAppController {
 	 *
 	 * @var array
 	 */
-	public $uses = array('Forum.Topic', 'Forum.Profile', 'Forum.Subscription');
+	public $uses = array('Forum.Topic', 'Forum.Profile', 'Forum.Subscription', 'Forum.ForumUser');
 
 	/**
 	 * Components.
@@ -37,9 +37,7 @@ class TopicsController extends ForumAppController {
 	public $paginate = array(
 		'Post' => array(
 			'order' => array('Post.created' => 'ASC'),
-			'contain' => array(
-				'User' => array('ForumProfile')
-			)
+			'contain' => array('User')
 		)
 	);
 
@@ -101,7 +99,7 @@ class TopicsController extends ForumAppController {
 		$this->set('pageTitle', $pageTitle);
 		$this->set('type', $type);
 		$this->set('forum', $forum);
-		$this->set('forums', $this->Topic->Forum->getGroupedHierarchy());
+		$this->set('forums', $this->Topic->Forum->getHierarchy());
 	}
 
 	/**
@@ -135,7 +133,7 @@ class TopicsController extends ForumAppController {
 		}
 
 		$this->set('topic', $topic);
-		$this->set('forums', $this->Topic->Forum->getGroupedHierarchy());
+		$this->set('forums', $this->Topic->Forum->getHierarchy());
 	}
 
 	/**

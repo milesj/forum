@@ -126,15 +126,9 @@ Configure::write('Forum.locales', array(
 ));
 
 /**
- * List of Cake locales to Decoda locales.
+ * Add forum specific user field mappings.
  */
-Configure::write('Forum.decodaLocales', array(
-	'eng' => 'en-us',
-	'spa' => 'es-mx',
-	'swe' => 'sv-se',
-	/*'deu' => 'de-de',
-	'fre' => 'fr-fr',
-	'rus' => 'ru-ru',
-	'ind' => 'id-id',
-	'bul' => 'bg-bg'*/
+Configure::write('User.fieldMap', Configure::read('User.fieldMap') + array(
+	'totalPosts'	=> 'totalPosts',
+	'totalTopics'	=> 'totalTopics'
 ));

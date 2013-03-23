@@ -4,6 +4,10 @@ UPDATE `{prefix}forums` SET `accessPost` = 1 WHERE `accessPost` != 0;
 UPDATE `{prefix}forums` SET `accessPoll` = 1 WHERE `accessPoll` != 0;
 UPDATE `{prefix}forums` SET `accessReply` = 1 WHERE `accessReply` != 0;
 
-DROP TABLE `{prefix}access`, `{prefix}access_levels`, `{prefix}settings`;
+DROP TABLE `{prefix}access`, `{prefix}access_levels`, `{prefix}settings`, `{prefix}reported`;
 
-ALTER TABLE `{prefix}forums` CHANGE `access_level_id` `aro_id` INT(11) NOT NULL DEFAULT '0';
+ALTER TABLE `{prefix}forums`
+	CHANGE `forum_id` `parent_id` INT( 11 ) NULL DEFAULT NULL,
+	CHANGE `access_level_id` `aro_id` INT(11) NOT NULL DEFAULT '0',
+	ADD `lft` INT NULL DEFAULT NULL AFTER `lastUser_id`,
+	ADD `rght` INT NULL DEFAULT NULL AFTER `lft`;

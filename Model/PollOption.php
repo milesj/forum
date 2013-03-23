@@ -10,6 +10,13 @@ App::uses('ForumAppModel', 'Forum.Model');
 class PollOption extends ForumAppModel {
 
 	/**
+	 * Display field.
+	 *
+	 * @var string
+	 */
+	public $displayField = 'option';
+
+	/**
 	 * Belongs to.
 	 *
 	 * @var array
@@ -32,6 +39,31 @@ class PollOption extends ForumAppModel {
 				'strip' => true
 			)
 		)
+	);
+
+	/**
+	 * Validation.
+	 *
+	 * @var array
+	 */
+	public $validations = array(
+		'default' => array(
+			'poll_id' => array(
+				'rule' => 'notEmpty'
+			),
+			'option' => array(
+				'rule' => 'notEmpty'
+			)
+		)
+	);
+
+	/**
+	 * Admin settings.
+	 *
+	 * @var array
+	 */
+	public $admin = array(
+		'iconClass' => 'icon-list'
 	);
 
 	/**

@@ -12,11 +12,11 @@ if ($posts) {
 		$link = array('plugin' => 'forum', 'controller' => 'topics', 'action' => 'view', $topic['Topic']['slug'], '#' => 'post-' . $item['Post']['id']);
 
 		echo $this->Rss->item(array(), array(
-			'title' => 'Post #' . $item['Post']['id'] . ' - ' . $item['User'][$config['userMap']['username']],
+			'title' => 'Post #' . $item['Post']['id'] . ' - ' . $item['User'][$userFields['username']],
 			'link' => $link,
 			'guid' => array('url' => $link, 'isPermaLink' => 'true'),
 			'description' => $this->Decoda->parse($item['Post']['content'], array(), false),
-			'author' => $item['User'][$config['userMap']['username']],
+			'author' => $item['User'][$userFields['username']],
 			'pubDate' => $item['Post']['created']
 		));
 	}

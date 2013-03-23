@@ -91,25 +91,36 @@ class Topic extends ForumAppModel {
 	 *
 	 * @var array
 	 */
-	public $validate = array(
-		'title' => 'notEmpty',
-		'forum_id' => 'notEmpty',
-		'expires' => array(
-			'rule' => 'numeric',
-			'message' => 'Expiration must be a numerical value for days',
-			'allowEmpty' => true
-		),
-		'options' => array(
-			'checkOptions' => array(
-				'rule' => array('checkOptions'),
-				'message' => 'You must supply a minimum of 2 options and a max of 10'
+	public $validations = array(
+		'default' => array(
+			'title' => array(
+				'rule' => 'notEmpty'
 			),
-			'notEmpty' => array(
+			'forum_id' => array(
 				'rule' => 'notEmpty',
-				'message' => 'Please supply some answer options for your poll'
+			),
+			'user_id' => array(
+				'rule' => 'notEmpty',
+			),
+			'expires' => array(
+				'rule' => 'numeric',
+				'message' => 'Expiration must be a numerical value for days',
+				'allowEmpty' => true
+			),
+			'options' => array(
+				'checkOptions' => array(
+					'rule' => array('checkOptions'),
+					'message' => 'You must supply a minimum of 2 options and a max of 10'
+				),
+				'notEmpty' => array(
+					'rule' => 'notEmpty',
+					'message' => 'Please supply some answer options for your poll'
+				)
+			),
+			'content' => array(
+				'rule' => 'notEmpty'
 			)
-		),
-		'content' => 'notEmpty'
+		)
 	);
 
 	/**
@@ -124,6 +135,15 @@ class Topic extends ForumAppModel {
 			self::IMPORTANT => 'IMPORTANT',
 			self::ANNOUNCEMENT => 'ANNOUNCEMENT'
 		)
+	);
+
+	/**
+	 * Admin settings.
+	 *
+	 * @var array
+	 */
+	public $admin = array(
+		'iconClass' => 'icon-comment'
 	);
 
 	/**

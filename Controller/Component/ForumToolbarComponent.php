@@ -5,6 +5,10 @@
  * @link		http://milesj.me/code/cakephp/forum
  */
 
+/**
+ * @property SessionComponent $Session
+ * @property AuthComponent $Auth
+ */
 class ForumToolbarComponent extends Component {
 
 	/**
@@ -12,7 +16,7 @@ class ForumToolbarComponent extends Component {
 	 *
 	 * @var array
 	 */
-	public $components = array('Session');
+	public $components = array('Session', 'Auth');
 
 	/**
 	 * Controller instance.
@@ -44,69 +48,22 @@ class ForumToolbarComponent extends Component {
 			return;
 		}
 
-		$user_id = $this->Controller->Auth->user('id');
-		$banned = ($this->Controller->Auth->user(Configure::read('User.fieldMap.status')) == Configure::read('User.statusMap.banned'));
-		$lastVisit = date('Y-m-d H:i:s');
+		$user_id = $this->Auth->user('id');
+		$isBanned = ($this->Auth->user(Configure::read('User.fieldMap.status')) == Configure::read('User.statusMap.banned'));
 		$isAdmin = false;
 		$isSuper = false;
-		$groups = array(0); // 0 is everything else
 		$moderates = array();
-		$permissions = array(
-			'topics' => array(
-				'create' => true,
-				'read' => true,
-				'update' => true,
-				'delete' => true
-			),
-			'posts' => array(
-				'create' => true,
-				'read' => true,
-				'update' => true,
-				'delete' => true
-			),
-			'polls' => array(
-				'create' => true,
-				'read' => true,
-				'update' => true,
-				'delete' => true
-			)
-		);
+		$permissions = array();
 
-		if ($user_id && !$banned) {
-			$profile = ClassRegistry::init('Forum.Profile')->getUserProfile($user_id);
-			$lastVisit = $profile['Profile']['lastLogin'];
+		if ($user_id && !$isBanned) {
+			$aro = ClassRegistry::init('Admin.RequestObject');
 
-			// Generate permissions list
-			if ($access = ClassRegistry::init('Forum.Access')->getPermissions($user_id)) {
-				$aroMap = Configure::read('Forum.aroMap');
+			// Get request access
+			$isAdmin = $aro->isAdmin($user_id);
+			$isSuper = $aro->isSuperMod($user_id);
 
-				foreach ($access as $perm) {
-					if ($perm['Aro']['alias'] === $aroMap['admin'] && !$isAdmin) {
-						$isAdmin = true;
-					}
-
-					if ($perm['Aro']['alias'] === $aroMap['superMod'] && !$isSuper) {
-						$isSuper = true;
-					}
-
-					// Save group IDs
-					$groups[] = (int) $perm['Aro']['id'];
-
-					// Save permissions
-					foreach ($perm['Permission'] as $action => $can) {
-						if (substr($action, 0, 1) !== '_') {
-							continue;
-						}
-
-						$permissions[str_replace('forum.', '', $perm['Aco']['alias'])][str_replace('_', '', $action)] = (bool) $can;
-					}
-				}
-			}
-
-			// Save more data if they are admin
-			if ($isAdmin) {
-				$groups = array_merge($groups, array_keys(ClassRegistry::init('Forum.Access')->getList()));
-			}
+			// Get permissions
+			$permissions = $aro->getCrudPermissions($user_id, 'Forum.');
 
 			// Get moderated forum IDs
 			$moderates = ClassRegistry::init('Forum.Moderator')->getModerations($user_id);
@@ -118,10 +75,9 @@ class ForumToolbarComponent extends Component {
 
 		$this->Session->write('Forum.isAdmin', $isAdmin);
 		$this->Session->write('Forum.isSuper', $isSuper);
-		$this->Session->write('Forum.groups', array_values(array_unique($groups)));
 		$this->Session->write('Forum.permissions', $permissions);
 		$this->Session->write('Forum.moderates', $moderates);
-		$this->Session->write('Forum.lastVisit', $lastVisit);
+		$this->Session->write('Forum.lastVisit', date('Y-m-d H:i:s'));
 		$this->Session->write('Forum.isBrowsing', true);
 	}
 
@@ -176,7 +132,8 @@ class ForumToolbarComponent extends Component {
 			return $url;
 		}
 
-		return $this->Controller->redirect($url);
+		$this->Controller->redirect($url);
+		return true;
 	}
 
 	/**
@@ -273,7 +230,7 @@ class ForumToolbarComponent extends Component {
 
 		// Does the user own this item?
 		if (isset($validators['ownership'])) {
-			if ($this->Controller->Auth->user('id') != $validators['ownership']) {
+			if ($this->Auth->user('id') != $validators['ownership']) {
 				throw new UnauthorizedException();
 			}
 		}

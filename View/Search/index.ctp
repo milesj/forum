@@ -45,7 +45,7 @@ if ($searching) { ?>
 				<tr>
 					<th colspan="2"><?php echo $this->Paginator->sort('Topic.title', __d('forum', 'Topic')); ?></th>
 					<th><?php echo $this->Paginator->sort('Topic.forum_id', __d('forum', 'Forum')); ?></th>
-					<th><?php echo $this->Paginator->sort('User.' . $config['userMap']['username'], __d('forum', 'Author')); ?></th>
+					<th><?php echo $this->Paginator->sort('User.' . $userFields['username'], __d('forum', 'Author')); ?></th>
 					<th><?php echo $this->Paginator->sort('Topic.created', __d('forum', 'Created')); ?></th>
 					<th><?php echo $this->Paginator->sort('Topic.post_count', __d('forum', 'Posts')); ?></th>
 					<th><?php echo $this->Paginator->sort('Topic.view_count', __d('forum', 'Views')); ?></th>

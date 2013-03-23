@@ -38,7 +38,7 @@ class SearchController extends ForumAppController {
 	 */
 	public function index($type = '') {
 		$searching = false;
-		$forums = $this->Topic->Forum->getGroupedHierarchy();
+		$forums = $this->Topic->Forum->getHierarchy();
 		$orderBy = array(
 			'LastPost.created' => __d('forum', 'Last post time'),
 			'Topic.created' => __d('forum', 'Topic created time'),
@@ -69,14 +69,14 @@ class SearchController extends ForumAppController {
 			}
 
 			if (!empty($this->request->data['Topic']['byUser'])) {
-				$this->paginate['Topic']['conditions']['User.' . $this->config['userMap']['username'] . ' LIKE'] = '%' . Sanitize::clean($this->request->data['Topic']['byUser']) . '%';
+				$this->paginate['Topic']['conditions']['User.' . $this->config['User']['fieldMap']['username'] . ' LIKE'] = '%' . Sanitize::clean($this->request->data['Topic']['byUser']) . '%';
 			}
 
 			if (empty($this->request->data['Topic']['orderBy']) || !isset($orderBy[$this->request->data['Topic']['orderBy']])) {
 				$this->request->data['Topic']['orderBy'] = 'LastPost.created';
 			}
 
-			$this->paginate['Topic']['conditions']['Forum.accessRead'] = true;
+			$this->paginate['Topic']['conditions']['Forum.accessRead'] = Forum::YES;
 			$this->paginate['Topic']['order'] = array($this->request->data['Topic']['orderBy'] => 'DESC');
 			$this->paginate['Topic']['limit'] = $this->settings['topicsPerPage'];
 

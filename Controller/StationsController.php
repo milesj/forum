@@ -146,7 +146,7 @@ class StationsController extends ForumAppController {
 
 		$this->set('forum', $forum);
 		$this->set('topics', $this->paginate('Topic'));
-		$this->set('forums', $this->Forum->getGroupedHierarchy());
+		$this->set('forums', $this->Forum->getHierarchy());
 	}
 
 	/**
@@ -187,118 +187,6 @@ class StationsController extends ForumAppController {
 			'success' => $success,
 			'data' => $data
 		));
-	}
-
-	/**
-	 * Admin index.
-	 */
-	public function admin_index() {
-		if ($this->request->data) {
-			$this->Forum->updateOrder($this->request->data);
-			$this->Session->setFlash(__d('forum', 'The order of the forums have been updated!'));
-		}
-
-		$this->set('forums', $this->Forum->getAdminIndex());
-	}
-
-	/**
-	 * Add a forum.
-	 */
-	public function admin_add() {
-		if ($this->request->data) {
-			if (empty($this->request->data['Forum']['forum_id'])) {
-				$this->request->data['Forum']['forum_id'] = 0;
-			}
-
-			if (empty($this->request->data['Forum']['aro_id'])) {
-				$this->request->data['Forum']['aro_id'] = 0;
-			}
-
-			if ($this->Forum->save($this->request->data, true)) {
-				$this->Forum->deleteCache('Forum::getIndex');
-
-				$this->Session->setFlash(sprintf(__d('forum', 'The %s forum has been added'), '<strong>' . $this->request->data['Forum']['title'] . '</strong>'));
-				$this->redirect(array('controller' => 'stations', 'action' => 'index', 'admin' => true));
-			}
-		}
-
-		$this->set('method', 'add');
-		$this->set('forums', $this->Forum->getHierarchy());
-		$this->render('admin_form');
-	}
-
-	/**
-	 * Edit a forum.
-	 *
-	 * @param int $id
-	 */
-	public function admin_edit($id) {
-		$forum = $this->Forum->getById($id);
-
-		$this->ForumToolbar->verifyAccess(array(
-			'exists' => $forum
-		));
-
-		if ($this->request->data) {
-			$this->Forum->id = $id;
-
-			if (empty($this->request->data['Forum']['forum_id']) || $this->request->data['Forum']['forum_id'] == $id) {
-				$this->request->data['Forum']['forum_id'] = 0;
-			}
-
-			if (empty($this->request->data['Forum']['aro_id'])) {
-				$this->request->data['Forum']['aro_id'] = 0;
-			}
-
-			if ($this->Forum->save($this->request->data, true)) {
-				$this->Forum->deleteCache('Forum::getIndex');
-				$this->Forum->deleteCache(array('Forum::getBySlug', $forum['Forum']['slug']));
-
-				$this->Session->setFlash(sprintf(__d('forum', 'The %s forum has been updated'), '<strong>' . $forum['Forum']['title'] . '</strong>'));
-				$this->redirect(array('controller' => 'stations', 'action' => 'index', 'admin' => true));
-			}
-		} else {
-			$this->request->data = $forum;
-		}
-
-		$this->set('method', 'edit');
-		$this->set('forums', $this->Forum->getHierarchy());
-		$this->render('admin_form');
-	}
-
-	/**
-	 * Delete a forum.
-	 *
-	 * @param int $id
-	 */
-	public function admin_delete($id) {
-		$forum = $this->Forum->getById($id);
-
-		$this->ForumToolbar->verifyAccess(array(
-			'exists' => $forum
-		));
-
-		if ($this->request->data) {
-			if ($this->request->data['Forum']['move_topics'] == $id) {
-				$this->Forum->invalidate('move_topics', 'Target destination cannot be itself');
-
-			} else if ($this->request->data['Forum']['move_forums'] == $id) {
-				$this->Forum->invalidate('move_forums', 'Target destination cannot be itself');
-
-			} else {
-				$this->Forum->Topic->moveAll($id, $this->request->data['Forum']['move_topics']);
-				$this->Forum->moveAll($id, $this->request->data['Forum']['move_forums']);
-				$this->Forum->delete($id, true);
-				$this->Forum->deleteCache('Forum::getIndex');
-
-				$this->Session->setFlash(sprintf(__d('forum', 'The %s forum has been deleted, and all its sub-forums and topics have been moved'), '<strong>' . $forum['Forum']['title'] . '</strong>'));
-				$this->redirect(array('controller' => 'stations', 'action' => 'index', 'admin' => true));
-			}
-		}
-
-		$this->set('forum', $forum);
-		$this->set('topicForums', $this->Forum->getGroupedHierarchy());
-		$this->set('subForums', $this->Forum->getGroupedHierarchy());
 	}
 
 	/**

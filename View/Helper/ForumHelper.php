@@ -16,7 +16,7 @@ class ForumHelper extends AppHelper {
 	 *
 	 * @var array
 	 */
-	public $helpers = array('Html', 'Session', 'Utility.Decoda');
+	public $helpers = array('Html', 'Session', 'Utility.Decoda', 'Admin.Admin');
 
 	/**
 	 * Output a users avatar.
@@ -54,6 +54,7 @@ class ForumHelper extends AppHelper {
 
 		if (isset($forum['LastPost']['created'])) {
 			$lastPost = $forum['LastPost']['created'];
+
 		} else if (isset($forum['LastTopic']['created'])) {
 			$lastPost = $forum['LastTopic']['created'];
 		}
@@ -147,11 +148,12 @@ class ForumHelper extends AppHelper {
 	/**
 	 * Checks to see if the user has mod status.
 	 *
+	 * @param string $model
 	 * @param string $action
 	 * @param array|int $status
 	 * @return bool
 	 */
-	public function hasAccess($action, $status = null) {
+	public function hasAccess($model, $action, $status = null) {
 		$user = $this->Session->read('Auth.User');
 
 		if (empty($user)) {
@@ -168,7 +170,14 @@ class ForumHelper extends AppHelper {
 			}
 		}
 
-		return (bool) $this->Session->read('Forum.permissions.' . $action);
+		$has = $this->Admin->hasAccess($model, $action, 'Forum.permissions', true);
+
+		// If permission doesn't exist, they have it by default
+		if ($has === null) {
+			return true;
+		}
+
+		return $has;
 	}
 
 	/**
@@ -213,19 +222,19 @@ class ForumHelper extends AppHelper {
 				Forum::NO => __d('forum', 'No')
 			);
 
-		} else if ($type === 'topicStatus') {
+		} else if ($type === 'Topic.status') {
 			$options = array(
 				Topic::OPEN => __d('forum', 'Open'),
 				Topic::CLOSED => __d('forum', 'Closed')
 			);
 
-		} else if ($type === 'forumStatus') {
+		} else if ($type === 'Forum.status') {
 			$options = array(
 				Forum::OPEN => __d('forum', 'Visible'),
 				Forum::CLOSED => __d('forum', 'Hidden')
 			);
 
-		} else if ($type === 'topicTypes') {
+		} else if ($type === 'Topic.type') {
 			$options = array(
 				Topic::NORMAL => __d('forum', 'Normal'),
 				Topic::STICKY => __d('forum', 'Sticky'),
@@ -233,7 +242,7 @@ class ForumHelper extends AppHelper {
 				Topic::ANNOUNCEMENT => __d('forum', 'Announcement')
 			);
 
-		} else if ($type === 'statusMap') {
+		} else if ($type === 'User.status') {
 			$statusMap = array_flip(Configure::read('User.statusMap'));
 			$options = array();
 
@@ -248,7 +257,7 @@ class ForumHelper extends AppHelper {
 				$options[$id] = $name;
 			}
 
-		} else if ($type === 'accessGroups') {
+		} else if ($type === 'Aro') {
 			$groups = ClassRegistry::init('Forum.Access')->getList();
 			$options = array();
 
@@ -278,31 +287,21 @@ class ForumHelper extends AppHelper {
 	 * @return string
 	 */
 	public function profileUrl($user) {
-		$url = $this->url(Configure::read('User.routes.profile'));
-		$url = str_replace('{id}', $user['id'], $url);
-		$url = str_replace('{username}', $user[Configure::read('User.fieldMap.username')], $url);
+		$route = Configure::read('User.routes.profile');
 
-		if (isset($user['slug'])) {
-			$url = str_replace('{slug}', $user['slug'], $url);
+		foreach ($route as &$value) {
+			if ($value === '{id}') {
+				$value = $user['id'];
+
+			} else if ($value === '{slug}' && isset($user['slug'])) {
+				$value = $user['slug'];
+
+			} else if ($value === '{username}') {
+				$value = $user[Configure::read('User.fieldMap.username')];
+			}
 		}
 
-		return $url;
-	}
-
-	/**
-	 * Return the report type as a string name.
-	 *
-	 * @param int $type
-	 * @return string
-	 */
-	public function reportType($type) {
-		$types = array(
-			Report::TOPIC => __d('forum', 'Topic'),
-			Report::POST => __d('forum', 'Post'),
-			Report::USER => __d('forum', 'User')
-		);
-
-		return $types[$type];
+		return $this->url($route);
 	}
 
 	/**
@@ -311,8 +310,10 @@ class ForumHelper extends AppHelper {
 	 * @return string
 	 */
 	public function timezone() {
-		if ($this->Session->check('Forum.Profile.timezone')) {
-			return $this->Session->read('Forum.Profile.timezone');
+		$key = AuthComponent::$sessionKey . '.' . Configure::read('User.fieldMap.timezone');
+
+		if ($this->Session->check($key)) {
+			return $this->Session->read($key);
 		}
 
 		return Configure::read('Forum.settings.defaultTimezone');
@@ -336,6 +337,7 @@ class ForumHelper extends AppHelper {
 
 		if (isset($topic['LastPost']['created'])) {
 			$lastPost = $topic['LastPost']['created'];
+
 		} else if (isset($topic['Topic']['created'])) {
 			$lastPost = $topic['Topic']['created'];
 		}
@@ -398,12 +400,10 @@ class ForumHelper extends AppHelper {
 	 */
 	public function topicType($type = null) {
 		if (!$type) {
-			return '';
+			return null;
 		}
 
-		$types = $this->options('topicTypes');
-
-		return '<strong>' . $types[$type] . '</strong>';
+		return '<strong>' . $this->options('Forum.Topic', 'type', $type) . '</strong>';
 	}
 
 	/**

@@ -49,7 +49,7 @@ $this->Breadcrumb->add($forum['Forum']['title'], array('controller' => 'stations
 <?php }
 
 // Cant post in top level
-if ($forum['Forum']['forum_id'] > 0) {
+if ($forum['Forum']['parent_id']) {
 	echo $this->element('tiles/forum_controls', array(
 		'forum' => $forum
 	)); ?>
@@ -62,7 +62,7 @@ if ($forum['Forum']['forum_id'] > 0) {
 				<thead>
 					<tr>
 						<th colspan="2"><?php echo $this->Paginator->sort('Topic.title', __d('forum', 'Topic')); ?></th>
-						<th><?php echo $this->Paginator->sort('User.' . $config['userMap']['username'], __d('forum', 'Author')); ?></th>
+						<th><?php echo $this->Paginator->sort('User.' . $userFields['username'], __d('forum', 'Author')); ?></th>
 						<th><?php echo $this->Paginator->sort('Topic.created', __d('forum', 'Created')); ?></th>
 						<th><?php echo $this->Paginator->sort('Topic.post_count', __d('forum', 'Posts')); ?></th>
 						<th><?php echo $this->Paginator->sort('Topic.view_count', __d('forum', 'Views')); ?></th>
@@ -121,7 +121,7 @@ if ($forum['Forum']['forum_id'] > 0) {
 
 		if ($forum['Moderator']) {
 			foreach ($forum['Moderator'] as $mod) {
-				$moderators[] = $this->Html->link($mod['User'][$config['userMap']['username']], $this->Forum->profileUrl($mod['User']));
+				$moderators[] = $this->Html->link($mod['User'][$userFields['username']], $this->Forum->profileUrl($mod['User']));
 			}
 		} ?>
 
@@ -135,10 +135,10 @@ if ($forum['Forum']['forum_id'] > 0) {
 					<td><strong><?php echo $forum['Forum']['settingPostCount'] ? __d('forum', 'Yes') : __d('forum', 'No'); ?></strong></td>
 
 					<td class="align-right"><?php echo __d('forum', 'Can Read Topics'); ?>: </td>
-					<td><strong><?php echo $this->Forum->hasAccess('topics.read', $forum['Forum']['accessRead']) ? __d('forum', 'Yes') : __d('forum', 'No'); ?></strong></td>
+					<td><strong><?php echo $this->Forum->hasAccess('Forum.Topic', 'read', $forum['Forum']['accessRead']) ? __d('forum', 'Yes') : __d('forum', 'No'); ?></strong></td>
 
 					<td class="align-right"><?php echo __d('forum', 'Can Create Topics'); ?>: </td>
-					<td><strong><?php echo $this->Forum->hasAccess('topics.create', $forum['Forum']['accessPost']) ? __d('forum', 'Yes') : __d('forum', 'No'); ?></strong></td>
+					<td><strong><?php echo $this->Forum->hasAccess('Forum.Topic', 'create', $forum['Forum']['accessPost']) ? __d('forum', 'Yes') : __d('forum', 'No'); ?></strong></td>
 				</tr>
 				<tr>
 					<td class="align-right"><?php echo __d('forum', 'Total Posts'); ?>: </td>
@@ -148,10 +148,10 @@ if ($forum['Forum']['forum_id'] > 0) {
 					<td><strong><?php echo $forum['Forum']['settingAutoLock'] ? __d('forum', 'Yes') : __d('forum', 'No'); ?></strong></td>
 
 					<td class="align-right"><?php echo __d('forum', 'Can Reply'); ?>: </td>
-					<td><strong><?php echo $this->Forum->hasAccess('posts.create', $forum['Forum']['accessReply']) ? __d('forum', 'Yes') : __d('forum', 'No'); ?></strong></td>
+					<td><strong><?php echo $this->Forum->hasAccess('Forum.Post', 'create', $forum['Forum']['accessReply']) ? __d('forum', 'Yes') : __d('forum', 'No'); ?></strong></td>
 
 					<td class="align-right"><?php echo __d('forum', 'Can Create Polls'); ?>: </td>
-					<td><strong><?php echo $this->Forum->hasAccess('polls.create', $forum['Forum']['accessPoll']) ? __d('forum', 'Yes') : __d('forum', 'No'); ?></strong></td>
+					<td><strong><?php echo $this->Forum->hasAccess('Forum.Poll', 'create', $forum['Forum']['accessPoll']) ? __d('forum', 'Yes') : __d('forum', 'No'); ?></strong></td>
 				</tr>
 				<?php if ($moderators) { ?>
 					<tr>

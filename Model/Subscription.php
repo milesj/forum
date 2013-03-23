@@ -29,6 +29,28 @@ class Subscription extends ForumAppModel {
 	);
 
 	/**
+	 * Validation.
+	 *
+	 * @var array
+	 */
+	public $validations = array(
+		'default' => array(
+			'user_id' => array(
+				'rule' => 'notEmpty',
+			)
+		)
+	);
+
+	/**
+	 * Admin settings.
+	 *
+	 * @var array
+	 */
+	public $admin = array(
+		'iconClass' => 'icon-pushpin'
+	);
+
+	/**
 	 * Get all subscribed forums from a user.
 	 *
 	 * @param int $user_id

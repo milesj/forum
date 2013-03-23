@@ -15,11 +15,11 @@
 		}
 
 		if ($forum['Forum']['status']) {
-			if ($this->Forum->hasAccess('topics.create', $forum['Forum']['accessPost']) || $isMod) {
+			if ($this->Forum->hasAccess('Forum.Topic', 'create', $forum['Forum']['accessPost']) || $isMod) {
 				echo $this->Html->link(__d('forum', 'Create Topic'), array('controller' => 'topics', 'action' => 'add', $forum['Forum']['slug']), array('class' => 'button'));
 			}
 
-			if ($this->Forum->hasAccess('polls.create', $forum['Forum']['accessPoll']) || $isMod) {
+			if ($this->Forum->hasAccess('Forum.Poll', 'create', $forum['Forum']['accessPoll']) || $isMod) {
 				echo $this->Html->link(__d('forum', 'Create Poll'), array('controller' => 'topics', 'action' => 'add', $forum['Forum']['slug'], 'poll'), array('class' => 'button'));
 			}
 		} else {

@@ -9,9 +9,8 @@ App::uses('ForumAppController', 'Forum.Controller');
 
 /**
  * @property Topic $Topic
- * @property Profile $Profile
- * @property Report $Report
  * @property Moderator $Moderator
+ * @property ForumUser $ForumUser
  */
 class ForumController extends ForumAppController {
 
@@ -20,7 +19,7 @@ class ForumController extends ForumAppController {
 	 *
 	 * @var array
 	 */
-	public $uses = array('Forum.Topic', 'Forum.Profile');
+	public $uses = array('Forum.Topic', 'Forum.ForumUser');
 
 	/**
 	 * Components.
@@ -49,9 +48,9 @@ class ForumController extends ForumAppController {
 		$this->set('forums', 		$this->Topic->Forum->getIndex());
 		$this->set('totalPosts', 	$this->Topic->Post->getTotal());
 		$this->set('totalTopics', 	$this->Topic->getTotal());
-		$this->set('totalUsers', 	$this->Profile->getTotal());
-		$this->set('newestUser', 	$this->Profile->getNewestUser());
-		$this->set('whosOnline', 	$this->Profile->whosOnline());
+		$this->set('totalUsers', 	$this->ForumUser->getTotal());
+		$this->set('newestUser', 	$this->ForumUser->getNewestUser());
+		$this->set('whosOnline', 	$this->ForumUser->whosOnline());
 	}
 
 	/**
@@ -79,33 +78,12 @@ class ForumController extends ForumAppController {
 	}
 
 	/**
-	 * Administration home, list statistics.
-	 */
-	public function admin_index() {
-		$this->loadModel('Forum.Report');
-		$this->loadModel('Forum.Moderator');
-		$this->loadModel('Forum.Profile');
-
-		$this->set('menuTab', 'home');
-		$this->set('totalPosts', 	$this->Topic->Post->getTotal());
-		$this->set('totalTopics', 	$this->Topic->getTotal());
-		$this->set('totalUsers', 	$this->Profile->User->find('count'));
-		$this->set('totalProfiles', $this->Profile->getTotal());
-		$this->set('totalPolls', 	$this->Topic->Poll->getTotal());
-		$this->set('totalReports', 	$this->Report->getTotal());
-		$this->set('totalMods', 	$this->Moderator->getTotal());
-		$this->set('newestUser', 	$this->Profile->getNewestUser());
-		$this->set('latestUsers', 	$this->Profile->getLatest());
-		$this->set('latestReports', $this->Report->getLatest());
-	}
-
-	/**
 	 * Before filter.
 	 */
 	public function beforeFilter() {
 		parent::beforeFilter();
 
-		$this->Auth->allow('index', 'feed', 'help', 'rules', 'jump');
+		$this->Auth->allow();
 	}
 
 }

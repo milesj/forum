@@ -27,6 +27,34 @@ class PollVote extends ForumAppModel {
 	);
 
 	/**
+	 * Validation.
+	 *
+	 * @var array
+	 */
+	public $validations = array(
+		'default' => array(
+			'poll_id' => array(
+				'rule' => 'notEmpty'
+			),
+			'poll_option_id' => array(
+				'rule' => 'notEmpty'
+			),
+			'user_id' => array(
+				'rule' => 'notEmpty'
+			)
+		)
+	);
+
+	/**
+	 * Admin settings.
+	 *
+	 * @var array
+	 */
+	public $admin = array(
+		'iconClass' => 'icon-list-ol'
+	);
+
+	/**
 	 * Add a voter for a poll.
 	 *
 	 * @param int $poll_id

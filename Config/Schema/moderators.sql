@@ -6,6 +6,7 @@ CREATE TABLE `{prefix}moderators` (
 	`forum_id` INT(11) DEFAULT NULL,
 	`user_id` INT(11) DEFAULT NULL,
 	`created` DATETIME DEFAULT NULL,
+	`modified` DATETIME DEFAULT NULL,
 	PRIMARY KEY (`id`),
 	KEY `user_id` (`user_id`),
 	KEY `forum_id` (`forum_id`)
