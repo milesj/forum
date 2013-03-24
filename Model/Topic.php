@@ -453,6 +453,8 @@ class Topic extends ForumAppModel {
 	 * @return bool
 	 */
 	public function moveAll($start_id, $moved_id) {
+		$this->Post->moveAll($start_id, $moved_id);
+
 		return $this->updateAll(
 			array('Topic.forum_id' => $moved_id),
 			array('Topic.forum_id' => $start_id)
@@ -545,6 +547,16 @@ class Topic extends ForumAppModel {
 		}
 
 		return $results;
+	}
+
+	/**
+	 * Null associations.
+	 */
+	public function afterDelete() {
+		$this->Forum->updateAll(
+			array('Forum.lastTopic_id' => null),
+			array('Forum.lastTopic_id' => $this->id)
+		);
 	}
 
 }

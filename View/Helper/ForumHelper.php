@@ -239,10 +239,8 @@ class ForumHelper extends AppHelper {
 	 * @return string
 	 */
 	public function timezone() {
-		$key = AuthComponent::$sessionKey . '.' . Configure::read('User.fieldMap.timezone');
-
-		if ($this->Session->check($key)) {
-			return $this->Session->read($key);
+		if ($timezone = $this->Session->read(AuthComponent::$sessionKey . '.' . Configure::read('User.fieldMap.timezone'))) {
+			return $timezone;
 		}
 
 		return Configure::read('Forum.settings.defaultTimezone');

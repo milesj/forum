@@ -266,6 +266,20 @@ class Post extends ForumAppModel {
 	}
 
 	/**
+	 * Move all posts to a new forum.
+	 *
+	 * @param int $start_id
+	 * @param int $moved_id
+	 * @return bool
+	 */
+	public function moveAll($start_id, $moved_id) {
+		return $this->updateAll(
+			array('Post.forum_id' => $moved_id),
+			array('Post.forum_id' => $start_id)
+		);
+	}
+
+	/**
 	 * Parse the HTML version.
 	 *
 	 * @param array $options
@@ -273,6 +287,26 @@ class Post extends ForumAppModel {
 	 */
 	public function beforeSave($options = array()) {
 		return $this->validateDecoda('Post');
+	}
+
+	/**
+	 * Null associations.
+	 */
+	public function afterDelete() {
+		$this->Forum->updateAll(
+			array('Forum.lastPost_id' => null),
+			array('Forum.lastPost_id' => $this->id)
+		);
+
+		$this->Topic->updateAll(
+			array('Topic.firstPost_id' => null),
+			array('Topic.firstPost_id' => $this->id)
+		);
+
+		$this->Topic->updateAll(
+			array('Topic.lastPost_id' => null),
+			array('Topic.lastPost_id' => $this->id)
+		);
 	}
 
 }

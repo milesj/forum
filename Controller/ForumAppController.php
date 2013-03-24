@@ -63,6 +63,7 @@ class ForumAppController extends AppController {
 	 *
 	 * @param array $user
 	 * @return bool
+	 * @throws UnauthorizedException
 	 */
 	public function isAuthorized($user) {
 		if ($this->Session->read('Forum.isAdmin')) {
@@ -95,7 +96,9 @@ class ForumAppController extends AppController {
 
 			// Allow if the user belongs to admin or super
 			case 'moderate':
-				return ($this->Session->read('Forum.isSuper') || $this->Session->read('Forum.moderates'));
+				if ($this->Session->read('Forum.isSuper') || $this->Session->read('Forum.moderates')) {
+					return true;
+				}
 			break;
 
 			// Check individual permissions
@@ -110,11 +113,16 @@ class ForumAppController extends AppController {
 					'delete' => 'delete'
 				);
 
-				return $this->AdminToolbar->hasAccess($model, $crud[$action]);
+				$has = $this->AdminToolbar->hasAccess($model, $crud[$action], 'Forum.permissions', true);
+
+				// If permission doesn't exist, they have it by default
+				if ($has === null || $has) {
+					return true;
+				}
 			break;
 		}
 
-		return true;
+		throw new UnauthorizedException();
 	}
 
 	/**

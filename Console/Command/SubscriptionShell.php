@@ -33,14 +33,9 @@ class SubscriptionShell extends Shell {
 		$this->timeframe = '-' . (isset($this->params['timeframe']) ? $this->params['timeframe'] : '24 hours');
 
 		// Begin
-		$this->out();
-		$this->out('Plugin: Forum');
-		$this->out('Version: ' . Configure::read('Forum.version'));
+		$this->out('Plugin: Forum v' . Configure::read('Forum.version'));
 		$this->out('Copyright: Miles Johnson, 2010-' . date('Y'));
 		$this->out('Help: http://milesj.me/code/cakephp/forum');
-		$this->out('Shell: Subscription');
-		$this->out();
-		$this->out('Queries the database for the latest activity within subscribed topics and forums, then notifies the subscribers with the updates.');
 		$this->hr(1);
 
 		// Gather and organize subscriptions
@@ -54,7 +49,7 @@ class SubscriptionShell extends Shell {
 		));
 
 		if (!$results) {
-			$this->out('No subscriptions to send...');
+			$this->out('<error>No subscriptions to send...</error>');
 			return;
 		}
 
@@ -84,7 +79,7 @@ class SubscriptionShell extends Shell {
 		$topics = $this->getTopics($forumIds, $topicIds);
 
 		if (!$topics) {
-			$this->out('No new activity...');
+			$this->out('<info>No new activity...</info>');
 			return;
 		}
 
@@ -92,11 +87,11 @@ class SubscriptionShell extends Shell {
 		$userMap = Configure::read('User.fieldMap');
 
 		$email = new CakeEmail();
-		//$email->transport('Debug');
 		$email->subject(sprintf(__d('forum', '%s [Subscriptions]'), $settings['name']));
 		$email->from($settings['email']);
 		$email->replyTo($settings['email']);
 		$email->emailFormat('text');
+		//$email->transport('Debug');
 
 		// Loop over each user and send one email
 		foreach ($users as $user) {
@@ -111,7 +106,7 @@ class SubscriptionShell extends Shell {
 		}
 
 		$this->hr(1);
-		$this->out(sprintf('Notified %d user(s)', $count));
+		$this->out(sprintf('<info>Notified %d user(s)</info>', $count));
 	}
 
 	/**
