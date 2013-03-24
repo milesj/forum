@@ -19,8 +19,6 @@ class UpgradeShell extends BaseUpgradeShell {
 			return;
 		}
 
-		$fieldMap = Configure::read('User.fieldMap');
-
 		$this->setSteps(array(
 			'Check Database Configuration' => 'checkDbConfig',
 			'Set Table Prefix' => 'checkTablePrefix',
@@ -31,12 +29,7 @@ class UpgradeShell extends BaseUpgradeShell {
 			'4.0.0' => 'Admin + Utility Plugin Migration'
 		))
 		->setDbConfig(FORUM_DATABASE)
-		->setTablePrefix(FORUM_PREFIX)
-		->setUserFields(array(
-			'username' => $fieldMap['username'],
-			'password' => $fieldMap['password'],
-			'email' => $fieldMap['email']
-		));
+		->setTablePrefix(FORUM_PREFIX);
 
 		$this->out('Plugin: Forum v' . Configure::read('Forum.version'));
 		$this->out('Copyright: Miles Johnson, 2010-' . date('Y'));

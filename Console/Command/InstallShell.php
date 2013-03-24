@@ -18,8 +18,6 @@ class InstallShell extends BaseInstallShell {
 			return;
 		}
 
-		$userMap = Configure::read('User.fieldMap');
-
 		$this->setSteps(array(
 			'Check Database Configuration' => 'checkDbConfig',
 			'Set Table Prefix' => 'checkTablePrefix',
@@ -30,12 +28,7 @@ class InstallShell extends BaseInstallShell {
 		))
 		->setDbConfig(FORUM_DATABASE)
 		->setTablePrefix(FORUM_PREFIX)
-		->setRequiredTables(array('aros', 'acos', 'aros_acos'))
-		->setUserFields(array(
-			'username' => $userMap['username'],
-			'password' => $userMap['password'],
-			'email' => $userMap['email']
-		));
+		->setRequiredTables(array('aros', 'acos', 'aros_acos'));
 
 		$this->out('Plugin: Forum v' . Configure::read('Forum.version'));
 		$this->out('Copyright: Miles Johnson, 2010-' . date('Y'));

@@ -7,8 +7,8 @@ A fully robust and powerful CakePHP forum plugin. Integrates with an external us
 * PHP 5.3.0
 	* Multibyte
 * CakePHP 2
-	* Admin v1.0.0 Plugin - https://github.com/milesj/Admin
-	* Utility v1.4.0 Plugin - https://github.com/milesj/Utility
+	* Admin Plugin v1.0.0 - https://github.com/milesj/Admin
+	* Utility Plugin v1.4.0 - https://github.com/milesj/Utility
 * Composer
 
 ## Compatibility ##
