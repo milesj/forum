@@ -5,214 +5,110 @@
  * @link		http://milesj.me/code/cakephp/forum
  */
 
-Configure::write('debug', 2);
-Configure::write('Cache.disable', true);
+App::uses('BaseUpgradeShell', 'Utility.Console/Command');
 
-App::uses('ConnectionManager', 'Model');
-App::uses('AppModel', 'Model');
-
-class UpgradeShell extends Shell {
+class UpgradeShell extends BaseUpgradeShell {
 
 	/**
-	 * Array of completed version upgrades.
-	 *
-	 * @var array
-	 */
-	public $complete = array();
-
-	/**
-	 * Available upgrade versions.
-	 *
-	 * @var array
-	 */
-	public $versions = array(
-		'4.0' => 'ACL Restructure'
-	);
-
-	/**
-	 * Execute upgrader!
-	 *
-	 * @return void
+	 * Trigger upgrade.
 	 */
 	public function main() {
-		$this->out();
-		$this->out('Plugin: Forum');
-		$this->out('Version: ' . Configure::read('Forum.version'));
+		if (!CakePlugin::loaded('Admin')) {
+			$this->err('Admin plugin is not installed, aborting!');
+			return;
+		}
+
+		$fieldMap = Configure::read('User.fieldMap');
+
+		$this->setSteps(array(
+			'Check Database Configuration' => 'checkDbConfig',
+			'Set Table Prefix' => 'checkTablePrefix',
+			'Set Users Table' => 'checkUsersTable',
+			'Upgrade Version' => 'versions'
+		))
+		->setVersions(array(
+			'4.0.0' => 'Admin + Utility Plugin Migration'
+		))
+		->setDbConfig(FORUM_DATABASE)
+		->setTablePrefix(FORUM_PREFIX)
+		->setUserFields(array(
+			'username' => $fieldMap['username'],
+			'password' => $fieldMap['password'],
+			'email' => $fieldMap['email']
+		));
+
+		$this->out('Plugin: Forum v' . Configure::read('Forum.version'));
 		$this->out('Copyright: Miles Johnson, 2010-' . date('Y'));
 		$this->out('Help: http://milesj.me/code/cakephp/forum');
-		$this->out('Shell: Upgrade');
-		$this->out();
-		$this->out('This shell will upgrade versions and manage any database changes.');
-		$this->out('Please do not skip versions, upgrade sequentially!');
 
-		$this->upgrade();
-	}
-
-	/**
-	 * List out all the available upgrade options.
-	 */
-	public function upgrade() {
-		$this->hr(1);
-		$this->out('Available versions:');
-		$this->out();
-
-		$versions = array();
-
-		if ($this->versions) {
-			foreach ($this->versions as $version => $title) {
-				if (!in_array($version, $this->complete)) {
-					$this->out(sprintf('[%s] %s', $version, $title));
-					$versions[] = $version;
-				}
-			}
-		}
-
-		$this->out('[E]xit');
-		$this->out();
-
-		$versions[] = 'E';
-		$version = strtoupper($this->in('Which version do you want to upgrade to?'));
-
-		if ($version === 'E') {
-			exit(0);
-		} else {
-			$this->hr(1);
-			$this->out(sprintf('Upgrading to %s...', $version));
-			$this->out();
-
-			$method = 'to_' . str_replace('.', '', $version);
-
-			if (method_exists($this, $method)) {
-				$response = $this->{$method}();
-			} else {
-				$response = $this->_querySql($version);
-			}
-
-			if ($response) {
-				$this->complete[] = $version;
-
-				$this->out('Complete...');
-				$this->finalize();
-			}
-		}
-	}
-
-	/**
-	 * Output complete message and render versions again.
-	 */
-	public function finalize() {
-		$this->out('You can now upgrade to another version or close the shell.');
-		$this->upgrade();
+		parent::main();
 	}
 
 	/**
 	 * Upgrade to 4.0.0.
 	 */
-	public function to_40() {
-		$answer = strtoupper($this->in('This upgrade will delete the following tables after migration: settings, access, access_levels. Are you sure you want to continue?', array('Y', 'N')));
+	public function to_400() {
+		$answer = strtoupper($this->in('This upgrade will delete the following tables after migration: settings, access, access_levels, profiles, reported. All data will be migrated to the new admin system, are you sure you want to continue?', array('Y', 'N')));
 
 		if ($answer === 'N') {
 			exit();
 		}
 
-		$Access = new AppModel(null, 'access', FORUM_DATABASE);
-		$Access->alias = 'Access';
-		$Access->tablePrefix = FORUM_PREFIX;
-		$Access->bindModel(array('belongsTo' => array(
-			'User' => array('className' => USER_MODEL)
-		)));
+		// Migrate old reports to the new admin system
+		$this->out('Migrating reports...');
 
-		$AccessLevel = new AppModel(null, 'access_levels', FORUM_DATABASE);
-		$AccessLevel->alias = 'AccessLevel';
-		$AccessLevel->tablePrefix = FORUM_PREFIX;
+		$ItemReport = ClassRegistry::init('Admin.ItemReport');
 
-		$Forum = ClassRegistry::init('Forum.Forum');
-		$Acl = ClassRegistry::init('Forum.Access');
+		$Reported = new AppModel(null, 'reported', $this->dbConfig);
+		$Reported->alias = 'Reported';
+		$Reported->tablePrefix = $this->tablePrefix;
 
-		// Create ACL request objects
-		$this->out('Installing ACL...');
-
-		$aclMap = $Acl->installAcl();
-		$levelMap = array();
-
-		foreach ($AccessLevel->find('all') as $level) {
-			$id = $level['AccessLevel']['id'];
-
-			if ($id == 3) {
-				$alias = Configure::read('Admin.aliases.superModerator');
-			} else if ($id == 4) {
-				$alias = Configure::read('Admin.aliases.administrator');
-			} else {
-				continue;
+		foreach ($Reported->find('all') as $report) {
+			switch ($report['Report']['itemType']) {
+				case 1: $model = 'Forum.Topic'; break;
+				case 2: $model = 'Forum.Post'; break;
+				case 3: $model = $this->usersModel; break;
 			}
 
-			$record = $Acl->getBySlug($alias);
-			$levelMap[$id] = $record['Access']['id'];
-		}
-
-		// Create users
-		$this->out('Migrating users...');
-
-		foreach ($Access->find('all') as $user) {
-			$Acl->add(array(
-				'foreign_key' => $user['User']['id'],
-				'parent_id' => $levelMap[$user['Access']['access_level_id']]
+			$ItemReport->reportItem(array(
+				'reporter_id' => $report['Report']['user_id'],
+				'model' => $model,
+				'foreign_key' => $report['Report']['item_id'],
+				'item' => $report['Report']['item_id'],
+				'reason' => $report['Report']['comment'],
+				'created' => $report['Report']['created']
 			));
 		}
 
-		// Migrate access levels
-		$this->out('Migrating access relations...');
+		// Migrate profile data to users table
+		$this->out('Migrating user profiles...');
 
-		$forums = $Forum->find('all', array(
-			'conditions' => array('Forum.access_level_id !=' => 0)
-		));
+		$User = ClassRegistry::init($this->usersModel);
+		$fieldMap = Configure::read('User.fieldMap');
 
-		if ($forums) {
-			foreach ($forums as $forum) {
-				$Forum->id = $forum['Forum']['id'];
-				$Forum->save(array(
-					'access_level_id' => $levelMap[$forum['Forum']['access_level_id']]
-				), false);
+		$Profile = new AppModel(null, 'profiles', $this->dbConfig);
+		$Profile->alias = 'Profile';
+		$Profile->tablePrefix = $this->tablePrefix;
+
+		foreach ($Profile->find('all') as $prof) {
+			$query = array();
+
+			foreach (array('signature', 'locale', 'timezone', 'totalPosts', 'totalTopics', 'lastLogin') as $field) {
+				if ($key = $fieldMap[$field]) {
+					$query[$key] = $prof['Profile'][$field];
+				}
 			}
+
+			if (!$query) {
+				continue;
+			}
+
+			$User->id = $prof['Profile']['user_id'];
+			$User->save($query, false);
 		}
 
-		// Delete tables
+		// Delete tables handled by parent shell
 		$this->out('Deleting old tables...');
-
-		return $this->_querySql('4.0');
-	}
-
-	/**
-	 * Execute the queries for the specific version SQL.
-	 *
-	 * @param string $version
-	 * @return bool
-	 */
-	protected function _querySql($version) {
-		sleep(1);
-
-		$db = ConnectionManager::getDataSource(FORUM_DATABASE);
-		$schema = FORUM_PLUGIN . 'Config/Schema/Upgrade/' . $version . '.sql';
-
-		if (!file_exists($schema)) {
-			$this->out(sprintf('Upgrade schema %s does not exist', $version));
-
-			return false;
-		}
-
-		$sql = file_get_contents($schema);
-		$sql = String::insert($sql, array('prefix' => FORUM_PREFIX), array('before' => '{', 'after' => '}'));
-		$sql = preg_replace('!/\*[^*]*\*+([^/][^*]*\*+)*/!', '', $sql);
-
-		foreach (explode(';', $sql) as $query) {
-			$query = trim($query);
-
-			if ($query !== '') {
-				$db->execute($query);
-			}
-		}
-
-		return true;
 	}
 
 }
