@@ -163,20 +163,6 @@ class ForumAppModel extends AppModel {
 	}
 
 	/**
-	 * Adds locale functions to errors.
-	 *
-	 * @param string $field
-	 * @param mixed $value
-	 * @param mixed $param
-	 * @return bool
-	 */
-	public function invalidate($field, $value = true, $param = '') {
-		parent::invalidate($field, sprintf(__d('forum', $value), $param));
-
-		return false;
-	}
-
-	/**
 	 * Update a row with certain fields.
 	 *
 	 * @param int $id
@@ -222,15 +208,15 @@ class ForumAppModel extends AppModel {
 		}
 
 		if ($nesting) {
-			return $this->invalidate('content', 'The following tags have been nested in the wrong order: %s', implode(', ', $nesting));
+			return $this->invalid('content', 'The following tags have been nested in the wrong order: %s', implode(', ', $nesting));
 		}
 
 		if ($closing) {
-			return $this->invalidate('content', 'The following tags have no closing tag: %s', implode(', ', $closing));
+			return $this->invalid('content', 'The following tags have no closing tag: %s', implode(', ', $closing));
 		}
 
 		if ($scope) {
-			return $this->invalidate('content', 'The following tags can not be placed within a specific tag: %s', implode(', ', $scope));
+			return $this->invalid('content', 'The following tags can not be placed within a specific tag: %s', implode(', ', $scope));
 		}
 
 		return true;

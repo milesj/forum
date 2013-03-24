@@ -1,16 +1,6 @@
 Custom strings that won't be generated through the shell.
 Will have to manually be added later on.
 
-# User
-msgid "user.status.0"
-msgstr "Pending"
-
-msgid "user.status.1"
-msgstr "Active"
-
-msgid "user.status.2"
-msgstr "Banned"
-
 # Forum
 msgid "forum.status.0"
 msgstr "Hidden"
@@ -19,22 +9,22 @@ msgid "forum.status.1"
 msgstr "Visible"
 
 # Topic
-msgid "forum.status.0"
+msgid "topic.status.0"
 msgstr "Closed"
 
-msgid "forum.status.1"
+msgid "topic.status.1"
 msgstr "Open"
 
-msgid "forum.type.0"
+msgid "topic.type.0"
 msgstr "Normal"
 
-msgid "forum.type.1"
+msgid "topic.type.1"
 msgstr "Sticky"
 
-msgid "forum.type.2"
+msgid "topic.type.2"
 msgstr "Important"
 
-msgid "forum.type.3"
+msgid "topic.type.3"
 msgstr "Announcement"
 
 # Controllers

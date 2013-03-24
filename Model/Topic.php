@@ -169,10 +169,10 @@ class Topic extends ForumAppModel {
 			$settings = Configure::read('Forum.settings');
 
 			if (($secondsLeft = $this->checkFlooding($settings['topicFloodInterval'])) > 0 && !$isAdmin) {
-				return $this->invalidate('title', 'You must wait %s more second(s) till you can post a topic', $secondsLeft);
+				return $this->invalid('title', 'You must wait %s more second(s) till you can post a topic', $secondsLeft);
 
 			} else if ($this->checkHourly($settings['topicsPerHour']) && !$isAdmin) {
-				return $this->invalidate('title', 'You are only allowed to post %s topic(s) per hour', $settings['topicsPerHour']);
+				return $this->invalid('title', 'You are only allowed to post %s topic(s) per hour', $settings['topicsPerHour']);
 
 			} else {
 				$this->create();

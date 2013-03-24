@@ -6,6 +6,7 @@
  */
 
 App::uses('BaseUpgradeShell', 'Utility.Console/Command');
+App::uses('Admin', 'Admin.Lib');
 
 class UpgradeShell extends BaseUpgradeShell {
 
@@ -14,7 +15,7 @@ class UpgradeShell extends BaseUpgradeShell {
 	 */
 	public function main() {
 		if (!CakePlugin::loaded('Admin')) {
-			$this->err('Admin plugin is not installed, aborting!');
+			$this->err('<error>Admin plugin is not installed, aborting!</error>');
 			return;
 		}
 
@@ -48,14 +49,15 @@ class UpgradeShell extends BaseUpgradeShell {
 	 * Upgrade to 4.0.0.
 	 */
 	public function to_400() {
-		$answer = strtoupper($this->in('This upgrade will delete the following tables after migration: settings, access, access_levels, profiles, reported. All data will be migrated to the new admin system, are you sure you want to continue?', array('Y', 'N')));
+		$this->out('<warning>This upgrade will delete the following tables after migration: settings, access, access_levels, profiles, reported.</warning>');
+		$answer = strtoupper($this->in('<question>All data will be migrated to the new admin system, are you sure you want to continue?</question>', array('Y', 'N')));
 
 		if ($answer === 'N') {
 			exit();
 		}
 
 		// Migrate old reports to the new admin system
-		$this->out('Migrating reports...');
+		$this->out('<info>Migrating reports...</info>');
 
 		$ItemReport = ClassRegistry::init('Admin.ItemReport');
 
@@ -64,24 +66,24 @@ class UpgradeShell extends BaseUpgradeShell {
 		$Reported->tablePrefix = $this->tablePrefix;
 
 		foreach ($Reported->find('all') as $report) {
-			switch ($report['Report']['itemType']) {
+			switch ($report['Reported']['itemType']) {
 				case 1: $model = 'Forum.Topic'; break;
 				case 2: $model = 'Forum.Post'; break;
 				case 3: $model = $this->usersModel; break;
 			}
 
 			$ItemReport->reportItem(array(
-				'reporter_id' => $report['Report']['user_id'],
+				'reporter_id' => $report['Reported']['user_id'],
 				'model' => $model,
-				'foreign_key' => $report['Report']['item_id'],
-				'item' => $report['Report']['item_id'],
-				'reason' => $report['Report']['comment'],
-				'created' => $report['Report']['created']
+				'foreign_key' => $report['Reported']['item_id'],
+				'item' => $report['Reported']['item_id'],
+				'reason' => $report['Reported']['comment'],
+				'created' => $report['Reported']['created']
 			));
 		}
 
 		// Migrate profile data to users table
-		$this->out('Migrating user profiles...');
+		$this->out('<info>Migrating user profiles...</info>');
 
 		$User = ClassRegistry::init($this->usersModel);
 		$fieldMap = Configure::read('User.fieldMap');
@@ -104,11 +106,13 @@ class UpgradeShell extends BaseUpgradeShell {
 			}
 
 			$User->id = $prof['Profile']['user_id'];
-			$User->save($query, false);
+			$User->save(array_filter($query), false);
 		}
 
 		// Delete tables handled by parent shell
-		$this->out('Deleting old tables...');
+		$this->out('<info>Deleting old tables...</info>');
+
+		return true;
 	}
 
 }

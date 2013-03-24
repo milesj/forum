@@ -1,21 +1,26 @@
+# LANGUAGE translation of CakePHP Application
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+#
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Forum v4.0.0\n"
+"Project-Id-Version: PROJECT VERSION\n"
 "POT-Creation-Date: 2013-03-24 02:13+0000\n"
-"PO-Revision-Date: 2013-03-23 19:21-0800\n"
-"Last-Translator: Miles Johnson <mileswjohnson@gmail.com>\n"
-"Language-Team: \n"
+"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n == 1 ? 0 : 1;\n"
-"X-Generator: Poedit 1.5.4\n"
-"X-Poedit-SourceCharset: UTF-8\n"
-"Language: English\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: /Config/bootstrap.php:40 /View/Forum/index.ctp:18 /View/Search/index.ctp:47
-#: /View/Stations/view.ctp:31 /View/Stations/rss/view.ctp:4
-#: /View/Topics/add.ctp:20 /View/Topics/edit.ctp:22
+#: /Config/bootstrap.php:40
+#: /View/Forum/index.ctp:18
+#: /View/Search/index.ctp:47
+#: /View/Stations/view.ctp:31
+#: /View/Stations/rss/view.ctp:4
+#: /View/Topics/add.ctp:20
+#: /View/Topics/edit.ctp:22
 msgid "Forum"
 msgstr ""
 
@@ -32,16 +37,11 @@ msgid "Hello %s,"
 msgstr ""
 
 #: /Console/Command/SubscriptionShell.php:183
-msgid ""
-"You have asked to be notified for any new activity within %s. Below you will "
-"find an update on all your forum subscriptions. The last subscription update "
-"was sent on %s."
+msgid "You have asked to be notified for any new activity within %s. Below you will find an update on all your forum subscriptions. The last subscription update was sent on %s."
 msgstr ""
 
 #: /Console/Command/SubscriptionShell.php:184
-msgid ""
-"You may unsubscribe from a forum or topic by clicking the \"Unsubscribe\" "
-"button found within the respective forum or topic."
+msgid "You may unsubscribe from a forum or topic by clicking the \"Unsubscribe\" button found within the respective forum or topic."
 msgstr ""
 
 #: /Console/Command/SubscriptionShell.php:189
@@ -69,9 +69,7 @@ msgid "%s [%s] %d new posts"
 msgstr ""
 
 #: /Controller/PostsController.php:136
-msgid ""
-"You have successfully reported this post! A moderator will review this post "
-"and take the necessary action."
+msgid "You have successfully reported this post! A moderator will review this post and take the necessary action."
 msgstr ""
 
 #: /Controller/SearchController.php:43
@@ -106,19 +104,23 @@ msgstr ""
 msgid "A total of %d topic(s) have been moved to another forum category"
 msgstr ""
 
-#: /Controller/StationsController.php:159 /Controller/TopicsController.php:228
+#: /Controller/StationsController.php:159
+#: /Controller/TopicsController.php:228
 msgid "Failed To Subscribe"
 msgstr ""
 
-#: /Controller/StationsController.php:163 /Controller/TopicsController.php:232
+#: /Controller/StationsController.php:163
+#: /Controller/TopicsController.php:232
 msgid "Subscribed"
 msgstr ""
 
-#: /Controller/StationsController.php:179 /Controller/TopicsController.php:248
+#: /Controller/StationsController.php:179
+#: /Controller/TopicsController.php:248
 msgid "Failed To Unsubscribe"
 msgstr ""
 
-#: /Controller/StationsController.php:183 /Controller/TopicsController.php:252
+#: /Controller/StationsController.php:183
+#: /Controller/TopicsController.php:252
 msgid "Unsubscribed"
 msgstr ""
 
@@ -135,9 +137,7 @@ msgid "Create Topic"
 msgstr ""
 
 #: /Controller/TopicsController.php:173
-msgid ""
-"You have successfully reported this topic! A moderator will review this "
-"topic and take the necessary action."
+msgid "You have successfully reported this topic! A moderator will review this topic and take the necessary action."
 msgstr ""
 
 #: /Controller/TopicsController.php:283
@@ -164,7 +164,8 @@ msgstr ""
 msgid "Remember Me?"
 msgstr ""
 
-#: /View/Elements/login.ctp:9 /View/Elements/navigation.ctp:17
+#: /View/Elements/login.ctp:9
+#: /View/Elements/navigation.ctp:17
 msgid "Login"
 msgstr ""
 
@@ -192,7 +193,8 @@ msgstr ""
 msgid "Displaying %start%-%end% of %count%"
 msgstr ""
 
-#: /View/Elements/search.ctp:5 /View/Layouts/forum.ctp:42
+#: /View/Elements/search.ctp:5
+#: /View/Layouts/forum.ctp:42
 #: /View/Search/index.ctp:3;6
 msgid "Search"
 msgstr ""
@@ -208,29 +210,35 @@ msgid "Unsubscribe"
 msgstr ""
 
 #: /View/Elements/tiles/forum_controls.ctp:14
-#: /View/Elements/tiles/topic_controls.ctp:14 /View/Stations/moderate.ctp:8;15
+#: /View/Elements/tiles/topic_controls.ctp:14
+#: /View/Stations/moderate.ctp:8;15
 #: /View/Topics/moderate.ctp:9;18
 msgid "Moderate"
 msgstr ""
 
 #: /View/Elements/tiles/forum_controls.ctp:26
-#: /View/Elements/tiles/topic_controls.ctp:29 /View/Topics/view.ctp:20
+#: /View/Elements/tiles/topic_controls.ctp:29
+#: /View/Topics/view.ctp:20
 msgid "Closed"
 msgstr ""
 
-#: /View/Elements/tiles/forum_row.ctp:21 /View/Stations/view.ctp:24
+#: /View/Elements/tiles/forum_row.ctp:21
+#: /View/Stations/view.ctp:24
 msgid "Sub-Forums"
 msgstr ""
 
-#: /View/Elements/tiles/forum_row.ctp:37 /View/Elements/tiles/topic_row.ctp:45
+#: /View/Elements/tiles/forum_row.ctp:37
+#: /View/Elements/tiles/topic_row.ctp:45
 msgid "by"
 msgstr ""
 
-#: /View/Elements/tiles/forum_row.ctp:40 /View/Elements/tiles/topic_row.ctp:50
+#: /View/Elements/tiles/forum_row.ctp:40
+#: /View/Elements/tiles/topic_row.ctp:50
 msgid "No latest activity to display"
 msgstr ""
 
-#: /View/Elements/tiles/topic_controls.ctp:27 /View/Posts/add.ctp:9;12;26
+#: /View/Elements/tiles/topic_controls.ctp:27
+#: /View/Posts/add.ctp:9;12;26
 #: /View/Topics/view.ctp:225
 msgid "Post Reply"
 msgstr ""
@@ -248,9 +256,7 @@ msgid "Why do I need to sign up?"
 msgstr ""
 
 #: /View/Forum/help.ctp:10
-msgid ""
-"You may read all public forums as a guest, but to be able to post or reply "
-"to a topic, you must have a user account."
+msgid "You may read all public forums as a guest, but to be able to post or reply to a topic, you must have a user account."
 msgstr ""
 
 #: /View/Forum/help.ctp:12
@@ -258,10 +264,7 @@ msgid "Why can't I post a topic, poll or reply?"
 msgstr ""
 
 #: /View/Forum/help.ctp:13
-msgid ""
-"To begin you must have a user account and must be logged in. If you have "
-"done this, the topic might be locked or you do not have the proper access to "
-"post in that topic or forum."
+msgid "To begin you must have a user account and must be logged in. If you have done this, the topic might be locked or you do not have the proper access to post in that topic or forum."
 msgstr ""
 
 #: /View/Forum/help.ctp:15
@@ -269,9 +272,7 @@ msgid "Why can't I login?"
 msgstr ""
 
 #: /View/Forum/help.ctp:16
-msgid ""
-"The server might be having technical difficulties and your request could not "
-"be processed. It may also be that your account has been deleted or banned."
+msgid "The server might be having technical difficulties and your request could not be processed. It may also be that your account has been deleted or banned."
 msgstr ""
 
 #: /View/Forum/help.ctp:18
@@ -279,8 +280,7 @@ msgid "Oh no, I forgot my password!"
 msgstr ""
 
 #: /View/Forum/help.ctp:19
-msgid ""
-"If you have forgotten your password, you can reset it using the %s form."
+msgid "If you have forgotten your password, you can reset it using the %s form."
 msgstr ""
 
 #: /View/Forum/help.ctp:19
@@ -292,9 +292,7 @@ msgid "What does reporting do?"
 msgstr ""
 
 #: /View/Forum/help.ctp:22
-msgid ""
-"If you find a piece of content that you find inappropriate or offensive, you "
-"can report the content for a moderator to delete or fix."
+msgid "If you find a piece of content that you find inappropriate or offensive, you can report the content for a moderator to delete or fix."
 msgstr ""
 
 #: /View/Forum/help.ctp:24
@@ -302,13 +300,7 @@ msgid "What are moderators, super moderators and administrators?"
 msgstr ""
 
 #: /View/Forum/help.ctp:25
-msgid ""
-"Those are users with higher access and privileges than a regular user. "
-"Moderators control and moderate specific forums, where as Super Moderators "
-"have full access to all forums. Administrators have full access to all "
-"forums as well as editing all the sites settings and configuration. "
-"Additionally, moderates have the power to edit and delete other users "
-"content."
+msgid "Those are users with higher access and privileges than a regular user. Moderators control and moderate specific forums, where as Super Moderators have full access to all forums. Administrators have full access to all forums as well as editing all the sites settings and configuration. Additionally, moderates have the power to edit and delete other users content."
 msgstr ""
 
 #: /View/Forum/help.ctp:27
@@ -316,9 +308,7 @@ msgid "How do I edit my profile?"
 msgstr ""
 
 #: /View/Forum/help.ctp:28
-msgid ""
-"Once you have logged in, you can edit your profile by going to the %s link, "
-"located at the top right."
+msgid "Once you have logged in, you can edit your profile by going to the %s link, located at the top right."
 msgstr ""
 
 #: /View/Forum/help.ctp:30
@@ -326,10 +316,7 @@ msgid "How do I post a topic?"
 msgstr ""
 
 #: /View/Forum/help.ctp:31
-msgid ""
-"You would first navigate to the appropriate forum you want to post in. Once "
-"there, you would click the \"Create Topic\" link located at the top and "
-"bottom right of the page."
+msgid "You would first navigate to the appropriate forum you want to post in. Once there, you would click the \"Create Topic\" link located at the top and bottom right of the page."
 msgstr ""
 
 #: /View/Forum/help.ctp:33
@@ -337,9 +324,7 @@ msgid "How do I post a reply?"
 msgstr ""
 
 #: /View/Forum/help.ctp:34
-msgid ""
-"When you are reading a topic and are logged in, you would click the \"Post "
-"Reply\" link also located at the top and bottom right of the page."
+msgid "When you are reading a topic and are logged in, you would click the \"Post Reply\" link also located at the top and bottom right of the page."
 msgstr ""
 
 #: /View/Forum/help.ctp:36
@@ -347,9 +332,7 @@ msgid "How do I create a poll?"
 msgstr ""
 
 #: /View/Forum/help.ctp:37
-msgid ""
-"You would create a poll the same way you would create a topic. First enter "
-"the correct forum, then hit the \"Create Poll\" link."
+msgid "You would create a poll the same way you would create a topic. First enter the correct forum, then hit the \"Create Poll\" link."
 msgstr ""
 
 #: /View/Forum/help.ctp:39
@@ -357,12 +340,7 @@ msgid "How do I edit my topic, poll, post, etc?"
 msgstr ""
 
 #: /View/Forum/help.ctp:40
-msgid ""
-"When you are reading a topic, at the top right of each post you will see a "
-"few text links. Hit the \"Edit\" link to edit your respective content. If "
-"you are editing the first post of a topic, it will additionally edit the "
-"topic or poll as well. You may only edit your own posts or topics unless you "
-"have moderating capabilities."
+msgid "When you are reading a topic, at the top right of each post you will see a few text links. Hit the \"Edit\" link to edit your respective content. If you are editing the first post of a topic, it will additionally edit the topic or poll as well. You may only edit your own posts or topics unless you have moderating capabilities."
 msgstr ""
 
 #: /View/Forum/help.ctp:42
@@ -370,9 +348,7 @@ msgid "How do I report a topic, post or user?"
 msgstr ""
 
 #: /View/Forum/help.ctp:43
-msgid ""
-"At the top right of each post you would click the report button. From there "
-"you should add a comment on why you are reporting this content."
+msgid "At the top right of each post you would click the report button. From there you should add a comment on why you are reporting this content."
 msgstr ""
 
 #: /View/Forum/help.ctp:45
@@ -380,9 +356,7 @@ msgid "How do I get higher access and permissions?"
 msgstr ""
 
 #: /View/Forum/help.ctp:46
-msgid ""
-"It is up to the administrator to give you higher access. All you can do is "
-"be an outstanding member on the forum and hope they promote you."
+msgid "It is up to the administrator to give you higher access. All you can do is be an outstanding member on the forum and hope they promote you."
 msgstr ""
 
 #: /View/Forum/help.ctp:48
@@ -390,26 +364,30 @@ msgid "I have more questions that aren't shown here!"
 msgstr ""
 
 #: /View/Forum/help.ctp:49
-msgid ""
-"If you have additional questions and need further help, please contact us at "
-"%s."
+msgid "If you have additional questions and need further help, please contact us at %s."
 msgstr ""
 
-#: /View/Forum/index.ctp:3 /View/Layouts/forum.ctp:41
+#: /View/Forum/index.ctp:3
+#: /View/Layouts/forum.ctp:41
 msgid "Forums"
 msgstr ""
 
-#: /View/Forum/index.ctp:19 /View/Stations/view.ctp:32
+#: /View/Forum/index.ctp:19
+#: /View/Stations/view.ctp:32
 msgid "Topics"
 msgstr ""
 
-#: /View/Forum/index.ctp:20 /View/Search/index.ctp:50
-#: /View/Stations/moderate.ctp:32 /View/Stations/view.ctp:33;67
+#: /View/Forum/index.ctp:20
+#: /View/Search/index.ctp:50
+#: /View/Stations/moderate.ctp:32
+#: /View/Stations/view.ctp:33;67
 msgid "Posts"
 msgstr ""
 
-#: /View/Forum/index.ctp:21 /View/Search/index.ctp:52
-#: /View/Stations/moderate.ctp:34 /View/Stations/view.ctp:34;69
+#: /View/Forum/index.ctp:21
+#: /View/Search/index.ctp:52
+#: /View/Stations/moderate.ctp:34
+#: /View/Stations/view.ctp:34;69
 msgid "Activity"
 msgstr ""
 
@@ -442,12 +420,7 @@ msgid "No Offensive Material"
 msgstr ""
 
 #: /View/Forum/rules.ctp:10
-msgid ""
-"No posting any harmful, threatening, abusive, harassing, defamatory, vulgar, "
-"obscene, hateful, or racially, ethnically or otherwise objectionable "
-"content. This means no porn, gore, offensive, violent or disturbing images, "
-"websites and or other adult content. This will result in an immediate ban "
-"from the community."
+msgid "No posting any harmful, threatening, abusive, harassing, defamatory, vulgar, obscene, hateful, or racially, ethnically or otherwise objectionable content. This means no porn, gore, offensive, violent or disturbing images, websites and or other adult content. This will result in an immediate ban from the community."
 msgstr ""
 
 #: /View/Forum/rules.ctp:12
@@ -455,10 +428,7 @@ msgid "No Prejudice or Discrimination"
 msgstr ""
 
 #: /View/Forum/rules.ctp:13
-msgid ""
-"There is to be absolutely no discriminating or hatred against somebody else "
-"due to race, religion, gender, cultural background or sexual preference. "
-"This will result in an immediate ban from the community."
+msgid "There is to be absolutely no discriminating or hatred against somebody else due to race, religion, gender, cultural background or sexual preference. This will result in an immediate ban from the community."
 msgstr ""
 
 #: /View/Forum/rules.ctp:15
@@ -466,10 +436,7 @@ msgid "No Flaming"
 msgstr ""
 
 #: /View/Forum/rules.ctp:16
-msgid ""
-"There is to be no offensive language, personal attacks, harassment or "
-"flaming to another member of the forum. For each infraction you will be "
-"warned, and if the problem persists you will be banned."
+msgid "There is to be no offensive language, personal attacks, harassment or flaming to another member of the forum. For each infraction you will be warned, and if the problem persists you will be banned."
 msgstr ""
 
 #: /View/Forum/rules.ctp:18
@@ -477,9 +444,7 @@ msgid "No Spamming"
 msgstr ""
 
 #: /View/Forum/rules.ctp:19
-msgid ""
-"No spamming or flooding forums or threads by posting frequent and / or "
-"annoying messages in the forums which serve no purpose."
+msgid "No spamming or flooding forums or threads by posting frequent and / or annoying messages in the forums which serve no purpose."
 msgstr ""
 
 #: /View/Forum/rules.ctp:21
@@ -487,11 +452,7 @@ msgid "No Short Length Posts"
 msgstr ""
 
 #: /View/Forum/rules.ctp:22
-msgid ""
-"A response with only a few words is considered spam. If you post a reply "
-"that contains less than 5-10 words, it is considered spam. If you do not "
-"have anything worth while to add to the conversation, then do not reply at "
-"all. Please refer to the No Spamming rule above."
+msgid "A response with only a few words is considered spam. If you post a reply that contains less than 5-10 words, it is considered spam. If you do not have anything worth while to add to the conversation, then do not reply at all. Please refer to the No Spamming rule above."
 msgstr ""
 
 #: /View/Forum/rules.ctp:24
@@ -499,10 +460,7 @@ msgid "No Virus, Trojans or Warez"
 msgstr ""
 
 #: /View/Forum/rules.ctp:25
-msgid ""
-"Posting links to and / or information about cheats, hacks, virus, trojans, "
-"warez and otherwise illegal content is prohibited. If this happens you will "
-"be banned immediately."
+msgid "Posting links to and / or information about cheats, hacks, virus, trojans, warez and otherwise illegal content is prohibited. If this happens you will be banned immediately."
 msgstr ""
 
 #: /View/Forum/rules.ctp:27
@@ -510,9 +468,7 @@ msgid "No Threadomancy"
 msgstr ""
 
 #: /View/Forum/rules.ctp:28
-msgid ""
-"Posting in a thread that hasn't had any new replies in roughly 3-4 weeks or "
-"more (up to mod discretion; possible exceptions apply)."
+msgid "Posting in a thread that hasn't had any new replies in roughly 3-4 weeks or more (up to mod discretion; possible exceptions apply)."
 msgstr ""
 
 #: /View/Forum/rules.ctp:30
@@ -520,10 +476,7 @@ msgid "No Trolling"
 msgstr ""
 
 #: /View/Forum/rules.ctp:31
-msgid ""
-"No trolling these forums are allowed. Do not intentionally post "
-"controversial or contrary messages to invoke other members of the community. "
-"This will result in an immediate ban."
+msgid "No trolling these forums are allowed. Do not intentionally post controversial or contrary messages to invoke other members of the community. This will result in an immediate ban."
 msgstr ""
 
 #: /View/Forum/rules.ctp:33
@@ -531,11 +484,7 @@ msgid "No Advertising"
 msgstr ""
 
 #: /View/Forum/rules.ctp:34
-msgid ""
-"Posting links to other community sites that are not on our affiliates list "
-"or posting links to advertise your site or community is prohibited. You may "
-"place a link within your signature, but you may not advertise with a topic. "
-"This will result in a warning or a ban."
+msgid "Posting links to other community sites that are not on our affiliates list or posting links to advertise your site or community is prohibited. You may place a link within your signature, but you may not advertise with a topic. This will result in a warning or a ban."
 msgstr ""
 
 #: /View/Forum/rules.ctp:36
@@ -543,9 +492,7 @@ msgid "No Double Posting"
 msgstr ""
 
 #: /View/Forum/rules.ctp:37
-msgid ""
-"Do not double post, if you need to double post please edit your previous "
-"post instead. Posting consecutively is not permitted."
+msgid "Do not double post, if you need to double post please edit your previous post instead. Posting consecutively is not permitted."
 msgstr ""
 
 #: /View/Forum/rules.ctp:39
@@ -553,10 +500,7 @@ msgid "No Duplicate Topics"
 msgstr ""
 
 #: /View/Forum/rules.ctp:40
-msgid ""
-"Do not create a new topic with the same content to an existing topic. "
-"Duplicated topics will be locked, and removed. Browse through the forum, or "
-"do a search and see if a topic already exist."
+msgid "Do not create a new topic with the same content to an existing topic. Duplicated topics will be locked, and removed. Browse through the forum, or do a search and see if a topic already exist."
 msgstr ""
 
 #: /View/Forum/rules.ctp:42
@@ -564,9 +508,7 @@ msgid "No Abusing Topics"
 msgstr ""
 
 #: /View/Forum/rules.ctp:43
-msgid ""
-"Do not post topics that have no real reason for being created. Also do not "
-"spam topics/polls."
+msgid "Do not post topics that have no real reason for being created. Also do not spam topics/polls."
 msgstr ""
 
 #: /View/Forum/rss/index.ctp:4
@@ -601,7 +543,9 @@ msgstr ""
 msgid "Admin"
 msgstr ""
 
-#: /View/Posts/add.ctp:20 /View/Posts/edit.ctp:20 /View/Topics/add.ctp:43
+#: /View/Posts/add.ctp:20
+#: /View/Posts/edit.ctp:20
+#: /View/Topics/add.ctp:43
 #: /View/Topics/edit.ctp:64
 msgid "Content"
 msgstr ""
@@ -610,7 +554,8 @@ msgstr ""
 msgid "Topic Review - Last 10 Replies"
 msgstr ""
 
-#: /View/Posts/edit.ctp:9;12 /View/Topics/view.ctp:133
+#: /View/Posts/edit.ctp:9;12
+#: /View/Topics/view.ctp:133
 msgid "Edit Post"
 msgstr ""
 
@@ -618,25 +563,27 @@ msgstr ""
 msgid "Update Post"
 msgstr ""
 
-#: /View/Posts/report.ctp:9;12 /View/Topics/view.ctp:137
+#: /View/Posts/report.ctp:9;12
+#: /View/Topics/view.ctp:137
 msgid "Report Post"
 msgstr ""
 
 #: /View/Posts/report.ctp:16
-msgid ""
-"Are you sure you want to report the post (below) in the topic %s? If so, "
-"please add a comment as to why you are reporting it, 255 max characters."
+msgid "Are you sure you want to report the post (below) in the topic %s? If so, please add a comment as to why you are reporting it, 255 max characters."
 msgstr ""
 
-#: /View/Posts/report.ctp:25 /View/Topics/moderate.ctp:32
+#: /View/Posts/report.ctp:25
+#: /View/Topics/moderate.ctp:32
 msgid "Post"
 msgstr ""
 
-#: /View/Posts/report.ctp:27 /View/Topics/report.ctp:26
+#: /View/Posts/report.ctp:27
+#: /View/Topics/report.ctp:26
 msgid "Comment"
 msgstr ""
 
-#: /View/Posts/report.ctp:32 /View/Topics/report.ctp:31
+#: /View/Posts/report.ctp:32
+#: /View/Topics/report.ctp:31
 msgid "Report"
 msgstr ""
 
@@ -660,22 +607,27 @@ msgstr ""
 msgid "Search Topics"
 msgstr ""
 
-#: /View/Search/index.ctp:46 /View/Stations/moderate.ctp:28
-#: /View/Stations/view.ctp:64 /View/Topics/rss/view.ctp:4
+#: /View/Search/index.ctp:46
+#: /View/Stations/moderate.ctp:28
+#: /View/Stations/view.ctp:64
+#: /View/Topics/rss/view.ctp:4
 msgid "Topic"
 msgstr ""
 
-#: /View/Search/index.ctp:48 /View/Stations/moderate.ctp:30
+#: /View/Search/index.ctp:48
+#: /View/Stations/moderate.ctp:30
 #: /View/Stations/view.ctp:65
 msgid "Author"
 msgstr ""
 
-#: /View/Search/index.ctp:49 /View/Stations/moderate.ctp:31
+#: /View/Search/index.ctp:49
+#: /View/Stations/moderate.ctp:31
 #: /View/Stations/view.ctp:66
 msgid "Created"
 msgstr ""
 
-#: /View/Search/index.ctp:51 /View/Stations/moderate.ctp:33
+#: /View/Search/index.ctp:51
+#: /View/Stations/moderate.ctp:33
 #: /View/Stations/view.ctp:68
 msgid "Views"
 msgstr ""
@@ -696,12 +648,14 @@ msgstr ""
 msgid "Return to Forum"
 msgstr ""
 
-#: /View/Stations/moderate.ctp:29 /View/Topics/add.ctp:23
+#: /View/Stations/moderate.ctp:29
+#: /View/Topics/add.ctp:23
 #: /View/Topics/edit.ctp:23
 msgid "Status"
 msgstr ""
 
-#: /View/Stations/moderate.ctp:50 /View/Stations/view.ctp:103
+#: /View/Stations/moderate.ctp:50
+#: /View/Stations/view.ctp:103
 msgid "There are no topics within this forum"
 msgstr ""
 
@@ -721,7 +675,8 @@ msgstr ""
 msgid "Delete Topic(s)"
 msgstr ""
 
-#: /View/Stations/moderate.ctp:72 /View/Topics/moderate.ctp:70
+#: /View/Stations/moderate.ctp:72
+#: /View/Topics/moderate.ctp:70
 msgid "Perform Action"
 msgstr ""
 
@@ -729,7 +684,8 @@ msgstr ""
 msgid "Move To"
 msgstr ""
 
-#: /View/Stations/moderate.ctp:76 /View/Topics/moderate.ctp:71
+#: /View/Stations/moderate.ctp:76
+#: /View/Topics/moderate.ctp:71
 msgid "Process"
 msgstr ""
 
@@ -741,7 +697,8 @@ msgstr ""
 msgid "Regular Topics"
 msgstr ""
 
-#: /View/Stations/view.ctp:131 /View/Topics/view.ctp:157
+#: /View/Stations/view.ctp:131
+#: /View/Topics/view.ctp:157
 msgid "Total Topics"
 msgstr ""
 
@@ -765,7 +722,8 @@ msgstr ""
 msgid "Can Create Topics"
 msgstr ""
 
-#: /View/Stations/view.ctp:144 /View/Topics/view.ctp:161
+#: /View/Stations/view.ctp:144
+#: /View/Topics/view.ctp:161
 msgid "Total Posts"
 msgstr ""
 
@@ -785,19 +743,23 @@ msgstr ""
 msgid "Moderators"
 msgstr ""
 
-#: /View/Topics/add.ctp:19 /View/Topics/edit.ctp:19
+#: /View/Topics/add.ctp:19
+#: /View/Topics/edit.ctp:19
 msgid "Title"
 msgstr ""
 
-#: /View/Topics/add.ctp:20 /View/Topics/edit.ctp:22
+#: /View/Topics/add.ctp:20
+#: /View/Topics/edit.ctp:22
 msgid "Select a Forum"
 msgstr ""
 
-#: /View/Topics/add.ctp:24 /View/Topics/edit.ctp:24
+#: /View/Topics/add.ctp:24
+#: /View/Topics/edit.ctp:24
 msgid "Type"
 msgstr ""
 
-#: /View/Topics/add.ctp:30 /View/Topics/edit.ctp:32
+#: /View/Topics/add.ctp:30
+#: /View/Topics/edit.ctp:32
 msgid "Poll Options"
 msgstr ""
 
@@ -805,15 +767,18 @@ msgstr ""
 msgid "One option per line. Max 10 options."
 msgstr ""
 
-#: /View/Topics/add.ctp:36 /View/Topics/edit.ctp:54
+#: /View/Topics/add.ctp:36
+#: /View/Topics/edit.ctp:54
 msgid "Expiration Date"
 msgstr ""
 
-#: /View/Topics/add.ctp:37 /View/Topics/edit.ctp:55
+#: /View/Topics/add.ctp:37
+#: /View/Topics/edit.ctp:55
 msgid "How many days till expiration? Leave blank to last forever."
 msgstr ""
 
-#: /View/Topics/edit.ctp:9;12;74 /View/Topics/view.ctp:123
+#: /View/Topics/edit.ctp:9;12;74
+#: /View/Topics/view.ctp:123
 msgid "Edit Topic"
 msgstr ""
 
@@ -821,11 +786,13 @@ msgstr ""
 msgid "Delete?"
 msgstr ""
 
-#: /View/Topics/moderate.ctp:13 /View/Topics/view.ctp:127
+#: /View/Topics/moderate.ctp:13
+#: /View/Topics/view.ctp:127
 msgid "Delete Topic"
 msgstr ""
 
-#: /View/Topics/moderate.ctp:13 /View/Topics/view.ctp:127;134
+#: /View/Topics/moderate.ctp:13
+#: /View/Topics/view.ctp:127;134
 msgid "Are you sure you want to delete?"
 msgstr ""
 
@@ -845,14 +812,13 @@ msgstr ""
 msgid "Delete Post(s)"
 msgstr ""
 
-#: /View/Topics/report.ctp:9;12 /View/Topics/view.ctp:130
+#: /View/Topics/report.ctp:9;12
+#: /View/Topics/view.ctp:130
 msgid "Report Topic"
 msgstr ""
 
 #: /View/Topics/report.ctp:16
-msgid ""
-"Are you sure you want to report the topic %s? If so, please add a comment as "
-"to why you are reporting it, 255 max characters."
+msgid "Are you sure you want to report the topic %s? If so, please add a comment as to why you are reporting it, 255 max characters."
 msgstr ""
 
 #: /View/Topics/view.ctp:64
