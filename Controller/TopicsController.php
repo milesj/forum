@@ -9,7 +9,6 @@ App::uses('ForumAppController', 'Forum.Controller');
 
 /**
  * @property Topic $Topic
- * @property ForumUser $ForumUser
  * @property Subscription $Subscription
  * @property AjaxHandlerComponent $AjaxHandler
  */
@@ -20,7 +19,7 @@ class TopicsController extends ForumAppController {
 	 *
 	 * @var array
 	 */
-	public $uses = array('Forum.Topic', 'Forum.ForumUser', 'Forum.Subscription', 'Forum.ForumUser');
+	public $uses = array('Forum.Topic', 'Forum.Subscription');
 
 	/**
 	 * Components.
@@ -84,11 +83,6 @@ class TopicsController extends ForumAppController {
 			$this->request->data['Topic']['userIP'] = $this->request->clientIp();
 
 			if ($topic_id = $this->Topic->addTopic($this->request->data['Topic'])) {
-				if ($forum['Forum']['settingPostCount']) {
-					$this->ForumUser->increasePosts($user_id);
-				}
-
-				$this->ForumUser->increaseTopics($user_id);
 				$this->ForumToolbar->updateTopics($topic_id);
 				$this->ForumToolbar->goToPage($topic_id);
 			}

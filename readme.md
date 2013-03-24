@@ -5,9 +5,11 @@ A fully robust and powerful CakePHP forum plugin. Integrates with an external us
 ## Requirements ##
 
 * PHP 5.3.0
+	* Multibyte
 * CakePHP 2
+	* Admin v1.0.0 Plugin - https://github.com/milesj/Admin
+	* Utility v1.4.0 Plugin - https://github.com/milesj/Utility
 * Composer
-* Utility Plugin - https://github.com/milesj/Utility
 
 ## Compatibility ##
 
@@ -45,9 +47,9 @@ Moderation
 * Ability to edit and manage users content
 
 Administration
-* Full admin panel using CakePHP admin routes
-* Requires the administration access level
-* Can add, edit, order, delete forums
+* Full admin panel using CakePHP Admin plugin
+* Utilizes ACL for permissions
+* Can add, edit, order, delete all data
 * Manage all reported content
 * Promote, demote, create access levels, staff and moderators
 * Manage all aspects and content

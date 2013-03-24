@@ -9,7 +9,6 @@ App::uses('ForumAppController', 'Forum.Controller');
 
 /**
  * @property Post $Post
- * @property ForumUser $ForumUser
  */
 class PostsController extends ForumAppController {
 
@@ -18,7 +17,7 @@ class PostsController extends ForumAppController {
 	 *
 	 * @var array
 	 */
-	public $uses = array('Forum.Post', 'Forum.ForumUser');
+	public $uses = array('Forum.Post');
 
 	/**
 	 * Redirect.
@@ -49,10 +48,6 @@ class PostsController extends ForumAppController {
 			$this->request->data['Post']['userIP'] = $this->request->clientIp();
 
 			if ($post_id = $this->Post->addPost($this->request->data['Post'])) {
-				if ($topic['Forum']['settingPostCount']) {
-					$this->ForumUser->increasePosts($user_id);
-				}
-
 				$this->ForumToolbar->updatePosts($post_id);
 				$this->ForumToolbar->goToPage($topic['Topic']['id'], $post_id);
 			}
