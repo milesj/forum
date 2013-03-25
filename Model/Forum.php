@@ -110,7 +110,10 @@ class Forum extends ForumAppModel {
 	 * @var array
 	 */
 	public $admin = array(
-		'iconClass' => 'icon-list-alt'
+		'iconClass' => 'icon-list-alt',
+		'paginate' => array(
+			'order' => array('Forum.lft' => 'ASC')
+		)
 	);
 
 	/**
