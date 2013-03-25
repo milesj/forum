@@ -60,6 +60,13 @@ class ForumController extends ForumAppController {
 	}
 
 	/**
+	 * Rules.
+	 */
+	public function rules() {
+		$this->set('menuTab', 'rules');
+	}
+
+	/**
 	 * Jump to a specific topic and post.
 	 *
 	 * @param int $topic_id
@@ -67,13 +74,6 @@ class ForumController extends ForumAppController {
 	 */
 	public function jump($topic_id, $post_id = null) {
 		$this->ForumToolbar->goToPage($topic_id, $post_id);
-	}
-
-	/**
-	 * Rules.
-	 */
-	public function rules() {
-		$this->set('menuTab', 'rules');
 	}
 
 	/**

@@ -13,4 +13,6 @@
 .decoda-help table td { border: 1px solid #DBE4EF; }
 .decoda-help span { color: #A4A4A4; }
 
+.decoda-preview { min-height: 100px; }
+
 #quickReply .decoda-editor { width: 75%; }

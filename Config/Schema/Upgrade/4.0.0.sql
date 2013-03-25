@@ -6,14 +6,14 @@ DROP TABLE `{prefix}access`, `{prefix}access_levels`, `{prefix}settings`, `{pref
 ALTER TABLE `{prefix}forums`
 	CHANGE `forum_id` `parent_id` INT( 11 ) NULL DEFAULT NULL ,
 	CHANGE `access_level_id` `aro_id` INT( 11 ) NULL DEFAULT NULL ,
-	CHANGE `accessRead` `accessRead` TINYINT( 1 ) NOT NULL DEFAULT '0',
+	CHANGE `accessRead` `accessRead` TINYINT( 1 ) NOT NULL DEFAULT '1',
 	CHANGE `accessPost` `accessPost` TINYINT( 1 ) NOT NULL DEFAULT '1',
 	CHANGE `accessPoll` `accessPoll` TINYINT( 1 ) NOT NULL DEFAULT '1',
 	CHANGE `accessReply` `accessReply` TINYINT( 1 ) NOT NULL DEFAULT '1',
-	CHANGE `settingPostCount` `settingPostCount` TINYINT( 1 ) NOT NULL DEFAULT '1',
-	CHANGE `settingAutoLock` `settingAutoLock` TINYINT( 1 ) NOT NULL DEFAULT '1',
+	CHANGE `settingAutoLock` `autoLock` TINYINT( 1 ) NOT NULL DEFAULT '1',
 	ADD `lft` INT NULL DEFAULT NULL AFTER `lastUser_id`,
-	ADD `rght` INT NULL DEFAULT NULL AFTER `lft`;
+	ADD `rght` INT NULL DEFAULT NULL AFTER `lft`,
+	DROP `settingPostCount`;
 
 ALTER TABLE `{prefix}moderators`
 	ADD `modified` DATETIME NULL DEFAULT NULL;

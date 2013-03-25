@@ -71,8 +71,8 @@ class ForumAppModel extends AppModel {
 	 */
 	public $enum = array(
 		'status' => array(
-			self::CLOSED => 'CLOSED',
-			self::OPEN => 'OPEN'
+			self::OPEN => 'OPEN',
+			self::CLOSED => 'CLOSED'
 		)
 	);
 

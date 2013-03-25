@@ -150,7 +150,7 @@ class Forum extends ForumAppModel {
 	 * @return array
 	 */
 	public function getBySlug($slug) {
-		return $this->filterByRole($this->find('first', array(
+		$forum = $this->find('first', array(
 			'conditions' => array(
 				'Forum.accessRead' => self::YES,
 				'Forum.slug' => $slug
@@ -167,7 +167,9 @@ class Forum extends ForumAppModel {
 				'Moderator' => array('User')
 			),
 			'cache' => array(__METHOD__, $slug)
-		)));
+		));
+
+		return $this->filterByRole($forum);
 	}
 
 	/**
@@ -245,7 +247,7 @@ class Forum extends ForumAppModel {
 	 * @return array
 	 */
 	public function getIndex() {
-		return $this->filterByRole($this->find('all', array(
+		$forums = $this->find('all', array(
 			'order' => array('Forum.orderNo' => 'ASC'),
 			'conditions' => array(
 				'Forum.parent_id' => null,
@@ -269,7 +271,9 @@ class Forum extends ForumAppModel {
 				)
 			),
 			'cache' => array(__METHOD__, $this->Session->read('Forum.roles'))
-		)));
+		));
+
+		return $this->filterByRole($forums);
 	}
 
 	/**
@@ -282,9 +286,11 @@ class Forum extends ForumAppModel {
 		$roles = (array) $this->Session->read('Forum.roles');
 		$isAdmin = $this->Session->read('Forum.isAdmin');
 		$isSuper = $this->Session->read('Forum.isSuper');
+		$isMulti = true;
 
-		if (!$roles) {
-			return $forums;
+		if (!isset($forums[0])) {
+			$forums = array($forums);
+			$isMulti = false;
 		}
 
 		foreach ($forums as $i => $forum) {
@@ -310,6 +316,10 @@ class Forum extends ForumAppModel {
 			if ($aro_id && !in_array($aro_id, $roles)) {
 				unset($forums[$i]);
 			}
+		}
+
+		if (!$isMulti) {
+			return $forums[0];
 		}
 
 		return $forums;

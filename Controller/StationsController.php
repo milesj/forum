@@ -39,7 +39,7 @@ class StationsController extends ForumAppController {
 			'contain' => array(
 				'User', 'LastPost', 'LastUser',
 				'Poll.id',
-				'Forum.id', 'Forum.settingPostCount', 'Forum.settingAutoLock'
+				'Forum.id', 'Forum.autoLock'
 			)
 		)
 	);

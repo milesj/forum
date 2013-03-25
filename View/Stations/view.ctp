@@ -132,7 +132,7 @@ if ($forum['Forum']['parent_id']) {
 					<td><strong><?php echo $forum['Forum']['topic_count']; ?></strong></td>
 
 					<td class="align-right"><?php echo __d('forum', 'Increases Post Count'); ?>: </td>
-					<td><strong><?php echo $forum['Forum']['settingPostCount'] ? __d('forum', 'Yes') : __d('forum', 'No'); ?></strong></td>
+					<td><strong><?php echo __d('forum', 'Yes'); ?></strong></td>
 
 					<td class="align-right"><?php echo __d('forum', 'Can Read Topics'); ?>: </td>
 					<td><strong><?php echo $this->Forum->hasAccess('Forum.Topic', 'read', $forum['Forum']['accessRead']) ? __d('forum', 'Yes') : __d('forum', 'No'); ?></strong></td>
@@ -145,7 +145,7 @@ if ($forum['Forum']['parent_id']) {
 					<td><strong><?php echo $forum['Forum']['post_count']; ?></strong></td>
 
 					<td class="align-right"><?php echo __d('forum', 'Auto-Lock Topics'); ?>: </td>
-					<td><strong><?php echo $forum['Forum']['settingAutoLock'] ? __d('forum', 'Yes') : __d('forum', 'No'); ?></strong></td>
+					<td><strong><?php echo $forum['Forum']['autoLock'] ? __d('forum', 'Yes') : __d('forum', 'No'); ?></strong></td>
 
 					<td class="align-right"><?php echo __d('forum', 'Can Reply'); ?>: </td>
 					<td><strong><?php echo $this->Forum->hasAccess('Forum.Post', 'create', $forum['Forum']['accessReply']) ? __d('forum', 'Yes') : __d('forum', 'No'); ?></strong></td>

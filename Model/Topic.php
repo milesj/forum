@@ -523,7 +523,7 @@ class Topic extends ForumAppModel {
 			if (isset($results[0])) {
 				foreach ($results as &$result) {
 					if (isset($result['Topic'])) {
-						$lock = isset($result['Forum']) ? $result['Forum']['settingAutoLock'] : false;
+						$lock = isset($result['Forum']) ? $result['Forum']['autoLock'] : false;
 						$lastTime = null;
 
 						if (isset($result['LastPost'])) {
@@ -554,7 +554,7 @@ class Topic extends ForumAppModel {
 	 */
 	public function afterDelete() {
 		$this->Forum->updateAll(
-			array('Forum.lastTopic_id' => null),
+			array('Forum.lastTopic_id' => null, 'Forum.lastPost_id' => null),
 			array('Forum.lastTopic_id' => $this->id)
 		);
 	}

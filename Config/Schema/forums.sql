@@ -16,8 +16,7 @@ CREATE TABLE `{prefix}forums` (
 	`accessPost` TINYINT(1) NOT NULL DEFAULT '1',
 	`accessPoll` TINYINT(1) NOT NULL DEFAULT '1',
 	`accessReply` TINYINT(1) NOT NULL DEFAULT '1',
-	`settingPostCount` TINYINT(1) NOT NULL DEFAULT '1',
-	`settingAutoLock` TINYINT(1) NOT NULL DEFAULT '1',
+	`autoLock` TINYINT(1) NOT NULL DEFAULT '1',
 	`lastTopic_id` INT(11) DEFAULT NULL,
 	`lastPost_id` INT(11) DEFAULT NULL,
 	`lastUser_id` INT(11) DEFAULT NULL,
@@ -33,6 +32,6 @@ CREATE TABLE `{prefix}forums` (
 	KEY `aro_id` (`aro_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Forum categories to post topics to' AUTO_INCREMENT=1;
 
-INSERT INTO `{prefix}forums` (`id`, `parent_id`, `aro_id`, `title`, `slug`, `description`, `status`, `orderNo`, `topic_count`, `post_count`, `accessRead`, `accessPost`, `accessReply`, `accessPoll`, `settingPostCount`, `settingAutoLock`, `lastTopic_id`, `lastPost_id`, `lastUser_id`, `lft`, `rght`, `created`, `modified`) VALUES
-	(1, null, null, 'Forums', 'forums', 'This is a primary forum and it contains child forums. Primary forums (no parents) can not be posted in.', 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, null, null, null, 1, 4, NOW(), NOW()),
-	(2, 1, null, 'General Discussion', 'general-discussion', 'This is a child forum. You can add, edit or delete these forums by visiting the administration panel, but first you would need to give a user admin rights.', 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, null, null, null, 2, 3, NOW(), NOW());
+INSERT INTO `{prefix}forums` (`id`, `parent_id`, `aro_id`, `title`, `slug`, `description`, `status`, `orderNo`, `topic_count`, `post_count`, `accessRead`, `accessPost`, `accessReply`, `accessPoll`, `autoLock`, `lastTopic_id`, `lastPost_id`, `lastUser_id`, `lft`, `rght`, `created`, `modified`) VALUES
+	(1, null, null, 'Forums', 'forums', 'This is a primary forum and it contains child forums. Primary forums (no parents) can not be posted in.', 1, 1, 0, 0, 1, 1, 1, 1, 0, null, null, null, 1, 4, NOW(), NOW()),
+	(2, 1, null, 'General Discussion', 'general-discussion', 'This is a child forum. You can add, edit or delete these forums by visiting the administration panel, but first you would need to give a user admin rights.', 1, 1, 0, 0, 1, 1, 1, 1, 1, null, null, null, 2, 3, NOW(), NOW());

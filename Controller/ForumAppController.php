@@ -120,6 +120,11 @@ class ForumAppController extends AppController {
 					return true;
 				}
 			break;
+
+			// All other actions should be available
+			default:
+				return true;
+			break;
 		}
 
 		throw new UnauthorizedException();
