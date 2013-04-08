@@ -209,9 +209,7 @@ class ForumToolbarComponent extends Component {
 
 		// Are we a moderator? Grant access
 		if (isset($validators['moderate'])) {
-			if (in_array($validators['moderate'], $this->Session->read('Forum.moderates'))) {
-				return true;
-			}
+			return in_array($validators['moderate'], $this->Session->read('Forum.moderates'));
 		}
 
 		// Is the item locked/unavailable?
