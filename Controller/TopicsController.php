@@ -148,7 +148,8 @@ class TopicsController extends ForumAppController {
 
 		$this->ForumToolbar->verifyAccess(array(
 			'exists' => $topic,
-			'moderate' => $topic['Topic']['forum_id']
+			'moderate' => $topic['Topic']['forum_id'],
+			'ownership' => $topic['Topic']['user_id']
 		));
 
 		$this->Topic->delete($topic['Topic']['id'], true);

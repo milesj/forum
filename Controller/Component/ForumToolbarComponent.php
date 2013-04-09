@@ -217,11 +217,14 @@ class ForumToolbarComponent extends Component {
 			}
 		}
 
+		// Full access
+		if ($this->Session->read('Forum.isSuper') || $this->Session->read('Forum.isAdmin')) {
+			return true;
+		}
+
 		// Are we a moderator? Grant access
 		if (isset($validators['moderate'])) {
-			if (in_array($validators['moderate'], $this->Session->read('Forum.moderates'))) {
-				return true;
-			}
+			return in_array($validators['moderate'], (array) $this->Session->read('Forum.moderates'));
 		}
 
 		// Do we have permission to do this action?
@@ -240,10 +243,7 @@ class ForumToolbarComponent extends Component {
 
 		// Does the user own this item?
 		if (isset($validators['ownership'])) {
-			if ($this->Session->read('Forum.isSuper') || $this->Session->read('Forum.isAdmin')) {
-				return true;
-
-			} else if ($this->Controller->Auth->user('id') != $validators['ownership']) {
+			if ($this->Controller->Auth->user('id') != $validators['ownership']) {
 				throw new UnauthorizedException();
 			}
 		}
