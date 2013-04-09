@@ -1,4 +1,4 @@
-# Forum v3.3.0 #
+# Forum v3.3.1 #
 
 A fully robust and powerful CakePHP forum plugin. Integrates with an external user system, support for topic and forum subscriptions, and many more features listed below.
 
@@ -6,8 +6,8 @@ A fully robust and powerful CakePHP forum plugin. Integrates with an external us
 
 * PHP 5.3.0
 * CakePHP 2
+	* Utility Plugin - https://github.com/milesj/Utility
 * Composer
-* Utility Plugin - https://github.com/milesj/Utility
 
 ## Contributors ##
 
