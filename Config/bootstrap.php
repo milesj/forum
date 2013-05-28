@@ -11,7 +11,7 @@ App::uses('Sanitize', 'Utility');
 /**
  * Forum critical constants.
  */
-define('FORUM_PLUGIN', dirname(__DIR__) . '/');
+define('FORUM_PLUGIN', dirname('__DIR__') . '/');
 
 // Table Prefix
 if (!defined('FORUM_PREFIX')) {
@@ -26,7 +26,7 @@ if (!defined('FORUM_DATABASE')) {
 /**
  * Current version.
  */
-Configure::write('Forum.version', file_get_contents(dirname(__DIR__) . '/version.md'));
+Configure::write('Forum.version', file_get_contents(dirname('__DIR__') . '/version.md'));
 
 /**
  * Customizable layout; defaults to the plugin layout.
