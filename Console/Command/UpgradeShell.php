@@ -43,14 +43,14 @@ class UpgradeShell extends BaseUpgradeShell {
 	 */
 	public function to_400() {
 		$this->out('<warning>This upgrade will delete the following tables after migration: settings, access, access_levels, profiles, reported.</warning>');
-		$answer = strtoupper($this->in('<question>All data will be migrated to the new admin system, are you sure you want to continue?</question>', array('Y', 'N')));
+		$answer = strtoupper($this->in('All data will be migrated to the new admin system, are you sure you want to continue?', array('Y', 'N')));
 
 		if ($answer === 'N') {
 			exit();
 		}
 
 		// Migrate old reports to the new admin system
-		$this->out('<info>Migrating reports...</info>');
+		$this->out('<success>Migrating reports...</success>');
 
 		$ItemReport = ClassRegistry::init('Admin.ItemReport');
 
@@ -76,7 +76,7 @@ class UpgradeShell extends BaseUpgradeShell {
 		}
 
 		// Migrate profile data to users table
-		$this->out('<info>Migrating user profiles...</info>');
+		$this->out('<success>Migrating user profiles...</success>');
 
 		$User = ClassRegistry::init($this->usersModel);
 		$fieldMap = Configure::read('User.fieldMap');
@@ -103,7 +103,7 @@ class UpgradeShell extends BaseUpgradeShell {
 		}
 
 		// Delete tables handled by parent shell
-		$this->out('<info>Deleting old tables...</info>');
+		$this->out('<success>Deleting old tables...</success>');
 
 		return true;
 	}
