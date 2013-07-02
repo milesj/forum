@@ -1,7 +1,7 @@
 <?php
-$this->Html->css('Utility.decoda-1.1.0.min', 'stylesheet', array('inline' => false));
+$this->Html->css('Utility.decoda.min', 'stylesheet', array('inline' => false));
 $this->Html->css('Forum.decoda', 'stylesheet', array('inline' => false));
-$this->Html->script('Utility.decoda-1.1.0.min', array('inline' => false)); ?>
+$this->Html->script('Utility.decoda.min', array('inline' => false)); ?>
 
 <script type="text/javascript">
 	window.addEvent('domready', function() {
