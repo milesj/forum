@@ -1,4 +1,4 @@
-# Forum v4.0.1 #
+# Forum v4.0.2 #
 
 A fully robust and powerful CakePHP forum plugin. Integrates with an external user system, support for topic and forum subscriptions, and many more features listed below.
 
@@ -6,9 +6,11 @@ A fully robust and powerful CakePHP forum plugin. Integrates with an external us
 
 * PHP 5.3.0
 	* Multibyte
+	* Decoda - https://github.com/milesj/Decoda
+	* Titon\Utility - https://github.com/titon/Utility
 * CakePHP 2
-	* Admin Plugin v1.0.0 - https://github.com/milesj/Admin
-	* Utility Plugin v1.4.0 - https://github.com/milesj/Utility
+	* Admin Plugin - https://github.com/milesj/Admin
+	* Utility Plugin - https://github.com/milesj/Utility
 * Composer
 
 ## Compatibility ##
