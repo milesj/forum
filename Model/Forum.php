@@ -331,7 +331,7 @@ class Forum extends ForumAppModel {
 			return $forums[0];
 		}
 
-		return $forums;
+		return array_values($forums);
 	}
 
 	/**
