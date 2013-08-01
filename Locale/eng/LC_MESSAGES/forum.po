@@ -899,6 +899,14 @@ msgstr ""
 msgid "BBCode Enabled"
 msgstr ""
 
+#: /View/Topics/view.ctp:193
+msgid "This post has been buried."
+msgstr ""
+
+#: /View/Topics/view.ctp:194
+msgid "View the buried post?"
+msgstr ""
+
 # Forum
 msgid "forum.status.0"
 msgstr "Hidden"
