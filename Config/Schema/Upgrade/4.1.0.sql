@@ -13,6 +13,11 @@ ALTER TABLE `{prefix}forums`
 	ADD INDEX ( `accessReply` ),
 	DROP `aro_id`;
 
+UPDATE `{prefix}forums` SET
+	`accessPost` = NULL,
+	`accessPoll` = NULL,
+	`accessReply` = NULL;
+
 # Add post ratings
 ALTER TABLE `{prefix}posts`
 	ADD `up` INT(11) NOT NULL DEFAULT '0' AFTER `content`,
