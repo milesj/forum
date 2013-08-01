@@ -7,6 +7,17 @@
 var Forum = {
 
 	/**
+	 * Toggle a buried post.
+	 *
+	 * @param {int} post_id
+	 * @returns {boolean}
+	 */
+	toggleBuried: function(post_id) {
+		$('post-buried-' + post_id).toggle();
+		return false;
+	},
+
+	/**
 	 * Open or close child forums.
 	 *
 	 * @param {Element} self
@@ -72,6 +83,37 @@ var Forum = {
 	 */
 	unsubscribe: function(self) {
 		return Forum.subscribe(self);
+	},
+
+	/**
+	 * Rate a post.
+	 *
+	 * @param {int} post_id
+	 * @param {String} type
+	 * @returns {boolean}
+	 */
+	ratePost: function(post_id, type) {
+		new Request.JSON({
+			method: 'POST',
+			url: '/forum/posts/rate/' + post_id + '/' + (type == 'up' ? 1 : 0),
+			onSuccess: function(response) {
+				var parent = $('post-ratings-' + post_id),
+					rating = parent.getElement('.rating');
+
+				parent.getElements('a').dispose();
+
+				if (response.success) {
+					if (rating) {
+						parent.addClass('has-rated');
+						rating.set('text', parseInt(rating.get('text')) + (type == 'up' ? 1 : -1));
+					} else {
+						parent.dispose();
+					}
+				}
+			}
+		}).send();
+
+		return false;
 	}
 
 };

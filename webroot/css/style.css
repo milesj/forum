@@ -315,6 +315,24 @@ select {
 .errorPage h3 { font-size: 30px; color: #823382; }
 .errorPage p { margin: 10px 0 0 0; }
 
+.post-ratings {
+	background: #fff;
+	display: inline-block;
+	vertical-align: middle;
+	border: 1px solid #DBE4EF;
+	padding: 1px 2px;
+	font-weight: bold;
+	border-radius: 2px;
+	font-size: .9em;
+	line-height: 16px;
+	height: 16px; }
+
+.post-ratings.has-rated { padding: 1px 4px; }
+.post-ratings:empty { display: none; }
+
+.buried-text { color: #A4A4A4; margin-top: 5px; }
+.post-buried { margin-top: 10px; padding-top: 10px; border-top: 1px solid #DBE4EF; }
+
 /*------------------------------------------------------
 	Table
 ------------------------------------------------------*/

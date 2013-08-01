@@ -30,6 +30,19 @@ class Post extends ForumAppModel {
 	);
 
 	/**
+	 * Has many.
+	 *
+	 * @type array
+	 */
+	public $hasMany = array(
+		'PostRating' => array(
+			'className' => 'Forum.PostRating',
+			'dependent' => true,
+			'limit' => 25
+		)
+	);
+
+	/**
 	 * Validation.
 	 *
 	 * @var array
@@ -237,6 +250,41 @@ class Post extends ForumAppModel {
 	}
 
 	/**
+	 * Get popular scoring posts by a user.
+	 *
+	 * @param int $user_id
+	 * @param int $limit
+	 * @return array
+	 */
+	public function getPopularByUser($user_id, $limit = 10) {
+		return $this->find('all', array(
+			'conditions' => array('Post.user_id' => $user_id),
+			'order' => array('Post.score' => 'DESC'),
+			'limit' => $limit,
+			'cache' => array(__METHOD__, $user_id, $limit),
+			'cacheExpires' => '+5 minutes'
+		));
+	}
+
+	/**
+	 * Get popular scoring posts in a topic.
+	 *
+	 * @param int $topic_id
+	 * @param int $limit
+	 * @return array
+	 */
+	public function getPopularInTopic($topic_id, $limit = 10) {
+		return $this->find('all', array(
+			'conditions' => array('Post.topic_id' => $topic_id),
+			'order' => array('Post.score' => 'DESC'),
+			'limit' => $limit,
+			'contain' => array('User'),
+			'cache' => array(__METHOD__, $topic_id, $limit),
+			'cacheExpires' => '+5 minutes'
+		));
+	}
+
+	/**
 	 * Return a post for quoting.
 	 *
 	 * @param int $id
@@ -263,6 +311,32 @@ class Post extends ForumAppModel {
 			'order' => array('Post.created' => 'DESC'),
 			'limit' => $limit
 		));
+	}
+
+	/**
+	 * Increase the down ratings.
+	 *
+	 * @param int $id
+	 * @return bool
+	 */
+	public function rateDown($id) {
+		return $this->updateAll(
+			array('Post.down' => 'Post.down + 1', 'Post.score' => 'Post.score - 1'),
+			array('Post.id' => $id)
+		);
+	}
+
+	/**
+	 * Increase the up ratings.
+	 *
+	 * @param int $id
+	 * @return bool
+	 */
+	public function rateUp($id) {
+		return $this->updateAll(
+			array('Post.up' => 'Post.up + 1', 'Post.score' => 'Post.score + 1'),
+			array('Post.id' => $id)
+		);
 	}
 
 	/**

@@ -9,6 +9,8 @@ App::uses('ForumAppController', 'Forum.Controller');
 
 /**
  * @property Post $Post
+ * @property PostRating $PostRating
+ * @property AjaxHandlerComponent $AjaxHandler
  */
 class PostsController extends ForumAppController {
 
@@ -18,6 +20,13 @@ class PostsController extends ForumAppController {
 	 * @var array
 	 */
 	public $uses = array('Forum.Post');
+
+	/**
+	 * Components.
+	 *
+	 * @var array
+	 */
+	public $components = array('Utility.AjaxHandler');
 
 	/**
 	 * Redirect.
@@ -150,6 +159,34 @@ class PostsController extends ForumAppController {
 	}
 
 	/**
+	 * Rate a post up or down.
+	 *
+	 * @param int $id
+	 * @param int $type
+	 */
+	public function rate($id, $type) {
+		$this->loadModel('Forum.PostRating');
+
+		$user_id = $this->Auth->user('id');
+		$post = $this->Post->getById($id);
+		$success = true;
+
+		if ($type != PostRating::UP && $type != PostRating::DOWN || !$post) {
+			$success = false;
+
+		} else if ($this->PostRating->hasRated($user_id, $id)) {
+			$success = false;
+
+		} else if (!$this->PostRating->ratePost($user_id, $id, $post['Post']['topic_id'], $type)) {
+			$success = false;
+		}
+
+		$this->AjaxHandler->respond('json', array(
+			'success' => $success
+		));
+	}
+
+	/**
 	 * Before filter.
 	 */
 	public function beforeFilter() {
@@ -161,6 +198,7 @@ class PostsController extends ForumAppController {
 		}
 
 		$this->Auth->allow('index', 'preview');
+		$this->AjaxHandler->handle('rate');
 
 		$this->set('menuTab', 'forums');
 	}

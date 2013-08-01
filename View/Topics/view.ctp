@@ -107,66 +107,104 @@ if (!empty($topic['Poll']['id'])) { ?>
 
 		<table class="table posts">
 			<tbody>
-				<?php foreach ($posts as $post) { ?>
+				<?php foreach ($posts as $post) {
+					$post_id = $post['Post']['id'];
+					$hasRated = in_array($post_id, $ratings);
+					$isBuried = ($post['Post']['score'] <= $settings['ratingBuryThreshold']); ?>
 
-				<tr class="altRow" id="post-<?php echo $post['Post']['id']; ?>">
+				<tr class="altRow <?php if ($isBuried) echo 'is-buried'; ?>" id="post-<?php echo $post_id; ?>">
 					<td class="align-right dark">
 						<?php echo $this->Time->niceShort($post['Post']['created'], $this->Forum->timezone()); ?>
 					</td>
-					<td class="align-right dark">
-						<?php if ($user) {
-							$links = array();
-							$isMod = $this->Forum->isMod($topic['Forum']['id']);
+					<td class="dark">
+						<?php if ($user) { ?>
+							<span class="float-right">
+								<?php
+								$links = array();
+								$isMod = $this->Forum->isMod($topic['Forum']['id']);
 
-							if ($topic['Topic']['firstPost_id'] == $post['Post']['id']) {
-								if ($isMod || ($topic['Topic']['status'] && $user['id'] == $post['Post']['user_id'])) {
-									$links[] = $this->Html->link(__d('forum', 'Edit Topic'), array('controller' => 'topics', 'action' => 'edit', $topic['Topic']['slug'], (!empty($topic['Poll']['id']) ? 'poll' : '')));
+								if ($topic['Topic']['firstPost_id'] == $post_id) {
+									if ($isMod || ($topic['Topic']['status'] && $user['id'] == $post['Post']['user_id'])) {
+										$links[] = $this->Html->link(__d('forum', 'Edit Topic'), array('controller' => 'topics', 'action' => 'edit', $topic['Topic']['slug'], (!empty($topic['Poll']['id']) ? 'poll' : '')));
+									}
+
+									if ($isMod) {
+										$links[] = $this->Html->link(__d('forum', 'Delete Topic'), array('controller' => 'topics', 'action' => 'delete', $topic['Topic']['slug']), array('confirm' => __d('forum', 'Are you sure you want to delete?')));
+									}
+
+									$links[] = $this->Html->link(__d('forum', 'Report Topic'), array('controller' => 'topics', 'action' => 'report', $topic['Topic']['slug']));
+								} else {
+									if ($isMod || ($topic['Topic']['status'] && $user['id'] == $post['Post']['user_id'])) {
+										$links[] = $this->Html->link(__d('forum', 'Edit Post'), array('controller' => 'posts', 'action' => 'edit', $post_id));
+										$links[] = $this->Html->link(__d('forum', 'Delete Post'), array('controller' => 'posts', 'action' => 'delete', $post_id), array('confirm' => __d('forum', 'Are you sure you want to delete?')));
+									}
+
+									$links[] = $this->Html->link(__d('forum', 'Report Post'), array('controller' => 'posts', 'action' => 'report', $post_id));
 								}
 
-								if ($isMod) {
-									$links[] = $this->Html->link(__d('forum', 'Delete Topic'), array('controller' => 'topics', 'action' => 'delete', $topic['Topic']['slug']), array('confirm' => __d('forum', 'Are you sure you want to delete?')));
+								if ($canReply) {
+									$links[] = $this->Html->link(__d('forum', 'Quote'), array('controller' => 'posts', 'action' => 'add', $topic['Topic']['slug'], $post_id));
 								}
 
-								$links[] = $this->Html->link(__d('forum', 'Report Topic'), array('controller' => 'topics', 'action' => 'report', $topic['Topic']['slug']));
-							} else {
-								if ($isMod || ($topic['Topic']['status'] && $user['id'] == $post['Post']['user_id'])) {
-									$links[] = $this->Html->link(__d('forum', 'Edit Post'), array('controller' => 'posts', 'action' => 'edit', $post['Post']['id']));
-									$links[] = $this->Html->link(__d('forum', 'Delete Post'), array('controller' => 'posts', 'action' => 'delete', $post['Post']['id']), array('confirm' => __d('forum', 'Are you sure you want to delete?')));
-								}
+								if ($links) {
+									echo implode(' - ', $links);
+								} ?>
+							</span>
 
-								$links[] = $this->Html->link(__d('forum', 'Report Post'), array('controller' => 'posts', 'action' => 'report', $post['Post']['id']));
-							}
+							<?php if (!$hasRated || $settings['showRatingScore']) { ?>
+								<div id="post-ratings-<?php echo $post_id; ?>" class="post-ratings<?php if ($hasRated) echo ' has-rated'; ?>">
+									<?php if (!$hasRated) { ?>
+										<a href="#up" onclick="return Forum.ratePost(<?php echo $post_id; ?>, 'up');" class="rate-up"><?php echo $this->Html->image('/forum/img/up.png'); ?></a>
+									<?php }
 
-							if ($canReply) {
-								$links[] = $this->Html->link(__d('forum', 'Quote'), array('controller' => 'posts', 'action' => 'add', $topic['Topic']['slug'], $post['Post']['id']));
-							}
+									if ($settings['showRatingScore']) { ?>
+										<span class="rating"><?php echo number_format($post['Post']['score']); ?></span>
+									<?php }
 
-							if ($links) {
-								echo implode(' - ', $links);
-							}
-						} ?>
+									if (!$hasRated) { ?>
+										<a href="#down" onclick="return Forum.ratePost(<?php echo $post_id; ?>, 'down');" class="rate-down"><?php echo $this->Html->image('/forum/img/down.png'); ?></a>
+									<?php } ?>
+								</div>
+							<?php } ?>
+						<?php } ?>
 					</td>
 				</tr>
 				<tr>
 					<td valign="top" style="width: 25%">
 						<h4 class="username"><?php echo $this->Html->link($post['User'][$userFields['username']], $this->Forum->profileUrl($post['User'])); ?></h4>
 
-						<?php echo $this->Forum->avatar($post) ?>
+						<?php if (!$isBuried) {
+							echo $this->Forum->avatar($post) ?>
 
-						<?php if (!empty($post['User'][$userFields['totalTopics']])) { ?>
-							<strong><?php echo __d('forum', 'Total Topics'); ?>:</strong> <?php echo number_format($post['User'][$userFields['totalTopics']]); ?><br>
-						<?php } ?>
+							<?php if (!empty($post['User'][$userFields['totalTopics']])) { ?>
+								<strong><?php echo __d('forum', 'Total Topics'); ?>:</strong> <?php echo number_format($post['User'][$userFields['totalTopics']]); ?><br>
+							<?php } ?>
 
-						<?php if (!empty($post['User'][$userFields['totalPosts']])) { ?>
-							<strong><?php echo __d('forum', 'Total Posts'); ?>:</strong> <?php echo number_format($post['User'][$userFields['totalPosts']]); ?>
-						<?php } ?>
+							<?php if (!empty($post['User'][$userFields['totalPosts']])) { ?>
+								<strong><?php echo __d('forum', 'Total Posts'); ?>:</strong> <?php echo number_format($post['User'][$userFields['totalPosts']]); ?>
+							<?php }
+						} ?>
 					</td>
 					<td valign="top">
 						<div class="post">
-							<?php echo $this->Decoda->parse($post['Post']['content']); ?>
+							<?php if ($isBuried) { ?>
+
+								<div class="buried-text">
+									<?php echo __d('forum', 'This post has been buried.'); ?>
+									<a href="javascript:;" onclick="return Forum.toggleBuried(<?php echo $post_id; ?>);"><?php echo __d('forum', 'View the buried post?'); ?></a>
+								</div>
+
+								<div class="post-buried" id="post-buried-<?php echo $post_id; ?>" style="display: none">
+									<?php echo $this->Decoda->parse($post['Post']['content']); ?>
+								</div>
+
+							<?php
+							} else {
+								echo $this->Decoda->parse($post['Post']['content']);
+							} ?>
 						</div>
 
-						<?php if (!empty($post['User'][$userFields['signature']])) { ?>
+						<?php if (!$isBuried && !empty($post['User'][$userFields['signature']])) { ?>
 							<div class="signature">
 								<?php echo $this->Decoda->parse($post['User'][$userFields['signature']]); ?>
 							</div>

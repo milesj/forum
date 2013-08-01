@@ -62,6 +62,10 @@ Configure::write('Forum.settings', array(
 	'enableForumSubscriptions' => true,
 	'autoSubscribeSelf' => true,
 
+	// Ratings
+	'showRatingScore' => true,
+	'ratingBuryThreshold' => -25,
+
 	// Misc
 	'whosOnlineInterval' => '-15 minutes',
 	'enableQuickReply' => true,

@@ -9,6 +9,7 @@ App::uses('ForumAppController', 'Forum.Controller');
 
 /**
  * @property Topic $Topic
+ * @property PostRating $PostRating
  * @property Subscription $Subscription
  * @property AjaxHandlerComponent $AjaxHandler
  */
@@ -198,6 +199,8 @@ class TopicsController extends ForumAppController {
 			return;
 		}
 
+		$this->loadModel('Forum.PostRating');
+
 		if (!empty($this->request->data['Poll']['option'])) {
 			$this->Topic->Poll->vote($topic['Poll']['id'], $this->request->data['Poll']['option'], $user_id);
 			$this->Topic->deleteCache(array('Topic::getBySlug', $slug));
@@ -211,6 +214,7 @@ class TopicsController extends ForumAppController {
 		$this->set('topic', $topic);
 		$this->set('posts', $this->paginate('Post'));
 		$this->set('subscription', $this->Subscription->isSubscribedToTopic($user_id, $topic['Topic']['id']));
+		$this->set('ratings', $this->PostRating->getRatingsInTopic($user_id, $topic['Topic']['id']));
 		$this->set('rss', $slug);
 	}
 
