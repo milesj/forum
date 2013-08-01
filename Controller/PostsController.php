@@ -17,14 +17,14 @@ class PostsController extends ForumAppController {
 	/**
 	 * Models.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $uses = array('Forum.Post');
 
 	/**
 	 * Components.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $components = array('Utility.AjaxHandler');
 

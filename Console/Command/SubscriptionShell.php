@@ -15,14 +15,14 @@ class SubscriptionShell extends Shell {
 	/**
 	 * Models.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $uses = array('Forum.Subscription');
 
 	/**
 	 * The past timeframe threshold to look for topics.
 	 *
-	 * @var string
+	 * @type string
 	 */
 	public $timeframe;
 

@@ -7,12 +7,17 @@
 
 App::uses('ForumAppModel', 'Forum.Model');
 
+/**
+ * @property User $User
+ * @property Poll $Poll
+ * @property PollOption $PollOption
+ */
 class PollVote extends ForumAppModel {
 
 	/**
 	 * Belongs to.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $belongsTo = array(
 		'Poll' => array(
@@ -30,7 +35,7 @@ class PollVote extends ForumAppModel {
 	/**
 	 * Validation.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $validations = array(
 		'default' => array(
@@ -55,7 +60,7 @@ class PollVote extends ForumAppModel {
 	/**
 	 * Admin settings.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $admin = array(
 		'iconClass' => 'icon-list-ol'

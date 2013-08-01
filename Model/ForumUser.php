@@ -10,7 +10,7 @@ class ForumUser extends ForumAppModel {
 	/**
 	 * Force the model to act like the User model.
 	 *
-	 * @var string
+	 * @type string
 	 */
 	public $name = USER_MODEL;
 	public $alias = USER_MODEL;
@@ -18,14 +18,14 @@ class ForumUser extends ForumAppModel {
 	/**
 	 * No prefix on users table.
 	 *
-	 * @var string
+	 * @type string
 	 */
 	public $tablePrefix = null;
 
 	/**
 	 * Disable admin.
 	 *
-	 * @var bool
+	 * @type bool
 	 */
 	public $admin = false;
 

@@ -7,6 +7,14 @@
 
 App::uses('ForumAppModel', 'Forum.Model');
 
+/**
+ * @property User $User
+ * @property Forum $Forum
+ * @property Poll $Poll
+ * @property Post $FirstPost
+ * @property Post $LastPost
+ * @property User $LastUser
+ */
 class Topic extends ForumAppModel {
 
 	/**
@@ -20,7 +28,7 @@ class Topic extends ForumAppModel {
 	/**
 	 * Behaviors
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $actsAs = array(
 		'Utility.Sluggable' => array(
@@ -31,7 +39,7 @@ class Topic extends ForumAppModel {
 	/**
 	 * Belongs to.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $belongsTo = array(
 		'User' => array(
@@ -59,7 +67,7 @@ class Topic extends ForumAppModel {
 	/**
 	 * Has one.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $hasOne = array(
 		'Poll' => array(
@@ -71,7 +79,7 @@ class Topic extends ForumAppModel {
 	/**
 	 * Has many.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $hasMany = array(
 		'Post' => array(
@@ -92,7 +100,7 @@ class Topic extends ForumAppModel {
 	/**
 	 * Validation.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $validations = array(
 		'default' => array(
@@ -135,7 +143,7 @@ class Topic extends ForumAppModel {
 	/**
 	 * Enum.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $enum = array(
 		'type' => array(
@@ -149,7 +157,7 @@ class Topic extends ForumAppModel {
 	/**
 	 * Admin settings.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $admin = array(
 		'iconClass' => 'icon-comment'
@@ -388,8 +396,7 @@ class Topic extends ForumAppModel {
 			'order' => array('Topic.created' => 'DESC'),
 			'contain' => array('User', 'LastPost', 'FirstPost'),
 			'limit' => $limit,
-			'cache' => array(__METHOD__, $limit),
-			'cacheExpires' => '+1 minute'
+			'cache' => array(__METHOD__, $limit)
 		));
 	}
 
@@ -406,6 +413,24 @@ class Topic extends ForumAppModel {
 			'order' => array('Topic.created' => 'DESC'),
 			'contain' => array('LastPost', 'LastUser'),
 			'limit' => $limit,
+			'cache' => array(__METHOD__, $user_id, $limit)
+		));
+	}
+
+	/**
+	 * Get the latest topics in a forum.
+	 *
+	 * @param int $forum_id
+	 * @param int $limit
+	 * @return array
+	 */
+	public function getLatestInForum($forum_id, $limit = 10) {
+		return $this->find('all', array(
+			'conditions' => array('Topic.forum_id' => $forum_id),
+			'order' => array('Topic.created' => 'DESC'),
+			'contain' => array('LastPost', 'LastUser'),
+			'limit' => $limit,
+			'cache' => array(__METHOD__, $forum_id, $limit)
 		));
 	}
 

@@ -7,12 +7,18 @@
 
 App::uses('ForumAppModel', 'Forum.Model');
 
+/**
+ * @property Forum $Forum
+ * @property Topic $Topic
+ * @property User $User
+ * @property PostRating $PostRating
+ */
 class Post extends ForumAppModel {
 
 	/**
 	 * Belongs to.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $belongsTo = array(
 		'Forum' => array(
@@ -45,7 +51,7 @@ class Post extends ForumAppModel {
 	/**
 	 * Validation.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $validations = array(
 		'default' => array(
@@ -67,7 +73,7 @@ class Post extends ForumAppModel {
 	/**
 	 * Admin settings.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $admin = array(
 		'iconClass' => 'icon-comments'

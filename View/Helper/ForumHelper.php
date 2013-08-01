@@ -14,7 +14,7 @@ class ForumHelper extends AppHelper {
 	/**
 	 * Helpers.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $helpers = array('Html', 'Session', 'Utility.Decoda', 'Utility.Utility', 'Admin.Admin');
 

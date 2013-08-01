@@ -18,21 +18,21 @@ class TopicsController extends ForumAppController {
 	/**
 	 * Models.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $uses = array('Forum.Topic', 'Forum.Subscription');
 
 	/**
 	 * Components.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $components = array('Utility.AjaxHandler', 'RequestHandler');
 
 	/**
 	 * Pagination.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $paginate = array(
 		'Post' => array(
@@ -44,7 +44,7 @@ class TopicsController extends ForumAppController {
 	/**
 	 * Helpers.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $helpers = array('Rss');
 

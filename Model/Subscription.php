@@ -7,12 +7,17 @@
 
 App::uses('ForumAppModel', 'Forum.Model');
 
+/**
+ * @property User $User
+ * @property Forum $Forum
+ * @property Topic $Topic
+ */
 class Subscription extends ForumAppModel {
 
 	/**
 	 * Belongs to.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $belongsTo = array(
 		'User' => array(
@@ -31,7 +36,7 @@ class Subscription extends ForumAppModel {
 	/**
 	 * Validation.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $validations = array(
 		'default' => array(
@@ -44,7 +49,7 @@ class Subscription extends ForumAppModel {
 	/**
 	 * Admin settings.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $admin = array(
 		'iconClass' => 'icon-pushpin'

@@ -7,12 +7,26 @@
 
 App::uses('ForumAppModel', 'Forum.Model');
 
+/**
+ * @property Forum $Parent
+ * @property Forum $Children
+ * @property Topic $Topic
+ * @property Topic $LastTopic
+ * @property Post $LastPost
+ * @property User $LastUser
+ * @property Moderator $Moderator
+ * @property Subscription $Subscription
+ * @property RequestObject $ReadTopicAccess
+ * @property RequestObject $CreateTopicAccess
+ * @property RequestObject $CreatePollAccess
+ * @property RequestObject $CreatePostAccess
+ */
 class Forum extends ForumAppModel {
 
 	/**
 	 * Behaviors.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $actsAs = array(
 		'Tree',
@@ -24,7 +38,7 @@ class Forum extends ForumAppModel {
 	/**
 	 * Belongs to.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $belongsTo = array(
 		'Parent' => array(
@@ -65,7 +79,7 @@ class Forum extends ForumAppModel {
 	/**
 	 * Has many.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $hasMany = array(
 		'Topic' => array(
@@ -95,7 +109,7 @@ class Forum extends ForumAppModel {
 	/**
 	 * Validate.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $validations = array(
 		'default' => array(
@@ -119,7 +133,7 @@ class Forum extends ForumAppModel {
 	/**
 	 * Admin settings.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $admin = array(
 		'iconClass' => 'icon-list-alt',
@@ -194,6 +208,8 @@ class Forum extends ForumAppModel {
 	 */
 	public function getHierarchy($group = true) {
 		return $this->cache(array(__METHOD__, $this->Session->read('Acl.roles'), $group), function($self) use ($group) {
+			/** @type Forum $self */
+
 			$keyPath = '{n}.Forum.id';
 			$valuePath = array('%s%s', '{n}.tree_prefix', '{n}.Forum.title');
 			$results = $self->filterByRole($self->find('all', array(

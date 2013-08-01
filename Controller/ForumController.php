@@ -16,21 +16,21 @@ class ForumController extends ForumAppController {
 	/**
 	 * Models.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $uses = array('Forum.Topic', 'Forum.ForumUser');
 
 	/**
 	 * Components.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $components = array('RequestHandler');
 
 	/**
 	 * Helpers.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $helpers = array('Rss');
 

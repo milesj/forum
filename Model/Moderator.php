@@ -7,12 +7,16 @@
 
 App::uses('ForumAppModel', 'Forum.Model');
 
+/**
+ * @property Forum $Forum
+ * @property User $User
+ */
 class Moderator extends ForumAppModel {
 
 	/**
 	 * Belongs to.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $belongsTo = array(
 		'Forum' => array(
@@ -27,7 +31,7 @@ class Moderator extends ForumAppModel {
 	/**
 	 * Validation.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $validations = array(
 		'default' => array(
@@ -49,7 +53,7 @@ class Moderator extends ForumAppModel {
 	/**
 	 * Admin settings.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $admin = array(
 		'iconClass' => 'icon-legal'

@@ -7,19 +7,23 @@
 
 App::uses('ForumAppModel', 'Forum.Model');
 
+/**
+ * @property Poll $Poll
+ * @property PollVote $PollVote
+ */
 class PollOption extends ForumAppModel {
 
 	/**
 	 * Display field.
 	 *
-	 * @var string
+	 * @type string
 	 */
 	public $displayField = 'option';
 
 	/**
 	 * Belongs to.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $belongsTo = array(
 		'Poll' => array(
@@ -30,7 +34,7 @@ class PollOption extends ForumAppModel {
 	/**
 	 * Has many.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $hasMany = array(
 		'PollVote' => array(
@@ -42,7 +46,7 @@ class PollOption extends ForumAppModel {
 	/**
 	 * Behaviors.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $actsAs = array(
 		'Utility.Filterable' => array(
@@ -56,7 +60,7 @@ class PollOption extends ForumAppModel {
 	/**
 	 * Validation.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $validations = array(
 		'default' => array(
@@ -72,7 +76,7 @@ class PollOption extends ForumAppModel {
 	/**
 	 * Admin settings.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $admin = array(
 		'iconClass' => 'icon-list'

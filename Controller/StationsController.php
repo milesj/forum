@@ -17,21 +17,21 @@ class StationsController extends ForumAppController {
 	/**
 	 * Models.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $uses = array('Forum.Forum', 'Forum.Subscription');
 
 	/**
 	 * Components.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $components = array('Utility.AjaxHandler', 'RequestHandler');
 
 	/**
 	 * Pagination.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $paginate = array(
 		'Topic' => array(
@@ -47,7 +47,7 @@ class StationsController extends ForumAppController {
 	/**
 	 * Helpers.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $helpers = array('Rss', 'Admin.Admin');
 

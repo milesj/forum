@@ -14,14 +14,14 @@ class ForumAppController extends AppController {
 	/**
 	 * Remove parent models.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $uses = array();
 
 	/**
 	 * Components.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $components = array(
 		'Session', 'Security', 'Cookie', 'Acl',
@@ -35,7 +35,7 @@ class ForumAppController extends AppController {
 	/**
 	 * Helpers.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $helpers = array(
 		'Html', 'Session', 'Form', 'Time', 'Text',
@@ -47,14 +47,14 @@ class ForumAppController extends AppController {
 	/**
 	 * Plugin configuration.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $config = array();
 
 	/**
 	 * Database forum settings.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $settings = array();
 

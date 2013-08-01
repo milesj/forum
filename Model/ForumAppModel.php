@@ -26,35 +26,35 @@ class ForumAppModel extends AppModel {
 	/**
 	 * Table prefix.
 	 *
-	 * @var string
+	 * @type string
 	 */
 	public $tablePrefix = FORUM_PREFIX;
 
 	/**
 	 * Database config.
 	 *
-	 * @var string
+	 * @type string
 	 */
 	public $useDbConfig = FORUM_DATABASE;
 
 	/**
 	 * Cache queries.
 	 *
-	 * @var bool
+	 * @type bool
 	 */
 	public $cacheQueries = true;
 
 	/**
 	 * No recursion.
 	 *
-	 * @var int
+	 * @type int
 	 */
 	public $recursive = -1;
 
 	/**
 	 * Behaviors.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $actsAs = array(
 		'Containable',
@@ -67,7 +67,7 @@ class ForumAppModel extends AppModel {
 	/**
 	 * Global enum.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $enum = array(
 		'status' => array(
@@ -79,7 +79,7 @@ class ForumAppModel extends AppModel {
 	/**
 	 * Session instance.
 	 *
-	 * @var CakeSession
+	 * @type CakeSession
 	 */
 	public $Session;
 

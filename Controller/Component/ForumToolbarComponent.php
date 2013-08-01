@@ -15,7 +15,7 @@ class ForumToolbarComponent extends Component {
 	/**
 	 * Components.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $components = array('Session', 'Auth');
 

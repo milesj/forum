@@ -7,6 +7,11 @@
 
 App::uses('ForumAppModel', 'Forum.Model');
 
+/**
+ * @property User $User
+ * @property Post $Post
+ * @property Topic $Topic
+ */
 class PostRating extends ForumAppModel {
 
 	const UP = 1;
@@ -32,7 +37,7 @@ class PostRating extends ForumAppModel {
 	/**
 	 * Admin settings.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $admin = array(
 		'iconClass' => 'icon-star-half-empty'
@@ -41,7 +46,7 @@ class PostRating extends ForumAppModel {
 	/**
 	 * Enum.
 	 *
-	 * @var array
+	 * @type array
 	 */
 	public $enum = array(
 		'type' => array(
