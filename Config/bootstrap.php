@@ -61,6 +61,7 @@ Configure::write('Forum.settings', array(
 	'enableTopicSubscriptions' => true,
 	'enableForumSubscriptions' => true,
 	'autoSubscribeSelf' => true,
+	'subscriptionTemplate' => '',
 
 	// Ratings
 	'enablePostRating' => true,

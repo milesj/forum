@@ -85,20 +85,33 @@ class SubscriptionShell extends Shell {
 
 		$settings = Configure::read('Forum.settings');
 		$userMap = Configure::read('User.fieldMap');
+		$template = $settings['subscriptionTemplate'];
 
 		$email = new CakeEmail();
 		$email->subject(sprintf(__d('forum', '%s [Subscriptions]'), $settings['name']));
 		$email->from($settings['email']);
 		$email->replyTo($settings['email']);
-		$email->emailFormat('text');
 		//$email->transport('Debug');
+
+		if ($template) {
+			$email->emailFormat('both')->template($template);
+		}
 
 		// Loop over each user and send one email
 		foreach ($users as $user) {
 			$email->to($user[$userMap['email']]);
 
 			if ($message = $this->formatEmail($user, $topics)) {
-				$email->send($message);
+				if ($template) {
+					$email->viewVars(array(
+						'user' => $user,
+						'topics' => $topics,
+						'settings' => $settings
+					))->send();
+				} else {
+					$email->send($message);
+				}
+
 				$this->out(sprintf('... %s', $user[$userMap['username']]));
 
 				$count++;
