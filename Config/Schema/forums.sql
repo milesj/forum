@@ -7,6 +7,7 @@ CREATE TABLE `{prefix}forums` (
 	`title` VARCHAR(100) NOT NULL,
 	`slug` VARCHAR(115) NOT NULL,
 	`description` VARCHAR(255) NOT NULL,
+	`icon` VARCHAR( 255 ) NOT NULL,
 	`status` SMALLINT(6) NOT NULL DEFAULT '1',
 	`orderNo` SMALLINT(6) NOT NULL DEFAULT '0',
 	`topic_count` INT(11) NOT NULL DEFAULT '0',

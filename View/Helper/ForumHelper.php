@@ -66,7 +66,21 @@ class ForumHelper extends AppHelper {
 			$icon = 'new';
 		}
 
-		return $this->Html->image('/forum/img/forum_' . $icon . '.png', array(
+		$custom = null;
+
+		if (isset($forum['Forum']['icon'])) {
+			$custom = $forum['Forum']['icon'];
+		} else if (isset($forum['icon'])) {
+			$custom = $forum['icon'];
+		}
+
+		if ($custom) {
+			$path = $custom;
+		} else {
+			$path = '/forum/img/forum_' . $icon . '.png';
+		}
+
+		return $this->Html->image($path, array(
 			'alt' => ucfirst($icon)
 		));
 	}

@@ -30,4 +30,8 @@ CREATE TABLE `{prefix}post_ratings` (
 	KEY `user_id` (`user_id`),
 	KEY `post_id` (`post_id`),
 	KEY `topic_id` (`topic_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Up down ratings for posts' AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Up down ratings for posts' AUTO_INCREMENT=1;
+
+# Add forum icons
+ALTER TABLE `{prefix}forums`
+	ADD `icon` VARCHAR( 255 ) NOT NULL AFTER `description`;
