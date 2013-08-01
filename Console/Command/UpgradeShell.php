@@ -26,7 +26,8 @@ class UpgradeShell extends BaseUpgradeShell {
 			'Upgrade Version' => 'versions'
 		))
 		->setVersions(array(
-			'4.0.0' => 'Admin + Utility Plugin Migration'
+			'4.0.0' => 'Admin + Utility Plugin Migration',
+			'4.1.0' => 'Post Rating + Forum ACL Changes'
 		))
 		->setDbConfig(FORUM_DATABASE)
 		->setTablePrefix(FORUM_PREFIX);
