@@ -151,7 +151,7 @@ if (!empty($topic['Poll']['id'])) { ?>
 								} ?>
 							</span>
 
-							<?php if (!$hasRated || $settings['showRatingScore']) { ?>
+							<?php if ($settings['enablePostRating'] && (!$hasRated || $settings['showRatingScore'])) { ?>
 								<div id="post-ratings-<?php echo $post_id; ?>" class="post-ratings<?php if ($hasRated) echo ' has-rated'; ?>">
 									<?php if (!$hasRated) { ?>
 										<a href="#up" onclick="return Forum.ratePost(<?php echo $post_id; ?>, 'up');" class="rate-up"><?php echo $this->Html->image('/forum/img/up.png'); ?></a>

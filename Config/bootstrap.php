@@ -63,6 +63,7 @@ Configure::write('Forum.settings', array(
 	'autoSubscribeSelf' => true,
 
 	// Ratings
+	'enablePostRating' => true,
 	'showRatingScore' => true,
 	'ratingBuryThreshold' => -25,
 
