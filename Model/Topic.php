@@ -165,7 +165,7 @@ class Topic extends ForumAppModel {
 		$this->set($data);
 
 		if ($this->validates()) {
-			$isAdmin = $this->Session->read('Forum.isAdmin');
+			$isAdmin = $this->Session->read('Acl.isAdmin');
 			$settings = Configure::read('Forum.settings');
 
 			if (($secondsLeft = $this->checkFlooding($settings['topicFloodInterval'])) > 0 && !$isAdmin) {

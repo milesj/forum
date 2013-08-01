@@ -38,42 +38,41 @@ class ForumToolbarComponent extends Component {
 	public function startup(Controller $Controller) {
 		$this->Controller = $Controller;
 
-		if ($this->Session->check('Forum.isBrowsing')) {
+		$user_id = $this->Auth->user('id');
+		$aro = ClassRegistry::init('Admin.RequestObject');
+
+		// Banned
+		if ($this->Auth->user(Configure::read('User.fieldMap.status')) == Configure::read('User.statusMap.banned')) {
 			return;
 		}
 
-		$user_id = $this->Auth->user('id');
-		$isBanned = ($this->Auth->user(Configure::read('User.fieldMap.status')) == Configure::read('User.statusMap.banned'));
-		$isAdmin = false;
-		$isSuper = false;
-		$roles = array(); // list of ARO IDs
-		$moderates = array(); // list of forum IDs
-		$permissions = array(); // CRUD mapping
+		// ACL
+		if (!$this->Session->check('Acl')) {
+			$isAdmin = false;
+			$isSuper = false;
+			$roles = $aro->getRoles($user_id);
 
-		if ($user_id && !$isBanned) {
-			$aro = ClassRegistry::init('Admin.RequestObject');
+			foreach ($roles as $role) {
+				if (!$isAdmin && $role['RequestObject']['alias'] == Configure::read('Admin.aliases.administrator')) {
+					$isAdmin = true;
+				}
 
-			// Get request access
-			$isAdmin = $aro->isAdmin($user_id);
-			$isSuper = $aro->isSuperMod($user_id);
+				if (!$isSuper && $role['RequestObject']['alias'] == Configure::read('Admin.aliases.superModerator')) {
+					$isSuper = true;
+				}
+			}
 
-			// Get permissions
-			$permissions = $aro->getCrudPermissions($user_id, 'Forum.');
-
-			// Get group roles
-			$roles = Hash::extract($aro->getRoles($user_id), '{n}.RequestObject.id');
-
-			// Get moderated forum IDs
-			$moderates = ClassRegistry::init('Forum.Moderator')->getModerations($user_id);
+			$this->Session->write('Acl.isAdmin', $isAdmin);
+			$this->Session->write('Acl.isSuper', $isSuper);
+			$this->Session->write('Acl.roles', Hash::extract($roles, '{n}.RequestObject.id'));
 		}
 
-		$this->Session->write('Forum.isAdmin', $isAdmin);
-		$this->Session->write('Forum.isSuper', $isSuper);
-		$this->Session->write('Forum.roles', $roles);
-		$this->Session->write('Forum.permissions', $permissions);
-		$this->Session->write('Forum.moderates', $moderates);
-		$this->Session->write('Forum.lastVisit', date('Y-m-d H:i:s'));
-		$this->Session->write('Forum.isBrowsing', true);
+		// Forum
+		if (!$this->Session->check('Forum')) {
+			$this->Session->write('Forum.permissions', $aro->getCrudPermissions($user_id, 'Forum.'));
+			$this->Session->write('Forum.moderates', ClassRegistry::init('Forum.Moderator')->getModerations($user_id));
+			$this->Session->write('Forum.lastVisit', date('Y-m-d H:i:s'));
+		}
 	}
 
 	/**
@@ -203,8 +202,15 @@ class ForumToolbarComponent extends Component {
 		}
 
 		// Admins have full control
-		if ($this->Session->read('Forum.isAdmin') || $this->Session->read('Forum.isSuper')) {
+		if ($this->Session->read('Acl.isAdmin') || $this->Session->read('Acl.isSuper')) {
 			return true;
+		}
+
+		// Do we have required role access?
+		if (isset($validators['access'])) {
+			if ($validators['access'] && !in_array($validators['access'], (array) $this->Session->read('Acl.roles'))) {
+				throw new UnauthorizedException();
+			}
 		}
 
 		// Are we a moderator? Grant access
@@ -214,10 +220,8 @@ class ForumToolbarComponent extends Component {
 
 		// Is the item locked/unavailable?
 		if (isset($validators['status'])) {
-			foreach ((array) $validators['status'] as $status) {
-				if (!$status) {
-					throw new ForbiddenException();
-				}
+			if (!$validators['status']) {
+				throw new ForbiddenException();
 			}
 		}
 

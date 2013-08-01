@@ -38,7 +38,8 @@ class PostsController extends ForumAppController {
 
 		$this->ForumToolbar->verifyAccess(array(
 			'exists' => $topic,
-			'status' => array($topic['Topic']['status'], $topic['Forum']['accessReply'])
+			'status' => $topic['Topic']['status'],
+			'access' => $topic['Forum']['accessReply']
 		));
 
 		if ($this->request->data) {

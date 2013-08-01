@@ -66,7 +66,7 @@ class ForumAppController extends AppController {
 	 * @throws UnauthorizedException
 	 */
 	public function isAuthorized($user) {
-		if ($this->Session->read('Forum.isAdmin')) {
+		if ($this->Session->read('Acl.isAdmin')) {
 			return true;
 		}
 
@@ -96,7 +96,7 @@ class ForumAppController extends AppController {
 
 			// Allow if the user belongs to admin or super
 			case 'moderate':
-				if ($this->Session->read('Forum.isSuper') || $this->Session->read('Forum.moderates')) {
+				if ($this->Session->read('Acl.isSuper') || $this->Session->read('Forum.moderates')) {
 					return true;
 				}
 			break;

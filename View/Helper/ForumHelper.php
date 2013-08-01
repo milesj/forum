@@ -33,7 +33,7 @@ class ForumHelper extends AppHelper {
 			$avatar = $this->Html->image($user['User'][$userMap['avatar']], array('width' => $size, 'height' => $size));
 
 		} else if (Configure::read('Forum.settings.enableGravatar')) {
-			$avatar = $this->gravatar($user['User'][$userMap['email']], array('size' => $size));
+			$avatar = $this->Utility->gravatar($user['User'][$userMap['email']], array('size' => $size));
 		}
 
 		if ($avatar) {
@@ -112,49 +112,14 @@ class ForumHelper extends AppHelper {
 	}
 
 	/**
-	 * Render out a gravatar thumbnail based on an email.
-	 *
-	 * @param string $email
-	 * @param array $options
-	 * @param array $attributes
-	 * @return string
-	 */
-	public function gravatar($email, array $options = array(), array $attributes = array()) {
-		$options = $options + array(
-			'default' => 'mm',
-			'size' => 80,
-			'rating' => 'g',
-			'hash' => 'md5',
-			'secure' => env('HTTPS')
-		);
-
-		$email = Security::hash(strtolower(trim($email)), $options['hash']);
-		$query = array();
-
-		if ($options['secure']) {
-			$image = 'https://secure.gravatar.com/avatar/' . $email;
-		} else {
-			$image = 'http://www.gravatar.com/avatar/' . $email;
-		}
-
-		foreach (array('default' => 'd', 'size' => 's', 'rating' => 'r') as $key => $param) {
-			$query[] = $param . '=' . urlencode($options[$key]);
-		}
-
-		$image .= '?' . implode('&amp;', $query);
-
-		return $this->Html->image($image, $attributes);
-	}
-
-	/**
 	 * Checks to see if the user has mod status.
 	 *
 	 * @param string $model
 	 * @param string $action
-	 * @param array|int $status
+	 * @param int $role
 	 * @return bool
 	 */
-	public function hasAccess($model, $action, $status = null) {
+	public function hasAccess($model, $action, $role = null) {
 		$user = $this->Session->read('Auth.User');
 
 		if (empty($user)) {
@@ -163,11 +128,9 @@ class ForumHelper extends AppHelper {
 		} else if ($this->isSuper()) {
 			return true;
 
-		} else if ($status !== null) {
-			foreach ((array) $status as $bool) {
-				if (!$bool) {
-					return false;
-				}
+		} else if ($role !== null) {
+			if (!$this->hasRole($role)) {
+				return false;
 			}
 		}
 
@@ -182,12 +145,22 @@ class ForumHelper extends AppHelper {
 	}
 
 	/**
+	 * Check to see if the user has a role.
+	 *
+	 * @param int $aro_id
+	 * @return bool
+	 */
+	public function hasRole($aro_id) {
+		return in_array($aro_id, (array) $this->Session->read('Acl.roles'));
+	}
+
+	/**
 	 * Return true if the user is an admin.
 	 *
 	 * @return bool
 	 */
 	public function isAdmin() {
-		return (bool) $this->Session->read('Forum.isAdmin');
+		return (bool) $this->Session->read('Acl.isAdmin');
 	}
 
 	/**
@@ -196,7 +169,7 @@ class ForumHelper extends AppHelper {
 	 * @return bool
 	 */
 	public function isSuper() {
-		return ($this->isAdmin() || $this->Session->read('Forum.isSuper'));
+		return ($this->isAdmin() || $this->Session->read('Acl.isSuper'));
 	}
 
 	/**

@@ -71,7 +71,7 @@ class Post extends ForumAppModel {
 
 		if ($this->validates()) {
 			$settings = Configure::read('Forum.settings');
-			$isAdmin = $this->Session->read('Forum.isAdmin');
+			$isAdmin = $this->Session->read('Acl.isAdmin');
 
 			if (($secondsLeft = $this->checkFlooding($settings['postFloodInterval'])) > 0 && !$isAdmin) {
 				return $this->invalid('content', 'You must wait %s more second(s) till you can post a reply', $secondsLeft);

@@ -44,9 +44,21 @@ class Forum extends ForumAppModel {
 			'className' => USER_MODEL,
 			'foreignKey' => 'lastUser_id'
 		),
-		'RequestObject' => array(
+		'ReadTopicAccess' => array(
 			'className' => 'Admin.RequestObject',
-			'foreignKey' => 'aro_id'
+			'foreignKey' => 'accessRead'
+		),
+		'CreateTopicAccess' => array(
+			'className' => 'Admin.RequestObject',
+			'foreignKey' => 'accessPost'
+		),
+		'CreatePollAccess' => array(
+			'className' => 'Admin.RequestObject',
+			'foreignKey' => 'accessPoll'
+		),
+		'CreatePostAccess' => array(
+			'className' => 'Admin.RequestObject',
+			'foreignKey' => 'accessReply'
 		)
 	);
 
@@ -155,15 +167,13 @@ class Forum extends ForumAppModel {
 	public function getBySlug($slug) {
 		$forum = $this->find('first', array(
 			'conditions' => array(
-				'Forum.accessRead' => self::YES,
 				'Forum.slug' => $slug
 			),
 			'contain' => array(
 				'Parent',
 				'Children' => array(
 					'conditions' => array(
-						'Children.status' => self::OPEN,
-						'Children.accessRead' => self::YES
+						'Children.status' => self::OPEN
 					),
 					'LastTopic', 'LastPost', 'LastUser'
 				),
@@ -183,13 +193,12 @@ class Forum extends ForumAppModel {
 	 * @return array
 	 */
 	public function getHierarchy($group = true) {
-		return $this->cache(array(__METHOD__, $this->Session->read('Forum.roles'), $group), function($self) use ($group) {
+		return $this->cache(array(__METHOD__, $this->Session->read('Acl.roles'), $group), function($self) use ($group) {
 			$keyPath = '{n}.Forum.id';
 			$valuePath = array('%s%s', '{n}.tree_prefix', '{n}.Forum.title');
 			$results = $self->filterByRole($self->find('all', array(
 				'conditions' => array(
 					'Forum.status' => Forum::OPEN,
-					'Forum.accessRead' => Forum::YES,
 					'OR' => array(
 						'Forum.parent_id' => null,
 						'Parent.status' => Forum::OPEN
@@ -254,26 +263,23 @@ class Forum extends ForumAppModel {
 			'order' => array('Forum.orderNo' => 'ASC'),
 			'conditions' => array(
 				'Forum.parent_id' => null,
-				'Forum.status' => self::OPEN,
-				'Forum.accessRead' => self::YES
+				'Forum.status' => self::OPEN
 			),
 			'contain' => array(
 				'Children' => array(
 					'conditions' => array(
-						'Children.status' => self::OPEN,
-						'Children.accessRead' => self::YES
+						'Children.status' => self::OPEN
 					),
 					'Children' => array(
-						'fields' => array('Children.id', 'Children.aro_id', 'Children.title', 'Children.slug'),
+						'fields' => array('Children.id', 'Children.accessRead', 'Children.title', 'Children.slug'),
 						'conditions' => array(
-							'Children.status' => self::OPEN,
-							'Children.accessRead' => self::YES
+							'Children.status' => self::OPEN
 						)
 					),
 					'LastTopic', 'LastPost', 'LastUser'
 				)
 			),
-			'cache' => array(__METHOD__, $this->Session->read('Forum.roles'))
+			'cache' => array(__METHOD__, $this->Session->read('Acl.roles'))
 		));
 
 		return $this->filterByRole($forums);
@@ -286,9 +292,9 @@ class Forum extends ForumAppModel {
 	 * @return array
 	 */
 	public function filterByRole($forums) {
-		$roles = (array) $this->Session->read('Forum.roles');
-		$isAdmin = $this->Session->read('Forum.isAdmin');
-		$isSuper = $this->Session->read('Forum.isSuper');
+		$roles = (array) $this->Session->read('Acl.roles');
+		$isAdmin = $this->Session->read('Acl.isAdmin');
+		$isSuper = $this->Session->read('Acl.isSuper');
 		$isMulti = true;
 
 		if (!isset($forums[0])) {
@@ -299,10 +305,10 @@ class Forum extends ForumAppModel {
 		foreach ($forums as $i => $forum) {
 			$aro_id = null;
 
-			if (isset($forum['Forum']['aro_id'])) {
-				$aro_id = $forum['Forum']['aro_id'];
-			} else if (isset($forum['aro_id'])) {
-				$aro_id = $forum['aro_id'];
+			if (isset($forum['Forum']['accessRead'])) {
+				$aro_id = $forum['Forum']['accessRead'];
+			} else if (isset($forum['accessRead'])) {
+				$aro_id = $forum['accessRead'];
 			}
 
 			// Filter down children
