@@ -30,7 +30,7 @@ class ForumToolbarComponent extends Component {
 	}
 
 	/**
-	 * Initialize the session and all data.
+	 * Initialize the session.
 	 *
 	 * @param Controller $Controller
 	 * @return void
@@ -39,38 +39,13 @@ class ForumToolbarComponent extends Component {
 		$this->Controller = $Controller;
 
 		$user_id = $this->Auth->user('id');
-		$aro = ClassRegistry::init('Admin.RequestObject');
 
-		// Banned
-		if ($this->Auth->user(Configure::read('User.fieldMap.status')) == Configure::read('User.statusMap.banned')) {
-			return;
-		}
-
-		// ACL
-		if (!$this->Session->check('Acl')) {
-			$isAdmin = false;
-			$isSuper = false;
-			$roles = $aro->getRoles($user_id);
-
-			foreach ($roles as $role) {
-				if (!$isAdmin && $role['RequestObject']['alias'] == Configure::read('Admin.aliases.administrator')) {
-					$isAdmin = true;
-				}
-
-				if (!$isSuper && $role['RequestObject']['alias'] == Configure::read('Admin.aliases.superModerator')) {
-					$isSuper = true;
-				}
+		if (!$this->Session->check('Forum')) {
+			if ($user_id && $this->Auth->user(Configure::read('User.fieldMap.status')) != Configure::read('User.statusMap.banned')) {
+				$this->Session->write('Forum.permissions', ClassRegistry::init('Admin.RequestObject')->getCrudPermissions($user_id, 'Forum.'));
+				$this->Session->write('Forum.moderates', ClassRegistry::init('Forum.Moderator')->getModerations($user_id));
 			}
 
-			$this->Session->write('Acl.isAdmin', $isAdmin);
-			$this->Session->write('Acl.isSuper', $isSuper);
-			$this->Session->write('Acl.roles', Hash::extract($roles, '{n}.RequestObject.id'));
-		}
-
-		// Forum
-		if (!$this->Session->check('Forum')) {
-			$this->Session->write('Forum.permissions', $aro->getCrudPermissions($user_id, 'Forum.'));
-			$this->Session->write('Forum.moderates', ClassRegistry::init('Forum.Moderator')->getModerations($user_id));
 			$this->Session->write('Forum.lastVisit', date('Y-m-d H:i:s'));
 		}
 	}
