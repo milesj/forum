@@ -31,15 +31,15 @@ Thorough documentation can be found here: http://milesj.me/code/cakephp/forum
 ## Features ##
 
 Forums
-* Parent and children forums
+* Unlimited Parent and child forums
 * Activity and latest post tracking
-* Auto-lock old topics
-* Enable/disable post count increments
+* Auto-locking of old topics
 * Individual settings for reading, posting, replying, etc
-* Access/private specific forums
+* Access/private specific forums through ACL
 * Create topics or polls
 * Reply to topics, or quote previous posts
 * Topic and forum subscription with email notifications
+* Post up and down ratings
 
 Moderation
 * Moderators, Super Moderators and Admin levels
@@ -65,10 +65,8 @@ Security
 
 Miscellaneous
 * BBCode support using Decoda
-* Utilizes remember me features using AutoLogin
 * Mark topics as read (Session)
 * Log created topics and posts (Session)
-* Access level verification
 * Report system for topics, posts and users
 * Search through topics (Title and Post)
 * RSS feeds for each forum
