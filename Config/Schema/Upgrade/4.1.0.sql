@@ -1,13 +1,5 @@
 
 # Update forum access to use AROs
-UPDATE `{prefix}forums` SET
-	`accessRead` = NULL,
-	`accessPost` = NULL,
-	`accessPoll` = NULL,
-	`accessReply` = NULL;
-
-UPDATE `{prefix}forums` SET `accessRead` = `aro_id`;
-
 ALTER TABLE `{prefix}forums`
 	CHANGE `accessRead` `accessRead` INT NULL DEFAULT NULL,
 	CHANGE `accessPost` `accessPost` INT NULL DEFAULT NULL,
@@ -16,8 +8,15 @@ ALTER TABLE `{prefix}forums`
 	ADD INDEX ( `accessRead` ),
 	ADD INDEX ( `accessPost` ),
 	ADD INDEX ( `accessPoll` ),
-	ADD INDEX ( `accessReply` ),
-	DROP `aro_id`;
+	ADD INDEX ( `accessReply` );
+
+UPDATE `{prefix}forums` SET
+	`accessRead` = `aro_id`,
+	`accessPost` = NULL,
+	`accessPoll` = NULL,
+	`accessReply` = NULL;
+
+ALTER TABLE `{prefix}forums` DROP `aro_id`;
 
 # Add post ratings
 ALTER TABLE `{prefix}posts`
