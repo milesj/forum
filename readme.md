@@ -1,4 +1,4 @@
-# Forum v4.1.0-rc1 #
+# Forum v4.1.0-rc2 #
 
 A fully robust and powerful CakePHP forum plugin. Integrates with an external user system, support for topic and forum subscriptions, and many more features listed below.
 
