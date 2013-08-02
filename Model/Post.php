@@ -326,8 +326,10 @@ class Post extends ForumAppModel {
 	 * @return bool
 	 */
 	public function rateDown($id) {
+		$down = (int) Configure::read('Forum.settings.rateDownPoints');
+
 		return $this->updateAll(
-			array('Post.down' => 'Post.down + 1', 'Post.score' => 'Post.score - 1'),
+			array('Post.down' => 'Post.down + ' . $down, 'Post.score' => 'Post.score - ' . $down),
 			array('Post.id' => $id)
 		);
 	}
@@ -339,8 +341,10 @@ class Post extends ForumAppModel {
 	 * @return bool
 	 */
 	public function rateUp($id) {
+		$up = (int) Configure::read('Forum.settings.rateUpPoints');
+
 		return $this->updateAll(
-			array('Post.up' => 'Post.up + 1', 'Post.score' => 'Post.score + 1'),
+			array('Post.up' => 'Post.up + ' . $up, 'Post.score' => 'Post.score + ' . $up),
 			array('Post.id' => $id)
 		);
 	}

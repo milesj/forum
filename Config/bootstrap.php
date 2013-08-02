@@ -67,6 +67,8 @@ Configure::write('Forum.settings', array(
 	'enablePostRating' => true,
 	'showRatingScore' => true,
 	'ratingBuryThreshold' => -25,
+	'rateUpPoints' => 1,
+	'rateDownPoints' => 1,
 
 	// Misc
 	'whosOnlineInterval' => '-15 minutes',
