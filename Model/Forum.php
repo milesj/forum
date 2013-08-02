@@ -137,7 +137,6 @@ class Forum extends ForumAppModel {
 	 */
 	public $admin = array(
 		'iconClass' => 'icon-list-alt',
-		'imageFields' => array('icon'),
 		'paginate' => array(
 			'order' => array('Forum.lft' => 'ASC')
 		)
