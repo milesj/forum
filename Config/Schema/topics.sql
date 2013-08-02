@@ -17,9 +17,9 @@ CREATE TABLE `{prefix}topics` (
 	`created` DATETIME DEFAULT NULL,
 	`modified` DATETIME DEFAULT NULL,
 	PRIMARY KEY (`id`),
+	KEY `forum_id` (`forum_id`),
 	KEY `user_id` (`user_id`),
 	KEY `firstPost_id` (`firstPost_id`),
 	KEY `lastPost_id` (`lastPost_id`),
-	KEY `lastUser_id` (`lastUser_id`),
-	KEY `forum_id` (`forum_id`)
+	KEY `lastUser_id` (`lastUser_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Discussion topics' AUTO_INCREMENT=1;

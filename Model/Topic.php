@@ -435,6 +435,26 @@ class Topic extends ForumAppModel {
 	}
 
 	/**
+	 * Return popular topics where the first post has a high rating score.
+	 *
+	 * @param string $timeframe
+	 * @param int $limit
+	 * @return array
+	 */
+	public function getPopularTopics($timeframe = '-7 days', $limit = 10) {
+		return $this->find('all', array(
+			'conditions' => array(
+				'Topic.created >=' => date('Y-m-d H:i:s', strtotime($timeframe)),
+				'Topic.status' => self::OPEN
+			),
+			'order' => array('FirstPost.score' => 'DESC'),
+			'contain' => array('FirstPost', 'User'),
+			'limit' => $limit,
+			'cache' => array(__METHOD__, $timeframe, $limit)
+		));
+	}
+
+	/**
 	 * Get all high level topics within a forum.
 	 *
 	 * @param int $forum_id
