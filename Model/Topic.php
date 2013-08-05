@@ -7,6 +7,8 @@
 
 App::uses('ForumAppModel', 'Forum.Model');
 
+define('EXCERPT_LENGTH', Configure::read('Forum.settings.excerptLength'));
+
 /**
  * @property User $User
  * @property Forum $Forum
@@ -107,6 +109,14 @@ class Topic extends ForumAppModel {
 			'title' => array(
 				'rule' => 'notEmpty'
 			),
+			'excerpt' => array(
+				'notEmpty' => array(
+					'rule' => 'notEmpty'
+				),
+				'maxLength' => array(
+					'rule' => array('maxLength', EXCERPT_LENGTH)
+				)
+			),
 			'forum_id' => array(
 				'rule' => 'notEmpty',
 			),
@@ -160,7 +170,8 @@ class Topic extends ForumAppModel {
 	 * @type array
 	 */
 	public $admin = array(
-		'iconClass' => 'icon-comment'
+		'iconClass' => 'icon-comment',
+		'editorFields' => array('excerpt')
 	);
 
 	/**
@@ -184,7 +195,7 @@ class Topic extends ForumAppModel {
 
 			} else {
 				$this->create();
-				$this->save($data, false, array('forum_id', 'user_id', 'title', 'slug', 'status', 'type'));
+				$this->save($data, false, array('forum_id', 'user_id', 'title', 'slug', 'excerpt', 'status', 'type'));
 
 				$data['topic_id'] = $this->id;
 				$data['post_id'] = $this->Post->addFirstPost($data);

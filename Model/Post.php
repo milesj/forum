@@ -76,7 +76,8 @@ class Post extends ForumAppModel {
 	 * @type array
 	 */
 	public $admin = array(
-		'iconClass' => 'icon-comments'
+		'iconClass' => 'icon-comments',
+		'editorFields' => array('content')
 	);
 
 	/**

@@ -39,6 +39,19 @@ $this->Breadcrumb->add($pageTitle, array('controller' => 'topics', 'action' => '
 			));
 		}
 
+		if ($forum['Forum']['excerpts']) {
+			$chars = isset($this->request->data['Topic']['excerpt']) ? strlen($this->request->data['Topic']['excerpt']) : 0;
+			$maxLength = $settings['excerptLength'];
+
+			echo $this->Form->input('excerpt', array(
+				'label' => __d('forum', 'Excerpt'),
+				'type' => 'textarea',
+				'rows' => 5,
+				'onkeyup' => 'Forum.charsRemaining(this, ' . $maxLength . ');',
+				'after' => '<span class="inputText">' . __d('forum', '%s characters remaining', '<span id="TopicExcerptCharsRemaining">' . ($maxLength - $chars) . '</span>') . '</span>',
+			));
+		}
+
 		echo $this->Form->input('content', array(
 			'label' => __d('forum', 'Content'),
 			'type' => 'textarea',

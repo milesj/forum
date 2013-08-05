@@ -40,8 +40,6 @@ Configure::write('Forum.settings', array(
 	'name' => __d('forum', 'Forum'),
 	'email' => 'forum@cakephp.org',
 	'url' => 'http://milesj.me/code/cakephp/forum',
-	'securityQuestion' => __d('forum', 'What framework does this plugin run on?'),
-	'securityAnswer' => 'cakephp',
 	'titleSeparator' => ' - ',
 
 	// Topics
@@ -50,6 +48,7 @@ Configure::write('Forum.settings', array(
 	'topicFloodInterval' => 300,
 	'topicPagesTillTruncate' => 10,
 	'topicDaysTillAutolock' => 21,
+	'excerptLength' => 500,
 
 	// Posts
 	'postsPerPage' => 15,

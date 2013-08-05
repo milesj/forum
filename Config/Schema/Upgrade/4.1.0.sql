@@ -1,6 +1,8 @@
 
 # Update forum access to use AROs
 ALTER TABLE `{prefix}forums`
+	ADD `icon` VARCHAR( 255 ) NOT NULL AFTER `description`,
+	ADD `excerpts` TINYINT( 1 ) NOT NULL DEFAULT '0' AFTER `autoLock`,
 	CHANGE `accessRead` `accessRead` INT NULL DEFAULT NULL,
 	CHANGE `accessPost` `accessPost` INT NULL DEFAULT NULL,
 	CHANGE `accessPoll` `accessPoll` INT NULL DEFAULT NULL,
@@ -37,6 +39,6 @@ CREATE TABLE `{prefix}post_ratings` (
 	KEY `topic_id` (`topic_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Up down ratings for posts' AUTO_INCREMENT=1;
 
-# Add forum icons
-ALTER TABLE `{prefix}forums`
-	ADD `icon` VARCHAR( 255 ) NOT NULL AFTER `description`;
+# Add topic excerpts
+ALTER TABLE `{prefix}topics`
+	ADD `excerpt` TEXT NOT NULL AFTER `slug`;

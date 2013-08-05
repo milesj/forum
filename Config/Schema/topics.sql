@@ -7,6 +7,7 @@ CREATE TABLE `{prefix}topics` (
 	`user_id` INT(11) DEFAULT NULL,
 	`title` VARCHAR(100) NOT NULL,
 	`slug` VARCHAR(110) NOT NULL,
+	`excerpt` TEXT NOT NULL,
 	`status` SMALLINT(6) NOT NULL DEFAULT '0',
 	`type` SMALLINT(6) NOT NULL DEFAULT '0',
 	`post_count` INT(11) NOT NULL DEFAULT '0',

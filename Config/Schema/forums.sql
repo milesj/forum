@@ -11,6 +11,7 @@ CREATE TABLE `{prefix}forums` (
 	`status` SMALLINT(6) NOT NULL DEFAULT '1',
 	`orderNo` SMALLINT(6) NOT NULL DEFAULT '0',
 	`autoLock` TINYINT(1) NOT NULL DEFAULT '1',
+	`excerpts` TINYINT(1) NOT NULL DEFAULT '0',
 	`topic_count` INT(11) NOT NULL DEFAULT '0',
 	`post_count` INT(11) NOT NULL DEFAULT '0',
 	`accessRead` INT(11) DEFAULT NULL,
@@ -35,6 +36,6 @@ CREATE TABLE `{prefix}forums` (
 	KEY `accessReply` (`accessReply`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Forum categories to post topics to' AUTO_INCREMENT=1;
 
-INSERT INTO `{prefix}forums` (`id`, `parent_id`, `title`, `slug`, `description`, `status`, `orderNo`, `topic_count`, `post_count`, `accessRead`, `accessPost`, `accessReply`, `accessPoll`, `autoLock`, `lastTopic_id`, `lastPost_id`, `lastUser_id`, `lft`, `rght`, `created`, `modified`) VALUES
-	(1, null, 'Forums', 'forums', 'This is a primary forum and it contains child forums. Primary forums (no parents) can not be posted in.', 1, 1, 0, 0, null, null, null, null, 0, null, null, null, 1, 4, NOW(), NOW()),
-	(2, 1, 'General Discussion', 'general-discussion', 'This is a child forum. You can add, edit or delete these forums by visiting the administration panel, but first you would need to give a user admin rights.', 1, 1, 0, 0, null, null, null, null, 1, null, null, null, 2, 3, NOW(), NOW());
+INSERT INTO `{prefix}forums` (`id`, `parent_id`, `title`, `slug`, `description`, `orderNo`, `lft`, `rght`, `created`) VALUES
+	(1, null, 'Forums', 'forums', 'This is a primary forum and it contains child forums. Primary forums (no parents) can not be posted in.', 0, 1, 4, NOW()),
+	(2, 1, 'General Discussion', 'general-discussion', 'This is a child forum. You can add, edit or delete these forums by visiting the administration panel, but first you would need to give a user admin rights.', 1, 2, 3, NOW());

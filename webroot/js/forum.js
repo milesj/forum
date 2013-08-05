@@ -4,7 +4,27 @@
  * @link		http://milesj.me/code/cakephp/forum
  */
 
+"use strict";
+
 var Forum = {
+
+	/**
+	 * Update an input with a characters remaining info box.
+	 *
+	 * @param {Element} input
+	 * @param {int} max
+	 */
+	charsRemaining: function(input, max) {
+		var target = $(input.get('id') + 'CharsRemaining'),
+			current = max - input.value.length;
+
+		if (current < 0) {
+			current = 0;
+			input.value = input.value.substr(0, max);
+		}
+
+		target.set('html', current);
+	},
 
 	/**
 	 * Toggle a buried post.
@@ -14,6 +34,7 @@ var Forum = {
 	 */
 	toggleBuried: function(post_id) {
 		$('post-buried-' + post_id).toggle();
+
 		return false;
 	},
 
