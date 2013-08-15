@@ -1,41 +1,37 @@
+<nav class="nav clear-after">
+	<div class="nav-buttons">
+		<?php
+		if ($user) {
+			echo $this->Html->link($user[$userFields['username']], $this->Admin->getUserRoute('profile', $user), array('class' => 'button'));
+			echo $this->Html->link(__d('forum', 'View New Posts'), array('controller' => 'search', 'action' => 'index', 'new_posts', 'admin' => false), array('class' => 'button'));
+			echo $this->Html->link(__d('forum', 'Logout'), $userRoutes['logout'], array('class' => 'button error'));
 
-<div class="navigation">
-	<div>
-		<?php echo $this->Time->nice(time(), $this->Forum->timezone()); ?>
+		} else {
+			echo $this->Html->link(__d('forum', 'Login'), $userRoutes['login'], array('class' => 'button'));
+
+			if (!empty($userRoutes['signup'])) {
+				echo $this->Html->link(__d('forum', 'Sign Up'), $userRoutes['signup'], array('class' => 'button'));
+			}
+
+			if (!empty($userRoutes['forgotPass'])) {
+				echo $this->Html->link(__d('forum', 'Forgot Password'), $userRoutes['forgotPass'], array('class' => 'button'));
+			}
+		} ?>
 	</div>
 
-	<?php $links = array();
+	<?php echo $this->Html->link(__d('forum', 'Forum'), array(
+		'controller' => 'forum',
+		'action' => 'index'
+	), array('class' => 'nav-brand')); ?>
 
-	if ($user) {
-		$links[] = $this->Html->link(__d('forum', 'Logout'), $userRoutes['logout']);
-		$links[] = $this->Html->link(__d('forum', 'View New Posts'), array('controller' => 'search', 'action' => 'index', 'new_posts', 'admin' => false));
-	} else {
-		if (!empty($userRoutes['forgotPass'])) {
-			$links[] = $this->Html->link(__d('forum', 'Forgot Password'), $userRoutes['forgotPass']);
-		}
+	<ul class="nav-menu">
+		<li<?php if ($menuTab === 'forums') echo ' class="is-active"'; ?>><?php echo $this->Html->link(__d('forum', 'Forums'), array('controller' => 'forum', 'action' => 'index')); ?></li>
+		<li<?php if ($menuTab === 'search') echo ' class="is-active"'; ?>><?php echo $this->Html->link(__d('forum', 'Search'), array('controller' => 'search', 'action' => 'index')); ?></li>
+		<li<?php if ($menuTab === 'rules') echo ' class="is-active"'; ?>><?php echo $this->Html->link(__d('forum', 'Rules'), array('controller' => 'forum', 'action' => 'rules')); ?></li>
+		<li<?php if ($menuTab === 'help') echo ' class="is-active"'; ?>><?php echo $this->Html->link(__d('forum', 'Help'), array('controller' => 'forum', 'action' => 'help')); ?></li>
 
-		$links[] = $this->Html->link(__d('forum', 'Login'), $userRoutes['login']);
-
-		if (!empty($userRoutes['signup'])) {
-			$links[] = $this->Html->link(__d('forum', 'Sign Up'), $userRoutes['signup']);
-		}
-	}
-
-	foreach ($links as $link) { ?>
-
-		<div>
-			<?php echo $link; ?>
-		</div>
-
-	<?php }
-
-	if ($user) { ?>
-
-		<div>
-			<?php echo sprintf(__d('forum', 'Welcome %s'), $this->Html->link($user[$userFields['username']], $this->Forum->profileUrl($user))); ?>
-		</div>
-
-	<?php } ?>
-
-	<span class="clear"></span>
-</div>
+		<?php if ($user && $this->Admin->isAdmin()) { ?>
+			<li><?php echo $this->Html->link(__d('forum', 'Admin'), array('controller' => 'admin', 'action' => 'index', 'plugin' => 'admin', 'admin' => false)); ?></li>
+		<?php } ?>
+	</ul>
+</nav>

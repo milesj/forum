@@ -76,7 +76,6 @@ class SearchController extends ForumAppController {
 				$this->request->data['Topic']['orderBy'] = 'LastPost.created';
 			}
 
-			$this->paginate['Topic']['conditions']['Forum.accessRead'] = Forum::YES;
 			$this->paginate['Topic']['order'] = array($this->request->data['Topic']['orderBy'] => 'DESC');
 			$this->paginate['Topic']['limit'] = $this->settings['topicsPerPage'];
 

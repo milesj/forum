@@ -47,10 +47,17 @@ class ForumHelper extends AppHelper {
 	 * Determine the forum icon state.
 	 *
 	 * @param array $forum
+	 * @param array $options
 	 * @return string
 	 */
-	public function forumIcon($forum) {
+	public function forumIcon($forum, array $options = array()) {
+		$options = $options + array(
+			'open' => 'icon-envelope-alt',
+			'closed' => 'icon-lock',
+			'new' => 'icon-envelope'
+		);
 		$icon = 'open';
+		$tooltip = '';
 
 		if (isset($forum['LastPost']['created'])) {
 			$lastPost = $forum['LastPost']['created'];
@@ -75,14 +82,16 @@ class ForumHelper extends AppHelper {
 		}
 
 		if ($custom) {
-			$path = $custom;
-		} else {
-			$path = '/forum/img/forum_' . $icon . '.png';
+			return $this->Html->image($custom);
 		}
 
-		return $this->Html->image($path, array(
-			'alt' => ucfirst($icon)
-		));
+		switch ($icon) {
+			case 'open': $tooltip = __d('forum', 'No New Posts'); break;
+			case 'closed': $tooltip = __d('forum', 'Closed'); break;
+			case 'new': $tooltip = __d('forum', 'New Posts'); break;
+		}
+
+		return $this->Html->tag('span', '', array('class' => $options[$icon] . ' js-tooltip', 'data-tooltip' => $tooltip));
 	}
 
 	/**
@@ -139,11 +148,11 @@ class ForumHelper extends AppHelper {
 		if (empty($user)) {
 			return false;
 
-		} else if ($this->isSuper()) {
+		} else if ($this->Admin->isSuper()) {
 			return true;
 
 		} else if ($role !== null) {
-			if (!$this->hasRole($role)) {
+			if (!$this->Admin->hasRole($role)) {
 				return false;
 			}
 		}
@@ -159,41 +168,13 @@ class ForumHelper extends AppHelper {
 	}
 
 	/**
-	 * Check to see if the user has a role.
-	 *
-	 * @param int $aro_id
-	 * @return bool
-	 */
-	public function hasRole($aro_id) {
-		return in_array($aro_id, (array) $this->Session->read('Acl.roles'));
-	}
-
-	/**
-	 * Return true if the user is an admin.
-	 *
-	 * @return bool
-	 */
-	public function isAdmin() {
-		return (bool) $this->Session->read('Acl.isAdmin');
-	}
-
-	/**
-	 * Return true if the user is a super mod.
-	 *
-	 * @return bool
-	 */
-	public function isSuper() {
-		return ($this->isAdmin() || $this->Session->read('Acl.isSuper'));
-	}
-
-	/**
 	 * Return true if the user is a forum mod.
 	 *
 	 * @param int $forum_id
 	 * @return bool
 	 */
 	public function isMod($forum_id) {
-		return ($this->isSuper() || in_array($forum_id, $this->Session->read('Forum.moderates')));
+		return ($this->Admin->isSuper() || in_array($forum_id, $this->Session->read('Forum.moderates')));
 	}
 
 	/**
@@ -203,21 +184,7 @@ class ForumHelper extends AppHelper {
 	 * @return string
 	 */
 	public function profileUrl($user) {
-		$route = Configure::read('User.routes.profile');
-
-		foreach ($route as &$value) {
-			if ($value === '{id}') {
-				$value = $user['id'];
-
-			} else if ($value === '{slug}' && isset($user['slug'])) {
-				$value = $user['slug'];
-
-			} else if ($value === '{username}') {
-				$value = $user[Configure::read('User.fieldMap.username')];
-			}
-		}
-
-		return $this->url($route);
+		return $this->Admin->getUserRoute('profile', $user);
 	}
 
 	/**
@@ -237,9 +204,21 @@ class ForumHelper extends AppHelper {
 	 * Determine the topic icon state.
 	 *
 	 * @param array $topic
+	 * @param array $options
 	 * @return string
 	 */
-	public function topicIcon($topic) {
+	public function topicIcon($topic, array $options = array()) {
+		$options = $options + array(
+			'open' => 'icon-comment-alt',
+			'open-hot' => 'icon-comments-alt',
+			'closed' => 'icon-lock',
+			'new' => 'icon-comment',
+			'new-hot' => 'icon-comments',
+			'sticky' => 'icon-question-sign',
+			'important' => 'icon-exclamation-sign',
+			'announcement' => 'icon-warning-sign'
+		);
+
 		$lastVisit = $this->Session->read('Forum.lastVisit');
 		$readTopics = $this->Session->read('Forum.readTopics');
 
@@ -248,10 +227,10 @@ class ForumHelper extends AppHelper {
 		}
 
 		$icon = 'open';
+		$tooltip = '';
 
 		if (isset($topic['LastPost']['created'])) {
 			$lastPost = $topic['LastPost']['created'];
-
 		} else if (isset($topic['Topic']['created'])) {
 			$lastPost = $topic['Topic']['created'];
 		}
@@ -272,13 +251,22 @@ class ForumHelper extends AppHelper {
 
 		if ($icon === 'open' || $icon === 'new') {
 			if ($topic['Topic']['post_count'] >= Configure::read('Forum.settings.postsTillHotTopic')) {
-				$icon .= '_hot';
+				$icon = '-hot';
 			}
 		}
 
-		return $this->Html->image('/forum/img/topic_' . $icon . '.png', array(
-			'alt' => ucfirst($icon)
-		));
+		switch ($icon) {
+			case 'open': $tooltip = __d('forum', 'No New Posts'); break;
+			case 'open-hot': $tooltip = __d('forum', 'No New Posts'); break;
+			case 'closed': $tooltip = __d('forum', 'Closed'); break;
+			case 'new': $tooltip = __d('forum', 'New Posts'); break;
+			case 'new-hot': $tooltip = __d('forum', 'New Posts'); break;
+			case 'sticky': $tooltip = __d('forum', 'Sticky'); break;
+			case 'important': $tooltip = __d('forum', 'Important'); break;
+			case 'announcement': $tooltip = __d('forum', 'Announcement'); break;
+		}
+
+		return $this->Html->tag('span', '', array('class' => $options[$icon] . ' js-tooltip', 'data-tooltip' => $tooltip));
 	}
 
 	/**

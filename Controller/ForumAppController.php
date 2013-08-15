@@ -41,7 +41,8 @@ class ForumAppController extends AppController {
 		'Html', 'Session', 'Form', 'Time', 'Text',
 		'Utility.Breadcrumb', 'Utility.OpenGraph',
 		'Utility.Utility', 'Utility.Decoda',
-		'Forum.Forum'
+		'Forum.Forum',
+		'Admin.Admin'
 	);
 
 	/**

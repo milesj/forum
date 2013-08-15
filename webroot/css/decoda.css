@@ -1,18 +1,11 @@
 
-.decoda-editor { display: inline-block; width: 50%; }
+.decoda-editor { display: inline-block; }
 .decoda-editor .decoda-textarea textarea { width: 100% !important; }
 
 .decoda-toolbars button { background: none; border: 0; padding: 4px; }
-.decoda-toolbars button:hover { background: #fff; border-radius: 2px; }
-.decoda-toolbars .decoda-menu { box-shadow: 0 0 2px #DBE4EF; border: 1px solid #DBE4EF; top: 23px; }
-.decoda-toolbars .decoda-menu li { border-top: 1px solid #DBE4EF; }
-.decoda-toolbars .decoda-menu li:first-child { border: 0; }
-.decoda-toolbars .decoda-menu a:hover { background-color: #F4F7FB; }
-
-.decoda-help table th { background: none; border: none; }
-.decoda-help table td { border: 1px solid #DBE4EF; }
-.decoda-help span { color: #A4A4A4; }
+.decoda-toolbars button:hover { background: #45c5eb; border-radius: 2px; }
+.decoda-toolbars .decoda-menu { box-shadow: 5px 5px rgba(0, 0, 0, .25); border: 1px solid #e5e5e5; top: 100%; background: #f8f8f8; }
+.decoda-toolbars .decoda-menu li:nth-child(odd) { background-color: #fbfbfb; }
+.decoda-toolbars .decoda-menu a:hover { background-color: #45c5eb; color: #fff; }
 
 .decoda-preview { min-height: 100px; }
-
-#quickReply .decoda-editor { width: 75%; }

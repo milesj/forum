@@ -1,7 +1,7 @@
 <?php if ($user) {
 	$isMod = $this->Forum->isMod($forum['Forum']['id']); ?>
 
-	<div class="controls <?php echo isset($class) ? $class : ''; ?>">
+	<div class="action-buttons <?php echo isset($class) ? $class : ''; ?>">
 		<?php if ($settings['enableForumSubscriptions']) {
 			if (empty($subscription)) {
 				echo $this->Html->link(__d('forum', 'Subscribe'), array('controller' => 'stations', 'action' => 'subscribe', $forum['Forum']['id']), array('class' => 'button subscription', 'onclick' => 'return Forum.subscribe(this);'));
@@ -11,7 +11,7 @@
 		}
 
 		if ($isMod) {
-			echo $this->Html->link(__d('forum', 'Moderate'), array('controller' => 'stations', 'action' => 'moderate', $forum['Forum']['slug']), array('class' => 'button'));
+			echo $this->Html->link(__d('forum', 'Moderate'), array('controller' => 'stations', 'action' => 'moderate', $forum['Forum']['slug']), array('class' => 'button info'));
 		}
 
 		if ($forum['Forum']['status']) {
@@ -23,7 +23,7 @@
 				echo $this->Html->link(__d('forum', 'Create Poll'), array('controller' => 'topics', 'action' => 'add', $forum['Forum']['slug'], 'poll'), array('class' => 'button'));
 			}
 		} else {
-			echo '<span class="button disabled">' . __d('forum', 'Closed') . '</span>';
+			echo $this->Html->link(__d('forum', 'Closed'), 'javascript:;', array('class' => 'button is-disabled'));
 		} ?>
 	</div>
 <?php } ?>

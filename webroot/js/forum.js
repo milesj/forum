@@ -4,7 +4,7 @@
  * @link		http://milesj.me/code/cakephp/forum
  */
 
-"use strict";
+'use strict';
 
 var Forum = {
 
@@ -39,30 +39,6 @@ var Forum = {
 	},
 
 	/**
-	 * Open or close child forums.
-	 *
-	 * @param {Element} self
-	 * @param {int} id
-	 */
-	toggleForums: function(self, id) {
-		var node = new Element(self),
-			target = $('forums-'+ id);
-
-		if (target.style.display === 'none') {
-			node.set('html', '-');
-			node.getParent().removeClass('closed');
-			target.show();
-
-		} else {
-			node.set('html', '+');
-			node.getParent().addClass('closed');
-			target.hide();
-		}
-
-		return false;
-	},
-
-	/**
 	 * Toggle all checkboxes.
 	 *
 	 * @param {Element} self
@@ -82,7 +58,7 @@ var Forum = {
 	subscribe: function(self) {
 		var node = new Element(self);
 
-		if (node.hasClass('disabled')) {
+		if (node.hasClass('is-disabled')) {
 			return false;
 		}
 
@@ -90,7 +66,7 @@ var Forum = {
 			method: 'POST',
 			url: node.get('href'),
 			onSuccess: function(response) {
-				$$('.subscription').set('text', response.data).addClass('disabled');
+				$$('.subscription').set('text', response.data).addClass('is-disabled');
 			}
 		}).send();
 
@@ -138,3 +114,9 @@ var Forum = {
 	}
 
 };
+
+window.addEvent('domready', function() {
+	Titon.Tooltip.factory('.js-tooltip', {
+		position: 'topCenter'
+	});
+});
