@@ -1,4 +1,6 @@
 
+hr { margin: 1rem 0; border: 0; border-top: 1px solid #e5e5e5; }
+
 .statistics { margin-top: 1.5rem; }
 
 .js-tooltip { cursor: help; }
@@ -10,7 +12,11 @@
 
 .forum-title,
 .topic-title { font-weight: bold; }
-.forum-desc { margin-top: 5px; }
+
+.forum-desc,
+.topic-pages { margin-top: 5px; }
+
+.topic-pages { font-size: .8em; }
 
 .login,
 .mod-actions { margin-top: 1.5rem; padding: 1rem; background: #f8f8f8; border: 1px solid #e5e5e5; border-radius: .3rem; text-align: center; }

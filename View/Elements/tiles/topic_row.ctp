@@ -10,7 +10,7 @@ $columns = isset($columns) ? $columns : array(); ?>
 	<?php } ?>
 	<td>
 		<?php if (!empty($topic['Poll']['id'])) {
-			echo $this->Html->tag('span', '', array('class' => 'icon-bar-chart js-tooltip', 'data-tooltip' => __d('forum', 'Poll')));
+			echo $this->Html->tag('span', '', array('class' => 'icon-bar-chart js-tooltip float-right', 'data-tooltip' => __d('forum', 'Poll')));
 		} ?>
 
 		<?php echo $this->Html->link($topic['Topic']['title'], array('controller' => 'topics', 'action' => 'view', $topic['Topic']['slug']), array('class' => 'topic-title'));

@@ -13,6 +13,11 @@ $this->Html->script('Utility.decoda.min', array('inline' => false)); ?>
 			onSubmit: function() {
 				return this.clean();
 			},
+			onRenderToolbar: function(toolbar) {
+				toolbar.getElements('button').each(function(button) {
+					button.set('data-tooltip', button.get('title')).addClass('js-tooltip').removeProperty('title');
+				});
+			},
 			onRenderHelp: function(table) {
 				table.addClass('table');
 			}

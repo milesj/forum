@@ -24,6 +24,13 @@ class ForumAppModel extends AppModel {
 	const CLOSED = 0;
 
 	/**
+	 * Force plugin name.
+	 *
+	 * @type string
+	 */
+	public $plugin = 'Forum';
+
+	/**
 	 * Table prefix.
 	 *
 	 * @type string

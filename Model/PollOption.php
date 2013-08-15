@@ -79,7 +79,10 @@ class PollOption extends ForumAppModel {
 	 * @type array
 	 */
 	public $admin = array(
-		'iconClass' => 'icon-list'
+		'iconClass' => 'icon-list',
+		'paginate' => array(
+			'order' => array('PollOption.topic_id' => 'DESC', 'PollOption.id' => 'ASC')
+		)
 	);
 
 }

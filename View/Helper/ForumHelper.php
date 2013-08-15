@@ -235,7 +235,7 @@ class ForumHelper extends AppHelper {
 			$lastPost = $topic['Topic']['created'];
 		}
 
-		if (!$topic['Topic']['status']) {
+		if (!$topic['Topic']['status'] && $topic['Topic']['type'] != Topic::ANNOUNCEMENT) {
 			$icon = 'closed';
 		} else {
 			if (isset($lastPost) && $lastPost > $lastVisit &&  !in_array($topic['Topic']['id'], $readTopics)) {
@@ -251,7 +251,7 @@ class ForumHelper extends AppHelper {
 
 		if ($icon === 'open' || $icon === 'new') {
 			if ($topic['Topic']['post_count'] >= Configure::read('Forum.settings.postsTillHotTopic')) {
-				$icon = '-hot';
+				$icon .= '-hot';
 			}
 		}
 

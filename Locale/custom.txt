@@ -1,14 +1,14 @@
 Custom strings that won't be generated through the shell.
 Will have to manually be added later on.
 
-# Forum
+#: Forum
 msgid "forum.status.0"
 msgstr "Hidden"
 
 msgid "forum.status.1"
 msgstr "Visible"
 
-# Topic
+#: Topic
 msgid "topic.status.0"
 msgstr "Closed"
 
@@ -27,7 +27,7 @@ msgstr "Important"
 msgid "topic.type.3"
 msgstr "Announcement"
 
-# Controllers
+#: Controllers
 msgid "Not Found"
 msgstr ""
 

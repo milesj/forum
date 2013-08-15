@@ -97,7 +97,9 @@ $canReply = ($user && $topic['Topic']['status'] && $this->Forum->hasAccess('Foru
 			</div>
 		</div>
 
-	<?php } ?>
+	<?php }
+
+	echo $this->element('Admin.pagination', array('class' => 'top')); ?>
 
 	<div class="panel" id="posts">
 		<div class="panel-body">
@@ -218,7 +220,9 @@ $canReply = ($user && $topic['Topic']['status'] && $this->Forum->hasAccess('Foru
 		</div>
 	</div>
 
-	<?php echo $this->element('tiles/topic_controls', array('topic' => $topic));
+	<?php echo $this->element('Admin.pagination', array('class' => 'bottom'));
+
+	echo $this->element('tiles/topic_controls', array('topic' => $topic));
 
 	if ($settings['enableQuickReply'] && $canReply) { ?>
 
@@ -237,14 +241,9 @@ $canReply = ($user && $topic['Topic']['status'] && $this->Forum->hasAccess('Foru
 					'error' => false,
 					'label' => false
 				));
-				echo $this->element('decoda', array('id' => 'PostContent')); ?>
-
-				<div class="submit">
-					<?php echo $this->Form->submit(__d('forum', 'Post Reply'), array('class' => 'button success', 'div' => false)); ?>
-					<?php echo $this->Html->link(__d('forum', 'Advanced Reply'), array('controller' => 'posts', 'action' => 'add', $topic['Topic']['slug']), array('class' => 'button')); ?>
-				</div>
-
-				<?php echo $this->Form->end(); ?>
+				echo $this->element('decoda', array('id' => 'PostContent'));
+				echo $this->Form->submit(__d('forum', 'Post Reply'), array('class' => 'button success'));
+				echo $this->Form->end(); ?>
 			</div>
 		</div>
 

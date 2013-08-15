@@ -38,7 +38,7 @@ $this->Breadcrumb->add(__d('forum', 'Post Reply'), array('action' => 'add', $top
 					</tr>
 					<tr>
 						<td class="span-2">
-							<h4 class="username"><?php echo $this->Html->link($post['User'][$userFields['username']], $this->Forum->profileUrl($post['User'])); ?></h4>
+							<h5><?php echo $this->Html->link($post['User'][$userFields['username']], $this->Forum->profileUrl($post['User'])); ?></h5>
 						</td>
 						<td>
 							<?php echo $this->Decoda->parse($post['Post']['content']); ?>

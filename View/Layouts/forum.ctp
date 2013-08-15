@@ -5,13 +5,13 @@ echo $this->OpenGraph->html(array('xmlns' => 'http://www.w3.org/1999/xhtml')); ?
 	<?php echo $this->Html->charset(); ?>
 	<title><?php echo $this->Breadcrumb->pageTitle($settings['name'], array('separator' => $settings['titleSeparator'])); ?></title>
 	<?php
-	echo $this->Html->css('Admin.titon-0.4.0.min');
+	echo $this->Html->css('Admin.titon.min');
 	echo $this->Html->css('Admin.font-awesome.min');
 	echo $this->Html->css('Admin.style');
 	echo $this->Html->css('Forum.style');
-	echo $this->Html->script('//ajax.googleapis.com/ajax/libs/mootools/1.4.5/mootools-yui-compressed.js');
-	echo $this->Html->script('Admin.mootools-more-1.4.0.1');
-	echo $this->Html->script('Admin.titon-0.4.0.min');
+	echo $this->Html->script('//cdnjs.cloudflare.com/ajax/libs/mootools/1.4.5/mootools-core-full-nocompat-yc.js');
+	echo $this->Html->script('//cdnjs.cloudflare.com/ajax/libs/mootools-more/1.4.0.1/mootools-more-yui-compressed.min.js');
+	echo $this->Html->script('Admin.titon.min');
 	echo $this->Html->script('Forum.forum');
 
 	if ($this->params['controller'] === 'forum') {
@@ -48,8 +48,8 @@ echo $this->OpenGraph->html(array('xmlns' => 'http://www.w3.org/1999/xhtml')); ?
 
 		<footer class="foot">
 			<div class="copyright">
-				<?php printf(__d('admin', 'Powered by the %s v%s'), $this->Html->link('Forum Plugin', 'http://milesj.me/code/cakephp/forum'), mb_strtoupper($config['Forum']['version'])); ?><br>
-				<?php printf(__d('admin', 'Created by %s'), $this->Html->link('Miles Johnson', 'http://milesj.me')); ?>
+				<?php printf(__d('forum', 'Powered by the %s v%s'), $this->Html->link('Forum Plugin', 'http://milesj.me/code/cakephp/forum'), mb_strtoupper($config['Forum']['version'])); ?><br>
+				<?php printf(__d('forum', 'Created by %s'), $this->Html->link('Miles Johnson', 'http://milesj.me')); ?>
 			</div>
 
 			<?php if (!CakePlugin::loaded('DebugKit')) {

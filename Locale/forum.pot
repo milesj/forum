@@ -1,74 +1,69 @@
-# LANGUAGE translation of CakePHP Application
-# Copyright YEAR NAME <EMAIL@ADDRESS>
-#
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2013-03-24 02:13+0000\n"
+"Project-Id-Version: Forum Plugin\n"
+"POT-Creation-Date: 2013-08-15 06:55+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
-"Last-Translator: NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"Last-Translator: Miles Johnson <mileswjohnson@gmail.com>\n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"Plural-Forms: nplurals=2; plural=n == 1 ? 0 : 1;\n"
 
 #: /Config/bootstrap.php:40
-#: /View/Forum/index.ctp:18
-#: /View/Search/index.ctp:47
-#: /View/Stations/view.ctp:31
+#: /View/Elements/navigation.ctp:22
+#: /View/Forum/index.ctp:15
+#: /View/Layouts/forum.ctp:41
+#: /View/Search/index.ctp:33
+#: /View/Stations/view.ctp:34
 #: /View/Stations/rss/view.ctp:4
-#: /View/Topics/add.ctp:20
-#: /View/Topics/edit.ctp:22
+#: /View/Topics/add.ctp:17
+#: /View/Topics/edit.ctp:20
 msgid "Forum"
 msgstr ""
 
-#: /Config/bootstrap.php:43
-msgid "What framework does this plugin run on?"
-msgstr ""
-
-#: /Console/Command/SubscriptionShell.php:96
+#: /Console/Command/SubscriptionShell.php:91
 msgid "%s [Subscriptions]"
 msgstr ""
 
-#: /Console/Command/SubscriptionShell.php:182
+#: /Console/Command/SubscriptionShell.php:190
 msgid "Hello %s,"
 msgstr ""
 
-#: /Console/Command/SubscriptionShell.php:183
+#: /Console/Command/SubscriptionShell.php:191
 msgid "You have asked to be notified for any new activity within %s. Below you will find an update on all your forum subscriptions. The last subscription update was sent on %s."
 msgstr ""
 
-#: /Console/Command/SubscriptionShell.php:184
+#: /Console/Command/SubscriptionShell.php:192
 msgid "You may unsubscribe from a forum or topic by clicking the \"Unsubscribe\" button found within the respective forum or topic."
 msgstr ""
 
-#: /Console/Command/SubscriptionShell.php:189
+#: /Console/Command/SubscriptionShell.php:197
 msgid "Forum Subscriptions"
 msgstr ""
 
-#: /Console/Command/SubscriptionShell.php:191
+#: /Console/Command/SubscriptionShell.php:199
 msgid "The following topics have been created."
 msgstr ""
 
-#: /Console/Command/SubscriptionShell.php:198
+#: /Console/Command/SubscriptionShell.php:206
 msgid "%s [%s] %s"
 msgstr ""
 
-#: /Console/Command/SubscriptionShell.php:212
+#: /Console/Command/SubscriptionShell.php:220
 msgid "Topic Subscriptions"
 msgstr ""
 
-#: /Console/Command/SubscriptionShell.php:214
+#: /Console/Command/SubscriptionShell.php:222
 msgid "The following topics have seen recent post activity."
 msgstr ""
 
-#: /Console/Command/SubscriptionShell.php:221
+#: /Console/Command/SubscriptionShell.php:229
 msgid "%s [%s] %d new posts"
 msgstr ""
 
-#: /Controller/PostsController.php:136
+#: /Controller/PostsController.php:141
 msgid "You have successfully reported this post! A moderator will review this post and take the necessary action."
 msgstr ""
 
@@ -88,38 +83,38 @@ msgstr ""
 msgid "Total views"
 msgstr ""
 
-#: /Controller/StationsController.php:121
+#: /Controller/StationsController.php:122
 msgid "A total of %d topic(s) have been permanently deleted"
 msgstr ""
 
-#: /Controller/StationsController.php:125
+#: /Controller/StationsController.php:126
 msgid "A total of %d topic(s) have been locked to the public"
 msgstr ""
 
-#: /Controller/StationsController.php:129
+#: /Controller/StationsController.php:130
 msgid "A total of %d topic(s) have been re-opened"
 msgstr ""
 
-#: /Controller/StationsController.php:133
+#: /Controller/StationsController.php:134
 msgid "A total of %d topic(s) have been moved to another forum category"
 msgstr ""
 
-#: /Controller/StationsController.php:159
+#: /Controller/StationsController.php:160
 #: /Controller/TopicsController.php:228
 msgid "Failed To Subscribe"
 msgstr ""
 
-#: /Controller/StationsController.php:163
+#: /Controller/StationsController.php:164
 #: /Controller/TopicsController.php:232
 msgid "Subscribed"
 msgstr ""
 
-#: /Controller/StationsController.php:179
+#: /Controller/StationsController.php:180
 #: /Controller/TopicsController.php:248
 msgid "Failed To Unsubscribe"
 msgstr ""
 
-#: /Controller/StationsController.php:183
+#: /Controller/StationsController.php:184
 #: /Controller/TopicsController.php:252
 msgid "Unsubscribed"
 msgstr ""
@@ -136,20 +131,12 @@ msgstr ""
 msgid "Create Topic"
 msgstr ""
 
-#: /Controller/TopicsController.php:173
+#: /Controller/TopicsController.php:169
 msgid "You have successfully reported this topic! A moderator will review this topic and take the necessary action."
 msgstr ""
 
 #: /Controller/TopicsController.php:283
 msgid "A total of %d post(s) have been permanently deleted"
-msgstr ""
-
-#: /View/Elements/copyright.ctp:3
-msgid "Powered by the %s v%s"
-msgstr ""
-
-#: /View/Elements/copyright.ctp:4
-msgid "Created by %s"
 msgstr ""
 
 #: /View/Elements/login.ctp:6
@@ -165,38 +152,45 @@ msgid "Remember Me?"
 msgstr ""
 
 #: /View/Elements/login.ctp:9
-#: /View/Elements/navigation.ctp:17
+#: /View/Elements/navigation.ctp:10
 msgid "Login"
 msgstr ""
 
-#: /View/Elements/navigation.ctp:10
-msgid "Logout"
-msgstr ""
-
-#: /View/Elements/navigation.ctp:11
+#: /View/Elements/navigation.ctp:6
 msgid "View New Posts"
 msgstr ""
 
-#: /View/Elements/navigation.ctp:14
-msgid "Forgot Password"
+#: /View/Elements/navigation.ctp:7
+msgid "Logout"
 msgstr ""
 
-#: /View/Elements/navigation.ctp:20
+#: /View/Elements/navigation.ctp:13
 msgid "Sign Up"
 msgstr ""
 
-#: /View/Elements/navigation.ctp:35
-msgid "Welcome %s"
+#: /View/Elements/navigation.ctp:17
+msgid "Forgot Password"
 msgstr ""
 
-#: /View/Elements/pagination.ctp:7
-msgid "Displaying %start%-%end% of %count%"
+#: /View/Elements/navigation.ctp:28
+msgid "Forums"
 msgstr ""
 
-#: /View/Elements/search.ctp:5
-#: /View/Layouts/forum.ctp:42
+#: /View/Elements/navigation.ctp:29
 #: /View/Search/index.ctp:3;6
 msgid "Search"
+msgstr ""
+
+#: /View/Elements/navigation.ctp:30
+msgid "Rules"
+msgstr ""
+
+#: /View/Elements/navigation.ctp:31
+msgid "Help"
+msgstr ""
+
+#: /View/Elements/navigation.ctp:34
+msgid "Admin"
 msgstr ""
 
 #: /View/Elements/tiles/forum_controls.ctp:7
@@ -211,43 +205,49 @@ msgstr ""
 
 #: /View/Elements/tiles/forum_controls.ctp:14
 #: /View/Elements/tiles/topic_controls.ctp:14
-#: /View/Stations/moderate.ctp:8;15
-#: /View/Topics/moderate.ctp:9;18
+#: /View/Stations/moderate.ctp:7;14
+#: /View/Topics/moderate.ctp:8;17
 msgid "Moderate"
 msgstr ""
 
 #: /View/Elements/tiles/forum_controls.ctp:26
 #: /View/Elements/tiles/topic_controls.ctp:29
-#: /View/Topics/view.ctp:20
+#: /View/Helper/ForumHelper.php:90;261
+#: /View/Topics/view.ctp:21
 msgid "Closed"
 msgstr ""
 
-#: /View/Elements/tiles/forum_row.ctp:21
-#: /View/Stations/view.ctp:24
+#: /View/Elements/tiles/forum_row.ctp:24
+#: /View/Stations/view.ctp:27
 msgid "Sub-Forums"
 msgstr ""
 
-#: /View/Elements/tiles/forum_row.ctp:37
+#: /View/Elements/tiles/forum_row.ctp:40
 #: /View/Elements/tiles/topic_row.ctp:45
 msgid "by"
 msgstr ""
 
-#: /View/Elements/tiles/forum_row.ctp:40
+#: /View/Elements/tiles/forum_row.ctp:43
 #: /View/Elements/tiles/topic_row.ctp:50
 msgid "No latest activity to display"
 msgstr ""
 
 #: /View/Elements/tiles/topic_controls.ctp:27
-#: /View/Posts/add.ctp:9;12;26
-#: /View/Topics/view.ctp:225
+#: /View/Posts/add.ctp:8;11;19
+#: /View/Topics/view.ctp:245
 msgid "Post Reply"
+msgstr ""
+
+#: /View/Elements/tiles/topic_row.ctp:13
+#: /View/Topics/view.ctp:33
+msgid "Poll"
 msgstr ""
 
 #: /View/Elements/tiles/topic_row.ctp:19
 msgid "Pages"
 msgstr ""
 
-#: /View/Forum/help.ctp:3;6
+#: /View/Forum/help.ctp:2;5
 msgid "Help Desk"
 msgstr ""
 
@@ -367,51 +367,46 @@ msgstr ""
 msgid "If you have additional questions and need further help, please contact us at %s."
 msgstr ""
 
-#: /View/Forum/index.ctp:3
-#: /View/Layouts/forum.ctp:41
-msgid "Forums"
-msgstr ""
-
-#: /View/Forum/index.ctp:19
-#: /View/Stations/view.ctp:32
+#: /View/Forum/index.ctp:16
+#: /View/Stations/view.ctp:35;82
 msgid "Topics"
 msgstr ""
 
-#: /View/Forum/index.ctp:20
-#: /View/Search/index.ctp:50
+#: /View/Forum/index.ctp:17
+#: /View/Search/index.ctp:36
 #: /View/Stations/moderate.ctp:32
-#: /View/Stations/view.ctp:33;67
+#: /View/Stations/view.ctp:36;66
 msgid "Posts"
 msgstr ""
 
-#: /View/Forum/index.ctp:21
-#: /View/Search/index.ctp:52
+#: /View/Forum/index.ctp:18
+#: /View/Search/index.ctp:38
 #: /View/Stations/moderate.ctp:34
-#: /View/Stations/view.ctp:34;69
+#: /View/Stations/view.ctp:37;68
 msgid "Activity"
 msgstr ""
 
-#: /View/Forum/index.ctp:36
+#: /View/Forum/index.ctp:33
 msgid "There are no categories within this forum"
 msgstr ""
 
-#: /View/Forum/index.ctp:52
+#: /View/Forum/index.ctp:49
 msgid "Statistics"
 msgstr ""
 
-#: /View/Forum/index.ctp:52
+#: /View/Forum/index.ctp:49
 msgid "%d topics, %d posts, and %d users"
 msgstr ""
 
-#: /View/Forum/index.ctp:57
+#: /View/Forum/index.ctp:54
 msgid "Newest User"
 msgstr ""
 
-#: /View/Forum/index.ctp:69
+#: /View/Forum/index.ctp:66
 msgid "Whos Online"
 msgstr ""
 
-#: /View/Forum/rules.ctp:3;6
+#: /View/Forum/rules.ctp:2;5
 msgid "Rules and Regulations"
 msgstr ""
 
@@ -519,52 +514,64 @@ msgstr ""
 msgid "The latest 10 topics out of all forums"
 msgstr ""
 
-#: /View/Layouts/forum.ctp:15
+#: /View/Helper/ForumHelper.php:89;259;260
+msgid "No New Posts"
+msgstr ""
+
+#: /View/Helper/ForumHelper.php:91;262;263
+msgid "New Posts"
+msgstr ""
+
+#: /View/Helper/ForumHelper.php:264
+msgid "Sticky"
+msgstr ""
+
+#: /View/Helper/ForumHelper.php:265
+msgid "Important"
+msgstr ""
+
+#: /View/Helper/ForumHelper.php:266
+msgid "Announcement"
+msgstr ""
+
+#: /View/Layouts/forum.ctp:18
 msgid "RSS Feed - Latest Topics"
 msgstr ""
 
-#: /View/Layouts/forum.ctp:17
+#: /View/Layouts/forum.ctp:20
 msgid "RSS Feed - Content Review"
 msgstr ""
 
-#: /View/Layouts/forum.ctp:40
-msgid "Home"
+#: /View/Layouts/forum.ctp:51
+msgid "Powered by the %s v%s"
 msgstr ""
 
-#: /View/Layouts/forum.ctp:43
-msgid "Rules"
+#: /View/Layouts/forum.ctp:52
+msgid "Created by %s"
 msgstr ""
 
-#: /View/Layouts/forum.ctp:44
-msgid "Help"
-msgstr ""
-
-#: /View/Layouts/forum.ctp:47
-msgid "Admin"
-msgstr ""
-
-#: /View/Posts/add.ctp:20
-#: /View/Posts/edit.ctp:20
-#: /View/Topics/add.ctp:43
-#: /View/Topics/edit.ctp:64
+#: /View/Posts/add.ctp:17
+#: /View/Posts/edit.ctp:17
+#: /View/Topics/add.ctp:53
+#: /View/Topics/edit.ctp:75
 msgid "Content"
 msgstr ""
 
-#: /View/Posts/add.ctp:33
+#: /View/Posts/add.ctp:26
 msgid "Topic Review - Last 10 Replies"
 msgstr ""
 
-#: /View/Posts/edit.ctp:9;12
-#: /View/Topics/view.ctp:133
+#: /View/Posts/edit.ctp:8;11
+#: /View/Topics/view.ctp:136
 msgid "Edit Post"
 msgstr ""
 
-#: /View/Posts/edit.ctp:26
+#: /View/Posts/edit.ctp:19
 msgid "Update Post"
 msgstr ""
 
-#: /View/Posts/report.ctp:9;12
-#: /View/Topics/view.ctp:137
+#: /View/Posts/report.ctp:8;11
+#: /View/Topics/view.ctp:140
 msgid "Report Post"
 msgstr ""
 
@@ -572,75 +579,75 @@ msgstr ""
 msgid "Are you sure you want to report the post (below) in the topic %s? If so, please add a comment as to why you are reporting it, 255 max characters."
 msgstr ""
 
-#: /View/Posts/report.ctp:25
+#: /View/Posts/report.ctp:22
 #: /View/Topics/moderate.ctp:32
 msgid "Post"
 msgstr ""
 
-#: /View/Posts/report.ctp:27
-#: /View/Topics/report.ctp:26
+#: /View/Posts/report.ctp:24
+#: /View/Topics/report.ctp:23
 msgid "Comment"
 msgstr ""
 
-#: /View/Posts/report.ctp:32
-#: /View/Topics/report.ctp:31
+#: /View/Posts/report.ctp:25
+#: /View/Topics/report.ctp:24
 msgid "Report"
 msgstr ""
 
+#: /View/Search/index.ctp:14
+msgid "With keywords"
+msgstr ""
+
+#: /View/Search/index.ctp:15
+msgid "in forum"
+msgstr ""
+
 #: /View/Search/index.ctp:16
-msgid "Keywords"
+msgid "by user"
 msgstr ""
 
-#: /View/Search/index.ctp:19
-msgid "Within Forum Category"
+#: /View/Search/index.ctp:17
+msgid "order by"
 msgstr ""
 
-#: /View/Search/index.ctp:22
-msgid "Order By"
-msgstr ""
-
-#: /View/Search/index.ctp:25
-msgid "By User (Username)"
-msgstr ""
-
-#: /View/Search/index.ctp:34
+#: /View/Search/index.ctp:21
 msgid "Search Topics"
 msgstr ""
 
-#: /View/Search/index.ctp:46
+#: /View/Search/index.ctp:32
 #: /View/Stations/moderate.ctp:28
-#: /View/Stations/view.ctp:64
+#: /View/Stations/view.ctp:63
 #: /View/Topics/rss/view.ctp:4
 msgid "Topic"
 msgstr ""
 
-#: /View/Search/index.ctp:48
+#: /View/Search/index.ctp:34
 #: /View/Stations/moderate.ctp:30
-#: /View/Stations/view.ctp:65
+#: /View/Stations/view.ctp:64
 msgid "Author"
 msgstr ""
 
-#: /View/Search/index.ctp:49
+#: /View/Search/index.ctp:35
 #: /View/Stations/moderate.ctp:31
-#: /View/Stations/view.ctp:66
+#: /View/Stations/view.ctp:65
 msgid "Created"
 msgstr ""
 
-#: /View/Search/index.ctp:51
+#: /View/Search/index.ctp:37
 #: /View/Stations/moderate.ctp:33
-#: /View/Stations/view.ctp:68
+#: /View/Stations/view.ctp:67
 msgid "Views"
 msgstr ""
 
-#: /View/Search/index.ctp:60
+#: /View/Search/index.ctp:46
 msgid "No results were found, please refine your search criteria"
 msgstr ""
 
-#: /View/Stations/admin_delete.ctp:25
+#: /View/Stations/admin_delete.ctp:28
 msgid "Move Topics To"
 msgstr ""
 
-#: /View/Stations/admin_delete.ctp:34
+#: /View/Stations/admin_delete.ctp:37
 msgid "Move Forums To"
 msgstr ""
 
@@ -649,13 +656,13 @@ msgid "Return to Forum"
 msgstr ""
 
 #: /View/Stations/moderate.ctp:29
-#: /View/Topics/add.ctp:23
-#: /View/Topics/edit.ctp:23
+#: /View/Topics/add.ctp:20
+#: /View/Topics/edit.ctp:21
 msgid "Status"
 msgstr ""
 
 #: /View/Stations/moderate.ctp:50
-#: /View/Stations/view.ctp:103
+#: /View/Stations/view.ctp:97
 msgid "There are no topics within this forum"
 msgstr ""
 
@@ -689,110 +696,112 @@ msgstr ""
 msgid "Process"
 msgstr ""
 
-#: /View/Stations/view.ctp:77
-msgid "Important Topics"
-msgstr ""
-
-#: /View/Stations/view.ctp:88
-msgid "Regular Topics"
-msgstr ""
-
-#: /View/Stations/view.ctp:131
-#: /View/Topics/view.ctp:157
+#: /View/Stations/view.ctp:121
+#: /View/Topics/view.ctp:182
 msgid "Total Topics"
 msgstr ""
 
-#: /View/Stations/view.ctp:134
+#: /View/Stations/view.ctp:124
 msgid "Increases Post Count"
 msgstr ""
 
-#: /View/Stations/view.ctp:135;138;141;148;151;154
+#: /View/Stations/view.ctp:125;128;131;138;141;144
 msgid "Yes"
 msgstr ""
 
-#: /View/Stations/view.ctp:135;138;141;148;151;154
-msgid "No"
-msgstr ""
-
-#: /View/Stations/view.ctp:137
+#: /View/Stations/view.ctp:127
 msgid "Can Read Topics"
 msgstr ""
 
-#: /View/Stations/view.ctp:140
+#: /View/Stations/view.ctp:128;131;138;141;144
+msgid "No"
+msgstr ""
+
+#: /View/Stations/view.ctp:130
 msgid "Can Create Topics"
 msgstr ""
 
-#: /View/Stations/view.ctp:144
-#: /View/Topics/view.ctp:161
+#: /View/Stations/view.ctp:134
+#: /View/Topics/view.ctp:186
 msgid "Total Posts"
 msgstr ""
 
-#: /View/Stations/view.ctp:147
+#: /View/Stations/view.ctp:137
 msgid "Auto-Lock Topics"
 msgstr ""
 
-#: /View/Stations/view.ctp:150
+#: /View/Stations/view.ctp:140
 msgid "Can Reply"
 msgstr ""
 
-#: /View/Stations/view.ctp:153
+#: /View/Stations/view.ctp:143
 msgid "Can Create Polls"
 msgstr ""
 
-#: /View/Stations/view.ctp:158
+#: /View/Stations/view.ctp:148
 msgid "Moderators"
 msgstr ""
 
-#: /View/Topics/add.ctp:19
-#: /View/Topics/edit.ctp:19
+#: /View/Topics/add.ctp:16
+#: /View/Topics/edit.ctp:17
 msgid "Title"
 msgstr ""
 
-#: /View/Topics/add.ctp:20
-#: /View/Topics/edit.ctp:22
+#: /View/Topics/add.ctp:17
+#: /View/Topics/edit.ctp:20
 msgid "Select a Forum"
 msgstr ""
 
-#: /View/Topics/add.ctp:24
-#: /View/Topics/edit.ctp:24
+#: /View/Topics/add.ctp:21
+#: /View/Topics/edit.ctp:22
 msgid "Type"
 msgstr ""
 
-#: /View/Topics/add.ctp:30
-#: /View/Topics/edit.ctp:32
+#: /View/Topics/add.ctp:27
+#: /View/Topics/edit.ctp:31
 msgid "Poll Options"
 msgstr ""
 
-#: /View/Topics/add.ctp:31
+#: /View/Topics/add.ctp:28
 msgid "One option per line. Max 10 options."
 msgstr ""
 
-#: /View/Topics/add.ctp:36
-#: /View/Topics/edit.ctp:54
+#: /View/Topics/add.ctp:33
+#: /View/Topics/edit.ctp:53
 msgid "Expiration Date"
 msgstr ""
 
-#: /View/Topics/add.ctp:37
-#: /View/Topics/edit.ctp:55
+#: /View/Topics/add.ctp:34
+#: /View/Topics/edit.ctp:54
 msgid "How many days till expiration? Leave blank to last forever."
 msgstr ""
 
-#: /View/Topics/edit.ctp:9;12;74
-#: /View/Topics/view.ctp:123
+#: /View/Topics/add.ctp:44
+#: /View/Topics/edit.ctp:65
+msgid "Excerpt"
+msgstr ""
+
+#: /View/Topics/add.ctp:48
+#: /View/Topics/edit.ctp:69
+msgid "%s characters remaining"
+msgstr ""
+
+#: /View/Topics/edit.ctp:8;11;81
+#: /View/Topics/view.ctp:126
 msgid "Edit Topic"
 msgstr ""
 
-#: /View/Topics/edit.ctp:45
+#: /View/Topics/edit.ctp:44
 msgid "Delete?"
 msgstr ""
 
 #: /View/Topics/moderate.ctp:13
-#: /View/Topics/view.ctp:127
+#: /View/Topics/view.ctp:130
 msgid "Delete Topic"
 msgstr ""
 
 #: /View/Topics/moderate.ctp:13
-#: /View/Topics/view.ctp:127;134
+#: /View/Topics/view.ctp:130;137
 msgid "Are you sure you want to delete?"
 msgstr ""
 
@@ -812,8 +821,8 @@ msgstr ""
 msgid "Delete Post(s)"
 msgstr ""
 
-#: /View/Topics/report.ctp:9;12
-#: /View/Topics/view.ctp:130
+#: /View/Topics/report.ctp:8;11
+#: /View/Topics/view.ctp:133
 msgid "Report Topic"
 msgstr ""
 
@@ -821,58 +830,62 @@ msgstr ""
 msgid "Are you sure you want to report the topic %s? If so, please add a comment as to why you are reporting it, 255 max characters."
 msgstr ""
 
-#: /View/Topics/view.ctp:64
+#: /View/Topics/view.ctp:62
 msgid "Voting on this poll has been closed"
 msgstr ""
 
-#: /View/Topics/view.ctp:66
+#: /View/Topics/view.ctp:64
 msgid "Vote"
 msgstr ""
 
-#: /View/Topics/view.ctp:69
+#: /View/Topics/view.ctp:67
 msgid "Please login to vote!"
 msgstr ""
 
-#: /View/Topics/view.ctp:85
+#: /View/Topics/view.ctp:83
 msgid "%d votes"
 msgstr ""
 
-#: /View/Topics/view.ctp:88
+#: /View/Topics/view.ctp:86
 msgid "Your Vote"
 msgstr ""
 
-#: /View/Topics/view.ctp:134
+#: /View/Topics/view.ctp:137
 msgid "Delete Post"
 msgstr ""
 
-#: /View/Topics/view.ctp:141
+#: /View/Topics/view.ctp:144
 msgid "Quote"
 msgstr ""
 
-#: /View/Topics/view.ctp:193
+#: /View/Topics/view.ctp:155
+msgid "Rate Up"
+msgstr ""
+
+#: /View/Topics/view.ctp:165
+msgid "Rate Down"
+msgstr ""
+
+#: /View/Topics/view.ctp:195
+msgid "This post has been buried."
+msgstr ""
+
+#: /View/Topics/view.ctp:196
+msgid "View the buried post?"
+msgstr ""
+
+#: /View/Topics/view.ctp:231
 msgid "Quick Reply"
 msgstr ""
 
-#: /View/Topics/view.ctp:205
-msgid "Message"
-msgstr ""
-
-#: /View/Topics/view.ctp:207
-msgid "Advanced Reply"
-msgstr ""
-
-#: /View/Topics/view.ctp:208
-msgid "BBCode Enabled"
-msgstr ""
-
-# Forum
+#: Forum
 msgid "forum.status.0"
 msgstr "Hidden"
 
 msgid "forum.status.1"
 msgstr "Visible"
 
-# Topic
+#: Topic
 msgid "topic.status.0"
 msgstr "Closed"
 
@@ -891,7 +904,7 @@ msgstr "Important"
 msgid "topic.type.3"
 msgstr "Announcement"
 
-# Controllers
+#: Controllers
 msgid "Not Found"
 msgstr ""
 

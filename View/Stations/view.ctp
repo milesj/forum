@@ -8,7 +8,9 @@ if (!empty($forum['Parent']['slug'])) {
 $this->Breadcrumb->add($forum['Forum']['title'], array('controller' => 'stations', 'action' => 'view', $forum['Forum']['slug'])); ?>
 
 <div class="title">
-	<?php echo $this->element('tiles/forum_controls', array('forum' => $forum)); ?>
+	<?php if ($forum['Forum']['parent_id']) {
+		echo $this->element('tiles/forum_controls', array('forum' => $forum));
+	} ?>
 
 	<h2><?php echo h($forum['Forum']['title']); ?></h2>
 

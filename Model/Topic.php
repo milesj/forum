@@ -171,7 +171,10 @@ class Topic extends ForumAppModel {
 	 */
 	public $admin = array(
 		'iconClass' => 'icon-comment',
-		'editorFields' => array('excerpt')
+		'editorFields' => array('excerpt'),
+		'paginate' => array(
+			'order' => array('Topic.id' => 'DESC')
+		)
 	);
 
 	/**
