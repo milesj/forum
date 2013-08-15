@@ -14,7 +14,7 @@
 	"require": {
 		"php": ">=5.3.0",
 		"ext-mbstring": "*",
-		"mjohnson/admin": "*",
+		"mjohnson/admin": "~1.1",
 		"mjohnson/utility": "~1.5",
 		"mjohnson/decoda": "6.*",
 		"titon/utility": "*",
