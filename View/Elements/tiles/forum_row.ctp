@@ -34,7 +34,7 @@ if (isset($forum['Children'])) {
 			echo $this->Html->link($forum['LastTopic']['title'], array('controller' => 'topics', 'action' => 'view', $forum['LastTopic']['slug'])) . ' ';
 			echo $this->Html->link('<span class="icon-external-link"></span>', array('controller' => 'topics', 'action' => 'view', $forum['LastTopic']['slug'], 'page' => $forum['LastTopic']['page_count'], '#' => 'post-' . $forum['lastPost_id']), array('escape' => false)); ?><br>
 
-			<em><?php echo $this->Time->timeAgoInWords($lastTime, array('userOffset' => $this->Forum->timezone())); ?></em>
+			<em><?php echo $this->Time->timeAgoInWords($lastTime, array('timezone' => $this->Forum->timezone())); ?></em>
 
 			<?php if (!empty($forum['LastUser']['id'])) { ?>
 				<span class="text-muted"><?php echo __d('forum', 'by'); ?> <?php echo $this->Html->link($forum['LastUser'][$userFields['username']], $this->Forum->profileUrl($forum['LastUser'])); ?></span>

@@ -112,13 +112,17 @@ $canReply = ($user && $topic['Topic']['status'] && $this->Forum->hasAccess('Foru
 
 					<tr class="<?php if ($isBuried) echo 'is-buried'; ?>" id="post-<?php echo $post_id; ?>">
 						<td class="post-time">
-							<?php echo $this->Time->niceShort($post['Post']['created'], $this->Forum->timezone()); ?>
+							<?php echo $this->Html->tag('time',
+								$this->Time->timeAgoInWords($post['Post']['created'], array('timezone' => $this->Forum->timezone())),
+								array('class' => 'js-tooltip', 'data-tooltip' => $post['Post']['created'], 'datetime' => $post['Post']['created'])
+							); ?>
 						</td>
 						<td>
-							<?php if ($user) { ?>
-								<div class="post-actions">
-									<?php
-									$links = array();
+							<div class="post-actions">
+								<?php
+								$links = array();
+
+								if ($user) {
 									$isMod = $this->Forum->isMod($topic['Forum']['id']);
 
 									if ($topic['Topic']['firstPost_id'] == $post_id) {
@@ -143,13 +147,17 @@ $canReply = ($user && $topic['Topic']['status'] && $this->Forum->hasAccess('Foru
 									if ($canReply) {
 										$links[] = $this->Html->link('<span class="icon-quote-left"></span>', array('controller' => 'posts', 'action' => 'add', $topic['Topic']['slug'], $post_id), array('escape' => false, 'class' => 'js-tooltip', 'data-tooltip' => __d('forum', 'Quote')));
 									}
+								}
 
-									if ($links) {
-										echo implode(' ', $links);
-									} ?>
-								</div>
+								$links[] = $this->Html->link('<span class="icon-link"></span>', '#post-' . $post_id, array('escape' => false, 'class' => 'js-tooltip', 'data-tooltip' => __d('forum', 'Link To This')));
 
-								<?php if ($settings['enablePostRating'] && (!$hasRated || $settings['showRatingScore'])) { ?>
+								if ($links) {
+									echo implode(' ', $links);
+								} ?>
+							</div>
+
+							<?php if ($user) {
+								if ($settings['enablePostRating'] && (!$hasRated || $settings['showRatingScore'])) { ?>
 									<div id="post-ratings-<?php echo $post_id; ?>" class="post-ratings<?php if ($hasRated) echo ' has-rated'; ?>">
 										<?php if (!$hasRated) { ?>
 											<a href="javascript:;" onclick="return Forum.ratePost(<?php echo $post_id; ?>, 'up');" class="rate-up js-tooltip" data-tooltip="<?php echo __d('forum', 'Rate Up'); ?>">

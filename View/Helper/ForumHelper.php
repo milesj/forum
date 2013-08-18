@@ -174,7 +174,7 @@ class ForumHelper extends AppHelper {
 	 * @return bool
 	 */
 	public function isMod($forum_id) {
-		return ($this->Admin->isSuper() || in_array($forum_id, $this->Session->read('Forum.moderates')));
+		return ($this->Admin->isSuper() || in_array($forum_id, (array) $this->Session->read('Forum.moderates')));
 	}
 
 	/**

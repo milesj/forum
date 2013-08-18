@@ -28,7 +28,7 @@ $this->Breadcrumb->add($forum['Forum']['title'], array('controller' => 'stations
 			</div>
 
 			<div class="panel-body">
-				<table class="table">
+				<table class="table table--hover">
 					<thead>
 						<tr>
 							<th colspan="2"><?php echo __d('forum', 'Forum'); ?></th>

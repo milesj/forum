@@ -39,7 +39,7 @@ $columns = isset($columns) ? $columns : array(); ?>
 	</td>
 	<td class="col-activity">
 		<?php if (!empty($topic['LastPost']['id'])) {
-			echo $this->Time->timeAgoInWords($topic['LastPost']['created'], array('userOffset' => $this->Forum->timezone())); ?>
+			echo $this->Time->timeAgoInWords($topic['LastPost']['created'], array('timezone' => $this->Forum->timezone())); ?>
 
 			<?php if (!empty($topic['LastUser']['id'])) { ?>
 				<span class="text-muted"><?php echo __d('forum', 'by'); ?> <?php echo $this->Html->link($topic['LastUser'][$userFields['username']], $this->Forum->profileUrl($topic['LastUser'])); ?></span>
