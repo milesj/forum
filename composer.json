@@ -21,6 +21,6 @@
 		"composer/installers": "*"
 	},
 	"support": {
-		"source": "https://github.com/milesj/Forum"
+		"source": "https://github.com/milesj/forum"
 	}
 }
