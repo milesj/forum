@@ -6,11 +6,11 @@ A fully robust and powerful CakePHP forum plugin. Integrates with an external us
 
 * PHP 5.3.0
 	* Multibyte
-	* Decoda - https://github.com/milesj/Decoda
-	* Titon\Utility - https://github.com/titon/Utility
+	* Decoda - https://github.com/milesj/decoda
+	* Titon\Utility - https://github.com/titon/utility
 * CakePHP 2
-	* Admin Plugin - https://github.com/milesj/Admin
-	* Utility Plugin - https://github.com/milesj/Utility
+	* Admin Plugin - https://github.com/milesj/admin
+	* Utility Plugin - https://github.com/milesj/utility
 * Composer
 
 ## Compatibility ##
