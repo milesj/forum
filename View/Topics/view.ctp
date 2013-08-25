@@ -77,7 +77,9 @@ $canReply = ($user && $topic['Topic']['status'] && $this->Forum->hasAccess('Foru
 								<b><?php echo $option['option']; ?></b>
 							</td>
 							<td style="width: 50%">
-								<div class="progress-bar" style="width: <?php echo $option['percentage']; ?>%"></div>
+								<div class="progress">
+									<div class="progress-bar info" style="width: <?php echo $option['percentage']; ?>%"></div>
+								</div>
 							</td>
 							<td>
 								<?php echo sprintf(__d('forum', '%d votes'), number_format($option['poll_vote_count'])); ?> (<?php echo $option['percentage']; ?>%)

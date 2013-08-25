@@ -2,8 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Forum Plugin\n"
-"POT-Creation-Date: 2013-08-15 06:55+0000\n"
-"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
+"POT-Creation-Date: 2013-08-25 19:56+0000\n"
 "Last-Translator: Miles Johnson <mileswjohnson@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -234,7 +233,7 @@ msgstr ""
 
 #: /View/Elements/tiles/topic_controls.ctp:27
 #: /View/Posts/add.ctp:8;11;19
-#: /View/Topics/view.ctp:245
+#: /View/Topics/view.ctp:255
 msgid "Post Reply"
 msgstr ""
 
@@ -562,7 +561,7 @@ msgid "Topic Review - Last 10 Replies"
 msgstr ""
 
 #: /View/Posts/edit.ctp:8;11
-#: /View/Topics/view.ctp:136
+#: /View/Topics/view.ctp:142
 msgid "Edit Post"
 msgstr ""
 
@@ -571,7 +570,7 @@ msgid "Update Post"
 msgstr ""
 
 #: /View/Posts/report.ctp:8;11
-#: /View/Topics/view.ctp:140
+#: /View/Topics/view.ctp:146
 msgid "Report Post"
 msgstr ""
 
@@ -697,7 +696,7 @@ msgid "Process"
 msgstr ""
 
 #: /View/Stations/view.ctp:121
-#: /View/Topics/view.ctp:182
+#: /View/Topics/view.ctp:192
 msgid "Total Topics"
 msgstr ""
 
@@ -722,7 +721,7 @@ msgid "Can Create Topics"
 msgstr ""
 
 #: /View/Stations/view.ctp:134
-#: /View/Topics/view.ctp:186
+#: /View/Topics/view.ctp:196
 msgid "Total Posts"
 msgstr ""
 
@@ -787,7 +786,7 @@ msgid "%s characters remaining"
 msgstr ""
 
 #: /View/Topics/edit.ctp:8;11;81
-#: /View/Topics/view.ctp:126
+#: /View/Topics/view.ctp:132
 msgid "Edit Topic"
 msgstr ""
 
@@ -796,12 +795,12 @@ msgid "Delete?"
 msgstr ""
 
 #: /View/Topics/moderate.ctp:13
-#: /View/Topics/view.ctp:130
+#: /View/Topics/view.ctp:136
 msgid "Delete Topic"
 msgstr ""
 
 #: /View/Topics/moderate.ctp:13
-#: /View/Topics/view.ctp:130;137
+#: /View/Topics/view.ctp:136;143
 msgid "Are you sure you want to delete?"
 msgstr ""
 
@@ -822,7 +821,7 @@ msgid "Delete Post(s)"
 msgstr ""
 
 #: /View/Topics/report.ctp:8;11
-#: /View/Topics/view.ctp:133
+#: /View/Topics/view.ctp:139
 msgid "Report Topic"
 msgstr ""
 
@@ -842,39 +841,43 @@ msgstr ""
 msgid "Please login to vote!"
 msgstr ""
 
-#: /View/Topics/view.ctp:83
+#: /View/Topics/view.ctp:85
 msgid "%d votes"
 msgstr ""
 
-#: /View/Topics/view.ctp:86
+#: /View/Topics/view.ctp:88
 msgid "Your Vote"
 msgstr ""
 
-#: /View/Topics/view.ctp:137
+#: /View/Topics/view.ctp:143
 msgid "Delete Post"
 msgstr ""
 
-#: /View/Topics/view.ctp:144
+#: /View/Topics/view.ctp:150
 msgid "Quote"
 msgstr ""
 
-#: /View/Topics/view.ctp:155
-msgid "Rate Up"
+#: /View/Topics/view.ctp:154
+msgid "Link To This"
 msgstr ""
 
 #: /View/Topics/view.ctp:165
+msgid "Rate Up"
+msgstr ""
+
+#: /View/Topics/view.ctp:175
 msgid "Rate Down"
 msgstr ""
 
-#: /View/Topics/view.ctp:195
+#: /View/Topics/view.ctp:205
 msgid "This post has been buried."
 msgstr ""
 
-#: /View/Topics/view.ctp:196
+#: /View/Topics/view.ctp:206
 msgid "View the buried post?"
 msgstr ""
 
-#: /View/Topics/view.ctp:231
+#: /View/Topics/view.ctp:241
 msgid "Quick Reply"
 msgstr ""
 

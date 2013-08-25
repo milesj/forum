@@ -24,13 +24,14 @@ hr { margin: 1rem 0; border: 0; border-top: 1px solid #e5e5e5; }
 .mod-actions .field { margin-bottom: 0; vertical-align: middle; }
 .login form { text-align: center; }
 
-.progress-bar { height: 15px; background: #45c5eb; border-radius: .3rem; }
+.progress,
+.progress-bar { height: 20px; }
 
 .icon-external-link { font-size: .8em; }
 
 /*-------------------- Posts --------------------*/
 
-.post-time { text-align: right; font-size: .8rem; vertical-align: middle; }
+.post-time { text-align: right; font-size: .8rem; vertical-align: middle !important; }
 .post-actions { float: right; }
 .post-actions a { margin-left: 5px; }
 .post-ratings .rating { background: #fff; border: 1px solid #e5e5e5; padding: 0 5px; border-radius: .3rem; }

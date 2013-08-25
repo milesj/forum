@@ -1,11 +1,13 @@
 
 .decoda-editor { display: inline-block; }
-.decoda-editor .decoda-textarea textarea { width: 100% !important; }
+.decoda-editor .decoda-textarea textarea { width: 100% !important; padding: 5px; }
 
+.decoda-toolbars { font-size: 14px; }
 .decoda-toolbars button { background: none; border: 0; padding: 4px; pointer-events: auto !important; }
 .decoda-toolbars button:hover { background: #45c5eb; border-radius: 2px; }
 .decoda-toolbars .decoda-menu { box-shadow: 5px 5px rgba(0, 0, 0, .25); border: 1px solid #e5e5e5; top: 100%; background: #f8f8f8; width: 175px; }
 .decoda-toolbars .decoda-menu li:nth-child(odd) { background-color: #fbfbfb; }
+.decoda-toolbars .decoda-menu a { padding: .5rem; }
 .decoda-toolbars .decoda-menu a:hover { background-color: #45c5eb; color: #fff; }
 
 .decoda-preview { min-height: 100px; }
