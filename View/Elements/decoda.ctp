@@ -8,23 +8,23 @@ $this->Html->script('//cdnjs.cloudflare.com/ajax/libs/mootools-more/1.4.0.1/moot
 $this->Html->script('Utility.decoda.min', array('inline' => false)); ?>
 
 <script type="text/javascript">
-	$(function() {
-		var decoda = new Decoda('<?php echo $id; ?>', {
-			previewUrl: '/forum/posts/preview',
-			onInitialize: function() {
-				this.editor.getParent('div').addClass('input-decoda');
-			},
-			onSubmit: function() {
-				return this.clean();
-			},
-			onRenderToolbar: function(toolbar) {
-				toolbar.getElements('button').each(function(button) {
-					button.set('data-tooltip', button.get('title')).addClass('js-tooltip').removeProperty('title');
-				});
-			},
-			onRenderHelp: function(table) {
-				table.addClass('table');
-			}
-		}).defaults();
-	});
+    $(function() {
+        var decoda = new Decoda('<?php echo $id; ?>', {
+            previewUrl: '/forum/posts/preview',
+            onInitialize: function() {
+                this.editor.getParent('div').addClass('input-decoda');
+            },
+            onSubmit: function() {
+                return this.clean();
+            },
+            onRenderToolbar: function(toolbar) {
+                toolbar.getElements('button').each(function(button) {
+                    button.set('data-tooltip', button.get('title')).addClass('js-tooltip').removeProperty('title');
+                });
+            },
+            onRenderHelp: function(table) {
+                table.addClass('table');
+            }
+        }).defaults();
+    });
 </script>
