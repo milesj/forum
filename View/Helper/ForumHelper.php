@@ -52,9 +52,9 @@ class ForumHelper extends AppHelper {
 	 */
 	public function forumIcon($forum, array $options = array()) {
 		$options = $options + array(
-			'open' => 'icon-envelope-alt',
-			'closed' => 'icon-lock',
-			'new' => 'icon-envelope'
+			'open' => 'fa fa-envelope-o',
+			'closed' => 'fa fa-lock',
+			'new' => 'fa fa-envelope'
 		);
 		$icon = 'open';
 		$tooltip = '';
@@ -209,14 +209,14 @@ class ForumHelper extends AppHelper {
 	 */
 	public function topicIcon($topic, array $options = array()) {
 		$options = $options + array(
-			'open' => 'icon-comment-alt',
-			'open-hot' => 'icon-comments-alt',
-			'closed' => 'icon-lock',
-			'new' => 'icon-comment',
-			'new-hot' => 'icon-comments',
-			'sticky' => 'icon-question-sign',
-			'important' => 'icon-exclamation-sign',
-			'announcement' => 'icon-warning-sign'
+			'open' => 'fa fa-comment-o',
+			'open-hot' => 'fa fa-comments-o',
+			'closed' => 'fa fa-lock',
+			'new' => 'fa fa-comment',
+			'new-hot' => 'fa fa-comments',
+			'sticky' => 'fa fa-question-circle',
+			'important' => 'fa fa-exclamation-circle',
+			'announcement' => 'fa fa-warning'
 		);
 
 		$lastVisit = $this->Session->read('Forum.lastVisit');

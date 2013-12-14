@@ -129,29 +129,29 @@ $canReply = ($user && $topic['Topic']['status'] && $this->Forum->hasAccess('Foru
 
 									if ($topic['Topic']['firstPost_id'] == $post_id) {
 										if ($isMod || ($topic['Topic']['status'] && $user['id'] == $post['Post']['user_id'])) {
-											$links[] = $this->Html->link('<span class="icon-wrench"></span>', array('controller' => 'topics', 'action' => 'edit', $topic['Topic']['slug'], (!empty($topic['Poll']['id']) ? 'poll' : '')), array('escape' => false, 'class' => 'js-tooltip', 'data-tooltip' => __d('forum', 'Edit Topic')));
+											$links[] = $this->Html->link('<span class="fa fa-wrench"></span>', array('controller' => 'topics', 'action' => 'edit', $topic['Topic']['slug'], (!empty($topic['Poll']['id']) ? 'poll' : '')), array('escape' => false, 'class' => 'js-tooltip', 'data-tooltip' => __d('forum', 'Edit Topic')));
 										}
 
 										if ($isMod) {
-											$links[] = $this->Html->link('<span class="icon-remove"></span>', array('controller' => 'topics', 'action' => 'delete', $topic['Topic']['slug']), array('escape' => false, 'confirm' => __d('forum', 'Are you sure you want to delete?'), 'class' => 'js-tooltip', 'data-tooltip' => __d('forum', 'Delete Topic')));
+											$links[] = $this->Html->link('<span class="fa fa-times"></span>', array('controller' => 'topics', 'action' => 'delete', $topic['Topic']['slug']), array('escape' => false, 'confirm' => __d('forum', 'Are you sure you want to delete?'), 'class' => 'js-tooltip', 'data-tooltip' => __d('forum', 'Delete Topic')));
 										}
 
-										$links[] = $this->Html->link('<span class="icon-flag"></span>', array('controller' => 'topics', 'action' => 'report', $topic['Topic']['slug']), array('escape' => false, 'class' => 'js-tooltip', 'data-tooltip' => __d('forum', 'Report Topic')));
+										$links[] = $this->Html->link('<span class="fa fa-flag"></span>', array('controller' => 'topics', 'action' => 'report', $topic['Topic']['slug']), array('escape' => false, 'class' => 'js-tooltip', 'data-tooltip' => __d('forum', 'Report Topic')));
 									} else {
 										if ($isMod || ($topic['Topic']['status'] && $user['id'] == $post['Post']['user_id'])) {
-											$links[] = $this->Html->link('<span class="icon-wrench"></span>', array('controller' => 'posts', 'action' => 'edit', $post_id), array('escape' => false, 'class' => 'js-tooltip', 'data-tooltip' => __d('forum', 'Edit Post')));
-											$links[] = $this->Html->link('<span class="icon-remove"></span>', array('controller' => 'posts', 'action' => 'delete', $post_id), array('escape' => false, 'confirm' => __d('forum', 'Are you sure you want to delete?'), 'class' => 'js-tooltip', 'data-tooltip' => __d('forum', 'Delete Post')));
+											$links[] = $this->Html->link('<span class="fa fa-wrench"></span>', array('controller' => 'posts', 'action' => 'edit', $post_id), array('escape' => false, 'class' => 'js-tooltip', 'data-tooltip' => __d('forum', 'Edit Post')));
+											$links[] = $this->Html->link('<span class="fa fa-times"></span>', array('controller' => 'posts', 'action' => 'delete', $post_id), array('escape' => false, 'confirm' => __d('forum', 'Are you sure you want to delete?'), 'class' => 'js-tooltip', 'data-tooltip' => __d('forum', 'Delete Post')));
 										}
 
-										$links[] = $this->Html->link('<span class="icon-flag"></span>', array('controller' => 'posts', 'action' => 'report', $post_id), array('escape' => false, 'class' => 'js-tooltip', 'data-tooltip' => __d('forum', 'Report Post')));
+										$links[] = $this->Html->link('<span class="fa fa-flag"></span>', array('controller' => 'posts', 'action' => 'report', $post_id), array('escape' => false, 'class' => 'js-tooltip', 'data-tooltip' => __d('forum', 'Report Post')));
 									}
 
 									if ($canReply) {
-										$links[] = $this->Html->link('<span class="icon-quote-left"></span>', array('controller' => 'posts', 'action' => 'add', $topic['Topic']['slug'], $post_id), array('escape' => false, 'class' => 'js-tooltip', 'data-tooltip' => __d('forum', 'Quote')));
+										$links[] = $this->Html->link('<span class="fa fa-quote-left"></span>', array('controller' => 'posts', 'action' => 'add', $topic['Topic']['slug'], $post_id), array('escape' => false, 'class' => 'js-tooltip', 'data-tooltip' => __d('forum', 'Quote')));
 									}
 								}
 
-								$links[] = $this->Html->link('<span class="icon-link"></span>', '#post-' . $post_id, array('escape' => false, 'class' => 'js-tooltip', 'data-tooltip' => __d('forum', 'Link To This')));
+								$links[] = $this->Html->link('<span class="fa fa-link"></span>', '#post-' . $post_id, array('escape' => false, 'class' => 'js-tooltip', 'data-tooltip' => __d('forum', 'Link To This')));
 
 								if ($links) {
 									echo implode(' ', $links);
@@ -163,7 +163,7 @@ $canReply = ($user && $topic['Topic']['status'] && $this->Forum->hasAccess('Foru
 									<div id="post-ratings-<?php echo $post_id; ?>" class="post-ratings<?php if ($hasRated) echo ' has-rated'; ?>">
 										<?php if (!$hasRated) { ?>
 											<a href="javascript:;" onclick="return Forum.ratePost(<?php echo $post_id; ?>, 'up');" class="rate-up js-tooltip" data-tooltip="<?php echo __d('forum', 'Rate Up'); ?>">
-												<span class="icon-arrow-up"></span>
+												<span class="fa fa-arrow-up"></span>
 											</a>
 										<?php }
 
@@ -173,7 +173,7 @@ $canReply = ($user && $topic['Topic']['status'] && $this->Forum->hasAccess('Foru
 
 										if (!$hasRated) { ?>
 											<a href="javascript:;" onclick="return Forum.ratePost(<?php echo $post_id; ?>, 'down');" class="rate-down js-tooltip" data-tooltip="<?php echo __d('forum', 'Rate Down'); ?>">
-												<span class="icon-arrow-down"></span>
+												<span class="fa fa-arrow-down"></span>
 											</a>
 										<?php } ?>
 									</div>

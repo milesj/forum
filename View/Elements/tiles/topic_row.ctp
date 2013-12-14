@@ -10,7 +10,7 @@ $columns = isset($columns) ? $columns : array(); ?>
 	<?php } ?>
 	<td>
 		<?php if (!empty($topic['Poll']['id'])) {
-			echo $this->Html->tag('span', '', array('class' => 'icon-bar-chart js-tooltip float-right', 'data-tooltip' => __d('forum', 'Poll')));
+			echo $this->Html->tag('span', '', array('class' => 'fa fa-bar-chart-o js-tooltip float-right', 'data-tooltip' => __d('forum', 'Poll')));
 		} ?>
 
 		<?php echo $this->Html->link($topic['Topic']['title'], array('controller' => 'topics', 'action' => 'view', $topic['Topic']['slug']), array('class' => 'topic-title'));
@@ -45,7 +45,7 @@ $columns = isset($columns) ? $columns : array(); ?>
 				<span class="text-muted"><?php echo __d('forum', 'by'); ?> <?php echo $this->Html->link($topic['LastUser'][$userFields['username']], $this->Forum->profileUrl($topic['LastUser'])); ?></span>
 			<?php } ?>
 
-			<?php echo $this->Html->link('<span class="icon-external-link"></span>', array('controller' => 'topics', 'action' => 'view', $topic['Topic']['slug'], 'page' => $topic['Topic']['page_count'], '#' => 'post-' . $topic['Topic']['lastPost_id']), array('escape' => false)); ?>
+			<?php echo $this->Html->link('<span class="fa fa-external-link"></span>', array('controller' => 'topics', 'action' => 'view', $topic['Topic']['slug'], 'page' => $topic['Topic']['page_count'], '#' => 'post-' . $topic['Topic']['lastPost_id']), array('escape' => false)); ?>
 		<?php } else { ?>
 			<em class="text-muted"><?php echo __d('forum', 'No latest activity to display'); ?></em>
 		<?php } ?>

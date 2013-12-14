@@ -9,8 +9,7 @@ echo $this->OpenGraph->html(); ?>
 	echo $this->Html->css('Admin.font-awesome.min');
 	echo $this->Html->css('Admin.style');
 	echo $this->Html->css('Forum.style');
-	echo $this->Html->script('//cdnjs.cloudflare.com/ajax/libs/mootools/1.4.5/mootools-core-full-nocompat-yc.js');
-	echo $this->Html->script('//cdnjs.cloudflare.com/ajax/libs/mootools-more/1.4.0.1/mootools-more-yui-compressed.min.js');
+    echo $this->Html->script('//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js');
 	echo $this->Html->script('Admin.titon.min');
 	echo $this->Html->script('Forum.forum');
 
@@ -57,6 +56,5 @@ echo $this->OpenGraph->html(); ?>
 			} ?>
 		</footer>
 	</div>
-</body>
 </body>
 </html>

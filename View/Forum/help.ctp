@@ -25,7 +25,7 @@ $this->Breadcrumb->add(__d('forum', 'Help Desk'), array('controller' => 'forum',
 	<?php echo __d('forum', 'Those are users with higher access and privileges than a regular user. Moderators control and moderate specific forums, where as Super Moderators have full access to all forums. Administrators have full access to all forums as well as editing all the sites settings and configuration. Additionally, moderates have the power to edit and delete other users content.'); ?></p>
 
 	<p><b><?php echo __d('forum', 'How do I edit my profile?'); ?></b><br>
-	<?php printf(__d('forum', 'Once you have logged in, you can edit your profile by going to the %s link, located at the top right.'), $this->Html->link('edit profile', array('controller' => 'users', 'action' => 'edit'))); ?></p>
+	<?php printf(__d('forum', 'Once you have logged in, you can edit your profile by going to the %s link, located at the top right.'), $this->Html->link(_d('forum', 'edit profile'), $userRoutes['settings'])); ?></p>
 
 	<p><b><?php echo __d('forum', 'How do I post a topic?'); ?></b><br>
 	<?php echo __d('forum', 'You would first navigate to the appropriate forum you want to post in. Once there, you would click the "Create Topic" link located at the top and bottom right of the page.'); ?></p>

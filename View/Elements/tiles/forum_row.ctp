@@ -32,7 +32,7 @@ if (isset($forum['Children'])) {
 			$lastTime = isset($forum['LastPost']['created']) ? $forum['LastPost']['created'] : $forum['LastTopic']['modified'];
 
 			echo $this->Html->link($forum['LastTopic']['title'], array('controller' => 'topics', 'action' => 'view', $forum['LastTopic']['slug'])) . ' ';
-			echo $this->Html->link('<span class="icon-external-link"></span>', array('controller' => 'topics', 'action' => 'view', $forum['LastTopic']['slug'], 'page' => $forum['LastTopic']['page_count'], '#' => 'post-' . $forum['lastPost_id']), array('escape' => false)); ?><br>
+			echo $this->Html->link('<span class="fa fa-external-link"></span>', array('controller' => 'topics', 'action' => 'view', $forum['LastTopic']['slug'], 'page' => $forum['LastTopic']['page_count'], '#' => 'post-' . $forum['lastPost_id']), array('escape' => false)); ?><br>
 
 			<em><?php echo $this->Time->timeAgoInWords($lastTime, array('timezone' => $this->Forum->timezone())); ?></em>
 

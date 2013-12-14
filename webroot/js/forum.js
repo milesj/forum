@@ -15,15 +15,17 @@ var Forum = {
 	 * @param {int} max
 	 */
 	charsRemaining: function(input, max) {
-		var target = $(input.get('id') + 'CharsRemaining'),
-			current = max - input.value.length;
+        input = $(input);
+
+		var target = $('#' + input.attr('id') + 'CharsRemaining'),
+			current = max - input.val().length;
 
 		if (current < 0) {
 			current = 0;
-			input.value = input.value.substr(0, max);
+			input.val(input.val().substr(0, max));
 		}
 
-		target.set('html', current);
+		target.html(current);
 	},
 
 	/**
@@ -33,7 +35,7 @@ var Forum = {
 	 * @returns {boolean}
 	 */
 	toggleBuried: function(post_id) {
-		$('post-buried-' + post_id).toggle();
+		$('#post-buried-' + post_id).toggle();
 
 		return false;
 	},
@@ -44,10 +46,8 @@ var Forum = {
 	 * @param {Element} self
 	 */
 	toggleCheckboxes: function(self) {
-		var node = new Element(self),
-			form = node.getParent('form');
-
-		form.getElements('input[type="checkbox"]').set('checked', self.checked);
+		$(self).parents('form')
+            .find('input[type="checkbox"]').prop('checked', self.checked);
 	},
 
 	/**
@@ -56,19 +56,18 @@ var Forum = {
 	 * @param {Element} self
 	 */
 	subscribe: function(self) {
-		var node = new Element(self);
+		var node = $(self);
 
 		if (node.hasClass('is-disabled')) {
 			return false;
 		}
 
-		new Request.JSON({
-			method: 'POST',
-			url: node.get('href'),
-			onSuccess: function(response) {
-				$$('.subscription').set('text', response.data).addClass('is-disabled');
-			}
-		}).send();
+		$.ajax({
+			type: 'POST',
+			url: node.attr('href')
+        }).done(function(response) {
+            $('.subscription').text(response.data).addClass('is-disabled');
+        });
 
 		return false;
 	},
@@ -90,33 +89,32 @@ var Forum = {
 	 * @returns {boolean}
 	 */
 	ratePost: function(post_id, type) {
-		new Request.JSON({
-			method: 'POST',
-			url: '/forum/posts/rate/' + post_id + '/' + (type == 'up' ? 1 : 0),
-			onSuccess: function(response) {
-				var parent = $('post-ratings-' + post_id),
-					rating = parent.getElement('.rating');
+		$.ajax({
+			type: 'POST',
+			url: '/forum/posts/rate/' + post_id + '/' + (type == 'up' ? 1 : 0)
+        }).done(function(response) {
+            var parent = $('#post-ratings-' + post_id),
+                rating = parent.find('.rating');
 
-				parent.getElements('a').dispose();
+            parent.find('a').remove();
 
-				if (response.success) {
-					if (rating) {
-						parent.addClass('has-rated');
-						rating.set('text', parseInt(rating.get('text')) + (type == 'up' ? 1 : -1));
-					} else {
-						parent.dispose();
-					}
-				}
-			}
-		}).send();
+            if (response.success) {
+                if (rating.length) {
+                    parent.addClass('has-rated');
+                    rating.text(parseInt(rating.text()) + (type == 'up' ? 1 : -1));
+                } else {
+                    parent.remove();
+                }
+            }
+        });
 
 		return false;
 	}
 
 };
 
-window.addEvent('domready', function() {
-	Titon.Tooltip.factory('.js-tooltip', {
+$(function() {
+	$('.js-tooltip').tooltip({
 		position: 'topCenter'
 	});
 });
