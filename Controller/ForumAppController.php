@@ -153,6 +153,8 @@ class ForumAppController extends AppController {
      * Before render.
      */
     public function beforeRender() {
+        parent::beforeRender();
+
         $this->set('user', $this->Auth->user());
         $this->set('userFields', $this->config['User']['fieldMap']);
         $this->set('userRoutes', $this->config['User']['routes']);
