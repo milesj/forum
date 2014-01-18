@@ -68,7 +68,8 @@ class ForumAppModel extends AppModel {
         'Utility.Enumerable',
         'Utility.Cacheable' => array(
             'cacheConfig' => 'forum'
-        )
+        ),
+        'Utility.Validateable'
     );
 
     /**
