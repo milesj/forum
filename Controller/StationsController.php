@@ -69,8 +69,8 @@ class StationsController extends ForumAppController {
 
         $this->ForumToolbar->verifyAccess(array(
             'exists' => $forum,
-            'status' => $forum['Forum']['status'],
-            'access' => $forum['Forum']['accessRead']
+            'status' => $forum ? $forum['Forum']['status'] : null,
+            'access' => $forum ? $forum['Forum']['accessRead'] : null
         ));
 
         $this->paginate['Topic']['limit'] = $this->settings['topicsPerPage'];
