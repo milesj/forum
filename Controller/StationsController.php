@@ -62,15 +62,19 @@ class StationsController extends ForumAppController {
      * Read a forum.
      *
      * @param string $slug
+     * @throws NotFoundException
      */
     public function view($slug) {
         $forum = $this->Forum->getBySlug($slug);
         $user_id = $this->Auth->user('id');
 
+        if (!$forum) {
+            throw new NotFoundException();
+        }
+
         $this->ForumToolbar->verifyAccess(array(
-            'exists' => $forum,
-            'status' => $forum ? $forum['Forum']['status'] : null,
-            'access' => $forum ? $forum['Forum']['accessRead'] : null
+            'status' => $forum['Forum']['status'],
+            'access' => $forum['Forum']['accessRead']
         ));
 
         $this->paginate['Topic']['limit'] = $this->settings['topicsPerPage'];
@@ -99,12 +103,16 @@ class StationsController extends ForumAppController {
      * Moderate a forum.
      *
      * @param string $slug
+     * @throws NotFoundException
      */
     public function moderate($slug) {
         $forum = $this->Forum->getBySlug($slug);
 
+        if (!$forum) {
+            throw new NotFoundException();
+        }
+
         $this->ForumToolbar->verifyAccess(array(
-            'exists' => $forum,
             'moderate' => $forum['Forum']['id']
         ));
 

@@ -40,13 +40,17 @@ class PostsController extends ForumAppController {
      *
      * @param string $slug
      * @param int $quote_id
+     * @throws NotFoundException
      */
     public function add($slug, $quote_id = null) {
         $topic = $this->Post->Topic->getBySlug($slug);
         $user_id = $this->Auth->user('id');
 
+        if (!$topic) {
+            throw new NotFoundException();
+        }
+
         $this->ForumToolbar->verifyAccess(array(
-            'exists' => $topic,
             'status' => $topic['Topic']['status'],
             'access' => $topic['Forum']['accessReply']
         ));
@@ -80,12 +84,16 @@ class PostsController extends ForumAppController {
      * Edit a post.
      *
      * @param int $id
+     * @throws NotFoundException
      */
     public function edit($id) {
         $post = $this->Post->getById($id);
 
+        if (!$post) {
+            throw new NotFoundException();
+        }
+
         $this->ForumToolbar->verifyAccess(array(
-            'exists' => $post,
             'moderate' => $post['Topic']['forum_id'],
             'ownership' => $post['Post']['user_id']
         ));
@@ -107,12 +115,16 @@ class PostsController extends ForumAppController {
      * Delete a post.
      *
      * @param int $id
+     * @throws NotFoundException
      */
     public function delete($id) {
         $post = $this->Post->getById($id);
 
+        if (!$post) {
+            throw new NotFoundException();
+        }
+
         $this->ForumToolbar->verifyAccess(array(
-            'exists' => $post,
             'moderate' => $post['Topic']['forum_id'],
             'ownership' => $post['Post']['user_id']
         ));
@@ -125,14 +137,15 @@ class PostsController extends ForumAppController {
      * Report a post.
      *
      * @param int $id
+     * @throws NotFoundException
      */
     public function report($id) {
         $post = $this->Post->getById($id);
         $user_id = $this->Auth->user('id');
 
-        $this->ForumToolbar->verifyAccess(array(
-            'exists' => $post
-        ));
+        if (!$post) {
+            throw new NotFoundException();
+        }
 
         if ($this->request->is('post')) {
             $data = $this->request->data['Report'];

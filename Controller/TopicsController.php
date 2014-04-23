@@ -60,6 +60,7 @@ class TopicsController extends ForumAppController {
      *
      * @param string $slug
      * @param string $type
+     * @throws NotFoundException
      */
     public function add($slug, $type = '') {
         $forum = $this->Topic->Forum->getBySlug($slug);
@@ -73,8 +74,11 @@ class TopicsController extends ForumAppController {
             $access = 'accessPost';
         }
 
+        if (!$forum) {
+            throw new NotFoundException();
+        }
+
         $this->ForumToolbar->verifyAccess(array(
-            'exists' => $forum,
             'status' => $forum['Forum']['status'],
             'access' => $forum['Forum'][$access]
         ));
@@ -103,12 +107,16 @@ class TopicsController extends ForumAppController {
      *
      * @param string $slug
      * @param string $type
+     * @throws NotFoundException
      */
     public function edit($slug, $type = '') {
         $topic = $this->Topic->getBySlug($slug);
 
+        if (!$topic) {
+            throw new NotFoundException();
+        }
+
         $this->ForumToolbar->verifyAccess(array(
-            'exists' => $topic,
             'moderate' => $topic['Topic']['forum_id'],
             'ownership' => $topic['Topic']['user_id']
         ));
@@ -135,12 +143,16 @@ class TopicsController extends ForumAppController {
      * Delete a topic.
      *
      * @param string $slug
+     * @throws NotFoundException
      */
     public function delete($slug) {
         $topic = $this->Topic->getBySlug($slug);
 
+        if (!$topic) {
+            throw new NotFoundException();
+        }
+
         $this->ForumToolbar->verifyAccess(array(
-            'exists' => $topic,
             'moderate' => $topic['Topic']['forum_id']
         ));
 
@@ -153,14 +165,15 @@ class TopicsController extends ForumAppController {
      * Report a topic.
      *
      * @param string $slug
+     * @throws NotFoundException
      */
     public function report($slug) {
         $topic = $this->Topic->getBySlug($slug);
         $user_id = $this->Auth->user('id');
 
-        $this->ForumToolbar->verifyAccess(array(
-            'exists' => $topic
-        ));
+        if (!$topic) {
+            throw new NotFoundException();
+        }
 
         if ($this->request->is('post')) {
             $data = $this->request->data['Report'];
@@ -178,13 +191,17 @@ class TopicsController extends ForumAppController {
      * Read a topic.
      *
      * @param string $slug
+     * @throws NotFoundException
      */
     public function view($slug) {
         $topic = $this->Topic->getBySlug($slug);
         $user_id = $this->Auth->user('id');
 
+        if (!$topic) {
+            throw new NotFoundException();
+        }
+
         $this->ForumToolbar->verifyAccess(array(
-            'exists' => $topic,
             'status' => $topic['Forum']['status'],
             'access' => $topic['Forum']['accessRead']
         ));
@@ -262,12 +279,16 @@ class TopicsController extends ForumAppController {
      * Moderate a topic.
      *
      * @param string $slug
+     * @throws NotFoundException
      */
     public function moderate($slug) {
         $topic = $this->Topic->getBySlug($slug);
 
+        if (!$topic) {
+            throw new NotFoundException();
+        }
+
         $this->ForumToolbar->verifyAccess(array(
-            'exists' => $topic,
             'moderate' => $topic['Topic']['forum_id']
         ));
 

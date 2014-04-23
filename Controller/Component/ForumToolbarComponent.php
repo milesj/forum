@@ -163,18 +163,10 @@ class ForumToolbarComponent extends Component {
      *
      * @param array $validators
      * @return bool
-     * @throws NotFoundException
      * @throws UnauthorizedException
      * @throws ForbiddenException
      */
     public function verifyAccess($validators = array()) {
-
-        // Does the data exist?
-        if (isset($validators['exists'])) {
-            if (empty($validators['exists'])) {
-                throw new NotFoundException();
-            }
-        }
 
         // Admins have full control
         if ($this->Session->read('Acl.isAdmin') || $this->Session->read('Acl.isSuper')) {
