@@ -7,7 +7,7 @@ A fully robust and powerful CakePHP forum plugin. Integrates with an external us
 * PHP 5.3.0
     * Multibyte
     * Decoda - https://github.com/milesj/decoda
-    * Titon\Utility - https://github.com/titon/utility
+    * TypeConverter - https://github.com/milesj/type-converter
 * CakePHP 2
     * Admin Plugin - https://github.com/milesj/admin
     * Utility Plugin - https://github.com/milesj/utility

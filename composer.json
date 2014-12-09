@@ -17,7 +17,7 @@
         "mjohnson/admin": "~1.1",
         "mjohnson/utility": "~1.5",
         "mjohnson/decoda": "6.*",
-        "titon/utility": "*",
+        "mjohnson/type-converter": "*",
         "composer/installers": "*"
     },
     "support": {
