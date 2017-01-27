@@ -40,14 +40,16 @@ class ForumToolbarComponent extends Component {
 
         $user_id = $this->Auth->user('id');
 
-        if (!$this->Session->check('Forum')) {
+        //this is a false check
+        //it should not check Forum session to determine if below is supposed to run
+        //if (!$this->Session->check('Forum')) {
             if ($user_id && $this->Auth->user(Configure::read('User.fieldMap.status')) != Configure::read('User.statusMap.banned')) {
                 $this->Session->write('Forum.permissions', ClassRegistry::init('Admin.RequestObject')->getCrudPermissions($user_id, 'Forum.'));
                 $this->Session->write('Forum.moderates', ClassRegistry::init('Forum.Moderator')->getModerations($user_id));
             }
 
             $this->Session->write('Forum.lastVisit', date('Y-m-d H:i:s'));
-        }
+        //}
     }
 
     /**
